@@ -1,0 +1,161 @@
+---
+/**
+ * PricingCards Component
+ * 
+ * A comprehensive pricing section with detailed feature lists and highlighted plans.
+ * Perfect for showcasing multiple pricing tiers with extensive feature comparisons.
+ * 
+ * Features:
+ * - Responsive 3-column grid layout (stacks on mobile)
+ * - Highlighted center plan option
+ * - Feature lists with checkmark icons
+ * - Customizable button styles and actions
+ * - TypeScript support with comprehensive prop types
+ * 
+ * Usage:
+ * ```astro
+ * <PricingCards
+ *   title="Simple, Transparent Pricing"
+ *   subtitle="Pricing to fit the needs of any company size."
+ *   plans={[
+ *     {
+ *       name: "Starter",
+ *       price: "$5",
+ *       period: "month",
+ *       description: "Ideal for Startups and Small Companies",
+ *       features: ["Automated Reporting", "Faster Processing", "Customizations"],
+ *       highlighted: false
+ *     },
+ *     {
+ *       name: "Basic", 
+ *       price: "$15",
+ *       period: "month",
+ *       description: "Ideal for medium-size businesses to larger businesses",
+ *       features: ["Everything in Starter", "100 Builds", "Progress Reports", "Premium Support"],
+ *       highlighted: true
+ *     },
+ *     {
+ *       name: "Plus",
+ *       price: "$25", 
+ *       period: "month",
+ *       description: "Ideal for larger and enterprise companies",
+ *       features: ["Everything in Basic", "Unlimited Builds", "Advanced Analytics", "Company Evaluations"],
+ *       highlighted: false
+ *     }
+ *   ]}
+ *   primaryColor="blue-600"
+ * />
+ * ```
+ */
+
+export interface PricingPlan {
+  name: string;
+  price: string;
+  period: string;
+  description: string;
+  features: string[];
+  highlighted?: boolean;
+  buttonText?: string;
+  buttonAction?: string;
+}
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  plans: PricingPlan[];
+  primaryColor?: string;
+  className?: string;
+}
+
+const {
+  title = "Simple, Transparent Pricing",
+  subtitle = "Pricing to fit the needs of any company size.",
+  plans,
+  primaryColor = "blue-600",
+  className = ""
+} = Astro.props;
+
+// Generate color classes based on primary color
+const colorClasses = {
+  text: `text-${primaryColor}`,
+  border: `border-${primaryColor}`,
+  bg: `bg-${primaryColor}`,
+  hover: `hover:bg-${primaryColor.replace('-600', '-700')} hover:border-${primaryColor.replace('-600', '-700')}`,
+  focus: `focus-within:bg-${primaryColor.replace('-600', '-700')} focus-within:border-${primaryColor.replace('-600', '-700')}`
+};
+---
+
+<section class={`py-8 leading-7 text-gray-900 bg-white sm:py-12 md:py-16 lg:py-24 ${className}`}>
+  <div class="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl">
+    <!-- Header -->
+    <div class="flex flex-col items-center leading-7 text-center text-gray-900 border-0 border-gray-200">
+      <h2 class="box-border m-0 text-3xl font-semibold leading-tight tracking-tight text-black border-solid sm:text-4xl md:text-5xl">
+        {title}
+      </h2>
+      <p class="box-border mt-2 text-xl text-gray-900 border-solid sm:text-2xl">
+        {subtitle}
+      </p>
+    </div>
+
+    <!-- Pricing Cards Grid -->
+    <div class="grid grid-cols-1 gap-4 mt-4 leading-7 text-gray-900 border-0 border-gray-200 sm:mt-6 sm:gap-6 md:mt-8 md:gap-0 lg:grid-cols-3">
+      {plans.map((plan, index) => (
+        <div 
+          class={`relative flex flex-col items-center max-w-md p-4 mx-auto my-0 border border-solid rounded-lg sm:my-0 sm:p-6 md:my-8 md:p-8 ${
+            plan.highlighted 
+              ? `z-20 bg-white border-4 ${colorClasses.border} md:px-8 md:py-16` 
+              : `z-10 ${index === 0 ? 'lg:-mr-3' : index === plans.length - 1 ? 'lg:-ml-3' : ''}`
+          }`}
+        >
+          <!-- Plan Name -->
+          <h3 class="m-0 text-2xl font-semibold leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-3xl md:text-4xl">
+            {plan.name}
+          </h3>
+
+          <!-- Price -->
+          <div class="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
+            <p class="box-border m-0 text-6xl font-semibold leading-none border-solid">
+              {plan.price}
+            </p>
+            <p class="box-border m-0 border-solid">
+              / {plan.period}
+            </p>
+          </div>
+
+          <!-- Description -->
+          <p class="mt-6 mb-5 text-base leading-normal text-left text-gray-900 border-0 border-gray-200">
+            {plan.description}
+          </p>
+
+          <!-- Features List -->
+          <ul class="flex-1 p-0 mt-4 ml-5 leading-7 text-gray-900 border-0 border-gray-200">
+            {plan.features.map((feature) => (
+              <li class="inline-flex items-center block w-full mb-2 ml-5 font-semibold text-left border-solid">
+                <svg class={`w-5 h-5 mr-2 font-semibold leading-7 ${colorClasses.text} sm:h-5 sm:w-5 md:h-6 md:w-6`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          <!-- CTA Button -->
+          <button 
+            class={`inline-flex justify-center w-full px-4 py-3 mt-8 font-sans text-sm leading-none text-center no-underline rounded-md cursor-pointer sm:text-base md:text-lg ${
+              plan.highlighted
+                ? `text-white ${colorClasses.bg} border ${colorClasses.hover} ${colorClasses.focus} hover:text-white focus-within:text-white`
+                : `${colorClasses.text} bg-transparent border ${colorClasses.border} ${colorClasses.hover} hover:text-white ${colorClasses.focus} focus-within:text-white`
+            }`}
+            {...(plan.buttonAction ? {
+              'hx-get': plan.buttonAction,
+              'hx-target': '#main-content',
+              'hx-swap': 'innerHTML'
+            } : {})}
+          >
+            {plan.buttonText || 'Select Plan'}
+          </button>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,153 @@
+---
+/**
+ * TitleSections Component
+ * 
+ * A collection of flexible title/hero section layouts for marketing pages.
+ * Supports multiple variants with different styling and positioning options.
+ * 
+ * @component
+ * @example
+ * ```astro
+ * <TitleSections 
+ *   variant="gradient"
+ *   title="The Number One Source for all your design needs"
+ *   subtitle="Say hello to the number one source for all your design needs."
+ *   highlight="Number One Source"
+ *   maxWidth="max-w-5xl"
+ * />
+ * ```
+ */
+
+export interface Props {
+  /** Main title text */
+  title: string;
+  /** Subtitle/description text */
+  subtitle?: string;
+  /** Text to highlight with gradient (must be part of title) */
+  highlight?: string;
+  /** Layout variant */
+  variant?: 'gradient' | 'simple' | 'centered';
+  /** Text size variant */
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** Maximum width for content */
+  maxWidth?: 'max-w-3xl' | 'max-w-5xl' | 'max-w-7xl';
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right';
+  /** Background color */
+  background?: 'white' | 'gray' | 'transparent';
+  /** Padding configuration */
+  padding?: 'sm' | 'md' | 'lg';
+  /** Custom CSS classes */
+  class?: string;
+}
+
+const {
+  title,
+  subtitle,
+  highlight,
+  variant = 'gradient',
+  size = 'lg',
+  maxWidth = 'max-w-5xl',
+  textAlign = 'center',
+  background = 'white',
+  padding = 'lg',
+  class: className = '',
+} = Astro.props;
+
+// Size configurations
+const sizeConfigs = {
+  sm: {
+    title: 'text-3xl sm:text-4xl lg:text-5xl',
+    subtitle: 'text-base sm:text-lg',
+    spacing: 'mb-4'
+  },
+  md: {
+    title: 'text-4xl sm:text-5xl lg:text-6xl',
+    subtitle: 'text-lg sm:text-xl',
+    spacing: 'mb-6'
+  },
+  lg: {
+    title: 'text-5xl sm:text-6xl md:text-6xl lg:text-7xl',
+    subtitle: 'text-lg md:text-xl lg:px-24',
+    spacing: 'mb-6'
+  },
+  xl: {
+    title: 'text-6xl sm:text-7xl md:text-8xl lg:text-9xl',
+    subtitle: 'text-xl md:text-2xl lg:px-32',
+    spacing: 'mb-8'
+  }
+};
+
+// Background classes
+const bgClasses = {
+  white: 'bg-white',
+  gray: 'bg-gray-100',
+  transparent: ''
+};
+
+// Padding classes
+const paddingClasses = {
+  sm: 'px-10 py-16 mx-auto',
+  md: 'px-10 py-20 mx-auto sm:py-24',
+  lg: 'px-10 py-24 mx-auto'
+};
+
+// Text alignment classes
+const alignClasses = {
+  left: 'text-left md:text-left',
+  center: 'text-left md:text-center',
+  right: 'text-left md:text-right'
+};
+
+const sizeConfig = sizeConfigs[size];
+const bgClass = bgClasses[background];
+const paddingClass = paddingClasses[padding];
+const alignClass = alignClasses[textAlign];
+
+// Process title with highlight
+const processTitle = (titleText: string, highlightText?: string) => {
+  if (!highlightText || !titleText.includes(highlightText)) {
+    return titleText;
+  }
+  
+  return titleText.replace(
+    highlightText,
+    `<span class="w-full text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 lg:inline">${highlightText}</span>`
+  );
+};
+
+const processedTitle = processTitle(title, highlight);
+---
+
+<section class={`h-auto ${bgClass} ${className}`}>
+  <div class={`${maxWidth} ${paddingClass}`}>
+    <div class={`w-full mx-auto ${alignClass}`}>
+      <h1 class={`${sizeConfig.spacing} ${sizeConfig.title} font-extrabold leading-none ${maxWidth} mx-auto tracking-normal text-gray-900 md:tracking-tight`}>
+        <Fragment set:html={processedTitle} />
+      </h1>
+      
+      {subtitle && (
+        <p class={`px-0 ${sizeConfig.spacing} ${sizeConfig.subtitle} text-gray-600`}>
+          {subtitle}
+        </p>
+      )}
+    </div>
+  </div>
+</section>
+
+{/* Simple variant */}
+{variant === 'simple' && (
+  <section class={`h-auto ${bgClass} ${className}`}>
+    <div class={`${maxWidth} mx-auto py-16 px-10 sm:py-24 sm:px-6 lg:px-8 sm:text-center`}>
+      <h2 class="text-base font-semibold text-indigo-600 tracking-wide uppercase">
+        {subtitle}
+      </h2>
+      <p class="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+        {title}
+      </p>
+      <p class="max-w-3xl mt-5 mx-auto text-xl text-gray-500">
+        Are you ready to start building the next great idea. You can start off by using our design components to help tell you story and showcase your great idea.
+      </p>
+    </div>
+  </section>
+)}

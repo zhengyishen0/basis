@@ -1,0 +1,99 @@
+---
+/**
+ * FeatureSideBySide Component
+ * 
+ * A side-by-side layout featuring text content with bullet points on one side
+ * and an image on the other. Perfect for highlighting key benefits or features.
+ * 
+ * Usage:
+ * ```astro
+ * ---
+ * import { FeatureSideBySide } from '@/components/pine-marketing';
+ * 
+ * const benefits = [
+ *   {
+ *     text: "Faster Processing and Delivery",
+ *     icon: `<svg class="w-8 h-8 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">...</svg>`
+ *   }
+ * ];
+ * ---
+ * <FeatureSideBySide 
+ *   title="Jam-packed with all the tools you need to succeed!"
+ *   subtitle="It's never been easier to build a business of your own."
+ *   benefits={benefits}
+ *   imageUrl="https://example.com/image.png"
+ *   imageAlt="Feature illustration"
+ *   imagePosition="right"
+ * />
+ * ```
+ */
+
+export interface Benefit {
+  text: string;
+  icon: string; // SVG string
+  iconColor?: string;
+}
+
+export interface Props {
+  title: string;
+  subtitle?: string;
+  benefits: Benefit[];
+  imageUrl: string;
+  imageAlt: string;
+  imagePosition?: 'left' | 'right';
+  backgroundColor?: string;
+  maxWidth?: string;
+  className?: string;
+}
+
+const {
+  title,
+  subtitle,
+  benefits,
+  imageUrl,
+  imageAlt,
+  imagePosition = 'right',
+  backgroundColor = "bg-gray-50",
+  maxWidth = "max-w-6xl",
+  className = ""
+} = Astro.props;
+
+const isImageRight = imagePosition === 'right';
+---
+
+<section class={`py-20 ${backgroundColor} ${className}`}>
+  <div class={`container items-center ${maxWidth} px-4 px-10 mx-auto sm:px-20 md:px-32 lg:px-16`}>
+    <div class="flex flex-wrap items-center -mx-3">
+      <!-- Text Content -->
+      <div class={`${isImageRight ? 'order-1 lg:order-0' : 'order-1 lg:order-1'} w-full px-3 lg:w-1/2`}>
+        <div class="w-full lg:max-w-md">
+          <h2 class="mb-4 text-3xl font-bold leading-tight tracking-tight sm:text-4xl font-heading">
+            {title}
+          </h2>
+          {subtitle && (
+            <p class="mb-4 font-medium tracking-tight text-gray-400 xl:mb-6">
+              {subtitle}
+            </p>
+          )}
+          <ul>
+            {benefits.map((benefit) => (
+              <li class="flex items-center py-2 space-x-4 xl:py-3">
+                <Fragment set:html={benefit.icon} />
+                <span class="font-medium text-gray-500">{benefit.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Image -->
+      <div class={`${isImageRight ? 'order-0 lg:order-1' : 'order-0 lg:order-0'} w-full px-3 mb-12 lg:w-1/2 lg:mb-0`}>
+        <img 
+          class="mx-auto sm:max-w-sm lg:max-w-full" 
+          src={imageUrl} 
+          alt={imageAlt}
+        />
+      </div>
+    </div>
+  </div>
+</section>

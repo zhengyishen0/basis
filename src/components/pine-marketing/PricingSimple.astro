@@ -1,0 +1,151 @@
+---
+/**
+ * PricingSimple Component
+ * 
+ * A clean, minimal pricing section with basic plan information.
+ * Perfect for simple pricing displays without detailed feature comparisons.
+ * 
+ * Features:
+ * - Responsive 3-column grid layout (stacks on mobile)
+ * - Highlighted center plan with different background
+ * - Clean pricing display with per-user pricing
+ * - Customizable button styles and actions
+ * - TypeScript support with comprehensive prop types
+ * 
+ * Usage:
+ * ```astro
+ * <PricingSimple
+ *   title="Pricing Options"
+ *   subtitle="We've got a plan for companies of any size"
+ *   plans={[
+ *     {
+ *       name: "Basic",
+ *       price: "$19",
+ *       period: "per user per month",
+ *       description: "The basic plan is a good fit for smaller teams and startups",
+ *       highlighted: false
+ *     },
+ *     {
+ *       name: "Plus", 
+ *       price: "$39",
+ *       period: "per user per month",
+ *       description: "The plus plan is a good fit for medium-size to larger companies",
+ *       highlighted: true
+ *     },
+ *     {
+ *       name: "Pro",
+ *       price: "$59", 
+ *       period: "per user per month",
+ *       description: "The pro plan is a good fit for larger and enterprise companies",
+ *       highlighted: false
+ *     }
+ *   ]}
+ *   primaryColor="blue-600"
+ * />
+ * ```
+ */
+
+export interface SimplePricingPlan {
+  name: string;
+  price: string;
+  period: string;
+  description: string;
+  highlighted?: boolean;
+  buttonText?: string;
+  buttonAction?: string;
+}
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  plans: SimplePricingPlan[];
+  primaryColor?: string;
+  className?: string;
+}
+
+const {
+  title = "Pricing Options",
+  subtitle = "We've got a plan for companies of any size",
+  plans,
+  primaryColor = "blue-600",
+  className = ""
+} = Astro.props;
+
+// Generate color classes based on primary color
+const colorClasses = {
+  text: `text-${primaryColor}`,
+  border: `border-${primaryColor}`,
+  borderB: `border-b-${primaryColor}`,
+  bg: `bg-${primaryColor}`,
+  bgLight: `bg-${primaryColor.replace('-600', '-700')}`,
+  hover: `hover:bg-${primaryColor} hover:border-${primaryColor}`,
+  hoverText: `hover:text-white`
+};
+---
+
+<section class={`box-border py-8 leading-7 text-gray-900 bg-white border-0 border-gray-200 border-solid sm:py-12 md:py-16 lg:py-24 ${className}`}>
+  <div class="box-border max-w-6xl px-4 pb-12 mx-auto border-solid sm:px-6 md:px-6 lg:px-4">
+    <!-- Header -->
+    <div class="flex flex-col items-center leading-7 text-center text-gray-900">
+      <h2 class="box-border m-0 text-3xl font-semibold leading-tight tracking-tight text-black border-solid sm:text-4xl md:text-5xl">
+        {title}
+      </h2>
+      <p class="box-border mt-4 text-2xl leading-normal text-gray-900 border-solid">
+        {subtitle}
+      </p>
+    </div>
+
+    <!-- Pricing Cards Container -->
+    <div class={`grid max-w-md mx-auto mt-6 overflow-hidden leading-7 text-gray-900 border border-b-4 border-gray-300 ${colorClasses.borderB} rounded-xl md:max-w-lg lg:max-w-none sm:mt-10 lg:grid-cols-3`}>
+      {plans.map((plan) => (
+        <div class={`box-border px-4 py-8 mb-6 text-center border-solid lg:mb-0 sm:px-4 sm:py-8 md:px-8 md:py-12 lg:px-10 ${
+          plan.highlighted 
+            ? 'bg-gray-100 border border-gray-300' 
+            : 'bg-white'
+        }`}>
+          <!-- Plan Name -->
+          <h3 class="m-0 text-2xl font-semibold leading-tight tracking-tight text-black border-0 border-solid sm:text-3xl md:text-4xl">
+            {plan.name}
+          </h3>
+
+          <!-- Plan Description -->
+          <p class="mt-3 leading-7 text-gray-900 border-0 border-solid">
+            {plan.description}
+          </p>
+
+          <!-- Price -->
+          <div class="flex items-center justify-center mt-6 leading-7 text-gray-900 border-0 border-solid sm:mt-8">
+            <p class="box-border m-0 text-6xl font-semibold leading-normal text-center border-0 border-gray-200">
+              {plan.price}
+            </p>
+            <p class="box-border my-0 ml-4 mr-0 text-xs text-left border-0 border-gray-200">
+              {plan.period.includes('per user') ? (
+                <>
+                  per user <span class="block">per month</span>
+                </>
+              ) : (
+                <span class="block">{plan.period}</span>
+              )}
+            </p>
+          </div>
+
+          <!-- CTA Button -->
+          <button 
+            class={`inline-flex items-center justify-center w-full py-3 mt-6 font-sans text-sm leading-none text-center no-underline rounded-md cursor-pointer sm:text-base sm:mt-8 md:text-lg ${
+              plan.highlighted
+                ? `text-white ${colorClasses.bg} border-b-4 ${colorClasses.bgLight} hover:text-white`
+                : `${colorClasses.text} bg-transparent border border-b-2 ${colorClasses.border} ${colorClasses.hover} ${colorClasses.hoverText}`
+            }`}
+            {...(plan.buttonAction ? {
+              'hx-get': plan.buttonAction,
+              'hx-target': '#main-content',
+              'hx-swap': 'innerHTML'
+            } : {})}
+          >
+            {plan.buttonText || 'Select Plan'}
+          </button>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

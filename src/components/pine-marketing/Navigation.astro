@@ -1,0 +1,181 @@
+---
+/**
+ * Navigation Component
+ * 
+ * A flexible navigation header component with Alpine.js interactions.
+ * Supports two layouts: animated hover navigation and simple navigation.
+ * 
+ * @component
+ * @example
+ * ```astro
+ * <Navigation 
+ *   variant="animated"
+ *   logoText="tails."
+ *   navItems={navigationItems}
+ *   ctaButtons={ctaButtons}
+ * />
+ * ```
+ */
+
+export interface NavItem {
+  label: string;
+  href: string;
+  isActive?: boolean;
+}
+
+export interface CTAButton {
+  label: string;
+  href: string;
+  variant: 'primary' | 'secondary';
+}
+
+export interface Props {
+  /** Navigation variant */
+  variant?: 'animated' | 'simple';
+  /** Logo text */
+  logoText: string;
+  /** Logo href */
+  logoHref?: string;
+  /** Navigation items */
+  navItems: NavItem[];
+  /** CTA buttons */
+  ctaButtons?: CTAButton[];
+  /** Background color */
+  background?: 'white' | 'transparent';
+  /** Maximum width container */
+  maxWidth?: 'max-w-6xl' | 'max-w-7xl' | 'max-w-screen-xl';
+  /** Custom CSS classes */
+  class?: string;
+}
+
+const {
+  variant = 'animated',
+  logoText,
+  logoHref = '#_',
+  navItems,
+  ctaButtons = [
+    { label: 'Sign in', href: '#', variant: 'secondary' },
+    { label: 'Sign up', href: '#', variant: 'primary' }
+  ],
+  background = 'white',
+  maxWidth = 'max-w-7xl',
+  class: className = '',
+} = Astro.props;
+
+const bgClass = background === 'white' ? 'bg-white' : '';
+const containerPadding = 'px-8';
+---
+
+{variant === 'animated' && (
+  <section class={`relative w-full ${containerPadding} text-gray-700 ${bgClass} body-font ${className}`} data-tails-scripts="//unpkg.com/alpinejs">
+    <div class={`container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row ${maxWidth}`}>
+      <!-- Logo -->
+      <a href={logoHref} class="relative z-10 flex items-center w-auto text-2xl font-extrabold leading-none text-black select-none">
+        {logoText}
+      </a>
+
+      <!-- Navigation -->
+      <nav class="top-0 left-0 z-0 flex items-center justify-center w-full h-full py-5 -ml-0 space-x-5 text-base md:-ml-5 md:py-0 md:absolute">
+        {navItems.map(item => (
+          <a 
+            href={item.href} 
+            class="relative font-medium leading-6 text-gray-600 transition duration-150 ease-out hover:text-gray-900" 
+            x-data="{ hover: false }" 
+            @mouseenter="hover = true" 
+            @mouseleave="hover = false"
+          >
+            <span class="block">{item.label}</span>
+            <span class="absolute bottom-0 left-0 inline-block w-full h-0.5 -mb-1 overflow-hidden">
+              <span 
+                x-show="hover" 
+                class="absolute inset-0 inline-block w-full h-1 h-full transform bg-gray-900" 
+                x-transition:enter="transition ease duration-200" 
+                x-transition:enter-start="scale-0" 
+                x-transition:enter-end="scale-100" 
+                x-transition:leave="transition ease-out duration-300" 
+                x-transition:leave-start="scale-100" 
+                x-transition:leave-end="scale-0"
+              ></span>
+            </span>
+          </a>
+        ))}
+      </nav>
+
+      <!-- CTA Buttons -->
+      <div class="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end">
+        {ctaButtons.map(button => (
+          button.variant === 'secondary' ? (
+            <a 
+              href={button.href} 
+              class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-gray-600 whitespace-no-wrap bg-white border border-gray-200 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:shadow-none" 
+              data-rounded="rounded-md"
+            >
+              {button.label}
+            </a>
+          ) : (
+            <span class="inline-flex rounded-md shadow-sm">
+              <a 
+                href={button.href} 
+                class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-blue-600 border border-blue-700 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" 
+                data-rounded="rounded-md" 
+                data-primary="blue-600"
+              >
+                {button.label}
+              </a>
+            </span>
+          )
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'simple' && (
+  <section class={`w-full ${containerPadding} text-gray-700 ${bgClass} ${className}`}>
+    <div class={`container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row ${maxWidth}`}>
+      <!-- Logo and Navigation Group -->
+      <div class="relative flex flex-col md:flex-row">
+        <a href={logoHref} class="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0">
+          <span class="mx-auto text-xl font-black leading-none text-gray-900 select-none">
+            {logoText.includes('.') ? (
+              <Fragment>
+                {logoText.split('.')[0]}<span class="text-indigo-600" data-primary="indigo-600">.</span>
+              </Fragment>
+            ) : logoText}
+          </span>
+        </a>
+        
+        <nav class="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200">
+          {navItems.map(item => (
+            <a href={item.href} class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="inline-flex items-center ml-5 space-x-6 lg:justify-end">
+        {ctaButtons.map(button => (
+          button.variant === 'secondary' ? (
+            <a 
+              href={button.href} 
+              class="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+            >
+              {button.label}
+            </a>
+          ) : (
+            <a 
+              href={button.href} 
+              class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600" 
+              data-rounded="rounded-md" 
+              data-primary="indigo-600"
+            >
+              {button.label}
+            </a>
+          )
+        ))}
+      </div>
+    </div>
+  </section>
+)}

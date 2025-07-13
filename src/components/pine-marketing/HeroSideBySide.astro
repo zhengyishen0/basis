@@ -1,0 +1,142 @@
+---
+/**
+ * HeroSideBySide Component
+ * 
+ * A flexible hero section with side-by-side layout featuring text content on the left
+ * and an image on the right. Fully responsive with customizable colors and content.
+ * 
+ * Features:
+ * - Responsive design (stacks on mobile)
+ * - Customizable primary color
+ * - Flexible button configuration
+ * - Image slot for custom images
+ * - Alpine.js compatible
+ * 
+ * Usage:
+ * ```astro
+ * <HeroSideBySide
+ *   title="Beautiful Pages to"
+ *   titleHighlight="Tell Your Story!"
+ *   description="It's never been easier to build beautiful websites that convey your message and tell your story."
+ *   primaryButtonText="Try It Free"
+ *   primaryButtonHref="#trial"
+ *   secondaryButtonText="Learn More"
+ *   secondaryButtonHref="#features"
+ *   primaryColor="indigo"
+ *   imageUrl="https://example.com/hero-image.jpeg"
+ *   imageAlt="Hero image description"
+ * />
+ * ```
+ */
+
+export interface Props {
+  title: string;
+  titleHighlight: string;
+  description: string;
+  primaryButtonText: string;
+  primaryButtonHref: string;
+  secondaryButtonText?: string;
+  secondaryButtonHref?: string;
+  primaryColor?: 'indigo' | 'purple' | 'blue' | 'green' | 'red' | 'yellow';
+  imageUrl: string;
+  imageAlt: string;
+  backgroundColor?: string;
+  containerMaxWidth?: string;
+}
+
+const {
+  title,
+  titleHighlight,
+  description,
+  primaryButtonText,
+  primaryButtonHref,
+  secondaryButtonText = "Learn More",
+  secondaryButtonHref = "#",
+  primaryColor = "indigo",
+  imageUrl,
+  imageAlt,
+  backgroundColor = "bg-white",
+  containerMaxWidth = "max-w-6xl"
+} = Astro.props;
+
+// Color mapping for primary colors
+const colorClasses = {
+  indigo: {
+    bg: 'bg-indigo-600',
+    bgHover: 'hover:bg-indigo-700',
+    text: 'text-indigo-600'
+  },
+  purple: {
+    bg: 'bg-purple-500',
+    bgHover: 'hover:bg-purple-700',
+    text: 'text-purple-500'
+  },
+  blue: {
+    bg: 'bg-blue-600',
+    bgHover: 'hover:bg-blue-700',
+    text: 'text-blue-600'
+  },
+  green: {
+    bg: 'bg-green-600',
+    bgHover: 'hover:bg-green-700',
+    text: 'text-green-600'
+  },
+  red: {
+    bg: 'bg-red-600',
+    bgHover: 'hover:bg-red-700',
+    text: 'text-red-600'
+  },
+  yellow: {
+    bg: 'bg-yellow-500',
+    bgHover: 'hover:bg-yellow-600',
+    text: 'text-yellow-500'
+  }
+};
+
+const colors = colorClasses[primaryColor];
+---
+
+<section class={`px-2 py-32 ${backgroundColor} md:px-0`}>
+  <div class={`container items-center ${containerMaxWidth} px-8 mx-auto xl:px-5`}>
+    <div class="flex flex-wrap items-center sm:-mx-3">
+      <div class="w-full md:w-1/2 md:px-3">
+        <div class="w-full pb-6 space-y-6 sm:max-w-md lg:max-w-lg md:space-y-4 lg:space-y-8 xl:space-y-9 sm:pr-5 lg:pr-0 md:pb-0">
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-4xl lg:text-5xl xl:text-6xl">
+            <span class="block xl:inline">{title}</span>
+            <span class={`block ${colors.text} xl:inline`}>{titleHighlight}</span>
+          </h1>
+          <p class="mx-auto text-base text-gray-500 sm:max-w-md lg:text-xl md:max-w-3xl">
+            {description}
+          </p>
+          <div class="relative flex flex-col sm:flex-row sm:space-x-4">
+            <a 
+              href={primaryButtonHref} 
+              class={`flex items-center w-full px-6 py-3 mb-3 text-lg text-white ${colors.bg} rounded-md sm:mb-0 ${colors.bgHover} sm:w-auto transition-colors duration-200`}
+            >
+              {primaryButtonText}
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            {secondaryButtonText && (
+              <a 
+                href={secondaryButtonHref} 
+                class="flex items-center px-6 py-3 text-gray-500 bg-gray-100 rounded-md hover:bg-gray-200 hover:text-gray-600 transition-colors duration-200"
+              >
+                {secondaryButtonText}
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+      <div class="w-full md:w-1/2">
+        <div class="w-full h-auto overflow-hidden rounded-md shadow-xl sm:rounded-xl">
+          <slot name="image">
+            <img src={imageUrl} alt={imageAlt} class="w-full h-auto object-cover" />
+          </slot>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

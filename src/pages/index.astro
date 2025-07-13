@@ -4,45 +4,73 @@ import Counter from '../components/alpine/Counter.astro';
 import TodoList from '../components/htmx/TodoList.astro';
 import { getEntry } from 'astro:content';
 
+// Pine UI Components for better styling
+import Card from '../components/pine/Card.astro';
+import Badge from '../components/pine/Badge.astro';
+import Button from '../components/pine/Button.astro';
+import Alert from '../components/pine/Alert.astro';
+
 const homeContent = await getEntry('pages', 'home');
-const { Content } = await homeContent.render();
+const { Content } = await homeContent?.render() || { Content: null };
 ---
 
 <Layout>
 	<main class="container mx-auto px-4 py-8 max-w-4xl">
-		<h1 class="text-3xl font-bold mb-8 text-center">{homeContent.data.hero.title}</h1>
-		{homeContent.data.hero.subtitle && (
-			<p class="text-lg text-gray-600 text-center mb-8">{homeContent.data.hero.subtitle}</p>
-		)}
-		
-		<div class="grid md:grid-cols-2 gap-8 mb-8">
-			<Counter />
-			<TodoList />
-		</div>
-		
-		<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-			{homeContent.data.features.map((feature: { icon: string; name: string; description: string }) => (
-				<div class="p-4 bg-white rounded-lg border shadow-sm">
-					<div class="text-2xl mb-2">{feature.icon}</div>
-					<h3 class="font-semibold mb-2">{feature.name}</h3>
-					<p class="text-sm text-gray-600">{feature.description}</p>
-				</div>
-			))}
-		</div>
-		
-		{homeContent.data.techStack && (
-			<div class="p-4 bg-gray-50 rounded-lg mb-8">
-				<h2 class="text-xl font-semibold mb-4">Tech Stack Demo</h2>
-				<ul class="space-y-2 text-sm">
-					{homeContent.data.techStack.map((tech: { emoji: string; name: string; description: string }) => (
-						<li>{tech.emoji} <strong>{tech.name}</strong> - {tech.description}</li>
-					))}
-				</ul>
+		<!-- Hero Section -->
+		<div class="text-center mb-12">
+			<h1 class="text-4xl font-bold mb-4">AHA Stack Demo</h1>
+			<p class="text-xl text-gray-600 mb-6">
+				Demonstrating Alpine.js, HTMX, and Markdown with Astro
+			</p>
+			<div class="flex justify-center gap-2">
+				<Badge color="blue">Alpine.js</Badge>
+				<Badge color="green">HTMX</Badge>
+				<Badge color="purple">Markdown</Badge>
 			</div>
+		</div>
+		
+		<!-- Alpine.js Demo -->
+		<Card class="mb-8">
+			<div class="flex items-center gap-3 mb-4">
+				<Badge color="blue">Alpine.js</Badge>
+				<h2 class="text-2xl font-bold">Interactive Counter</h2>
+			</div>
+			<p class="text-gray-600 mb-6">Reactive counter with Alpine.js state management</p>
+			<div class="bg-gray-50 p-6 rounded-lg">
+				<Counter />
+			</div>
+		</Card>
+		
+		<!-- HTMX Demo -->
+		<Card class="mb-8">
+			<div class="flex items-center gap-3 mb-4">
+				<Badge color="green">HTMX</Badge>
+				<h2 class="text-2xl font-bold">Todo List</h2>
+			</div>
+			<p class="text-gray-600 mb-6">Dynamic todo list with HTMX server interactions</p>
+			<div class="bg-gray-50 p-6 rounded-lg">
+				<TodoList />
+			</div>
+		</Card>
+		
+		<!-- Markdown Demo -->
+		{Content && (
+			<Card class="mb-8">
+				<div class="flex items-center gap-3 mb-4">
+					<Badge color="purple">Markdown</Badge>
+					<h2 class="text-2xl font-bold">Content from Markdown</h2>
+				</div>
+				<p class="text-gray-600 mb-6">Content rendered from Markdown files using Astro's content collections</p>
+				<div class="prose max-w-none bg-gray-50 p-6 rounded-lg">
+					<Content />
+				</div>
+			</Card>
 		)}
 		
-		<div class="prose max-w-none">
-			<Content />
-		</div>
+		<!-- Info Alert -->
+		<Alert variant="blue" title="About This Demo">
+			This page demonstrates how Alpine.js provides client-side interactivity, HTMX enables server-side dynamic updates, 
+			and Markdown provides content management - all working together seamlessly in the AHA stack.
+		</Alert>
 	</main>
 </Layout>

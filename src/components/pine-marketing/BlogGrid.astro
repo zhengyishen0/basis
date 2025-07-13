@@ -1,0 +1,156 @@
+---
+/**
+ * BlogGrid Component
+ * 
+ * A responsive grid layout for displaying blog posts in a card format.
+ * Supports customizable columns and flexible blog post data structure.
+ * 
+ * Features:
+ * - Responsive grid (1 col mobile, 2 col tablet, 3+ col desktop)
+ * - Individual blog cards with image, category badge, title, excerpt, and metadata
+ * - Customizable category badge colors
+ * - Author links and read time display
+ * - Hover effects on images
+ * - Flexible layout options
+ * 
+ * Usage:
+ * ```astro
+ * <BlogGrid
+ *   posts={[
+ *     {
+ *       id: "1",
+ *       imageUrl: "https://example.com/image.jpg",
+ *       imageAlt: "Post image",
+ *       href: "/blog/post-1",
+ *       category: { name: "Lifestyle", color: "purple" },
+ *       title: "Amazing Post Title",
+ *       excerpt: "Brief description of the post content...",
+ *       author: { name: "John Doe", href: "/author/john" },
+ *       date: "April 17, 2021",
+ *       readTime: "3 min. read"
+ *     }
+ *   ]}
+ *   columns="xl:grid-cols-3"
+ * />
+ * ```
+ */
+
+export interface BlogPost {
+  id: string;
+  imageUrl: string;
+  imageAlt?: string;
+  href?: string;
+  category?: {
+    name: string;
+    color?: 'purple' | 'pink' | 'red' | 'blue' | 'green' | 'yellow' | 'gray';
+  };
+  title: string;
+  titleHref?: string;
+  excerpt?: string;
+  author?: {
+    name: string;
+    href?: string;
+  };
+  date?: string;
+  readTime?: string;
+}
+
+export interface Props {
+  posts: BlogPost[];
+  columns?: string;
+  gap?: string;
+  containerClass?: string;
+  cardClass?: string;
+  showExcerpts?: boolean;
+  showMetadata?: boolean;
+}
+
+const {
+  posts = [],
+  columns = "xl:grid-cols-3",
+  gap = "gap-x-8 gap-y-16",
+  containerClass = "",
+  cardClass = "",
+  showExcerpts = true,
+  showMetadata = true
+} = Astro.props;
+
+const categoryColors = {
+  purple: 'bg-purple-500',
+  pink: 'bg-pink-500',
+  red: 'bg-red-500',
+  blue: 'bg-blue-500',
+  green: 'bg-green-500',
+  yellow: 'bg-yellow-400',
+  gray: 'bg-gray-800'
+};
+
+const getCategoryClass = (color: string = 'purple') => {
+  return `${categoryColors[color as keyof typeof categoryColors]} flex items-center px-3 py-1.5 leading-none rounded-full text-xs font-medium uppercase text-white inline-block`;
+};
+---
+
+<div class={`flex grid grid-cols-12 pb-10 sm:px-5 ${gap} ${containerClass}`}>
+    {posts.map((post) => (
+        <div class={`flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 ${columns} ${cardClass}`}>
+            <!-- Image -->
+            {post.href ? (
+                <a href={post.href} class="block">
+                    <img 
+                        class="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56" 
+                        src={post.imageUrl}
+                        alt={post.imageAlt || post.title}
+                    />
+                </a>
+            ) : (
+                <img 
+                    class="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56" 
+                    src={post.imageUrl}
+                    alt={post.imageAlt || post.title}
+                />
+            )}
+            
+            <!-- Category Badge -->
+            {post.category && (
+                <div class={getCategoryClass(post.category.color)}>
+                    <span>{post.category.name}</span>
+                </div>
+            )}
+            
+            <!-- Title -->
+            <h2 class="text-lg font-bold sm:text-xl md:text-2xl">
+                {(post.titleHref || post.href) ? (
+                    <a href={post.titleHref || post.href}>{post.title}</a>
+                ) : (
+                    post.title
+                )}
+            </h2>
+            
+            <!-- Excerpt -->
+            {showExcerpts && post.excerpt && (
+                <p class="text-sm text-gray-500">{post.excerpt}</p>
+            )}
+            
+            <!-- Metadata -->
+            {showMetadata && (post.author || post.date || post.readTime) && (
+                <p class="pt-2 text-xs font-medium">
+                    {post.author && (
+                        <>
+                            {post.author.href ? (
+                                <a href={post.author.href} class="mr-1 underline">{post.author.name}</a>
+                            ) : (
+                                <span class="mr-1">{post.author.name}</span>
+                            )}
+                        </>
+                    )}
+                    {post.date && (
+                        <span class="mx-1">· {post.date}</span>
+                    )}
+                    {post.readTime && (
+                        <span class="mx-1 text-gray-600">· {post.readTime}</span>
+                    )}
+                </p>
+            )}
+        </div>
+    ))}
+</div>

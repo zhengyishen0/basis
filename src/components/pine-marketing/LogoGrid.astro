@@ -1,0 +1,154 @@
+---
+/**
+ * LogoGrid Component
+ * 
+ * A flexible logo grid component for showcasing company logos, partners, or brands.
+ * Supports two layouts: SVG-based logos and image-based logos.
+ * 
+ * @component
+ * @example
+ * ```astro
+ * <LogoGrid 
+ *   title="Trusted by top-leading companies"
+ *   logoType="images"
+ *   logos={companyLogos}
+ *   background="gray"
+ * />
+ * ```
+ */
+
+export interface Logo {
+  name: string;
+  /** Either SVG string (for logoType: 'svg') or image URL (for logoType: 'images') */
+  content: string;
+  /** Alt text for accessibility */
+  alt?: string;
+  /** Custom height class for this specific logo */
+  height?: string;
+  /** Link URL for the logo */
+  url?: string;
+}
+
+export interface Props {
+  /** Title text for the logo section */
+  title?: string;
+  /** Array of logo items */
+  logos: Logo[];
+  /** Type of logos: 'svg' for inline SVGs, 'images' for image URLs */
+  logoType?: 'svg' | 'images';
+  /** Background color theme */
+  background?: 'white' | 'gray';
+  /** Maximum width container class */
+  maxWidth?: 'max-w-6xl' | 'max-w-7xl' | 'max-w-screen-xl';
+  /** Grid layout configuration */
+  gridCols?: string;
+  /** Text alignment */
+  textAlign?: 'left' | 'center' | 'right';
+  /** Container padding */
+  padding?: 'sm' | 'md' | 'lg';
+  /** Custom CSS classes */
+  class?: string;
+}
+
+const {
+  title,
+  logos,
+  logoType = 'svg',
+  background = 'gray',
+  maxWidth = 'max-w-screen-xl',
+  gridCols = 'grid-cols-2 md:grid-cols-6 lg:grid-cols-5',
+  textAlign = 'center',
+  padding = 'md',
+  class: className = '',
+} = Astro.props;
+
+const bgClass = background === 'white' ? 'bg-white' : 'bg-gray-100';
+const textAlignClass = `text-${textAlign}`;
+
+const paddingClasses = {
+  sm: 'px-4 py-8',
+  md: 'px-8 py-12 sm:px-12 lg:px-20',
+  lg: 'px-12 py-16 sm:px-16 lg:px-24'
+};
+
+const containerPadding = paddingClasses[padding];
+
+// Default grid configuration for different logo counts
+const getGridConfig = (logoCount: number) => {
+  if (logoCount <= 3) return 'grid-cols-1 sm:grid-cols-3';
+  if (logoCount <= 4) return 'grid-cols-2 sm:grid-cols-4';
+  if (logoCount <= 6) return 'grid-cols-2 sm:grid-cols-3 md:grid-cols-6';
+  return gridCols;
+};
+
+const finalGridCols = getGridConfig(logos.length);
+---
+
+<section class={`${bgClass} ${className}`}>
+  <div class={`container ${containerPadding} mx-auto ${maxWidth}`}>
+    {title && (
+      <h1 class={`text-sm font-bold tracking-wide ${textAlignClass} text-gray-800 uppercase mb-7`}>
+        {title}
+      </h1>
+    )}
+    
+    <div class={`flex grid items-center justify-center grid-cols-4 ${finalGridCols} gap-y-8`}>
+      {logos.map((logo) => {
+        const heightClass = logo.height || (logoType === 'images' ? 'h-9' : 'h-8 mt-2');
+        const logoContent = logoType === 'svg' ? (
+          <Fragment set:html={logo.content} />
+        ) : (
+          <img 
+            src={logo.content} 
+            alt={logo.alt || logo.name} 
+            class={`block object-contain ${heightClass}`} 
+          />
+        );
+
+        const containerClasses = logoType === 'svg' 
+          ? `${heightClass} text-gray-500 fill-current`
+          : '';
+
+        // Grid column span configuration based on layout
+        const getColSpan = (index: number) => {
+          const totalLogos = logos.length;
+          
+          // For images layout with 6 logos (like the original)
+          if (logoType === 'images' && totalLogos === 6) {
+            if (index < 4) return 'col-span-6 sm:col-span-4 md:col-span-3 xl:col-span-2';
+            return 'col-span-6 sm:col-span-4 md:col-span-6 xl:col-span-2';
+          }
+          
+          // Default responsive spans
+          if (totalLogos <= 4) return 'col-span-1';
+          if (totalLogos === 5) return 'col-span-1 md:col-span-2 lg:col-span-1';
+          return 'col-span-1 md:col-span-2 lg:col-span-1';
+        };
+
+        return (
+          <div class={`flex items-center justify-center ${getColSpan(logos.indexOf(logo))}`}>
+            {logo.url ? (
+              <a href={logo.url} aria-label={`Visit ${logo.name}`}>
+                {logoType === 'svg' ? (
+                  <div class={containerClasses}>
+                    {logoContent}
+                  </div>
+                ) : (
+                  logoContent
+                )}
+              </a>
+            ) : (
+              logoType === 'svg' ? (
+                <div class={containerClasses}>
+                  {logoContent}
+                </div>
+              ) : (
+                logoContent
+              )
+            )}
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

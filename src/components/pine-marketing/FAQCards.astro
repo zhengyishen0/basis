@@ -1,0 +1,98 @@
+---
+/**
+ * FAQCards Component
+ * 
+ * A simple FAQ section with individual card layouts for each question.
+ * Perfect for showcasing frequently asked questions in a clean, scannable format.
+ * 
+ * Features:
+ * - Stacked card layout with shadows and borders
+ * - Customizable header text and colors
+ * - Responsive design that works on all devices
+ * - Support for rich text content in answers
+ * - TypeScript support with comprehensive prop types
+ * 
+ * Usage:
+ * ```astro
+ * <FAQCards
+ *   eyebrow="Got a Question? We've got answers."
+ *   title="Frequently Asked Questions"
+ *   faqs={[
+ *     {
+ *       question: "How does it work?",
+ *       answer: "Our platform works with your content to provides insights and metrics on how you can grow your business and scale your infrastructure."
+ *     },
+ *     {
+ *       question: "Do you offer team pricing?",
+ *       answer: "Yes, we do! Team pricing is available for any plan. You can take advantage of 30% off for signing up for team pricing of 10 users or more."
+ *     }
+ *   ]}
+ *   primaryColor="purple-500"
+ *   eyebrowColor="pink-500"
+ * />
+ * ```
+ */
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export interface Props {
+  eyebrow?: string;
+  title?: string;
+  faqs: FAQItem[];
+  primaryColor?: string;
+  eyebrowColor?: string;
+  className?: string;
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
+}
+
+const {
+  eyebrow = "Got a Question? We've got answers.",
+  title = "Frequently Asked Questions",
+  faqs,
+  primaryColor = "purple-500",
+  eyebrowColor = "pink-500",
+  className = "",
+  maxWidth = "2xl"
+} = Astro.props;
+
+// Generate color classes
+const questionColorClass = `text-${primaryColor}`;
+const eyebrowColorClass = `text-${eyebrowColor}`;
+
+// Max width classes
+const maxWidthClasses = {
+  'sm': 'lg:w-3/6 xl:w-2/4',
+  'md': 'lg:w-4/6 xl:w-3/5', 
+  'lg': 'lg:w-5/6 xl:w-2/3',
+  'xl': 'lg:w-5/6 xl:w-3/4',
+  '2xl': 'lg:w-5/6 xl:w-2/3',
+  'full': 'w-full'
+};
+---
+
+<section class={`relative py-16 bg-white min-w-screen animation-fade animation-delay ${className}`}>
+  <div class="container px-0 px-8 mx-auto sm:px-12 xl:px-5">
+    <!-- Header -->
+    <p class={`text-xs font-bold text-left ${eyebrowColorClass} uppercase sm:mx-6 sm:text-center sm:text-normal sm:font-bold`}>
+      {eyebrow}
+    </p>
+    <h3 class="mt-1 text-2xl font-bold text-left text-gray-800 sm:mx-6 sm:text-3xl md:text-4xl lg:text-5xl sm:text-center sm:mx-0">
+      {title}
+    </h3>
+
+    <!-- FAQ Cards -->
+    {faqs.map((faq) => (
+      <div class={`w-full px-6 py-6 mx-auto mt-10 bg-white border border-gray-200 rounded-lg sm:px-8 md:px-12 sm:py-8 sm:shadow ${maxWidthClasses[maxWidth]}`}>
+        <h3 class={`text-lg font-bold ${questionColorClass} sm:text-xl md:text-2xl`}>
+          {faq.question}
+        </h3>
+        <p class="mt-2 text-base text-gray-600 sm:text-lg md:text-normal">
+          {faq.answer}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>

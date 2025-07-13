@@ -1,0 +1,228 @@
+---
+/**
+ * BlogOverlayCards Component
+ * 
+ * A visually striking blog section with overlay cards featuring background images,
+ * colored overlays, and prominent content. Perfect for featured articles or 
+ * premium content sections.
+ * 
+ * Features:
+ * - Background image cards with colored overlays
+ * - Responsive grid layout (1-3 columns based on screen size)
+ * - Hover effects with image scaling
+ * - Category badges with contrasting colors
+ * - Large, bold typography for impact
+ * - Optional header section with title and description
+ * - Flexible card arrangement with special layouts for different screen sizes
+ * 
+ * Usage:
+ * ```astro
+ * <BlogOverlayCards
+ *   title="The Project Blog"
+ *   subtitle="Designs and layouts to help you with your app."
+ *   cards={[
+ *     {
+ *       id: "1",
+ *       backgroundImage: "https://example.com/image.jpg",
+ *       href: "/blog/post-1",
+ *       overlayColor: "purple",
+ *       category: { name: "Resources", color: "purple" },
+ *       title: "Amazing Design",
+ *       description: "Learn about amazing designs and layouts."
+ *     }
+ *   ]}
+ *   showHeader={true}
+ * />
+ * ```
+ */
+
+export interface OverlayCard {
+  id: string;
+  backgroundImage: string;
+  href?: string;
+  overlayColor?: 'purple' | 'blue' | 'yellow' | 'green' | 'red' | 'indigo';
+  category?: {
+    name: string;
+    color?: 'purple' | 'blue' | 'yellow' | 'green' | 'red' | 'indigo';
+  };
+  title: string;
+  description?: string;
+  imageClass?: string;
+  contentClass?: string;
+}
+
+export interface SmallCard {
+  id: string;
+  imageUrl: string;
+  href?: string;
+  category?: {
+    name: string;
+    color?: 'purple' | 'blue' | 'yellow' | 'green' | 'red' | 'indigo';
+  };
+  title: string;
+  description?: string;
+}
+
+export interface Props {
+  title?: string;
+  titleHref?: string;
+  subtitle?: string;
+  cards?: OverlayCard[];
+  smallCards?: SmallCard[];
+  showHeader?: boolean;
+  containerClass?: string;
+  headerClass?: string;
+  gridClass?: string;
+}
+
+const {
+  title,
+  titleHref,
+  subtitle,
+  cards = [],
+  smallCards = [],
+  showHeader = true,
+  containerClass = "",
+  headerClass = "",
+  gridClass = ""
+} = Astro.props;
+
+const overlayColors = {
+  purple: 'bg-purple-500',
+  blue: 'bg-blue-400',
+  yellow: 'bg-yellow-400',
+  green: 'bg-green-500',
+  red: 'bg-red-500',
+  indigo: 'bg-indigo-400'
+};
+
+const categoryColors = {
+  purple: 'text-purple-500 bg-white',
+  blue: 'text-blue-500 bg-white',
+  yellow: 'text-yellow-400 bg-white',
+  green: 'text-green-500 bg-white',
+  red: 'text-red-400 bg-white',
+  indigo: 'text-indigo-400 bg-white'
+};
+
+const textColors = {
+  purple: 'text-purple-100',
+  blue: 'text-blue-100',
+  yellow: 'text-yellow-50',
+  green: 'text-green-100',
+  red: 'text-red-100',
+  indigo: 'text-indigo-100'
+};
+---
+
+<section class={`relative w-full bg-white ${containerClass}`}>
+    <!-- Background Gradient -->
+    <div class="absolute w-full h-32 bg-gradient-to-b from-gray-100 to-white"></div>
+    
+    <div class="relative w-full px-5 py-10 mx-auto sm:py-12 md:py-16 md:px-10 max-w-7xl">
+        
+        <!-- Header -->
+        {showHeader && (title || subtitle) && (
+            <div class={headerClass}>
+                {title ? (
+                    <h1 class="mb-1 text-4xl font-extrabold leading-none text-gray-900 lg:text-5xl xl:text-6xl sm:mb-3">
+                        {titleHref ? (
+                            <a href={titleHref}>{title}</a>
+                        ) : (
+                            title
+                        )}
+                    </h1>
+                ) : null}
+                {subtitle && (
+                    <p class="text-lg font-medium text-gray-500 sm:text-2xl">{subtitle}</p>
+                )}
+            </div>
+        )}
+        
+        <div class={`flex grid h-full grid-cols-12 gap-10 pb-10 ${showHeader ? 'mt-8 sm:mt-16' : ''} ${gridClass}`}>
+            
+            <!-- Overlay Cards -->
+            {cards.map((card) => (
+                <div class="relative flex flex-col items-start justify-end h-full col-span-12 overflow-hidden rounded-xl group md:col-span-6 xl:col-span-4">
+                    <!-- Background Image with Hover Effect -->
+                    {card.href ? (
+                        <a href={card.href} class="block w-full transition duration-300 ease-in-out transform bg-center bg-cover h-96 hover:scale-110" style={`background-image:url('${card.backgroundImage}')`}>
+                        </a>
+                    ) : (
+                        <div class="w-full transition duration-300 ease-in-out transform bg-center bg-cover h-96 group-hover:scale-110" style={`background-image:url('${card.backgroundImage}')`}>
+                        </div>
+                    )}
+                    
+                    <!-- Content Overlay -->
+                    <div class={`relative z-20 w-full h-auto py-8 text-white ${overlayColors[card.overlayColor || 'purple']} border-t-0 border-yellow-200 px-7 ${card.contentClass || ''}`}>
+                        <!-- Category Badge -->
+                        {card.category && (
+                            <a href="#_" class={`inline-block text-xs font-semibold absolute top-0 -mt-3.5 rounded-full px-4 py-2 uppercase ${categoryColors[card.category.color || card.overlayColor || 'purple']}`}>
+                                {card.category.name}
+                            </a>
+                        )}
+                        
+                        <!-- Title -->
+                        <h2 class="mb-5 text-5xl font-bold">
+                            {card.href ? (
+                                <a href={card.href}>{card.title}</a>
+                            ) : (
+                                card.title
+                            )}
+                        </h2>
+                        
+                        <!-- Description -->
+                        {card.description && (
+                            <p class={`mb-2 text-lg font-normal opacity-100 ${textColors[card.overlayColor || 'purple']}`}>
+                                {card.description}
+                            </p>
+                        )}
+                    </div>
+                </div>
+            ))}
+            
+            <!-- Small Cards Grid -->
+            {smallCards.length > 0 && (
+                <div class="grid grid-cols-12 col-span-12 gap-7">
+                    {smallCards.map((card) => (
+                        <div class="flex flex-col items-start col-span-12 overflow-hidden shadow-sm rounded-xl md:col-span-6 lg:col-span-4">
+                            <!-- Image -->
+                            {card.href ? (
+                                <a href={card.href} class="block transition duration-200 ease-out transform hover:scale-110">
+                                    <img class="object-cover w-full shadow-sm max-h-56" src={card.imageUrl} alt={card.title} />
+                                </a>
+                            ) : (
+                                <img class="object-cover w-full shadow-sm max-h-56" src={card.imageUrl} alt={card.title} />
+                            )}
+                            
+                            <!-- Content -->
+                            <div class="relative flex flex-col items-start px-6 bg-white border border-t-0 border-gray-200 py-7 rounded-b-2xl">
+                                <!-- Category Badge -->
+                                {card.category && (
+                                    <div class={`${overlayColors[card.category.color || 'indigo']} absolute top-0 -mt-3 flex items-center px-3 py-1.5 leading-none w-auto inline-block rounded-full text-xs font-medium uppercase text-white inline-block`}>
+                                        <span>{card.category.name}</span>
+                                    </div>
+                                )}
+                                
+                                <!-- Title -->
+                                <h2 class="text-base font-bold sm:text-lg md:text-xl">
+                                    {card.href ? (
+                                        <a href={card.href}>{card.title}</a>
+                                    ) : (
+                                        card.title
+                                    )}
+                                </h2>
+                                
+                                <!-- Description -->
+                                {card.description && (
+                                    <p class="mt-2 text-sm text-gray-500">{card.description}</p>
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+            
+        </div>
+    </div>
+</section>

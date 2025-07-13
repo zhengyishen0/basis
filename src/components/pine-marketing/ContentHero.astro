@@ -1,0 +1,123 @@
+---
+/**
+ * ContentHero Component
+ * 
+ * A powerful hero section with large typography and positioned side image.
+ * Perfect for landing pages, portfolio sections, or content showcases.
+ * 
+ * Features:
+ * - Large, bold typography with flexible text lines
+ * - Positioned side image that responds to screen sizes
+ * - Customizable text alignment and image positioning
+ * - Optional separator line with spacing control
+ * - Subtitle/description text with custom styling
+ * - Flexible layout with slot support for additional content
+ * 
+ * Usage:
+ * ```astro
+ * <ContentHero
+ *   title={["Crafting", "Powerful", "Experiences"]}
+ *   imageUrl="https://example.com/image.png"
+ *   imageAlt="3D Design illustration"
+ *   subtitle="Building beautiful designs for your next project..."
+ *   showSeparator={true}
+ *   containerClass="py-16"
+ * />
+ * ```
+ */
+
+export interface Props {
+  title?: string | string[];
+  titleClass?: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  imageClass?: string;
+  subtitle?: string;
+  subtitleClass?: string;
+  showSeparator?: boolean;
+  separatorClass?: string;
+  containerClass?: string;
+  contentClass?: string;
+  textAlignment?: 'left' | 'center' | 'right';
+  imagePosition?: 'right' | 'left' | 'top' | 'bottom';
+}
+
+const {
+  title = [],
+  titleClass = "",
+  imageUrl,
+  imageAlt = "Hero image",
+  imageClass = "",
+  subtitle,
+  subtitleClass = "",
+  showSeparator = true,
+  separatorClass = "",
+  containerClass = "",
+  contentClass = "",
+  textAlignment = 'left',
+  imagePosition = 'right'
+} = Astro.props;
+
+// Convert title to array if it's a string
+const titleLines = Array.isArray(title) ? title : [title];
+
+const alignmentClasses = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right'
+};
+
+const defaultTitleClass = `relative flex flex-col text-6xl font-extrabold ${alignmentClasses[textAlignment]} text-black`;
+const defaultSubtitleClass = `${alignmentClasses[textAlignment]} text-gray-500 xl:text-xl`;
+const defaultSeparatorClass = "my-16 border-b border-gray-300 lg:my-24";
+---
+
+<section class={`flex items-center justify-center py-10 text-white bg-white sm:py-16 md:py-24 lg:py-32 ${containerClass}`}>
+    <div class={`relative max-w-3xl px-10 text-center text-white auto lg:px-0 ${contentClass}`}>
+        <div class="flex flex-col w-full md:flex-row">
+
+            <!-- Main Content -->
+            <div class={`flex ${textAlignment === 'center' ? 'justify-center' : 'justify-between'}`}>
+                <!-- Title -->
+                {titleLines.length > 0 && (
+                    <h1 class={`${defaultTitleClass} ${titleClass}`}>
+                        {titleLines.map((line, index) => (
+                            <span key={index}>{line}</span>
+                        ))}
+                    </h1>
+                )}
+            </div>
+            
+            <!-- Image -->
+            {imageUrl && (
+                <div class={`relative ${
+                    imagePosition === 'right' ? 'top-0 right-0 h-64 mt-12 md:-mt-16 md:absolute md:h-96' : 
+                    imagePosition === 'left' ? 'top-0 left-0 h-64 mt-12 md:-mt-16 md:absolute md:h-96' :
+                    imagePosition === 'top' ? 'mb-8' :
+                    'mt-8'
+                }`}>
+                    <img 
+                        src={imageUrl} 
+                        alt={imageAlt}
+                        class={`object-cover mt-3 mr-5 h-80 lg:h-96 ${imageClass}`}
+                    />
+                </div>
+            )}
+        </div>
+
+        <!-- Separator -->
+        {showSeparator && (
+            <div class={`${defaultSeparatorClass} ${separatorClass}`}></div>
+        )}
+
+        <!-- Subtitle/Description -->
+        {subtitle && (
+            <h2 class={`${defaultSubtitleClass} ${subtitleClass}`}>
+                {subtitle}
+            </h2>
+        )}
+        
+        <!-- Slot for additional content -->
+        <slot />
+    </div>
+</section>

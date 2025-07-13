@@ -1,0 +1,151 @@
+---
+/**
+ * LoginForm Component
+ * 
+ * A marketing-focused login form with promotional content on the left and sign-in form on the right.
+ * Features a clean, professional design with customizable content and branding.
+ * 
+ * Usage:
+ * ```astro
+ * <LoginForm 
+ *   tagline="Building Businesses"
+ *   headline="Changing The Way People Do Business."
+ *   description="Learn how to engage with your visitors and teach them about your mission."
+ *   formTitle="Sign in to your Account"
+ *   signUpText="Don't have an account?"
+ *   signUpLinkText="Sign up here"
+ *   signUpUrl="/signup"
+ *   submitText="Log Me In"
+ * />
+ * ```
+ */
+
+export interface Props {
+  tagline?: string;
+  headline?: string;
+  description?: string;
+  formTitle?: string;
+  emailPlaceholder?: string;
+  passwordPlaceholder?: string;
+  submitText?: string;
+  signUpText?: string;
+  signUpLinkText?: string;
+  signUpUrl?: string;
+  actionUrl?: string;
+  primaryColor?: string;
+  backgroundColor?: string;
+  className?: string;
+}
+
+const {
+  tagline = "Building Businesses",
+  headline = "Changing The Way People Do Business.",
+  description = "Learn how to engage with your visitors and teach them about your mission. We're revolutionizing the way customers and businesses interact.",
+  formTitle = "Sign in to your Account",
+  emailPlaceholder = "Email address",
+  passwordPlaceholder = "Password",
+  submitText = "Log Me In",
+  signUpText = "Don't have an account?",
+  signUpLinkText = "Sign up here",
+  signUpUrl = "/signup",
+  actionUrl = "/api/auth/login",
+  primaryColor = "blue",
+  backgroundColor = "gray-100",
+  className = "",
+} = Astro.props;
+
+// Dynamic color classes based on primaryColor prop
+const colorClasses = {
+  tagline: `text-${primaryColor}-500`,
+  focusRing: `focus:ring-${primaryColor}-500`,
+  button: `bg-${primaryColor}-600 hover:bg-${primaryColor}-700`,
+  link: `text-${primaryColor}-500`,
+};
+---
+
+<section class={`w-full px-8 py-16 bg-${backgroundColor} xl:px-8 ${className}`}>
+  <div class="max-w-5xl mx-auto">
+    <div class="flex flex-col items-center md:flex-row">
+      
+      <!-- Left Content Section -->
+      <div class="w-full space-y-5 md:w-3/5 md:pr-16">
+        <p class={`font-medium uppercase ${colorClasses.tagline}`}>{tagline}</p>
+        <h2 class="text-2xl font-extrabold leading-none text-black sm:text-3xl md:text-5xl">
+          {headline}
+        </h2>
+        <p class="text-xl text-gray-600 md:pr-16">{description}</p>
+      </div>
+
+      <!-- Right Form Section -->
+      <div class="w-full mt-16 md:mt-0 md:w-2/5">
+        <div class="relative z-10 h-auto p-8 py-10 overflow-hidden bg-white border-b-2 border-gray-300 rounded-lg shadow-2xl px-7">
+          <h3 class="mb-6 text-2xl font-medium text-center">{formTitle}</h3>
+          
+          <form 
+            method="POST" 
+            action={actionUrl}
+            hx-post={actionUrl}
+            hx-target="#login-result"
+            hx-indicator="#login-loading"
+          >
+            <input 
+              type="email" 
+              name="email" 
+              id="email" 
+              required
+              class={`block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring ${colorClasses.focusRing} focus:outline-none`}
+              placeholder={emailPlaceholder}
+            >
+            
+            <input 
+              type="password" 
+              name="password" 
+              id="password" 
+              required
+              class={`block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring ${colorClasses.focusRing} focus:outline-none`}
+              placeholder={passwordPlaceholder}
+            >
+            
+            <div class="block">
+              <button 
+                type="submit"
+                class={`w-full px-3 py-4 font-medium text-white rounded-lg transition-colors duration-200 ${colorClasses.button}`}
+              >
+                <span class="htmx-indicator" id="login-loading" style="display: none;">
+                  <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Signing in...
+                </span>
+                <span class="htmx-indicator-default">{submitText}</span>
+              </button>
+            </div>
+          </form>
+          
+          <!-- Form result container for HTMX responses -->
+          <div id="login-result" class="mt-4"></div>
+          
+          <p class="w-full mt-4 text-sm text-center text-gray-500">
+            {signUpText} 
+            <a href={signUpUrl} class={`underline ${colorClasses.link}`}>
+              {signUpLinkText}
+            </a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Custom styles for HTMX indicators */
+  .htmx-request .htmx-indicator {
+    display: inline !important;
+  }
+  
+  .htmx-request .htmx-indicator-default {
+    display: none;
+  }
+</style>
