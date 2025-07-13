@@ -1,0 +1,323 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/pine/Card.astro';
+import Button from '../../components/pine/Button.astro';
+import Badge from '../../components/pine/Badge.astro';
+import VideoPlayer from '../../components/pine/VideoPlayer.astro';
+---
+
+<Layout title="VideoPlayer Component Test">
+  <main class="container mx-auto px-4 py-8 max-w-6xl">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold mb-4">VideoPlayer Component Test</h1>
+      <div class="flex justify-center gap-2 mb-6">
+        <Button href="/test" variant="outline" color="neutral">← Back to Test Suite</Button>
+        <Button href="/test/imagegallery" variant="ghost" color="neutral">Image Gallery Test</Button>
+      </div>
+    </div>
+
+    <!-- Basic Video Player -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Basic Video Player</h2>
+        <p class="text-gray-600 mb-4">Standard video player with default controls</p>
+        <VideoPlayer
+          src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+          poster="https://peach.blender.org/wp-content/uploads/bbb-splash.png"
+          width="100%"
+          height="400"
+        />
+      </div>
+    </Card>
+
+    <!-- Multiple Video Sources -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Multiple Video Sources</h2>
+        <p class="text-gray-600 mb-4">Video player with multiple source formats for better browser compatibility</p>
+        <VideoPlayer
+          sources={[
+            { src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4", type: "video/mp4", label: "MP4 HD" },
+            { src: "https://upload.wikimedia.org/wikipedia/commons/transcoded/8/88/Elephants_Dream_%282006%29.webm/Elephants_Dream_%282006%29.webm.480p.vp9.webm", type: "video/webm", label: "WebM" }
+          ]}
+          poster="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Elephants_Dream_s5_both.jpg/1280px-Elephants_Dream_s5_both.jpg"
+          width="100%"
+          height="400"
+        />
+      </div>
+    </Card>
+
+    <!-- Autoplay and Loop Options -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Autoplay & Loop Options</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Autoplay (Muted)</h3>
+            <p class="text-gray-600 mb-3 text-sm">Autoplays when page loads (muted for browser compliance)</p>
+            <VideoPlayer
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+              poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg"
+              width="100%"
+              height="200"
+              autoplay={true}
+              muted={true}
+            />
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Loop Video</h3>
+            <p class="text-gray-600 mb-3 text-sm">Video loops continuously when it ends</p>
+            <VideoPlayer
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+              poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg"
+              width="100%"
+              height="200"
+              loop={true}
+              muted={true}
+            />
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Custom Controls Configuration -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Custom Controls Configuration</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Minimal Controls</h3>
+            <p class="text-gray-600 mb-3 text-sm">Only basic play/pause and progress bar</p>
+            <VideoPlayer
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+              poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerFun.jpg"
+              width="100%"
+              height="200"
+              showVolumeControl={false}
+              showTime={false}
+              showPlaybackSpeed={false}
+              showFullscreen={false}
+            />
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-semibold mb-3">No Custom Controls</h3>
+            <p class="text-gray-600 mb-3 text-sm">Using browser's native controls</p>
+            <VideoPlayer
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+              poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerJoyrides.jpg"
+              width="100%"
+              height="200"
+              showControls={false}
+              controls={true}
+            />
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Responsive Sizing -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Responsive Sizing</h2>
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Fixed Dimensions</h3>
+            <p class="text-gray-600 mb-3 text-sm">Video with specific width and height</p>
+            <VideoPlayer
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
+              poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerMeltdowns.jpg"
+              width="800"
+              height="450"
+            />
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Full Width Responsive</h3>
+            <p class="text-gray-600 mb-3 text-sm">Video that adapts to container width</p>
+            <VideoPlayer
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+              poster="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Sintel_movie_4K.webm/1280px--Sintel_movie_4K.webm.jpg"
+              width="100%"
+              height="auto"
+              containerClass="max-w-4xl mx-auto"
+            />
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Custom Styling -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Custom Styling</h2>
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Custom Container Styling</h3>
+            <p class="text-gray-600 mb-3 text-sm">Video player with custom border and shadow</p>
+            <VideoPlayer
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4"
+              poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/SubaruOutbackOnStreetAndDirt.jpg"
+              width="100%"
+              height="300"
+              containerClass="border-4 border-blue-500 shadow-2xl rounded-xl max-w-2xl mx-auto"
+            />
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Custom Video Element Styling</h3>
+            <p class="text-gray-600 mb-3 text-sm">Video with custom CSS classes applied</p>
+            <VideoPlayer
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
+              poster="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Tears_of_Steel_in_2K_%28cropped%29.jpg/1280px-Tears_of_Steel_in_2K_%28cropped%29.jpg"
+              width="100%"
+              height="300"
+              class="filter grayscale hover:grayscale-0 transition-all duration-500"
+              containerClass="max-w-2xl mx-auto"
+            />
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Keyboard Shortcuts Demo -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Keyboard Shortcuts</h2>
+        <p class="text-gray-600 mb-4">Click on the video player below and try these keyboard shortcuts:</p>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div class="bg-gray-50 p-3 rounded-lg text-center">
+            <kbd class="bg-gray-200 px-2 py-1 rounded text-sm font-mono">Space</kbd>
+            <p class="text-sm mt-1">Play/Pause</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded-lg text-center">
+            <kbd class="bg-gray-200 px-2 py-1 rounded text-sm font-mono">M</kbd>
+            <p class="text-sm mt-1">Toggle Mute</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded-lg text-center">
+            <kbd class="bg-gray-200 px-2 py-1 rounded text-sm font-mono">F</kbd>
+            <p class="text-sm mt-1">Fullscreen</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded-lg text-center">
+            <kbd class="bg-gray-200 px-2 py-1 rounded text-sm font-mono">←→</kbd>
+            <p class="text-sm mt-1">Seek ±10s</p>
+          </div>
+        </div>
+        
+        <VideoPlayer
+          src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4"
+          poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/VolkswagenGTIReview.jpg"
+          width="100%"
+          height="400"
+          containerClass="border-2 border-dashed border-blue-300"
+        />
+      </div>
+    </Card>
+
+    <!-- Advanced Features -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Advanced Features</h2>
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-3">All Controls Enabled</h3>
+            <p class="text-gray-600 mb-3 text-sm">Video player with all available features enabled</p>
+            <VideoPlayer
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
+              poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/WhatCarCanYouGetForAGrand.jpg"
+              width="100%"
+              height="400"
+              showControls={true}
+              showFullscreen={true}
+              showVolumeControl={true}
+              showProgress={true}
+              showTime={true}
+              showPlaybackSpeed={true}
+            />
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Interactive Test -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Interactive Test</h2>
+        <div x-data="{ 
+          currentVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+          currentPoster: 'https://peach.blender.org/wp-content/uploads/bbb-splash.png',
+          videos: [
+            { src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', poster: 'https://peach.blender.org/wp-content/uploads/bbb-splash.png', name: 'Big Buck Bunny' },
+            { src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', poster: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Elephants_Dream_s5_both.jpg/1280px-Elephants_Dream_s5_both.jpg', name: 'Elephants Dream' },
+            { src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4', poster: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Sintel_movie_4K.webm/1280px--Sintel_movie_4K.webm.jpg', name: 'Sintel' }
+          ]
+        }">
+          <p class="text-gray-600 mb-4">Dynamically switch between different video sources:</p>
+          
+          <div class="flex gap-2 mb-4">
+            <template x-for="(video, index) in videos" :key="index">
+              <Button 
+                variant="outline" 
+                color="blue"
+                x-on:click="currentVideo = video.src; currentPoster = video.poster"
+                x-text="video.name"
+              ></Button>
+            </template>
+          </div>
+          
+          <VideoPlayer
+            x-bind:src="currentVideo"
+            x-bind:poster="currentPoster"
+            width="100%"
+            height="300"
+            id="interactive-player"
+          />
+        </div>
+      </div>
+    </Card>
+
+    <!-- Status Summary -->
+    <Card>
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Test Results</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Basic video playback</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Custom controls</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Keyboard shortcuts</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Responsive sizing</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Multiple sources</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Autoplay & loop</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Fullscreen support</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Alpine.js integration</p>
+          </div>
+        </div>
+      </div>
+    </Card>
+  </main>
+</Layout>

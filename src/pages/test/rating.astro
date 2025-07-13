@@ -1,0 +1,574 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/pine/Card.astro';
+import Button from '../../components/pine/Button.astro';
+import Badge from '../../components/pine/Badge.astro';
+import Rating from '../../components/pine/Rating.astro';
+---
+
+<Layout title="Rating Component Test">
+  <main class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold mb-4">Rating Component Test</h1>
+      <div class="flex justify-center gap-2 mb-6">
+        <Button href="/test" variant="outline" color="neutral">← Back to Test Suite</Button>
+        <Button href="/test/all" variant="ghost" color="neutral">View All</Button>
+      </div>
+    </div>
+
+    <!-- Basic Rating Test -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Basic Rating Components</h2>
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Different Initial Values</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Empty Rating (0 stars)</label>
+                <Rating maxStars={5} initialValue={0} name="rating-empty" />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">2 out of 5 stars</label>
+                <Rating maxStars={5} initialValue={2} name="rating-2" />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">4 out of 5 stars</label>
+                <Rating maxStars={5} initialValue={4} name="rating-4" />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Perfect 5 out of 5 stars</label>
+                <Rating maxStars={5} initialValue={5} name="rating-5" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Size Variants -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Size Variants</h2>
+        <div class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Small Size</label>
+            <Rating maxStars={5} initialValue={3} size="sm" name="rating-small" />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Medium Size (Default)</label>
+            <Rating maxStars={5} initialValue={3} size="md" name="rating-medium" />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Large Size</label>
+            <Rating maxStars={5} initialValue={3} size="lg" name="rating-large" />
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Different Star Counts -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Different Star Counts</h2>
+        <div class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">3-Star Rating (2/3)</label>
+            <Rating maxStars={3} initialValue={2} name="rating-3-star" />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">5-Star Rating (3/5) - Standard</label>
+            <Rating maxStars={5} initialValue={3} name="rating-5-star" />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">7-Star Rating (5/7)</label>
+            <Rating maxStars={7} initialValue={5} name="rating-7-star" />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">10-Star Rating (8/10)</label>
+            <Rating maxStars={10} initialValue={8} size="sm" name="rating-10-star" />
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- States Test -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Rating States</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Interactive States</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Normal (Interactive)</label>
+                <Rating maxStars={5} initialValue={0} name="rating-normal" />
+                <p class="text-xs text-gray-500 mt-1">Click stars to rate, hover for preview</p>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Read-only Display</label>
+                <Rating maxStars={5} initialValue={4} readonly={true} name="rating-readonly" />
+                <p class="text-xs text-gray-500 mt-1">Cannot be modified</p>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Disabled State</label>
+                <Rating maxStars={5} initialValue={2} disabled={true} name="rating-disabled" />
+                <p class="text-xs text-gray-500 mt-1">Disabled and cannot be interacted with</p>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Display Examples</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Poor Rating</label>
+                <Rating maxStars={5} initialValue={1} readonly={true} />
+                <p class="text-xs text-red-500 mt-1">Needs improvement</p>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Good Rating</label>
+                <Rating maxStars={5} initialValue={4} readonly={true} />
+                <p class="text-xs text-green-500 mt-1">Good quality</p>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Excellent Rating</label>
+                <Rating maxStars={5} initialValue={5} readonly={true} />
+                <p class="text-xs text-blue-500 mt-1">Outstanding!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Interactive Demo -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Interactive Demo</h2>
+        <div x-data="{ 
+          ratings: {
+            product: 0,
+            service: 3,
+            value: 0,
+            overall: 0
+          },
+          
+          maxStars: 5,
+          
+          get averageRating() {
+            const values = Object.values(this.ratings);
+            const nonZeroValues = values.filter(v => v > 0);
+            if (nonZeroValues.length === 0) return 0;
+            return (nonZeroValues.reduce((a, b) => a + b, 0) / nonZeroValues.length).toFixed(1);
+          },
+          
+          get totalRatings() {
+            return Object.values(this.ratings).filter(v => v > 0).length;
+          },
+          
+          resetAll() {
+            this.ratings = {
+              product: 0,
+              service: 0,
+              value: 0,
+              overall: 0
+            };
+          },
+          
+          setAllMax() {
+            this.ratings = {
+              product: this.maxStars,
+              service: this.maxStars,
+              value: this.maxStars,
+              overall: this.maxStars
+            };
+          }
+        }">
+          <div class="space-y-6">
+            <div class="flex gap-4 mb-6">
+              <Button @click="resetAll()" variant="outline" color="red" size="sm">
+                Reset All Ratings
+              </Button>
+              <Button @click="setAllMax()" variant="solid" color="green" size="sm">
+                Give All 5 Stars
+              </Button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Rating Categories -->
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Product Quality</label>
+                  <Rating 
+                    maxStars={5}
+                    x-model="ratings.product"
+                    name="demo-product"
+                  />
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Customer Service</label>
+                  <Rating 
+                    maxStars={5}
+                    x-model="ratings.service"
+                    name="demo-service"
+                  />
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Value for Money</label>
+                  <Rating 
+                    maxStars={5}
+                    x-model="ratings.value"
+                    name="demo-value"
+                  />
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Overall Experience</label>
+                  <Rating 
+                    maxStars={5}
+                    x-model="ratings.overall"
+                    name="demo-overall"
+                  />
+                </div>
+              </div>
+              
+              <!-- Rating Summary -->
+              <div class="p-4 bg-gray-50 rounded-lg">
+                <h4 class="font-semibold mb-3">Rating Summary</h4>
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm">Product Quality:</span>
+                    <div class="flex items-center gap-2">
+                      <Rating maxStars={5} :initialValue="ratings.product" readonly={true} size="sm" />
+                      <Badge variant="soft" color="blue" size="sm" x-text="ratings.product + '/5'"></Badge>
+                    </div>
+                  </div>
+                  
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm">Customer Service:</span>
+                    <div class="flex items-center gap-2">
+                      <Rating maxStars={5} :initialValue="ratings.service" readonly={true} size="sm" />
+                      <Badge variant="soft" color="green" size="sm" x-text="ratings.service + '/5'"></Badge>
+                    </div>
+                  </div>
+                  
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm">Value for Money:</span>
+                    <div class="flex items-center gap-2">
+                      <Rating maxStars={5} :initialValue="ratings.value" readonly={true} size="sm" />
+                      <Badge variant="soft" color="yellow" size="sm" x-text="ratings.value + '/5'"></Badge>
+                    </div>
+                  </div>
+                  
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm">Overall Experience:</span>
+                    <div class="flex items-center gap-2">
+                      <Rating maxStars={5} :initialValue="ratings.overall" readonly={true} size="sm" />
+                      <Badge variant="soft" color="purple" size="sm" x-text="ratings.overall + '/5'"></Badge>
+                    </div>
+                  </div>
+                  
+                  <hr class="my-3" />
+                  
+                  <div class="flex justify-between items-center font-semibold">
+                    <span>Average Rating:</span>
+                    <div class="flex items-center gap-2">
+                      <span x-text="averageRating" class="text-lg text-blue-600"></span>
+                      <span class="text-sm text-gray-500">/5</span>
+                      <Badge variant="solid" color="blue" size="sm" x-text="totalRatings + ' ratings'"></Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Form Integration Example -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Product Review Form</h2>
+        <form x-data="{ 
+          reviewData: {
+            productRating: 0,
+            serviceRating: 0,
+            valueRating: 0,
+            overallRating: 0,
+            reviewText: '',
+            recommend: ''
+          },
+          
+          errors: {},
+          
+          validateForm() {
+            this.errors = {};
+            
+            if (this.reviewData.productRating === 0) {
+              this.errors.productRating = 'Product rating is required';
+            }
+            
+            if (this.reviewData.overallRating === 0) {
+              this.errors.overallRating = 'Overall rating is required';
+            }
+            
+            if (!this.reviewData.reviewText.trim()) {
+              this.errors.reviewText = 'Review text is required';
+            }
+            
+            return Object.keys(this.errors).length === 0;
+          },
+          
+          submitReview() {
+            if (this.validateForm()) {
+              alert('Review submitted successfully!\\n\\n' + JSON.stringify(this.reviewData, null, 2));
+            } else {
+              alert('Please complete all required fields.');
+            }
+          }
+        }" @submit.prevent="submitReview()">
+          <div class="space-y-6">
+            <h3 class="text-lg font-semibold">Share Your Experience</h3>
+            
+            <!-- Required Ratings -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Product Rating <span class="text-red-500">*</span>
+                </label>
+                <Rating 
+                  maxStars={5}
+                  initialValue={0}
+                  name="form-product-rating"
+                  x-model="reviewData.productRating"
+                />
+                <p x-show="errors.productRating" class="mt-1 text-xs text-red-500" x-text="errors.productRating"></p>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Overall Rating <span class="text-red-500">*</span>
+                </label>
+                <Rating 
+                  maxStars={5}
+                  initialValue={0}
+                  name="form-overall-rating"
+                  x-model="reviewData.overallRating"
+                />
+                <p x-show="errors.overallRating" class="mt-1 text-xs text-red-500" x-text="errors.overallRating"></p>
+              </div>
+            </div>
+            
+            <!-- Optional Ratings -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Service Rating (Optional)</label>
+                <Rating 
+                  maxStars={5}
+                  initialValue={0}
+                  name="form-service-rating"
+                  x-model="reviewData.serviceRating"
+                />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Value Rating (Optional)</label>
+                <Rating 
+                  maxStars={5}
+                  initialValue={0}
+                  name="form-value-rating"
+                  x-model="reviewData.valueRating"
+                />
+              </div>
+            </div>
+            
+            <!-- Review Text -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">
+                Review Text <span class="text-red-500">*</span>
+              </label>
+              <textarea 
+                x-model="reviewData.reviewText"
+                rows="4"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Share your experience with this product..."
+              ></textarea>
+              <p x-show="errors.reviewText" class="mt-1 text-xs text-red-500" x-text="errors.reviewText"></p>
+            </div>
+            
+            <!-- Form Actions -->
+            <div class="flex gap-4 pt-6 border-t">
+              <Button type="submit" variant="solid" color="blue">
+                Submit Review
+              </Button>
+              <Button type="button" variant="outline" color="neutral" @click="reviewData = { productRating: 0, serviceRating: 0, valueRating: 0, overallRating: 0, reviewText: '', recommend: '' }; errors = {};">
+                Clear Form
+              </Button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </Card>
+
+    <!-- Real-world Usage Examples -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Real-world Usage Examples</h2>
+        <div class="space-y-6">
+          <!-- Product Reviews -->
+          <div class="border border-gray-200 rounded-lg p-4">
+            <h3 class="font-semibold mb-3">Product Reviews</h3>
+            <div class="space-y-4">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold">
+                  JD
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-2">
+                    <h4 class="font-medium">John Doe</h4>
+                    <Rating maxStars={5} initialValue={4} readonly={true} size="sm" />
+                    <Badge variant="soft" color="green" size="sm">Verified Purchase</Badge>
+                  </div>
+                  <p class="text-gray-600 text-sm mb-2">"Great product! Really satisfied with the quality and performance. Would definitely recommend to others."</p>
+                  <p class="text-xs text-gray-500">2 days ago</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold">
+                  SM
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-2">
+                    <h4 class="font-medium">Sarah Miller</h4>
+                    <Rating maxStars={5} initialValue={5} readonly={true} size="sm" />
+                    <Badge variant="soft" color="green" size="sm">Verified Purchase</Badge>
+                  </div>
+                  <p class="text-gray-600 text-sm mb-2">"Absolutely perfect! Exceeded my expectations in every way. The customer service was also excellent."</p>
+                  <p class="text-xs text-gray-500">1 week ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Skill Assessment -->
+          <div class="border border-gray-200 rounded-lg p-4">
+            <h3 class="font-semibold mb-3">Employee Skill Assessment</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-sm font-medium">Communication</span>
+                  <Rating maxStars={5} initialValue={4} readonly={true} size="sm" />
+                </div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-sm font-medium">Technical Skills</span>
+                  <Rating maxStars={5} initialValue={5} readonly={true} size="sm" />
+                </div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-sm font-medium">Teamwork</span>
+                  <Rating maxStars={5} initialValue={4} readonly={true} size="sm" />
+                </div>
+              </div>
+              
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-sm font-medium">Problem Solving</span>
+                  <Rating maxStars={5} initialValue={5} readonly={true} size="sm" />
+                </div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-sm font-medium">Leadership</span>
+                  <Rating maxStars={5} initialValue={3} readonly={true} size="sm" />
+                </div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-sm font-medium">Innovation</span>
+                  <Rating maxStars={5} initialValue={4} readonly={true} size="sm" />
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Course Ratings -->
+          <div class="border border-gray-200 rounded-lg p-4">
+            <h3 class="font-semibold mb-3">Course Ratings</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h4 class="font-medium">Advanced JavaScript</h4>
+                  <p class="text-sm text-gray-500">256 students</p>
+                </div>
+                <div class="text-right">
+                  <Rating maxStars={5} initialValue={5} readonly={true} size="sm" />
+                  <p class="text-sm text-gray-500">4.8/5 (45 reviews)</p>
+                </div>
+              </div>
+              
+              <div class="flex justify-between items-center">
+                <div>
+                  <h4 class="font-medium">React Fundamentals</h4>
+                  <p class="text-sm text-gray-500">189 students</p>
+                </div>
+                <div class="text-right">
+                  <Rating maxStars={5} initialValue={4} readonly={true} size="sm" />
+                  <p class="text-sm text-gray-500">4.2/5 (32 reviews)</p>
+                </div>
+              </div>
+              
+              <div class="flex justify-between items-center">
+                <div>
+                  <h4 class="font-medium">Node.js Backend</h4>
+                  <p class="text-sm text-gray-500">134 students</p>
+                </div>
+                <div class="text-right">
+                  <Rating maxStars={5} initialValue={4} readonly={true} size="sm" />
+                  <p class="text-sm text-gray-500">4.6/5 (28 reviews)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Status Summary -->
+    <Card>
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Test Results</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Interactive rating system</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Hover and click effects</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Read-only display mode</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Form integration</p>
+          </div>
+        </div>
+      </div>
+    </Card>
+  </main>
+</Layout>

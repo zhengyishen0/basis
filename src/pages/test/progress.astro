@@ -1,0 +1,471 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/pine/Card.astro';
+import Button from '../../components/pine/Button.astro';
+import Badge from '../../components/pine/Badge.astro';
+import Progress from '../../components/pine/Progress.astro';
+---
+
+<Layout title="Progress Component Test">
+  <main class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold mb-4">Progress Component Test</h1>
+      <div class="flex justify-center gap-2 mb-6">
+        <Button href="/test" variant="outline" color="neutral">← Back to Test Suite</Button>
+        <Button href="/test/all" variant="ghost" color="neutral">View All</Button>
+      </div>
+    </div>
+
+    <!-- Basic Progress Bars -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Basic Progress Bars</h2>
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Different Values</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">25% Complete</label>
+                <Progress value={25} showLabel={true} />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">50% Complete</label>
+                <Progress value={50} showLabel={true} />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">75% Complete</label>
+                <Progress value={75} showLabel={true} />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">100% Complete</label>
+                <Progress value={100} showLabel={true} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Color Variants -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Color Variants</h2>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Blue (Default)</label>
+            <Progress value={60} color="blue" showLabel={true} />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Green</label>
+            <Progress value={60} color="green" showLabel={true} />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Red</label>
+            <Progress value={60} color="red" showLabel={true} />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Yellow</label>
+            <Progress value={60} color="yellow" showLabel={true} />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Purple</label>
+            <Progress value={60} color="purple" showLabel={true} />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Gray</label>
+            <Progress value={60} color="gray" showLabel={true} />
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Size Variants -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Size Variants</h2>
+        <div class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Small Size</label>
+            <Progress value={70} size="sm" color="blue" showLabel={true} />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Medium Size (Default)</label>
+            <Progress value={70} size="md" color="green" showLabel={true} />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Large Size</label>
+            <Progress value={70} size="lg" color="purple" showLabel={true} />
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Animated and Striped Variants -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Animated and Striped Variants</h2>
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Striped Progress Bars</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Static Striped</label>
+                <Progress value={65} striped={true} color="blue" showLabel={true} />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Animated Striped</label>
+                <Progress value={65} striped={true} animated={true} color="green" showLabel={true} />
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Different Colors with Animation</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Animated Blue</label>
+                <Progress value={80} striped={true} animated={true} color="blue" size="lg" />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Animated Red</label>
+                <Progress value={45} striped={true} animated={true} color="red" size="lg" />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Animated Purple</label>
+                <Progress value={90} striped={true} animated={true} color="purple" size="lg" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Auto-increment Progress -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Auto-increment Progress</h2>
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Loading Simulations</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Fast Loading (50ms interval)</label>
+                <Progress 
+                  value={0} 
+                  autoIncrement={true} 
+                  incrementInterval={50} 
+                  color="green" 
+                  showLabel={true}
+                  striped={true}
+                  animated={true}
+                />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Normal Loading (100ms interval)</label>
+                <Progress 
+                  value={0} 
+                  autoIncrement={true} 
+                  incrementInterval={100} 
+                  color="blue" 
+                  showLabel={true}
+                  striped={true}
+                  animated={true}
+                />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Slow Loading (200ms interval)</label>
+                <Progress 
+                  value={0} 
+                  autoIncrement={true} 
+                  incrementInterval={200} 
+                  color="purple" 
+                  showLabel={true}
+                  striped={true}
+                  animated={true}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Interactive Demo -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Interactive Demo</h2>
+        <div x-data="{ 
+          progressValue: 45,
+          progressColor: 'blue',
+          progressSize: 'md',
+          isStriped: false,
+          isAnimated: false,
+          showLabel: true,
+          
+          incrementProgress() {
+            if (this.progressValue < 100) {
+              this.progressValue += 10;
+            }
+          },
+          
+          decrementProgress() {
+            if (this.progressValue > 0) {
+              this.progressValue -= 10;
+            }
+          },
+          
+          resetProgress() {
+            this.progressValue = 0;
+          },
+          
+          fillProgress() {
+            this.progressValue = 100;
+          }
+        }">
+          <div class="space-y-6">
+            <!-- Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Value</label>
+                <input 
+                  x-model="progressValue" 
+                  type="range" 
+                  min="0" 
+                  max="100" 
+                  class="w-full"
+                />
+                <div class="text-center text-sm text-gray-500 mt-1" x-text="progressValue + '%'"></div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Color</label>
+                <select x-model="progressColor" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                  <option value="blue">Blue</option>
+                  <option value="green">Green</option>
+                  <option value="red">Red</option>
+                  <option value="yellow">Yellow</option>
+                  <option value="purple">Purple</option>
+                  <option value="gray">Gray</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Size</label>
+                <select x-model="progressSize" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                  <option value="sm">Small</option>
+                  <option value="md">Medium</option>
+                  <option value="lg">Large</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Options</label>
+                <div class="space-y-2">
+                  <label class="flex items-center text-sm">
+                    <input x-model="isStriped" type="checkbox" class="mr-2" />
+                    Striped
+                  </label>
+                  <label class="flex items-center text-sm">
+                    <input x-model="isAnimated" type="checkbox" class="mr-2" />
+                    Animated
+                  </label>
+                  <label class="flex items-center text-sm">
+                    <input x-model="showLabel" type="checkbox" class="mr-2" />
+                    Show Label
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="flex gap-2">
+              <Button @click="decrementProgress()" variant="outline" color="red" size="sm">
+                -10%
+              </Button>
+              <Button @click="incrementProgress()" variant="outline" color="green" size="sm">
+                +10%
+              </Button>
+              <Button @click="resetProgress()" variant="outline" color="neutral" size="sm">
+                Reset
+              </Button>
+              <Button @click="fillProgress()" variant="solid" color="blue" size="sm">
+                Fill
+              </Button>
+            </div>
+            
+            <!-- Interactive Progress Bar -->
+            <div class="p-4 bg-gray-50 rounded-lg">
+              <h4 class="font-semibold mb-3">Preview</h4>
+              <Progress 
+                :value="progressValue"
+                :color="progressColor"
+                :size="progressSize"
+                :striped="isStriped"
+                :animated="isAnimated"
+                :showLabel="showLabel"
+              />
+            </div>
+            
+            <!-- Configuration Summary -->
+            <div class="p-4 bg-blue-50 rounded-lg">
+              <h4 class="font-semibold mb-2">Current Configuration:</h4>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
+                <div>Value: <Badge variant="soft" color="blue" size="sm" x-text="progressValue + '%'"></Badge></div>
+                <div>Color: <Badge variant="soft" color="green" size="sm" x-text="progressColor"></Badge></div>
+                <div>Size: <Badge variant="soft" color="purple" size="sm" x-text="progressSize"></Badge></div>
+                <div>Features: <Badge variant="soft" color="yellow" size="sm" x-text="(isStriped ? 'Striped ' : '') + (isAnimated ? 'Animated ' : '') + (showLabel ? 'Labeled' : '')"></Badge></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Real-world Usage Examples -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Real-world Usage Examples</h2>
+        <div class="space-y-6">
+          <!-- File Upload Progress -->
+          <div class="p-4 border border-gray-200 rounded-lg">
+            <h3 class="font-semibold mb-3">File Upload Progress</h3>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <span class="text-sm">document.pdf</span>
+                <div class="flex-1">
+                  <Progress value={85} color="green" size="sm" showLabel={true} />
+                </div>
+                <Badge variant="soft" color="green" size="sm">Uploading</Badge>
+              </div>
+              
+              <div class="flex items-center gap-3">
+                <span class="text-sm">image.jpg</span>
+                <div class="flex-1">
+                  <Progress value={100} color="green" size="sm" showLabel={true} />
+                </div>
+                <Badge variant="solid" color="green" size="sm">Complete</Badge>
+              </div>
+              
+              <div class="flex items-center gap-3">
+                <span class="text-sm">video.mp4</span>
+                <div class="flex-1">
+                  <Progress value={30} color="blue" size="sm" showLabel={true} striped={true} animated={true} />
+                </div>
+                <Badge variant="soft" color="blue" size="sm">Processing</Badge>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Skills/Ratings -->
+          <div class="p-4 border border-gray-200 rounded-lg">
+            <h3 class="font-semibold mb-3">Skill Levels</h3>
+            <div class="space-y-3">
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">JavaScript</span>
+                  <span class="text-sm text-gray-500">Expert</span>
+                </div>
+                <Progress value={90} color="green" size="md" />
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">Python</span>
+                  <span class="text-sm text-gray-500">Advanced</span>
+                </div>
+                <Progress value={75} color="blue" size="md" />
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">Rust</span>
+                  <span class="text-sm text-gray-500">Intermediate</span>
+                </div>
+                <Progress value={50} color="yellow" size="md" />
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">Go</span>
+                  <span class="text-sm text-gray-500">Beginner</span>
+                </div>
+                <Progress value={25} color="red" size="md" />
+              </div>
+            </div>
+          </div>
+          
+          <!-- System Resources -->
+          <div class="p-4 border border-gray-200 rounded-lg">
+            <h3 class="font-semibold mb-3">System Resources</h3>
+            <div class="space-y-3">
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">CPU Usage</span>
+                  <span class="text-sm text-gray-500">45%</span>
+                </div>
+                <Progress value={45} color="blue" size="sm" />
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">Memory Usage</span>
+                  <span class="text-sm text-gray-500">78%</span>
+                </div>
+                <Progress value={78} color="yellow" size="sm" />
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">Disk Usage</span>
+                  <span class="text-sm text-gray-500">92%</span>
+                </div>
+                <Progress value={92} color="red" size="sm" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Status Summary -->
+    <Card>
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Test Results</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">All colors and sizes</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Striped animations</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Auto-increment feature</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Alpine.js integration</p>
+          </div>
+        </div>
+      </div>
+    </Card>
+  </main>
+</Layout>

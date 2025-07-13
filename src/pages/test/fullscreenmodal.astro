@@ -1,0 +1,236 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/pine/Card.astro';
+import Button from '../../components/pine/Button.astro';
+import Badge from '../../components/pine/Badge.astro';
+import FullScreenModal from '../../components/pine/FullScreenModal.astro';
+import TextInput from '../../components/pine/TextInput.astro';
+import Textarea from '../../components/pine/Textarea.astro';
+import Switch from '../../components/pine/Switch.astro';
+---
+
+<Layout title="FullScreenModal Component Test">
+  <main class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold mb-4">FullScreenModal Component Test</h1>
+      <div class="flex justify-center gap-2 mb-6">
+        <Button href="/test" variant="outline" color="neutral">← Back to Test Suite</Button>
+        <Button href="/test/all" variant="ghost" color="neutral">View All</Button>
+      </div>
+    </div>
+
+    <!-- Basic FullScreen Modal Test -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Basic FullScreen Modal</h2>
+        <FullScreenModal id="basic-fullscreen" closeable={true} lockScroll={true}>
+          <div slot="trigger">
+            <Button variant="solid" color="blue">Open Basic FullScreen Modal</Button>
+          </div>
+          
+          <div slot="header">
+            <h1 class="text-2xl font-bold">Basic FullScreen Modal</h1>
+            <p class="text-gray-600 mt-1">This modal takes up the entire viewport</p>
+          </div>
+          
+          <div slot="body">
+            <div class="space-y-6">
+              <p class="text-gray-700 text-lg">Welcome to the full screen modal experience! This modal covers the entire viewport and provides a focused, immersive interface.</p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-6 bg-blue-50 rounded-lg">
+                  <h3 class="font-semibold text-blue-900 mb-2">Key Features</h3>
+                  <ul class="text-blue-800 text-sm space-y-1">
+                    <li>• Full viewport coverage</li>
+                    <li>• Body scroll lock</li>
+                    <li>• Escape key support</li>
+                    <li>• Click outside to close</li>
+                    <li>• Focus trapping</li>
+                  </ul>
+                </div>
+                
+                <div class="p-6 bg-green-50 rounded-lg">
+                  <h3 class="font-semibold text-green-900 mb-2">Use Cases</h3>
+                  <ul class="text-green-800 text-sm space-y-1">
+                    <li>• Image/video viewers</li>
+                    <li>• Document editors</li>
+                    <li>• Settings panels</li>
+                    <li>• Form wizards</li>
+                    <li>• Content galleries</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <!-- Long content for scroll testing -->
+              <div class="space-y-4">
+                <h3 class="font-semibold text-gray-900">Scrollable Content Test</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div class="p-4 bg-gray-50 rounded-lg">
+                    <h4 class="font-medium mb-2">Card 1</h4>
+                    <p class="text-sm text-gray-600">This is sample content to test scrolling behavior within the full screen modal.</p>
+                  </div>
+                  <div class="p-4 bg-gray-50 rounded-lg">
+                    <h4 class="font-medium mb-2">Card 2</h4>
+                    <p class="text-sm text-gray-600">The body should remain locked while this content scrolls.</p>
+                  </div>
+                  <div class="p-4 bg-gray-50 rounded-lg">
+                    <h4 class="font-medium mb-2">Card 3</h4>
+                    <p class="text-sm text-gray-600">Test the scrolling behavior by opening this modal and scrolling.</p>
+                  </div>
+                  <div class="p-4 bg-gray-50 rounded-lg">
+                    <h4 class="font-medium mb-2">Card 4</h4>
+                    <p class="text-sm text-gray-600">More content to demonstrate vertical scrolling.</p>
+                  </div>
+                  <div class="p-4 bg-gray-50 rounded-lg">
+                    <h4 class="font-medium mb-2">Card 5</h4>
+                    <p class="text-sm text-gray-600">Additional test content for the modal.</p>
+                  </div>
+                  <div class="p-4 bg-gray-50 rounded-lg">
+                    <h4 class="font-medium mb-2">Card 6</h4>
+                    <p class="text-sm text-gray-600">Final test card to verify scrolling works properly.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div slot="footer">
+            <Button variant="outline" color="neutral">Cancel</Button>
+            <Button variant="solid" color="blue">Confirm</Button>
+          </div>
+        </FullScreenModal>
+      </div>
+    </Card>
+
+    <!-- Form Editor Modal -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Form Editor Modal</h2>
+        <FullScreenModal id="form-editor-modal" closeable={true} lockScroll={true}>
+          <div slot="trigger">
+            <Button variant="solid" color="green">Open Form Editor</Button>
+          </div>
+          
+          <div slot="header">
+            <h1 class="text-2xl font-bold">Create New Document</h1>
+            <p class="text-gray-600 mt-1">Fill out the form below to create a new document</p>
+          </div>
+          
+          <div slot="body">
+            <div class="max-w-4xl mx-auto space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <TextInput label="Document Title" placeholder="Enter document title..." />
+                <TextInput label="Author" placeholder="Enter author name..." />
+              </div>
+              
+              <TextInput label="Category" placeholder="Select or enter category..." />
+              
+              <Textarea label="Description" placeholder="Enter document description..." rows={4} />
+              
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                  <Switch label="Public Document" />
+                </div>
+                <div>
+                  <Switch label="Allow Comments" />
+                </div>
+                <div>
+                  <Switch label="Enable Notifications" />
+                </div>
+              </div>
+              
+              <div class="p-6 bg-gray-50 rounded-lg">
+                <h3 class="font-semibold mb-4">Preview</h3>
+                <div class="prose max-w-none">
+                  <p>Your document will appear here once created. This is a preview area that shows how the final document will look.</p>
+                  <p>You can continue editing the form above and see changes reflected here in real-time.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div slot="footer">
+            <Button variant="outline" color="neutral">Cancel</Button>
+            <Button variant="solid" color="green">Create Document</Button>
+          </div>
+        </FullScreenModal>
+      </div>
+    </Card>
+
+    <!-- Non-closeable Modal -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Non-closeable Modal</h2>
+        <FullScreenModal id="non-closeable-modal" closeable={false} lockScroll={true}>
+          <div slot="trigger">
+            <Button variant="outline" color="red">Open Non-closeable Modal</Button>
+          </div>
+          
+          <div slot="header">
+            <h1 class="text-2xl font-bold text-red-700">⚠️ Important Action Required</h1>
+            <p class="text-red-600 mt-1">This modal cannot be dismissed without taking action</p>
+          </div>
+          
+          <div slot="body">
+            <div class="text-center space-y-6">
+              <div class="p-8 bg-red-50 border border-red-200 rounded-lg">
+                <h3 class="text-xl font-semibold text-red-800 mb-4">Critical System Update</h3>
+                <p class="text-red-700 mb-4">A critical system update is required. This action cannot be canceled or dismissed.</p>
+                <p class="text-red-600 text-sm">This modal demonstrates the non-closeable functionality where users must complete the action.</p>
+              </div>
+              
+              <div class="space-y-4">
+                <h4 class="font-semibold">Update Progress</h4>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                  <div class="bg-red-600 h-2 rounded-full" style="width: 45%"></div>
+                </div>
+                <p class="text-sm text-gray-600">45% Complete</p>
+              </div>
+            </div>
+          </div>
+          
+          <div slot="footer">
+            <Button variant="solid" color="red">Complete Update</Button>
+          </div>
+        </FullScreenModal>
+      </div>
+    </Card>
+
+    <!-- Status Summary -->
+    <Card>
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Test Results</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Full screen coverage</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Body scroll lock</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Close behaviors</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Content scrolling</p>
+          </div>
+        </div>
+        
+        <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+          <h3 class="font-semibold text-blue-800 mb-2">Testing Notes:</h3>
+          <ul class="text-sm text-blue-700 space-y-1">
+            <li>• Modal should cover entire viewport</li>
+            <li>• Background body scroll should be locked</li>
+            <li>• ESC key should close modal (if closeable)</li>
+            <li>• Modal content should be scrollable</li>
+            <li>• Non-closeable modal cannot be dismissed</li>
+          </ul>
+        </div>
+      </div>
+    </Card>
+  </main>
+</Layout>

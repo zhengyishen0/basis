@@ -22,6 +22,9 @@ const {
   inputClass = "",
   calendarClass = ""
 } = Astro.props;
+
+// Generate a unique ID for this instance
+const componentId = `datepicker-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 <!-- 
@@ -61,10 +64,13 @@ Date Format Options:
 -->
 
 <div 
+  id={componentId}
+  data-value={value}
+  data-format={format}
   x-data="{
     datePickerOpen: false,
-    datePickerValue: \$persist('${value}'),
-    datePickerFormat: '${format}',
+    datePickerValue: '',
+    datePickerFormat: 'Y-m-d',
     datePickerMonth: '',
     datePickerYear: '',
     datePickerDay: '',
@@ -160,6 +166,11 @@ Date Format Options:
     },
 
     init() {
+      // Set initial values from data attributes
+      const element = this.$el;
+      this.datePickerValue = element.dataset.value || '';
+      this.datePickerFormat = element.dataset.format || 'Y-m-d';
+      
       let today = new Date();
       if (this.datePickerValue) {
         let currentDate = new Date(Date.parse(this.datePickerValue));
@@ -171,7 +182,6 @@ Date Format Options:
         this.datePickerYear = today.getFullYear();
         this.datePickerDay = today.getDate();
       }
-      this.datePickerValue = this.datePickerFormatDate(new Date(this.datePickerYear, this.datePickerMonth, this.datePickerDay), this.datePickerFormat);
       this.datePickerCalculateDays();
     }
   }"

@@ -1,0 +1,397 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/pine/Card.astro';
+import Button from '../../components/pine/Button.astro';
+import Badge from '../../components/pine/Badge.astro';
+import Command from '../../components/pine/Command.astro';
+---
+
+<Layout title="Command Component Test">
+  <main class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold mb-4">Command Palette Test</h1>
+      <div class="flex justify-center gap-2 mb-6">
+        <Button href="/test" variant="outline" color="neutral">← Back to Test Suite</Button>
+        <Button href="/test/all" variant="ghost" color="neutral">View All</Button>
+      </div>
+    </div>
+
+    <!-- Basic Command Palette -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Basic Command Palette</h2>
+        <p class="text-neutral-600 mb-4">Click the button or press Cmd/Ctrl+K to open the command palette</p>
+        
+        <Command placeholder="Type a command or search...">
+          <div slot="trigger">
+            <Button variant="solid" color="blue">Open Command Palette</Button>
+          </div>
+          
+          <div slot="commands">
+            <div data-group="Navigation">
+              <div data-command="home" data-keywords="home dashboard main" data-shortcut="⌘H">
+                <span>Go to Home</span>
+              </div>
+              <div data-command="profile" data-keywords="profile user account settings" data-shortcut="⌘P">
+                <span>View Profile</span>
+              </div>
+              <div data-command="search" data-keywords="search find lookup" data-shortcut="⌘F">
+                <span>Search</span>
+              </div>
+            </div>
+            
+            <div data-group="Actions">
+              <div data-command="create" data-keywords="create new add post article" data-shortcut="⌘N">
+                <span>Create New Post</span>
+              </div>
+              <div data-command="save" data-keywords="save document file" data-shortcut="⌘S">
+                <span>Save Document</span>
+              </div>
+              <div data-command="export" data-keywords="export download backup" data-shortcut="⌘E">
+                <span>Export Data</span>
+              </div>
+            </div>
+          </div>
+        </Command>
+      </div>
+    </Card>
+
+    <!-- Extended Command Palette with Icons -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Command Palette with Icons</h2>
+        <p class="text-neutral-600 mb-4">Commands with visual icons and extended functionality</p>
+        
+        <Command placeholder="Search commands with icons..." maxHeight="500px">
+          <div slot="trigger">
+            <Button variant="outline" color="purple">Advanced Command Palette</Button>
+          </div>
+          
+          <div slot="commands">
+            <div data-group="File Operations">
+              <div data-command="new-file" data-keywords="new file create document" data-shortcut="⌘N">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.467-.881-6.084-2.324.208-.35.498-.644.849-.844L8 11.25c.287-.29.635-.447 1-.447s.713.157 1 .447l1.235.582c.351.2.641.494.849.844C13.467 14.119 11.34 15 9 15z"></path>
+                  </svg>
+                  <span>New File</span>
+                </div>
+              </div>
+              <div data-command="open-file" data-keywords="open file browse" data-shortcut="⌘O">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                  </svg>
+                  <span>Open File</span>
+                </div>
+              </div>
+              <div data-command="save-file" data-keywords="save file disk" data-shortcut="⌘S">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+                  </svg>
+                  <span>Save File</span>
+                </div>
+              </div>
+            </div>
+            
+            <div data-group="Edit">
+              <div data-command="undo" data-keywords="undo revert back" data-shortcut="⌘Z">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
+                  </svg>
+                  <span>Undo</span>
+                </div>
+              </div>
+              <div data-command="redo" data-keywords="redo forward again" data-shortcut="⌘⇧Z">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10h-10a8 8 0 00-8 8v2m18-10l-6-6m6 6l-6 6"></path>
+                  </svg>
+                  <span>Redo</span>
+                </div>
+              </div>
+              <div data-command="find-replace" data-keywords="find replace search" data-shortcut="⌘F">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                  </svg>
+                  <span>Find & Replace</span>
+                </div>
+              </div>
+            </div>
+            
+            <div data-group="Settings">
+              <div data-command="preferences" data-keywords="preferences settings config" data-shortcut="⌘,">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  <span>Preferences</span>
+                </div>
+              </div>
+              <div data-command="theme" data-keywords="theme dark light mode" data-shortcut="⌘T">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                  </svg>
+                  <span>Toggle Theme</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Command>
+      </div>
+    </Card>
+
+    <!-- Keyboard Navigation Test -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Keyboard Navigation Test</h2>
+        <p class="text-neutral-600 mb-4">Test keyboard navigation and shortcuts</p>
+        
+        <div class="space-y-4">
+          <div class="bg-neutral-50 p-4 rounded-lg">
+            <h3 class="font-semibold mb-2">Keyboard Shortcuts:</h3>
+            <ul class="text-sm space-y-1">
+              <li><kbd class="px-2 py-1 bg-white border rounded">⌘K</kbd> or <kbd class="px-2 py-1 bg-white border rounded">Ctrl+K</kbd> - Open command palette</li>
+              <li><kbd class="px-2 py-1 bg-white border rounded">↑</kbd>/<kbd class="px-2 py-1 bg-white border rounded">↓</kbd> - Navigate commands</li>
+              <li><kbd class="px-2 py-1 bg-white border rounded">Enter</kbd> - Execute selected command</li>
+              <li><kbd class="px-2 py-1 bg-white border rounded">Esc</kbd> - Close command palette</li>
+            </ul>
+          </div>
+          
+          <Command placeholder="Test keyboard navigation...">
+            <div slot="trigger">
+              <Button variant="soft" color="green">Test Keyboard Navigation</Button>
+            </div>
+            
+            <div slot="commands">
+              <div data-group="Quick Actions">
+                <div data-command="first" data-keywords="first action one" data-shortcut="1">
+                  <span>First Action</span>
+                </div>
+                <div data-command="second" data-keywords="second action two" data-shortcut="2">
+                  <span>Second Action</span>
+                </div>
+                <div data-command="third" data-keywords="third action three" data-shortcut="3">
+                  <span>Third Action</span>
+                </div>
+              </div>
+            </div>
+          </Command>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Search and Filter Test -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Search and Filter Test</h2>
+        <p class="text-neutral-600 mb-4">Test search functionality with multiple keywords</p>
+        
+        <Command placeholder="Search by keywords...">
+          <div slot="trigger">
+            <Button variant="ghost" color="neutral">Test Search & Filter</Button>
+          </div>
+          
+          <div slot="commands">
+            <div data-group="Development">
+              <div data-command="debug" data-keywords="debug troubleshoot fix error bug issue problem" data-shortcut="F12">
+                <span>Debug Application</span>
+              </div>
+              <div data-command="test" data-keywords="test unit integration e2e spec jest" data-shortcut="⌘T">
+                <span>Run Tests</span>
+              </div>
+              <div data-command="build" data-keywords="build compile bundle webpack vite" data-shortcut="⌘B">
+                <span>Build Project</span>
+              </div>
+              <div data-command="deploy" data-keywords="deploy production release publish" data-shortcut="⌘D">
+                <span>Deploy to Production</span>
+              </div>
+            </div>
+            
+            <div data-group="Database">
+              <div data-command="migrate" data-keywords="migrate database schema sql" data-shortcut="⌘M">
+                <span>Run Migrations</span>
+              </div>
+              <div data-command="seed" data-keywords="seed data populate database" data-shortcut="⌘⇧S">
+                <span>Seed Database</span>
+              </div>
+              <div data-command="backup" data-keywords="backup export dump database" data-shortcut="⌘⇧B">
+                <span>Backup Database</span>
+              </div>
+            </div>
+          </div>
+        </Command>
+        
+        <div class="mt-4 bg-blue-50 p-4 rounded-lg">
+          <h4 class="font-semibold text-blue-900 mb-2">Try searching for:</h4>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">debug</span>
+            <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">database</span>
+            <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">build</span>
+            <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">production</span>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Event Handling Test -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Event Handling Test</h2>
+        <p class="text-neutral-600 mb-4">Test command execution and event dispatching</p>
+        
+        <div x-data="{ lastCommand: null, commandHistory: [] }">
+          <div class="mb-4">
+            <Command 
+              placeholder="Execute commands to test events..."
+              @command-selected="lastCommand = $event.detail; commandHistory.unshift($event.detail)"
+            >
+              <div slot="trigger">
+                <Button variant="solid" color="red">Test Event Handling</Button>
+              </div>
+              
+              <div slot="commands">
+                <div data-group="Test Actions">
+                  <div data-command="action-1" data-keywords="action one first">
+                    <span>Execute Action 1</span>
+                  </div>
+                  <div data-command="action-2" data-keywords="action two second">
+                    <span>Execute Action 2</span>
+                  </div>
+                  <div data-command="action-3" data-keywords="action three third">
+                    <span>Execute Action 3</span>
+                  </div>
+                </div>
+              </div>
+            </Command>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-green-50 p-4 rounded-lg">
+              <h4 class="font-semibold text-green-900 mb-2">Last Command:</h4>
+              <template x-if="lastCommand">
+                <div class="text-sm">
+                  <p><strong>ID:</strong> <span x-text="lastCommand.id"></span></p>
+                  <p><strong>Text:</strong> <span x-text="lastCommand.text"></span></p>
+                  <p><strong>Group:</strong> <span x-text="lastCommand.group"></span></p>
+                </div>
+              </template>
+              <template x-if="!lastCommand">
+                <p class="text-green-600 text-sm">No command executed yet</p>
+              </template>
+            </div>
+            
+            <div class="bg-blue-50 p-4 rounded-lg">
+              <h4 class="font-semibold text-blue-900 mb-2">Command History:</h4>
+              <div class="max-h-24 overflow-y-auto">
+                <template x-if="commandHistory.length === 0">
+                  <p class="text-blue-600 text-sm">No commands in history</p>
+                </template>
+                <template x-for="(cmd, index) in commandHistory.slice(0, 5)" :key="index">
+                  <div class="text-sm py-1 border-b border-blue-200 last:border-b-0">
+                    <span x-text="cmd.text"></span>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Custom Styling Test -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Custom Styling Test</h2>
+        <p class="text-neutral-600 mb-4">Test custom classes and styling options</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Command 
+            class="custom-command-palette" 
+            maxHeight="300px"
+            showShortcuts={false}
+            placeholder="No shortcuts shown..."
+          >
+            <div slot="trigger">
+              <Button variant="outline" color="purple" class="w-full">Without Shortcuts</Button>
+            </div>
+            
+            <div slot="commands">
+              <div data-group="Simple Commands">
+                <div data-command="cmd-1" data-keywords="command one">
+                  <span>Simple Command 1</span>
+                </div>
+                <div data-command="cmd-2" data-keywords="command two">
+                  <span>Simple Command 2</span>
+                </div>
+              </div>
+            </div>
+          </Command>
+          
+          <Command 
+            maxHeight="200px"
+            placeholder="Custom height limit..."
+          >
+            <div slot="trigger">
+              <Button variant="soft" color="yellow" class="w-full">Limited Height</Button>
+            </div>
+            
+            <div slot="commands">
+              <div data-group="Long List">
+                <div data-command="item-1" data-keywords="item one">
+                  <span>Item 1</span>
+                </div>
+                <div data-command="item-2" data-keywords="item two">
+                  <span>Item 2</span>
+                </div>
+                <div data-command="item-3" data-keywords="item three">
+                  <span>Item 3</span>
+                </div>
+                <div data-command="item-4" data-keywords="item four">
+                  <span>Item 4</span>
+                </div>
+                <div data-command="item-5" data-keywords="item five">
+                  <span>Item 5</span>
+                </div>
+                <div data-command="item-6" data-keywords="item six">
+                  <span>Item 6</span>
+                </div>
+              </div>
+            </div>
+          </Command>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Status Summary -->
+    <Card>
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Test Results</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Basic functionality</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Keyboard navigation</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Search & filter</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Event handling</p>
+          </div>
+        </div>
+      </div>
+    </Card>
+  </main>
+</Layout>

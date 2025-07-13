@@ -60,9 +60,11 @@ Features:
 
 <div class={`rounded-lg overflow-hidden ${variantClasses[variant]} ${className}`}>
   <!-- Header -->
-  <div class={`border-b border-neutral-200 ${paddingClasses[padding]} ${headerClass}`}>
-    <slot name="header" />
-  </div>
+  {Astro.slots.header && (
+    <div class={`border-b border-neutral-200 ${paddingClasses[padding]} ${headerClass}`}>
+      <slot name="header" />
+    </div>
+  )}
   
   <!-- Body -->
   <div class={`${paddingClasses[padding]} ${bodyClass}`}>
@@ -71,7 +73,9 @@ Features:
   </div>
   
   <!-- Footer -->
-  <div class={`border-t border-neutral-200 bg-neutral-50 ${paddingClasses[padding]} ${footerClass}`}>
-    <slot name="footer" />
-  </div>
+  {Astro.slots.footer && (
+    <div class={`border-t border-neutral-200 bg-neutral-50 ${paddingClasses[padding]} ${footerClass}`}>
+      <slot name="footer" />
+    </div>
+  )}
 </div>

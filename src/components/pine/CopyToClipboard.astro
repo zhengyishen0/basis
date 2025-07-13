@@ -18,57 +18,55 @@ const {
 } = Astro.props;
 ---
 
-<!-- 
-Pine UI Copy to Clipboard Component
-
-Usage:
-<CopyToClipboard 
-  text="Hello, World!"
-  successMessage="Copied to clipboard!"
-  variant="button"
-/>
-
-<CopyToClipboard 
-  text={code}
-  variant="icon"
-  class="absolute top-2 right-2"
-/>
-
-Features:
-- Copy any text to clipboard
-- Visual feedback
-- Configurable messages
-- Button or icon variants
-- Auto-hide notification
--->
-
 <div 
   x-data={`{
-    copyText: \`${text}\`,
+    copyText: ${JSON.stringify(text)},
     copyNotification: false,
     copySuccess: true,
-    successMessage: \`${successMessage}\`,
-    errorMessage: \`${errorMessage}\`,
+    successMessage: ${JSON.stringify(successMessage)},
+    errorMessage: ${JSON.stringify(errorMessage)},
     timeout: ${timeout},
     
     async copyToClipboard() {
       try {
-        await navigator.clipboard.writeText(this.copyText);
-        this.copySuccess = true;
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(this.copyText);
+          this.copySuccess = true;
+        } else {
+          this.fallbackCopyTextToClipboard(this.copyText);
+          this.copySuccess = true;
+        }
         this.copyNotification = true;
       } catch (err) {
-        this.copySuccess = false;
+        console.warn('Clipboard copy failed:', err);
+        try {
+          this.fallbackCopyTextToClipboard(this.copyText);
+          this.copySuccess = true;
+        } catch (fallbackErr) {
+          console.error('Fallback copy also failed:', fallbackErr);
+          this.copySuccess = false;
+        }
         this.copyNotification = true;
       }
       
       setTimeout(() => {
         this.copyNotification = false;
       }, this.timeout);
+    },
+    
+    fallbackCopyTextToClipboard(text) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
     }
   }`}
   class={`relative ${className}`}
 >
-  <!-- Button variant -->
   {variant === 'button' && (
     <button 
       @click="copyToClipboard()"
@@ -98,7 +96,6 @@ Features:
     </button>
   )}
   
-  <!-- Icon variant -->
   {variant === 'icon' && (
     <button 
       @click="copyToClipboard()"
@@ -120,7 +117,6 @@ Features:
     </button>
   )}
   
-  <!-- Notification tooltip -->
   <div 
     x-show="copyNotification"
     x-transition:enter="transition ease-out duration-200"

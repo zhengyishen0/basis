@@ -1,0 +1,98 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/pine/Card.astro';
+import Button from '../../components/pine/Button.astro';
+import Badge from '../../components/pine/Badge.astro';
+
+// Get all Pine component names from the directory structure
+const components = [
+  // Basic Components
+  'Accordion', 'Alert', 'Badge', 'Banner', 'Card', 'Quotes', 'Table',
+  // Form Components  
+  'Button', 'Checkbox', 'DatePicker', 'RadioGroup', 'RangeSlider', 'Rating', 'Select', 'Switch', 'TextInput', 'Textarea',
+  // Navigation Components
+  'Breadcrumbs', 'Dropdown', 'MenuBar', 'Modal', 'NavigationMenu', 'Pagination', 'Tabs',
+  // Interactive Components
+  'Command', 'ContextMenu', 'FullScreenModal', 'HoverCard', 'Popover', 'SlideOver', 'Toast',
+  // Animation Components
+  'Marquee', 'Progress', 'RetroGrid', 'TextAnimation', 'TypingEffect',
+  // Media Components
+  'ImageGallery', 'VideoPlayer',
+  // Utility Components
+  'CopyToClipboard', 'MonacoEditor', 'Tooltip'
+];
+---
+
+<Layout title="Pine Components Test Suite">
+  <main class="container mx-auto px-4 py-8 max-w-6xl">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold mb-4">Pine UI Components Test Suite</h1>
+      <p class="text-xl text-gray-600 mb-6">
+        Individual test pages for all {components.length} Pine UI components
+      </p>
+      <div class="flex justify-center gap-2 mb-6">
+        <Badge color="blue">{components.length} Components</Badge>
+        <Badge color="green">Alpine.js</Badge>
+        <Badge color="purple">HTMX</Badge>
+      </div>
+      <Button href="/" variant="outline" color="neutral">← Back to Home</Button>
+    </div>
+
+    <!-- Component Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {components.map((component) => (
+        <Card class="hover:shadow-lg transition-shadow">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-2">{component}</h3>
+            <p class="text-gray-600 text-sm mb-4">Test the {component} component</p>
+            <Button 
+              href={`/test/${component.toLowerCase()}`} 
+              variant="solid" 
+              color="blue" 
+              size="sm"
+              class="w-full"
+            >
+              Test {component}
+            </Button>
+          </div>
+        </Card>
+      ))}
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="mt-12 text-center">
+      <Card>
+        <div class="p-6">
+          <h2 class="text-2xl font-bold mb-4">Quick Actions</h2>
+          <div class="flex flex-wrap justify-center gap-4 mb-6">
+            <Button href="/test/all" variant="solid" color="green">View All Components</Button>
+            <Button href="/test/quick-test" variant="solid" color="blue">Quick Test</Button>
+            <Button href="/test/advanced-test" variant="solid" color="purple">Advanced Test</Button>
+            <Button href="/demo" variant="outline" color="blue">Original Demo</Button>
+          </div>
+          
+          <!-- Test Status -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+            <div class="text-center p-3 bg-green-50 rounded-lg">
+              <Badge color="green" class="mb-1">✓ 25 Tested</Badge>
+              <p class="text-xs text-gray-600">Complete test pages</p>
+            </div>
+            <div class="text-center p-3 bg-blue-50 rounded-lg">
+              <Badge color="blue" class="mb-1">~ 11 Basic</Badge>
+              <p class="text-xs text-gray-600">Simple components</p>
+            </div>
+            <div class="text-center p-3 bg-yellow-50 rounded-lg">
+              <Badge color="yellow" class="mb-1">⚡ 8 Advanced</Badge>
+              <p class="text-xs text-gray-600">Complex features</p>
+            </div>
+            <div class="text-center p-3 bg-purple-50 rounded-lg">
+              <Badge color="purple" class="mb-1">🎨 Alpine.js</Badge>
+              <p class="text-xs text-gray-600">Interactive demos</p>
+            </div>
+          </div>
+        </div>
+      </Card>
+    </div>
+  </main>
+</Layout>

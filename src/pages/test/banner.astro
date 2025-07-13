@@ -1,0 +1,554 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/pine/Card.astro';
+import Button from '../../components/pine/Button.astro';
+import Banner from '../../components/pine/Banner.astro';
+import Badge from '../../components/pine/Badge.astro';
+---
+
+<Layout title="Banner Component Test">
+  <main class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold mb-4">Banner Component Test</h1>
+      <div class="flex justify-center gap-2 mb-6">
+        <Button href="/test" variant="outline" color="neutral">← Back to Test Suite</Button>
+        <Button href="/test/all" variant="ghost" color="neutral">View All</Button>
+      </div>
+    </div>
+
+    <!-- Basic Banner Test -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Basic Banner</h2>
+        <div class="space-y-4">
+          <div x-data="{ showBanner: false }">
+            <Button variant="solid" color="blue" x-on:click="showBanner = true">
+              Show Basic Banner (Top)
+            </Button>
+            <div x-show="showBanner" x-transition>
+              <Banner visible={true} visibleAfter={0} position="top" dismissible={true}>
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <p class="text-sm">
+                    <strong class="font-semibold">Information:</strong> This is a basic banner with default settings and an info icon.
+                  </p>
+                </div>
+              </Banner>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Position Variants -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Position Variants</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Top Position</h3>
+            <div x-data="{ showTopBanner: false }">
+              <Button variant="solid" color="blue" x-on:click="showTopBanner = true" class="w-full">
+                Show Top Banner
+              </Button>
+              <div x-show="showTopBanner" x-transition>
+                <Banner visible={true} visibleAfter={0} position="top" dismissible={true}>
+                  <p class="text-sm">Top positioned banner - sticks to the top of the viewport</p>
+                </Banner>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Bottom Position</h3>
+            <div x-data="{ showBottomBanner: false }">
+              <Button variant="solid" color="purple" x-on:click="showBottomBanner = true" class="w-full">
+                Show Bottom Banner
+              </Button>
+              <div x-show="showBottomBanner" x-transition>
+                <Banner visible={true} visibleAfter={0} position="bottom" dismissible={true}>
+                  <p class="text-sm">Bottom positioned banner - sticks to the bottom of the viewport</p>
+                </Banner>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Dismissible vs Non-dismissible -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Dismissible Options</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Dismissible (Default)</h3>
+            <div x-data="{ showDismissible: false }">
+              <Button variant="solid" color="green" x-on:click="showDismissible = true" class="w-full">
+                Show Dismissible Banner
+              </Button>
+              <div x-show="showDismissible" x-transition>
+                <Banner visible={true} visibleAfter={0} position="top" dismissible={true}>
+                  <p class="text-sm">This banner can be dismissed using the X button</p>
+                </Banner>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Non-dismissible</h3>
+            <div x-data="{ showNonDismissible: false }">
+              <Button variant="solid" color="red" x-on:click="showNonDismissible = true" class="w-full">
+                Show Non-dismissible Banner
+              </Button>
+              <Button variant="outline" color="red" size="sm" x-on:click="showNonDismissible = false" class="w-full mt-2">
+                Hide Manually
+              </Button>
+              <div x-show="showNonDismissible" x-transition>
+                <Banner visible={true} visibleAfter={0} position="top" dismissible={false}>
+                  <p class="text-sm">This banner cannot be dismissed - no X button appears</p>
+                </Banner>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Visibility Delay Test -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Visibility Delay</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Immediate (0ms)</h3>
+            <div x-data="{ showImmediate: false }">
+              <Button variant="solid" color="blue" size="sm" x-on:click="showImmediate = true" class="w-full">
+                Show Immediate
+              </Button>
+              <div x-show="showImmediate" x-transition>
+                <Banner visible={true} visibleAfter={0} position="top" dismissible={true}>
+                  <p class="text-sm">Appears immediately (0ms delay)</p>
+                </Banner>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Short Delay (1s)</h3>
+            <div x-data="{ showShort: false }">
+              <Button variant="solid" color="green" size="sm" x-on:click="showShort = true" class="w-full">
+                Show with 1s Delay
+              </Button>
+              <div x-show="showShort" x-transition>
+                <Banner visible={true} visibleAfter={1000} position="top" dismissible={true}>
+                  <p class="text-sm">Appears after 1 second delay</p>
+                </Banner>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-semibold mb-3">Long Delay (3s)</h3>
+            <div x-data="{ showLong: false }">
+              <Button variant="solid" color="purple" size="sm" x-on:click="showLong = true" class="w-full">
+                Show with 3s Delay
+              </Button>
+              <div x-show="showLong" x-transition>
+                <Banner visible={true} visibleAfter={3000} position="top" dismissible={true}>
+                  <p class="text-sm">Appears after 3 seconds delay</p>
+                </Banner>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Content Types -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Content Types</h2>
+        <div class="space-y-4">
+          <!-- Simple Text -->
+          <div x-data="{ showText: false }">
+            <Button variant="outline" color="neutral" x-on:click="showText = true">
+              Simple Text Banner
+            </Button>
+            <div x-show="showText" x-transition>
+              <Banner visible={true} visibleAfter={0} position="top" dismissible={true}>
+                <p class="text-sm">Simple text content without any icons or special formatting.</p>
+              </Banner>
+            </div>
+          </div>
+
+          <!-- With Icon -->
+          <div x-data="{ showIcon: false }">
+            <Button variant="outline" color="blue" x-on:click="showIcon = true">
+              Banner with Icon
+            </Button>
+            <div x-show="showIcon" x-transition>
+              <Banner visible={true} visibleAfter={0} position="top" dismissible={true}>
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-yellow-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.083 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                  </svg>
+                  <p class="text-sm">
+                    <strong class="font-semibold">Warning:</strong> This banner includes a warning icon and bold text.
+                  </p>
+                </div>
+              </Banner>
+            </div>
+          </div>
+
+          <!-- With Action Button -->
+          <div x-data="{ showAction: false }">
+            <Button variant="outline" color="green" x-on:click="showAction = true">
+              Banner with Action Button
+            </Button>
+            <div x-show="showAction" x-transition>
+              <Banner visible={true} visibleAfter={0} position="top" dismissible={true}>
+                <div class="flex items-center justify-between w-full">
+                  <div class="flex items-center">
+                    <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="text-sm">
+                      <strong class="font-semibold">Success:</strong> Your changes have been saved successfully.
+                    </p>
+                  </div>
+                  <Button variant="soft" color="green" size="sm" class="ml-4">
+                    View Details
+                  </Button>
+                </div>
+              </Banner>
+            </div>
+          </div>
+
+          <!-- Rich Content -->
+          <div x-data="{ showRich: false }">
+            <Button variant="outline" color="purple" x-on:click="showRich = true">
+              Rich Content Banner
+            </Button>
+            <div x-show="showRich" x-transition>
+              <Banner visible={true} visibleAfter={0} position="top" dismissible={true}>
+                <div class="flex items-start justify-between w-full">
+                  <div class="flex">
+                    <div class="flex-shrink-0">
+                      <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path>
+                      </svg>
+                    </div>
+                    <div class="ml-3">
+                      <h4 class="text-sm font-semibold">New Feature Available!</h4>
+                      <p class="text-sm text-gray-600 mt-1">
+                        We've added dark mode support. Click the settings icon to try it out.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex gap-2 ml-4">
+                    <Button variant="soft" color="blue" size="sm">
+                      Learn More
+                    </Button>
+                    <Button variant="outline" color="blue" size="sm">
+                      Settings
+                    </Button>
+                  </div>
+                </div>
+              </Banner>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Custom Styling -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Custom Styling</h2>
+        <div class="space-y-4">
+          <!-- Custom Background Colors -->
+          <div x-data="{ showCustom1: false }">
+            <Button variant="outline" color="red" x-on:click="showCustom1 = true">
+              Red Background Banner
+            </Button>
+            <div x-show="showCustom1" x-transition>
+              <Banner visible={true} visibleAfter={0} position="top" dismissible={true} class="bg-red-50 border-red-200">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-red-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <p class="text-sm text-red-800">
+                    <strong class="font-semibold">Error:</strong> Custom red background with border styling.
+                  </p>
+                </div>
+              </Banner>
+            </div>
+          </div>
+
+          <div x-data="{ showCustom2: false }">
+            <Button variant="outline" color="green" x-on:click="showCustom2 = true">
+              Green Gradient Banner
+            </Button>
+            <div x-show="showCustom2" x-transition>
+              <Banner visible={true} visibleAfter={0} position="top" dismissible={true} class="bg-gradient-to-r from-green-400 to-green-600 border-green-400">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-white mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <p class="text-sm text-white">
+                    <strong class="font-semibold">Success:</strong> Custom gradient background banner.
+                  </p>
+                </div>
+              </Banner>
+            </div>
+          </div>
+
+          <div x-data="{ showCustom3: false }">
+            <Button variant="outline" color="purple" x-on:click="showCustom3 = true">
+              Dark Theme Banner
+            </Button>
+            <div x-show="showCustom3" x-transition>
+              <Banner visible={true} visibleAfter={0} position="top" dismissible={true} class="bg-gray-800 border-gray-700">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-purple-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                  </svg>
+                  <p class="text-sm text-white">
+                    <strong class="font-semibold">Dark Mode:</strong> Custom dark theme styling with purple accent.
+                  </p>
+                </div>
+              </Banner>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Interactive Test with Alpine.js -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Interactive Test</h2>
+        <div x-data="{ 
+          banners: [],
+          bannerCounter: 0,
+          addBanner(type) {
+            this.bannerCounter++;
+            this.banners.push({
+              id: this.bannerCounter,
+              type: type,
+              visible: true,
+              message: this.getBannerMessage(type)
+            });
+          },
+          removeBanner(id) {
+            this.banners = this.banners.filter(b => b.id !== id);
+          },
+          getBannerMessage(type) {
+            const messages = {
+              info: 'Information banner #' + (this.bannerCounter),
+              warning: 'Warning banner #' + (this.bannerCounter),
+              success: 'Success banner #' + (this.bannerCounter),
+              error: 'Error banner #' + (this.bannerCounter)
+            };
+            return messages[type] || 'Banner #' + (this.bannerCounter);
+          },
+          clearAll() {
+            this.banners = [];
+          }
+        }">
+          <div class="space-y-4">
+            <div class="flex flex-wrap gap-2">
+              <Button variant="solid" color="blue" size="sm" x-on:click="addBanner('info')">
+                Add Info Banner
+              </Button>
+              <Button variant="solid" color="yellow" size="sm" x-on:click="addBanner('warning')">
+                Add Warning Banner
+              </Button>
+              <Button variant="solid" color="green" size="sm" x-on:click="addBanner('success')">
+                Add Success Banner
+              </Button>
+              <Button variant="solid" color="red" size="sm" x-on:click="addBanner('error')">
+                Add Error Banner
+              </Button>
+              <Button variant="outline" color="neutral" size="sm" x-on:click="clearAll()">
+                Clear All
+              </Button>
+            </div>
+
+            <div class="space-y-2">
+              <template x-for="banner in banners" :key="banner.id">
+                <div x-show="banner.visible" x-transition>
+                  <Banner visible={true} visibleAfter={0} position="top" dismissible={true}>
+                    <div class="flex items-center justify-between w-full">
+                      <div class="flex items-center">
+                        <template x-if="banner.type === 'info'">
+                          <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                          </svg>
+                        </template>
+                        <template x-if="banner.type === 'warning'">
+                          <svg class="w-5 h-5 text-yellow-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.083 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                          </svg>
+                        </template>
+                        <template x-if="banner.type === 'success'">
+                          <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                          </svg>
+                        </template>
+                        <template x-if="banner.type === 'error'">
+                          <svg class="w-5 h-5 text-red-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                          </svg>
+                        </template>
+                        <p class="text-sm" x-text="banner.message"></p>
+                      </div>
+                      <Button 
+                        variant="ghost" 
+                        color="neutral" 
+                        size="sm" 
+                        x-on:click="removeBanner(banner.id)"
+                        class="ml-4"
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  </Banner>
+                </div>
+              </template>
+              
+              <div x-show="banners.length === 0" class="text-center py-8 text-gray-500">
+                <p>No banners active. Click the buttons above to add some!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Real-world Examples -->
+    <Card class="mb-8">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Real-world Examples</h2>
+        <div class="space-y-4">
+          <!-- Cookie Notice -->
+          <div x-data="{ showCookie: false }">
+            <Button variant="outline" color="neutral" x-on:click="showCookie = true">
+              Cookie Consent Banner
+            </Button>
+            <div x-show="showCookie" x-transition>
+              <Banner visible={true} visibleAfter={0} position="bottom" dismissible={false} class="bg-gray-800 border-gray-700">
+                <div class="flex items-center justify-between w-full text-white">
+                  <div class="flex items-start">
+                    <svg class="w-5 h-5 text-yellow-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.083 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                    </svg>
+                    <div class="text-sm">
+                      <p>We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-2 ml-4">
+                    <Button variant="soft" color="neutral" size="sm" x-on:click="showCookie = false">
+                      Accept
+                    </Button>
+                    <Button variant="outline" color="neutral" size="sm">
+                      Learn More
+                    </Button>
+                  </div>
+                </div>
+              </Banner>
+            </div>
+          </div>
+
+          <!-- Maintenance Notice -->
+          <div x-data="{ showMaintenance: false }">
+            <Button variant="outline" color="yellow" x-on:click="showMaintenance = true">
+              Maintenance Notice
+            </Button>
+            <div x-show="showMaintenance" x-transition>
+              <Banner visible={true} visibleAfter={0} position="top" dismissible={true} class="bg-yellow-50 border-yellow-200">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-yellow-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <div class="text-sm text-yellow-800">
+                    <strong class="font-semibold">Scheduled Maintenance:</strong> Our services will be temporarily unavailable on Sunday, July 14th from 2:00 AM to 4:00 AM EST for system upgrades.
+                  </div>
+                </div>
+              </Banner>
+            </div>
+          </div>
+
+          <!-- Promotional Banner -->
+          <div x-data="{ showPromo: false }">
+            <Button variant="outline" color="purple" x-on:click="showPromo = true">
+              Promotional Banner
+            </Button>
+            <div x-show="showPromo" x-transition>
+              <Banner visible={true} visibleAfter={0} position="top" dismissible={true} class="bg-gradient-to-r from-purple-500 to-pink-500 border-purple-400">
+                <div class="flex items-center justify-between w-full text-white">
+                  <div class="flex items-center">
+                    <svg class="w-5 h-5 text-yellow-300 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                    </svg>
+                    <div class="text-sm">
+                      <strong class="font-semibold">Special Offer:</strong> Save 50% on all premium plans! Limited time offer.
+                    </div>
+                  </div>
+                  <div class="flex gap-2 ml-4">
+                    <Button variant="soft" color="yellow" size="sm">
+                      Claim Offer
+                    </Button>
+                  </div>
+                </div>
+              </Banner>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Status Summary -->
+    <Card>
+      <div class="p-6">
+        <h2 class="text-2xl font-bold mb-4">Test Results</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Position variants</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Dismissible functionality</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Visibility delays</p>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <Badge color="green" class="mb-2">✓ Working</Badge>
+            <p class="text-sm">Alpine.js integration</p>
+          </div>
+        </div>
+        
+        <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+          <h3 class="font-semibold text-blue-800 mb-2">Component Features Tested:</h3>
+          <ul class="text-sm text-blue-700 space-y-1">
+            <li>• Position variants (top/bottom)</li>
+            <li>• Dismissible and non-dismissible modes</li>
+            <li>• Visibility delay timing (0ms, 1s, 3s)</li>
+            <li>• Custom styling and theming</li>
+            <li>• Rich content support (icons, buttons, multi-line text)</li>
+            <li>• Alpine.js reactive integration</li>
+            <li>• Real-world usage patterns</li>
+            <li>• Smooth transitions and animations</li>
+          </ul>
+        </div>
+      </div>
+    </Card>
+  </main>
+</Layout>

@@ -17,7 +17,18 @@ const { title = "AHA Stack" } = Astro.props;
 		<!-- HTMX -->
 		<script src="https://unpkg.com/htmx.org@2.0.6"></script>
 		
-		<!-- Alpine.js -->
+		<!-- Alpine.js Plugins (must be loaded before Alpine.js core) -->
+		<script defer src="https://unpkg.com/@alpinejs/mask@3.14.9/dist/cdn.min.js"></script>
+		<script defer src="https://unpkg.com/@alpinejs/intersect@3.14.9/dist/cdn.min.js"></script>
+		<script defer src="https://unpkg.com/@alpinejs/persist@3.14.9/dist/cdn.min.js"></script>
+		<script defer src="https://unpkg.com/@alpinejs/focus@3.14.9/dist/cdn.min.js"></script>
+		<script defer src="https://unpkg.com/@alpinejs/collapse@3.14.9/dist/cdn.min.js"></script>
+		<script defer src="https://unpkg.com/@alpinejs/anchor@3.14.9/dist/cdn.min.js"></script>
+		<script defer src="https://unpkg.com/@alpinejs/morph@3.14.9/dist/cdn.min.js"></script>
+		<script defer src="https://unpkg.com/@alpinejs/sort@3.14.9/dist/cdn.min.js"></script>
+		<script defer src="https://unpkg.com/@alpinejs/resize@3.14.9/dist/cdn.min.js"></script>
+		
+		<!-- Alpine.js Core (must be loaded after all plugins) -->
 		<script defer src="https://unpkg.com/alpinejs@3.14.9/dist/cdn.min.js"></script>
 	</head>
 	<body>
@@ -26,12 +37,16 @@ const { title = "AHA Stack" } = Astro.props;
 </html>
 
 <style is:global>
-	@import 'tailwindcss';
+	@import '../styles/global.css';
 	
 	html,
 	body {
 		margin: 0;
 		width: 100%;
 		height: 100%;
+	}
+	
+	[x-cloak] {
+		display: none !important;
 	}
 </style>

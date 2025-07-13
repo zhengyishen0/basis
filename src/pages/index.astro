@@ -12,62 +12,73 @@ const { Content } = await homeContent?.render() || { Content: null };
 ---
 
 <Layout>
-	<main>
+	<main class="min-h-screen">
 		<!-- Hero Section -->
-		<div>
-			<h1>Welcome to AHA Stack</h1>
-			<p>
+		<div class="text-center py-16 px-4 bg-gradient-to-b from-blue-50 to-white">
+			<h1 class="text-5xl font-bold mb-6 text-gray-900">Welcome to AHA Stack</h1>
+			<p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
 				A modern web development stack combining Astro, HTMX, and Alpine.js
 			</p>
-			<div>
+			<div class="flex justify-center gap-3 mb-8">
 				<Badge color="blue">Astro</Badge>
 				<Badge color="green">HTMX</Badge>
 				<Badge color="purple">Alpine.js</Badge>
 			</div>
-			<div>
+			<div class="flex flex-col sm:flex-row justify-center gap-4">
 				<Button href="/demo" variant="solid" color="blue" size="lg">
 					View Demo
 				</Button>
-				<Button variant="outline" color="neutral" size="lg">
+				<Button href="/marketing" variant="solid" color="purple" size="lg">
+					Marketing Template
+				</Button>
+				<Button href="/test" variant="outline" color="green" size="lg">
+					Test Components
+				</Button>
+				<Button href="https://github.com/zhengyishen0/aha_starter" variant="outline" color="neutral" size="lg">
 					GitHub
 				</Button>
 			</div>
 		</div>
 		
 		<!-- Features Section -->
-		<div>
-			<Card>
-				<div>
-					<Badge color="blue">Astro</Badge>
-					<h3>Static Site Generation</h3>
-					<p>Fast, optimized builds with component islands for dynamic content</p>
-				</div>
-			</Card>
-			
-			<Card>
-				<div>
-					<Badge color="green">HTMX</Badge>
-					<h3>Dynamic Server Interactions</h3>
-					<p>AJAX, WebSockets, and server-sent events with minimal JavaScript</p>
-				</div>
-			</Card>
-			
-			<Card>
-				<div>
-					<Badge color="purple">Alpine.js</Badge>
-					<h3>Reactive UI Components</h3>
-					<p>Lightweight framework for client-side interactivity</p>
-				</div>
-			</Card>
+		<div class="max-w-6xl mx-auto px-4 py-16">
+			<h2 class="text-3xl font-bold text-center mb-12 text-gray-900">Why AHA Stack?</h2>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+				<Card class="hover:shadow-lg transition-shadow">
+					<div class="p-6">
+						<Badge color="blue" class="mb-4">Astro</Badge>
+						<h3 class="text-xl font-semibold mb-3 text-gray-900">Static Site Generation</h3>
+						<p class="text-gray-600">Fast, optimized builds with component islands for dynamic content</p>
+					</div>
+				</Card>
+				
+				<Card class="hover:shadow-lg transition-shadow">
+					<div class="p-6">
+						<Badge color="green" class="mb-4">HTMX</Badge>
+						<h3 class="text-xl font-semibold mb-3 text-gray-900">Dynamic Server Interactions</h3>
+						<p class="text-gray-600">AJAX, WebSockets, and server-sent events with minimal JavaScript</p>
+					</div>
+				</Card>
+				
+				<Card class="hover:shadow-lg transition-shadow">
+					<div class="p-6">
+						<Badge color="purple" class="mb-4">Alpine.js</Badge>
+						<h3 class="text-xl font-semibold mb-3 text-gray-900">Reactive UI Components</h3>
+						<p class="text-gray-600">Lightweight framework for client-side interactivity</p>
+					</div>
+				</Card>
+			</div>
 		</div>
 		
 		<!-- Content from Markdown -->
 		{Content && (
-			<Card>
-				<div>
-					<Content />
-				</div>
-			</Card>
+			<div class="max-w-4xl mx-auto px-4 py-8">
+				<Card>
+					<div class="prose max-w-none p-6">
+						<Content />
+					</div>
+				</Card>
+			</div>
 		)}
 	</main>
 </Layout>

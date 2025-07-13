@@ -15,7 +15,7 @@ export interface Props {
 }
 
 const { 
-  images,
+  images = [],
   columns = 3,
   gap = 'md',
   aspectRatio = 'square',
@@ -23,6 +23,12 @@ const {
   thumbnailClass = "",
   lightboxClass = ""
 } = Astro.props;
+
+// Ensure images is always an array with valid data
+const safeImages = Array.isArray(images) ? images.filter(img => img && img.src) : [];
+
+// Debug information (will be visible in server logs)
+console.log(`ImageGallery: Processing ${safeImages.length} images of ${images.length} provided`);
 
 const columnClasses: { [key: number]: string } = {
   2: 'grid-cols-2',
@@ -94,7 +100,7 @@ Props:
     imageGalleryOpened: false,
     imageGalleryActiveUrl: null,
     imageGalleryActiveIndex: 0,
-    imageGalleryImages: ${JSON.stringify(images)},
+    imageGalleryImages: ${JSON.stringify(safeImages)},
     imageGalleryOpen(index) {
       this.imageGalleryActiveIndex = index;
       this.imageGalleryActiveUrl = this.imageGalleryImages[index].src;
@@ -127,8 +133,14 @@ Props:
   class={className}
 >
   <!-- Image Grid -->
-  <div class={`grid ${columnClasses[columns]} ${gapClasses[gap]}`}>
-    {images.map((image, index) => (
+  {safeImages.length === 0 ? (
+    <div class="text-center py-8 text-gray-500">
+      <p>No images to display</p>
+      <p class="text-sm mt-2">Check console for debugging information</p>
+    </div>
+  ) : (
+    <div class={`grid ${columnClasses[columns]} ${gapClasses[gap]}`}>
+      {safeImages.map((image, index) => (
       <div 
         class={`relative overflow-hidden rounded-lg cursor-pointer group ${aspectRatioClasses[aspectRatio]} ${thumbnailClass}`}
         x-on:click={`imageGalleryOpen(${index})`}
@@ -138,6 +150,7 @@ Props:
           alt={image.alt || `Gallery image ${index + 1}`}
           class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
+          onerror="console.error('Failed to load image:', this.src); this.style.display='none';"
         />
         <!-- Hover overlay -->
         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
@@ -150,12 +163,13 @@ Props:
             <p class="text-white text-sm font-medium truncate">{image.caption}</p>
           </div>
         )}
-      </div>
-    ))}
-  </div>
+        </div>
+      ))}
+    </div>
+  )}
 
   <!-- Lightbox Modal -->
-  <template x-teleport="body">
+  <div x-show="imageGalleryOpened" style="display: none;">
     <div 
       x-show="imageGalleryOpened" 
       x-transition.opacity.duration.300
@@ -246,5 +260,5 @@ Props:
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
       </div>
     </div>
-  </template>
+  </div>
 </div>

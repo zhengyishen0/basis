@@ -153,6 +153,19 @@ Keyboard Shortcuts:
         this.playbackRate = this.video.playbackRate;
       });
       
+      this.video.addEventListener('error', (e) => {
+        console.error('Video error:', e);
+        this.loading = false;
+      });
+      
+      this.video.addEventListener('loadstart', () => {
+        this.loading = true;
+      });
+      
+      this.video.addEventListener('canplay', () => {
+        this.loading = false;
+      });
+      
       // Fullscreen events
       document.addEventListener('fullscreenchange', () => {
         this.fullscreen = !!document.fullscreenElement;
@@ -260,7 +273,9 @@ Keyboard Shortcuts:
     loop={loop}
     muted={muted}
     controls={controls}
-    playsinline
+    playsinline={true}
+    preload="metadata"
+    crossorigin="anonymous"
   >
     {videoSources.map(source => (
       <source src={source.src} type={source.type} />
