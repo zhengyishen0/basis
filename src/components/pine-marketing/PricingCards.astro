@@ -65,7 +65,7 @@ export interface Props {
   title?: string;
   subtitle?: string;
   plans: PricingPlan[];
-  primaryColor?: string;
+  primaryColor?: 'blue-600' | 'green-600' | 'purple-600' | 'red-600' | 'indigo-600' | 'gray-600';
   className?: string;
 }
 
@@ -77,14 +77,53 @@ const {
   className = ""
 } = Astro.props;
 
-// Generate color classes based on primary color
-const colorClasses = {
-  text: `text-${primaryColor}`,
-  border: `border-${primaryColor}`,
-  bg: `bg-${primaryColor}`,
-  hover: `hover:bg-${primaryColor.replace('-600', '-700')} hover:border-${primaryColor.replace('-600', '-700')}`,
-  focus: `focus-within:bg-${primaryColor.replace('-600', '-700')} focus-within:border-${primaryColor.replace('-600', '-700')}`
+// Pine-compatible explicit color mappings
+const pineColorClasses = {
+  'blue-600': { 
+    text: 'text-blue-600', 
+    border: 'border-blue-600',
+    bg: 'bg-blue-600',
+    hoverBg: 'hover:bg-blue-700',
+    hoverBorder: 'hover:border-blue-700'
+  },
+  'green-600': { 
+    text: 'text-green-600', 
+    border: 'border-green-600',
+    bg: 'bg-green-600',
+    hoverBg: 'hover:bg-green-700',
+    hoverBorder: 'hover:border-green-700'
+  },
+  'purple-600': { 
+    text: 'text-purple-600', 
+    border: 'border-purple-600',
+    bg: 'bg-purple-600',
+    hoverBg: 'hover:bg-purple-700',
+    hoverBorder: 'hover:border-purple-700'
+  },
+  'red-600': { 
+    text: 'text-red-600', 
+    border: 'border-red-600',
+    bg: 'bg-red-600',
+    hoverBg: 'hover:bg-red-700',
+    hoverBorder: 'hover:border-red-700'
+  },
+  'indigo-600': { 
+    text: 'text-indigo-600', 
+    border: 'border-indigo-600',
+    bg: 'bg-indigo-600',
+    hoverBg: 'hover:bg-indigo-700',
+    hoverBorder: 'hover:border-indigo-700'
+  },
+  'gray-600': { 
+    text: 'text-gray-600', 
+    border: 'border-gray-600',
+    bg: 'bg-gray-600',
+    hoverBg: 'hover:bg-gray-700',
+    hoverBorder: 'hover:border-gray-700'
+  }
 };
+
+const colorClasses = pineColorClasses[primaryColor];
 ---
 
 <section class={`py-8 leading-7 text-gray-900 bg-white sm:py-12 md:py-16 lg:py-24 ${className}`}>

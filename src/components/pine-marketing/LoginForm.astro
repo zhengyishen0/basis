@@ -58,11 +58,16 @@ const {
   className = "",
 } = Astro.props;
 
-// Dynamic color classes based on primaryColor prop
-const colorClasses = {
-  tagline: `text-${primaryColor}-500`,
-  link: `text-${primaryColor}-500`,
+// Pine-compatible color classes based on primaryColor prop
+const pineColorClasses = {
+  neutral: { tagline: 'text-neutral-700', link: 'text-neutral-700' },
+  blue: { tagline: 'text-blue-600', link: 'text-blue-600' },
+  green: { tagline: 'text-green-600', link: 'text-green-600' },
+  red: { tagline: 'text-red-600', link: 'text-red-600' },
+  yellow: { tagline: 'text-yellow-500', link: 'text-yellow-500' },
+  purple: { tagline: 'text-purple-600', link: 'text-purple-600' }
 };
+const colorClasses = pineColorClasses[primaryColor];
 ---
 
 <section class={`w-full px-8 py-16 bg-${backgroundColor} xl:px-8 ${className}`}>

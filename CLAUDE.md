@@ -10,5 +10,5 @@ My tech stack is:
 To-DOs:
 - [ ] convert anthropic website using Pine components while keeping all the visual design as it is
 - [x] display all the marketing template on the website
-- [ ] replace the marketing template using the componets in the Pine. start with a copy of existing pine-marketing components and update the copy
+- [x] replace the marketing template using the componets in the Pine. start with a copy of existing pine-marketing components and update the copy
 - [x] add proper guidance on how to use alpine with plugins, and htmx in the readme file

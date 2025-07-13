@@ -5,6 +5,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
 
 <Layout title="Anthropic - AI research and products that put safety at the frontier">
   <AnthropicCustom>
+    <div class="u-bg-clay" style="min-height: 100vh;">
     <!-- Navigation Bar -->
     <nav class="anthropic-nav">
       <div class="u-container-full" style="padding-top: 1rem; padding-bottom: 1rem;">
@@ -22,21 +23,21 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
           </div>
           
           <div style="display: flex; gap: 1rem; align-items: center;">
-            <a href="/" class="anthropic-nav-link">← Back</a>
-            <a href="https://claude.ai" class="anthropic-button-primary">Try Claude</a>
+            <a href="../" class="anthropic-button-primary">Back Home</a>
           </div>
         </div>
       </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="anthropic-hero u-bg-clay">
+    <section class="anthropic-hero">
       <div class="u-container-full">
         <div class="hero-grid">
           <div class="hero-left">
             <h1 class="u-display-xl" style="margin-bottom: 3rem; color: #000;">
               AI <u>research</u> and <u>products</u><br>
-              that put safety at the frontier
+              that put safety<br>
+              at the frontier
             </h1>
             
             <!-- Two Column Cards -->
@@ -61,35 +62,41 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
           </div>
           
           <div class="hero-visual">
-            <img src="https://cdn.prod.website-files.com/67ce28cfec624e2b733f8a52/67d2158d8a6bd9a74b2e8486_Nodes-ManyHeads.svg" 
-                 alt="Network diagram with interconnected nodes representing AI systems" 
+            <img src="/hero-image.png" 
+                 alt="Network diagram with interconnected nodes and hand illustration representing AI systems" 
                  class="network-diagram" />
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Video Section -->
+    <!-- Model Section -->
     <section class="anthropic-section">
       <div class="u-container-full">
-        <div class="video-grid">
-          <div class="video-content">
-            <h2 class="u-display-l" style="margin-bottom: 2rem; color: #000;">Claude Opus 4 and Sonnet 4</h2>
-            <p class="u-paragraph-l" style="margin-bottom: 2rem; color: #666;">
-              Our most powerful models yet, pushing the frontier for coding and AI agents—and enabling Claude to handle hours of work across Claude and Claude Code.
-            </p>
-            <a href="/announcement" class="anthropic-button-secondary">Read announcement</a>
-          </div>
-          <div class="model-cards">
-            <div class="model-card">
-              <div class="u-detail-s u-mb-2">Model details</div>
-              <h3 class="u-display-s">Opus 4</h3>
-              <div class="model-arrow">→</div>
+        <div class="model-highlight-section" style="background-color: #e6d3c1; border-radius: 2rem; padding: 3rem; margin-bottom: 4rem;">
+          <div class="video-grid">
+            <div class="video-content">
+              <h2 class="u-display-m" style="margin-bottom: 1.5rem; color: #000;">Claude Opus 4 and Sonnet 4</h2>
+              <p class="u-paragraph-m" style="margin-bottom: 1.5rem; color: #666;">
+                Our most powerful models yet, pushing the frontier for coding and AI agents—and enabling Claude to handle hours of work across Claude and Claude Code.
+              </p>
+              <a href="/announcement" class="anthropic-button-secondary" style="border-color: #000;">Read announcement</a>
             </div>
-            <div class="model-card">
-              <div class="u-detail-s u-mb-2">Model details</div>
-              <h3 class="u-display-s">Sonnet 4</h3>
-              <div class="model-arrow">→</div>
+            <div class="model-cards">
+              <div class="model-card">
+                <div class="model-card-content">
+                  <div class="u-detail-s u-mb-2">Model details</div>
+                  <h3 class="u-display-s">Opus 4</h3>
+                </div>
+                <div class="model-arrow">→</div>
+              </div>
+              <div class="model-card">
+                <div class="model-card-content">
+                  <div class="u-detail-s u-mb-2">Model details</div>
+                  <h3 class="u-display-s">Sonnet 4</h3>
+                </div>
+                <div class="model-arrow">→</div>
+              </div>
             </div>
           </div>
         </div>
@@ -120,18 +127,23 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
       </div>
     </section>
 
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
     <!-- Mission Section -->
     <section class="anthropic-section">
       <div class="u-container-full">
-        <div class="mission-content">
-          <h2 class="u-display-xl" style="margin-bottom: 2rem; color: #000;">
-            At Anthropic, we build AI to serve humanity's long-term well-being.
-          </h2>
+        <div class="mission-header-content">
+          <div class="mission-header-left">
+            <h2 class="u-display-m" style="color: #000;">
+              At Anthropic, we build AI to serve humanity's long-term well-being.
+            </h2>
+          </div>
           <div class="mission-text">
-            <p class="u-paragraph-l" style="margin-bottom: 1.5rem; color: #666;">
+            <p class="u-paragraph-m" style="margin-bottom: 1.5rem; color: #666;">
               While no one can foresee every outcome AI will have on society, we do know that designing powerful technologies requires both bold steps forward and intentional pauses to consider the effects.
             </p>
-            <p class="u-paragraph-l" style="color: #666; margin-bottom: 3rem;">
+            <p class="u-paragraph-m" style="color: #666; margin-bottom: 3rem;">
               That's why we focus on building tools with human benefit at their foundation, like Claude. Through our daily research, policy work, and product design, we aim to show what responsible AI development looks like in practice.
             </p>
           </div>
@@ -142,7 +154,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
             <div class="mission-icon">
               <img src="https://cdn.prod.website-files.com/67ce28cfec624e2b733f8a52/67d2158c590b5c5fb0248eb5_Hands-Tree.svg" 
                    alt="Hands and tree illustration" 
-                   width="80" height="80" />
+                   width="120" height="120" />
             </div>
             <h3 class="u-display-s" style="margin-bottom: 1rem; color: #000;">Core Views on AI Safety</h3>
           </div>
@@ -151,7 +163,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
             <div class="mission-icon">
               <img src="https://cdn.prod.website-files.com/67ce28cfec624e2b733f8a52/67d2158ccf9185b411d0f75d_Hands-Balance.svg" 
                    alt="Hands and balance illustration" 
-                   width="80" height="80" />
+                   width="120" height="120" />
             </div>
             <h3 class="u-display-s" style="margin-bottom: 1rem; color: #000;">Anthropic's Responsible Scaling Policy</h3>
           </div>
@@ -160,7 +172,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
             <div class="mission-icon">
               <img src="https://cdn.prod.website-files.com/67ce28cfec624e2b733f8a52/67d2158c01257d0df0594452_Hands-Lock.svg" 
                    alt="Hands and lock illustration" 
-                   width="80" height="80" />
+                   width="120" height="120" />
             </div>
             <h3 class="u-display-s" style="margin-bottom: 1rem; color: #000;">Anthropic Academy: Learn to build with Claude</h3>
           </div>
@@ -179,7 +191,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
           <div class="research-list">
             <div class="research-item">
               <div class="research-content">
-                <h3 class="u-paragraph-m" style="font-weight: 600; margin-bottom: 0.5rem;">Tracing the thoughts of a large language model</h3>
+                <h3 class="u-paragraph-s" style="font-weight: 600; margin-bottom: 0.25rem;">Tracing the thoughts of a large language model</h3>
               </div>
               <div class="research-meta">
                 <span class="research-category">Interpretability</span>
@@ -189,7 +201,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
             
             <div class="research-item">
               <div class="research-content">
-                <h3 class="u-paragraph-m" style="font-weight: 600; margin-bottom: 0.5rem;">Anthropic Economic Index</h3>
+                <h3 class="u-paragraph-s" style="font-weight: 600; margin-bottom: 0.25rem;">Anthropic Economic Index</h3>
               </div>
               <div class="research-meta">
                 <span class="research-category">Societal impacts</span>
@@ -199,7 +211,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
             
             <div class="research-item">
               <div class="research-content">
-                <h3 class="u-paragraph-m" style="font-weight: 600; margin-bottom: 0.5rem;">Claude 3.7 Sonnet and Claude Code</h3>
+                <h3 class="u-paragraph-s" style="font-weight: 600; margin-bottom: 0.25rem;">Claude 3.7 Sonnet and Claude Code</h3>
               </div>
               <div class="research-meta">
                 <span class="research-category">Product</span>
@@ -209,7 +221,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
             
             <div class="research-item">
               <div class="research-content">
-                <h3 class="u-paragraph-m" style="font-weight: 600; margin-bottom: 0.5rem;">Claude's extended thinking</h3>
+                <h3 class="u-paragraph-s" style="font-weight: 600; margin-bottom: 0.25rem;">Claude's extended thinking</h3>
               </div>
               <div class="research-meta">
                 <span class="research-category">Product</span>
@@ -219,7 +231,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
             
             <div class="research-item">
               <div class="research-content">
-                <h3 class="u-paragraph-m" style="font-weight: 600; margin-bottom: 0.5rem;">Alignment faking in large language models</h3>
+                <h3 class="u-paragraph-s" style="font-weight: 600; margin-bottom: 0.25rem;">Alignment faking in large language models</h3>
               </div>
               <div class="research-meta">
                 <span class="research-category">Alignment science</span>
@@ -229,7 +241,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
             
             <div class="research-item">
               <div class="research-content">
-                <h3 class="u-paragraph-m" style="font-weight: 600; margin-bottom: 0.5rem;">Introducing the Model Context Protocol</h3>
+                <h3 class="u-paragraph-s" style="font-weight: 600; margin-bottom: 0.25rem;">Introducing the Model Context Protocol</h3>
               </div>
               <div class="research-meta">
                 <span class="research-category">Product</span>
@@ -268,7 +280,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
           </div>
           
           <div>
-            <h4 class="u-display-xs" style="margin-bottom: 1rem; color: #fff;">Product</h4>
+            <h4 class="u-detail-s" style="margin-bottom: 1rem; color: #fff;">Product</h4>
             <div class="footer-links">
               <a href="/claude" class="anthropic-footer-link">Claude overview</a>
               <a href="/claude-code" class="anthropic-footer-link">Claude Code</a>
@@ -282,7 +294,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
           </div>
           
           <div>
-            <h4 class="u-display-xs" style="margin-bottom: 1rem; color: #fff;">API Platform</h4>
+            <h4 class="u-detail-s" style="margin-bottom: 1rem; color: #fff;">API Platform</h4>
             <div class="footer-links">
               <a href="/api" class="anthropic-footer-link">API overview</a>
               <a href="https://docs.anthropic.com" class="anthropic-footer-link">Developer docs</a>
@@ -294,13 +306,13 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
           </div>
           
           <div>
-            <h4 class="u-display-xs" style="margin-bottom: 1rem; color: #fff;">Research</h4>
+            <h4 class="u-detail-s" style="margin-bottom: 1rem; color: #fff;">Research</h4>
             <div class="footer-links">
               <a href="/research" class="anthropic-footer-link">Research overview</a>
               <a href="/publications" class="anthropic-footer-link">Economic Index</a>
             </div>
             
-            <h4 class="u-display-xs" style="margin-bottom: 1rem; color: #fff; margin-top: 2rem;">Claude models</h4>
+            <h4 class="u-detail-s" style="margin-bottom: 1rem; color: #fff; margin-top: 2rem;">Claude models</h4>
             <div class="footer-links">
               <a href="/opus" class="anthropic-footer-link">Claude Opus 4</a>
               <a href="/sonnet" class="anthropic-footer-link">Claude Sonnet 4</a>
@@ -309,14 +321,14 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
           </div>
           
           <div>
-            <h4 class="u-display-xs" style="margin-bottom: 1rem; color: #fff;">Commitments</h4>
+            <h4 class="u-detail-s" style="margin-bottom: 1rem; color: #fff;">Commitments</h4>
             <div class="footer-links">
               <a href="/transparency" class="anthropic-footer-link">Transparency</a>
               <a href="/scaling-policy" class="anthropic-footer-link">Responsible scaling policy</a>
               <a href="/security" class="anthropic-footer-link">Security and compliance</a>
             </div>
             
-            <h4 class="u-display-xs" style="margin-bottom: 1rem; color: #fff; margin-top: 2rem;">Solutions</h4>
+            <h4 class="u-detail-s" style="margin-bottom: 1rem; color: #fff; margin-top: 2rem;">Solutions</h4>
             <div class="footer-links">
               <a href="/agents" class="anthropic-footer-link">AI agents</a>
               <a href="/coding" class="anthropic-footer-link">Coding</a>
@@ -326,7 +338,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
           </div>
           
           <div>
-            <h4 class="u-display-xs" style="margin-bottom: 1rem; color: #fff;">Learn</h4>
+            <h4 class="u-detail-s" style="margin-bottom: 1rem; color: #fff;">Learn</h4>
             <div class="footer-links">
               <a href="/academy" class="anthropic-footer-link">Anthropic Academy</a>
               <a href="/stories" class="anthropic-footer-link">Customer stories</a>
@@ -335,7 +347,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
               <a href="/partners" class="anthropic-footer-link">Partner Directory</a>
             </div>
             
-            <h4 class="u-display-xs" style="margin-bottom: 1rem; color: #fff; margin-top: 2rem;">Explore</h4>
+            <h4 class="u-detail-s" style="margin-bottom: 1rem; color: #fff; margin-top: 2rem;">Explore</h4>
             <div class="footer-links">
               <a href="/about" class="anthropic-footer-link">About us</a>
               <a href="/partners" class="anthropic-footer-link">Become a partner</a>
@@ -347,14 +359,14 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
           </div>
           
           <div>
-            <h4 class="u-display-xs" style="margin-bottom: 1rem; color: #fff;">Help and security</h4>
+            <h4 class="u-detail-s" style="margin-bottom: 1rem; color: #fff;">Help and security</h4>
             <div class="footer-links">
               <a href="/status" class="anthropic-footer-link">Status</a>
               <a href="/availability" class="anthropic-footer-link">Availability</a>
               <a href="/support" class="anthropic-footer-link">Support center</a>
             </div>
             
-            <h4 class="u-display-xs" style="margin-bottom: 1rem; color: #fff; margin-top: 2rem;">Terms and policies</h4>
+            <h4 class="u-detail-s" style="margin-bottom: 1rem; color: #fff; margin-top: 2rem;">Terms and policies</h4>
             <div class="footer-links">
               <a href="/privacy" class="anthropic-footer-link">Privacy choices</a>
               <a href="/privacy-policy" class="anthropic-footer-link">Privacy policy</a>
@@ -390,5 +402,6 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
         </div>
       </div>
     </footer>
+    </div>
   </AnthropicCustom>
 </Layout>

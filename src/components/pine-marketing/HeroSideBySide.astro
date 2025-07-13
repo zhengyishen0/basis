@@ -31,13 +31,14 @@ const {
   containerMaxWidth = "max-w-6xl"
 } = Astro.props;
 
-const highlightColorClasses = {
+const pineColorClasses = {
   blue: 'text-blue-600',
   purple: 'text-purple-600',
   green: 'text-green-600',
   red: 'text-red-600',
   yellow: 'text-yellow-500'
 };
+const highlightColorClasses = pineColorClasses;
 ---
 
 <section class={`px-2 py-32 ${backgroundColor} md:px-0`}>
