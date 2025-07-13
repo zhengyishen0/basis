@@ -13,7 +13,7 @@ const {
   menuClass = ""
 } = Astro.props;
 
-const placementClasses = {
+const placementClasses: { [key: string]: string } = {
   'bottom-start': 'top-full left-0 mt-2',
   'bottom-end': 'top-full right-0 mt-2',
   'top-start': 'bottom-full left-0 mb-2',

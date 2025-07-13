@@ -20,7 +20,7 @@ const {
   class: className = ""
 } = Astro.props;
 
-const menuBarClasses = {
+const menuBarClasses: { [key: string]: string } = {
   desktop: 'bg-neutral-100 border-b border-neutral-200 px-2 py-1',
   web: 'bg-white border-b border-neutral-200 shadow-sm'
 };

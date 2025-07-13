@@ -24,7 +24,7 @@ const {
   lightboxClass = ""
 } = Astro.props;
 
-const columnClasses = {
+const columnClasses: { [key: number]: string } = {
   2: 'grid-cols-2',
   3: 'grid-cols-2 md:grid-cols-3',
   4: 'grid-cols-2 md:grid-cols-4',
@@ -32,13 +32,13 @@ const columnClasses = {
   6: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-6'
 };
 
-const gapClasses = {
+const gapClasses: { [key: string]: string } = {
   'sm': 'gap-2',
   'md': 'gap-4',
   'lg': 'gap-6'
 };
 
-const aspectRatioClasses = {
+const aspectRatioClasses: { [key: string]: string } = {
   'square': 'aspect-square',
   'video': 'aspect-video',
   'photo': 'aspect-[4/3]',

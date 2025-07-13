@@ -15,7 +15,9 @@ const {
   dotColor = color
 } = Astro.props;
 
-const colorClasses = {
+const colorClasses: {
+  [variant: string]: { [color: string]: string }
+} = {
   solid: {
     'black': 'bg-black text-white',
     'blue': 'bg-blue-600 text-white',
@@ -58,7 +60,7 @@ const colorClasses = {
   }
 };
 
-const dotColors = {
+const dotColors: { [key: string]: string } = {
   'black': 'bg-gray-800',
   'blue': 'bg-blue-500',
   'red': 'bg-red-500',
@@ -69,7 +71,7 @@ const dotColors = {
   'gray': 'bg-gray-500',
 };
 
-const sizeClasses = {
+const sizeClasses: { [key: string]: string } = {
   'sm': 'px-2 py-0.5 text-xs',
   'md': 'px-2.5 py-0.5 text-xs',
   'lg': 'px-3 py-1 text-sm',

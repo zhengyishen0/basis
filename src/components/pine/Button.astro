@@ -17,7 +17,9 @@ const {
   class: className = ""
 } = Astro.props;
 
-const variantClasses = {
+const variantClasses: {
+  [variant: string]: { [color: string]: string }
+} = {
   solid: {
     'neutral': 'bg-neutral-950 text-white hover:bg-neutral-900 focus:ring-neutral-900',
     'blue': 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-600',
@@ -52,7 +54,7 @@ const variantClasses = {
   }
 };
 
-const sizeClasses = {
+const sizeClasses: { [key: string]: string } = {
   'sm': 'px-3 py-1.5 text-sm',
   'md': 'px-4 py-2 text-sm',
   'lg': 'px-6 py-3 text-base',

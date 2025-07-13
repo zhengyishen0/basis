@@ -21,19 +21,19 @@ const {
   class: className = ""
 } = Astro.props;
 
-const containerClasses = {
+const containerClasses: { [key: string]: string } = {
   default: 'text-left',
   centered: 'text-center',
   minimal: 'text-left border-l-4 border-neutral-200 pl-6'
 };
 
-const quoteClasses = {
+const quoteClasses: { [key: string]: string } = {
   sm: 'text-base',
   md: 'text-lg', 
   lg: 'text-xl'
 };
 
-const authorClasses = {
+const authorClasses: { [key: string]: string } = {
   sm: 'text-sm',
   md: 'text-base',
   lg: 'text-lg'

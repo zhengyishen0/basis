@@ -17,7 +17,7 @@ const {
   responsive = true
 } = Astro.props;
 
-const orientationClasses = {
+const orientationClasses: { [key: string]: string } = {
   'horizontal': 'flex-row',
   'vertical': 'flex-col'
 };
@@ -160,7 +160,7 @@ function navigationMenu() {
         if (this.activeMenu === menu) {
           this.activeMenu = null;
         }
-      }, ${delay});
+      }, 150);
     },
     
     closeAllMenus() {
@@ -188,7 +188,7 @@ Features:
 -->
 
 <nav 
-  x-data=`{ 
+  x-data={`{ 
     mobileMenuOpen: false,
     activeMenu: null,
     timeoutId: null,
@@ -209,7 +209,7 @@ Features:
           if (this.activeMenu === menu) {
             this.activeMenu = null;
           }
-        }, ${delay});
+        }, 150);
       }
     },
     
@@ -227,7 +227,7 @@ Features:
         this.timeoutId = null;
       }
     }
-  }`
+  }`}
   @click.away="closeAllMenus()"
   @keydown.escape="closeAllMenus()"
   class={`relative ${className}`}

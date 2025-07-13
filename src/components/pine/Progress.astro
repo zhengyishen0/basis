@@ -25,7 +25,7 @@ const {
   class: className = ""
 } = Astro.props;
 
-const colorClasses = {
+const colorClasses: { [key: string]: string } = {
   'blue': 'bg-blue-600',
   'green': 'bg-green-600',
   'red': 'bg-red-600',
@@ -34,7 +34,7 @@ const colorClasses = {
   'gray': 'bg-gray-600'
 };
 
-const sizeClasses = {
+const sizeClasses: { [key: string]: string } = {
   'sm': 'h-2',
   'md': 'h-3',
   'lg': 'h-4'

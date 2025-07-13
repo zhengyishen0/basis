@@ -21,7 +21,7 @@ const {
   id = 'toast'
 } = Astro.props;
 
-const variantClasses = {
+const variantClasses: { [key: string]: string } = {
   'default': 'bg-white border-neutral-200 text-neutral-900',
   'success': 'bg-green-50 border-green-200 text-green-800',
   'error': 'bg-red-50 border-red-200 text-red-800',
@@ -29,7 +29,7 @@ const variantClasses = {
   'info': 'bg-blue-50 border-blue-200 text-blue-800',
 };
 
-const positionClasses = {
+const positionClasses: { [key: string]: string } = {
   'top-right': 'top-4 right-4',
   'top-left': 'top-4 left-4',
   'bottom-right': 'bottom-4 right-4',
@@ -38,7 +38,7 @@ const positionClasses = {
   'bottom-center': 'bottom-4 left-1/2 transform -translate-x-1/2',
 };
 
-const defaultIcons = {
+const defaultIcons: { [key: string]: string } = {
   'success': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>',
   'error': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>',
   'warning': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"></path>',
@@ -137,7 +137,7 @@ Features:
 
 <template x-teleport="body">
   <div 
-    x-data=`{ 
+    x-data="{ 
       toastVisible: true,
       duration: ${duration},
       init() {

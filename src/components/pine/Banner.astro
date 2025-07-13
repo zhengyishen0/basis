@@ -15,7 +15,7 @@ const {
   class: className = ""
 } = Astro.props;
 
-const positionClasses = {
+const positionClasses: { [key: string]: string } = {
   'top': 'top-0',
   'bottom': 'bottom-0'
 };

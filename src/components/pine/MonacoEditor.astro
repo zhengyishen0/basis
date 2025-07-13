@@ -93,17 +93,17 @@ Themes:
 <div 
   x-data="{
     monacoEditor: null,
-    monacoContent: $persist('${value}'),
-    monacoLanguage: '${language}',
-    monacoTheme: '${theme}',
+    monacoContent: $persist(`${value}`),
+    monacoLanguage: `${language}`,
+    monacoTheme: `${theme}`,
     monacoFontSize: ${fontSize},
-    monacoLineNumbers: '${lineNumbers}',
-    monacoWordWrap: '${wordWrap}',
+    monacoLineNumbers: `${lineNumbers}`,
+    monacoWordWrap: `${wordWrap}`,
     monacoMinimap: ${minimap},
     monacoReadOnly: ${readOnly},
-    monacoPlaceholder: '${placeholder}',
-    monacoHeight: '${height}',
-    monacoWidth: '${width}',
+    monacoPlaceholder: `${placeholder}`,
+    monacoHeight: `${height}`,
+    monacoWidth: `${width}`,
     monacoAutoResize: ${autoResize},
     monacoLoaded: false,
     monacoError: null,
@@ -305,7 +305,7 @@ Themes:
   <!-- Hidden input for form submission -->
   <input 
     type="hidden" 
-    :name="'${name}'" 
+    :name="`${name}`" 
     x-model="monacoContent"
   />
 

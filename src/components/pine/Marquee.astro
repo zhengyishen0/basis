@@ -15,7 +15,7 @@ const {
   gradientColor = 'gray-900'
 } = Astro.props;
 
-const speedClasses = {
+const speedClasses: { [key: string]: string } = {
   'slow': 'duration-[40s]',
   'normal': 'duration-[20s]',
   'fast': 'duration-[10s]'

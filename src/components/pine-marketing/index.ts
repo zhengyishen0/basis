@@ -92,10 +92,10 @@ export { default as Navigation } from './Navigation.astro';
 // Type definitions for better TypeScript support
 export type { Props as HeroSideBySideProps } from './HeroSideBySide.astro';
 export type { Props as HeroCenteredProps } from './HeroCentered.astro';
-export type { Props as HeaderWithNavProps, NavItem } from './HeaderWithNav.astro';
+export type { Props as HeaderWithNavProps, NavItem as HeaderNavItem } from './HeaderWithNav.astro';
 export type { Props as HeaderDarkProps, NavItem as DarkNavItem } from './HeaderDark.astro';
-export type { Props as FeatureGridProps, Feature } from './FeatureGrid.astro';
-export type { Props as FeatureSideBySideProps, Benefit } from './FeatureSideBySide.astro';
+export type { Props as FeatureGridProps, Feature as GridFeature } from './FeatureGrid.astro';
+export type { Props as FeatureSideBySideProps, Benefit as SideBySideBenefit } from './FeatureSideBySide.astro';
 export type { Props as TestimonialSideBySideProps, Testimonial } from './TestimonialSideBySide.astro';
 export type { Props as TestimonialGridProps, Testimonial as GridTestimonial } from './TestimonialGrid.astro';
 export type { Props as PricingCardsProps, PricingPlan } from './PricingCards.astro';
@@ -104,7 +104,7 @@ export type { Props as FAQCardsProps, FAQItem } from './FAQCards.astro';
 export type { Props as FAQColumnsProps, FAQColumnItem } from './FAQColumns.astro';
 export type { Props as LoginFormProps } from './LoginForm.astro';
 export type { Props as SignupFormProps } from './SignupForm.astro';
-export type { Props as FooterWithSocialProps, NavItem, SocialLink } from './FooterWithSocial.astro';
+export type { Props as FooterWithSocialProps, NavItem as FooterNavItem, SocialLink as FooterSocialLink } from './FooterWithSocial.astro';
 export type { Props as FooterSimpleProps, SocialLink as SimpleSocialLink } from './FooterSimple.astro';
 
 // Blog Component Types
@@ -114,10 +114,10 @@ export type { Props as BlogOverlayCardsProps, OverlayCard, SmallCard } from './B
 
 // Content Component Types
 export type { Props as ContentHeroProps } from './ContentHero.astro';
-export type { Props as ContentFeaturesProps, Feature, Benefit } from './ContentFeatures.astro';
+export type { Props as ContentFeaturesProps, Feature as ContentFeature, Benefit as ContentBenefit } from './ContentFeatures.astro';
 
 // Team Component Types
-export type { Props as TeamGridProps, TeamMember, SocialLink } from './TeamGrid.astro';
+export type { Props as TeamGridProps, TeamMember, SocialLink as TeamSocialLink } from './TeamGrid.astro';
 
 // Integration Component Types
 export type { Props as IntegrationLogosProps, Integration } from './IntegrationLogos.astro';
@@ -129,4 +129,4 @@ export type { Props as LogoGridProps, Logo } from './LogoGrid.astro';
 export type { Props as TitleSectionsProps } from './TitleSections.astro';
 
 // Navigation Component Types
-export type { Props as NavigationProps, NavItem, CTAButton } from './Navigation.astro';
+export type { Props as NavigationProps, NavItem as NavigationNavItem, CTAButton } from './Navigation.astro';

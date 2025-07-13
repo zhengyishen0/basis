@@ -21,7 +21,13 @@ const {
   class: className = ""
 } = Astro.props;
 
-const sizeClasses = {
+const sizeClasses: {
+  [key: string]: {
+    switch: string;
+    thumb: string;
+    translate: string;
+  }
+} = {
   'sm': {
     switch: 'w-8 h-5',
     thumb: 'w-3 h-3',
@@ -81,7 +87,7 @@ Features:
       class={`relative inline-flex items-center ${sizeClasses[size].switch} rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2 ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
     >
       <span 
-        :class="switchOn ? '${sizeClasses[size].translate}' : 'translate-x-1'"
+        :class="switchOn ? `${sizeClasses[size].translate}` : 'translate-x-1'"
         class={`inline-block ${sizeClasses[size].thumb} bg-white rounded-full transition-transform duration-200 ease-in-out`}
       ></span>
     </button>

@@ -20,7 +20,7 @@ const {
   contentClass = ""
 } = Astro.props;
 
-const variantClasses = {
+const variantClasses: { [key: string]: { [key: string]: string } } = {
   underline: {
     nav: 'border-b border-neutral-200',
     tab: 'border-b-2 border-transparent hover:border-neutral-300 focus:border-neutral-300',

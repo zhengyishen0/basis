@@ -17,14 +17,14 @@ const {
   footerClass = ""
 } = Astro.props;
 
-const variantClasses = {
+const variantClasses: { [key: string]: string } = {
   'default': 'bg-white border border-neutral-200',
   'bordered': 'bg-white border-2 border-neutral-300',
   'shadow': 'bg-white border border-neutral-200 shadow-md',
   'elevated': 'bg-white border border-neutral-200 shadow-lg'
 };
 
-const paddingClasses = {
+const paddingClasses: { [key: string]: string } = {
   'none': '',
   'sm': 'p-4',
   'md': 'p-6',

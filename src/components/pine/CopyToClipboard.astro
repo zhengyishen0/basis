@@ -44,11 +44,11 @@ Features:
 
 <div 
   x-data={`{
-    copyText: '${text}',
+    copyText: \`${text}\`,
     copyNotification: false,
     copySuccess: true,
-    successMessage: '${successMessage}',
-    errorMessage: '${errorMessage}',
+    successMessage: \`${successMessage}\`,
+    errorMessage: \`${errorMessage}\`,
     timeout: ${timeout},
     
     async copyToClipboard() {
