@@ -1,17 +1,21 @@
-# AHA Stack Starter Kit: 
+# AHA Stack Starter Kit
 
-demo: https://zhengyishen0.github.io/aha-stack-starter/
+🚀 A modern web development starter template combining **Astro**, **HTMX**, and **Alpine.js** for fast, interactive web applications.
 
-## To-Dos:
-- [x] fix the alpine components
-- [x] the htmx todo list
-- [x] github actions
-- [x] install all the alpine plugins
-- [x] create comprehensive test suite for all Pine components
-- [x] fix all component issues (ImageGallery, CopyToClipboard, MonacoEditor, Popover, etc.)
-- [x] test Github Actions for Github Pages
-- [ ] convert ahtropic website to alpine components
-- [ ] convert all the marketing template using alpine basic elements
+## 🌟 Live Demo
+
+**Demo:** `https://zhengyishen0.github.io/aha-stack-starter`
+
+> Replace with your actual GitHub Pages URL after deployment
+
+## ✨ What's Included
+
+- ✅ **40+ Pine UI Components** - Complete component library
+- ✅ **GitHub Actions CI/CD** - Automatic deployment to GitHub Pages
+- ✅ **Comprehensive Test Suite** - Individual test pages for all components
+- ✅ **Dynamic Configuration** - Works with any GitHub username/repo
+- ✅ **Mobile Responsive** - All components work on mobile devices
+- ✅ **Zero Config Deployment** - Just push to deploy
 
 ## 🚀 Project Structure
 
@@ -161,15 +165,14 @@ This project is configured for automatic deployment to GitHub Pages using GitHub
 
 3. **Automatic Deployment**:
    - The workflow will automatically trigger on pushes to the `main` branch
-   - Your site will be available at: `https://yourusername.github.io/aha_starter`
+   - Your site will be available at: `https://your-username.github.io/your-repo-name`
 
 ### Manual Deployment:
-You can also trigger deployment manually by going to the **Actions** tab in your repository and clicking "Run workflow" on the "Deploy to GitHub Pages" workflow.
-
-The deployment configuration is in `.github/workflows/deploy.yml` and includes:
-- Node.js setup and dependency installation
-- Astro build process
-- Automatic deployment to GitHub Pages
+### Configuration Notes:
+- The project automatically detects your GitHub username and repository name
+- No manual configuration needed for deployment
+- Works with any repository name or GitHub account
+- The configuration is in `.github/workflows/deploy.yml`
 
 ## 👀 Want to learn more?
 

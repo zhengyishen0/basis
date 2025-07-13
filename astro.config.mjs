@@ -4,8 +4,8 @@ import tailwind from '@tailwindcss/vite';
 
 // Dynamic configuration for GitHub Pages
 const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
-const githubRepo = process.env.GITHUB_REPOSITORY?.split('/')[1] || 'aha-stack-starter';
-const githubUser = process.env.GITHUB_REPOSITORY?.split('/')[0] || 'zhengyishen0';
+const githubRepo = process.env.GITHUB_REPOSITORY?.split('/')[1] || 'your-repo-name';
+const githubUser = process.env.GITHUB_REPOSITORY?.split('/')[0] || 'your-username';
 
 // https://astro.build/config
 export default defineConfig({
