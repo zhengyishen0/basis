@@ -7,7 +7,7 @@
 - [x] install all the alpine plugins
 - [x] create comprehensive test suite for all Pine components
 - [x] fix all component issues (ImageGallery, CopyToClipboard, MonacoEditor, Popover, etc.)
-- [ ] test Github Actions for Github Pages
+- [x] test Github Actions for Github Pages
 - [ ] convert ahtropic website to alpine components
 - [ ] convert all the marketing template using alpine basic elements
 
