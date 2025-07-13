@@ -22,7 +22,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
               <a href="/learn" class="anthropic-nav-link">Learn</a>
               <a href="/news" class="anthropic-nav-link">News</a>
             </div>
-            <a href="../" class="anthropic-button-primary">Back to Home</a>
+            <a href={import.meta.env.BASE_URL} class="anthropic-button-primary">Back to Home</a>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
           </div>
           
           <div class="hero-visual">
-            <img src={import.meta.env.BASE_URL + "hero-image.png"} 
+            <img src={import.meta.env.BASE_URL + "/hero-image.png"} 
                  alt="Network diagram with interconnected nodes and hand illustration representing AI systems" 
                  class="network-diagram" />
           </div>
