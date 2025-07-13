@@ -1,11 +1,26 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Counter from '../components/alpine/Counter.astro';
+import TodoList from '../components/htmx/TodoList.astro';
 ---
 
 <Layout>
-	<Welcome />
+	<main class="container mx-auto px-4 py-8 max-w-4xl">
+		<h1 class="text-3xl font-bold mb-8 text-center">Astro + HTMX + Alpine.js + Pines Starter</h1>
+		
+		<div class="grid md:grid-cols-2 gap-8">
+			<Counter />
+			<TodoList />
+		</div>
+		
+		<div class="mt-8 p-4 bg-gray-50 rounded-lg">
+			<h2 class="text-xl font-semibold mb-2">Tech Stack Demo</h2>
+			<ul class="space-y-1 text-sm">
+				<li>🚀 <strong>Astro</strong> - Static site generation with dynamic islands</li>
+				<li>⚡ <strong>HTMX</strong> - AJAX without JavaScript frameworks</li>
+				<li>🏔️ <strong>Alpine.js</strong> - Minimal framework for interactivity</li>
+				<li>🌲 <strong>Pines UI</strong> - Copy-paste components for Alpine.js</li>
+			</ul>
+		</div>
+	</main>
 </Layout>

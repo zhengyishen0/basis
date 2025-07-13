@@ -9,6 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.11.0"
+    "alpinejs": "^3.14.9",
+    "astro": "^5.11.0",
+    "htmx.org": "^2.0.6"
   }
 }
