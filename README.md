@@ -1,7 +1,9 @@
 # AHA Stack Starter Kit: 
 
 ## To-Dos:
-- [ ] fix the alpine components and the htmx todo list
+- [ ] fix the alpine components and 
+- [x] the htmx todo list
+- [x] github actions
 - [ ] install all the alpine plugins
 - [ ] convert ahtropic website to alpine components
 - [ ] convert all the marketing template using alpine basic elements
@@ -73,6 +75,36 @@ All commands are run from the root of the project, from a terminal:
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## 🚀 GitHub Pages Deployment
+
+This project is configured for automatic deployment to GitHub Pages using GitHub Actions.
+
+### Setup Instructions:
+
+1. **Push your code to GitHub**:
+   ```bash
+   git add .
+   git commit -m "Add GitHub Pages deployment"
+   git push origin main
+   ```
+
+2. **Enable GitHub Pages**:
+   - Go to your repository on GitHub
+   - Navigate to **Settings** → **Pages**
+   - Under "Source", select **GitHub Actions**
+
+3. **Automatic Deployment**:
+   - The workflow will automatically trigger on pushes to the `main` branch
+   - Your site will be available at: `https://yourusername.github.io/aha_starter`
+
+### Manual Deployment:
+You can also trigger deployment manually by going to the **Actions** tab in your repository and clicking "Run workflow" on the "Deploy to GitHub Pages" workflow.
+
+The deployment configuration is in `.github/workflows/deploy.yml` and includes:
+- Node.js setup and dependency installation
+- Astro build process
+- Automatic deployment to GitHub Pages
 
 ## 👀 Want to learn more?
 

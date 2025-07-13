@@ -8,6 +8,7 @@ import { getEntry } from 'astro:content';
 import Card from '../components/pine/Card.astro';
 import Badge from '../components/pine/Badge.astro';
 import Alert from '../components/pine/Alert.astro';
+import Button from '../components/pine/Button.astro';
 
 const homeContent = await getEntry('pages', 'home');
 const { Content } = await homeContent?.render() || { Content: null };
@@ -17,6 +18,9 @@ const { Content } = await homeContent?.render() || { Content: null };
 	<main class="container mx-auto px-4 py-8 max-w-4xl">
 		<!-- Hero Section -->
 		<div class="text-center mb-12">
+			<div class="mb-4">
+				<Button href="/" variant="ghost" color="neutral">← Back to Home</Button>
+			</div>
 			<h1 class="text-4xl font-bold mb-4">AHA Stack Demo</h1>
 			<p class="text-xl text-gray-600 mb-6">
 				Demonstrating Alpine.js, HTMX, and Markdown with Astro
