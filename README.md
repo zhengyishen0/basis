@@ -5,6 +5,7 @@
 - [ ] install all the alpine plugins
 - [ ] convert ahtropic website to alpine components
 - [ ] convert all the marketing template using alpine basic elements
+- [ ] css class and global css
 
 
 ## 🚀 Project Structure

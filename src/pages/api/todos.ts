@@ -41,11 +41,11 @@ export const POST: APIRoute = async ({ request }) => {
 export const GET: APIRoute = async () => {
   // Return all todos as HTML fragments
   const todos = getTodos();
-  const todoHTML = todos.map((todo, index) => 
+  const todoHTML = todos.map((todo) => 
     `<li class="flex justify-between items-center p-2 bg-white rounded border">
-      <span>${todo}</span>
+      <span>${todo.text}</span>
       <button 
-        hx-delete="/api/todos/${index}" 
+        hx-delete="/api/todos/${todo.id}" 
         hx-target="closest li" 
         hx-swap="outerHTML"
         class="text-red-500 hover:text-red-700"

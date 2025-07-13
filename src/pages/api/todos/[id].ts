@@ -6,9 +6,9 @@ export const prerender = false;
 
 export const DELETE: APIRoute = async ({ params }) => {
   try {
-    const id = parseInt(params.id as string);
+    const id = params.id as string;
     
-    if (isNaN(id)) {
+    if (!id) {
       return new Response('Invalid ID', { status: 400 });
     }
     

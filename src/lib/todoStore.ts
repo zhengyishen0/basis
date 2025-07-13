@@ -1,19 +1,27 @@
 // Simple in-memory todo store (replace with database in production)
-export let todos: string[] = [];
-
-export function addTodo(todo: string): number {
-  todos.push(todo);
-  return todos.length - 1;
+interface Todo {
+  id: string;
+  text: string;
 }
 
-export function removeTodo(index: number): boolean {
-  if (index >= 0 && index < todos.length) {
+export let todos: Todo[] = [];
+let nextId = 1;
+
+export function addTodo(text: string): string {
+  const id = String(nextId++);
+  todos.push({ id, text });
+  return id;
+}
+
+export function removeTodo(id: string): boolean {
+  const index = todos.findIndex(todo => todo.id === id);
+  if (index !== -1) {
     todos.splice(index, 1);
     return true;
   }
   return false;
 }
 
-export function getTodos(): string[] {
+export function getTodos(): Todo[] {
   return [...todos];
 }
