@@ -1,5 +1,7 @@
 # AHA Stack Starter Kit: 
 
+demo: https://zhengyishen0.github.io/aha-stack-starter/
+
 ## To-Dos:
 - [x] fix the alpine components
 - [x] the htmx todo list
@@ -10,7 +12,6 @@
 - [x] test Github Actions for Github Pages
 - [ ] convert ahtropic website to alpine components
 - [ ] convert all the marketing template using alpine basic elements
-
 
 ## 🚀 Project Structure
 

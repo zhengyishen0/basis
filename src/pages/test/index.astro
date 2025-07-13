@@ -36,7 +36,7 @@ const components = [
         <Badge color="green">Alpine.js</Badge>
         <Badge color="purple">HTMX</Badge>
       </div>
-      <Button href="/" variant="outline" color="neutral">← Back to Home</Button>
+      <Button href={import.meta.env.BASE_URL || "/"} variant="outline" color="neutral">← Back to Home</Button>
     </div>
 
     <!-- Component Grid -->
@@ -47,7 +47,7 @@ const components = [
             <h3 class="text-lg font-semibold mb-2">{component}</h3>
             <p class="text-gray-600 text-sm mb-4">Test the {component} component</p>
             <Button 
-              href={`/test/${component.toLowerCase()}`} 
+              href={`./${component.toLowerCase()}`} 
               variant="solid" 
               color="blue" 
               size="sm"
@@ -66,10 +66,10 @@ const components = [
         <div class="p-6">
           <h2 class="text-2xl font-bold mb-4">Quick Actions</h2>
           <div class="flex flex-wrap justify-center gap-4 mb-6">
-            <Button href="/test/all" variant="solid" color="green">View All Components</Button>
-            <Button href="/test/quick-test" variant="solid" color="blue">Quick Test</Button>
-            <Button href="/test/advanced-test" variant="solid" color="purple">Advanced Test</Button>
-            <Button href="/demo" variant="outline" color="blue">Original Demo</Button>
+            <Button href="./all" variant="solid" color="green">View All Components</Button>
+            <Button href="./quick-test" variant="solid" color="blue">Quick Test</Button>
+            <Button href="./advanced-test" variant="solid" color="purple">Advanced Test</Button>
+            <Button href="../demo" variant="outline" color="blue">Original Demo</Button>
           </div>
           
           <!-- Test Status -->
