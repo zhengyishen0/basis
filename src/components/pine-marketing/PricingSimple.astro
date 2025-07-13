@@ -1,4 +1,6 @@
 ---
+import Button from '../pine/Button.astro';
+
 /**
  * PricingSimple Component
  * 
@@ -130,12 +132,11 @@ const colorClasses = {
           </div>
 
           <!-- CTA Button -->
-          <button 
-            class={`inline-flex items-center justify-center w-full py-3 mt-6 font-sans text-sm leading-none text-center no-underline rounded-md cursor-pointer sm:text-base sm:mt-8 md:text-lg ${
-              plan.highlighted
-                ? `text-white ${colorClasses.bg} border-b-4 ${colorClasses.bgLight} hover:text-white`
-                : `${colorClasses.text} bg-transparent border border-b-2 ${colorClasses.border} ${colorClasses.hover} ${colorClasses.hoverText}`
-            }`}
+          <Button 
+            variant={plan.highlighted ? 'solid' : 'outline'}
+            color="blue"
+            size="lg"
+            class="w-full mt-6 sm:mt-8"
             {...(plan.buttonAction ? {
               'hx-get': plan.buttonAction,
               'hx-target': '#main-content',
@@ -143,7 +144,7 @@ const colorClasses = {
             } : {})}
           >
             {plan.buttonText || 'Select Plan'}
-          </button>
+          </Button>
         </div>
       ))}
     </div>

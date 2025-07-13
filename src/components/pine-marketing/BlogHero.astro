@@ -1,4 +1,6 @@
 ---
+import Button from '../pine/Button.astro';
+
 /**
  * BlogHero Component
  * 
@@ -7,7 +9,7 @@
  * 
  * Features:
  * - Responsive layout (stacked on mobile, side-by-side on desktop)
- * - Featured badge with icon and customizable text
+ * - Pine UI badge with icon and customizable colors
  * - Large typography for impactful headlines
  * - Author, date, and read time metadata
  * - Flexible content with slots for custom HTML
@@ -18,7 +20,7 @@
  *   imageUrl="https://example.com/image.jpg"
  *   imageAlt="Featured article image"
  *   badgeText="Featured"
- *   badgeColor="pink"
+ *   badgeColor="purple"
  *   title="Amazing Article Title"
  *   titleHref="/blog/amazing-article"
  *   author="John Doe"
@@ -34,7 +36,7 @@ export interface Props {
   imageAlt?: string;
   imageHref?: string;
   badgeText?: string;
-  badgeColor?: 'pink' | 'purple' | 'blue' | 'green' | 'yellow' | 'red' | 'gray';
+  badgeColor?: 'neutral' | 'blue' | 'green' | 'red' | 'yellow' | 'purple';
   showBadgeIcon?: boolean;
   title: string;
   titleHref?: string;
@@ -52,7 +54,7 @@ const {
   imageAlt = "Featured blog post",
   imageHref,
   badgeText = "Featured",
-  badgeColor = "pink",
+  badgeColor = "purple",
   showBadgeIcon = true,
   title,
   titleHref,
@@ -64,18 +66,6 @@ const {
   imageClass = "",
   contentClass = ""
 } = Astro.props;
-
-const badgeColors = {
-  pink: 'bg-pink-500',
-  purple: 'bg-purple-500',
-  blue: 'bg-blue-500',
-  green: 'bg-green-500',
-  yellow: 'bg-yellow-500',
-  red: 'bg-red-500',
-  gray: 'bg-gray-500'
-};
-
-const badgeClass = `${badgeColors[badgeColor]} flex items-center pl-2 pr-3 py-1.5 leading-none rounded-full text-xs font-medium uppercase text-white inline-block`;
 ---
 
 <section class={`bg-white ${containerClass}`}>
@@ -107,14 +97,19 @@ const badgeClass = `${badgeColors[badgeColor]} flex items-center pl-2 pr-3 py-1.
                     
                     <!-- Badge -->
                     {badgeText && (
-                        <div class={badgeClass}>
+                        <Button 
+                            variant="solid" 
+                            color={badgeColor} 
+                            size="sm"
+                            class="uppercase tracking-wide"
+                        >
                             {showBadgeIcon && (
                                 <svg class="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                                 </svg>
                             )}
                             <span>{badgeText}</span>
-                        </div>
+                        </Button>
                     )}
                     
                     <!-- Title -->
@@ -133,7 +128,15 @@ const badgeClass = `${badgeColors[badgeColor]} flex items-center pl-2 pr-3 py-1.
                                 <>
                                     by 
                                     {authorHref ? (
-                                        <a href={authorHref} class="mr-1 underline">{author}</a>
+                                        <Button 
+                                            href={authorHref} 
+                                            variant="ghost" 
+                                            color="neutral" 
+                                            size="sm"
+                                            class="p-0 h-auto underline font-medium mr-1"
+                                        >
+                                            {author}
+                                        </Button>
                                     ) : (
                                         <span class="mr-1">{author}</span>
                                     )}

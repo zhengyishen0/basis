@@ -1,4 +1,6 @@
 ---
+import Button from '../pine/Button.astro';
+
 /**
  * FooterSimple Component
  * 
@@ -16,7 +18,7 @@
  *     { platform: "facebook", href: "https://facebook.com/company" },
  *     { platform: "twitter", href: "https://twitter.com/company" }
  *   ]}
- *   accentColor="indigo"
+ *   accentColor="blue"
  * />
  * ```
  */
@@ -33,7 +35,7 @@ export interface Props {
   logoUrl?: string;
   copyright?: string;
   socialLinks?: SocialLink[];
-  accentColor?: string;
+  accentColor?: 'neutral' | 'blue' | 'red' | 'green' | 'yellow' | 'purple';
   backgroundColor?: string;
   textColor?: string;
   className?: string;
@@ -51,7 +53,7 @@ const {
     { platform: "github", href: "#" },
     { platform: "dribbble", href: "#" },
   ],
-  accentColor = "indigo",
+  accentColor = "blue",
   backgroundColor = "white",
   textColor = "gray-700",
   className = "",
@@ -98,7 +100,7 @@ const socialIcons = {
       href={logoUrl} 
       class="text-xl font-black leading-none text-gray-900 select-none logo"
     >
-      {logoText}<span class={`text-${accentColor}-600`}>{logoAccent}</span>
+      {logoText}<span class={accentColor === 'neutral' ? 'text-neutral-600' : accentColor === 'blue' ? 'text-blue-600' : accentColor === 'red' ? 'text-red-600' : accentColor === 'green' ? 'text-green-600' : accentColor === 'yellow' ? 'text-yellow-600' : 'text-purple-600'}>{logoAccent}</span>
     </a>
     
     <!-- Copyright -->
@@ -107,18 +109,20 @@ const socialIcons = {
     </p>
     
     <!-- Social Links -->
-    <span class="inline-flex justify-center mt-4 space-x-5 sm:ml-auto sm:mt-0 sm:justify-start">
+    <span class="inline-flex justify-center mt-4 space-x-2 sm:ml-auto sm:mt-0 sm:justify-start">
       {socialLinks.map((social) => {
         const icon = socialIcons[social.platform];
         return (
-          <a 
-            href={social.href} 
-            class="text-gray-400 hover:text-gray-500 transition-colors duration-200"
-            aria-label={social.label || `Visit our ${social.platform} page`}
+          <Button
+            variant="ghost"
+            color="neutral"
+            size="sm"
+            href={social.href}
+            class="!p-2"
           >
             <span class="sr-only">{social.platform.charAt(0).toUpperCase() + social.platform.slice(1)}</span>
             <svg 
-              class="w-6 h-6" 
+              class="w-5 h-5" 
               fill="currentColor" 
               viewBox={icon.viewBox} 
               aria-hidden="true"
@@ -129,7 +133,7 @@ const socialIcons = {
                 clip-rule="evenodd" 
               />
             </svg>
-          </a>
+          </Button>
         );
       })}
     </span>

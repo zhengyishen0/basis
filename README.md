@@ -174,6 +174,210 @@ This project is configured for automatic deployment to GitHub Pages using GitHub
 - Works with any repository name or GitHub account
 - The configuration is in `.github/workflows/deploy.yml`
 
+## 🔧 Working with Alpine.js and HTMX
+
+### Alpine.js Setup & Plugin Usage
+
+Alpine.js is included via CDN with all major plugins pre-loaded. The plugins are loaded in the correct order in `src/layouts/Layout.astro`:
+
+```javascript
+// Alpine.js Plugins (loaded before core)
+@alpinejs/mask         // Input masking and formatting
+@alpinejs/intersect    // Intersection observer functionality  
+@alpinejs/persist      // Data persistence across page loads
+@alpinejs/focus        // Focus management utilities
+@alpinejs/collapse     // Smooth collapse/expand animations
+@alpinejs/anchor       // Anchor positioning
+@alpinejs/morph        // DOM morphing for smooth updates
+@alpinejs/sort         // Sortable lists and drag-and-drop
+@alpinejs/resize       // Element resize detection
+
+// Alpine.js Core (loaded last)
+alpinejs@3.14.9
+```
+
+#### Basic Alpine.js Usage
+
+```astro
+<!-- Simple counter component -->
+<div x-data="{ count: 0 }" class="p-4">
+  <button x-on:click="count--">-</button>
+  <span x-text="count"></span>
+  <button x-on:click="count++">+</button>
+</div>
+
+<!-- Form with validation -->
+<div x-data="{ email: '', valid: false }" class="space-y-4">
+  <input 
+    x-model="email"
+    x-on:input="valid = email.includes('@')"
+    type="email" 
+    placeholder="Enter email"
+    class="w-full px-3 py-2 border rounded"
+  />
+  <button 
+    x-show="valid"
+    class="px-4 py-2 bg-blue-500 text-white rounded"
+  >
+    Submit
+  </button>
+</div>
+```
+
+#### Using Alpine.js Plugins
+
+```astro
+<!-- @alpinejs/mask - Input formatting -->
+<input x-mask="(999) 999-9999" placeholder="Phone number" />
+<input x-mask="99/99/9999" placeholder="MM/DD/YYYY" />
+
+<!-- @alpinejs/persist - Data persistence -->
+<div x-data="{ theme: $persist('light') }">
+  <button x-on:click="theme = theme === 'light' ? 'dark' : 'light'">
+    Toggle Theme: <span x-text="theme"></span>
+  </button>
+</div>
+
+<!-- @alpinejs/intersect - Scroll animations -->
+<div x-intersect="$el.classList.add('animate-fadeIn')">
+  Content that animates in when scrolled into view
+</div>
+
+<!-- @alpinejs/collapse - Smooth animations -->
+<div x-data="{ open: false }">
+  <button x-on:click="open = !open">Toggle</button>
+  <div x-show="open" x-collapse>
+    <p>This content will smoothly collapse/expand</p>
+  </div>
+</div>
+
+<!-- @alpinejs/focus - Focus management -->
+<div x-data="{ open: false }" x-on:keydown.escape="open = false">
+  <button x-on:click="open = true">Open Dialog</button>
+  <div x-show="open" x-trap="open">
+    <input x-ref="firstInput" />
+    <button x-on:click="open = false">Close</button>
+  </div>
+</div>
+```
+
+### HTMX Integration
+
+HTMX is loaded via CDN (version 2.0.6) and provides seamless AJAX functionality:
+
+#### Basic HTMX Usage
+
+```astro
+<!-- Simple form submission -->
+<form hx-post="/api/submit" hx-target="#result">
+  <input name="data" type="text" />
+  <button type="submit">Submit</button>
+</form>
+<div id="result"><!-- Response will appear here --></div>
+
+<!-- Load content on page load -->
+<div hx-get="/api/data" hx-trigger="load" hx-target="this">
+  Loading...
+</div>
+
+<!-- Auto-refresh content -->
+<div hx-get="/api/status" hx-trigger="every 30s">
+  Status will update every 30 seconds
+</div>
+```
+
+#### Advanced HTMX Patterns
+
+```astro
+<!-- Infinite scroll -->
+<div hx-get="/api/more" 
+     hx-trigger="revealed" 
+     hx-target="this" 
+     hx-swap="outerHTML">
+  <div>Last item...</div>
+</div>
+
+<!-- Search with debouncing -->
+<input type="search" 
+       name="q"
+       hx-get="/api/search" 
+       hx-trigger="input changed delay:300ms" 
+       hx-target="#search-results" />
+
+<!-- Modal loading -->
+<button hx-get="/api/modal-content" 
+        hx-target="#modal-body" 
+        hx-trigger="click">
+  Open Modal
+</button>
+```
+
+### Combining Alpine.js + HTMX
+
+The real power comes from combining both libraries:
+
+```astro
+<!-- HTMX loads data, Alpine.js manages UI state -->
+<div x-data="{ loading: false, items: [] }">
+  <button 
+    x-on:click="loading = true"
+    hx-get="/api/items"
+    hx-target="#items"
+    hx-on:htmx:after-request="loading = false">
+    <span x-show="!loading">Load Items</span>
+    <span x-show="loading">Loading...</span>
+  </button>
+  
+  <div id="items" x-show="!loading">
+    <!-- HTMX will populate this -->
+  </div>
+</div>
+
+<!-- Form with Alpine.js validation + HTMX submission -->
+<div x-data="{ 
+  form: { email: '', password: '' },
+  errors: {},
+  submitted: false 
+}">
+  <form hx-post="/api/login" 
+        hx-target="#response"
+        hx-on:htmx:response-error="errors = JSON.parse($event.detail.xhr.response)">
+    
+    <input x-model="form.email" 
+           type="email" 
+           name="email"
+           x-bind:class="errors.email ? 'border-red-500' : 'border-gray-300'" />
+    <p x-show="errors.email" x-text="errors.email" class="text-red-500"></p>
+    
+    <input x-model="form.password" 
+           type="password" 
+           name="password" />
+    
+    <button type="submit" 
+            x-bind:disabled="!form.email || !form.password">
+      Login
+    </button>
+  </form>
+  
+  <div id="response"></div>
+</div>
+```
+
+### Best Practices
+
+1. **State Management**: Use Alpine.js for client-side state, HTMX for server communication
+2. **Performance**: Leverage Alpine.js's `x-cloak` directive to prevent flash of unstyled content
+3. **Accessibility**: Use Alpine.js focus management plugins for keyboard navigation
+4. **Error Handling**: Combine HTMX error events with Alpine.js for user-friendly error states
+5. **Progressive Enhancement**: Start with working HTML forms, then enhance with HTMX + Alpine.js
+
+### Testing Components
+
+Test your components at `/test/` routes:
+- Basic Alpine.js: `/test/quick-test`
+- Advanced interactions: `/test/advanced-test`
+- Individual component tests: `/test/[component-name]`
+
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

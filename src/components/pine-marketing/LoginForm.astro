@@ -4,6 +4,7 @@
  * 
  * A marketing-focused login form with promotional content on the left and sign-in form on the right.
  * Features a clean, professional design with customizable content and branding.
+ * Uses Pine UI components for form elements and buttons.
  * 
  * Usage:
  * ```astro
@@ -20,6 +21,9 @@
  * ```
  */
 
+import Button from '../pine/Button.astro';
+import TextInput from '../pine/TextInput.astro';
+
 export interface Props {
   tagline?: string;
   headline?: string;
@@ -32,7 +36,7 @@ export interface Props {
   signUpLinkText?: string;
   signUpUrl?: string;
   actionUrl?: string;
-  primaryColor?: string;
+  primaryColor?: 'neutral' | 'blue' | 'green' | 'red' | 'yellow' | 'purple';
   backgroundColor?: string;
   className?: string;
 }
@@ -49,7 +53,7 @@ const {
   signUpLinkText = "Sign up here",
   signUpUrl = "/signup",
   actionUrl = "/api/auth/login",
-  primaryColor = "blue",
+  primaryColor = "blue" as const,
   backgroundColor = "gray-100",
   className = "",
 } = Astro.props;
@@ -57,8 +61,6 @@ const {
 // Dynamic color classes based on primaryColor prop
 const colorClasses = {
   tagline: `text-${primaryColor}-500`,
-  focusRing: `focus:ring-${primaryColor}-500`,
-  button: `bg-${primaryColor}-600 hover:bg-${primaryColor}-700`,
   link: `text-${primaryColor}-500`,
 };
 ---
@@ -88,28 +90,37 @@ const colorClasses = {
             hx-target="#login-result"
             hx-indicator="#login-loading"
           >
-            <input 
-              type="email" 
-              name="email" 
-              id="email" 
-              required
-              class={`block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring ${colorClasses.focusRing} focus:outline-none`}
-              placeholder={emailPlaceholder}
-            >
+            <div class="mb-4">
+              <TextInput 
+                type="email" 
+                name="email" 
+                id="email" 
+                required={true}
+                placeholder={emailPlaceholder}
+                size="lg"
+                variant="filled"
+              />
+            </div>
             
-            <input 
-              type="password" 
-              name="password" 
-              id="password" 
-              required
-              class={`block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring ${colorClasses.focusRing} focus:outline-none`}
-              placeholder={passwordPlaceholder}
-            >
+            <div class="mb-4">
+              <TextInput 
+                type="password" 
+                name="password" 
+                id="password" 
+                required={true}
+                placeholder={passwordPlaceholder}
+                size="lg"
+                variant="filled"
+              />
+            </div>
             
             <div class="block">
-              <button 
+              <Button 
                 type="submit"
-                class={`w-full px-3 py-4 font-medium text-white rounded-lg transition-colors duration-200 ${colorClasses.button}`}
+                variant="solid"
+                color={primaryColor}
+                size="lg"
+                class="w-full"
               >
                 <span class="htmx-indicator" id="login-loading" style="display: none;">
                   <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -119,7 +130,7 @@ const colorClasses = {
                   Signing in...
                 </span>
                 <span class="htmx-indicator-default">{submitText}</span>
-              </button>
+              </Button>
             </div>
           </form>
           

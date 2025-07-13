@@ -26,9 +26,12 @@
  *   ctaText="View Case Studies"
  *   ctaUrl="#"
  *   testimonials={testimonials}
+ *   primaryColor="blue"
  * />
  * ```
  */
+
+import Button from '../pine/Button.astro';
 
 export interface Testimonial {
   quote: string;
@@ -45,7 +48,7 @@ export interface Props {
   ctaUrl?: string;
   testimonials: Testimonial[];
   backgroundColor?: string;
-  primaryColor?: string;
+  primaryColor?: 'neutral' | 'blue' | 'red' | 'green' | 'yellow' | 'purple';
   maxWidth?: string;
   className?: string;
 }
@@ -58,7 +61,7 @@ const {
   ctaUrl,
   testimonials,
   backgroundColor = "bg-gray-100",
-  primaryColor = "indigo",
+  primaryColor = "blue",
   maxWidth = "max-w-6xl",
   className = ""
 } = Astro.props;
@@ -85,12 +88,14 @@ const quoteIcon = `<svg class="absolute left-0 w-10 h-10 text-${primaryColor}-50
           <p class="my-6 text-lg text-gray-600">{subtitle}</p>
         )}
         {ctaText && ctaUrl && (
-          <a 
+          <Button 
             href={ctaUrl} 
-            class={`flex items-center justify-center px-8 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-${primaryColor}-600 border border-transparent rounded-md shadow hover:bg-${primaryColor}-500 focus:outline-none focus:border-${primaryColor}-700 focus:shadow-outline-${primaryColor} md:py-4 md:text-lg md:px-10`}
+            variant="solid"
+            color={primaryColor}
+            size="lg"
           >
             {ctaText}
-          </a>
+          </Button>
         )}
       </div>
       

@@ -17,6 +17,8 @@
  * ```
  */
 
+import Button from '../pine/Button.astro';
+
 export interface NavItem {
   label: string;
   href: string;
@@ -27,6 +29,7 @@ export interface CTAButton {
   label: string;
   href: string;
   variant: 'primary' | 'secondary';
+  color?: 'neutral' | 'blue' | 'red' | 'green' | 'yellow' | 'purple';
 }
 
 export interface Props {
@@ -104,26 +107,14 @@ const containerPadding = 'px-8';
       <!-- CTA Buttons -->
       <div class="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end">
         {ctaButtons.map(button => (
-          button.variant === 'secondary' ? (
-            <a 
-              href={button.href} 
-              class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-gray-600 whitespace-no-wrap bg-white border border-gray-200 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:shadow-none" 
-              data-rounded="rounded-md"
-            >
-              {button.label}
-            </a>
-          ) : (
-            <span class="inline-flex rounded-md shadow-sm">
-              <a 
-                href={button.href} 
-                class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-blue-600 border border-blue-700 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" 
-                data-rounded="rounded-md" 
-                data-primary="blue-600"
-              >
-                {button.label}
-              </a>
-            </span>
-          )
+          <Button 
+            href={button.href} 
+            variant={button.variant === 'secondary' ? 'outline' : 'solid'}
+            color={button.color || 'blue'}
+            size="md"
+          >
+            {button.label}
+          </Button>
         ))}
       </div>
     </div>
@@ -158,21 +149,23 @@ const containerPadding = 'px-8';
       <div class="inline-flex items-center ml-5 space-x-6 lg:justify-end">
         {ctaButtons.map(button => (
           button.variant === 'secondary' ? (
-            <a 
+            <Button 
               href={button.href} 
-              class="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+              variant="ghost"
+              color={button.color || 'neutral'}
+              size="md"
             >
               {button.label}
-            </a>
+            </Button>
           ) : (
-            <a 
+            <Button 
               href={button.href} 
-              class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600" 
-              data-rounded="rounded-md" 
-              data-primary="indigo-600"
+              variant="solid"
+              color={button.color || 'purple'}
+              size="md"
             >
               {button.label}
-            </a>
+            </Button>
           )
         ))}
       </div>

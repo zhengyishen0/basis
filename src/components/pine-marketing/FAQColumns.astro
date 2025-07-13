@@ -1,0 +1,113 @@
+---
+/**
+ * FAQColumns Component
+ * 
+ * An interactive two-column FAQ layout using Pine Accordion components.
+ * Perfect for comprehensive FAQ sections with collapsible functionality.
+ * 
+ * Features:
+ * - Responsive two-column accordion layout (stacks on mobile)
+ * - Interactive expand/collapse functionality per column
+ * - Support for rich text content including links
+ * - Automatic question distribution across columns
+ * - Pine UI design system integration
+ * - TypeScript support with comprehensive prop types
+ * 
+ * Usage:
+ * ```astro
+ * <FAQColumns
+ *   title="Frequently Asked Questions"
+ *   faqs={[
+ *     {
+ *       question: "What is our product?",
+ *       answer: "Our product is a comprehensive solution built with modern technologies. You can use it to achieve your business goals efficiently."
+ *     },
+ *     {
+ *       question: "Can I try it for Free?",
+ *       answer: "Absolutely, you can try out our product for free; however, if you wish to access all features you'll need to upgrade your account."
+ *     },
+ *     {
+ *       question: "Where do I go to upgrade my account?",
+ *       answer: 'You can upgrade your account by visiting <a href="/upgrade" class="text-blue-500 underline">The Pro Upgrade Page</a>. You will also gain access to many other features.'
+ *     }
+ *   ]}
+ *   primaryColor="blue"
+ * />
+ * ```
+ */
+
+import Accordion from '../pine/Accordion.astro';
+
+export interface FAQColumnItem {
+  question: string;
+  answer: string;
+}
+
+export interface Props {
+  title?: string;
+  faqs: FAQColumnItem[];
+  primaryColor?: 'neutral' | 'blue' | 'green' | 'red' | 'yellow' | 'purple';
+  className?: string;
+  questionsPerColumn?: number;
+}
+
+const {
+  title = "Frequently Asked Questions",
+  faqs,
+  primaryColor = "blue",
+  className = "",
+  questionsPerColumn
+} = Astro.props;
+
+// Pine color system for links
+const linkColorClass = primaryColor === 'neutral' ? 'text-neutral-500' :
+  primaryColor === 'blue' ? 'text-blue-500' :
+  primaryColor === 'green' ? 'text-green-500' :
+  primaryColor === 'red' ? 'text-red-500' :
+  primaryColor === 'yellow' ? 'text-yellow-500' :
+  'text-purple-500';
+
+// Split FAQs into two columns
+const midpoint = questionsPerColumn || Math.ceil(faqs.length / 2);
+const leftColumnFAQs = faqs.slice(0, midpoint);
+const rightColumnFAQs = faqs.slice(midpoint);
+
+// Transform FAQs to Accordion items format for each column
+const leftAccordionItems = leftColumnFAQs.map((faq, index) => ({
+  id: `faq-left-${index}`,
+  title: faq.question,
+  content: faq.answer.replace(/class="text-\w+-\d+ underline"/g, `class="${linkColorClass} underline"`)
+}));
+
+const rightAccordionItems = rightColumnFAQs.map((faq, index) => ({
+  id: `faq-right-${index}`,
+  title: faq.question,
+  content: faq.answer.replace(/class="text-\w+-\d+ underline"/g, `class="${linkColorClass} underline"`)
+}));
+---
+
+<section class={`py-24 bg-white ${className}`}>
+  <div class="px-8 mx-auto max-w-7xl lg:px-16">
+    <!-- Header -->
+    <h2 class="mb-4 text-xl font-bold md:text-3xl">
+      {title}
+    </h2>
+
+    <!-- Two Column Pine Accordions -->
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-16">
+      <!-- Left Column -->
+      <div>
+        {leftAccordionItems.length > 0 && (
+          <Accordion items={leftAccordionItems} />
+        )}
+      </div>
+
+      <!-- Right Column -->
+      <div>
+        {rightAccordionItems.length > 0 && (
+          <Accordion items={rightAccordionItems} />
+        )}
+      </div>
+    </div>
+  </div>
+</section>

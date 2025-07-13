@@ -1,4 +1,6 @@
 ---
+import Button from '../pine/Button.astro';
+
 /**
  * PricingCards Component
  * 
@@ -140,12 +142,11 @@ const colorClasses = {
           </ul>
 
           <!-- CTA Button -->
-          <button 
-            class={`inline-flex justify-center w-full px-4 py-3 mt-8 font-sans text-sm leading-none text-center no-underline rounded-md cursor-pointer sm:text-base md:text-lg ${
-              plan.highlighted
-                ? `text-white ${colorClasses.bg} border ${colorClasses.hover} ${colorClasses.focus} hover:text-white focus-within:text-white`
-                : `${colorClasses.text} bg-transparent border ${colorClasses.border} ${colorClasses.hover} hover:text-white ${colorClasses.focus} focus-within:text-white`
-            }`}
+          <Button 
+            variant={plan.highlighted ? 'solid' : 'outline'}
+            color="blue"
+            size="lg"
+            class="w-full mt-8"
             {...(plan.buttonAction ? {
               'hx-get': plan.buttonAction,
               'hx-target': '#main-content',
@@ -153,7 +154,7 @@ const colorClasses = {
             } : {})}
           >
             {plan.buttonText || 'Select Plan'}
-          </button>
+          </Button>
         </div>
       ))}
     </div>

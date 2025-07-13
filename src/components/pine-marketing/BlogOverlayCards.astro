@@ -1,4 +1,6 @@
 ---
+import Button from '../pine/Button.astro';
+
 /**
  * BlogOverlayCards Component
  * 
@@ -10,7 +12,7 @@
  * - Background image cards with colored overlays
  * - Responsive grid layout (1-3 columns based on screen size)
  * - Hover effects with image scaling
- * - Category badges with contrasting colors
+ * - Pine UI category badges with consistent styling
  * - Large, bold typography for impact
  * - Optional header section with title and description
  * - Flexible card arrangement with special layouts for different screen sizes
@@ -40,10 +42,10 @@ export interface OverlayCard {
   id: string;
   backgroundImage: string;
   href?: string;
-  overlayColor?: 'purple' | 'blue' | 'yellow' | 'green' | 'red' | 'indigo';
+  overlayColor?: 'neutral' | 'blue' | 'green' | 'red' | 'yellow' | 'purple';
   category?: {
     name: string;
-    color?: 'purple' | 'blue' | 'yellow' | 'green' | 'red' | 'indigo';
+    color?: 'neutral' | 'blue' | 'green' | 'red' | 'yellow' | 'purple';
   };
   title: string;
   description?: string;
@@ -57,7 +59,7 @@ export interface SmallCard {
   href?: string;
   category?: {
     name: string;
-    color?: 'purple' | 'blue' | 'yellow' | 'green' | 'red' | 'indigo';
+    color?: 'neutral' | 'blue' | 'green' | 'red' | 'yellow' | 'purple';
   };
   title: string;
   description?: string;
@@ -88,30 +90,21 @@ const {
 } = Astro.props;
 
 const overlayColors = {
-  purple: 'bg-purple-500',
-  blue: 'bg-blue-400',
-  yellow: 'bg-yellow-400',
-  green: 'bg-green-500',
-  red: 'bg-red-500',
-  indigo: 'bg-indigo-400'
-};
-
-const categoryColors = {
-  purple: 'text-purple-500 bg-white',
-  blue: 'text-blue-500 bg-white',
-  yellow: 'text-yellow-400 bg-white',
-  green: 'text-green-500 bg-white',
-  red: 'text-red-400 bg-white',
-  indigo: 'text-indigo-400 bg-white'
+  neutral: 'bg-neutral-800',
+  blue: 'bg-blue-600',
+  green: 'bg-green-600',
+  red: 'bg-red-600',
+  yellow: 'bg-yellow-500',
+  purple: 'bg-purple-600'
 };
 
 const textColors = {
-  purple: 'text-purple-100',
+  neutral: 'text-neutral-100',
   blue: 'text-blue-100',
-  yellow: 'text-yellow-50',
   green: 'text-green-100',
   red: 'text-red-100',
-  indigo: 'text-indigo-100'
+  yellow: 'text-yellow-50',
+  purple: 'text-purple-100'
 };
 ---
 
@@ -157,9 +150,16 @@ const textColors = {
                     <div class={`relative z-20 w-full h-auto py-8 text-white ${overlayColors[card.overlayColor || 'purple']} border-t-0 border-yellow-200 px-7 ${card.contentClass || ''}`}>
                         <!-- Category Badge -->
                         {card.category && (
-                            <a href="#_" class={`inline-block text-xs font-semibold absolute top-0 -mt-3.5 rounded-full px-4 py-2 uppercase ${categoryColors[card.category.color || card.overlayColor || 'purple']}`}>
-                                {card.category.name}
-                            </a>
+                            <div class="absolute top-0 -mt-3.5">
+                                <Button 
+                                    variant="solid" 
+                                    color={card.category.color || card.overlayColor || 'purple'} 
+                                    size="sm"
+                                    class="uppercase tracking-wide bg-white text-current border-2"
+                                >
+                                    {card.category.name}
+                                </Button>
+                            </div>
                         )}
                         
                         <!-- Title -->
@@ -199,8 +199,15 @@ const textColors = {
                             <div class="relative flex flex-col items-start px-6 bg-white border border-t-0 border-gray-200 py-7 rounded-b-2xl">
                                 <!-- Category Badge -->
                                 {card.category && (
-                                    <div class={`${overlayColors[card.category.color || 'indigo']} absolute top-0 -mt-3 flex items-center px-3 py-1.5 leading-none w-auto inline-block rounded-full text-xs font-medium uppercase text-white inline-block`}>
-                                        <span>{card.category.name}</span>
+                                    <div class="absolute top-0 -mt-3">
+                                        <Button 
+                                            variant="solid" 
+                                            color={card.category.color || 'neutral'} 
+                                            size="sm"
+                                            class="uppercase tracking-wide"
+                                        >
+                                            {card.category.name}
+                                        </Button>
                                     </div>
                                 )}
                                 

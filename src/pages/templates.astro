@@ -1,0 +1,576 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Badge from '../components/pine/Badge.astro';
+import Button from '../components/pine/Button.astro';
+
+// Import some key Pine Marketing Components to showcase
+import HeroCentered from '../components/pine-marketing/HeroCentered.astro';
+import HeroSideBySide from '../components/pine-marketing/HeroSideBySide.astro';
+import FeatureGrid from '../components/pine-marketing/FeatureGrid.astro';
+import TestimonialGrid from '../components/pine-marketing/TestimonialGrid.astro';
+import PricingCards from '../components/pine-marketing/PricingCards.astro';
+import FAQCards from '../components/pine-marketing/FAQCards.astro';
+import TeamGrid from '../components/pine-marketing/TeamGrid.astro';
+import FooterSimple from '../components/pine-marketing/FooterSimple.astro';
+
+// Sample data
+const features = [
+  {
+    title: "Lightning Fast",
+    description: "Built with Astro for optimal performance and quick loading times",
+    icon: "⚡"
+  },
+  {
+    title: "Interactive",
+    description: "HTMX and Alpine.js provide seamless interactivity without complex JavaScript",
+    icon: "🚀"
+  },
+  {
+    title: "Developer Friendly",
+    description: "Clean, maintainable code with excellent TypeScript support",
+    icon: "💻"
+  },
+  {
+    title: "Responsive",
+    description: "Mobile-first design that works perfectly on all devices",
+    icon: "📱"
+  }
+];
+
+const testimonials = [
+  {
+    quote: "Switching to the AHA stack was a game-changer for our team. We reduced our build times by 70% and our developers are happier than ever. The combination of Astro's performance with Alpine's simplicity is just perfect.",
+    author: "Sarah Chen",
+    position: "VP Engineering",
+    company: "Vercel",
+    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face"
+  },
+  {
+    quote: "We migrated our entire e-commerce platform to the AHA stack and saw immediate improvements. Page load speeds increased by 45% and our conversion rates followed. The developer experience is unmatched.",
+    author: "Marcus Rodriguez",
+    position: "CTO",
+    company: "Shopify",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
+  },
+  {
+    quote: "The Pine UI components saved us months of development time. We launched our MVP 3 months ahead of schedule, and the design consistency across our platform is remarkable. Highly recommended!",
+    author: "Dr. Emily Watson",
+    position: "Head of Product",
+    company: "Stripe",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
+  }
+];
+
+const pricingPlans = [
+  {
+    name: "Starter",
+    description: "Perfect for small projects and learning",
+    price: "Free",
+    period: "",
+    features: [
+      "Up to 3 projects",
+      "Community support",
+      "Basic templates",
+      "Documentation access"
+    ],
+    buttonText: "Get Started",
+    buttonHref: "#",
+    featured: false
+  },
+  {
+    name: "Professional",
+    description: "For growing teams and businesses",
+    price: "$29",
+    period: "/month",
+    features: [
+      "Unlimited projects",
+      "Priority support",
+      "Premium templates",
+      "Advanced components",
+      "Team collaboration",
+      "Analytics dashboard"
+    ],
+    buttonText: "Start Trial",
+    buttonHref: "#",
+    featured: true
+  },
+  {
+    name: "Enterprise",
+    description: "For large organizations",
+    price: "$99",
+    period: "/month",
+    features: [
+      "Everything in Professional",
+      "Custom components",
+      "Dedicated support",
+      "SLA guarantees",
+      "Advanced security",
+      "Custom integrations"
+    ],
+    buttonText: "Contact Sales",
+    buttonHref: "#",
+    featured: false
+  }
+];
+
+const faqItems = [
+  {
+    question: "What makes the AHA stack different from React or Vue?",
+    answer: "Unlike traditional SPAs that ship JavaScript for everything, AHA stack ships zero JavaScript by default. Astro generates static HTML, while HTMX and Alpine.js add interactivity only where needed. This results in faster page loads, better SEO, and lower bundle sizes - often 90% smaller than equivalent React apps."
+  },
+  {
+    question: "Can I migrate my existing React/Vue app to AHA stack?",
+    answer: "Yes! Astro supports React, Vue, and other framework components out of the box. You can migrate incrementally - start with static pages in Astro, keep dynamic components in your preferred framework, then gradually replace them with Alpine.js as needed."
+  },
+  {
+    question: "How do I handle complex state management?",
+    answer: "For most applications, Alpine.js's reactive data and HTMX's server-driven approach eliminate the need for complex state management. For advanced cases, you can use Alpine stores, URL state, or integrate libraries like Zustand or Pinia in framework islands."
+  },
+  {
+    question: "What's the learning curve like?",
+    answer: "If you know HTML, CSS, and basic JavaScript, you can be productive in days. Astro feels like writing HTML with superpowers, HTMX uses familiar HTML attributes, and Alpine.js has a tiny API. Most developers find it refreshingly simple after React/Vue complexity."
+  },
+  {
+    question: "Is it production-ready for enterprise applications?",
+    answer: "Absolutely! Companies like NASA, Nordstrom, and Google use Astro in production. The stack offers excellent performance, TypeScript support, robust testing tools, and scales from simple landing pages to complex applications with millions of users."
+  },
+  {
+    question: "How does deployment and hosting work?",
+    answer: "Since AHA stack generates static files, you can deploy anywhere - Vercel, Netlify, GitHub Pages, AWS S3, or any CDN. For dynamic features, you can add serverless functions or use Astro's SSR mode with Node.js, Deno, or Cloudflare Workers."
+  }
+];
+
+const teamMembers = [
+  {
+    name: "Alex Thompson",
+    role: "Lead Architect",
+    bio: "Former Google engineer with 10+ years building scalable web applications. Created the core AHA stack architecture and leads our open-source initiatives.",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face",
+    socialLinks: [
+      { platform: "github", href: "https://github.com/alexthompson" },
+      { platform: "twitter", href: "https://twitter.com/alexthompson" }
+    ]
+  },
+  {
+    name: "Dr. Maria Gonzalez",
+    role: "Head of Design Systems",
+    bio: "PhD in Human-Computer Interaction from Stanford. Previously design lead at Airbnb, specializing in component libraries and design systems at scale.",
+    image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop&crop=face",
+    socialLinks: [
+      { platform: "dribbble", href: "https://dribbble.com/mariagonzalez" },
+      { platform: "linkedin", href: "https://linkedin.com/in/mariagonzalez" }
+    ]
+  },
+  {
+    name: "David Kim",
+    role: "Principal DevOps Engineer",
+    bio: "Infrastructure wizard who scaled systems at Netflix and Tesla. Experts in Kubernetes, CI/CD, and making deployments so smooth they're boring.",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face",
+    socialLinks: [
+      { platform: "github", href: "https://github.com/davidkim" },
+      { platform: "linkedin", href: "https://linkedin.com/in/davidkim" }
+    ]
+  },
+  {
+    name: "Sophie Chen",
+    role: "Community Manager",
+    bio: "Community builder and developer advocate. Former technical writer at Mozilla, passionate about making web development accessible to everyone.",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&crop=face",
+    socialLinks: [
+      { platform: "twitter", href: "https://twitter.com/sophiechen" },
+      { platform: "linkedin", href: "https://linkedin.com/in/sophiechen" }
+    ]
+  }
+];
+---
+
+<Layout>
+	<main class="min-h-screen">
+		<!-- Page Header -->
+		<div class="text-center py-16 px-4 bg-gradient-to-b from-purple-50 to-white">
+			<h1 class="text-5xl font-bold mb-6 text-gray-900">Marketing Templates Showcase</h1>
+			<p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+				Live preview of Pine UI marketing components, ready to use in your AHA stack projects.
+			</p>
+			<div class="flex justify-center gap-3 mb-8">
+				<Badge color="purple">26 Templates</Badge>
+				<Badge color="blue">Live Preview</Badge>
+				<Badge color="green">AHA Stack</Badge>
+			</div>
+			<div class="flex gap-4 justify-center">
+				<Button href="/" variant="solid" color="purple" size="lg">← Back to Home</Button>
+				<Button href="#hero" variant="outline" color="purple" size="lg">View Templates</Button>
+			</div>
+		</div>
+		
+		<div class="space-y-20">
+			<!-- Hero Components -->
+			<section id="hero">
+				<div class="text-center mb-12 px-4">
+					<h2 class="text-3xl font-bold text-gray-900 mb-4">Hero Components</h2>
+					<p class="text-gray-600 max-w-2xl mx-auto">Powerful hero sections to make a great first impression</p>
+				</div>
+				
+				<div class="space-y-16">
+					<div class="border border-gray-200 rounded-lg overflow-hidden">
+						<div class="bg-gray-50 p-4 border-b">
+							<h3 class="font-semibold text-gray-900">HeroCentered</h3>
+							<p class="text-sm text-gray-600">Centered hero with large text and optional image</p>
+						</div>
+						<HeroCentered
+							title="Level Up Your"
+							titleHighlight="Landing Pages"
+							description="Award winning pages that will take your game to the next level!"
+							primaryButtonText="Try It Free"
+							primaryButtonHref="#trial"
+							secondaryButtonText="Learn More"
+							secondaryButtonHref="#features"
+							primaryColor="purple"
+							imageUrl="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600"
+							imageAlt="Product screenshot"
+						/>
+					</div>
+					
+					<div class="border border-gray-200 rounded-lg overflow-hidden">
+						<div class="bg-gray-50 p-4 border-b">
+							<h3 class="font-semibold text-gray-900">HeroSideBySide</h3>
+							<p class="text-sm text-gray-600">Side-by-side layout with text and image</p>
+						</div>
+						<HeroSideBySide
+							title="Beautiful Pages to"
+							titleHighlight="Tell Your Story!"
+							description="It's never been easier to build beautiful websites that convey your message and tell your story."
+							primaryButtonText="Get Started"
+							primaryButtonHref="#start"
+							secondaryButtonText="View Demo"
+							secondaryButtonHref="#demo"
+							primaryColor="indigo"
+							imageUrl="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600"
+							imageAlt="Hero image"
+						/>
+					</div>
+				</div>
+			</section>
+
+			<!-- Feature Components -->
+			<section id="features">
+				<div class="text-center mb-12 px-4">
+					<h2 class="text-3xl font-bold text-gray-900 mb-4">Feature Components</h2>
+					<p class="text-gray-600 max-w-2xl mx-auto">Showcase your product features effectively</p>
+				</div>
+				
+				<div class="border border-gray-200 rounded-lg overflow-hidden">
+					<div class="bg-gray-50 p-4 border-b">
+						<h3 class="font-semibold text-gray-900">FeatureGrid</h3>
+						<p class="text-sm text-gray-600">Responsive grid for showcasing features with icons</p>
+					</div>
+					<FeatureGrid
+						title="Why Choose AHA Stack?"
+						features={features}
+						primaryColor="blue"
+					/>
+				</div>
+			</section>
+
+			<!-- Testimonial Components -->
+			<section id="testimonials">
+				<div class="text-center mb-12 px-4">
+					<h2 class="text-3xl font-bold text-gray-900 mb-4">Testimonial Components</h2>
+					<p class="text-gray-600 max-w-2xl mx-auto">Show off your customer success stories</p>
+				</div>
+				
+				<div class="border border-gray-200 rounded-lg overflow-hidden">
+					<div class="bg-gray-50 p-4 border-b">
+						<h3 class="font-semibold text-gray-900">TestimonialGrid</h3>
+						<p class="text-sm text-gray-600">Clean 3-column testimonial layout</p>
+					</div>
+					<TestimonialGrid
+						title="What Industry Leaders Say"
+						description="Don't just take our word for it - hear from CTOs and engineering leaders at top companies"
+						testimonials={testimonials}
+					/>
+				</div>
+			</section>
+
+			<!-- Pricing Components -->
+			<section id="pricing">
+				<div class="text-center mb-12 px-4">
+					<h2 class="text-3xl font-bold text-gray-900 mb-4">Pricing Components</h2>
+					<p class="text-gray-600 max-w-2xl mx-auto">Clear pricing for your products and services</p>
+				</div>
+				
+				<div class="border border-gray-200 rounded-lg overflow-hidden">
+					<div class="bg-gray-50 p-4 border-b">
+						<h3 class="font-semibold text-gray-900">PricingCards</h3>
+						<p class="text-sm text-gray-600">Comprehensive pricing with detailed features</p>
+					</div>
+					<div class="w-full">
+						<div class="pricing-container" style="margin: 0 auto; max-width: 1400px; padding: 0 40px;">
+							<PricingCards
+								title="Choose Your Plan"
+								plans={pricingPlans}
+								primaryColor="purple"
+							/>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- FAQ Components -->
+			<section id="faq">
+				<div class="text-center mb-12 px-4">
+					<h2 class="text-3xl font-bold text-gray-900 mb-4">FAQ Components</h2>
+					<p class="text-gray-600 max-w-2xl mx-auto">Answer common questions from your users</p>
+				</div>
+				
+				<div class="border border-gray-200 rounded-lg overflow-hidden">
+					<div class="bg-gray-50 p-4 border-b">
+						<h3 class="font-semibold text-gray-900">FAQCards</h3>
+						<p class="text-sm text-gray-600">Simple FAQ with individual card layouts</p>
+					</div>
+					<div class="flex justify-center w-full px-4">
+						<div class="faq-section w-full max-w-4xl">
+							<div class="text-center mb-8">
+								<p class="text-xs font-bold text-pink-500 uppercase mb-2">Got a Question? We've got answers.</p>
+								<h3 class="text-3xl font-bold text-gray-800 md:text-4xl">Frequently Asked Questions</h3>
+							</div>
+							
+							<div class="space-y-6">
+								{faqItems.map((faq) => (
+									<div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+										<h4 class="text-lg font-bold text-purple-600 mb-3 md:text-xl">{faq.question}</h4>
+										<p class="text-gray-600 leading-relaxed">{faq.answer}</p>
+									</div>
+								))}
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Team Components -->
+			<section id="team">
+				<div class="text-center mb-12 px-4">
+					<h2 class="text-3xl font-bold text-gray-900 mb-4">Team Components</h2>
+					<p class="text-gray-600 max-w-2xl mx-auto">Introduce your team members</p>
+				</div>
+				
+				<div class="border border-gray-200 rounded-lg overflow-hidden">
+					<div class="bg-gray-50 p-4 border-b">
+						<h3 class="font-semibold text-gray-900">TeamGrid</h3>
+						<p class="text-sm text-gray-600">Team member grid with multiple layouts</p>
+					</div>
+					<TeamGrid
+						title="Meet Our Team"
+						description="The talented people behind the AHA stack"
+						members={teamMembers}
+						layout="cards"
+					/>
+				</div>
+			</section>
+
+			<!-- Footer Components -->
+			<section id="footer">
+				<div class="text-center mb-12 px-4">
+					<h2 class="text-3xl font-bold text-gray-900 mb-4">Footer Components</h2>
+					<p class="text-gray-600 max-w-2xl mx-auto">Complete your pages with professional footers</p>
+				</div>
+				
+				<div class="border border-gray-200 rounded-lg overflow-hidden">
+					<div class="bg-gray-50 p-4 border-b">
+						<h3 class="font-semibold text-gray-900">FooterSimple</h3>
+						<p class="text-sm text-gray-600">Minimal horizontal footer layout</p>
+					</div>
+					<FooterSimple
+						logo="AHA Stack"
+						logoHref="/"
+						copyright="© 2024 AHA Stack. All rights reserved."
+						socialLinks={[
+							{ platform: "github", url: "https://github.com" },
+							{ platform: "twitter", url: "https://twitter.com" },
+							{ platform: "linkedin", url: "https://linkedin.com" }
+						]}
+					/>
+				</div>
+			</section>
+
+			<!-- All Templates List -->
+			<section class="bg-gray-50 py-16">
+				<div class="max-w-7xl mx-auto px-4">
+					<div class="text-center mb-12">
+						<h2 class="text-3xl font-bold text-gray-900 mb-4">Complete Template Library</h2>
+						<p class="text-gray-600 max-w-2xl mx-auto">All 26 marketing components available in the Pine UI library</p>
+					</div>
+					
+					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+						<!-- Hero Components -->
+						<div class="bg-white p-6 rounded-lg border">
+							<Badge color="purple" class="mb-3">Hero (4)</Badge>
+							<ul class="space-y-2 text-sm">
+								<li>• HeroCentered</li>
+								<li>• HeroSideBySide</li>
+								<li>• HeaderDark</li>
+								<li>• HeaderWithNav</li>
+							</ul>
+						</div>
+						
+						<!-- Blog Components -->
+						<div class="bg-white p-6 rounded-lg border">
+							<Badge color="blue" class="mb-3">Blog (3)</Badge>
+							<ul class="space-y-2 text-sm">
+								<li>• BlogGrid</li>
+								<li>• BlogHero</li>
+								<li>• BlogOverlayCards</li>
+							</ul>
+						</div>
+						
+						<!-- Feature Components -->
+						<div class="bg-white p-6 rounded-lg border">
+							<Badge color="green" class="mb-3">Features (4)</Badge>
+							<ul class="space-y-2 text-sm">
+								<li>• FeatureGrid</li>
+								<li>• FeatureSideBySide</li>
+								<li>• ContentFeatures</li>
+								<li>• ContentHero</li>
+							</ul>
+						</div>
+						
+						<!-- Testimonial & Pricing -->
+						<div class="bg-white p-6 rounded-lg border">
+							<Badge color="yellow" class="mb-3">Social Proof (4)</Badge>
+							<ul class="space-y-2 text-sm">
+								<li>• TestimonialGrid</li>
+								<li>• TestimonialSideBySide</li>
+								<li>• PricingCards</li>
+								<li>• PricingSimple</li>
+							</ul>
+						</div>
+						
+						<!-- Forms & Navigation -->
+						<div class="bg-white p-6 rounded-lg border">
+							<Badge color="red" class="mb-3">Forms & Nav (5)</Badge>
+							<ul class="space-y-2 text-sm">
+								<li>• LoginForm</li>
+								<li>• SignupForm</li>
+								<li>• FAQCards</li>
+								<li>• FAQColumns</li>
+								<li>• Navigation</li>
+							</ul>
+						</div>
+						
+						<!-- Others -->
+						<div class="bg-white p-6 rounded-lg border">
+							<Badge color="indigo" class="mb-3">Others (6)</Badge>
+							<ul class="space-y-2 text-sm">
+								<li>• TeamGrid</li>
+								<li>• FooterWithSocial</li>
+								<li>• FooterSimple</li>
+								<li>• IntegrationLogos</li>
+								<li>• LogoGrid</li>
+								<li>• TitleSections</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="text-center mt-12">
+						<div class="bg-white p-8 rounded-lg border max-w-2xl mx-auto">
+							<h3 class="text-xl font-semibold mb-4">Ready to Get Started?</h3>
+							<p class="text-gray-600 mb-6">
+								These templates are ready to use! Import them into your Astro project and customize with your content.
+							</p>
+							<div class="flex flex-col sm:flex-row gap-4 justify-center">
+								<Button href="/" variant="solid" color="purple" size="lg">
+									Back to Home
+								</Button>
+								<Button href="https://github.com/zhengyishen0/aha_starter" variant="outline" color="purple" size="lg">
+									View Source
+								</Button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	/* Fix content overflow issues */
+	.pricing-container {
+		overflow-x: auto;
+	}
+	
+	/* Add extra spacing between pricing cards */
+	.pricing-container :global(.grid),
+	.pricing-container :global(.flex) {
+		gap: 2rem !important;
+	}
+	
+	.pricing-container :global(.space-x-6) {
+		gap: 2rem !important;
+	}
+	
+	.pricing-container :global(.grid-cols-3) {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 2rem !important;
+	}
+	
+	@media (min-width: 768px) {
+		.pricing-container :global(.grid),
+		.pricing-container :global(.flex) {
+			gap: 3rem !important;
+		}
+		
+		.pricing-container :global(.space-x-6) {
+			gap: 3rem !important;
+		}
+		
+		.pricing-container :global(.grid-cols-3) {
+			gap: 3rem !important;
+		}
+	}
+	
+	@media (min-width: 1024px) {
+		.pricing-container :global(.grid),
+		.pricing-container :global(.flex) {
+			gap: 4rem !important;
+		}
+		
+		.pricing-container :global(.space-x-6) {
+			gap: 4rem !important;
+		}
+		
+		.pricing-container :global(.grid-cols-3) {
+			gap: 4rem !important;
+		}
+	}
+	
+	/* FAQ Section Styling */
+	.faq-section {
+		margin: 0 auto;
+		width: 100%;
+	}
+	
+	.faq-section p,
+	.faq-section h3,
+	.faq-section h4 {
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+		hyphens: auto;
+	}
+	
+	.faq-section .space-y-6 > div {
+		word-break: break-word;
+	}
+	
+	/* Ensure proper responsive behavior */
+	@media (max-width: 768px) {
+		.pricing-container {
+			padding: 0 16px;
+		}
+		
+		.faq-container {
+			padding: 0 16px;
+		}
+	}
+</style>

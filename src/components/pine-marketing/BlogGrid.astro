@@ -1,4 +1,6 @@
 ---
+import Button from '../pine/Button.astro';
+
 /**
  * BlogGrid Component
  * 
@@ -8,7 +10,7 @@
  * Features:
  * - Responsive grid (1 col mobile, 2 col tablet, 3+ col desktop)
  * - Individual blog cards with image, category badge, title, excerpt, and metadata
- * - Customizable category badge colors
+ * - Pine UI category badges with consistent color system
  * - Author links and read time display
  * - Hover effects on images
  * - Flexible layout options
@@ -42,7 +44,7 @@ export interface BlogPost {
   href?: string;
   category?: {
     name: string;
-    color?: 'purple' | 'pink' | 'red' | 'blue' | 'green' | 'yellow' | 'gray';
+    color?: 'neutral' | 'blue' | 'green' | 'red' | 'yellow' | 'purple';
   };
   title: string;
   titleHref?: string;
@@ -74,20 +76,6 @@ const {
   showExcerpts = true,
   showMetadata = true
 } = Astro.props;
-
-const categoryColors = {
-  purple: 'bg-purple-500',
-  pink: 'bg-pink-500',
-  red: 'bg-red-500',
-  blue: 'bg-blue-500',
-  green: 'bg-green-500',
-  yellow: 'bg-yellow-400',
-  gray: 'bg-gray-800'
-};
-
-const getCategoryClass = (color: string = 'purple') => {
-  return `${categoryColors[color as keyof typeof categoryColors]} flex items-center px-3 py-1.5 leading-none rounded-full text-xs font-medium uppercase text-white inline-block`;
-};
 ---
 
 <div class={`flex grid grid-cols-12 pb-10 sm:px-5 ${gap} ${containerClass}`}>
@@ -112,9 +100,14 @@ const getCategoryClass = (color: string = 'purple') => {
             
             <!-- Category Badge -->
             {post.category && (
-                <div class={getCategoryClass(post.category.color)}>
-                    <span>{post.category.name}</span>
-                </div>
+                <Button 
+                    variant="solid" 
+                    color={post.category.color || 'purple'} 
+                    size="sm"
+                    class="uppercase tracking-wide"
+                >
+                    {post.category.name}
+                </Button>
             )}
             
             <!-- Title -->
@@ -137,7 +130,15 @@ const getCategoryClass = (color: string = 'purple') => {
                     {post.author && (
                         <>
                             {post.author.href ? (
-                                <a href={post.author.href} class="mr-1 underline">{post.author.name}</a>
+                                <Button 
+                                    href={post.author.href} 
+                                    variant="ghost" 
+                                    color="neutral" 
+                                    size="sm"
+                                    class="p-0 h-auto underline font-medium"
+                                >
+                                    {post.author.name}
+                                </Button>
                             ) : (
                                 <span class="mr-1">{post.author.name}</span>
                             )}

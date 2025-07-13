@@ -20,6 +20,8 @@
  * ```
  */
 
+import Button from '../pine/Button.astro';
+
 export interface Integration {
   name: string;
   description: string;
@@ -111,12 +113,14 @@ const smallAppIcons = [
 
     {/* CTA Button */}
     {ctaText && ctaUrl && (
-      <a 
+      <Button 
         href={ctaUrl} 
-        class="px-8 py-4 sm:w-auto w-full text-center text-base font-medium inline-block rounded text-white hover:bg-blue-600 bg-blue-500"
+        variant="solid"
+        color="blue"
+        size="lg"
       >
         {ctaText}
-      </a>
+      </Button>
     )}
   </div>
 </section>
