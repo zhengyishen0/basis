@@ -1,0 +1,312 @@
+---
+export interface Props {
+  id?: string;
+  class?: string;
+  menuClass?: string;
+  trigger?: 'right-click' | 'click' | 'hover';
+  closeOnClick?: boolean;
+}
+
+const { 
+  id = 'context-menu',
+  class: className = "",
+  menuClass = "",
+  trigger = 'right-click',
+  closeOnClick = true
+} = Astro.props;
+---
+
+<!-- 
+Pine UI Context Menu Component
+
+Usage:
+<ContextMenu trigger="right-click">
+  <div slot="target" class="p-4 bg-gray-100 rounded">
+    Right-click me for context menu
+  </div>
+  
+  <div slot="menu">
+    <a href="#" class="context-menu-item">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+      </svg>
+      Edit
+    </a>
+    <a href="#" class="context-menu-item">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+      </svg>
+      Copy
+    </a>
+    <hr class="context-menu-separator">
+    <a href="#" class="context-menu-item text-red-600">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+      </svg>
+      Delete
+    </a>
+  </div>
+</ContextMenu>
+
+Submenu Usage:
+<ContextMenu>
+  <div slot="target">Right-click for menu with submenu</div>
+  <div slot="menu">
+    <a href="#" class="context-menu-item">Regular Item</a>
+    <div class="context-menu-submenu" data-submenu="share">
+      <a href="#" class="context-menu-item">
+        Share
+        <svg class="w-4 h-4 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+      <div class="submenu-content">
+        <a href="#" class="context-menu-item">Email</a>
+        <a href="#" class="context-menu-item">Copy Link</a>
+        <a href="#" class="context-menu-item">Social Media</a>
+      </div>
+    </div>
+  </div>
+</ContextMenu>
+
+Features:
+- Right-click, click, or hover trigger modes
+- Smart positioning (avoids screen edges)
+- Submenu support with hover detection
+- Click outside to close
+- Smooth transitions
+- Customizable styling
+- Alpine.js powered
+- Accessible keyboard navigation
+
+CSS Classes Available:
+- .context-menu-item: Standard menu item styling
+- .context-menu-separator: Horizontal separator line
+- .context-menu-submenu: Container for submenu items
+- .submenu-content: Submenu items container
+
+Events:
+- Dispatches 'context-menu-item-click' event when menu item is clicked
+-->
+
+<div 
+  x-data="{
+    contextMenuOpen: false,
+    contextMenuPosition: { x: 0, y: 0 },
+    submenuOpen: '',
+    submenuPosition: { x: 0, y: 0 },
+    
+    openContextMenu(event) {
+      if (event.type === 'contextmenu') {
+        event.preventDefault();
+      }
+      
+      this.contextMenuPosition = this.calculateContextMenuPosition(event);
+      this.contextMenuOpen = true;
+      this.submenuOpen = '';
+      
+      this.$nextTick(() => {
+        this.$refs.contextMenu?.focus();
+      });
+    },
+    
+    closeContextMenu() {
+      this.contextMenuOpen = false;
+      this.submenuOpen = '';
+    },
+    
+    calculateContextMenuPosition(event) {
+      const menuWidth = 200; // Approximate menu width
+      const menuHeight = 300; // Approximate menu height
+      const padding = 8; // Screen edge padding
+      
+      let x = event.clientX;
+      let y = event.clientY;
+      
+      // Check right edge
+      if (x + menuWidth > window.innerWidth - padding) {
+        x = window.innerWidth - menuWidth - padding;
+      }
+      
+      // Check bottom edge
+      if (y + menuHeight > window.innerHeight - padding) {
+        y = window.innerHeight - menuHeight - padding;
+      }
+      
+      // Check left edge
+      if (x < padding) {
+        x = padding;
+      }
+      
+      // Check top edge
+      if (y < padding) {
+        y = padding;
+      }
+      
+      return { x, y };
+    },
+    
+    handleSubmenuHover(submenuId, event) {
+      if (submenuId) {
+        this.submenuOpen = submenuId;
+        this.submenuPosition = this.calculateSubmenuPosition(event.currentTarget);
+      } else {
+        this.submenuOpen = '';
+      }
+    },
+    
+    calculateSubmenuPosition(triggerElement) {
+      const rect = triggerElement.getBoundingClientRect();
+      const submenuWidth = 180;
+      const submenuHeight = 200;
+      const padding = 8;
+      
+      let x = rect.right;
+      let y = rect.top;
+      
+      // Check right edge - show submenu on left if needed
+      if (x + submenuWidth > window.innerWidth - padding) {
+        x = rect.left - submenuWidth;
+      }
+      
+      // Check bottom edge
+      if (y + submenuHeight > window.innerHeight - padding) {
+        y = window.innerHeight - submenuHeight - padding;
+      }
+      
+      // Check top edge
+      if (y < padding) {
+        y = padding;
+      }
+      
+      return { x, y };
+    },
+    
+    handleMenuItemClick(event) {
+      if (closeOnClick) {
+        this.closeContextMenu();
+      }
+      
+      // Dispatch custom event
+      this.$dispatch('context-menu-item-click', {
+        target: event.target,
+        text: event.target.textContent?.trim()
+      });
+    }
+  }"
+  @click.away="closeContextMenu()"
+  @keydown.escape="closeContextMenu()"
+  class={`relative ${className}`}
+>
+  <!-- Target Element -->
+  <div
+    @contextmenu="trigger === 'right-click' ? openContextMenu($event) : null"
+    @click="trigger === 'click' ? openContextMenu($event) : null"
+    @mouseenter="trigger === 'hover' ? openContextMenu($event) : null"
+    @mouseleave="trigger === 'hover' ? closeContextMenu() : null"
+  >
+    <slot name="target" />
+  </div>
+  
+  <!-- Context Menu -->
+  <template x-teleport="body">
+    <div 
+      x-show="contextMenuOpen"
+      x-ref="contextMenu"
+      x-transition:enter="transition ease-out duration-100"
+      x-transition:enter-start="transform opacity-0 scale-95"
+      x-transition:enter-end="transform opacity-100 scale-100"
+      x-transition:leave="transition ease-in duration-75"
+      x-transition:leave-start="transform opacity-100 scale-100"
+      x-transition:leave-end="transform opacity-0 scale-95"
+      :style="`position: fixed; left: ${contextMenuPosition.x}px; top: ${contextMenuPosition.y}px; z-index: 9999;`"
+      class={`min-w-48 bg-white border border-neutral-200 rounded-md shadow-lg py-1 focus:outline-none ${menuClass}`}
+      tabindex="-1"
+      @click="handleMenuItemClick($event)"
+    >
+      <div 
+        x-data="{
+          setupSubmenuHandlers() {
+            this.$nextTick(() => {
+              const submenuTriggers = this.$el.querySelectorAll('[data-submenu]');
+              submenuTriggers.forEach(trigger => {
+                const submenuId = trigger.getAttribute('data-submenu');
+                trigger.addEventListener('mouseenter', (e) => {
+                  this.handleSubmenuHover(submenuId, e);
+                });
+                trigger.addEventListener('mouseleave', (e) => {
+                  // Small delay to allow moving to submenu
+                  setTimeout(() => {
+                    const submenuElement = document.querySelector(`[data-submenu-id='${submenuId}']`);
+                    if (submenuElement && !submenuElement.matches(':hover') && !trigger.matches(':hover')) {
+                      this.handleSubmenuHover('', e);
+                    }
+                  }, 100);
+                });
+              });
+            });
+          }
+        }"
+        x-init="setupSubmenuHandlers()"
+      >
+        <slot name="menu" />
+      </div>
+    </div>
+    
+    <!-- Submenu -->
+    <div 
+      x-show="submenuOpen"
+      x-transition:enter="transition ease-out duration-100"
+      x-transition:enter-start="transform opacity-0 scale-95"
+      x-transition:enter-end="transform opacity-100 scale-100"
+      x-transition:leave="transition ease-in duration-75"
+      x-transition:leave-start="transform opacity-100 scale-100"
+      x-transition:leave-end="transform opacity-0 scale-95"
+      :style="`position: fixed; left: ${submenuPosition.x}px; top: ${submenuPosition.y}px; z-index: 10000;`"
+      :data-submenu-id="submenuOpen"
+      class="min-w-44 bg-white border border-neutral-200 rounded-md shadow-lg py-1"
+      @mouseenter="clearTimeout(submenuTimeout)"
+      @click="handleMenuItemClick($event)"
+    >
+      <template x-if="submenuOpen">
+        <div x-html="$el.closest('[x-data]').querySelector(`[data-submenu='${submenuOpen}'] .submenu-content`)?.innerHTML || ''"></div>
+      </template>
+    </div>
+  </template>
+</div>
+
+<!-- Default Styles for Context Menu Items -->
+<style>
+  .context-menu-item {
+    @apply flex items-center gap-2 px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-100 transition-colors duration-150 cursor-pointer;
+  }
+  
+  .context-menu-item:focus {
+    @apply bg-neutral-100 outline-none;
+  }
+  
+  .context-menu-item svg {
+    @apply w-4 h-4 text-neutral-500;
+  }
+  
+  .context-menu-separator {
+    @apply my-1 border-neutral-200;
+  }
+  
+  .context-menu-submenu {
+    @apply relative;
+  }
+  
+  .context-menu-submenu > .context-menu-item {
+    @apply justify-between;
+  }
+  
+  .submenu-content {
+    @apply hidden;
+  }
+  
+  /* Hide submenu content in the main menu */
+  .context-menu-submenu .submenu-content {
+    @apply hidden;
+  }
+</style>

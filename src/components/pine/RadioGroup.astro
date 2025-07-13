@@ -1,0 +1,82 @@
+---
+export interface Props {
+  name: string;
+  options: Array<{
+    value: string;
+    title: string;
+    description?: string;
+  }>;
+  selectedValue?: string;
+  class?: string;
+}
+
+const { 
+  name,
+  options,
+  selectedValue = '',
+  class: className = ""
+} = Astro.props;
+---
+
+<!-- 
+Pine UI Radio Group Component
+
+Usage:
+<RadioGroup 
+  name="plan"
+  options={[
+    { 
+      value: "basic", 
+      title: "Basic Plan", 
+      description: "Perfect for small teams" 
+    },
+    { 
+      value: "pro", 
+      title: "Pro Plan", 
+      description: "Best for growing businesses" 
+    }
+  ]}
+  selectedValue="basic"
+/>
+
+Features:
+- Alpine.js powered selection
+- Optional descriptions
+- Accessible radio group
+- Dynamic rendering
+-->
+
+<div 
+  x-data={`{
+    radioGroupSelectedValue: '${selectedValue}',
+    radioGroupOptions: ${JSON.stringify(options)}
+  }`}
+  class={`space-y-4 ${className}`}
+>
+  <template x-for="(option, index) in radioGroupOptions" :key="option.value">
+    <div class="flex items-start">
+      <div class="flex items-center h-5">
+        <input 
+          :id="name + '-' + option.value"
+          :name="name"
+          type="radio" 
+          :value="option.value"
+          x-model="radioGroupSelectedValue"
+          class="w-4 h-4 border-gray-300 text-neutral-900 focus:ring-neutral-900 focus:ring-2"
+        />
+      </div>
+      <div class="ml-3 text-sm">
+        <label 
+          :for="name + '-' + option.value" 
+          class="font-medium text-gray-900 cursor-pointer"
+          x-text="option.title"
+        ></label>
+        <p 
+          x-show="option.description" 
+          x-text="option.description"
+          class="text-gray-500"
+        ></p>
+      </div>
+    </div>
+  </template>
+</div>

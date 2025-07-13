@@ -2,25 +2,47 @@
 import Layout from '../layouts/Layout.astro';
 import Counter from '../components/alpine/Counter.astro';
 import TodoList from '../components/htmx/TodoList.astro';
+import { getEntry } from 'astro:content';
+
+const homeContent = await getEntry('pages', 'home');
+const { Content } = await homeContent.render();
 ---
 
 <Layout>
 	<main class="container mx-auto px-4 py-8 max-w-4xl">
-		<h1 class="text-3xl font-bold mb-8 text-center">Astro + HTMX + Alpine.js + Pines Starter</h1>
+		<h1 class="text-3xl font-bold mb-8 text-center">{homeContent.data.hero.title}</h1>
+		{homeContent.data.hero.subtitle && (
+			<p class="text-lg text-gray-600 text-center mb-8">{homeContent.data.hero.subtitle}</p>
+		)}
 		
-		<div class="grid md:grid-cols-2 gap-8">
+		<div class="grid md:grid-cols-2 gap-8 mb-8">
 			<Counter />
 			<TodoList />
 		</div>
 		
-		<div class="mt-8 p-4 bg-gray-50 rounded-lg">
-			<h2 class="text-xl font-semibold mb-2">Tech Stack Demo</h2>
-			<ul class="space-y-1 text-sm">
-				<li>🚀 <strong>Astro</strong> - Static site generation with dynamic islands</li>
-				<li>⚡ <strong>HTMX</strong> - AJAX without JavaScript frameworks</li>
-				<li>🏔️ <strong>Alpine.js</strong> - Minimal framework for interactivity</li>
-				<li>🌲 <strong>Pines UI</strong> - Copy-paste components for Alpine.js</li>
-			</ul>
+		<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+			{homeContent.data.features.map((feature: { icon: string; name: string; description: string }) => (
+				<div class="p-4 bg-white rounded-lg border shadow-sm">
+					<div class="text-2xl mb-2">{feature.icon}</div>
+					<h3 class="font-semibold mb-2">{feature.name}</h3>
+					<p class="text-sm text-gray-600">{feature.description}</p>
+				</div>
+			))}
+		</div>
+		
+		{homeContent.data.techStack && (
+			<div class="p-4 bg-gray-50 rounded-lg mb-8">
+				<h2 class="text-xl font-semibold mb-4">Tech Stack Demo</h2>
+				<ul class="space-y-2 text-sm">
+					{homeContent.data.techStack.map((tech: { emoji: string; name: string; description: string }) => (
+						<li>{tech.emoji} <strong>{tech.name}</strong> - {tech.description}</li>
+					))}
+				</ul>
+			</div>
+		)}
+		
+		<div class="prose max-w-none">
+			<Content />
 		</div>
 	</main>
 </Layout>

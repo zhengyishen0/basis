@@ -1,0 +1,107 @@
+---
+export interface Props {
+  text: string;
+  animation?: 'fade' | 'scale' | 'slide' | 'bounce';
+  stagger?: number;
+  duration?: number;
+  autoStart?: boolean;
+  class?: string;
+}
+
+const { 
+  text,
+  animation = 'fade',
+  stagger = 0.1,
+  duration = 0.5,
+  autoStart = true,
+  class: className = ""
+} = Astro.props;
+---
+
+<!-- 
+Pine UI Text Animation Component
+
+Usage:
+<TextAnimation 
+  text="Hello World!" 
+  animation="scale" 
+  stagger={0.1}
+  duration={0.5}
+  autoStart={true}
+/>
+
+Features:
+- Character-by-character animation
+- Multiple animation types
+- Configurable timing
+- GSAP powered animations
+- Auto-loading GSAP from CDN
+-->
+
+<div 
+  x-data={`{
+    startingAnimation: false,
+    endingAnimation: false,
+    addCNDScript: false,
+    text: '${text}',
+    animationType: '${animation}',
+    stagger: ${stagger},
+    duration: ${duration},
+    autoStart: ${autoStart}
+  }`}
+  x-init="
+    if (autoStart) {
+      $nextTick(() => {
+        startAnimation();
+      });
+    }
+    
+    function startAnimation() {
+      if (!window.gsap) {
+        addCNDScript = true;
+        let script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
+        script.onload = function() {
+          runAnimation();
+        };
+        document.head.appendChild(script);
+      } else {
+        runAnimation();
+      }
+    }
+    
+    function runAnimation() {
+      const chars = $refs.textContainer.querySelectorAll('.char');
+      const tl = gsap.timeline();
+      
+      // Set initial state
+      gsap.set(chars, {
+        opacity: animationType === 'fade' ? 0 : 1,
+        scale: animationType === 'scale' ? 0 : 1,
+        x: animationType === 'slide' ? -20 : 0,
+        y: animationType === 'bounce' ? -20 : 0
+      });
+      
+      // Animate in
+      tl.to(chars, {
+        opacity: 1,
+        scale: 1,
+        x: 0,
+        y: 0,
+        duration: duration,
+        stagger: stagger,
+        ease: animationType === 'bounce' ? 'bounce.out' : 'power2.out'
+      });
+    }
+  "
+  class={`inline-block ${className}`}
+>
+  <div x-ref="textContainer" class="inline-block">
+    <template x-for="(char, index) in text.split('')" :key="index">
+      <span 
+        class="char inline-block"
+        x-text="char === ' ' ? '\\u00A0' : char"
+      ></span>
+    </template>
+  </div>
+</div>

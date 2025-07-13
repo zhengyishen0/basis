@@ -1,0 +1,176 @@
+---
+export interface Props {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  itemsPerPage: number;
+  showInfo?: boolean;
+  showFirstLast?: boolean;
+  maxVisible?: number;
+  baseUrl?: string;
+  class?: string;
+}
+
+const { 
+  currentPage,
+  totalPages,
+  totalItems,
+  itemsPerPage,
+  showInfo = true,
+  showFirstLast = true,
+  maxVisible = 5,
+  baseUrl = '',
+  class: className = ""
+} = Astro.props;
+
+// Calculate visible page numbers
+const getVisiblePages = () => {
+  const pages = [];
+  let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+  let end = Math.min(totalPages, start + maxVisible - 1);
+  
+  if (end - start + 1 < maxVisible) {
+    start = Math.max(1, end - maxVisible + 1);
+  }
+  
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+  
+  return pages;
+};
+
+const visiblePages = getVisiblePages();
+const startItem = (currentPage - 1) * itemsPerPage + 1;
+const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+---
+
+<!-- 
+Pine UI Pagination Component
+
+Usage:
+<Pagination 
+  currentPage={2}
+  totalPages={10}
+  totalItems={89}
+  itemsPerPage={10}
+  showInfo={true}
+  baseUrl="/products?page="
+/>
+
+Features:
+- Responsive design
+- Page range display
+- First/last page links
+- Previous/next navigation
+- Items count information
+- Customizable visible pages
+-->
+
+<div class={`flex items-center justify-between w-full px-3 py-4 border-t border-neutral-200 ${className}`}>
+  <!-- Results information -->
+  {showInfo && (
+    <div class="flex-1 flex justify-between sm:hidden">
+      <p class="text-sm text-gray-700">
+        Showing {startItem} to {endItem} of {totalItems} results
+      </p>
+    </div>
+  )}
+  
+  {showInfo && (
+    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+      <div>
+        <p class="text-sm text-gray-700">
+          Showing <span class="font-medium">{startItem}</span> to <span class="font-medium">{endItem}</span> of{' '}
+          <span class="font-medium">{totalItems}</span> results
+        </p>
+      </div>
+    </div>
+  )}
+  
+  <!-- Pagination navigation -->
+  <div class={showInfo ? "mt-3 sm:mt-0" : ""}>
+    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+      <!-- Previous button -->
+      <a 
+        href={currentPage > 1 ? `${baseUrl}${currentPage - 1}` : '#'}
+        class={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium ${
+          currentPage > 1 
+            ? 'text-gray-500 hover:bg-gray-50' 
+            : 'text-gray-300 cursor-not-allowed'
+        }`}
+        aria-disabled={currentPage <= 1}
+      >
+        <span class="sr-only">Previous</span>
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+      
+      <!-- First page -->
+      {showFirstLast && visiblePages[0] > 1 && (
+        <>
+          <a 
+            href={`${baseUrl}1`}
+            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            1
+          </a>
+          {visiblePages[0] > 2 && (
+            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+              ...
+            </span>
+          )}
+        </>
+      )}
+      
+      <!-- Page numbers -->
+      {visiblePages.map((page) => (
+        <a 
+          href={page === currentPage ? '#' : `${baseUrl}${page}`}
+          class={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+            page === currentPage
+              ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
+              : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
+          }`}
+          aria-current={page === currentPage ? 'page' : undefined}
+        >
+          {page}
+        </a>
+      ))}
+      
+      <!-- Last page -->
+      {showFirstLast && visiblePages[visiblePages.length - 1] < totalPages && (
+        <>
+          {visiblePages[visiblePages.length - 1] < totalPages - 1 && (
+            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+              ...
+            </span>
+          )}
+          <a 
+            href={`${baseUrl}${totalPages}`}
+            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            {totalPages}
+          </a>
+        </>
+      )}
+      
+      <!-- Next button -->
+      <a 
+        href={currentPage < totalPages ? `${baseUrl}${currentPage + 1}` : '#'}
+        class={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium ${
+          currentPage < totalPages 
+            ? 'text-gray-500 hover:bg-gray-50' 
+            : 'text-gray-300 cursor-not-allowed'
+        }`}
+        aria-disabled={currentPage >= totalPages}
+      >
+        <span class="sr-only">Next</span>
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </nav>
+  </div>
+</div>
