@@ -9,20 +9,19 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
     <!-- Navigation Bar -->
     <nav class="anthropic-nav">
       <div class="u-container-full" style="padding-top: 1rem; padding-bottom: 1rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <a href="/" class="anthropic-nav-logo">ANTHROPIC</a>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          <a href="/" class="anthropic-nav-logo">ANTHROPIC FORK</a>
           
-          <div class="anthropic-nav-links">
-            <a href="/claude" class="anthropic-nav-link">Claude</a>
-            <a href="/api" class="anthropic-nav-link">API</a>
-            <a href="/solutions" class="anthropic-nav-link">Solutions</a>
-            <a href="/research" class="anthropic-nav-link">Research</a>
-            <a href="/commitments" class="anthropic-nav-link">Commitments</a>
-            <a href="/learn" class="anthropic-nav-link">Learn</a>
-            <a href="/news" class="anthropic-nav-link">News</a>
-          </div>
-          
-          <div style="display: flex; gap: 1rem; align-items: center;">
+          <div style="display: flex; gap: 2rem; align-items: center;">
+            <div class="anthropic-nav-links">
+              <a href="/claude" class="anthropic-nav-link">Claude</a>
+              <a href="/api" class="anthropic-nav-link">API</a>
+              <a href="/solutions" class="anthropic-nav-link">Solutions</a>
+              <a href="/research" class="anthropic-nav-link">Research</a>
+              <a href="/commitments" class="anthropic-nav-link">Commitments</a>
+              <a href="/learn" class="anthropic-nav-link">Learn</a>
+              <a href="/news" class="anthropic-nav-link">News</a>
+            </div>
             <a href="../" class="anthropic-button-primary">Back Home</a>
           </div>
         </div>
@@ -31,29 +30,27 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
 
     <!-- Hero Section -->
     <section class="anthropic-hero">
-      <div class="u-container-full">
+      <div class="u-container-wide">
         <div class="hero-grid">
           <div class="hero-left">
-            <h1 class="u-display-xl" style="margin-bottom: 3rem; color: #000;">
-              AI <u>research</u> and <u>products</u><br>
-              that put safety<br>
-              at the frontier
+            <h1 class="u-display-xl" style="margin-bottom: 2rem; color: #000;">
+              AI <u>research</u> and <u>products</u> that put safety at the frontier
             </h1>
             
             <!-- Two Column Cards -->
             <div class="hero-two-column-grid">
               <div class="column-card">
                 <div class="u-detail-s u-mb-2">CLAUDE.AI</div>
-                <h2 class="u-display-l" style="margin-bottom: 1rem; color: #000;">Meet Claude Opus 4</h2>
-                <p class="u-paragraph-m" style="margin-bottom: 2rem; color: #666;">
+                <h2 class="u-display-s" style="margin-bottom: 1rem; color: #000;">Meet Claude Opus 4</h2>
+                <p class="u-paragraph-m" style="margin-bottom: 1rem; color: #666;">
                   Claude Opus 4, our most intelligent AI model, is now available.
                 </p>
                 <a href="https://claude.ai" class="anthropic-button-primary">Talk to Claude</a>
               </div>
               <div class="column-card">
                 <div class="u-detail-s u-mb-2">API</div>
-                <h2 class="u-display-l" style="margin-bottom: 1rem; color: #000;">Build with Claude</h2>
-                <p class="u-paragraph-m" style="margin-bottom: 2rem; color: #666;">
+                <h2 class="u-display-s" style="margin-bottom: 1rem; color: #000;">Build with Claude</h2>
+                <p class="u-paragraph-m" style="margin-bottom: 1rem; color: #666;">
                   Create AI-powered applications and custom experiences using Claude.
                 </p>
                 <a href="/api" class="anthropic-button-secondary">Learn more</a>
@@ -71,9 +68,9 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
     </section>
 
     <!-- Model Section -->
-    <section class="anthropic-section">
-      <div class="u-container-full">
-        <div class="model-highlight-section" style="background-color: #e6d3c1; border-radius: 2rem; padding: 3rem; margin-bottom: 4rem;">
+    <section class="anthropic-section" style="padding-top: 0.5rem;">
+      <div class="u-container-wide">
+        <div class="model-highlight-section" style="background-color: #e6d3c1; border-radius: 2rem; padding: 2rem; margin-bottom: 2rem;">
           <div class="video-grid">
             <div class="video-content">
               <h2 class="u-display-m" style="margin-bottom: 1.5rem; color: #000;">Claude Opus 4 and Sonnet 4</h2>
@@ -132,7 +129,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
 
     <!-- Mission Section -->
     <section class="anthropic-section">
-      <div class="u-container-full">
+      <div class="u-container-wide">
         <div class="mission-header-content">
           <div class="mission-header-left">
             <h2 class="u-display-m" style="color: #000;">
@@ -154,7 +151,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
             <div class="mission-icon">
               <img src="https://cdn.prod.website-files.com/67ce28cfec624e2b733f8a52/67d2158c590b5c5fb0248eb5_Hands-Tree.svg" 
                    alt="Hands and tree illustration" 
-                   width="120" height="120" />
+                   width="200" height="200" />
             </div>
             <h3 class="u-display-s" style="margin-bottom: 1rem; color: #000;">Core Views on AI Safety</h3>
           </div>
@@ -182,7 +179,7 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
 
     <!-- Research Section -->
     <section class="anthropic-section">
-      <div class="u-container-full">
+      <div class="u-container-wide">
         <div class="research-section">
           <div class="research-header">
             <h2 class="u-display-s" style="color: #000;">Featured</h2>
@@ -255,12 +252,12 @@ import AnthropicCustom from '../components/anthropic/AnthropicCustom.astro';
 
     <!-- CTA Section -->
     <section class="anthropic-section">
-      <div class="u-container-full" style="text-align: center;">
+      <div class="u-container-wide" style="text-align: center;">
         <h2 class="u-display-l" style="margin-bottom: 2rem; color: #000;">
           Want to help us build<br>
           the future of safe AI?
         </h2>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: nowrap;">
           <a href="/careers" class="anthropic-button-primary">See open roles</a>
           <a href="/contact" class="anthropic-button-secondary">Speak with sales</a>
         </div>

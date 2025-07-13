@@ -43,7 +43,7 @@ const { className = "" } = Astro.props;
     
     --container--main: calc(var(--site--max-width) - var(--site--margin) * 2);
     --site--max-width: min(var(--site--width), 100vw);
-    --site--width: 1440px;
+    --site--width: 1800px;
   }
 
   /* Apply Inter font to body and all elements */
@@ -77,8 +77,16 @@ const { className = "" } = Astro.props;
     padding-right: var(--site--margin); 
   }
 
+  .u-container-wide {
+    max-width: 95vw;
+    margin-left: auto; 
+    margin-right: auto; 
+    padding-left: 2rem; 
+    padding-right: 2rem;
+  }
+
   /* Anthropic Color System */
-  .u-bg-clay { background-color: #f5f1ed; }
+  .u-bg-clay { background-color: #f0eee6; }
   .u-bg-sky { background-color: #e8f4fd; }
   .u-bg-heather { background-color: #f0f0f6; }
   .u-bg-cloud-light { background-color: #f8f9fa; }
@@ -89,7 +97,7 @@ const { className = "" } = Astro.props;
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(255, 255, 255, 0.95);
+    background: #f0eee6;
     backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
@@ -109,7 +117,7 @@ const { className = "" } = Astro.props;
   }
 
   .anthropic-nav-link {
-    font-size: var(--font-size--paragraph-s);
+    font-size: var(--font-size--detail-xs);
     font-weight: 500;
     color: #666;
     text-decoration: none;
@@ -121,8 +129,8 @@ const { className = "" } = Astro.props;
   }
 
   .anthropic-hero {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    padding-top: 3rem;
+    padding-bottom: 0rem;
   }
 
   .hero-grid {
@@ -137,14 +145,15 @@ const { className = "" } = Astro.props;
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin-top: 6rem;
   }
 
   .hero-two-column-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.5fr 1.5fr;
     gap: 1rem;
     margin-top: 2rem;
-    width: 100%;
+    width: 120%;
   }
 
   .hero-content h1 u {
@@ -161,15 +170,16 @@ const { className = "" } = Astro.props;
   .network-diagram {
     max-width: 100%;
     height: auto;
-    width: 300px;
+    width: 500px;
   }
 
   .anthropic-button-primary {
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    justify-content: center;
     padding: 0.75rem 1.5rem;
-    background: #f5f1ed;
-    color: #000;
+    background: #000;
+    color: #fff;
     border-radius: 0.5rem;
     font-weight: 500;
     text-decoration: none;
@@ -177,13 +187,14 @@ const { className = "" } = Astro.props;
   }
 
   .anthropic-button-primary:hover {
-    background: #ede8e3;
+    background: #333;
     transform: translateY(-1px);
   }
 
   .anthropic-button-secondary {
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    justify-content: center;
     padding: 0.75rem 1.5rem;
     background: transparent;
     color: #000;
@@ -200,12 +211,12 @@ const { className = "" } = Astro.props;
   }
 
   .anthropic-section {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 
   .column-card {
-    padding: 2.5rem 3rem;
+    padding: 1rem 1.5rem;
     background: #fff;
     border-radius: 1rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -219,7 +230,7 @@ const { className = "" } = Astro.props;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
-    margin-bottom: 5rem;
+    margin-bottom: 0.5rem;
     align-items: flex-start;
   }
 
@@ -230,13 +241,13 @@ const { className = "" } = Astro.props;
   }
 
   .model-card {
-    padding: 1.5rem;
+    padding: 1rem;
     background: #f5f5f5;
     border-radius: 0.75rem;
     position: relative;
     cursor: pointer;
     transition: all 0.2s ease;
-    aspect-ratio: 1;
+    aspect-ratio: 1.5;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -306,16 +317,16 @@ const { className = "" } = Astro.props;
   .section-divider {
     height: 1px;
     background: #e0e0e0;
-    margin: 4rem 0;
+    margin: 2rem 0;
   }
 
   /* Mission Section */
   .mission-header-content {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 4rem;
+    gap: 2rem;
     align-items: flex-start;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
   }
 
   .mission-header-left {
@@ -349,13 +360,13 @@ const { className = "" } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 120px;
+    height: 200px;
     overflow: hidden;
   }
 
   .mission-icon img {
-    width: 120px;
-    height: 120px;
+    width: 200px;
+    height: 200px;
     object-fit: contain;
     transition: transform 0.3s ease;
   }
