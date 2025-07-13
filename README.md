@@ -4,7 +4,9 @@
 
 ## 🌟 Live Demo
 
-**Demo:** `https://zhengyishen0.github.io/aha-stack-starter`
+**Demo:** [https://zhengyishen0.github.io/aha-stack-starter](https://zhengyishen0.github.io/aha-stack-starter)
+
+![screen-shot](./public/screen-shot.png)
 
 > Replace with your actual GitHub Pages URL after deployment
 
@@ -378,6 +380,3 @@ Test your components at `/test/` routes:
 - Advanced interactions: `/test/advanced-test`
 - Individual component tests: `/test/[component-name]`
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

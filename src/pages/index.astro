@@ -8,80 +8,170 @@ import Badge from '../components/pine/Badge.astro';
 import Button from '../components/pine/Button.astro';
 
 const homeContent = await getEntry('pages', 'home');
-const { Content } = await homeContent?.render() || { Content: null };
+const features = homeContent?.data?.features || [];
 ---
 
 <Layout>
 	<main class="min-h-screen">
+		<!-- GitHub Icon in upper right -->
+		<div class="fixed top-4 right-4 z-50">
+			<a href="https://github.com/zhengyishen0/aha_starter" 
+			   class="flex items-center justify-center w-10 h-10 bg-black text-white rounded-full hover:bg-gray-800 transition-colors"
+			   aria-label="GitHub Repository">
+				<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+					<path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+				</svg>
+			</a>
+		</div>
+
 		<!-- Hero Section -->
-		<div class="text-center py-16 px-4 bg-gradient-to-b from-blue-50 to-white">
-			<h1 class="text-5xl font-bold mb-6 text-gray-900">Welcome to AHA Stack</h1>
-			<p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+		<div class="text-center pt-48 pb-8 px-4 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+			<!-- Grid Background -->
+			<div class="absolute inset-0 opacity-10">
+				<div class="grid-pattern"></div>
+			</div>
+			<h1 class="text-8xl font-black mb-6 text-gray-900 leading-tight relative z-10">Welcome to AHA Stack</h1>
+			<p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto relative z-10">
 				A modern web development stack combining Astro, HTMX, and Alpine.js
 			</p>
-			<div class="flex justify-center gap-3 mb-8">
-				<Badge color="blue">Astro</Badge>
-				<Badge color="green">HTMX</Badge>
-				<Badge color="purple">Alpine.js</Badge>
+			<div class="flex justify-center gap-3 mb-8 relative z-10">
+				<Badge class="bg-black text-white">Astro</Badge>
+				<Badge class="bg-black text-white">HTMX</Badge>
+				<Badge class="bg-black text-white">Alpine.js</Badge>
 			</div>
-			<div class="flex flex-col sm:flex-row justify-center gap-4">
-				<Button href="./anthropic" variant="solid" color="blue" size="lg">
-					Anthropic Demo
+			<div class="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
+				<Button href="./demo" variant="outline" color="neutral" size="lg">
+					Demo
 				</Button>
-				<Button href="./demo" variant="solid" color="blue" size="lg">
-					View Demo
+				<Button href="./components/" variant="outline" color="neutral" size="lg">
+					Components
 				</Button>
-				<Button href="./templates" variant="solid" color="purple" size="lg">
-					Marketing Templates
+				<Button href="./templates" variant="outline" color="neutral" size="lg">
+					Templates
 				</Button>
-				<Button href="./test/" variant="outline" color="green" size="lg">
-					Test Components
-				</Button>
-				<Button href="https://github.com/zhengyishen0/aha_starter" variant="outline" color="neutral" size="lg">
-					GitHub
+				<Button href="./anthropic" variant="outline" color="neutral" size="lg">
+					Website
 				</Button>
 			</div>
 		</div>
 		
 		<!-- Features Section -->
-		<div class="max-w-6xl mx-auto px-4 py-16">
+		<div class="max-w-7xl mx-auto px-4 py-16">
 			<h2 class="text-3xl font-bold text-center mb-12 text-gray-900">Why AHA Stack?</h2>
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-				<Card class="hover:shadow-lg transition-shadow">
-					<div class="p-6">
-						<Badge color="blue" class="mb-4">Astro</Badge>
-						<h3 class="text-xl font-semibold mb-3 text-gray-900">Static Site Generation</h3>
-						<p class="text-gray-600">Fast, optimized builds with component islands for dynamic content</p>
-					</div>
-				</Card>
-				
-				<Card class="hover:shadow-lg transition-shadow">
-					<div class="p-6">
-						<Badge color="green" class="mb-4">HTMX</Badge>
-						<h3 class="text-xl font-semibold mb-3 text-gray-900">Dynamic Server Interactions</h3>
-						<p class="text-gray-600">AJAX, WebSockets, and server-sent events with minimal JavaScript</p>
-					</div>
-				</Card>
-				
-				<Card class="hover:shadow-lg transition-shadow">
-					<div class="p-6">
-						<Badge color="purple" class="mb-4">Alpine.js</Badge>
-						<h3 class="text-xl font-semibold mb-3 text-gray-900">Reactive UI Components</h3>
-						<p class="text-gray-600">Lightweight framework for client-side interactivity</p>
-					</div>
-				</Card>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+				{features.map((feature) => (
+					<Card class="hover:shadow-lg transition-shadow">
+						<div class="px-6 py-4">
+							<Badge class="bg-black text-white mb-3">{feature.name}</Badge>
+							<h3 class="text-lg font-semibold mb-2 text-gray-900">{feature.title}</h3>
+							<p class="text-gray-600 text-sm">{feature.description}</p>
+						</div>
+					</Card>
+				))}
 			</div>
 		</div>
 		
-		<!-- Content from Markdown -->
-		{Content && (
-			<div class="max-w-4xl mx-auto px-4 py-8">
-				<Card>
-					<div class="prose max-w-none p-6">
-						<Content />
-					</div>
-				</Card>
+		<!-- Font Showcase Section -->
+		<div class="bg-gray-100 py-16 px-4">
+			<div class="max-w-6xl mx-auto">
+				<h2 class="text-3xl font-bold text-center mb-12 text-gray-900">Font Options</h2>
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+					<!-- Inter Font -->
+					<Card class="text-center p-6">
+						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Inter', sans-serif;">Inter</h3>
+						<p class="text-lg mb-2" style="font-family: 'Inter', sans-serif;">Welcome to AHA Stack</p>
+						<p class="text-sm text-gray-600">Modern, clean, excellent readability</p>
+					</Card>
+					
+					<!-- Poppins Font -->
+					<Card class="text-center p-6">
+						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Poppins', sans-serif;">Poppins</h3>
+						<p class="text-lg mb-2" style="font-family: 'Poppins', sans-serif;">Welcome to AHA Stack</p>
+						<p class="text-sm text-gray-600">Geometric, friendly, approachable</p>
+					</Card>
+					
+					<!-- Montserrat Font -->
+					<Card class="text-center p-6">
+						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Montserrat', sans-serif;">Montserrat</h3>
+						<p class="text-lg mb-2" style="font-family: 'Montserrat', sans-serif;">Welcome to AHA Stack</p>
+						<p class="text-sm text-gray-600">Professional, versatile, strong</p>
+					</Card>
+					
+					<!-- Roboto Font -->
+					<Card class="text-center p-6">
+						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Roboto', sans-serif;">Roboto</h3>
+						<p class="text-lg mb-2" style="font-family: 'Roboto', sans-serif;">Welcome to AHA Stack</p>
+						<p class="text-sm text-gray-600">Google's Material Design font</p>
+					</Card>
+					
+					<!-- Source Sans Pro Font -->
+					<Card class="text-center p-6">
+						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Source Sans Pro', sans-serif;">Source Sans Pro</h3>
+						<p class="text-lg mb-2" style="font-family: 'Source Sans Pro', sans-serif;">Welcome to AHA Stack</p>
+						<p class="text-sm text-gray-600">Adobe's open-source font</p>
+					</Card>
+					
+					<!-- Nunito Font -->
+					<Card class="text-center p-6">
+						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Nunito', sans-serif;">Nunito</h3>
+						<p class="text-lg mb-2" style="font-family: 'Nunito', sans-serif;">Welcome to AHA Stack</p>
+						<p class="text-sm text-gray-600">Rounded, warm, inviting</p>
+					</Card>
+					
+					<!-- Open Sans Font -->
+					<Card class="text-center p-6">
+						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Open Sans', sans-serif;">Open Sans</h3>
+						<p class="text-lg mb-2" style="font-family: 'Open Sans', sans-serif;">Welcome to AHA Stack</p>
+						<p class="text-sm text-gray-600">Optimized for web, highly legible</p>
+					</Card>
+					
+					<!-- Lato Font -->
+					<Card class="text-center p-6">
+						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Lato', sans-serif;">Lato</h3>
+						<p class="text-lg mb-2" style="font-family: 'Lato', sans-serif;">Welcome to AHA Stack</p>
+						<p class="text-sm text-gray-600">Humanist, warm yet stable</p>
+					</Card>
+					
+					<!-- Manrope Font -->
+					<Card class="text-center p-6">
+						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Manrope', sans-serif;">Manrope</h3>
+						<p class="text-lg mb-2" style="font-family: 'Manrope', sans-serif;">Welcome to AHA Stack</p>
+						<p class="text-sm text-gray-600">Modern geometric, trendy</p>
+					</Card>
+					
+					<!-- IBM Plex Sans Font -->
+					<Card class="text-center p-6">
+						<h3 class="text-2xl font-bold mb-4" style="font-family: 'IBM Plex Sans', sans-serif;">IBM Plex Sans</h3>
+						<p class="text-lg mb-2" style="font-family: 'IBM Plex Sans', sans-serif;">Welcome to AHA Stack</p>
+						<p class="text-sm text-gray-600">Corporate, technical, reliable</p>
+					</Card>
+					
+					<!-- Work Sans Font -->
+					<Card class="text-center p-6">
+						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Work Sans', sans-serif;">Work Sans</h3>
+						<p class="text-lg mb-2" style="font-family: 'Work Sans', sans-serif;">Welcome to AHA Stack</p>
+						<p class="text-sm text-gray-600">Optimized for screens, versatile</p>
+					</Card>
+				</div>
 			</div>
-		)}
+		</div>
 	</main>
 </Layout>
+
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Poppins:wght@400;600;700;900&family=Montserrat:wght@400;600;700;900&family=Roboto:wght@400;700;900&family=Source+Sans+Pro:wght@400;600;700;900&family=Nunito:wght@400;600;700;900&family=Open+Sans:wght@400;600;700;900&family=Lato:wght@400;700;900&family=Manrope:wght@400;600;700;900&family=IBM+Plex+Sans:wght@400;600;700&family=Work+Sans:wght@400;600;700;900&family=DM+Sans:wght@400;500;700&display=swap');
+	
+	.grid-pattern {
+		width: 100%;
+		height: 100%;
+		background-image: 
+			linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+		background-size: 50px 50px;
+		background-position: -1px -1px;
+	}
+	
+	h1 {
+		text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+</style>

@@ -185,21 +185,22 @@ const teamMembers = [
 ---
 
 <Layout>
+	<!-- Navigation in upper right -->
+	<div class="fixed top-4 right-4 z-50">
+		<Button href="/" variant="solid" color="neutral" size="sm">Back to Home</Button>
+	</div>
+
 	<main class="min-h-screen">
 		<!-- Page Header -->
-		<div class="text-center py-16 px-4 bg-gradient-to-b from-purple-50 to-white">
+		<div class="text-center py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
 			<h1 class="text-5xl font-bold mb-6 text-gray-900">Marketing Templates Showcase</h1>
 			<p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
 				Live preview of Pine UI marketing components, ready to use in your AHA stack projects.
 			</p>
 			<div class="flex justify-center gap-3 mb-8">
-				<Badge color="purple">26 Templates</Badge>
-				<Badge color="blue">Live Preview</Badge>
-				<Badge color="green">AHA Stack</Badge>
-			</div>
-			<div class="flex gap-4 justify-center">
-				<Button href="/" variant="solid" color="purple" size="lg">← Back to Home</Button>
-				<Button href="#hero" variant="outline" color="purple" size="lg">View Templates</Button>
+				<Badge class="bg-black text-white">26 Templates</Badge>
+				<Badge class="bg-black text-white">Live Preview</Badge>
+				<Badge class="bg-black text-white">AHA Stack</Badge>
 			</div>
 		</div>
 		
@@ -225,7 +226,7 @@ const teamMembers = [
 							primaryButtonHref="#trial"
 							secondaryButtonText="Learn More"
 							secondaryButtonHref="#features"
-							primaryColor="purple"
+							primaryColor="neutral"
 							imageUrl="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600"
 							imageAlt="Product screenshot"
 						/>
@@ -309,7 +310,7 @@ const teamMembers = [
 							<PricingCards
 								title="Choose Your Plan"
 								plans={pricingPlans}
-								primaryColor="purple-600"
+								primaryColor="gray-600"
 							/>
 						</div>
 					</div>
@@ -338,7 +339,7 @@ const teamMembers = [
 							<div class="space-y-6">
 								{faqItems.map((faq) => (
 									<div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-										<h4 class="text-lg font-bold text-purple-600 mb-3 md:text-xl">{faq.question}</h4>
+										<h4 class="text-lg font-bold text-black mb-3 md:text-xl">{faq.question}</h4>
 										<p class="text-gray-600 leading-relaxed">{faq.answer}</p>
 									</div>
 								))}
@@ -405,7 +406,7 @@ const teamMembers = [
 					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 						<!-- Hero Components -->
 						<div class="bg-white p-6 rounded-lg border">
-							<Badge color="purple" class="mb-3">Hero (4)</Badge>
+							<Badge class="bg-black text-white mb-3">Hero (4)</Badge>
 							<ul class="space-y-2 text-sm">
 								<li>• HeroCentered</li>
 								<li>• HeroSideBySide</li>
@@ -416,7 +417,7 @@ const teamMembers = [
 						
 						<!-- Blog Components -->
 						<div class="bg-white p-6 rounded-lg border">
-							<Badge color="blue" class="mb-3">Blog (3)</Badge>
+							<Badge class="bg-black text-white mb-3">Blog (3)</Badge>
 							<ul class="space-y-2 text-sm">
 								<li>• BlogGrid</li>
 								<li>• BlogHero</li>
@@ -426,7 +427,7 @@ const teamMembers = [
 						
 						<!-- Feature Components -->
 						<div class="bg-white p-6 rounded-lg border">
-							<Badge color="green" class="mb-3">Features (4)</Badge>
+							<Badge class="bg-black text-white mb-3">Features (4)</Badge>
 							<ul class="space-y-2 text-sm">
 								<li>• FeatureGrid</li>
 								<li>• FeatureSideBySide</li>
@@ -437,7 +438,7 @@ const teamMembers = [
 						
 						<!-- Testimonial & Pricing -->
 						<div class="bg-white p-6 rounded-lg border">
-							<Badge color="yellow" class="mb-3">Social Proof (4)</Badge>
+							<Badge class="bg-black text-white mb-3">Social Proof (4)</Badge>
 							<ul class="space-y-2 text-sm">
 								<li>• TestimonialGrid</li>
 								<li>• TestimonialSideBySide</li>
@@ -448,7 +449,7 @@ const teamMembers = [
 						
 						<!-- Forms & Navigation -->
 						<div class="bg-white p-6 rounded-lg border">
-							<Badge color="red" class="mb-3">Forms & Nav (5)</Badge>
+							<Badge class="bg-black text-white mb-3">Forms & Nav (5)</Badge>
 							<ul class="space-y-2 text-sm">
 								<li>• LoginForm</li>
 								<li>• SignupForm</li>
@@ -472,22 +473,7 @@ const teamMembers = [
 						</div>
 					</div>
 					
-					<div class="text-center mt-12">
-						<div class="bg-white p-8 rounded-lg border max-w-2xl mx-auto">
-							<h3 class="text-xl font-semibold mb-4">Ready to Get Started?</h3>
-							<p class="text-gray-600 mb-6">
-								These templates are ready to use! Import them into your Astro project and customize with your content.
-							</p>
-							<div class="flex flex-col sm:flex-row gap-4 justify-center">
-								<Button href="/" variant="solid" color="purple" size="lg">
-									Back to Home
-								</Button>
-								<Button href="https://github.com/zhengyishen0/aha_starter" variant="outline" color="purple" size="lg">
-									View Source
-								</Button>
-							</div>
-						</div>
-					</div>
+					<div class="text-center mt-12"/>
 				</div>
 			</section>
 		</div>

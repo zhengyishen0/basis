@@ -1,5 +1,15 @@
 ---
 title: "AHA Stack Demo"
+features:
+  - name: "Astro"
+    title: "Static Site Generation"
+    description: "Fast, optimized builds with component islands for dynamic content"
+  - name: "HTMX"
+    title: "Dynamic Server Interactions"
+    description: "AJAX, WebSockets, and server-sent events with minimal JavaScript"
+  - name: "Alpine.js"
+    title: "Reactive UI Components"
+    description: "Lightweight framework for client-side interactivity"
 ---
 
 # AHA Stack: Alpine.js + HTMX + Astro
