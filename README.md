@@ -401,6 +401,51 @@ The real power comes from combining both libraries:
 4. **Error Handling**: Combine HTMX error events with Alpine.js for user-friendly error states
 5. **Progressive Enhancement**: Start with working HTML forms, then enhance with HTMX + Alpine.js
 
+## 🔥 Supabase Integration
+
+The AHA stack includes a complete example of integrating Supabase with HTMX and Alpine.js for real-time applications.
+
+### Supabase Todo App Example
+
+Visit `/supabase-todo` to see a fully functional todo application that demonstrates:
+
+- **Anonymous Authentication**: Automatic sign-in for instant use
+- **Real-time Updates**: Live synchronization across sessions
+- **HTMX CRUD Operations**: All database operations via HTMX
+- **Alpine.js State Management**: Client-side interactivity
+- **Secure API Routes**: Server-side authentication handling
+
+#### Architecture Overview:
+
+```
+Frontend (Astro Page)
+├── Alpine.js Component (State & Auth)
+├── HTMX Forms & Actions
+└── Supabase JS Client (Auth Only)
+    ↓
+API Routes (Server-side)
+├── Authentication Validation
+├── Supabase Operations
+└── HTML Response Generation
+```
+
+#### Key Features:
+
+1. **Pure Frontend Approach**: No backend server required
+2. **HTMX-driven Updates**: All UI updates via HTML responses
+3. **Type-safe API Routes**: Astro's built-in TypeScript support
+4. **Row Level Security**: Supabase RLS policies enforced
+5. **Optimistic UI**: Loading states with Alpine.js
+
+#### Setting Up Your Own Supabase Project:
+
+1. Create a new Supabase project at [supabase.com](https://supabase.com)
+2. Enable anonymous sign-ins in Authentication settings
+3. Create your database schema with RLS policies
+4. Update the credentials in the code:
+   - `/src/pages/supabase-todo.astro` (frontend)
+   - `/src/pages/api/supabase-todos/*.ts` (API routes)
+
 ### Testing Components
 
 Test your components at `/test/` routes:
