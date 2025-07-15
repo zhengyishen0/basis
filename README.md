@@ -46,12 +46,14 @@ To learn more about the folder structure of an Astro project, refer to [our guid
 This project includes a comprehensive collection of UI components from Pine UI, converted and optimized for the AHA stack (Astro + HTMX + Alpine.js):
 
 ### Pine Marketing Components:
+
 - **HeroSideBySide**: Side-by-side hero layout with text and image
-- **HeroCentered**: Centered hero section with optional image below  
+- **HeroCentered**: Centered hero section with optional image below
 - **HeaderWithNav**: Complete header with navigation and hero content
 - **HeaderDark**: Dark-themed header with gradient background and newsletter signup
 
 ### Pine Interactive Components:
+
 - **MonacoEditor**: Full-featured code editor with syntax highlighting, IntelliSense, and 15+ language support
 - **Button**: Customizable buttons with multiple variants and colors
 - **Modal**: Responsive modal dialogs with Alpine.js integration
@@ -63,6 +65,7 @@ This project includes a comprehensive collection of UI components from Pine UI, 
 ### Usage Examples:
 
 #### Pine Marketing Components:
+
 ```astro
 ---
 import { HeroSideBySide, HeaderWithNav } from '@/components/pine-marketing';
@@ -82,13 +85,14 @@ import { HeroSideBySide, HeaderWithNav } from '@/components/pine-marketing';
 ```
 
 #### MonacoEditor Component:
+
 ```astro
 ---
 import { MonacoEditor } from '@/components/pine';
 ---
 
 <!-- Basic JavaScript Editor -->
-<MonacoEditor 
+<MonacoEditor
   id="code-editor"
   language="javascript"
   theme="vs-dark"
@@ -97,7 +101,7 @@ import { MonacoEditor } from '@/components/pine';
 />
 
 <!-- Python Editor with Custom Configuration -->
-<MonacoEditor 
+<MonacoEditor
   language="python"
   theme="vs-light"
   height="300px"
@@ -110,7 +114,7 @@ import { MonacoEditor } from '@/components/pine';
 
 <!-- Form Integration -->
 <form>
-  <MonacoEditor 
+  <MonacoEditor
     name="userCode"
     language="typescript"
     height="500px"
@@ -120,6 +124,7 @@ import { MonacoEditor } from '@/components/pine';
 ```
 
 #### Key MonacoEditor Features:
+
 - **15+ Programming Languages**: JavaScript, TypeScript, Python, Rust, Go, Java, C#, HTML, CSS, JSON, YAML, SQL, and more
 - **3 Built-in Themes**: Dark (`vs-dark`), Light (`vs-light`), High Contrast (`hc-black`)
 - **IntelliSense & Code Completion**: Full VS Code-like editing experience
@@ -154,6 +159,7 @@ This project is configured for automatic deployment to GitHub Pages using GitHub
 ### Setup Instructions:
 
 1. **Push your code to GitHub**:
+
    ```bash
    git add .
    git commit -m "Add GitHub Pages deployment"
@@ -170,7 +176,9 @@ This project is configured for automatic deployment to GitHub Pages using GitHub
    - Your site will be available at: `https://your-username.github.io/your-repo-name`
 
 ### Manual Deployment:
+
 ### Configuration Notes:
+
 - The project automatically detects your GitHub username and repository name
 - No manual configuration needed for deployment
 - Works with any repository name or GitHub account
@@ -185,7 +193,7 @@ Alpine.js is included via CDN with all major plugins pre-loaded. The plugins are
 ```javascript
 // Alpine.js Plugins (loaded before core)
 @alpinejs/mask         // Input masking and formatting
-@alpinejs/intersect    // Intersection observer functionality  
+@alpinejs/intersect    // Intersection observer functionality
 @alpinejs/persist      // Data persistence across page loads
 @alpinejs/focus        // Focus management utilities
 @alpinejs/collapse     // Smooth collapse/expand animations
@@ -210,14 +218,14 @@ alpinejs@3.14.9
 
 <!-- Form with validation -->
 <div x-data="{ email: '', valid: false }" class="space-y-4">
-  <input 
+  <input
     x-model="email"
     x-on:input="valid = email.includes('@')"
-    type="email" 
+    type="email"
     placeholder="Enter email"
     class="w-full px-3 py-2 border rounded"
   />
-  <button 
+  <button
     x-show="valid"
     class="px-4 py-2 bg-blue-500 text-white rounded"
   >
@@ -265,7 +273,27 @@ alpinejs@3.14.9
 
 ### HTMX Integration
 
-HTMX is loaded via CDN (version 2.0.6) and provides seamless AJAX functionality:
+HTMX is loaded via CDN (version 2.0.6) and provides seamless AJAX functionality.
+
+#### Important: Astro Script Loading
+
+**When using external CDN scripts in Astro (like HTMX, htmx-json, or Alpine.js), you MUST add the `is:inline` directive to prevent Astro from processing and bundling them:**
+
+```html
+<!-- CORRECT - Works properly -->
+<script is:inline src="https://unpkg.com/htmx.org@2.0.6"></script>
+
+<!-- WRONG - Will break functionality -->
+<script src="https://unpkg.com/htmx.org@2.0.6"></script>
+```
+
+Without `is:inline`, Astro will:
+
+- Process and bundle the external scripts
+- Potentially break their functionality
+- Cause extensions like htmx-json to fail silently
+
+This is already configured correctly in `src/layouts/Layout.astro`.
 
 #### Basic HTMX Usage
 
@@ -292,23 +320,23 @@ HTMX is loaded via CDN (version 2.0.6) and provides seamless AJAX functionality:
 
 ```astro
 <!-- Infinite scroll -->
-<div hx-get="/api/more" 
-     hx-trigger="revealed" 
-     hx-target="this" 
+<div hx-get="/api/more"
+     hx-trigger="revealed"
+     hx-target="this"
      hx-swap="outerHTML">
   <div>Last item...</div>
 </div>
 
 <!-- Search with debouncing -->
-<input type="search" 
+<input type="search"
        name="q"
-       hx-get="/api/search" 
-       hx-trigger="input changed delay:300ms" 
+       hx-get="/api/search"
+       hx-trigger="input changed delay:300ms"
        hx-target="#search-results" />
 
 <!-- Modal loading -->
-<button hx-get="/api/modal-content" 
-        hx-target="#modal-body" 
+<button hx-get="/api/modal-content"
+        hx-target="#modal-body"
         hx-trigger="click">
   Open Modal
 </button>
@@ -321,7 +349,7 @@ The real power comes from combining both libraries:
 ```astro
 <!-- HTMX loads data, Alpine.js manages UI state -->
 <div x-data="{ loading: false, items: [] }">
-  <button 
+  <button
     x-on:click="loading = true"
     hx-get="/api/items"
     hx-target="#items"
@@ -329,38 +357,38 @@ The real power comes from combining both libraries:
     <span x-show="!loading">Load Items</span>
     <span x-show="loading">Loading...</span>
   </button>
-  
+
   <div id="items" x-show="!loading">
     <!-- HTMX will populate this -->
   </div>
 </div>
 
 <!-- Form with Alpine.js validation + HTMX submission -->
-<div x-data="{ 
+<div x-data="{
   form: { email: '', password: '' },
   errors: {},
-  submitted: false 
+  submitted: false
 }">
-  <form hx-post="/api/login" 
+  <form hx-post="/api/login"
         hx-target="#response"
         hx-on:htmx:response-error="errors = JSON.parse($event.detail.xhr.response)">
-    
-    <input x-model="form.email" 
-           type="email" 
+
+    <input x-model="form.email"
+           type="email"
            name="email"
            x-bind:class="errors.email ? 'border-red-500' : 'border-gray-300'" />
     <p x-show="errors.email" x-text="errors.email" class="text-red-500"></p>
-    
-    <input x-model="form.password" 
-           type="password" 
+
+    <input x-model="form.password"
+           type="password"
            name="password" />
-    
-    <button type="submit" 
+
+    <button type="submit"
             x-bind:disabled="!form.email || !form.password">
       Login
     </button>
   </form>
-  
+
   <div id="response"></div>
 </div>
 ```
@@ -376,7 +404,7 @@ The real power comes from combining both libraries:
 ### Testing Components
 
 Test your components at `/test/` routes:
+
 - Basic Alpine.js: `/test/quick-test`
 - Advanced interactions: `/test/advanced-test`
 - Individual component tests: `/test/[component-name]`
-

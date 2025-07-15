@@ -1,0 +1,170 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Store template strings as variables to prevent Astro processing
+const todoTemplate = `
+<template json-each="todos" json-key="id">
+  <li class="p-3 bg-white rounded flex items-center justify-between">
+    <span>\${title}</span>
+    <span class="text-xs px-2 py-1 rounded \${completed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+      \${completed ? 'Done' : 'Pending'}
+    </span>
+  </li>
+</template>
+`;
+
+const socialLinksTemplate = `
+<template json-each="socialLinks" json-key="platform">
+  <a @href="url" @title="\`Visit \${platform}\`" class="inline-block px-4 py-2 bg-blue-100 text-blue-800 rounded hover:bg-blue-200 mr-2">
+    \${platform}
+  </a>
+</template>
+`;
+
+const employeesTemplate = `
+<template json-each="employees" json-key="id">
+  <li class="text-gray-700">
+    \${name} - \${position}
+  </li>
+</template>
+`;
+---
+
+<Layout title="HTMX-JSON Final Working">
+  <main class="container mx-auto px-4 py-8 max-w-4xl" hx-ext="json-swap">
+    <h1 class="text-4xl font-bold mb-8">HTMX-JSON Complete Test Suite</h1>
+    
+    <!-- Test 1: json-text -->
+    <section class="border p-6 rounded-lg mb-6">
+      <h2 class="text-2xl font-semibold mb-4">1. json-text - Simple Text Replacement</h2>
+      <button 
+        hx-get="/api/test-data.json" 
+        hx-target="#text-demo"
+        hx-swap="json"
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
+        Load User Data
+      </button>
+      <div id="text-demo" class="mt-4 p-4 bg-gray-100 rounded">
+        <p>Name: <span json-text="name" class="font-bold">Loading...</span></p>
+        <p>Email: <span json-text="email" class="text-blue-600">Loading...</span></p>
+        <p>Age: <span json-text="age">Loading...</span></p>
+      </div>
+    </section>
+
+    <!-- Test 2: json-if/else -->
+    <section class="border p-6 rounded-lg mb-6">
+      <h2 class="text-2xl font-semibold mb-4">2. json-if - Conditional Rendering</h2>
+      <button 
+        hx-get="/api/test-data.json" 
+        hx-target="#conditional-demo"
+        hx-swap="json"
+        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+      >
+        Check Premium Status
+      </button>
+      <div id="conditional-demo" class="mt-4">
+        <template json-if="isPremium">
+          <div class="p-4 bg-yellow-100 rounded">
+            <p class="text-yellow-800">⭐ Premium User</p>
+          </div>
+        </template>
+        <template json-if="!isPremium">
+          <div class="p-4 bg-gray-100 rounded">
+            <p class="text-gray-600">Standard User</p>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <!-- Test 3: json-each (using set:html) -->
+    <section class="border p-6 rounded-lg mb-6">
+      <h2 class="text-2xl font-semibold mb-4">3. json-each - List Rendering</h2>
+      <button 
+        hx-get="/api/test-data.json" 
+        hx-target="#list-demo"
+        hx-swap="json"
+        class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600"
+      >
+        Load Todo List
+      </button>
+      <div id="list-demo" class="mt-4">
+        <ul class="space-y-2" set:html={todoTemplate}></ul>
+      </div>
+    </section>
+
+    <!-- Test 4: @attributes -->
+    <section class="border p-6 rounded-lg mb-6">
+      <h2 class="text-2xl font-semibold mb-4">4. @attributes - Dynamic Attributes</h2>
+      <button 
+        hx-get="/api/test-data.json" 
+        hx-target="#attrs-demo"
+        hx-swap="json"
+        class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+      >
+        Load Social Links
+      </button>
+      <div id="attrs-demo" class="mt-4 space-y-2" set:html={socialLinksTemplate}></div>
+    </section>
+
+    <!-- Test 5: json-show/hide -->
+    <section class="border p-6 rounded-lg mb-6">
+      <h2 class="text-2xl font-semibold mb-4">5. json-show/hide - Visibility Control</h2>
+      <button 
+        hx-get="/api/test-data.json" 
+        hx-target="#visibility-demo"
+        hx-swap="json"
+        class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600"
+      >
+        Toggle Visibility
+      </button>
+      <div id="visibility-demo" class="mt-4 space-y-2">
+        <div json-show="features.showWelcome" class="p-4 bg-green-100 rounded">
+          <p>Welcome message (shown when showWelcome is true)</p>
+        </div>
+        <div json-hide="features.hidePromo" class="p-4 bg-yellow-100 rounded">
+          <p>🎉 Special promotion (hidden when hidePromo is true)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Test 6: json-with -->
+    <section class="border p-6 rounded-lg mb-6">
+      <h2 class="text-2xl font-semibold mb-4">6. json-with - Nested Objects</h2>
+      <button 
+        hx-get="/api/test-data.json" 
+        hx-target="#nested-demo"
+        hx-swap="json"
+        class="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600"
+      >
+        Load Company Data
+      </button>
+      <div id="nested-demo" class="mt-4">
+        <div json-with="company" class="p-4 bg-gray-50 rounded">
+          <h3 class="font-bold text-lg" json-text="name">Company Name</h3>
+          <div json-with="address" class="mt-2 text-gray-600">
+            <p json-text="street">Street</p>
+            <p><span json-text="city">City</span>, <span json-text="state">State</span> <span json-text="zip">ZIP</span></p>
+          </div>
+          <div class="mt-4">
+            <h4 class="font-semibold">Employees:</h4>
+            <ul class="mt-2 space-y-1" set:html={employeesTemplate}></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Auto-load test -->
+    <section class="border p-6 rounded-lg mb-6">
+      <h2 class="text-2xl font-semibold mb-4">7. Auto-load Test</h2>
+      <div 
+        hx-get="/api/simple.json" 
+        hx-trigger="load"
+        hx-swap="json"
+        class="p-4 bg-gray-100 rounded"
+      >
+        <p>Auto-loaded: <span json-text="name" class="font-bold">Loading...</span></p>
+      </div>
+    </section>
+  </main>
+</Layout>
