@@ -15,7 +15,7 @@ export default defineConfig({
   site: isGitHubPages
     ? `https://${githubUser}.github.io/${githubRepo}`
     : "http://localhost:4321",
-  base: isGitHubPages ? `/${githubRepo}` : undefined,
+  base: isGitHubPages ? `/${githubRepo}/` : undefined,
 
   // Static output for GitHub Pages - API routes will be ignored in build
   output: "static", //  'server' | 'static'
