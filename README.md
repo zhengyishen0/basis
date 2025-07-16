@@ -1,6 +1,6 @@
-# ASA Stack Starter Kit
+# PASTA Stack Starter Kit
 
-🚀 A modern web development starter template combining **Astro**, **Supabase**, and **Alpine.js** for fast, interactive web applications.
+🚀 A modern web development starter template combining **Pine UI**, **Astro**, **Supabase**, **Tailwind CSS**, and **Alpine.js** for fast, interactive web applications.
 
 ## 🌟 Live Demo
 
@@ -43,7 +43,7 @@ To learn more about the folder structure of an Astro project, refer to [our guid
 
 ## 🎨 Pine UI Components
 
-This project includes a comprehensive collection of UI components from Pine UI, converted and optimized for the ASA stack (Astro + Supabase + Alpine.js):
+This project includes a comprehensive collection of UI components from Pine UI, converted and optimized for the PASTA stack (Pine UI + Astro + Supabase + Tailwind CSS + Alpine.js):
 
 ### Pine Marketing Components:
 
@@ -186,7 +186,7 @@ This project is configured for automatic deployment to GitHub Pages using GitHub
 
 ## 🎯 Tech Stack Overview
 
-Our ASA stack is carefully chosen for optimal developer experience and application performance:
+Our PASTA stack is carefully chosen for optimal developer experience and application performance:
 
 ### Core Technologies
 
@@ -352,7 +352,7 @@ export const supabase = createClient(supabaseUrl, supabaseKey)
 
 ## 🔥 Supabase Integration
 
-The ASA stack includes a complete example of integrating Supabase with Alpine.js for real-time applications.
+The PASTA stack includes a complete example of integrating Supabase with Alpine.js for real-time applications.
 
 ### Supabase Todo App Example
 
