@@ -7,35 +7,49 @@ const title = "Todo App with Supabase";
     <div 
         class="bg-gray-100 min-h-screen py-8" 
         x-data="{ 
-            app: window.TodoApp
+            app: null,
+            async initApp() {
+                // Wait for TodoApp to be available
+                while (!window.TodoApp) {
+                    await new Promise(resolve => setTimeout(resolve, 50));
+                }
+                this.app = window.TodoApp;
+                await this.app.init();
+            }
         }" 
-        x-init="await app.init()"
+        x-init="initApp()"
     >
         <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-            <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Todo App</h1>
+            <!-- Header with back button -->
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Todo App</h1>
+                <a href="../" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors">
+                    Back to Home
+                </a>
+            </div>
             
             <!-- Auth Status -->
             <div class="mb-4">
-                <div x-show="!app.isAuthenticated" class="text-center py-4">
+                <div x-show="app && !app.isAuthenticated" class="text-center py-4">
                     <p class="text-gray-600 mb-2">Click to start using the app</p>
                     <button 
                         @click="app.signInAnonymously()"
-                        :disabled="app.loading"
+                        :disabled="!app || app.loading"
                         class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 disabled:opacity-50"
-                        x-text="app.loading ? 'Signing in...' : 'Sign In Anonymously'"
+                        x-text="app && app.loading ? 'Signing in...' : 'Sign In Anonymously'"
                     >
                     </button>
                 </div>
-                <div x-show="app.isAuthenticated" class="text-center text-sm text-gray-600 mb-4">
-                    Signed in as: <span x-text="app.userDisplayId"></span>
+                <div x-show="app && app.isAuthenticated" class="text-center text-sm text-gray-600 mb-4">
+                    Signed in as: <span x-text="app && app.userDisplayId"></span>
                     <button @click="app.signOut()" class="ml-2 text-red-500 hover:text-red-700 text-xs">Sign Out</button>
                 </div>
             </div>
 
             <!-- Todo App -->
-            <div x-show="app.isAuthenticated">
+            <div x-show="app && app.isAuthenticated">
                 <!-- Add Todo Form -->
-                <form @submit.prevent="app.addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="mb-6">
+                <form @submit.prevent="app && app.addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="mb-6">
                     <div class="flex gap-2">
                         <input 
                             x-ref="todoInput"
@@ -46,9 +60,9 @@ const title = "Todo App with Supabase";
                         >
                         <button 
                             type="submit"
-                            :disabled="app.loading"
+                            :disabled="!app || app.loading"
                             class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50"
-                            x-text="app.loading ? '...' : 'Add'"
+                            x-text="app && app.loading ? '...' : 'Add'"
                         >
                         </button>
                     </div>
@@ -57,22 +71,22 @@ const title = "Todo App with Supabase";
                 <!-- Filter Buttons -->
                 <div class="flex gap-2 mb-4">
                     <button 
-                        @click="app.setFilter('all')"
-                        :class="app.currentFilter === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
+                        @click="app && app.setFilter('all')"
+                        :class="app && app.currentFilter === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
                         class="filter-btn px-3 py-1 rounded text-sm"
                     >
                         All
                     </button>
                     <button 
-                        @click="app.setFilter('active')"
-                        :class="app.currentFilter === 'active' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
+                        @click="app && app.setFilter('active')"
+                        :class="app && app.currentFilter === 'active' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
                         class="filter-btn px-3 py-1 rounded text-sm"
                     >
                         Active
                     </button>
                     <button 
-                        @click="app.setFilter('completed')"
-                        :class="app.currentFilter === 'completed' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
+                        @click="app && app.setFilter('completed')"
+                        :class="app && app.currentFilter === 'completed' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
                         class="filter-btn px-3 py-1 rounded text-sm"
                     >
                         Completed
@@ -80,22 +94,22 @@ const title = "Todo App with Supabase";
                 </div>
 
                 <!-- Error Message -->
-                <div x-show="app.error" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded" x-text="app.error">
+                <div x-show="app && app.error" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded" x-text="app && app.error">
                 </div>
 
                 <!-- Loading State -->
-                <div x-show="app.loading && app.filteredTodos.length === 0" class="text-center py-8 text-gray-500">
+                <div x-show="app && app.loading && app.filteredTodos && app.filteredTodos.length === 0" class="text-center py-8 text-gray-500">
                     Loading todos...
                 </div>
 
                 <!-- Todo List -->
                 <div class="space-y-2">
-                    <template x-for="todo in app.filteredTodos" :key="todo.id">
+                    <template x-for="todo in (app && app.filteredTodos) || []" :key="todo.id">
                         <div class="flex items-center gap-3 p-3 border border-gray-200 rounded-md">
                             <input 
                                 type="checkbox" 
                                 :checked="todo.is_complete"
-                                @change="app.toggleTodo(todo.id, $event.target.checked)"
+                                @change="app && app.toggleTodo(todo.id, $event.target.checked)"
                                 class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                             >
                             <span 
@@ -104,7 +118,7 @@ const title = "Todo App with Supabase";
                                 x-text="todo.task"
                             ></span>
                             <button 
-                                @click="app.deleteTodo(todo.id)"
+                                @click="app && app.deleteTodo(todo.id)"
                                 class="text-red-500 hover:text-red-700 text-sm"
                             >
                                 Delete
@@ -114,16 +128,16 @@ const title = "Todo App with Supabase";
                 </div>
 
                 <!-- Empty State -->
-                <div x-show="app.filteredTodos.length === 0 && !app.loading" class="text-center py-8 text-gray-500">
-                    <span x-show="app.currentFilter === 'all'">No todos yet. Add one above!</span>
-                    <span x-show="app.currentFilter === 'active'">No active todos.</span>
-                    <span x-show="app.currentFilter === 'completed'">No completed todos.</span>
+                <div x-show="app && app.filteredTodos && app.filteredTodos.length === 0 && !app.loading" class="text-center py-8 text-gray-500">
+                    <span x-show="app && app.currentFilter === 'all'">No todos yet. Add one above!</span>
+                    <span x-show="app && app.currentFilter === 'active'">No active todos.</span>
+                    <span x-show="app && app.currentFilter === 'completed'">No completed todos.</span>
                 </div>
 
                 <!-- Stats -->
-                <div x-show="app.todos.length > 0" class="mt-6 text-sm text-gray-600 text-center">
-                    <span x-text="app.activeCount"></span> active, 
-                    <span x-text="app.completedCount"></span> completed
+                <div x-show="app && app.todos && app.todos.length > 0" class="mt-6 text-sm text-gray-600 text-center">
+                    <span x-text="app && app.activeCount"></span> active, 
+                    <span x-text="app && app.completedCount"></span> completed
                 </div>
             </div>
         </div>
