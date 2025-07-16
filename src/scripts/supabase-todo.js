@@ -1,24 +1,20 @@
+import { supabase } from '../lib/supabase.js'
+
 // Todo App State Management
-window.TodoApp = {
+const TodoApp = {
     currentUser: null,
     todos: [],
     currentFilter: 'all',
     loading: false,
     error: null,
     
-    // Get the global Supabase client
+    // Use the imported Supabase client
     get supabaseClient() {
-        return window.App?.supabase;
+        return supabase;
     },
     
     // Initialize the app
     async init() {
-        // Wait for global App to be available
-        if (!window.App?.supabase) {
-            setTimeout(() => this.init(), 200);
-            return;
-        }
-
         try {
             await this.checkAuthStatus();
         } catch (error) {
@@ -52,11 +48,7 @@ window.TodoApp = {
 
     get userDisplayId() {
         return this.currentUser ? this.currentUser.id.slice(0, 8) + '...' : '';
-    }
-};
-
-// Add methods to TodoApp object
-Object.assign(window.TodoApp, {
+    },
     async checkAuthStatus() {
         try {
             const { data: { user } } = await this.supabaseClient.auth.getUser();
@@ -209,4 +201,7 @@ Object.assign(window.TodoApp, {
     setFilter(filter) {
         this.currentFilter = filter;
     }
-});
+};
+
+// Make TodoApp available globally for Alpine.js
+window.TodoApp = TodoApp;

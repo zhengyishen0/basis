@@ -31,35 +31,6 @@ const { title = "AHA Stack" } = Astro.props;
 		<script src="https://unpkg.com/@alpinejs/sort@3.14.9/dist/cdn.min.js"></script>
 		<script src="https://unpkg.com/@alpinejs/resize@3.14.9/dist/cdn.min.js"></script>
 		
-		<!-- Supabase -->
-		<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
-		
-		<!-- Global App Initialization -->
-		<script>
-			// Initialize Supabase globally when app starts
-			window.App = {
-				supabase: null,
-				
-				async init() {
-					// Wait for Supabase to be available
-					if (typeof window.supabase === 'undefined') {
-						setTimeout(() => this.init(), 100);
-						return;
-					}
-					
-					const SUPABASE_URL = 'https://wiqivthmlgjwtlrnynsq.supabase.co';
-					const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpcWl2dGhtbGdqd3Rscm55bnNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI1NTY1MDgsImV4cCI6MjA2ODEzMjUwOH0.1Nh6nIbXolEkrpSFYzF-l3LqYmkQw0d4xzdi1xoez9M';
-					
-					this.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-					console.log('Global Supabase client initialized');
-				}
-			};
-			
-			// Initialize when DOM loads
-			document.addEventListener('DOMContentLoaded', function() {
-				window.App.init();
-			});
-		</script>
 		
 		<!-- Alpine.js Core (must be loaded after all plugins) -->
 		<script src="https://unpkg.com/alpinejs@3.14.9/dist/cdn.min.js"></script>
