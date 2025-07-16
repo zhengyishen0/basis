@@ -5,34 +5,44 @@ const title = "Todo App with Supabase";
 
 <Layout title={title}>
     <div 
-        class="bg-gray-100 min-h-screen py-8" 
+        class="bg-gray-100 min-h-screen" 
         x-data="$store.todo" 
         x-init="init()"
     >
-        <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-            <!-- Header with back button -->
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold text-gray-800">Todo App</h1>
-                <a href="../" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors">
-                    Back to Home
-                </a>
+        <!-- Navigation Bar -->
+        <nav class="bg-white shadow-sm">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex justify-end items-center">
+                    <a href="/" class="px-4 py-2 bg-white border-2 border-neutral-950 text-neutral-950 hover:bg-neutral-950 hover:text-white focus:ring-neutral-900 rounded-md transition-colors">
+                        ← Back to Home
+                    </a>
+                </div>
             </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="py-8">
+            <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+                <!-- Header -->
+                <div class="text-center mb-6">
+                    <h1 class="text-2xl font-bold text-neutral-800">Supabase Todo App</h1>
+                </div>
             
-            <!-- Auth Status -->
+                <!-- Auth Status -->
             <div class="mb-4">
                 <div x-show="!isAuthenticated" class="text-center py-4">
                     <p class="text-gray-600 mb-2">Click to start using the app</p>
                     <button 
                         @click="signInAnonymously()"
                         :disabled="loading"
-                        class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 disabled:opacity-50"
+                        class="px-4 py-2 bg-neutral-950 text-white hover:bg-neutral-900 focus:ring-neutral-900 rounded-md disabled:opacity-50 transition-colors"
                         x-text="loading ? 'Signing in...' : 'Sign In Anonymously'"
                     >
                     </button>
                 </div>
                 <div x-show="isAuthenticated" class="text-center text-sm text-gray-600 mb-4">
-                    Signed in as: <span x-text="userDisplayId"></span>
-                    <button @click="signOut()" class="ml-2 text-red-500 hover:text-red-700 text-xs">Sign Out</button>
+                    Signed in as: <span x-text="userDisplayId" class="text-neutral-800 font-medium"></span>
+                    <button @click="signOut()" class="ml-2 px-2 py-1 bg-red-50 text-red-600 hover:bg-red-100 focus:ring-red-500 rounded text-xs transition-colors">Sign Out</button>
                 </div>
             </div>
 
@@ -45,13 +55,13 @@ const title = "Todo App with Supabase";
                             x-ref="todoInput"
                             type="text" 
                             placeholder="Add a new todo..."
-                            class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            class="flex-1 px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-neutral-900"
                             required
                         >
                         <button 
                             type="submit"
                             :disabled="loading"
-                            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50"
+                            class="px-4 py-2 bg-neutral-950 text-white hover:bg-neutral-900 focus:ring-neutral-900 rounded-md disabled:opacity-50 transition-colors"
                             x-text="loading ? '...' : 'Add'"
                         >
                         </button>
@@ -62,22 +72,28 @@ const title = "Todo App with Supabase";
                 <div class="flex gap-2 mb-4">
                     <button 
                         @click="setFilter('all')"
-                        :class="currentFilter === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
-                        class="filter-btn px-3 py-1 rounded text-sm"
+                        :class="currentFilter === 'all' ? 
+                            'bg-neutral-950 text-white hover:bg-neutral-900' : 
+                            'bg-white border-2 border-neutral-950 text-neutral-950 hover:bg-neutral-950 hover:text-white'"
+                        class="px-3 py-1 rounded text-sm transition-colors focus:ring-neutral-900"
                     >
                         All
                     </button>
                     <button 
                         @click="setFilter('active')"
-                        :class="currentFilter === 'active' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
-                        class="filter-btn px-3 py-1 rounded text-sm"
+                        :class="currentFilter === 'active' ? 
+                            'bg-neutral-950 text-white hover:bg-neutral-900' : 
+                            'bg-white border-2 border-neutral-950 text-neutral-950 hover:bg-neutral-950 hover:text-white'"
+                        class="px-3 py-1 rounded text-sm transition-colors focus:ring-neutral-900"
                     >
                         Active
                     </button>
                     <button 
                         @click="setFilter('completed')"
-                        :class="currentFilter === 'completed' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
-                        class="filter-btn px-3 py-1 rounded text-sm"
+                        :class="currentFilter === 'completed' ? 
+                            'bg-neutral-950 text-white hover:bg-neutral-900' : 
+                            'bg-white border-2 border-neutral-950 text-neutral-950 hover:bg-neutral-950 hover:text-white'"
+                        class="px-3 py-1 rounded text-sm transition-colors focus:ring-neutral-900"
                     >
                         Completed
                     </button>
@@ -95,21 +111,21 @@ const title = "Todo App with Supabase";
                 <!-- Todo List -->
                 <div class="space-y-2">
                     <template x-for="todo in filteredTodos" :key="todo.id">
-                        <div class="flex items-center gap-3 p-3 border border-gray-200 rounded-md">
+                        <div class="flex items-center gap-3 p-3 border border-neutral-200 rounded-md">
                             <input 
                                 type="checkbox" 
                                 :checked="todo.is_complete"
                                 @change="toggleTodo(todo.id, $event.target.checked)"
-                                class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                                class="w-4 h-4 text-neutral-950 bg-white border-2 border-neutral-300 rounded focus:ring-neutral-900 checked:bg-neutral-950 checked:border-neutral-950"
                             >
                             <span 
-                                :class="todo.is_complete ? 'line-through text-gray-500' : 'text-gray-800'"
+                                :class="todo.is_complete ? 'line-through text-gray-500' : 'text-neutral-800'"
                                 class="flex-1"
                                 x-text="todo.task"
                             ></span>
                             <button 
                                 @click="deleteTodo(todo.id)"
-                                class="text-red-500 hover:text-red-700 text-sm"
+                                class="px-2 py-1 bg-red-50 text-red-600 hover:bg-red-100 focus:ring-red-500 rounded text-sm transition-colors"
                             >
                                 Delete
                             </button>
@@ -129,6 +145,7 @@ const title = "Todo App with Supabase";
                     <span x-text="activeCount"></span> active, 
                     <span x-text="completedCount"></span> completed
                 </div>
+            </div>
             </div>
         </div>
     </div>
