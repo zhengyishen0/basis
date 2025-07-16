@@ -1,15 +1,16 @@
 My tech stack is:
-- Astro: for the fullstack and using dynamic island to glue all the components together
-- HTMX: for AJAX and backend communication
-- Alpine: for frontend reactibility
-- Pine: UI library for Alpine
-- Tailwind CSS: Use Tailwind CSS for reusable UI elements like <Button size="lg" variant="primary">
+- Astro: for the fullstack and using dynamic island architecture to hydrate only interactive components
+- Supabase: for backend-as-a-service with real-time database and authentication
+- Alpine.js: for frontend reactivity using ES6 modules and Alpine.store() pattern
+- Pine UI: complete component library for Alpine.js with variants, colors, and sizes
+- Tailwind CSS: utility-first CSS framework for rapid UI development
 - Markdown Content: Use Astro Content Collections with frontmatter to store landing page content in MD files - put structured data (hero, features, testimonials) in frontmatter and long-form content in markdown body, then render with getEntry() and <Content /> components.
 - Github Actions: Host static pages on Github Pages
 
 # Testing Reminder
 Always test code myself before claiming it works. Use techniques like:
-- hx-trigger="load" to test HTMX requests automatically
+- x-init="init()" to test Alpine.js initialization automatically
 - console.log() to debug variable values
-- Create test pages/endpoints to verify functionality
-- Check server logs for errors
+- Create test pages to verify component functionality
+- Check browser console for errors
+- Test Alpine.store() state changes

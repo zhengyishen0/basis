@@ -1,6 +1,6 @@
-# AHA Stack Starter Kit
+# ASA Stack Starter Kit
 
-🚀 A modern web development starter template combining **Astro**, **HTMX**, and **Alpine.js** for fast, interactive web applications.
+🚀 A modern web development starter template combining **Astro**, **Supabase**, and **Alpine.js** for fast, interactive web applications.
 
 ## 🌟 Live Demo
 
@@ -43,7 +43,7 @@ To learn more about the folder structure of an Astro project, refer to [our guid
 
 ## 🎨 Pine UI Components
 
-This project includes a comprehensive collection of UI components from Pine UI, converted and optimized for the AHA stack (Astro + HTMX + Alpine.js):
+This project includes a comprehensive collection of UI components from Pine UI, converted and optimized for the ASA stack (Astro + Supabase + Alpine.js):
 
 ### Pine Marketing Components:
 
@@ -184,14 +184,42 @@ This project is configured for automatic deployment to GitHub Pages using GitHub
 - Works with any repository name or GitHub account
 - The configuration is in `.github/workflows/deploy.yml`
 
-## 🔧 Working with Alpine.js and HTMX
+## 🎯 Tech Stack Overview
+
+Our ASA stack is carefully chosen for optimal developer experience and application performance:
+
+### Core Technologies
+
+- **🚀 Astro** - Static site generator with component islands architecture
+- **🗄️ Supabase** - Backend-as-a-Service with real-time database and authentication
+- **⚡ Alpine.js** - Lightweight reactive framework for frontend interactivity
+- **🎨 Pine UI** - Complete component library built for Alpine.js
+- **🎨 Tailwind CSS** - Utility-first CSS framework
+- **📝 Markdown Content** - Content management via Astro Content Collections
+- **🔄 GitHub Actions** - CI/CD for automatic deployment to GitHub Pages
+
+### Why This Stack?
+
+**Astro + Component Islands**: Astro provides excellent performance through its islands architecture, allowing us to hydrate only the interactive components we need. This gives us the best of both worlds - static site speed with dynamic functionality where needed. Astro's component system eliminates code duplication by making all UI elements reusable across pages.
+
+**Supabase Integration**: Supabase replaces traditional backend development with a complete BaaS solution. It provides real-time database functionality, built-in authentication, and row-level security policies. This eliminates the need for separate backend services while maintaining full database capabilities.
+
+**Alpine.js + ES6 Modules**: Alpine.js provides reactive frontend functionality with a minimal footprint. We use ES6 module imports rather than CDN scripts for better reliability and Alpine.store() pattern for clean global state management. This approach eliminates timing issues and provides a more maintainable codebase.
+
+**Pine UI Components**: Pine UI gives us a complete set of production-ready components specifically designed for Alpine.js. All components are customizable with variants, colors, and sizes, following consistent design patterns throughout the application.
+
+**Tailwind CSS**: Provides utility-first styling that integrates seamlessly with our component system. We use Tailwind for rapid UI development while maintaining design consistency across all Pine UI components.
+
+**Content Collections**: Astro's Content Collections with frontmatter allow us to manage landing page content in Markdown files. Structured data (hero sections, features, testimonials) goes in frontmatter while long-form content uses markdown body, then renders with getEntry() and <Content /> components.
+
+## 🔧 Working with Alpine.js
 
 ### Alpine.js Setup & Plugin Usage
 
-Alpine.js is included via CDN with all major plugins pre-loaded. The plugins are loaded in the correct order in `src/layouts/Layout.astro`:
+Alpine.js is included via ES6 modules with all major plugins. The setup is in `src/lib/alpine.js`:
 
 ```javascript
-// Alpine.js Plugins (loaded before core)
+// Alpine.js Plugins
 @alpinejs/mask         // Input masking and formatting
 @alpinejs/intersect    // Intersection observer functionality
 @alpinejs/persist      // Data persistence across page loads
@@ -202,7 +230,7 @@ Alpine.js is included via CDN with all major plugins pre-loaded. The plugins are
 @alpinejs/sort         // Sortable lists and drag-and-drop
 @alpinejs/resize       // Element resize detection
 
-// Alpine.js Core (loaded last)
+// Alpine.js Core
 alpinejs@3.14.9
 ```
 
@@ -271,180 +299,97 @@ alpinejs@3.14.9
 </div>
 ```
 
-### HTMX Integration
+### Supabase Integration
 
-HTMX is loaded via CDN (version 2.0.6) and provides seamless AJAX functionality.
+Supabase provides our backend functionality with real-time database capabilities and authentication:
 
-#### Important: Astro Script Loading
-
-**When using external CDN scripts in Astro (like HTMX, htmx-json, or Alpine.js), you MUST add the `is:inline` directive to prevent Astro from processing and bundling them:**
-
-```html
-<!-- CORRECT - Works properly -->
-<script is:inline src="https://unpkg.com/htmx.org@2.0.6"></script>
-
-<!-- WRONG - Will break functionality -->
-<script src="https://unpkg.com/htmx.org@2.0.6"></script>
+```javascript
+// Supabase Client Setup
+import { createClient } from '@supabase/supabase-js'
+export const supabase = createClient(supabaseUrl, supabaseKey)
 ```
 
-Without `is:inline`, Astro will:
-
-- Process and bundle the external scripts
-- Potentially break their functionality
-- Cause extensions like htmx-json to fail silently
-
-This is already configured correctly in `src/layouts/Layout.astro`.
-
-#### Basic HTMX Usage
+#### Alpine.js + Supabase Integration
 
 ```astro
-<!-- Simple form submission -->
-<form hx-post="/api/submit" hx-target="#result">
-  <input name="data" type="text" />
-  <button type="submit">Submit</button>
-</form>
-<div id="result"><!-- Response will appear here --></div>
-
-<!-- Load content on page load -->
-<div hx-get="/api/data" hx-trigger="load" hx-target="this">
-  Loading...
-</div>
-
-<!-- Auto-refresh content -->
-<div hx-get="/api/status" hx-trigger="every 30s">
-  Status will update every 30 seconds
-</div>
-```
-
-#### Advanced HTMX Patterns
-
-```astro
-<!-- Infinite scroll -->
-<div hx-get="/api/more"
-     hx-trigger="revealed"
-     hx-target="this"
-     hx-swap="outerHTML">
-  <div>Last item...</div>
-</div>
-
-<!-- Search with debouncing -->
-<input type="search"
-       name="q"
-       hx-get="/api/search"
-       hx-trigger="input changed delay:300ms"
-       hx-target="#search-results" />
-
-<!-- Modal loading -->
-<button hx-get="/api/modal-content"
-        hx-target="#modal-body"
-        hx-trigger="click">
-  Open Modal
-</button>
-```
-
-### Combining Alpine.js + HTMX
-
-The real power comes from combining both libraries:
-
-```astro
-<!-- HTMX loads data, Alpine.js manages UI state -->
-<div x-data="{ loading: false, items: [] }">
-  <button
-    x-on:click="loading = true"
-    hx-get="/api/items"
-    hx-target="#items"
-    hx-on:htmx:after-request="loading = false">
-    <span x-show="!loading">Load Items</span>
-    <span x-show="loading">Loading...</span>
-  </button>
-
-  <div id="items" x-show="!loading">
-    <!-- HTMX will populate this -->
-  </div>
-</div>
-
-<!-- Form with Alpine.js validation + HTMX submission -->
-<div x-data="{
-  form: { email: '', password: '' },
-  errors: {},
-  submitted: false
-}">
-  <form hx-post="/api/login"
-        hx-target="#response"
-        hx-on:htmx:response-error="errors = JSON.parse($event.detail.xhr.response)">
-
-    <input x-model="form.email"
-           type="email"
-           name="email"
-           x-bind:class="errors.email ? 'border-red-500' : 'border-gray-300'" />
-    <p x-show="errors.email" x-text="errors.email" class="text-red-500"></p>
-
-    <input x-model="form.password"
-           type="password"
-           name="password" />
-
-    <button type="submit"
-            x-bind:disabled="!form.email || !form.password">
-      Login
+<!-- Real-time todo app with Alpine.js + Supabase -->
+<div x-data="$store.todo" x-init="init()">
+  <!-- Authentication -->
+  <div x-show="!isAuthenticated">
+    <button @click="signInAnonymously()" :disabled="loading">
+      <span x-text="loading ? 'Signing in...' : 'Sign In Anonymously'"></span>
     </button>
-  </form>
+  </div>
 
-  <div id="response"></div>
+  <!-- Todo Interface -->
+  <div x-show="isAuthenticated">
+    <form @submit.prevent="addTodo($refs.todoInput.value); $refs.todoInput.value = ''">
+      <input x-ref="todoInput" type="text" placeholder="Add todo..." required>
+      <button type="submit" :disabled="loading">Add</button>
+    </form>
+
+    <!-- Todo List -->
+    <template x-for="todo in filteredTodos" :key="todo.id">
+      <div class="flex items-center gap-3">
+        <input type="checkbox" 
+               :checked="todo.is_complete"
+               @change="toggleTodo(todo.id, $event.target.checked)">
+        <span x-text="todo.task"></span>
+        <button @click="deleteTodo(todo.id)">Delete</button>
+      </div>
+    </template>
+  </div>
 </div>
 ```
 
 ### Best Practices
 
-1. **State Management**: Use Alpine.js for client-side state, HTMX for server communication
+1. **State Management**: Use Alpine.store() for global state management
 2. **Performance**: Leverage Alpine.js's `x-cloak` directive to prevent flash of unstyled content
 3. **Accessibility**: Use Alpine.js focus management plugins for keyboard navigation
-4. **Error Handling**: Combine HTMX error events with Alpine.js for user-friendly error states
-5. **Progressive Enhancement**: Start with working HTML forms, then enhance with HTMX + Alpine.js
+4. **Error Handling**: Implement proper error states in Alpine.js components
+5. **Progressive Enhancement**: Start with working functionality, then enhance with reactive features
 
 ## 🔥 Supabase Integration
 
-The AHA stack includes a complete example of integrating Supabase with HTMX and Alpine.js for real-time applications.
+The ASA stack includes a complete example of integrating Supabase with Alpine.js for real-time applications.
 
 ### Supabase Todo App Example
 
 Visit `/supabase-todo` to see a fully functional todo application that demonstrates:
 
 - **Anonymous Authentication**: Automatic sign-in for instant use
-- **Real-time Updates**: Live synchronization across sessions
-- **HTMX CRUD Operations**: All database operations via HTMX
-- **Alpine.js State Management**: Client-side interactivity
-- **Secure API Routes**: Server-side authentication handling
+- **Real-time Updates**: Live synchronization with the database
+- **Alpine.js State Management**: Complete CRUD operations via Alpine.store()
+- **Client-side Architecture**: Direct Supabase integration without API routes
+- **Row Level Security**: Supabase RLS policies enforced
 
 #### Architecture Overview:
 
 ```
 Frontend (Astro Page)
-├── Alpine.js Component (State & Auth)
-├── HTMX Forms & Actions
-└── Supabase JS Client (Auth Only)
-    ↓
-API Routes (Server-side)
-├── Authentication Validation
-├── Supabase Operations
-└── HTML Response Generation
+├── Alpine.js Store (Global State Management)
+├── Supabase JS Client (Direct Database Access)
+├── Authentication Handling
+└── Real-time UI Updates
 ```
 
 #### Key Features:
 
-1. **Pure Frontend Approach**: No backend server required
-2. **HTMX-driven Updates**: All UI updates via HTML responses
-3. **Type-safe API Routes**: Astro's built-in TypeScript support
+1. **Pure Frontend Approach**: No backend server or API routes required
+2. **Alpine.store() Pattern**: Clean global state management
+3. **ES6 Module Imports**: Reliable script loading and initialization
 4. **Row Level Security**: Supabase RLS policies enforced
-5. **Optimistic UI**: Loading states with Alpine.js
+5. **Optimistic UI**: Loading states and error handling
 
 #### Setting Up Your Own Supabase Project:
 
 1. Create a new Supabase project at [supabase.com](https://supabase.com)
 2. Enable anonymous sign-ins in Authentication settings
 3. Create your database schema with RLS policies
-4. Update the credentials in the code:
-   - `/src/pages/supabase-todo.astro` (frontend)
-   - `/src/pages/api/supabase-todos/*.ts` (API routes)
+4. Update the credentials in:
+   - `/src/lib/supabase.js` (Supabase client configuration)
+   - `/src/lib/alpine.js` (Alpine.js store with Supabase integration)
 
 ### Testing Components
 
