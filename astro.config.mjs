@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-import tailwind from "@tailwindcss/vite";
+import tailwind from "@astrojs/tailwind";
 
 // Dynamic configuration for GitHub Pages
 const isGitHubPages = process.env.GITHUB_ACTIONS === "true";
@@ -21,10 +21,8 @@ export default defineConfig({
   output: "static", //  'server' | 'static'
 
   // Enable client-side hydration for Alpine.js
-  integrations: [],
+  integrations: [tailwind()],
   vite: {
-    plugins: [tailwind()],
-    // Ensure HTMX and Alpine.js are available globally
     define: {
       global: "globalThis",
     },
