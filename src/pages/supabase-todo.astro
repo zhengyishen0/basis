@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Button from '../components/pine/Button.astro';
 const title = "Todo App with Supabase";
 ---
 
@@ -11,12 +12,8 @@ const title = "Todo App with Supabase";
     >
         <!-- Navigation Bar -->
         <nav class="bg-white shadow-sm">
-            <div class="container mx-auto px-4 py-4">
-                <div class="flex justify-end items-center">
-                    <a href="/" class="px-4 py-2 bg-white border-2 border-neutral-950 text-neutral-950 hover:bg-neutral-950 hover:text-white focus:ring-neutral-900 rounded-md transition-colors">
-                        ← Back to Home
-                    </a>
-                </div>
+            <div class="container mx-auto px-4 py-4 flex justify-end">
+                <Button href="../" variant="solid" color="neutral" size="sm">Back to Home</Button>
             </div>
         </nav>
 

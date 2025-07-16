@@ -24,9 +24,5 @@ export default defineConfig({
   integrations: [],
   vite: {
     plugins: [tailwind()],
-    // Ensure HTMX and Alpine.js are available globally
-    define: {
-      global: "globalThis",
-    },
   },
 });

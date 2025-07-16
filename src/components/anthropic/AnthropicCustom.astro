@@ -139,6 +139,7 @@ const { className = "" } = Astro.props;
     gap: 6rem;
     align-items: flex-start;
     min-height: 80vh;
+    position: relative;
   }
 
   .hero-left {
@@ -146,6 +147,8 @@ const { className = "" } = Astro.props;
     flex-direction: column;
     width: 100%;
     margin-top: 6rem;
+    position: relative;
+    z-index: 10;
   }
 
   .hero-two-column-grid {
@@ -165,6 +168,17 @@ const { className = "" } = Astro.props;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
   }
 
   .network-diagram {
@@ -223,6 +237,8 @@ const { className = "" } = Astro.props;
     min-width: 0;
     width: 100%;
     box-sizing: border-box;
+    position: relative;
+    z-index: 20;
   }
 
   /* Video and Model Section */
