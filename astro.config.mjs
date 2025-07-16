@@ -18,7 +18,7 @@ export default defineConfig({
   base: isGitHubPages ? `/${githubRepo}` : undefined,
 
   // Static output for GitHub Pages - API routes will be ignored in build
-  output: "server", //  'server' | 'static'
+  output: "static", //  'server' | 'static'
 
   // Enable client-side hydration for Alpine.js
   integrations: [],

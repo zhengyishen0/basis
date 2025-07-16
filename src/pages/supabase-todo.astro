@@ -1,0 +1,527 @@
+---
+import Layout from "../layouts/Layout.astro";
+const title = "Todo App with Supabase";
+---
+
+<Layout title={title}>
+    <div class="bg-gray-100 min-h-screen py-8">
+        <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Todo App</h1>
+            
+            <!-- Auth Status -->
+            <div id="auth-section" class="mb-4">
+                <div id="auth-login" class="text-center py-4">
+                    <p class="text-gray-600 mb-2">Click to start using the app</p>
+                    <button 
+                        id="sign-in-btn"
+                        class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 disabled:opacity-50"
+                    >
+                        Sign In Anonymously
+                    </button>
+                </div>
+                <div id="auth-status" class="text-center text-sm text-gray-600 mb-4" style="display: none;">
+                    Signed in as: <span id="user-id"></span>
+                    <button id="sign-out-btn" class="ml-2 text-red-500 hover:text-red-700 text-xs">Sign Out</button>
+                </div>
+            </div>
+
+            <!-- Todo App -->
+            <div id="todo-app" style="display: none;">
+                <!-- Add Todo Form -->
+                <form id="todo-form" class="mb-6">
+                    <div class="flex gap-2">
+                        <input 
+                            type="text" 
+                            id="todo-input"
+                            placeholder="Add a new todo..."
+                            class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                        >
+                        <button 
+                            type="submit"
+                            id="add-btn"
+                            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50"
+                        >
+                            Add
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Filter Buttons -->
+                <div class="flex gap-2 mb-4">
+                    <button 
+                        class="filter-btn px-3 py-1 rounded text-sm bg-blue-500 text-white"
+                        data-filter="all"
+                    >
+                        All
+                    </button>
+                    <button 
+                        class="filter-btn px-3 py-1 rounded text-sm bg-gray-200 text-gray-700"
+                        data-filter="active"
+                    >
+                        Active
+                    </button>
+                    <button 
+                        class="filter-btn px-3 py-1 rounded text-sm bg-gray-200 text-gray-700"
+                        data-filter="completed"
+                    >
+                        Completed
+                    </button>
+                </div>
+
+                <!-- Error Message -->
+                <div id="error-message" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded" style="display: none;">
+                </div>
+
+                <!-- Loading State -->
+                <div id="loading-message" class="text-center py-8 text-gray-500" style="display: none;">
+                    Loading todos...
+                </div>
+
+                <!-- Todo List -->
+                <div id="todo-list" class="space-y-2">
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-message" class="text-center py-8 text-gray-500">
+                    No todos yet. Add one above!
+                </div>
+
+                <!-- Stats -->
+                <div id="stats" class="mt-6 text-sm text-gray-600 text-center" style="display: none;">
+                    <span id="active-count">0</span> active, 
+                    <span id="completed-count">0</span> completed
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load scripts in correct order -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
+    
+    <script>
+        // Wait for all dependencies to load
+        let supabaseClient = null;
+        let currentUser = null;
+        let todos = [];
+        let currentFilter = 'all';
+
+        // Initialize when all scripts are loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing...');
+            
+            // Wait a bit for Supabase to be available
+            setTimeout(initApp, 100);
+        });
+
+        function initApp() {
+            console.log('Initializing app...');
+            
+            // Check if Supabase is available
+            if (typeof window.supabase === 'undefined') {
+                console.error('Supabase not loaded yet, retrying...');
+                setTimeout(initApp, 200);
+                return;
+            }
+
+            // Initialize Supabase
+            try {
+                const SUPABASE_URL = 'https://wiqivthmlgjwtlrnynsq.supabase.co';
+                const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpcWl2dGhtbGdqd3Rscm55bnNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI1NTY1MDgsImV4cCI6MjA2ODEzMjUwOH0.1Nh6nIbXolEkrpSFYzF-l3LqYmkQw0d4xzdi1xoez9M';
+                
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                console.log('Supabase initialized successfully:', supabaseClient);
+                
+                setupEventListeners();
+                checkAuthStatus();
+                
+            } catch (error) {
+                console.error('Failed to initialize Supabase:', error);
+                showError('Failed to initialize app: ' + error.message);
+            }
+        }
+
+        function setupEventListeners() {
+            console.log('Setting up event listeners...');
+            
+            // Auth buttons
+            const signInBtn = document.getElementById('sign-in-btn');
+            const signOutBtn = document.getElementById('sign-out-btn');
+            
+            if (signInBtn) {
+                signInBtn.addEventListener('click', signInAnonymously);
+            }
+            if (signOutBtn) {
+                signOutBtn.addEventListener('click', signOut);
+            }
+
+            // Todo form
+            const todoForm = document.getElementById('todo-form');
+            if (todoForm) {
+                todoForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    addTodo();
+                });
+            }
+
+            // Filter buttons
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    setFilter(filter);
+                });
+            });
+        }
+
+        async function checkAuthStatus() {
+            console.log('Checking auth status...');
+            try {
+                const { data: { user }, error } = await supabaseClient.auth.getUser();
+                if (error) {
+                    console.log('No current user:', error.message);
+                } else if (user) {
+                    console.log('Found existing user:', user);
+                    setCurrentUser(user);
+                }
+            } catch (error) {
+                console.error('Auth check failed:', error);
+            }
+        }
+
+        async function signInAnonymously() {
+            console.log('Signing in anonymously...');
+            const signInBtn = document.getElementById('sign-in-btn');
+            
+            if (signInBtn) {
+                signInBtn.disabled = true;
+                signInBtn.textContent = 'Signing in...';
+            }
+
+            try {
+                const { data, error } = await supabaseClient.auth.signInAnonymously();
+                if (error) throw error;
+                
+                console.log('Anonymous sign in successful:', data.user);
+                setCurrentUser(data.user);
+                
+            } catch (error) {
+                console.error('Sign in failed:', error);
+                showError('Sign in failed: ' + error.message);
+            } finally {
+                if (signInBtn) {
+                    signInBtn.disabled = false;
+                    signInBtn.textContent = 'Sign In Anonymously';
+                }
+            }
+        }
+
+        async function signOut() {
+            console.log('Signing out...');
+            try {
+                const { error } = await supabaseClient.auth.signOut();
+                if (error) throw error;
+                
+                console.log('Sign out successful');
+                setCurrentUser(null);
+                
+            } catch (error) {
+                console.error('Sign out failed:', error);
+                showError('Sign out failed: ' + error.message);
+            }
+        }
+
+        function setCurrentUser(user) {
+            currentUser = user;
+            
+            const authLogin = document.getElementById('auth-login');
+            const authStatus = document.getElementById('auth-status');
+            const todoApp = document.getElementById('todo-app');
+            const userIdSpan = document.getElementById('user-id');
+
+            if (user) {
+                // Show authenticated state
+                if (authLogin) authLogin.style.display = 'none';
+                if (authStatus) authStatus.style.display = 'block';
+                if (todoApp) todoApp.style.display = 'block';
+                if (userIdSpan) userIdSpan.textContent = user.id.slice(0, 8) + '...';
+                
+                // Load todos
+                loadTodos();
+            } else {
+                // Show unauthenticated state
+                if (authLogin) authLogin.style.display = 'block';
+                if (authStatus) authStatus.style.display = 'none';
+                if (todoApp) todoApp.style.display = 'none';
+                
+                // Clear todos
+                todos = [];
+                renderTodos();
+            }
+        }
+
+        async function loadTodos() {
+            if (!currentUser) return;
+            
+            console.log('Loading todos...');
+            showLoading(true);
+            hideError();
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('todos')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .order('inserted_at', { ascending: false });
+
+                if (error) throw error;
+                
+                todos = data || [];
+                console.log('Loaded todos:', todos);
+                renderTodos();
+                
+            } catch (error) {
+                console.error('Failed to load todos:', error);
+                showError('Failed to load todos: ' + error.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function addTodo() {
+            const todoInput = document.getElementById('todo-input');
+            const text = todoInput?.value?.trim();
+            
+            if (!text || !currentUser) return;
+
+            console.log('Adding todo:', text);
+            const addBtn = document.getElementById('add-btn');
+            
+            if (addBtn) {
+                addBtn.disabled = true;
+                addBtn.textContent = '...';
+            }
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('todos')
+                    .insert([{
+                        task: text,
+                        user_id: currentUser.id
+                    }])
+                    .select();
+
+                if (error) throw error;
+                
+                if (data && data[0]) {
+                    todos.unshift(data[0]);
+                    renderTodos();
+                    if (todoInput) todoInput.value = '';
+                }
+                
+                console.log('Todo added successfully:', data);
+                
+            } catch (error) {
+                console.error('Failed to add todo:', error);
+                showError('Failed to add todo: ' + error.message);
+            } finally {
+                if (addBtn) {
+                    addBtn.disabled = false;
+                    addBtn.textContent = 'Add';
+                }
+            }
+        }
+
+        async function toggleTodo(todoId, completed) {
+            if (!currentUser) return;
+            
+            console.log('Toggling todo:', todoId, completed);
+
+            try {
+                const { error } = await supabaseClient
+                    .from('todos')
+                    .update({ is_complete: completed })
+                    .eq('id', todoId)
+                    .eq('user_id', currentUser.id);
+
+                if (error) throw error;
+                
+                // Update local state
+                console.log('Looking for todo with ID:', todoId, 'Type:', typeof todoId);
+                console.log('Current todos:', todos.map(t => ({ id: t.id, type: typeof t.id })));
+                const todo = todos.find(t => t.id == todoId); // Use == instead of === for type coercion
+                if (todo) {
+                    console.log('Found todo, updating:', todo);
+                    todo.is_complete = completed;
+                    renderTodos();
+                } else {
+                    console.log('Todo not found in local state');
+                }
+                
+                console.log('Todo toggled successfully');
+                
+            } catch (error) {
+                console.error('Failed to toggle todo:', error);
+                showError('Failed to update todo: ' + error.message);
+            }
+        }
+
+        async function deleteTodo(todoId) {
+            if (!currentUser) return;
+            
+            console.log('Deleting todo:', todoId);
+
+            try {
+                const { error } = await supabaseClient
+                    .from('todos')
+                    .delete()
+                    .eq('id', todoId)
+                    .eq('user_id', currentUser.id);
+
+                if (error) throw error;
+                
+                // Remove from local state
+                console.log('Deleting todo with ID:', todoId, 'Type:', typeof todoId);
+                console.log('Current todos before delete:', todos.map(t => ({ id: t.id, type: typeof t.id })));
+                const initialLength = todos.length;
+                todos = todos.filter(t => t.id != todoId); // Use != instead of !== for type coercion
+                console.log('Todos after delete:', todos.length, 'removed:', initialLength - todos.length);
+                renderTodos();
+                
+                console.log('Todo deleted successfully');
+                
+            } catch (error) {
+                console.error('Failed to delete todo:', error);
+                showError('Failed to delete todo: ' + error.message);
+            }
+        }
+
+        function setFilter(filter) {
+            currentFilter = filter;
+            
+            // Update filter button styles
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                const btnFilter = btn.getAttribute('data-filter');
+                if (btnFilter === filter) {
+                    btn.className = 'filter-btn px-3 py-1 rounded text-sm bg-blue-500 text-white';
+                } else {
+                    btn.className = 'filter-btn px-3 py-1 rounded text-sm bg-gray-200 text-gray-700';
+                }
+            });
+            
+            renderTodos();
+        }
+
+        function getFilteredTodos() {
+            switch (currentFilter) {
+                case 'active':
+                    return todos.filter(t => !t.is_complete);
+                case 'completed':
+                    return todos.filter(t => t.is_complete);
+                default:
+                    return todos;
+            }
+        }
+
+        function renderTodos() {
+            console.log('renderTodos called, current todos:', todos.length);
+            const todoList = document.getElementById('todo-list');
+            const emptyMessage = document.getElementById('empty-message');
+            const stats = document.getElementById('stats');
+            const activeCount = document.getElementById('active-count');
+            const completedCount = document.getElementById('completed-count');
+
+            if (!todoList) {
+                console.log('todoList element not found');
+                return;
+            }
+
+            const filteredTodos = getFilteredTodos();
+            const activeTodos = todos.filter(t => !t.is_complete);
+            const completedTodos = todos.filter(t => t.is_complete);
+
+            // Clear list
+            todoList.innerHTML = '';
+
+            if (filteredTodos.length === 0) {
+                if (emptyMessage) {
+                    if (currentFilter === 'all') {
+                        emptyMessage.textContent = 'No todos yet. Add one above!';
+                    } else if (currentFilter === 'active') {
+                        emptyMessage.textContent = 'No active todos.';
+                    } else {
+                        emptyMessage.textContent = 'No completed todos.';
+                    }
+                    emptyMessage.style.display = 'block';
+                }
+            } else {
+                if (emptyMessage) emptyMessage.style.display = 'none';
+            }
+
+            // Render todos
+            filteredTodos.forEach(todo => {
+                const todoEl = document.createElement('div');
+                todoEl.className = 'flex items-center gap-3 p-3 border border-gray-200 rounded-md';
+                
+                todoEl.innerHTML = `
+                    <input 
+                        type="checkbox" 
+                        ${todo.is_complete ? 'checked' : ''} 
+                        onchange="toggleTodo('${todo.id}', this.checked)"
+                        class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                    >
+                    <span class="flex-1 ${todo.is_complete ? 'line-through text-gray-500' : 'text-gray-800'}">${escapeHtml(todo.task)}</span>
+                    <button 
+                        onclick="deleteTodo('${todo.id}')"
+                        class="text-red-500 hover:text-red-700 text-sm"
+                    >
+                        Delete
+                    </button>
+                `;
+                
+                todoList.appendChild(todoEl);
+            });
+
+            // Update stats
+            if (todos.length > 0) {
+                if (stats) stats.style.display = 'block';
+                if (activeCount) activeCount.textContent = activeTodos.length;
+                if (completedCount) completedCount.textContent = completedTodos.length;
+            } else {
+                if (stats) stats.style.display = 'none';
+            }
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('error-message');
+            if (errorEl) {
+                errorEl.textContent = message;
+                errorEl.style.display = 'block';
+            }
+        }
+
+        function hideError() {
+            const errorEl = document.getElementById('error-message');
+            if (errorEl) {
+                errorEl.style.display = 'none';
+            }
+        }
+
+        function showLoading(show) {
+            const loadingEl = document.getElementById('loading-message');
+            if (loadingEl) {
+                loadingEl.style.display = show ? 'block' : 'none';
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Make functions global for onclick handlers
+        window.toggleTodo = toggleTodo;
+        window.deleteTodo = deleteTodo;
+    </script>
+</Layout>
