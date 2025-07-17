@@ -27,8 +27,6 @@ export function createDataStore(tableName, config = {}) {
     
     // Generic load with dynamic filters
     async load(userId, filters = {}) {
-      if (!userId && options.userField) return
-      
       this.loading = true
       this.error = null
       this.currentFilters = filters
@@ -36,9 +34,9 @@ export function createDataStore(tableName, config = {}) {
       try {
         let query = supabase.from(tableName).select('*')
         
-        // Always filter by user unless explicitly disabled
-        if (options.userField && userId && !filters._skipUserFilter) {
-          query = query.eq(options.userField, userId)
+        // Add user filter if userId is provided (unless bypassed)
+        if (userId && options.userField && !filters._loadAllUsers) {
+          filters = { ...filters, [options.userField]: userId }
         }
         
         // Apply dynamic filters
@@ -226,6 +224,133 @@ export function createDataStore(tableName, config = {}) {
         this.error = `Query failed: ${error.message}`
       } finally {
         this.loading = false
+      }
+    },
+    
+    // Real-time subscription with filter support
+    subscribe(userId, filters = {}, callbacks = {}) {
+      const channelName = `${tableName}_${userId || 'public'}_${Date.now()}`
+      
+      console.log('Setting up subscription for:', tableName, 'userId:', userId)
+      
+      // Add user filter if userId is provided
+      if (userId && options.userField) {
+        filters = { ...filters, [options.userField]: userId }
+      }
+      
+      // Build filter string for real-time subscription
+      let filterString = ''
+      
+      // Add additional filters
+      Object.entries(filters).forEach(([key, value]) => {
+        if (key.startsWith('_')) return // Skip internal filters
+        
+        let filterPart = ''
+        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+          filterPart = `${key}=eq.${value}`
+        } else if (Array.isArray(value)) {
+          filterPart = `${key}=in.(${value.join(',')})`
+        } else if (typeof value === 'object') {
+          if (value.min !== undefined) {
+            filterPart = `${key}=gte.${value.min}`
+          } else if (value.max !== undefined) {
+            filterPart = `${key}=lte.${value.max}`
+          }
+        }
+        
+        if (filterPart) {
+          filterString = filterString ? `${filterString}&${filterPart}` : filterPart
+        }
+      })
+      
+      console.log('Filter string:', filterString)
+      
+      const channel = supabase
+        .channel(channelName)
+        .on('postgres_changes', 
+          { 
+            event: '*', 
+            schema: 'public', 
+            table: tableName,
+            filter: filterString || undefined
+          },
+          (payload) => {
+            console.log('Real-time event received:', payload)
+            this.handleRealtimeEvent(payload, callbacks)
+          }
+        )
+        .subscribe((status) => {
+          console.log('Subscription status:', status)
+        })
+      
+      // Store subscription reference
+      this._subscription = channel
+      
+      // Return unsubscribe function
+      return () => {
+        if (this._subscription) {
+          this._subscription.unsubscribe()
+          this._subscription = null
+        }
+      }
+    },
+    
+    // Handle real-time events
+    handleRealtimeEvent(payload, callbacks = {}) {
+      const { eventType, new: newRecord, old: oldRecord } = payload
+      
+      switch (eventType) {
+        case 'INSERT':
+          // Add new record to items
+          if (options.orderBy === 'created_at' && !options.ascending) {
+            this.items.unshift(newRecord)
+          } else {
+            this.items.push(newRecord)
+          }
+          
+          if (callbacks.onInsert) {
+            callbacks.onInsert(newRecord)
+          }
+          break
+          
+        case 'UPDATE':
+          // Update existing record
+          const updateIndex = this.items.findIndex(item => 
+            item[options.primaryKey] === newRecord[options.primaryKey]
+          )
+          
+          if (updateIndex !== -1) {
+            this.items[updateIndex] = newRecord
+          }
+          
+          if (callbacks.onUpdate) {
+            callbacks.onUpdate(newRecord, oldRecord)
+          }
+          break
+          
+        case 'DELETE':
+          // Remove record from items
+          this.items = this.items.filter(item => 
+            item[options.primaryKey] !== oldRecord[options.primaryKey]
+          )
+          
+          if (callbacks.onDelete) {
+            callbacks.onDelete(oldRecord)
+          }
+          break
+      }
+      
+      // Call general onChange callback
+      if (callbacks.onChange) {
+        callbacks.onChange(eventType, newRecord, oldRecord)
+      }
+    },
+    
+    // Unsubscribe from real-time updates
+    unsubscribe() {
+      if (this._subscription) {
+        this._subscription.unsubscribe()
+        this._subscription = null
       }
     }
   }
