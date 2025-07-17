@@ -1,12 +1,12 @@
 import { supabase } from './supabase.js'
 
 /**
- * Creates a generic store for any Supabase view/table
- * @param {string} viewName - The name of the Supabase view/table
+ * Creates a generic data store for any Supabase table/view
+ * @param {string} tableName - The name of the Supabase table/view
  * @param {Object} config - Configuration options
  * @returns {Object} Store object with CRUD operations
  */
-export function createViewStore(viewName, config = {}) {
+export function createDataStore(tableName, config = {}) {
   const defaults = {
     orderBy: 'created_at',
     ascending: false,
@@ -34,7 +34,7 @@ export function createViewStore(viewName, config = {}) {
       this.currentFilters = filters
       
       try {
-        let query = supabase.from(viewName).select('*')
+        let query = supabase.from(tableName).select('*')
         
         // Always filter by user unless explicitly disabled
         if (options.userField && userId && !filters._skipUserFilter) {
@@ -81,7 +81,7 @@ export function createViewStore(viewName, config = {}) {
         }
         
       } catch (error) {
-        this.error = `Failed to load ${viewName}: ${error.message}`
+        this.error = `Failed to load ${tableName}: ${error.message}`
       } finally {
         this.loading = false
       }
@@ -115,7 +115,7 @@ export function createViewStore(viewName, config = {}) {
         }
         
         const { data, error } = await supabase
-          .from(viewName)
+          .from(tableName)
           .insert([dataToInsert])
           .select()
           
@@ -138,7 +138,7 @@ export function createViewStore(viewName, config = {}) {
         return data?.[0]
         
       } catch (error) {
-        this.error = `Failed to create ${viewName}: ${error.message}`
+        this.error = `Failed to create ${tableName}: ${error.message}`
         
         // Try to refresh to ensure consistency
         await this.refresh(userId)
@@ -158,7 +158,7 @@ export function createViewStore(viewName, config = {}) {
         }
         
         const { error } = await supabase
-          .from(viewName)
+          .from(tableName)
           .update(updates)
           .eq(options.primaryKey, id)
           .eq(options.userField, userId)
@@ -177,7 +177,7 @@ export function createViewStore(viewName, config = {}) {
         }
         
       } catch (error) {
-        this.error = `Failed to update ${viewName}: ${error.message}`
+        this.error = `Failed to update ${tableName}: ${error.message}`
       }
     },
     
@@ -187,7 +187,7 @@ export function createViewStore(viewName, config = {}) {
       
       try {
         const { error } = await supabase
-          .from(viewName)
+          .from(tableName)
           .delete()
           .eq(options.primaryKey, id)
           .eq(options.userField, userId)
@@ -203,7 +203,7 @@ export function createViewStore(viewName, config = {}) {
         }
         
       } catch (error) {
-        this.error = `Failed to delete ${viewName}: ${error.message}`
+        this.error = `Failed to delete ${tableName}: ${error.message}`
       }
     },
     
@@ -213,7 +213,7 @@ export function createViewStore(viewName, config = {}) {
       this.error = null
       
       try {
-        const baseQuery = supabase.from(viewName).select('*')
+        const baseQuery = supabase.from(tableName).select('*')
         const query = buildQuery(baseQuery)
         
         const { data, error } = await query

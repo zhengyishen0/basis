@@ -61,7 +61,7 @@ const title = "Todo App with Supabase";
             <!-- Todo App -->
             <div x-show="auth.isAuthenticated">
                 <!-- Add Todo Form -->
-                <form @submit.prevent="addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="mb-6">
+                <form @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="mb-6">
                     <div class="flex gap-2">
                         <input 
                             x-ref="todoInput"
@@ -127,7 +127,7 @@ const title = "Todo App with Supabase";
                             <input 
                                 type="checkbox" 
                                 :checked="todoItem.is_complete"
-                                @change="toggleTodo(todoItem.id, $event.target.checked)"
+                                @change="todo.toggleTodo(todoItem.id, $event.target.checked)"
                                 class="w-4 h-4 text-neutral-950 bg-white border-2 border-neutral-300 rounded focus:ring-neutral-900 checked:bg-neutral-950 checked:border-neutral-950"
                             >
                             <span 
@@ -136,7 +136,7 @@ const title = "Todo App with Supabase";
                                 x-text="todoItem.task"
                             ></span>
                             <button 
-                                @click="deleteTodo(todoItem.id)"
+                                @click="todo.deleteTodo(todoItem.id)"
                                 class="px-2 py-1 bg-red-50 text-red-600 hover:bg-red-100 focus:ring-red-500 rounded text-sm transition-colors"
                             >
                                 Delete

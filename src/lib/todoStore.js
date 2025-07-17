@@ -1,8 +1,8 @@
-import { createViewStore } from './genericViewStore.js'
+import { createDataStore } from './dataStore.js'
 import { authStore } from './authStore.js'
 
 // Create base store for CRUD operations
-const baseStore = createViewStore('todos', {
+const baseStore = createDataStore('todos', {
     orderBy: 'inserted_at',
     ascending: false,
     primaryKey: 'id',
