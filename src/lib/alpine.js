@@ -9,6 +9,7 @@ import morph from '@alpinejs/morph'
 import sort from '@alpinejs/sort'
 import resize from '@alpinejs/resize'
 import { todoStore } from './todoStore.js'
+import { authStore } from './authStore.js'
 
 // Register all plugins before starting Alpine
 Alpine.plugin(mask)
@@ -21,8 +22,9 @@ Alpine.plugin(morph)
 Alpine.plugin(sort)
 Alpine.plugin(resize)
 
-// Register Todo Store
+// Register Stores
 Alpine.store('todo', todoStore)
+Alpine.store('auth', authStore)
 
 // Make Alpine available globally for debugging (optional)
 window.Alpine = Alpine

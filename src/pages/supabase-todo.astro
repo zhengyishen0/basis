@@ -7,7 +7,22 @@ const title = "Todo App with Supabase";
 <Layout title={title}>
     <div 
         class="bg-gray-100 min-h-screen" 
-        x-data="$store.todo" 
+        x-data="{ 
+            auth: $store.auth,
+            todo: $store.todo,
+            async init() {
+                await this.auth.init()
+                await this.todo.loadTodos()
+            },
+            async signInAnonymously() {
+                await this.auth.signInAnonymously()
+                await this.todo.loadTodos()
+            },
+            async signOut() {
+                await this.auth.signOut()
+                this.todo.todos = []
+            }
+        }" 
         x-init="init()"
     >
         <!-- Navigation Bar -->
@@ -27,24 +42,24 @@ const title = "Todo App with Supabase";
             
                 <!-- Auth Status -->
             <div class="mb-4">
-                <div x-show="!isAuthenticated" class="text-center py-4">
+                <div x-show="!auth.isAuthenticated" class="text-center py-4">
                     <p class="text-gray-600 mb-2">Click to start using the app</p>
                     <button 
                         @click="signInAnonymously()"
-                        :disabled="loading"
+                        :disabled="auth.loading || todo.loading"
                         class="px-4 py-2 bg-neutral-950 text-white hover:bg-neutral-900 focus:ring-neutral-900 rounded-md disabled:opacity-50 transition-colors"
-                        x-text="loading ? 'Signing in...' : 'Sign In Anonymously'"
+                        x-text="auth.loading ? 'Signing in...' : 'Sign In Anonymously'"
                     >
                     </button>
                 </div>
-                <div x-show="isAuthenticated" class="text-center text-sm text-gray-600 mb-4">
-                    Signed in as: <span x-text="userDisplayId" class="text-neutral-800 font-medium"></span>
+                <div x-show="auth.isAuthenticated" class="text-center text-sm text-gray-600 mb-4">
+                    Signed in as: <span x-text="auth.userDisplayId" class="text-neutral-800 font-medium"></span>
                     <button @click="signOut()" class="ml-2 px-2 py-1 bg-red-50 text-red-600 hover:bg-red-100 focus:ring-red-500 rounded text-xs transition-colors">Sign Out</button>
                 </div>
             </div>
 
             <!-- Todo App -->
-            <div x-show="isAuthenticated">
+            <div x-show="auth.isAuthenticated">
                 <!-- Add Todo Form -->
                 <form @submit.prevent="addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="mb-6">
                     <div class="flex gap-2">
@@ -57,9 +72,9 @@ const title = "Todo App with Supabase";
                         >
                         <button 
                             type="submit"
-                            :disabled="loading"
+                            :disabled="todo.loading"
                             class="px-4 py-2 bg-neutral-950 text-white hover:bg-neutral-900 focus:ring-neutral-900 rounded-md disabled:opacity-50 transition-colors"
-                            x-text="loading ? '...' : 'Add'"
+                            x-text="todo.loading ? '...' : 'Add'"
                         >
                         </button>
                     </div>
@@ -68,8 +83,8 @@ const title = "Todo App with Supabase";
                 <!-- Filter Buttons -->
                 <div class="flex gap-2 mb-4">
                     <button 
-                        @click="setFilter('all')"
-                        :class="currentFilter === 'all' ? 
+                        @click="todo.setFilter('all')"
+                        :class="todo.currentFilter === 'all' ? 
                             'bg-neutral-950 text-white hover:bg-neutral-900' : 
                             'bg-white border-2 border-neutral-950 text-neutral-950 hover:bg-neutral-950 hover:text-white'"
                         class="px-3 py-1 rounded text-sm transition-colors focus:ring-neutral-900"
@@ -77,8 +92,8 @@ const title = "Todo App with Supabase";
                         All
                     </button>
                     <button 
-                        @click="setFilter('active')"
-                        :class="currentFilter === 'active' ? 
+                        @click="todo.setFilter('active')"
+                        :class="todo.currentFilter === 'active' ? 
                             'bg-neutral-950 text-white hover:bg-neutral-900' : 
                             'bg-white border-2 border-neutral-950 text-neutral-950 hover:bg-neutral-950 hover:text-white'"
                         class="px-3 py-1 rounded text-sm transition-colors focus:ring-neutral-900"
@@ -86,8 +101,8 @@ const title = "Todo App with Supabase";
                         Active
                     </button>
                     <button 
-                        @click="setFilter('completed')"
-                        :class="currentFilter === 'completed' ? 
+                        @click="todo.setFilter('completed')"
+                        :class="todo.currentFilter === 'completed' ? 
                             'bg-neutral-950 text-white hover:bg-neutral-900' : 
                             'bg-white border-2 border-neutral-950 text-neutral-950 hover:bg-neutral-950 hover:text-white'"
                         class="px-3 py-1 rounded text-sm transition-colors focus:ring-neutral-900"
@@ -97,31 +112,31 @@ const title = "Todo App with Supabase";
                 </div>
 
                 <!-- Error Message -->
-                <div x-show="error" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded" x-text="error">
+                <div x-show="todo.error || auth.error" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded" x-text="todo.error || auth.error">
                 </div>
 
                 <!-- Loading State -->
-                <div x-show="loading && filteredTodos.length === 0" class="text-center py-8 text-gray-500">
+                <div x-show="todo.loading && todo.filteredTodos.length === 0" class="text-center py-8 text-gray-500">
                     Loading todos...
                 </div>
 
                 <!-- Todo List -->
                 <div class="space-y-2">
-                    <template x-for="todo in filteredTodos" :key="todo.id">
+                    <template x-for="todoItem in todo.filteredTodos" :key="todoItem.id">
                         <div class="flex items-center gap-3 p-3 border border-neutral-200 rounded-md">
                             <input 
                                 type="checkbox" 
-                                :checked="todo.is_complete"
-                                @change="toggleTodo(todo.id, $event.target.checked)"
+                                :checked="todoItem.is_complete"
+                                @change="toggleTodo(todoItem.id, $event.target.checked)"
                                 class="w-4 h-4 text-neutral-950 bg-white border-2 border-neutral-300 rounded focus:ring-neutral-900 checked:bg-neutral-950 checked:border-neutral-950"
                             >
                             <span 
-                                :class="todo.is_complete ? 'line-through text-gray-500' : 'text-neutral-800'"
+                                :class="todoItem.is_complete ? 'line-through text-gray-500' : 'text-neutral-800'"
                                 class="flex-1"
-                                x-text="todo.task"
+                                x-text="todoItem.task"
                             ></span>
                             <button 
-                                @click="deleteTodo(todo.id)"
+                                @click="deleteTodo(todoItem.id)"
                                 class="px-2 py-1 bg-red-50 text-red-600 hover:bg-red-100 focus:ring-red-500 rounded text-sm transition-colors"
                             >
                                 Delete
@@ -131,16 +146,16 @@ const title = "Todo App with Supabase";
                 </div>
 
                 <!-- Empty State -->
-                <div x-show="filteredTodos.length === 0 && !loading" class="text-center py-8 text-gray-500">
-                    <span x-show="currentFilter === 'all'">No todos yet. Add one above!</span>
-                    <span x-show="currentFilter === 'active'">No active todos.</span>
-                    <span x-show="currentFilter === 'completed'">No completed todos.</span>
+                <div x-show="todo.filteredTodos.length === 0 && !todo.loading" class="text-center py-8 text-gray-500">
+                    <span x-show="todo.currentFilter === 'all'">No todos yet. Add one above!</span>
+                    <span x-show="todo.currentFilter === 'active'">No active todos.</span>
+                    <span x-show="todo.currentFilter === 'completed'">No completed todos.</span>
                 </div>
 
                 <!-- Stats -->
-                <div x-show="todos.length > 0" class="mt-6 text-sm text-gray-600 text-center">
-                    <span x-text="activeCount"></span> active, 
-                    <span x-text="completedCount"></span> completed
+                <div x-show="todo.todos.length > 0" class="mt-6 text-sm text-gray-600 text-center">
+                    <span x-text="todo.activeCount"></span> active, 
+                    <span x-text="todo.completedCount"></span> completed
                 </div>
             </div>
             </div>
