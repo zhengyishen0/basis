@@ -1,0 +1,56 @@
+/* 
+ * Layout Semantic Tokens
+ * Layout-specific design decisions
+ */
+
+:root {
+  /* Z-index Scale */
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1100;
+
+  /* Container Widths */
+  --container-xs: 20rem;    /* 320px */
+  --container-sm: 24rem;    /* 384px */
+  --container-md: 28rem;    /* 448px */
+  --container-lg: 32rem;    /* 512px */
+  --container-xl: 36rem;    /* 576px */
+  --container-2xl: 42rem;   /* 672px */
+  --container-3xl: 48rem;   /* 768px */
+  --container-4xl: 56rem;   /* 896px */
+  --container-5xl: 64rem;   /* 1024px */
+  --container-6xl: 72rem;   /* 1152px */
+  --container-7xl: 80rem;   /* 1280px */
+
+  /* Section Spacing */
+  --section-padding-y: var(--space-16);
+  --section-padding-y-sm: var(--space-8);
+  --section-padding-y-lg: var(--space-24);
+
+  /* Grid & Gaps */
+  --grid-gap: var(--space-6);
+  --grid-gap-sm: var(--space-4);
+  --grid-gap-lg: var(--space-8);
+
+  /* Page Gutters */
+  --gutter: var(--space-4);
+  --gutter-sm: var(--space-3);
+  --gutter-lg: var(--space-6);
+  --gutter-xl: var(--space-8);
+
+  /* Header Heights */
+  --header-height: 4rem;    /* 64px */
+  --header-height-sm: 3.5rem; /* 56px */
+  --header-height-lg: 5rem;   /* 80px */
+
+  /* Sidebar Widths */
+  --sidebar-width: 16rem;   /* 256px */
+  --sidebar-width-sm: 12rem; /* 192px */
+  --sidebar-width-lg: 20rem; /* 320px */
+}

@@ -6,12 +6,22 @@
 /* Import fonts from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* Design tokens in dependency order */
-@import './tokens/primitives.css';
-@import './tokens/semantic.css';
-@import './tokens/themes.css';
+/* Import Primitive Tokens - Raw values */
+@import './tokens/primitives/colors.css';
+@import './tokens/primitives/typography.css';
+@import './tokens/primitives/spacing.css';
+@import './tokens/primitives/effects.css';
 
-/* Component templates */
+/* Import Semantic Tokens - Meaningful mappings */
+@import './tokens/semantic/colors.css';
+@import './tokens/semantic/components.css';
+@import './tokens/semantic/layout.css';
+
+/* Import Themes - Contextual overrides */
+@import './tokens/themes/light.css';
+@import './tokens/themes/dark.css';
+
+/* Import Component Templates */
 @import './templates/components.css';
 
 /* Global reset and base styles */

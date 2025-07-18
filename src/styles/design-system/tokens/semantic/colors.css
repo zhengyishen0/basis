@@ -1,0 +1,95 @@
+/* 
+ * Semantic Color Tokens
+ * Maps primitive colors to meaningful, component-agnostic names
+ */
+
+:root {
+  /* Surface Colors - Clean black and white aesthetic */
+  --color-background: var(--background-base);   /* Pure white background */
+  --color-surface: var(--neutral-50);           /* Very light gray for subtle layering */
+  --color-surface-hover: var(--neutral-100);    /* Slightly darker for hover */
+  --color-surface-elevated: var(--background-base); /* Cards, modals - pure white */
+
+  /* Text Colors - Black and white hierarchy */
+  --color-text-primary: var(--neutral-900);     /* Very dark gray - main text */
+  --color-text-secondary: var(--neutral-600);   /* Medium gray - secondary text */
+  --color-text-tertiary: var(--neutral-400);    /* Light gray - de-emphasized */
+  --color-text-disabled: var(--neutral-300);    /* Very light gray - disabled */
+  --color-text-placeholder: var(--neutral-400); /* Form placeholders */
+  --color-text-inverse: var(--background-base); /* White text on dark backgrounds */
+
+  /* Border Colors - Subtle grays */
+  --color-border: var(--neutral-200);          /* Light gray borders */
+  --color-border-hover: var(--neutral-300);    /* Medium gray for hover */
+  --color-border-focus: var(--neutral-950);    /* Black for focus */
+  --color-border-error: var(--danger-600);     /* Red for errors */
+
+  /* Brand Colors - Black-based primary */
+  --color-primary: var(--primary-950);         /* Black primary */
+  --color-primary-hover: var(--primary-800);   /* Darker on hover */
+  --color-primary-active: var(--primary-900);  /* Active state */
+  --color-primary-light: var(--primary-100);   /* Light variant */
+  --color-primary-text: var(--background-base); /* White text on dark */
+
+  /* Semantic Status Colors - Using primitive tokens */
+  --color-neutral: var(--neutral-950);         /* Black neutral */
+  --color-neutral-hover: var(--neutral-800);   /* Darker on hover */
+  --color-neutral-light: var(--neutral-100);   /* Light variant */
+
+  --color-success: var(--success-500);         /* Green - success states */
+  --color-success-hover: var(--success-600);   /* Darker green hover */
+  --color-success-light: var(--success-100);   /* Light green variant */
+  --color-success-text: var(--success-800);    /* Dark green text */
+
+  --color-warning: var(--warning-500);         /* Amber - warning states */
+  --color-warning-hover: var(--warning-600);   /* Darker amber hover */
+  --color-warning-light: var(--warning-100);   /* Light amber variant */
+  --color-warning-text: var(--warning-800);    /* Dark amber text */
+
+  --color-danger: var(--danger-500);           /* Red - error/danger */
+  --color-danger-hover: var(--danger-600);     /* Darker red hover */
+  --color-danger-light: var(--danger-100);     /* Light red variant */
+  --color-danger-text: var(--danger-800);      /* Dark red text */
+
+  /* Additional Colors - Mapping to semantic colors for consistency */
+  --color-blue: var(--info-500);               /* Blue maps to info */
+  --color-blue-hover: var(--info-600);
+  --color-blue-light: var(--info-100);
+  --color-blue-text: var(--info-800);
+
+  --color-green: var(--success-500);           /* Green maps to success */
+  --color-green-hover: var(--success-600);
+  --color-green-light: var(--success-100);
+  --color-green-text: var(--success-800);
+
+  --color-yellow: var(--warning-500);          /* Yellow maps to warning */
+  --color-yellow-hover: var(--warning-600);
+  --color-yellow-light: var(--warning-100);
+  --color-yellow-text: var(--warning-800);
+
+  --color-red: var(--danger-500);              /* Red maps to danger */
+  --color-red-hover: var(--danger-600);
+  --color-red-light: var(--danger-100);
+  --color-red-text: var(--danger-800);
+
+  /* Black/gray accent colors for minimal palette */
+  --color-purple: var(--neutral-700);          /* Purple maps to dark gray */
+  --color-purple-hover: var(--neutral-800);
+  --color-purple-light: var(--neutral-100);
+  --color-purple-text: var(--neutral-900);
+
+  --color-pink: var(--neutral-600);            /* Pink maps to medium gray */
+  --color-pink-hover: var(--neutral-700);
+  --color-pink-light: var(--neutral-100);
+  --color-pink-text: var(--neutral-800);
+
+  --color-gray: var(--neutral-500);            /* Gray uses neutral scale */
+  --color-gray-hover: var(--neutral-600);
+  --color-gray-light: var(--neutral-100);
+  --color-gray-text: var(--neutral-700);
+
+  /* Overlay Colors */
+  --color-overlay: rgba(0, 0, 0, 0.5);         /* Semi-transparent black for backdrops */
+  --color-surface-inverse: var(--neutral-900); /* Dark background for tooltips */
+  --color-text-on-dark: var(--background-base); /* White text on dark surfaces */
+}

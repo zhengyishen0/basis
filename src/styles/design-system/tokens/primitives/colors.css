@@ -1,0 +1,118 @@
+/* 
+ * Color Primitives
+ * Raw color values and scales - customize base colors and regenerate shades
+ */
+
+:root {
+  /* Base Colors - Black and White Theme (customize these) */
+  --primary-base: #000000;
+  --secondary-base: #000000;
+  --accent-base: #000000;
+  --text-base: #000000;
+  --background-base: #ffffff;
+
+  /* Neutral/Gray Scale - Always needed for UI */
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+  --neutral-950: #0a0a0a;
+
+  /* Primary Shades - Currently maps to neutral (will be unique when customized) */
+  --primary-50: var(--neutral-50);
+  --primary-100: var(--neutral-100);
+  --primary-200: var(--neutral-200);
+  --primary-300: var(--neutral-300);
+  --primary-400: var(--neutral-400);
+  --primary-500: var(--neutral-500);
+  --primary-600: var(--neutral-600);
+  --primary-700: var(--neutral-700);
+  --primary-800: var(--neutral-800);
+  --primary-900: var(--neutral-900);
+  --primary-950: var(--neutral-950);
+
+  /* Secondary Shades - Currently maps to neutral (will be unique when customized) */
+  --secondary-50: var(--neutral-50);
+  --secondary-100: var(--neutral-100);
+  --secondary-200: var(--neutral-200);
+  --secondary-300: var(--neutral-300);
+  --secondary-400: var(--neutral-400);
+  --secondary-500: var(--neutral-500);
+  --secondary-600: var(--neutral-600);
+  --secondary-700: var(--neutral-700);
+  --secondary-800: var(--neutral-800);
+  --secondary-900: var(--neutral-900);
+  --secondary-950: var(--neutral-950);
+
+  /* Accent Shades - Currently maps to neutral (will be unique when customized) */
+  --accent-50: var(--neutral-50);
+  --accent-100: var(--neutral-100);
+  --accent-200: var(--neutral-200);
+  --accent-300: var(--neutral-300);
+  --accent-400: var(--neutral-400);
+  --accent-500: var(--neutral-500);
+  --accent-600: var(--neutral-600);
+  --accent-700: var(--neutral-700);
+  --accent-800: var(--neutral-800);
+  --accent-900: var(--neutral-900);
+  --accent-950: var(--neutral-950);
+
+  /* Semantic Status Colors - Essential for UI communication */
+  /* Success - Green */
+  --success-50: #f0fdf4;
+  --success-100: #dcfce7;
+  --success-200: #bbf7d0;
+  --success-300: #86efac;
+  --success-400: #4ade80;
+  --success-500: #22c55e;
+  --success-600: #16a34a;
+  --success-700: #15803d;
+  --success-800: #166534;
+  --success-900: #14532d;
+  --success-950: #052e16;
+
+  /* Warning - Amber */
+  --warning-50: #fffbeb;
+  --warning-100: #fef3c7;
+  --warning-200: #fde68a;
+  --warning-300: #fcd34d;
+  --warning-400: #fbbf24;
+  --warning-500: #f59e0b;
+  --warning-600: #d97706;
+  --warning-700: #b45309;
+  --warning-800: #92400e;
+  --warning-900: #78350f;
+  --warning-950: #451a03;
+
+  /* Danger - Red */
+  --danger-50: #fef2f2;
+  --danger-100: #fee2e2;
+  --danger-200: #fecaca;
+  --danger-300: #fca5a5;
+  --danger-400: #f87171;
+  --danger-500: #ef4444;
+  --danger-600: #dc2626;
+  --danger-700: #b91c1c;
+  --danger-800: #991b1b;
+  --danger-900: #7f1d1d;
+  --danger-950: #450a0a;
+
+  /* Info - Blue */
+  --info-50: #eff6ff;
+  --info-100: #dbeafe;
+  --info-200: #bfdbfe;
+  --info-300: #93c5fd;
+  --info-400: #60a5fa;
+  --info-500: #3b82f6;
+  --info-600: #2563eb;
+  --info-700: #1d4ed8;
+  --info-800: #1e40af;
+  --info-900: #1e3a8a;
+  --info-950: #172554;
+}

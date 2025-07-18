@@ -1,0 +1,9 @@
+/* 
+ * Light Theme (Default)
+ * This is the default theme - no overrides needed
+ */
+
+:root {
+  /* Light theme is the default, so no overrides required */
+  /* All semantic tokens in semantic/*.css already define light theme */
+}

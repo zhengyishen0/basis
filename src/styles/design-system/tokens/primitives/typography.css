@@ -1,0 +1,32 @@
+/* 
+ * Typography Primitives
+ * Raw font values - sizes, weights, families, line heights
+ */
+
+:root {
+  /* Font Families */
+  --font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Font Size Scale */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.5rem;      /* 24px */
+  --text-2xl: 2.25rem;    /* 36px */
+  --text-3xl: 3.375rem;   /* 54px */
+  --text-4xl: 5.063rem;   /* 81px */
+  --text-5xl: 7.595rem;   /* 121px */
+
+  /* Line Heights */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+}
