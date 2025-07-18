@@ -23,5 +23,10 @@
     "alpinejs": "^3.14.9",
     "astro": "^5.11.0",
     "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "cssnano": "^7.1.0",
+    "postcss": "^8.5.6"
   }
 }
