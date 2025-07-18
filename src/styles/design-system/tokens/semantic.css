@@ -22,20 +22,20 @@
   /* Border Colors - Subtle grays */
   --color-border: #e5e7eb;                     /* Light gray borders */
   --color-border-hover: #d1d5db;               /* Medium gray for hover */
-  --color-border-focus: #000000;               /* Black for focus (original style) */
+  --color-border-focus: #0a0a0a;               /* Tailwind neutral-950 for focus */
   --color-border-error: #dc2626;               /* Red for errors */
 
-  /* Brand Colors - Black as primary (matching original) */
-  --color-primary: #000000;                    /* Black - main brand color */
-  --color-primary-hover: #374151;              /* Dark gray hover */
-  --color-primary-active: #111827;             /* Very dark gray active */
-  --color-primary-light: #f3f4f6;              /* Light gray variant */
-  --color-primary-text: #ffffff;               /* White text on black */
+  /* Brand Colors - Matching Tailwind neutral-950 */
+  --color-primary: #0a0a0a;                    /* Tailwind neutral-950 */
+  --color-primary-hover: #262626;              /* Tailwind neutral-800 */
+  --color-primary-active: #171717;             /* Tailwind neutral-900 */
+  --color-primary-light: #f5f5f5;              /* Tailwind neutral-100 */
+  --color-primary-text: #ffffff;               /* White text on dark */
 
-  /* Semantic Status Colors - Black and white with minimal color accents */
-  --color-neutral: #000000;                    /* Black - neutral actions */
-  --color-neutral-hover: #374151;              /* Dark gray hover */
-  --color-neutral-light: #f3f4f6;              /* Light gray variant */
+  /* Semantic Status Colors - Matching Tailwind neutral scale */
+  --color-neutral: #0a0a0a;                    /* Tailwind neutral-950 */
+  --color-neutral-hover: #262626;              /* Tailwind neutral-800 */
+  --color-neutral-light: #f5f5f5;              /* Tailwind neutral-100 */
 
   --color-success: #10b981;                    /* Green - success states */
   --color-success-hover: #059669;              /* Darker green hover */

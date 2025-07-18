@@ -80,6 +80,8 @@
   /* Typography Primitives */
   --font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
   --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
   /* Font Size Scale (from Realtime Colors) */
