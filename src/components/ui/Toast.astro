@@ -28,12 +28,12 @@ const getComponentClasses = () => {
 };
 
 const positionClasses: { [key: string]: string } = {
-  'top-right': 'top-4 right-4',
-  'top-left': 'top-4 left-4',
-  'bottom-right': 'bottom-4 right-4',
-  'bottom-left': 'bottom-4 left-4',
-  'top-center': 'top-4 left-1/2 transform -translate-x-1/2',
-  'bottom-center': 'bottom-4 left-1/2 transform -translate-x-1/2',
+  'top-right': 'toast-container--top-right',
+  'top-left': 'toast-container--top-left',
+  'bottom-right': 'toast-container--bottom-right',
+  'bottom-left': 'toast-container--bottom-left',
+  'top-center': 'toast-container--top-center',
+  'bottom-center': 'toast-container--bottom-center',
 };
 
 const defaultIcons: { [key: string]: string } = {
@@ -65,7 +65,7 @@ Advanced Usage with Custom Toast Queue:
   <button @click="addToast('error', 'Error!', 'Something went wrong')">Show Error</button>
   
   <!-- Toast Container -->
-  <div class="fixed top-4 right-4 z-50 space-y-2">
+  <div class="toast-container toast-container--top-right" style="display: flex; flex-direction: column; gap: var(--space-2)">
     <template x-for="toast in toasts" :key="toast.id">
       <Toast 
         x-show="toast.visible"
@@ -153,8 +153,7 @@ Features:
     x-transition:leave="transition ease-in duration-200"
     x-transition:leave-start="opacity-100 transform translate-y-0 scale-100"
     x-transition:leave-end="opacity-0 transform translate-y-2 scale-95"
-    class={`fixed ${positionClasses[position]} w-full max-w-sm pointer-events-auto`}
-    style="z-index: var(--z-toast)"
+    class={`toast-container ${positionClasses[position]}`}
   >
     <div class={`${getComponentClasses()} ${className}`}>
       

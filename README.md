@@ -193,7 +193,7 @@ Our AHA stack is carefully chosen for optimal developer experience and applicati
 - **🚀 Astro** - Static site generator with component islands architecture
 - **⚡ Alpine.js** - Lightweight reactive framework for frontend interactivity
 - **🌐 HTMX** - Dynamic HTML over HTTP for enhanced interactivity
-- **🎨 Custom UI Library** - Complete component library built for Alpine.js
+- **🎨 Custom UI Library** - Complete component library built for Alpine.js with no Tailwind dependencies
 - **🗄️ Supabase** - Backend-as-a-Service with real-time database and authentication
 - **📝 Markdown Content** - Content management via Astro Content Collections
 - **🔄 GitHub Actions** - CI/CD for automatic deployment to GitHub Pages
@@ -206,7 +206,7 @@ Our AHA stack is carefully chosen for optimal developer experience and applicati
 
 **Alpine.js + ES6 Modules**: Alpine.js provides reactive frontend functionality with a minimal footprint. We use ES6 module imports rather than CDN scripts for better reliability and Alpine.store() pattern for clean global state management. This approach eliminates timing issues and provides a more maintainable codebase.
 
-**Custom UI Components**: Our component library provides a complete set of production-ready components specifically designed for Alpine.js. All components are customizable with variants, colors, and sizes, following consistent design patterns throughout the application.
+**Custom UI Components**: Our component library provides a complete set of production-ready components specifically designed for Alpine.js with zero Tailwind dependencies. All components use a comprehensive design system with CSS custom properties, semantic tokens, and consistent naming conventions. Components are fully customizable with variants, colors, and sizes, while maintaining excellent performance and bundle size.
 
 **HTMX Integration**: HTMX allows us to add dynamic functionality to HTML without writing JavaScript, perfect for server-side interactions and partial page updates while maintaining SEO-friendly markup.
 

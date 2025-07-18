@@ -50,7 +50,7 @@ Features:
   }`}
   @mouseenter="setTimeout(() => { tooltipVisible = true }, tooltipDelay)"
   @mouseleave="tooltipVisible = false"
-  class={`relative inline-block ${className}`}
+  class={`tooltip-container ${className}`}
 >
   <!-- Trigger element -->
   <slot />
@@ -58,12 +58,12 @@ Features:
   <!-- Tooltip -->
   <div 
     x-show="tooltipVisible"
-    x-transition:enter="transition ease-out duration-200"
-    x-transition:enter-start="opacity-0 scale-95"
-    x-transition:enter-end="opacity-100 scale-100"
-    x-transition:leave="transition ease-in duration-75"
-    x-transition:leave-start="opacity-100 scale-100"
-    x-transition:leave-end="opacity-0 scale-95"
+    x-transition:enter="transition-enter"
+    x-transition:enter-start="transition-enter-start"
+    x-transition:enter-end="transition-enter-end"
+    x-transition:leave="transition-leave"
+    x-transition:leave-start="transition-leave-start"
+    x-transition:leave-end="transition-leave-end"
     class={getComponentClasses()}
     x-cloak
   >

@@ -34,7 +34,7 @@ const getComponentClasses = () => {
 
 const getInputClasses = () => {
   const baseClass = 'date-picker-input';
-  const disabledClass = disabled ? 'opacity-50 cursor-not-allowed' : '';
+  const disabledClass = disabled ? 'date-picker-input--disabled' : '';
   return `${baseClass} ${disabledClass}`;
 };
 
@@ -207,7 +207,7 @@ Date Format Options:
   class={`${getComponentClasses()} ${className}`}
 >
   <!-- Input Field -->
-  <div class="relative">
+  <div class="date-picker-wrapper">
     <input 
       x-model="datePickerValue"
       @click="datePickerOpen = !datePickerOpen"
@@ -229,12 +229,12 @@ Date Format Options:
   <div 
     x-show="datePickerOpen" 
     @click.away="datePickerOpen = false"
-    x-transition:enter="transition ease-out duration-100"
-    x-transition:enter-start="transform opacity-0 scale-95"
-    x-transition:enter-end="transform opacity-100 scale-100"
-    x-transition:leave="transition ease-in duration-75"
-    x-transition:leave-start="transform opacity-100 scale-100"
-    x-transition:leave-end="transform opacity-0 scale-95"
+    x-transition:enter="transition-enter"
+    x-transition:enter-start="transition-enter-start"
+    x-transition:enter-end="transition-enter-end"
+    x-transition:leave="transition-leave"
+    x-transition:leave-start="transition-leave-start"
+    x-transition:leave-end="transition-leave-end"
     class={`${getCalendarClasses()} ${calendarClass}`}
     x-cloak
   >

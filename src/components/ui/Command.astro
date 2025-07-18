@@ -203,7 +203,7 @@ Events:
   }"
   @keydown.cmd.k.window.prevent="openCommand()"
   @keydown.ctrl.k.window.prevent="openCommand()"
-  class="relative z-50 w-auto h-auto"
+  class="command-container"
 >
   <!-- Trigger -->
   <div @click="openCommand()">
@@ -211,7 +211,7 @@ Events:
   </div>
   
   <!-- Hidden slot for parsing commands -->
-  <div x-ref="commandSlot" class="hidden">
+  <div x-ref="commandSlot" class="command-slot-hidden">
     <slot name="commands" />
   </div>
   

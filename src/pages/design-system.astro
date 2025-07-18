@@ -23,6 +23,8 @@ import Checkbox from '../components/ui/Checkbox.astro';
 import Switch from '../components/ui/Switch.astro';
 import RangeSlider from '../components/ui/RangeSlider.astro';
 import RadioGroup from '../components/ui/RadioGroup.astro';
+import Alert from '../components/ui/Alert.astro';
+import Banner from '../components/ui/Banner.astro';
 ---
 
 <Layout title="Design System">
@@ -131,6 +133,163 @@ import RadioGroup from '../components/ui/RadioGroup.astro';
             <Button variant="solid" color="blue" disabled>Disabled Solid</Button>
             <Button variant="outline" color="blue" disabled>Disabled Outline</Button>
           </div>
+        </div>
+      </section>
+
+      <!-- Alert Component Test -->
+      <section class="stack">
+        <h2>Alert Component</h2>
+        
+        <div class="stack">
+          <h3>Alert Variants</h3>
+          <div class="stack">
+            <Alert variant="default" title="Default Alert">
+              This is a default alert with a title. It uses neutral colors and is perfect for general notifications.
+            </Alert>
+            
+            <Alert variant="blue" title="Information" dismissible={true}>
+              This is an informational alert that can be dismissed. It's perfect for showing helpful tips or updates.
+            </Alert>
+            
+            <Alert variant="green" title="Success!" dismissible={true}>
+              Your action was completed successfully. This alert confirms that everything went as expected.
+            </Alert>
+            
+            <Alert variant="yellow" title="Warning" dismissible={true}>
+              Please review your input before proceeding. This warning helps prevent potential issues.
+            </Alert>
+            
+            <Alert variant="red" title="Error" dismissible={true}>
+              Something went wrong. Please check your input and try again.
+            </Alert>
+          </div>
+
+          <h3>Soft Alert Variants</h3>
+          <div class="stack">
+            <Alert variant="soft-blue" title="Soft Information">
+              This is a soft blue alert with subtle background colors for less intrusive notifications.
+            </Alert>
+            
+            <Alert variant="soft-green" title="Soft Success">
+              A gentle success notification that doesn't overpower the content.
+            </Alert>
+            
+            <Alert variant="soft-yellow" title="Soft Warning">
+              A subtle warning that draws attention without being too bold.
+            </Alert>
+            
+            <Alert variant="soft-red" title="Soft Error">
+              A gentle error notification for less critical issues.
+            </Alert>
+          </div>
+
+          <h3>Alert with Icons</h3>
+          <div class="stack">
+            <Alert 
+              variant="blue" 
+              title="Information with Icon"
+              icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>'
+              dismissible={true}
+            >
+              This alert includes a custom information icon to enhance visual communication.
+            </Alert>
+            
+            <Alert 
+              variant="green" 
+              title="Success with Check Icon"
+              icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>'
+              dismissible={true}
+            >
+              This success alert uses a checkmark icon to reinforce the positive message.
+            </Alert>
+            
+            <Alert 
+              variant="yellow" 
+              title="Warning with Alert Icon"
+              icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"></path>'
+              dismissible={true}
+            >
+              Warning alerts can include a triangle icon to emphasize caution.
+            </Alert>
+          </div>
+
+          <h3>Alerts without Titles</h3>
+          <div class="stack">
+            <Alert variant="blue" dismissible={true}>
+              This is a simple alert without a title. Perfect for brief notifications or status updates.
+            </Alert>
+            
+            <Alert variant="soft-green">
+              A non-dismissible alert without a title, ideal for persistent status information.
+            </Alert>
+          </div>
+
+          <h3>Complex Alert Content</h3>
+          <div class="stack">
+            <Alert variant="soft-blue" title="System Update Available" dismissible={true}>
+              <p>A new system update is available with the following improvements:</p>
+              <ul style="margin: var(--space-2) 0 var(--space-2) var(--space-4); color: var(--color-blue-text);">
+                <li>Enhanced security features</li>
+                <li>Performance improvements</li>
+                <li>Bug fixes and stability updates</li>
+              </ul>
+              <div class="cluster" style="margin-top: var(--space-3);">
+                <Button variant="solid" color="blue" size="sm">Update Now</Button>
+                <Button variant="ghost" color="blue" size="sm">Later</Button>
+              </div>
+            </Alert>
+          </div>
+        </div>
+      </section>
+
+      <!-- Banner Component Test -->
+      <section class="stack">
+        <h2>Banner Component</h2>
+        
+        <div class="stack">
+          <h3>Banner Variants</h3>
+          <div class="stack">
+            <div class="cluster">
+              <Button 
+                variant="solid" 
+                color="blue" 
+                onclick="showTopBanner()"
+              >
+                Show Top Banner
+              </Button>
+              <Button 
+                variant="solid" 
+                color="green" 
+                onclick="showBottomBanner()"
+              >
+                Show Bottom Banner
+              </Button>
+              <Button 
+                variant="outline" 
+                color="red" 
+                onclick="hideBanners()"
+              >
+                Hide All Banners
+              </Button>
+            </div>
+            
+            <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">
+              Click the buttons above to test banner positioning and dismissibility. The banners will appear at the top or bottom of the viewport with smooth animations.
+            </p>
+          </div>
+
+          <!-- Hidden banners that will be shown via JavaScript -->
+          <Banner id="test-top-banner" visible={false} visibleAfter={100} position="top" dismissible={true} class="test-banner-top" style="display: none;">
+            <p style="margin: 0; text-align: center;">
+              <strong>Top Banner:</strong> This is a test banner positioned at the top of the viewport. It can be dismissed by clicking the X button.
+            </p>
+          </Banner>
+          
+          <Banner id="test-bottom-banner" visible={false} visibleAfter={100} position="bottom" dismissible={true} class="test-banner-bottom" style="display: none;">
+            <p style="margin: 0; text-align: center;">
+              <strong>Bottom Banner:</strong> This banner appears at the bottom of the screen. Perfect for cookie notices or important announcements.
+            </p>
+          </Banner>
         </div>
       </section>
 
@@ -1474,6 +1633,44 @@ import RadioGroup from '../components/ui/RadioGroup.astro';
     };
 
     window.removeToast = removeToast;
+
+    // Banner test functions
+    window.showTopBanner = () => {
+      const banner = document.querySelector('#test-top-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        // Reset Alpine.js state
+        const alpineComponent = banner.__x.$data;
+        if (alpineComponent) {
+          alpineComponent.bannerVisible = true;
+        }
+      }
+    };
+
+    window.showBottomBanner = () => {
+      const banner = document.querySelector('#test-bottom-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        // Reset Alpine.js state
+        const alpineComponent = banner.__x.$data;
+        if (alpineComponent) {
+          alpineComponent.bannerVisible = true;
+        }
+      }
+    };
+
+    window.hideBanners = () => {
+      const banners = document.querySelectorAll('.test-banner-top, .test-banner-bottom');
+      banners.forEach(banner => {
+        const alpineComponent = banner.__x?.$data;
+        if (alpineComponent) {
+          alpineComponent.bannerVisible = false;
+        }
+        setTimeout(() => {
+          banner.style.display = 'none';
+        }, 300);
+      });
+    };
 
     // Demo functions for MenuBar actions
     window.newFile = () => alert('New file created!');

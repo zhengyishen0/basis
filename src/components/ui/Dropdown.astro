@@ -22,10 +22,10 @@ const getMenuClasses = () => {
 };
 
 const placementClasses: { [key: string]: string } = {
-  'bottom-start': 'top-full left-0 mt-2',
-  'bottom-end': 'top-full right-0 mt-2',
-  'top-start': 'bottom-full left-0 mb-2',
-  'top-end': 'bottom-full right-0 mb-2'
+  'bottom-start': 'position-top-full position-left-0 margin-top-2',
+  'bottom-end': 'position-top-full position-right-0 margin-top-2',
+  'top-start': 'position-bottom-full position-left-0 margin-bottom-2',
+  'top-end': 'position-bottom-full position-right-0 margin-bottom-2'
 };
 ---
 
@@ -69,12 +69,12 @@ Features:
   <div 
     x-show="dropdownOpen" 
     @click.away="dropdownOpen = false"
-    x-transition:enter="transition ease-out duration-100"
-    x-transition:enter-start="transform opacity-0 scale-95"
-    x-transition:enter-end="transform opacity-100 scale-100"
-    x-transition:leave="transition ease-in duration-75"
-    x-transition:leave-start="transform opacity-100 scale-100"
-    x-transition:leave-end="transform opacity-0 scale-95"
+    x-transition:enter="transition-enter"
+    x-transition:enter-start="transition-enter-start"
+    x-transition:enter-end="transition-enter-end"
+    x-transition:leave="transition-leave"
+    x-transition:leave-start="transition-leave-start"
+    x-transition:leave-end="transition-leave-end"
     class={`${getMenuClasses()} ${placementClasses[placement]} ${menuClass}`}
     x-cloak
   >

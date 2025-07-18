@@ -260,14 +260,14 @@ Keyboard Shortcuts:
       return this.duration ? (this.buffered / this.duration) * 100 : 0;
     }
   }"
-  class={`relative bg-black rounded-lg overflow-hidden group ${containerClass}`}
+  class={`video-player ${containerClass}`}
   style={`width: ${typeof width === 'number' ? width + 'px' : width}; ${height !== 'auto' ? `height: ${typeof height === 'number' ? height + 'px' : height}` : ''}`}
   tabindex="0"
 >
   <!-- Video Element -->
   <video
     x-ref="video"
-    class={`w-full h-full object-contain ${className}`}
+    class={`video-player-video ${className}`}
     poster={poster}
     autoplay={autoplay}
     loop={loop}
@@ -286,37 +286,37 @@ Keyboard Shortcuts:
   <!-- Loading Spinner -->
   <div 
     x-show="loading" 
-    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50"
+    class="video-player-loading"
   >
-    <div class="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+    <div class="video-player-loading-spinner"></div>
   </div>
   
   <!-- Custom Controls -->
   {showControls && (
     <div 
-      class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent p-4 transition-opacity duration-300"
-      :class="{ 'opacity-0 group-hover:opacity-100': !showVolumeSlider && !showSpeedMenu }"
+      class="video-player-controls"
+      :class="{ 'video-player-controls-hidden': !showVolumeSlider && !showSpeedMenu }"
     >
       <!-- Progress Bar -->
       {showProgress && (
-        <div class="mb-4">
+        <div class="video-player-progress-container">
           <div 
-            class="relative h-1 bg-white/30 rounded-full cursor-pointer"
+            class="video-player-progress"
             @click="seekToPercentage(($event.offsetX / $el.offsetWidth) * 100)"
           >
             <!-- Buffered Progress -->
             <div 
-              class="absolute inset-y-0 left-0 bg-white/50 rounded-full"
+              class="video-player-progress-buffered"
               :style="`width: ${getBufferedPercentage()}%`"
             ></div>
             <!-- Current Progress -->
             <div 
-              class="absolute inset-y-0 left-0 bg-white rounded-full"
+              class="video-player-progress-current"
               :style="`width: ${getProgressPercentage()}%`"
             ></div>
             <!-- Scrubber -->
             <div 
-              class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              class="video-player-progress-scrubber"
               :style="`left: calc(${getProgressPercentage()}% - 6px)`"
             ></div>
           </div>
@@ -324,38 +324,38 @@ Keyboard Shortcuts:
       )}
       
       <!-- Control Bar -->
-      <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-4">
+      <div class="video-player-control-bar">
+        <div class="video-player-control-group">
           <!-- Play/Pause Button -->
           <button 
             @click="togglePlay()"
-            class="text-white hover:text-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-white rounded"
+            class="video-player-button video-player-button-play"
             aria-label="Play/Pause"
           >
-            <svg x-show="!playing" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <svg x-show="!playing" class="video-player-icon" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z"/>
             </svg>
-            <svg x-show="playing" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <svg x-show="playing" class="video-player-icon" fill="currentColor" viewBox="0 0 24 24">
               <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
             </svg>
           </button>
           
           <!-- Volume Control -->
           {showVolumeControl && (
-            <div class="flex items-center space-x-2" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false; showVolumeSlider = false">
+            <div class="video-player-volume" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false; showVolumeSlider = false">
               <button 
                 @click="toggleMute()"
                 @mouseenter="showVolumeSlider = true"
-                class="text-white hover:text-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-white rounded"
+                class="video-player-button"
                 aria-label="Toggle Mute"
               >
-                <svg x-show="!muted && volume > 0.5" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <svg x-show="!muted && volume > 0.5" class="video-player-icon-sm" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
                 </svg>
-                <svg x-show="!muted && volume <= 0.5 && volume > 0" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <svg x-show="!muted && volume <= 0.5 && volume > 0" class="video-player-icon-sm" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z"/>
                 </svg>
-                <svg x-show="muted || volume === 0" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <svg x-show="muted || volume === 0" class="video-player-icon-sm" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
                 </svg>
               </button>
@@ -369,7 +369,7 @@ Keyboard Shortcuts:
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
-                class="flex items-center"
+                class="video-player-volume-slider-container"
                 @mouseenter="showVolumeSlider = true"
               >
                 <input 
@@ -379,7 +379,7 @@ Keyboard Shortcuts:
                   step="0.1"
                   :value="volume"
                   @input="setVolume($event.target.value)"
-                  class="w-20 h-1 bg-white/30 rounded-lg appearance-none slider"
+                  class="video-player-volume-slider"
                 />
               </div>
             </div>
@@ -387,22 +387,22 @@ Keyboard Shortcuts:
           
           <!-- Time Display -->
           {showTime && (
-            <div class="text-white text-sm font-mono">
+            <div class="video-player-time">
               <span x-text="formatTime(currentTime)">0:00</span>
-              <span class="text-gray-400"> / </span>
+              <span class="video-player-time-separator"> / </span>
               <span x-text="formatTime(duration)">0:00</span>
             </div>
           )}
         </div>
         
-        <div class="flex items-center space-x-4">
+        <div class="video-player-control-group">
           <!-- Playback Speed -->
           {showPlaybackSpeed && (
-            <div class="relative" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false; showSpeedMenu = false">
+            <div class="video-player-speed" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false; showSpeedMenu = false">
               <button 
                 @click="showSpeedMenu = !showSpeedMenu"
                 @mouseenter="showSpeedMenu = true"
-                class="text-white hover:text-gray-300 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-white rounded px-2 py-1"
+                class="video-player-button video-player-button-speed"
               >
                 <span x-text="`${playbackRate}x`">1x</span>
               </button>
@@ -416,14 +416,14 @@ Keyboard Shortcuts:
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                 x-transition:leave-end="opacity-0 scale-95 translate-y-2"
-                class="absolute bottom-full right-0 mb-2 bg-black/90 rounded-lg py-2 min-w-[80px]"
+                class="video-player-speed-menu"
                 @mouseenter="showSpeedMenu = true"
               >
                 {[0.25, 0.5, 0.75, 1, 1.25, 1.5, 2].map(speed => (
                   <button 
                     @click={`setPlaybackRate(${speed})`}
-                    class="block w-full text-left px-3 py-1 text-white text-sm hover:bg-white/20 transition-colors"
-                    :class={`{ 'bg-white/20': playbackRate === ${speed} }`}
+                    class="video-player-speed-option"
+                    :class={`{ 'video-player-speed-option-active': playbackRate === ${speed} }`}
                   >
                     {speed}x
                   </button>
@@ -436,13 +436,13 @@ Keyboard Shortcuts:
           {showFullscreen && (
             <button 
               @click="toggleFullscreen()"
-              class="text-white hover:text-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-white rounded"
+              class="video-player-button video-player-fullscreen"
               aria-label="Toggle Fullscreen"
             >
-              <svg x-show="!fullscreen" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <svg x-show="!fullscreen" class="video-player-icon-sm" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
               </svg>
-              <svg x-show="fullscreen" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <svg x-show="fullscreen" class="video-player-icon-sm" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
               </svg>
             </button>
@@ -456,10 +456,10 @@ Keyboard Shortcuts:
   <div 
     x-show="!playing && !loading"
     @click="togglePlay()"
-    class="absolute inset-0 flex items-center justify-center cursor-pointer bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"
+    class="video-player-overlay"
   >
-    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-      <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+    <div class="video-player-overlay-play">
+      <svg class="video-player-icon-lg" fill="currentColor" viewBox="0 0 24 24">
         <path d="M8 5v14l11-7z"/>
       </svg>
     </div>

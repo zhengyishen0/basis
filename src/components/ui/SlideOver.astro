@@ -31,15 +31,15 @@ const getBackdropClasses = () => {
 };
 
 const getEnterTransition = () => {
-  return 'transform transition ease-in-out duration-300';
+  return 'slide-over-transition';
 };
 
 const getEnterStartClass = () => {
   const startClasses: { [key: string]: string } = {
-    left: '-translate-x-full',
-    right: 'translate-x-full',
-    top: '-translate-y-full',
-    bottom: 'translate-y-full'
+    left: 'slide-over-enter-left',
+    right: 'slide-over-enter-right',
+    top: 'slide-over-enter-top',
+    bottom: 'slide-over-enter-bottom'
   };
   return startClasses[side];
 };
@@ -55,8 +55,8 @@ Usage:
   </div>
   
   <div slot="header">
-    <h2 class="text-lg font-medium text-gray-900">Panel Title</h2>
-    <p class="text-sm text-gray-500">Panel description</p>
+    <h2>Panel Title</h2>
+    <p>Panel description</p>
   </div>
   
   <div slot="body">
@@ -104,9 +104,9 @@ Props:
   <template x-teleport="body">
     <div 
       x-show="slideOverOpen" 
-      x-transition.opacity.duration.300ms
+      x-transition.opacity
       x-trap.inert.noscroll="slideOverOpen"
-      class={`${getBackdropClasses()} ${side === 'top' || side === 'bottom' ? 'flex-col' : ''} ${!overlay ? '!bg-transparent' : ''}`}
+      class={`${getBackdropClasses()} slide-over-backdrop-transition ${side === 'top' || side === 'bottom' ? 'slide-over-flex-col' : ''} ${!overlay ? 'slide-over-bg-transparent' : ''}`}
       @click.self={closeable ? "slideOverOpen = false" : ""}
       role="dialog"
       aria-modal="true"
@@ -116,9 +116,9 @@ Props:
         x-show="slideOverOpen"
         x-transition:enter={getEnterTransition()}
         x-transition:enter-start={getEnterStartClass()}
-        x-transition:enter-end="translate-x-0 translate-y-0"
+        x-transition:enter-end="slide-over-enter-end"
         x-transition:leave={getEnterTransition()}
-        x-transition:leave-start="translate-x-0 translate-y-0"
+        x-transition:leave-start="slide-over-enter-end"
         x-transition:leave-end={getEnterStartClass()}
         class={`slide-over-panel ${className}`}
       >
@@ -134,7 +134,7 @@ Props:
               type="button"
               aria-label="Close panel"
             >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="slide-over-close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
             </button>

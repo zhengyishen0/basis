@@ -41,7 +41,7 @@ Usage:
   </div>
   
   <div slot="header">
-    <h1 class="text-2xl font-bold">Full Screen Modal Title</h1>
+    <h1 class="fullscreen-modal-title">Full Screen Modal Title</h1>
   </div>
   
   <div slot="body">
@@ -84,7 +84,7 @@ Features:
   x-effect="lockBodyScroll()"
   @keydown.escape.window="fullscreenModal = false"
   data-lock-scroll={lockScroll}
-  class="relative"
+  class="fullscreen-modal-container"
 >
   <!-- Trigger -->
   <div @click="fullscreenModal = true">
@@ -118,7 +118,7 @@ Features:
             type="button"
             aria-label="Close modal"
           >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="fullscreen-modal-close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
@@ -141,3 +141,75 @@ Features:
     </div>
   </template>
 </div>
+
+<style>
+/* FullScreenModal Component Styles */
+.fullscreen-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background-color: var(--color-overlay);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.fullscreen-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  background-color: var(--color-surface-elevated);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.fullscreen-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+  color: var(--color-text-secondary);
+  background-color: transparent;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.fullscreen-modal-close:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-hover);
+}
+
+.fullscreen-modal-close:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.fullscreen-modal-close-icon {
+  width: var(--space-6);
+  height: var(--space-6);
+  stroke-width: 2;
+}
+
+.fullscreen-modal-content {
+  flex: 1;
+  overflow-y: auto;
+  background-color: var(--color-surface-elevated);
+  display: flex;
+  flex-direction: column;
+}
+
+.fullscreen-modal-body {
+  flex: 1;
+  padding: var(--space-6);
+}
+
+.fullscreen-modal-footer {
+  padding: var(--space-4) var(--space-6) var(--space-6);
+  background-color: var(--color-surface-elevated);
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+</style>

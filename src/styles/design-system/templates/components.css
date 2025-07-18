@@ -464,6 +464,23 @@
   opacity: 0.7;
 }
 
+.alert-icon {
+  position: absolute;
+  left: var(--space-4);
+  top: var(--space-4);
+  width: var(--space-5);
+  height: var(--space-5);
+}
+
+.alert-dismiss-icon {
+  width: var(--space-4);
+  height: var(--space-4);
+}
+
+.alert-content-with-icon {
+  padding-left: calc(var(--space-5) + var(--space-3));
+}
+
 /* ==========================================================================
    BADGE COMPONENT
    ========================================================================== */
@@ -803,6 +820,47 @@
   transition: width linear;
 }
 
+/* Toast Container Positioning */
+.toast-container {
+  position: fixed;
+  width: 100%;
+  max-width: 24rem;
+  pointer-events: auto;
+  z-index: var(--z-toast);
+}
+
+.toast-container--top-right {
+  top: var(--space-4);
+  right: var(--space-4);
+}
+
+.toast-container--top-left {
+  top: var(--space-4);
+  left: var(--space-4);
+}
+
+.toast-container--bottom-right {
+  bottom: var(--space-4);
+  right: var(--space-4);
+}
+
+.toast-container--bottom-left {
+  bottom: var(--space-4);
+  left: var(--space-4);
+}
+
+.toast-container--top-center {
+  top: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.toast-container--bottom-center {
+  bottom: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 /* ==========================================================================
    LAYOUT UTILITIES
    ========================================================================== */
@@ -1084,6 +1142,10 @@
 
 .modal-close:hover {
   color: var(--color-text-primary);
+}
+.modal-close-icon {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 /* Modal Sizes */
@@ -1885,6 +1947,11 @@
    TOOLTIP COMPONENT
    ========================================================================== */
 
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
 .tooltip {
   position: absolute;
   z-index: var(--z-tooltip);
@@ -2047,6 +2114,52 @@
 .slide-over-close:focus {
   outline: none;
   box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.slide-over-close-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Slide Over Transitions */
+.slide-over-transition {
+  transform: translateX(0) translateY(0);
+  transition: transform var(--transition-slow) ease-in-out;
+}
+
+.slide-over-enter-left {
+  transform: translateX(-100%);
+}
+
+.slide-over-enter-right {
+  transform: translateX(100%);
+}
+
+.slide-over-enter-top {
+  transform: translateY(-100%);
+}
+
+.slide-over-enter-bottom {
+  transform: translateY(100%);
+}
+
+.slide-over-enter-end {
+  transform: translateX(0) translateY(0);
+}
+
+/* Slide Over Utilities */
+.slide-over-flex-col {
+  flex-direction: column;
+}
+
+.slide-over-bg-transparent {
+  background-color: transparent !important;
+}
+
+.slide-over-backdrop-transition {
+  transition: opacity var(--transition-slow);
 }
 
 /* Direction Variants */
@@ -2938,6 +3051,46 @@
   }
 }
 
+/* Navigation Menu Additional Utilities */
+.navigation-menu-logo {
+  width: 2rem;
+  height: 2rem;
+  display: block;
+}
+
+.navigation-menu-brand-text {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-xl);
+  color: var(--color-text-primary);
+}
+
+.navigation-menu-chevron {
+  margin-left: var(--space-1);
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+.navigation-menu-mobile-icon {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.navigation-menu-mega-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.navigation-menu-list-wrap {
+  flex-wrap: wrap;
+}
+
+.navigation-menu-relative {
+  position: relative;
+}
+
 /* ==========================================================================
    TEXT ANIMATION COMPONENT
    ========================================================================== */
@@ -3512,6 +3665,15 @@
   outline: none;
   box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
               0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+.date-picker-wrapper {
+  position: relative;
+}
+
+.date-picker-input--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* ==========================================================================
@@ -5720,4 +5882,240 @@
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
   line-height: 1.4;
+}
+
+/* ==========================================================================
+   UTILITY CLASSES
+   ========================================================================== */
+
+/* Position utilities */
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+/* Opacity utilities */
+.opacity-50 {
+  opacity: 0.5;
+}
+
+/* Cursor utilities */
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+/* Transition utilities for Alpine.js x-transition */
+.transition-enter {
+  transition: all 0.1s ease-out;
+}
+
+.transition-enter-start {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.transition-enter-end {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.transition-leave {
+  transition: all 0.075s ease-in;
+}
+
+.transition-leave-start {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.transition-leave-end {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* ==========================================================================
+   UTILITY CLASSES - POSITIONING & TRANSITIONS
+   ========================================================================== */
+
+/* Positioning utilities for dropdowns and modals */
+.position-top-full {
+  top: 100%;
+}
+
+.position-bottom-full {
+  bottom: 100%;
+}
+
+.position-left-0 {
+  left: 0;
+}
+
+.position-right-0 {
+  right: 0;
+}
+
+.position-left-50 {
+  left: 50%;
+}
+
+.position-transform-x-50 {
+  transform: translateX(-50%);
+}
+
+.margin-top-2 {
+  margin-top: var(--space-2);
+}
+
+.margin-bottom-2 {
+  margin-bottom: var(--space-2);
+}
+
+/* Alpine.js Transition Utility Classes */
+.transition-enter {
+  transition: all 100ms ease-out;
+}
+
+.transition-enter-start {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.transition-enter-end {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.transition-leave {
+  transition: all 75ms ease-in;
+}
+
+.transition-leave-start {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.transition-leave-end {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* Extended transition for mobile menus */
+.transition-enter-mobile {
+  transition: all 200ms ease-out;
+}
+
+.transition-leave-mobile {
+  transition: all 150ms ease-in;
+}
+
+.transition-enter-mobile-start {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.transition-enter-mobile-end {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.transition-leave-mobile-start {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.transition-leave-mobile-end {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* Example trigger style for documentation */
+.example-trigger {
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.example-trigger:hover {
+  background: var(--color-surface-hover);
+  border-color: var(--color-border-hover);
+}
+
+/* ==========================================================================
+   BANNER COMPONENT
+   ========================================================================== */
+
+.banner {
+  position: fixed;
+  left: 0;
+  z-index: var(--z-toast);
+  width: 100%;
+}
+
+/* Banner positioning */
+.banner-position-top {
+  top: 0;
+}
+
+.banner-position-bottom {
+  bottom: 0;
+}
+
+.banner-container {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  padding: var(--space-3) var(--space-4);
+  box-shadow: var(--shadow-lg);
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 80rem;
+  margin: 0 auto;
+  gap: var(--space-4);
+}
+
+.banner-message {
+  flex: 1;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-normal);
+}
+
+.banner-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1);
+  background: transparent;
+  color: var(--color-primary-text);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.banner-close:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.banner-close:focus {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 var(--focus-ring-offset) rgba(255, 255, 255, 0.2);
+}
+
+.banner-close-icon {
+  width: var(--space-5);
+  height: var(--space-5);
+  stroke-width: 2;
 }

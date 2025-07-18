@@ -48,7 +48,7 @@ Features:
   {...(dismissible ? { 'x-data': '{ alertVisible: true }', 'x-show': 'alertVisible' } : {})}
 >
   {icon && (
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="position: absolute; left: 1rem; top: 1rem;">
+    <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <Fragment set:html={icon} />
     </svg>
   )}
@@ -59,13 +59,13 @@ Features:
       class="alert-dismiss"
       type="button"
     >
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="alert-dismiss-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
       </svg>
     </button>
   )}
   
-  <div style={icon ? "padding-left: 2.75rem;" : ""}>
+  <div class={icon ? "alert-content-with-icon" : ""}>
     {title && (
       <h5 class="alert-title">
         {title}

@@ -38,7 +38,7 @@ Pine UI Context Menu Component
 
 Usage:
 <ContextMenu trigger="right-click">
-  <div slot="trigger" class="p-4 bg-gray-100 rounded">
+  <div slot="trigger" class="example-trigger">
     Right-click me for context menu
   </div>
   
@@ -212,14 +212,14 @@ Events:
     <div 
       x-show="contextMenuOpen"
       x-ref="contextMenu"
-      x-transition:enter="transition ease-out duration-100"
-      x-transition:enter-start="transform opacity-0 scale-95"
-      x-transition:enter-end="transform opacity-100 scale-100"
-      x-transition:leave="transition ease-in duration-75"
-      x-transition:leave-start="transform opacity-100 scale-100"
-      x-transition:leave-end="transform opacity-0 scale-95"
+      x-transition:enter="transition-enter"
+      x-transition:enter-start="transition-enter-start"
+      x-transition:enter-end="transition-enter-end"
+      x-transition:leave="transition-leave"
+      x-transition:leave-start="transition-leave-start"
+      x-transition:leave-end="transition-leave-end"
       :style="`position: fixed; left: ${contextMenuPosition.x}px; top: ${contextMenuPosition.y}px; z-index: 9999;`"
-      class={`${classes.content} focus:outline-none ${menuClass}`}
+      class={`${classes.content} ${menuClass}`}
       tabindex="-1"
       @click="handleMenuItemClick($event)"
     >
@@ -255,12 +255,12 @@ Events:
     <!-- Submenu -->
     <div 
       x-show="submenuOpen"
-      x-transition:enter="transition ease-out duration-100"
-      x-transition:enter-start="transform opacity-0 scale-95"
-      x-transition:enter-end="transform opacity-100 scale-100"
-      x-transition:leave="transition ease-in duration-75"
-      x-transition:leave-start="transform opacity-100 scale-100"
-      x-transition:leave-end="transform opacity-0 scale-95"
+      x-transition:enter="transition-enter"
+      x-transition:enter-start="transition-enter-start"
+      x-transition:enter-end="transition-enter-end"
+      x-transition:leave="transition-leave"
+      x-transition:leave-start="transition-leave-start"
+      x-transition:leave-end="transition-leave-end"
       :style="`position: fixed; left: ${submenuPosition.x}px; top: ${submenuPosition.y}px; z-index: 10000;`"
       :data-submenu-id="submenuOpen"
       class={classes.submenuContent}

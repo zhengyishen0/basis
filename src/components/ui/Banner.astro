@@ -22,8 +22,8 @@ const getComponentClasses = () => {
 };
 
 const positionClasses: { [key: string]: string } = {
-  'top': 'top-0',
-  'bottom': 'bottom-0'
+  'top': 'banner-position-top',
+  'bottom': 'banner-position-bottom'
 };
 ---
 
@@ -56,7 +56,7 @@ Features:
   x-transition:leave="transition ease-in duration-300"
   x-transition:leave-start="translate-y-0"
   x-transition:leave-end="-translate-y-10"
-  class={`${getComponentClasses()} fixed ${positionClasses[position]} left-0 z-50 w-full ${className}`}
+  class={`${getComponentClasses()} ${positionClasses[position]} ${className}`}
 >
   <div class="banner-container">
     <div class="banner-content">
@@ -71,7 +71,7 @@ Features:
           type="button"
           aria-label="Close banner"
         >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="banner-close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
