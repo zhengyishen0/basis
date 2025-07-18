@@ -1,0 +1,118 @@
+/* 
+ * QUOTES COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the quotes component
+ */
+
+/* ==========================================================================
+   QUOTES COMPONENT
+   ========================================================================== */
+
+.quote {
+  position: relative;
+  font-family: var(--font-family);
+}
+
+.quote-default {
+  text-align: left;
+}
+
+.quote-centered {
+  text-align: center;
+}
+
+.quote-minimal {
+  text-align: left;
+  border-left: 4px solid var(--color-border-hover);
+  padding-left: var(--space-6);
+}
+
+.quote-text {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  font-style: italic;
+  margin-bottom: var(--space-6);
+}
+
+.quote-text-minimal {
+  margin-bottom: var(--space-2);
+}
+
+.quote-text-sm {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+}
+
+.quote-text-md {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+}
+
+.quote-text-lg {
+  font-size: var(--text-xl);
+  line-height: var(--leading-relaxed);
+}
+
+.quote-author {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+  font-style: normal;
+}
+
+.quote-author-sm {
+  font-size: var(--text-sm);
+}
+
+.quote-author-md {
+  font-size: var(--text-base);
+}
+
+.quote-author-lg {
+  font-size: var(--text-lg);
+}
+
+.quote-icon {
+  width: var(--space-8);
+  height: var(--space-8);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.quote-icon-centered {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.quote-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.quote-footer-centered {
+  flex-direction: column;
+  align-items: center;
+}
+
+.quote-avatar {
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.quote-attribution {
+  display: flex;
+  flex-direction: column;
+}
+
+.quote-attribution-centered {
+  text-align: center;
+}
+
+.quote-role {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-0-5);
+}

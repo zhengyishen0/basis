@@ -1,0 +1,109 @@
+/* 
+ * RATING COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the rating component
+ */
+
+/* ==========================================================================
+   RATING COMPONENT
+   ========================================================================== */
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-family);
+}
+
+.rating-star {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.rating-star:focus {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+.rating-star:hover {
+  transform: scale(1.1);
+}
+
+.rating-star:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.rating-star:disabled:hover {
+  transform: none;
+}
+
+.rating-readonly .rating-star {
+  cursor: default;
+}
+
+.rating-readonly .rating-star:hover {
+  transform: none;
+}
+
+/* Star Sizes */
+.rating-star-sm {
+  width: var(--space-4);
+  height: var(--space-4);
+}
+
+.rating-star-md {
+  width: var(--space-6);
+  height: var(--space-6);
+}
+
+.rating-star-lg {
+  width: var(--space-8);
+  height: var(--space-8);
+}
+
+/* Star States */
+.rating-star-filled {
+  color: var(--color-yellow);
+}
+
+.rating-star-empty {
+  color: var(--color-border-hover);
+}
+
+/* Rating Controls */
+.rating-reset {
+  margin-left: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.rating-reset:hover {
+  color: var(--color-text-primary);
+}
+
+.rating-reset:focus {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+.rating-display {
+  margin-left: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}

@@ -1,0 +1,128 @@
+/* 
+ * MONACO EDITOR COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the monaco editor component
+ */
+
+/* ==========================================================================
+   MONACO EDITOR COMPONENT
+   ========================================================================== */
+
+.monaco-editor {
+  position: relative;
+  width: 100%;
+  font-family: var(--font-family);
+}
+
+.monaco-editor-container {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface-elevated);
+}
+
+.monaco-editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.monaco-editor-toolbar-button {
+  flex-shrink: 0;
+}
+
+.monaco-editor-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+.monaco-editor-status-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.monaco-editor-status-item {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+.monaco-editor-status-value {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+/* Monaco Editor Loading State */
+.monaco-editor-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.monaco-editor-loading-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-secondary);
+}
+
+.monaco-editor-loading-spinner {
+  width: var(--space-5);
+  height: var(--space-5);
+  animation: spin 1s linear infinite;
+}
+
+.monaco-editor-loading-text {
+  font-size: var(--text-sm);
+}
+
+/* Monaco Editor Error State */
+.monaco-editor-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-red-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.monaco-editor-error-content {
+  text-align: center;
+  color: var(--color-red-text);
+}
+
+.monaco-editor-error-icon {
+  width: var(--space-8);
+  height: var(--space-8);
+  margin: 0 auto var(--space-2);
+  color: var(--color-red);
+}
+
+.monaco-editor-error-title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-1);
+}
+
+.monaco-editor-error-message {
+  font-size: var(--text-xs);
+}
+
+.monaco-editor-error-retry {
+  margin-top: var(--space-3);
+}
+
+/* Spin animation for loading spinner */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

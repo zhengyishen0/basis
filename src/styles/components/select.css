@@ -1,0 +1,135 @@
+/* 
+ * SELECT COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the select component
+ */
+
+/* ==========================================================================
+   SELECT COMPONENT
+   ========================================================================== */
+
+.select {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-family: var(--font-family);
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2-5) var(--space-3);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.select-trigger:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+.select-trigger[aria-expanded="true"] {
+  border-color: var(--color-primary);
+}
+
+.select--disabled .select-trigger {
+  background: var(--color-surface-disabled);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.select-icon {
+  width: var(--space-4);
+  height: var(--space-4);
+  color: var(--color-text-secondary);
+  transition: transform var(--transition-normal);
+}
+
+.select-trigger[aria-expanded="true"] .select-icon {
+  transform: rotate(180deg);
+}
+
+.select-placeholder {
+  color: var(--color-text-placeholder);
+}
+
+.select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  margin-top: var(--space-1);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.select-search {
+  width: 100%;
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-2-5) var(--space-3);
+  outline: none;
+}
+
+.select-search::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+.select-option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  padding: var(--space-2-5) var(--space-3);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  text-align: left;
+}
+
+.select-option:hover {
+  background: var(--color-surface-secondary);
+}
+
+.select-option:focus {
+  background: var(--color-surface-secondary);
+  outline: none;
+}
+
+.select-option[aria-selected="true"] {
+  background: var(--color-primary-bg);
+  color: var(--color-primary);
+}
+
+.select-option:disabled {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.select-no-results {
+  padding: var(--space-2-5) var(--space-3);
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  text-align: center;
+}

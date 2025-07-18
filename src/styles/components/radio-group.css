@@ -1,0 +1,120 @@
+/* 
+ * RADIO GROUP COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the radio group component
+ */
+
+/* ==========================================================================
+   RADIO GROUP COMPONENT
+   ========================================================================== */
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.radio-option {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  cursor: pointer;
+  padding: var(--space-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+}
+
+.radio-option:hover {
+  border-color: var(--color-primary-light);
+  background: var(--color-primary-bg);
+}
+
+.radio-option.radio-option-selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary-bg);
+}
+
+.radio-input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-0-5);
+}
+
+.radio {
+  appearance: none;
+  width: var(--space-4);
+  height: var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.radio:focus {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+.radio:checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.radio:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  background: var(--color-surface);
+  border-radius: var(--radius-full);
+}
+
+/* Radio Sizes */
+.radio-sm {
+  width: var(--space-3-5);
+  height: var(--space-3-5);
+}
+
+.radio-sm:checked::after {
+  width: 4px;
+  height: 4px;
+}
+
+.radio-lg {
+  width: var(--space-5);
+  height: var(--space-5);
+}
+
+.radio-lg:checked::after {
+  width: 8px;
+  height: 8px;
+}
+
+.radio-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.radio-title {
+  display: block;
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  margin-bottom: var(--space-1);
+}
+
+.radio-description {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}

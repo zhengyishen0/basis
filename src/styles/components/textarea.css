@@ -1,0 +1,86 @@
+/* 
+ * TEXTAREA COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the textarea component
+ */
+
+/* ==========================================================================
+   TEXTAREA COMPONENT
+   ========================================================================== */
+
+.textarea {
+  width: 100%;
+  font-family: var(--font-family);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2-5) var(--space-3);
+  transition: all var(--transition-normal);
+  resize: vertical;
+  min-height: calc(var(--space-4) * 4);
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+.textarea::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+/* Textarea Variants */
+.textarea--filled {
+  background: var(--color-surface-secondary);
+  border-color: transparent;
+}
+
+.textarea--filled:focus {
+  background: var(--color-surface);
+  border-color: var(--color-primary);
+}
+
+.textarea--underlined {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--color-border);
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.textarea--underlined:focus {
+  border-bottom-color: var(--color-primary);
+  box-shadow: none;
+}
+
+/* Textarea States */
+.textarea--error {
+  border-color: var(--color-danger);
+  background: var(--color-danger-bg);
+}
+
+.textarea--error:focus {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--color-danger-light);
+}
+
+.textarea--disabled {
+  background: var(--color-surface-disabled);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+  resize: none;
+}
+
+.textarea--readonly {
+  background: var(--color-surface-secondary);
+  cursor: default;
+  resize: none;
+}

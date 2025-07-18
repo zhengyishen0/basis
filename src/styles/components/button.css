@@ -1,0 +1,303 @@
+/* 
+ * BUTTON COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the button component
+ */
+
+/* ==========================================================================
+   BUTTON COMPONENT
+   ========================================================================== */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.025em;
+  transition: all var(--transition-normal);
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+}
+
+.button:focus {
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+.button:disabled,
+.button-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Button Sizes */
+.button-sm {
+  padding: var(--space-1-5) var(--space-3);
+  font-size: var(--text-sm);
+  gap: var(--space-1);
+}
+
+.button-md {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  gap: var(--space-1-5);
+}
+
+.button-lg {
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-base);
+  gap: var(--space-2);
+}
+
+.button-xl {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--text-lg);
+  gap: var(--space-2);
+}
+
+/* Button Variants - Neutral */
+.button-solid-neutral {
+  background: var(--color-neutral);
+  color: var(--color-text-inverse);
+}
+
+.button-solid-neutral:hover {
+  background: var(--color-neutral-hover);
+}
+
+.button-outline-neutral {
+  background: var(--color-background);
+  border-color: var(--color-neutral);
+  color: var(--color-neutral);
+}
+
+.button-outline-neutral:hover {
+  background: var(--color-neutral);
+  color: var(--color-text-inverse);
+}
+
+.button-soft-neutral {
+  background: var(--color-neutral-light);
+  color: var(--color-neutral);
+}
+
+.button-soft-neutral:hover {
+  background: var(--color-border-hover);
+}
+
+.button-ghost-neutral {
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.button-ghost-neutral:hover {
+  background: var(--color-neutral-light);
+}
+
+/* Button Variants - Primary/Blue */
+.button-solid-blue,
+.button-solid-primary {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+}
+
+.button-solid-blue:hover,
+.button-solid-primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.button-outline-blue,
+.button-outline-primary {
+  background: var(--color-background);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.button-outline-blue:hover,
+.button-outline-primary:hover {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+}
+
+.button-soft-blue,
+.button-soft-primary {
+  background: var(--color-primary-light);
+  color: var(--color-blue-text);
+}
+
+.button-soft-blue:hover,
+.button-soft-primary:hover {
+  background: var(--color-border-hover);
+}
+
+.button-ghost-blue,
+.button-ghost-primary {
+  background: transparent;
+  color: var(--color-primary);
+}
+
+.button-ghost-blue:hover,
+.button-ghost-primary:hover {
+  background: var(--color-primary-light);
+}
+
+/* Button Variants - Red/Danger */
+.button-solid-red {
+  background: var(--color-red);
+  color: var(--color-primary-text);
+}
+
+.button-solid-red:hover {
+  background: var(--color-red-hover);
+}
+
+.button-outline-red {
+  background: var(--color-background);
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+.button-outline-red:hover {
+  background: var(--color-red);
+  color: var(--color-primary-text);
+}
+
+.button-soft-red {
+  background: var(--color-red-light);
+  color: var(--color-red-text);
+}
+
+.button-soft-red:hover {
+  background: var(--color-border-hover);
+}
+
+.button-ghost-red {
+  background: transparent;
+  color: var(--color-red);
+}
+
+.button-ghost-red:hover {
+  background: var(--color-red-light);
+}
+
+/* Button Variants - Green */
+.button-solid-green {
+  background: var(--color-green);
+  color: var(--color-primary-text);
+}
+
+.button-solid-green:hover {
+  background: var(--color-green-hover);
+}
+
+.button-outline-green {
+  background: var(--color-background);
+  border-color: var(--color-green);
+  color: var(--color-green);
+}
+
+.button-outline-green:hover {
+  background: var(--color-green);
+  color: var(--color-primary-text);
+}
+
+.button-soft-green {
+  background: var(--color-green-light);
+  color: var(--color-green-text);
+}
+
+.button-soft-green:hover {
+  background: var(--color-border-hover);
+}
+
+.button-ghost-green {
+  background: transparent;
+  color: var(--color-green);
+}
+
+.button-ghost-green:hover {
+  background: var(--color-green-light);
+}
+
+/* Button Variants - Yellow */
+.button-solid-yellow {
+  background: var(--color-yellow);
+  color: var(--color-primary-text);
+}
+
+.button-solid-yellow:hover {
+  background: var(--color-yellow-hover);
+}
+
+.button-outline-yellow {
+  background: var(--color-background);
+  border-color: var(--color-yellow);
+  color: var(--color-yellow);
+}
+
+.button-outline-yellow:hover {
+  background: var(--color-yellow);
+  color: var(--color-primary-text);
+}
+
+.button-soft-yellow {
+  background: var(--color-yellow-light);
+  color: var(--color-yellow-text);
+}
+
+.button-soft-yellow:hover {
+  background: var(--color-border-hover);
+}
+
+.button-ghost-yellow {
+  background: transparent;
+  color: var(--color-yellow);
+}
+
+.button-ghost-yellow:hover {
+  background: var(--color-yellow-light);
+}
+
+/* Button Variants - Purple */
+.button-solid-purple {
+  background: var(--color-purple);
+  color: var(--color-primary-text);
+}
+
+.button-solid-purple:hover {
+  background: var(--color-purple-hover);
+}
+
+.button-outline-purple {
+  background: var(--color-background);
+  border-color: var(--color-purple);
+  color: var(--color-purple);
+}
+
+.button-outline-purple:hover {
+  background: var(--color-purple);
+  color: var(--color-primary-text);
+}
+
+.button-soft-purple {
+  background: var(--color-purple-light);
+  color: var(--color-purple-text);
+}
+
+.button-soft-purple:hover {
+  background: var(--color-border-hover);
+}
+
+.button-ghost-purple {
+  background: transparent;
+  color: var(--color-purple);
+}
+
+.button-ghost-purple:hover {
+  background: var(--color-purple-light);
+}

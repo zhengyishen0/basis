@@ -1,0 +1,148 @@
+/* 
+ * CHECKBOX COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the checkbox component
+ */
+
+/* ==========================================================================
+   CHECKBOX COMPONENT
+   ========================================================================== */
+
+.checkbox-wrapper {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.checkbox-input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-0-5);
+}
+
+.checkbox {
+  appearance: none;
+  width: var(--space-4);
+  height: var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.checkbox:focus {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+.checkbox:checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.checkbox:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: var(--color-surface);
+  mask: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='m13.854 3.646-4.5 4.5-.707.707-.707-.707-2-2 1.414-1.414L8.5 6.086l3.793-3.793z'/%3e%3c/svg%3e") no-repeat center;
+  mask-size: contain;
+}
+
+.checkbox:indeterminate {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.checkbox:indeterminate::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 2px;
+  background: var(--color-surface);
+}
+
+/* Checkbox Sizes */
+.checkbox-sm {
+  width: var(--space-3-5);
+  height: var(--space-3-5);
+}
+
+.checkbox-sm:checked::after,
+.checkbox-sm:indeterminate::after {
+  width: 6px;
+  height: 6px;
+}
+
+.checkbox-sm:indeterminate::after {
+  height: 1px;
+}
+
+.checkbox-lg {
+  width: var(--space-5);
+  height: var(--space-5);
+}
+
+.checkbox-lg:checked::after,
+.checkbox-lg:indeterminate::after {
+  width: 10px;
+  height: 10px;
+}
+
+.checkbox-lg:indeterminate::after {
+  height: 3px;
+}
+
+.checkbox:disabled {
+  background: var(--color-surface-disabled);
+  border-color: var(--color-border-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.checkbox-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.checkbox-label {
+  display: block;
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.checkbox-label.disabled {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+.checkbox-description {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.checkbox-description.disabled {
+  color: var(--color-text-disabled);
+}
+
+/* Custom Checkbox Variant */
+.checkbox-custom {
+  /* Custom styling would go here based on design needs */
+}

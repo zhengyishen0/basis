@@ -1,0 +1,78 @@
+/* 
+ * BANNER COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the banner component
+ */
+
+/* ==========================================================================
+   BANNER COMPONENT
+   ========================================================================== */
+
+.banner {
+  position: fixed;
+  left: 0;
+  z-index: var(--z-toast);
+  width: 100%;
+}
+
+/* Banner positioning */
+.banner-position-top {
+  top: 0;
+}
+
+.banner-position-bottom {
+  bottom: 0;
+}
+
+.banner-container {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  padding: var(--space-3) var(--space-4);
+  box-shadow: var(--shadow-lg);
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 80rem;
+  margin: 0 auto;
+  gap: var(--space-4);
+}
+
+.banner-message {
+  flex: 1;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-normal);
+}
+
+.banner-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1);
+  background: transparent;
+  color: var(--color-primary-text);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.banner-close:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.banner-close:focus {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 var(--focus-ring-offset) rgba(255, 255, 255, 0.2);
+}
+
+.banner-close-icon {
+  width: var(--space-5);
+  height: var(--space-5);
+  stroke-width: 2;
+}

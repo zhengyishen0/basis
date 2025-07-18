@@ -1,0 +1,91 @@
+/* 
+ * BREADCRUMBS COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the breadcrumbs component
+ */
+
+/* ==========================================================================
+   BREADCRUMBS COMPONENT
+   ========================================================================== */
+
+.breadcrumbs {
+  font-family: var(--font-family);
+  font-size: var(--text-sm);
+}
+
+.breadcrumbs-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0;
+}
+
+.breadcrumbs-list li {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumbs-home {
+  display: flex;
+  align-items: center;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.breadcrumbs-home:hover {
+  color: var(--color-text-primary);
+}
+
+.breadcrumb-home-icon {
+  width: var(--space-4);
+  height: var(--space-4);
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-link {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.breadcrumb-link:hover {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+.breadcrumb-current {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.breadcrumb-separator {
+  display: flex;
+  align-items: center;
+  margin: 0 var(--space-2);
+  color: var(--color-text-muted);
+}
+
+.breadcrumb-separator svg {
+  width: var(--space-4);
+  height: var(--space-4);
+}
+
+/* Breadcrumb Separator Variants */
+.breadcrumbs-chevron .breadcrumb-separator svg {
+  stroke: currentColor;
+  fill: none;
+}
+
+.breadcrumbs-slash .breadcrumb-separator span,
+.breadcrumbs-dot .breadcrumb-separator span {
+  font-size: var(--text-base);
+  line-height: 1;
+}

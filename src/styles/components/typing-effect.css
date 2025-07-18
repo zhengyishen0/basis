@@ -1,0 +1,104 @@
+/* 
+ * TYPING EFFECT COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the typing effect component
+ */
+
+/* ==========================================================================
+   TYPING EFFECT COMPONENT
+   ========================================================================== */
+
+.typing-effect {
+  display: inline-block;
+  font-family: var(--font-family);
+  color: var(--color-text-primary);
+  min-width: 35ch;
+  height: 2rem;
+  line-height: 2rem;
+  vertical-align: top;
+  overflow: hidden;
+}
+
+.typing-effect-text {
+  display: inline;
+  font-weight: inherit;
+  color: inherit;
+}
+
+.typing-effect-cursor {
+  display: inline;
+  color: var(--color-text-primary);
+  animation: typing-cursor-blink 1s infinite;
+}
+
+/* Typing Effect Cursor Animation */
+@keyframes typing-cursor-blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Typing Effect Sizes */
+.typing-effect-sm {
+  font-size: var(--text-sm);
+  min-width: 30ch;
+  height: 1.5rem;
+  line-height: 1.5rem;
+}
+
+.typing-effect-md {
+  font-size: var(--text-base);
+  min-width: 35ch;
+  height: 1.75rem;
+  line-height: 1.75rem;
+}
+
+.typing-effect-lg {
+  font-size: var(--text-lg);
+  min-width: 30ch;
+  height: 2rem;
+  line-height: 2rem;
+}
+
+.typing-effect-xl {
+  font-size: var(--text-xl);
+  min-width: 25ch;
+  height: 2.5rem;
+  line-height: 2.5rem;
+}
+
+/* Typing Effect Colors */
+.typing-effect-primary {
+  color: var(--color-primary);
+}
+
+.typing-effect-secondary {
+  color: var(--color-text-secondary);
+}
+
+.typing-effect-neutral {
+  color: var(--color-neutral);
+}
+
+.typing-effect-blue {
+  color: var(--color-blue);
+}
+
+.typing-effect-red {
+  color: var(--color-red);
+}
+
+.typing-effect-green {
+  color: var(--color-green);
+}
+
+.typing-effect-yellow {
+  color: var(--color-yellow);
+}
+
+.typing-effect-purple {
+  color: var(--color-purple);
+}

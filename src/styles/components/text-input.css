@@ -1,0 +1,93 @@
+/* 
+ * TEXT INPUT COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the text input component
+ */
+
+/* ==========================================================================
+   TEXT INPUT COMPONENT
+   ========================================================================== */
+
+.input {
+  width: 100%;
+  font-family: var(--font-family);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2-5) var(--space-3);
+  transition: all var(--transition-normal);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+.input::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+/* Input Sizes */
+.input--sm {
+  padding: var(--space-2) var(--space-2-5);
+  font-size: var(--text-sm);
+}
+
+.input--lg {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-lg);
+}
+
+/* Input Variants */
+.input--filled {
+  background: var(--color-surface-secondary);
+  border-color: transparent;
+}
+
+.input--filled:focus {
+  background: var(--color-surface);
+  border-color: var(--color-primary);
+}
+
+.input--underlined {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--color-border);
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.input--underlined:focus {
+  border-bottom-color: var(--color-primary);
+  box-shadow: none;
+}
+
+/* Input States */
+.input--error {
+  border-color: var(--color-danger);
+  background: var(--color-danger-bg);
+}
+
+.input--error:focus {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--color-danger-light);
+}
+
+.input--disabled {
+  background: var(--color-surface-disabled);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.input--readonly {
+  background: var(--color-surface-secondary);
+  cursor: default;
+}

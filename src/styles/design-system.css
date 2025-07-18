@@ -1,5 +1,6 @@
 /* 
- * Design System - Main Entry Point
+ * AHA Starter Design System
+ * Main entry point for the design system
  * Import order matters: primitives → semantic → themes → components
  */
 
@@ -21,10 +22,10 @@
 @import './tokens/themes/light.css';
 @import './tokens/themes/dark.css';
 
-/* Import Component Templates */
-@import './templates/components.css';
+/* Import Component Styles */
+@import './components/index.css';
 
-/* Global reset and base styles */
+/* Global Reset and Base Styles */
 *,
 *::before,
 *::after {
@@ -48,48 +49,48 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography scale */
+/* Typography Base */
 h1 {
-  font-size: var(--text-5xl);  /* 7.595rem / 121.44px */
+  font-size: var(--text-5xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--leading-tight);
 }
 
 h2 {
-  font-size: var(--text-4xl);  /* 5.063rem / 80.96px */
+  font-size: var(--text-4xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--leading-tight);
 }
 
 h3 {
-  font-size: var(--text-3xl);  /* 3.375rem / 54.08px */
+  font-size: var(--text-3xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--leading-tight);
 }
 
 h4 {
-  font-size: var(--text-2xl);  /* 2.250rem / 36px */
+  font-size: var(--text-2xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--leading-tight);
 }
 
 h5 {
-  font-size: var(--text-xl);   /* 1.500rem / 24px */
+  font-size: var(--text-xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--leading-tight);
 }
 
 h6 {
-  font-size: var(--text-lg);   /* 1.125rem / 18px */
+  font-size: var(--text-lg);
   font-weight: var(--font-weight-bold);
   line-height: var(--leading-tight);
 }
 
 small {
-  font-size: var(--text-xs);   /* 0.667rem / 10.72px */
+  font-size: var(--text-xs);
 }
 
-/* Link styles */
+/* Link Styles */
 a {
   color: var(--color-primary);
   text-decoration: underline;
@@ -99,13 +100,13 @@ a:hover {
   color: var(--color-primary-hover);
 }
 
-/* Focus styles for accessibility */
+/* Focus Styles for Accessibility */
 *:focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
 }
 
-/* Remove default button styles */
+/* Remove Default Button Styles */
 button {
   background: none;
   border: none;
@@ -115,14 +116,14 @@ button {
   color: inherit;
 }
 
-/* Image defaults */
+/* Image Defaults */
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-/* Utility classes for common needs */
+/* Utility Classes */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -144,22 +145,4 @@ img {
   overflow: visible;
   clip: auto;
   white-space: normal;
-}
-
-/* Theme switcher button (example) */
-.theme-toggle {
-  position: fixed;
-  top: var(--space-4);
-  right: var(--space-4);
-  z-index: var(--z-tooltip);
-  background: var(--color-surface-elevated);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-2);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.theme-toggle:hover {
-  background: var(--color-surface-hover);
 }

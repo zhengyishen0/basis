@@ -1,0 +1,308 @@
+/* 
+ * IMAGE GALLERY COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the image gallery component
+ */
+
+/* ==========================================================================
+   IMAGE GALLERY COMPONENT
+   ========================================================================== */
+
+.image-gallery {
+  position: relative;
+  width: 100%;
+  font-family: var(--font-family);
+}
+
+.image-gallery-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.image-gallery-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.image-gallery-grid-3 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.image-gallery-grid-4 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.image-gallery-grid-5 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.image-gallery-grid-6 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 768px) {
+  .image-gallery-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .image-gallery-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .image-gallery-grid-5 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .image-gallery-grid-6 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .image-gallery-grid-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  
+  .image-gallery-grid-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* Gap Variants */
+.image-gallery-gap-sm {
+  gap: var(--space-2);
+}
+
+.image-gallery-gap-md {
+  gap: var(--space-4);
+}
+
+.image-gallery-gap-lg {
+  gap: var(--space-6);
+}
+
+.image-gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: transform var(--transition-normal);
+}
+
+.image-gallery-item:hover {
+  transform: scale(1.02);
+}
+
+.image-gallery-item-square {
+  aspect-ratio: 1 / 1;
+}
+
+.image-gallery-item-video {
+  aspect-ratio: 16 / 9;
+}
+
+.image-gallery-item-photo {
+  aspect-ratio: 4 / 3;
+}
+
+.image-gallery-item-auto {
+  aspect-ratio: auto;
+}
+
+.image-gallery-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.image-gallery-item:hover .image-gallery-thumbnail {
+  transform: scale(1.05);
+}
+
+.image-gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  transition: background var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-gallery-item:hover .image-gallery-overlay {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.image-gallery-zoom-icon {
+  width: var(--space-8);
+  height: var(--space-8);
+  color: white;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.image-gallery-item:hover .image-gallery-zoom-icon {
+  opacity: 1;
+}
+
+.image-gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  padding: var(--space-3);
+}
+
+.image-gallery-caption-text {
+  color: white;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Modal Styles */
+.image-gallery-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(4px);
+}
+
+.image-gallery-modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  padding: var(--space-4);
+}
+
+.image-gallery-modal-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+
+.image-gallery-modal-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4), transparent);
+  padding: var(--space-6);
+}
+
+.image-gallery-modal-caption {
+  color: white;
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+}
+
+.image-gallery-modal-counter {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-3);
+}
+
+.image-gallery-modal-counter-text {
+  color: white;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Navigation Controls */
+.image-gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  padding: var(--space-2);
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-radius: var(--radius-md);
+}
+
+.image-gallery-nav:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.image-gallery-nav:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.image-gallery-nav-icon {
+  width: var(--space-8);
+  height: var(--space-8);
+}
+
+.image-gallery-nav-prev {
+  left: var(--space-4);
+}
+
+.image-gallery-nav-next {
+  right: var(--space-4);
+}
+
+.image-gallery-nav-close {
+  top: var(--space-4);
+  right: var(--space-4);
+  transform: none;
+}
+
+/* Loading States */
+.image-gallery-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.image-gallery-spinner {
+  width: var(--space-12);
+  height: var(--space-12);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: var(--radius-full);
+  animation: image-gallery-spin 1s linear infinite;
+}
+
+@keyframes image-gallery-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Empty State */
+.image-gallery-empty {
+  text-align: center;
+  padding: var(--space-8);
+  color: var(--color-text-secondary);
+}
+
+.image-gallery-empty-message {
+  margin-bottom: var(--space-2);
+}
+
+.image-gallery-empty-hint {
+  font-size: var(--text-sm);
+  margin-top: var(--space-2);
+}

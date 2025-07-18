@@ -1,0 +1,79 @@
+/* 
+ * POPOVER COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the popover component
+ */
+
+/* ==========================================================================
+   POPOVER COMPONENT
+   ========================================================================== */
+
+.popover {
+  position: relative;
+  display: inline-block;
+}
+
+.popover-trigger {
+  display: inline-block;
+}
+
+.popover-content {
+  position: absolute;
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+}
+
+.popover-arrow {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  transform: rotate(45deg);
+  z-index: -1;
+}
+
+/* Arrow positioning based on placement */
+.popover-top .popover-arrow,
+.popover-top-start .popover-arrow,
+.popover-top-end .popover-arrow {
+  border-top: none;
+  border-left: none;
+}
+
+.popover-bottom .popover-arrow,
+.popover-bottom-start .popover-arrow,
+.popover-bottom-end .popover-arrow {
+  border-bottom: none;
+  border-right: none;
+}
+
+.popover-left .popover-arrow,
+.popover-left-start .popover-arrow,
+.popover-left-end .popover-arrow {
+  border-left: none;
+  border-bottom: none;
+}
+
+.popover-right .popover-arrow,
+.popover-right-start .popover-arrow,
+.popover-right-end .popover-arrow {
+  border-right: none;
+  border-top: none;
+}
+
+.popover-header {
+  padding: var(--space-4) var(--space-4) var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.popover-body {
+  padding: var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+}

@@ -1,0 +1,146 @@
+/* 
+ * COPY TO CLIPBOARD COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the copy to clipboard component
+ */
+
+/* ==========================================================================
+   COPY TO CLIPBOARD COMPONENT
+   ========================================================================== */
+
+.copy-to-clipboard {
+  position: relative;
+  display: inline-block;
+}
+
+/* Button Variant */
+.copy-to-clipboard-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-family: var(--font-family);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  outline: none;
+}
+
+.copy-to-clipboard-button:hover {
+  background: var(--color-neutral-light);
+  border-color: var(--color-border-hover);
+}
+
+.copy-to-clipboard-button:focus {
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+/* Icon Button Variant */
+.copy-to-clipboard-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  outline: none;
+}
+
+.copy-to-clipboard-icon-button:hover {
+  color: var(--color-text);
+  background: var(--color-neutral-light);
+}
+
+.copy-to-clipboard-icon-button:focus {
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+/* Content and Icons */
+.copy-to-clipboard-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+.copy-to-clipboard-icon {
+  width: var(--space-4);
+  height: var(--space-4);
+  flex-shrink: 0;
+}
+
+.copy-to-clipboard-icon-large {
+  width: var(--space-5);
+  height: var(--space-5);
+  flex-shrink: 0;
+}
+
+/* Feedback States */
+.copy-to-clipboard-feedback {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+.copy-to-clipboard-feedback-success {
+  color: var(--color-success);
+}
+
+.copy-to-clipboard-feedback-error {
+  color: var(--color-danger);
+}
+
+.copy-to-clipboard-icon-success {
+  color: var(--color-success);
+}
+
+.copy-to-clipboard-icon-error {
+  color: var(--color-danger);
+}
+
+/* Tooltip */
+.copy-to-clipboard-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-inverse);
+  background: var(--color-neutral-dark);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  white-space: nowrap;
+  z-index: 50;
+}
+
+.copy-to-clipboard-tooltip-arrow {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: var(--space-1) solid transparent;
+  border-right: var(--space-1) solid transparent;
+  border-top: var(--space-1) solid var(--color-neutral-dark);
+}
+
+/* Variant-specific Styles */
+.copy-to-clipboard-button .copy-to-clipboard {
+  /* Additional button-specific styles if needed */
+}
+
+.copy-to-clipboard-icon .copy-to-clipboard {
+  /* Additional icon-specific styles if needed */
+}

@@ -1,0 +1,392 @@
+/* 
+ * VIDEO PLAYER COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the video player component
+ */
+
+/* ==========================================================================
+   VIDEO PLAYER COMPONENT
+   ========================================================================== */
+
+.video-player {
+  position: relative;
+  background: #000;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  font-family: var(--font-family);
+  cursor: default;
+}
+
+.video-player:focus {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+.video-player-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Loading Spinner */
+.video-player-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.video-player-loading-spinner {
+  width: var(--space-8);
+  height: var(--space-8);
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: var(--radius-full);
+  animation: video-player-spin 1s linear infinite;
+}
+
+@keyframes video-player-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Controls Container */
+.video-player-controls {
+  position: absolute;
+  inset-x: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4), transparent);
+  padding: var(--space-4);
+  transition: opacity var(--transition-normal);
+}
+
+.video-player-controls-hidden {
+  opacity: 0;
+}
+
+.video-player:hover .video-player-controls-hidden {
+  opacity: 1;
+}
+
+/* Progress Bar */
+.video-player-progress-container {
+  margin-bottom: var(--space-4);
+}
+
+.video-player-progress {
+  position: relative;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: height var(--transition-fast);
+}
+
+.video-player:hover .video-player-progress {
+  height: 6px;
+}
+
+.video-player-progress-buffered {
+  position: absolute;
+  inset-y: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-fast);
+}
+
+.video-player-progress-current {
+  position: absolute;
+  inset-y: 0;
+  left: 0;
+  background: white;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-fast);
+}
+
+.video-player-progress-scrubber {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: var(--radius-full);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+.video-player:hover .video-player-progress-scrubber {
+  opacity: 1;
+}
+
+/* Control Bar */
+.video-player-control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.video-player-control-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Buttons */
+.video-player-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-radius: var(--radius-md);
+  padding: var(--space-1);
+}
+
+.video-player-button:hover {
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.video-player-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.video-player-button-play {
+  padding: var(--space-2);
+}
+
+.video-player-button-speed {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Icons */
+.video-player-icon {
+  width: var(--space-6);
+  height: var(--space-6);
+  fill: currentColor;
+}
+
+.video-player-icon-sm {
+  width: var(--space-5);
+  height: var(--space-5);
+}
+
+.video-player-icon-lg {
+  width: var(--space-8);
+  height: var(--space-8);
+  margin-left: 2px; /* Visual centering for play icon */
+}
+
+/* Volume Controls */
+.video-player-volume {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.video-player-volume-slider-container {
+  display: flex;
+  align-items: center;
+}
+
+.video-player-volume-slider {
+  width: 80px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-lg);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+}
+
+.video-player-volume-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.video-player-volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.video-player-volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  border: none;
+  transition: transform var(--transition-fast);
+}
+
+.video-player-volume-slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Time Display */
+.video-player-time {
+  color: white;
+  font-size: var(--text-sm);
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+}
+
+.video-player-time-separator {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Speed Menu */
+.video-player-speed {
+  position: relative;
+}
+
+.video-player-speed-menu {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: var(--space-2);
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2) 0;
+  min-width: 80px;
+  backdrop-filter: blur(8px);
+}
+
+.video-player-speed-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--space-1) var(--space-3);
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.video-player-speed-option:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.video-player-speed-option-active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Fullscreen Button */
+.video-player-fullscreen {
+  padding: var(--space-2);
+}
+
+/* Click to Play Overlay */
+.video-player-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.video-player:hover .video-player-overlay {
+  opacity: 1;
+}
+
+.video-player-overlay-play {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: all var(--transition-fast);
+}
+
+.video-player-overlay-play:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.video-player-overlay-play svg {
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .video-player-controls {
+    padding: var(--space-2);
+  }
+  
+  .video-player-control-group {
+    gap: var(--space-2);
+  }
+  
+  .video-player-progress-container {
+    margin-bottom: var(--space-2);
+  }
+  
+  .video-player-volume-slider {
+    width: 60px;
+  }
+  
+  .video-player-time {
+    font-size: var(--text-xs);
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .video-player-controls,
+  .video-player-progress,
+  .video-player-progress-buffered,
+  .video-player-progress-current,
+  .video-player-progress-scrubber,
+  .video-player-button,
+  .video-player-overlay,
+  .video-player-overlay-play {
+    transition: none;
+  }
+  
+  .video-player-loading-spinner {
+    animation: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .video-player-progress {
+    background: rgba(255, 255, 255, 0.8);
+  }
+  
+  .video-player-progress-buffered {
+    background: rgba(255, 255, 255, 0.9);
+  }
+  
+  .video-player-controls {
+    background: rgba(0, 0, 0, 0.95);
+  }
+}

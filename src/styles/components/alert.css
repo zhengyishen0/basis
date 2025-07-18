@@ -1,0 +1,123 @@
+/* 
+ * ALERT COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the alert component
+ */
+
+/* ==========================================================================
+   ALERT COMPONENT
+   ========================================================================== */
+
+.alert {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  padding: var(--space-4);
+}
+
+.alert-default {
+  background: var(--color-surface-elevated);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.alert-blue {
+  background: var(--color-blue);
+  border-color: var(--color-blue);
+  color: var(--color-primary-text);
+}
+
+.alert-red {
+  background: var(--color-red);
+  border-color: var(--color-red);
+  color: var(--color-primary-text);
+}
+
+.alert-green {
+  background: var(--color-green);
+  border-color: var(--color-green);
+  color: var(--color-primary-text);
+}
+
+.alert-yellow {
+  background: var(--color-yellow);
+  border-color: var(--color-yellow);
+  color: var(--color-primary-text);
+}
+
+.alert-soft-blue {
+  background: var(--color-blue-light);
+  border-color: var(--color-border);
+  color: var(--color-blue-text);
+}
+
+.alert-soft-red {
+  background: var(--color-red-light);
+  border-color: var(--color-border);
+  color: var(--color-red-text);
+}
+
+.alert-soft-green {
+  background: var(--color-green-light);
+  border-color: var(--color-border);
+  color: var(--color-green-text);
+}
+
+.alert-soft-yellow {
+  background: var(--color-yellow-light);
+  border-color: var(--color-border);
+  color: var(--color-yellow-text);
+}
+
+.alert-title {
+  margin-bottom: var(--space-1);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.025em;
+}
+
+.alert-content {
+  font-size: var(--text-sm);
+}
+
+.alert-content.has-title {
+  opacity: 0.7;
+}
+
+.alert-dismiss {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  color: currentColor;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-4);
+  height: var(--space-4);
+}
+
+.alert-dismiss:hover {
+  opacity: 0.7;
+}
+
+.alert-icon {
+  position: absolute;
+  left: var(--space-4);
+  top: var(--space-4);
+  width: var(--space-5);
+  height: var(--space-5);
+}
+
+.alert-dismiss-icon {
+  width: var(--space-4);
+  height: var(--space-4);
+}
+
+.alert-content-with-icon {
+  padding-left: calc(var(--space-5) + var(--space-3));
+}

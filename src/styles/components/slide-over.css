@@ -1,0 +1,208 @@
+/* 
+ * SLIDE-OVER COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the slide-over component
+ */
+
+/* ==========================================================================
+   SLIDE-OVER COMPONENT
+   ========================================================================== */
+
+.slide-over {
+  position: relative;
+  z-index: var(--z-modal);
+  width: auto;
+  height: auto;
+}
+
+.slide-over-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  background: var(--color-overlay);
+}
+
+.slide-over-panel {
+  position: fixed;
+  background: var(--color-surface-elevated);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-over-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--space-6) var(--space-6) var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.slide-over-header > div {
+  flex: 1;
+}
+
+.slide-over-body {
+  flex: 1;
+  padding: var(--space-6);
+  overflow-y: auto;
+}
+
+.slide-over-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.slide-over-close {
+  margin-left: var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1);
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: color var(--transition-fast);
+}
+
+.slide-over-close:hover {
+  color: var(--color-text-primary);
+}
+
+.slide-over-close:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.slide-over-close-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Slide Over Transitions */
+.slide-over-transition {
+  transform: translateX(0) translateY(0);
+  transition: transform var(--transition-slow) ease-in-out;
+}
+
+.slide-over-enter-left {
+  transform: translateX(-100%);
+}
+
+.slide-over-enter-right {
+  transform: translateX(100%);
+}
+
+.slide-over-enter-top {
+  transform: translateY(-100%);
+}
+
+.slide-over-enter-bottom {
+  transform: translateY(100%);
+}
+
+.slide-over-enter-end {
+  transform: translateX(0) translateY(0);
+}
+
+/* Slide Over Utilities */
+.slide-over-flex-col {
+  flex-direction: column;
+}
+
+.slide-over-bg-transparent {
+  background-color: transparent !important;
+}
+
+.slide-over-backdrop-transition {
+  transition: opacity var(--transition-slow);
+}
+
+/* Direction Variants */
+.slide-over-left .slide-over-panel {
+  inset-y: 0;
+  left: 0;
+  height: 100%;
+}
+
+.slide-over-right .slide-over-panel {
+  inset-y: 0;
+  right: 0;
+  height: 100%;
+}
+
+.slide-over-top .slide-over-panel {
+  inset-x: 0;
+  top: 0;
+  width: 100%;
+}
+
+.slide-over-bottom .slide-over-panel {
+  inset-x: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Size Variants for Left/Right */
+.slide-over-left.slide-over-sm .slide-over-panel,
+.slide-over-right.slide-over-sm .slide-over-panel {
+  width: 20rem;
+}
+
+.slide-over-left.slide-over-md .slide-over-panel,
+.slide-over-right.slide-over-md .slide-over-panel {
+  width: 24rem;
+}
+
+.slide-over-left.slide-over-lg .slide-over-panel,
+.slide-over-right.slide-over-lg .slide-over-panel {
+  width: 32rem;
+}
+
+.slide-over-left.slide-over-xl .slide-over-panel,
+.slide-over-right.slide-over-xl .slide-over-panel {
+  width: 40rem;
+}
+
+.slide-over-left.slide-over-full .slide-over-panel,
+.slide-over-right.slide-over-full .slide-over-panel {
+  width: 100%;
+}
+
+/* Size Variants for Top/Bottom */
+.slide-over-top.slide-over-sm .slide-over-panel,
+.slide-over-bottom.slide-over-sm .slide-over-panel {
+  height: 20rem;
+}
+
+.slide-over-top.slide-over-md .slide-over-panel,
+.slide-over-bottom.slide-over-md .slide-over-panel {
+  height: 24rem;
+}
+
+.slide-over-top.slide-over-lg .slide-over-panel,
+.slide-over-bottom.slide-over-lg .slide-over-panel {
+  height: 32rem;
+}
+
+.slide-over-top.slide-over-xl .slide-over-panel,
+.slide-over-bottom.slide-over-xl .slide-over-panel {
+  height: 40rem;
+}
+
+.slide-over-top.slide-over-full .slide-over-panel,
+.slide-over-bottom.slide-over-full .slide-over-panel {
+  height: 100%;
+}

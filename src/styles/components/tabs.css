@@ -1,0 +1,120 @@
+/* 
+ * TABS COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the tabs component
+ */
+
+/* ==========================================================================
+   TABS COMPONENT
+   ========================================================================== */
+
+.tabs {
+  font-family: var(--font-family);
+}
+
+.tab-list {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.tab-list-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.tab-item {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.tab-item:hover {
+  color: var(--color-text-primary);
+}
+
+.tab-item-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.tab-active {
+  color: var(--color-text-primary);
+}
+
+.tab-content {
+  margin-top: var(--space-4);
+}
+
+.tab-panel {
+  outline: none;
+}
+
+/* Underline variant */
+.tabs-underline .tab-list {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tabs-underline .tab-item {
+  position: relative;
+  border-bottom: 2px solid transparent;
+}
+
+.tabs-underline .tab-active {
+  border-bottom-color: var(--color-primary);
+}
+
+/* Pills variant */
+.tabs-pills .tab-list {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-1);
+  position: relative;
+}
+
+.tabs-pills .tab-item {
+  position: relative;
+  z-index: 1;
+  border-radius: var(--radius-md);
+}
+
+.tabs-pills .tab-active {
+  background: var(--color-surface-elevated);
+  box-shadow: var(--shadow-sm);
+}
+
+.tab-marker {
+  position: absolute;
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  z-index: 0;
+}
+
+/* Enclosed variant */
+.tabs-enclosed .tab-list {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tabs-enclosed .tab-item {
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
+  margin-bottom: -1px;
+}
+
+.tabs-enclosed .tab-active {
+  background: var(--color-surface-elevated);
+  border-color: var(--color-border);
+  border-bottom-color: var(--color-surface-elevated);
+}

@@ -1,0 +1,78 @@
+/* 
+ * RETRO GRID COMPONENT
+ * Part of the AHA Starter Design System
+ * This file contains styles for the retro grid component
+ */
+
+/* ==========================================================================
+   RETRO GRID COMPONENT
+   ========================================================================== */
+
+.retro-grid {
+  position: relative;
+  overflow: hidden;
+}
+
+.retro-grid-lines {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+}
+
+.retro-grid-animated .retro-grid-horizontal {
+  animation: retro-grid-move 1s linear infinite;
+}
+
+.retro-grid-animated .retro-grid-vertical {
+  animation: retro-grid-move-vertical 1s linear infinite;
+}
+
+.retro-grid-horizontal {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent, var(--color-text-secondary), transparent);
+}
+
+.retro-grid-vertical {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent, var(--color-text-secondary), transparent);
+}
+
+.retro-grid-pattern-horizontal {
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 35px,
+    rgba(107, 114, 128, 0.1) 35px,
+    rgba(107, 114, 128, 0.1) 36px
+  );
+}
+
+.retro-grid-pattern-vertical {
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 35px,
+    rgba(107, 114, 128, 0.1) 35px,
+    rgba(107, 114, 128, 0.1) 36px
+  );
+}
+
+.retro-grid-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Retro Grid Animations */
+@keyframes retro-grid-move {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(35px); }
+}
+
+@keyframes retro-grid-move-vertical {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(35px); }
+}
