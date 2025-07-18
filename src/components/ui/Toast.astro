@@ -134,7 +134,7 @@ Features:
 -->
 
 <template x-teleport="body">
-  <div 
+  <output role="status" aria-live="polite" aria-atomic="true" 
     x-data="{ 
       toastVisible: true,
       duration: ${duration},
@@ -199,5 +199,5 @@ Features:
         ></div>
       )}
     </div>
-  </div>
+  </output>
 </template>

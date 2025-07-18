@@ -223,7 +223,8 @@ Events:
       tabindex="-1"
       @click="handleMenuItemClick($event)"
     >
-      <div 
+      <menu 
+        type="context"
         x-data="{
           setupSubmenuHandlers() {
             this.$nextTick(() => {
@@ -249,7 +250,7 @@ Events:
         x-init="setupSubmenuHandlers()"
       >
         <slot name="menu" />
-      </div>
+      </menu>
     </div>
     
     <!-- Submenu -->

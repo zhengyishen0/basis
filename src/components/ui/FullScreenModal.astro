@@ -93,7 +93,7 @@ Features:
   
   <!-- Full Screen Modal -->
   <template x-teleport="body">
-    <div 
+    <dialog 
       x-show="fullscreenModal" 
       x-transition:enter="ease-out duration-300"
       x-transition:enter-start="opacity-0"
@@ -105,6 +105,7 @@ Features:
       class={getBackdropClasses()}
       @click.self={closeable ? "fullscreenModal = false" : ""}
       style="display: none;"
+      open
     >
       <!-- Header -->
       <div class="fullscreen-modal-header">
@@ -138,7 +139,7 @@ Features:
       <div class="fullscreen-modal-footer">
         <slot name="footer" />
       </div>
-    </div>
+    </dialog>
   </template>
 </div>
 

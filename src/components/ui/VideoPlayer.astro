@@ -21,7 +21,7 @@ export interface Props {
 }
 
 const { 
-  id = `video-player-${Math.random().toString(36).substr(2, 9)}`,
+  id = `video-player-${Math.random().toString(36).substring(2, 11)}`,
   src,
   sources = [],
   poster,
@@ -110,7 +110,7 @@ Keyboard Shortcuts:
 - Down Arrow: Decrease volume
 -->
 
-<div 
+<figure 
   x-data="{
     playing: false,
     muted: ${muted},
@@ -464,5 +464,4 @@ Keyboard Shortcuts:
       </svg>
     </div>
   </div>
-</div>
-
+</figure>

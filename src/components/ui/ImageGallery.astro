@@ -63,19 +63,21 @@ const getItemClasses = () => {
     <ul x-ref="gallery" class="image-gallery-list">
       {safeImages.map((image, index) => (
         <li class={`${getItemClasses()} ${thumbnailClass}`}>
-          <img 
-            src={image.thumbnail || image.src}
-            alt={image.alt || `Gallery image ${index + 1}`}
-            class="image-gallery-thumbnail"
-            loading="lazy"
-            data-index={index + 1}
-            @click="imageGalleryOpen"
-          />
-          {image.caption && (
-            <div class="image-gallery-caption">
-              <p class="image-gallery-caption-text">{image.caption}</p>
-            </div>
-          )}
+          <figure>
+            <img 
+              src={image.thumbnail || image.src}
+              alt={image.alt || `Gallery image ${index + 1}`}
+              class="image-gallery-thumbnail"
+              loading="lazy"
+              data-index={index + 1}
+              @click="imageGalleryOpen"
+            />
+            {image.caption && (
+              <figcaption class="image-gallery-caption">
+                <p class="image-gallery-caption-text">{image.caption}</p>
+              </figcaption>
+            )}
+          </figure>
         </li>
       ))}
     </ul>
@@ -156,7 +158,7 @@ const getItemClasses = () => {
   </template>
 </div>
 
-<script define:vars={{ safeImages }}>
+<script define:vars={{ safeImages }} is:inline>
   const imageGalleryData = {
     imageGalleryOpened: false,
     imageGalleryActiveUrl: null,

@@ -53,24 +53,24 @@ Features:
 - Customizable styling
 -->
 
-<div class={`${getCardClasses()} ${className}`}>
+<article class={`${getCardClasses()} ${className}`}>
   <!-- Header -->
   {Astro.slots.header && (
-    <div class={`card-header ${headerClass}`}>
+    <header class={`card-header ${headerClass}`}>
       <slot name="header" />
-    </div>
+    </header>
   )}
   
   <!-- Body -->
-  <div class={`card-body ${bodyClass}`}>
+  <section class={`card-body ${bodyClass}`}>
     <slot name="body" />
     <slot />
-  </div>
+  </section>
   
   <!-- Footer -->
   {Astro.slots.footer && (
-    <div class={`card-footer ${footerClass}`}>
+    <footer class={`card-footer ${footerClass}`}>
       <slot name="footer" />
-    </div>
+    </footer>
   )}
-</div>
+</article>

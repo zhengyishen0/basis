@@ -256,9 +256,10 @@ Events:
         </div>
         
         <!-- Command List -->
-        <div 
+        <menu 
           class={classes.list}
           :style="`max-height: ${maxHeight}`"
+          type="toolbar"
         >
           <template x-for="(group, groupName) in getGroupedCommands()" :key="groupName">
             <div class={classes.group}>
@@ -277,7 +278,7 @@ Events:
                   class={classes.item}
                 >
                   <span x-text="item.text" class={classes.itemText}></span>
-                  <template x-if="showShortcuts && item.shortcut">
+                  <template x-if="${showShortcuts} && item.shortcut">
                     <kbd 
                       x-text="item.shortcut"
                       class={classes.kbd}
@@ -298,7 +299,7 @@ Events:
               <p class={classes.emptyDescription}>Try a different search term</p>
             </div>
           </template>
-        </div>
+        </menu>
         
         <!-- Footer -->
         <div class={classes.footer}>

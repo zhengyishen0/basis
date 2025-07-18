@@ -6,9 +6,28 @@ export interface Props {
     content: string;
   }>;
   class?: string;
+  allowMultiple?: boolean;
 }
 
-const { items, class: className = "" } = Astro.props;
+const { items, class: className = "", allowMultiple = false } = Astro.props;
+
+// Convert items to JSON for Alpine.js
+const itemsJson = JSON.stringify(items);
+
+// Create the Alpine.js x-data object
+const accordionData = `{
+  items: ${itemsJson},
+  allowMultiple: ${allowMultiple},
+  
+  handleToggle(el) {
+    if (!this.allowMultiple && el.open) {
+      // Close all other details elements
+      el.parentElement.querySelectorAll('details[open]').forEach(detail => {
+        if (detail !== el) detail.open = false;
+      });
+    }
+  }
+}`;
 
 const getAccordionClasses = () => {
   const baseClass = 'accordion';
@@ -37,52 +56,43 @@ Usage:
     { title: "Question 1", content: "Answer content here" },
     { title: "Question 2", content: "More answer content" }
   ]} 
+  allowMultiple={false}
 />
 
 Features:
-- Collapse/expand animation
-- Only one item open at a time
-- Alpine.js powered reactivity
-- Requires Alpine.js and Collapse plugin
+- Native HTML details/summary for accessibility
+- Optional Alpine.js enhancement for single-open behavior
+- Smooth transitions
+- Accessible by default
 -->
 
 <div 
-  x-data="{ 
-    activeAccordion: '', 
-    setActiveAccordion(id) { 
-      this.activeAccordion = (this.activeAccordion == id) ? '' : id 
-    } 
-  }"
+  x-data={accordionData}
   class={getAccordionClasses()}
 >
-  {items.map((item, index) => (
-    <div x-data={`{ id: $id('accordion-${index}') }`} class={getAccordionItemClasses()}>
-      <button 
-        @click="setActiveAccordion(id)"
+  <template x-for="(item, index) in items" :key="item.id || ('accordion-' + index)">
+    <details 
+      class={getAccordionItemClasses()}
+      @toggle="handleToggle($el)"
+    >
+      <summary 
         class={getAccordionButtonClasses()}
-        type="button"
       >
-        <span class="accordion-title">{item.title}</span>
+        <span class="accordion-title" x-text="item.title"></span>
         <svg 
           class="accordion-icon"
-          :class="{ 'accordion-icon-open': activeAccordion === id }"
           fill="none" 
           stroke="currentColor" 
           viewBox="0 0 24 24"
         >
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
         </svg>
-      </button>
+      </summary>
       <div 
-        x-show="activeAccordion === id" 
-        x-collapse 
-        x-cloak
         class={getAccordionContentClasses()}
       >
-        <div class="accordion-text">
-          {item.content}
-        </div>
+        <div class="accordion-text" x-text="item.content"></div>
       </div>
-    </div>
-  ))}
+    </details>
+  </template>
 </div>

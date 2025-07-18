@@ -28,24 +28,14 @@ const {
 // Generate class names using our design system
 const getProgressClasses = () => {
   const baseClass = 'progress';
-  return `${baseClass} ${className}`.trim();
-};
-
-const getProgressContainerClasses = () => {
-  const baseClass = 'progress-container';
-  const sizeClass = `progress-container-${size}`;
-  return `${baseClass} ${sizeClass}`.trim();
-};
-
-const getProgressBarClasses = () => {
-  const baseClass = 'progress-bar';
-  const colorClass = `progress-bar-${color}`;
+  const sizeClass = `progress-${size}`;
+  const colorClass = `progress-${color}`;
   const variantClasses = [];
   
-  if (striped) variantClasses.push('progress-bar-striped');
-  if (animated) variantClasses.push('progress-bar-animated');
+  if (striped) variantClasses.push('progress-striped');
+  if (animated) variantClasses.push('progress-animated');
   
-  return `${baseClass} ${colorClass} ${variantClasses.join(' ')}`.trim();
+  return `${baseClass} ${sizeClass} ${colorClass} ${variantClasses.join(' ')} ${className}`.trim();
 };
 ---
 
@@ -70,6 +60,7 @@ Usage:
 />
 
 Features:
+- Native HTML progress element
 - Configurable progress value
 - Multiple colors and sizes
 - Animated and striped variants
@@ -117,7 +108,7 @@ Features:
       startAutoIncrement();
     }
   "
-  class={getProgressClasses()}
+  class="progress-wrapper"
 >
   <!-- Progress label -->
   {showLabel && (
@@ -127,17 +118,28 @@ Features:
     </div>
   )}
   
-  <!-- Progress bar container -->
-  <div class={getProgressContainerClasses()}>
-    <!-- Progress bar -->
-    <div 
-      :style="`width: ${percentage}%`"
-      class={getProgressBarClasses()}
+  <!-- Native progress element with custom styling overlay -->
+  <div class="progress-container">
+    <progress 
+      :value="progress"
+      :max="max"
+      class={getProgressClasses()}
       x-cloak
     >
-      <!-- Optional inner glow effect -->
-      <div class="progress-inner-glow"></div>
-    </div>
+      <span x-text="`${Math.round(percentage)}%`"></span>
+    </progress>
+    
+    <!-- Custom overlay for advanced styling (striped, animated) -->
+    {(striped || animated) && (
+      <div class="progress-overlay">
+        <div 
+          :style="`width: ${percentage}%`"
+          class={`progress-bar ${striped ? 'progress-bar-striped' : ''} ${animated ? 'progress-bar-animated' : ''} progress-bar-${color}`}
+        >
+          <div class="progress-inner-glow"></div>
+        </div>
+      </div>
+    )}
   </div>
   
   <!-- Auto-increment controls -->
@@ -153,4 +155,3 @@ Features:
     </div>
   )}
 </div>
-

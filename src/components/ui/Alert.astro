@@ -43,7 +43,8 @@ Features:
 - Multiple color variants
 -->
 
-<div 
+<aside 
+  role="alert"
   class={`${getAlertClasses()} ${className}`}
   {...(dismissible ? { 'x-data': '{ alertVisible: true }', 'x-show': 'alertVisible' } : {})}
 >
@@ -76,4 +77,4 @@ Features:
       <slot />
     </div>
   </div>
-</div>
+</aside>

@@ -72,11 +72,10 @@ Features:
     <div 
       x-show="modalOpen" 
       x-transition.opacity.duration.200ms
-      x-trap="modalOpen"
       class={getBackdropClasses()}
       @click.self={closeable ? "modalOpen = false" : ""}
     >
-      <div 
+      <dialog 
         x-show="modalOpen"
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0 scale-95"
@@ -85,6 +84,8 @@ Features:
         x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95"
         class={`modal-content ${getComponentClasses()} ${className}`}
+        x-trap="modalOpen"
+        open
       >
         <!-- Header -->
         <div class="modal-header">
@@ -114,7 +115,7 @@ Features:
         <div class="modal-footer">
           <slot name="footer" />
         </div>
-      </div>
+      </dialog>
     </div>
   </template>
 </div>
