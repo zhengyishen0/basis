@@ -12,7 +12,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/basis.git
+git clone https://github.com/zhengyishen0/basis.git
 cd basis
 
 # Install dependencies
@@ -159,4 +159,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-Built with ❤️ using Astro + Alpine.js
+Built with ❤️ using Astro + Alpine.js + Supabase
