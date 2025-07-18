@@ -120,7 +120,7 @@ Trigger Types:
     popoverInteractive: ${interactive},
     popoverMaxWidth: '${maxWidth}',
     popoverZIndex: ${zIndex},
-    popoverPosition: { top: 0, left: 0 },
+    popoverPosition: { top: 100, left: 100 },
     popoverArrowPosition: { top: 0, left: 0 },
     popoverActualPlacement: '${placement}',
     popoverShowTimeout: null,
@@ -138,11 +138,15 @@ Trigger Types:
       if (this.popoverDelay > 0) {
         this.popoverShowTimeout = setTimeout(() => {
           this.popoverOpen = true;
-          this.$nextTick(() => this.popoverCalculatePosition());
+          this.$nextTick(() => {
+            setTimeout(() => this.popoverCalculatePosition(), 10);
+          });
         }, this.popoverDelay);
       } else {
         this.popoverOpen = true;
-        this.$nextTick(() => this.popoverCalculatePosition());
+        this.$nextTick(() => {
+          setTimeout(() => this.popoverCalculatePosition(), 10);
+        });
       }
     },
 
@@ -295,7 +299,8 @@ Trigger Types:
         }
       }
 
-      this.popoverPosition = { top, left };
+      // Force reactive update
+      this.popoverPosition = { top: top, left: left };
       this.popoverArrowPosition = { top: arrowTop, left: arrowLeft };
       this.popoverActualPlacement = placement;
     },
@@ -352,12 +357,12 @@ Trigger Types:
       x-transition:leave-start="opacity-100 scale-100"
       x-transition:leave-end="opacity-0 scale-95"
       class={`popover-content ${popoverClass}`}
-      :style="`
-        top: ${popoverPosition.top}px; 
-        left: ${popoverPosition.left}px; 
-        max-width: ${popoverMaxWidth}; 
-        z-index: ${popoverZIndex};
-      `"
+      :style="{
+        top: popoverPosition.top + 'px', 
+        left: popoverPosition.left + 'px', 
+        maxWidth: popoverMaxWidth, 
+        zIndex: popoverZIndex
+      }"
       x-cloak
       role="tooltip"
       :aria-hidden="!popoverOpen"
@@ -368,10 +373,10 @@ Trigger Types:
         x-ref="popoverArrow"
         :class="popoverGetArrowClasses()"
         class={arrowClass}
-        :style="`
-          top: ${popoverArrowPosition.top}px; 
-          left: ${popoverArrowPosition.left}px;
-        `"
+        :style="{
+          top: popoverArrowPosition.top + 'px', 
+          left: popoverArrowPosition.left + 'px'
+        }"
       ></div>
 
       <!-- Content -->

@@ -136,7 +136,7 @@ const getComponentClasses = () => {
     class="copy-to-clipboard-tooltip"
     x-cloak
   >
-    <span x-text="copySuccess ? successMessage : errorMessage"></span>
+    <span x-text="copySuccess ? (successMessage || 'Copied!') : (errorMessage || 'Failed to copy')"></span>
     <div class="copy-to-clipboard-tooltip-arrow"></div>
   </div>
 </div>

@@ -2320,6 +2320,11 @@
   display: inline-block;
   font-family: var(--font-family);
   color: var(--color-text-primary);
+  min-width: 35ch;
+  height: 2rem;
+  line-height: 2rem;
+  vertical-align: top;
+  overflow: hidden;
 }
 
 .typing-effect-text {
@@ -2347,18 +2352,30 @@
 /* Typing Effect Sizes */
 .typing-effect-sm {
   font-size: var(--text-sm);
+  min-width: 30ch;
+  height: 1.5rem;
+  line-height: 1.5rem;
 }
 
 .typing-effect-md {
   font-size: var(--text-base);
+  min-width: 35ch;
+  height: 1.75rem;
+  line-height: 1.75rem;
 }
 
 .typing-effect-lg {
   font-size: var(--text-lg);
+  min-width: 30ch;
+  height: 2rem;
+  line-height: 2rem;
 }
 
 .typing-effect-xl {
   font-size: var(--text-xl);
+  min-width: 25ch;
+  height: 2.5rem;
+  line-height: 2.5rem;
 }
 
 /* Typing Effect Colors */
@@ -3335,10 +3352,19 @@
 .text-animation {
   display: inline-block;
   font-family: var(--font-family);
+  height: 1.5rem;
+  line-height: 1.5rem;
+  overflow: hidden;
+  vertical-align: top;
 }
 
 .text-animation-container {
   display: inline-block;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  overflow: hidden;
+  vertical-align: top;
+  min-width: 1px;
 }
 
 .text-animation-word {
@@ -3349,6 +3375,9 @@
 .text-animation-char {
   display: inline-block;
   transition: all var(--transition-normal);
+  white-space: pre;
+  line-height: 1.5rem;
+  height: 1.5rem;
 }
 
 /* Text Animation Variants */
@@ -3357,7 +3386,7 @@
 }
 
 .text-animation-fade.text-animation-animate .text-animation-char {
-  opacity: 1;
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
 .text-animation-slide .text-animation-char {
@@ -3366,8 +3395,7 @@
 }
 
 .text-animation-slide.text-animation-animate .text-animation-char {
-  opacity: 1;
-  transform: translateX(0);
+  animation: slideIn 0.6s ease-out forwards;
 }
 
 .text-animation-scale .text-animation-char {
@@ -3376,8 +3404,7 @@
 }
 
 .text-animation-scale.text-animation-animate .text-animation-char {
-  opacity: 1;
-  transform: scale(1);
+  animation: scaleIn 0.4s ease-out forwards;
 }
 
 .text-animation-bounce .text-animation-char {
@@ -3386,8 +3413,49 @@
 }
 
 .text-animation-bounce.text-animation-animate .text-animation-char {
-  opacity: 1;
-  transform: translateY(0);
+  animation: bounceIn 0.8s ease-out forwards;
+}
+
+/* Ensure final state is preserved after animation */
+.text-animation-animate .text-animation-char {
+  opacity: 1 !important;
+  transform: translateX(0) translateY(0) scale(1) !important;
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ==========================================================================
@@ -4111,68 +4179,6 @@
 /* Pause on Hover */
 .marquee-pause:hover .marquee-content {
   animation-play-state: paused;
-}
-
-/* ==========================================================================
-   TEXT ANIMATION COMPONENT
-   ========================================================================== */
-
-.text-animation {
-  display: inline-block;
-  font-family: var(--font-family);
-}
-
-.text-animation-container {
-  display: inline-block;
-}
-
-.text-animation-word {
-  display: inline-block;
-  margin-right: var(--space-1);
-}
-
-.text-animation-char {
-  display: inline-block;
-  transition: all var(--transition-normal);
-}
-
-/* Text Animation Variants */
-.text-animation-fade .text-animation-char {
-  opacity: 0;
-}
-
-.text-animation-fade.text-animation-animate .text-animation-char {
-  opacity: 1;
-}
-
-.text-animation-slide .text-animation-char {
-  opacity: 0;
-  transform: translateX(-20px);
-}
-
-.text-animation-slide.text-animation-animate .text-animation-char {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.text-animation-scale .text-animation-char {
-  opacity: 0;
-  transform: scale(0);
-}
-
-.text-animation-scale.text-animation-animate .text-animation-char {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.text-animation-bounce .text-animation-char {
-  opacity: 0;
-  transform: translateY(-20px);
-}
-
-.text-animation-bounce.text-animation-animate .text-animation-char {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* ==========================================================================

@@ -71,12 +71,11 @@ Features:
     <button 
       type="button"
       @click="switchOn = !switchOn"
-      :class="switchOn ? 'active' : ''"
+      :class="switchOn ? 'switch-on' : ''"
       :disabled="disabled"
       class={`${getComponentClasses()} ${disabled ? 'disabled' : ''}`}
     >
       <span 
-        :class="switchOn ? 'translate' : ''"
         class={getThumbClasses()}
       ></span>
     </button>

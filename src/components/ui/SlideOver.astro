@@ -105,8 +105,8 @@ Props:
     <div 
       x-show="slideOverOpen" 
       x-transition.opacity
-      x-trap.inert.noscroll="slideOverOpen"
-      class={`${getBackdropClasses()} slide-over-backdrop-transition ${side === 'top' || side === 'bottom' ? 'slide-over-flex-col' : ''} ${!overlay ? 'slide-over-bg-transparent' : ''}`}
+      x-trap="slideOverOpen"
+      class={`${getBackdropClasses()} ${getComponentClasses()} slide-over-backdrop-transition ${side === 'top' || side === 'bottom' ? 'slide-over-flex-col' : ''} ${!overlay ? 'slide-over-bg-transparent' : ''}`}
       @click.self={closeable ? "slideOverOpen = false" : ""}
       role="dialog"
       aria-modal="true"

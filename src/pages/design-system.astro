@@ -50,7 +50,29 @@ import TypingEffect from '../components/ui/TypingEffect.astro';
       <div class="design-nav-container">
         <Button href="../" variant="solid" color="neutral" size="sm">Back to Home</Button>
         <h1 class="design-nav-title">Design System</h1>
-        <div class="design-nav-spacer"></div> <!-- Spacer to center the title -->
+        <button 
+          onclick="toggleTheme()" 
+          class="design-nav-theme-toggle"
+          type="button"
+          title="Toggle dark mode"
+          style="
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+          "
+          onmouseover="this.style.background='var(--color-surface-hover)'; this.style.color='var(--color-text-primary)'"
+          onmouseout="this.style.background='var(--color-surface)'; this.style.color='var(--color-text-secondary)'"
+        >
+          <span id="theme-icon">🌙</span>
+          <span id="theme-text">Dark Mode</span>
+        </button>
       </div>
     </nav>
 
@@ -2063,7 +2085,7 @@ import TypingEffect from '../components/ui/TypingEffect.astro';
           
           <Command 
             placeholder="Search commands or press ⌘K..." 
-            @command-selected="alert('Command selected: ' + $event.detail.text)"
+            @command-selected="$event.detail.id === 'theme' ? toggleTheme() : alert('Command selected: ' + $event.detail.text)"
           >
             <div slot="trigger">
               <Button variant="outline" color="blue">Open Command Palette</Button>
@@ -2742,8 +2764,7 @@ print(greet(person["name"]))`}
           <h3>HTML5 Video Player</h3>
           <div class="cluster">
             <VideoPlayer 
-              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-              poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
+              src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4"
               width="640"
               height="360"
               showControls={true}
@@ -2752,6 +2773,7 @@ print(greet(person["name"]))`}
               showProgress={true}
               showTime={true}
               showPlaybackSpeed={true}
+              controls={true}
             />
           </div>
         </div>
@@ -2760,20 +2782,22 @@ print(greet(person["name"]))`}
           <h3>Different Sizes</h3>
           <div class="cluster">
             <VideoPlayer 
-              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+              src="https://sample-videos.com/zip/10/mp4/SampleVideo_640x360_1mb.mp4"
               width="480"
               height="270"
               showPlaybackSpeed={false}
               showTime={true}
+              controls={true}
             />
             
             <VideoPlayer 
-              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+              src="https://sample-videos.com/zip/10/mp4/SampleVideo_360x240_1mb.mp4"
               width="320"
               height="180"
               showPlaybackSpeed={false}
               showTime={false}
               showVolumeControl={false}
+              controls={true}
             />
           </div>
         </div>
@@ -2861,6 +2885,24 @@ print(greet(person["name"]))`}
     </div>
   </main>
 
+  <style>
+    /* Prevent page jumping when modals/slideovers open */
+    body {
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    
+    /* Ensure smooth transitions without layout shifts */
+    * {
+      box-sizing: border-box;
+    }
+    
+    /* Prevent scrollbars from causing layout shifts */
+    :root {
+      scrollbar-gutter: stable;
+    }
+  </style>
+
   <script>
     function toggleTheme() {
       const html = document.documentElement;
@@ -2869,6 +2911,24 @@ print(greet(person["name"]))`}
       
       html.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
+      
+      // Update button text and icon
+      updateThemeButton(newTheme);
+    }
+    
+    function updateThemeButton(theme) {
+      const themeIcon = document.getElementById('theme-icon');
+      const themeText = document.getElementById('theme-text');
+      
+      if (themeIcon && themeText) {
+        if (theme === 'dark') {
+          themeIcon.textContent = '☀️';
+          themeText.textContent = 'Light Mode';
+        } else {
+          themeIcon.textContent = '🌙';
+          themeText.textContent = 'Dark Mode';
+        }
+      }
     }
 
     // Toast notification functions
@@ -3024,6 +3084,17 @@ print(greet(person["name"]))`}
     document.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', savedTheme);
+      
+      // Initialize theme button
+      updateThemeButton(savedTheme);
+      
+      // Add keyboard shortcut for theme toggle
+      document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 't') {
+          e.preventDefault();
+          toggleTheme();
+        }
+      });
       
       // Test navigation components functionality
       console.log('Testing navigation components...');

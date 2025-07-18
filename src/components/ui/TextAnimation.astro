@@ -70,47 +70,18 @@ Features:
     });
     
     function startAnimation() {
-      if (!window.gsap) {
-        addCNDScript = true;
-        let script = document.createElement('script');
-        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
-        script.onload = function() {
-          runAnimation();
-        };
-        document.head.appendChild(script);
-      } else {
-        runAnimation();
-      }
-    }
-    
-    function runAnimation() {
       const chars = $refs.textContainer.querySelectorAll('.text-animation-char');
-      const tl = gsap.timeline();
       
-      // Reset animation state first
-      $el.classList.remove('text-animation-animate');
+      // Only reset if not already animated
+      if (!$el.classList.contains('text-animation-animate')) {
+        // Use CSS animations with staggered delays
+        chars.forEach((char, index) => {
+          char.style.animationDelay = (index * stagger) + 's';
+        });
+      }
       
-      // Set initial state based on animation type
-      gsap.set(chars, {
-        opacity: animationType === 'fade' ? 0 : 1,
-        scale: animationType === 'scale' ? 0 : 1,
-        x: animationType === 'slide' ? -20 : 0,
-        y: animationType === 'bounce' ? -20 : 0
-      });
-      
-      // Add animate class to trigger design system transitions
+      // Add animate class to trigger CSS transitions
       $el.classList.add('text-animation-animate');
-      
-      // Animate in with GSAP for staggered timing
-      tl.to(chars, {
-        opacity: 1,
-        scale: 1,
-        x: 0,
-        y: 0,
-        duration: duration,
-        stagger: stagger,
-        ease: animationType === 'bounce' ? 'bounce.out' : 'power2.out'
-      });
     }
   "
   class={`${getTextAnimationClasses()} ${className}`}

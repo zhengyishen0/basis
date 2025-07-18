@@ -72,7 +72,7 @@ Features:
     <div 
       x-show="modalOpen" 
       x-transition.opacity.duration.200ms
-      x-trap.inert.noscroll="modalOpen"
+      x-trap="modalOpen"
       class={getBackdropClasses()}
       @click.self={closeable ? "modalOpen = false" : ""}
     >
