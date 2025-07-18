@@ -75,6 +75,34 @@ This starter embodies a fundamental approach to web development - using basic, f
 └── package.json
 ```
 
+## 🎯 Quick Customization Guide
+
+Thanks to our separation of concerns, you only need to modify a few files to customize Basis:
+
+### Essential Files to Update:
+
+```text
+src/
+├── content/pages/home.md     # ✏️ Homepage content (hero, features, etc.)
+├── styles/
+│   └── design-system/
+│       └── tokens/
+│           └── primitives/
+│               └── colors.css # 🎨 Your brand colors
+├── lib/
+│   └── supabase.js           # 🔑 Your Supabase credentials
+└── public/                   # 🖼️ Your images and assets
+```
+
+### What to Change:
+
+1. **Content** → Edit `/src/content/pages/home.md` for all homepage text
+2. **Colors** → Update `/src/styles/design-system/tokens/primitives/colors.css` with your brand colors
+3. **Images** → Replace files in `/public/` with your assets
+4. **Backend** → Add your Supabase URL and key in `/src/lib/supabase.js`
+
+That's it! No need to touch components, layouts, or most other files unless you want to.
+
 ## 🚀 Commands
 
 | Command           | Action                               |
