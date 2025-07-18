@@ -1,4 +1,5 @@
 My tech stack is:
+
 - Astro: for the fullstack and using dynamic island architecture to hydrate only interactive components
 - Supabase: for backend-as-a-service with real-time database and authentication
 - Alpine.js: for frontend reactivity using ES6 modules and Alpine.store() pattern
@@ -7,9 +8,12 @@ My tech stack is:
 - Github Actions: Host static pages on Github Pages
 
 # Testing Reminder
+
 Always test code myself before claiming it works. Use techniques like:
+
 - x-init="init()" to test Alpine.js initialization automatically
 - console.log() to debug variable values
 - Create test pages to verify component functionality
 - Check browser console for errors
 - Test Alpine.store() state changes
+-
