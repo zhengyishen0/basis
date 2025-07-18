@@ -2,7 +2,7 @@
  * Pine Marketing Components
  * 
  * A collection of marketing-focused Astro components converted from Pine UI templates.
- * These components are optimized for the AHA stack (Astro + HTMX + Alpine.js).
+ * These components are optimized for the Basis stack (Astro + HTMX + Alpine.js).
  * 
  * Components:
  * - HeroSideBySide: Hero section with side-by-side text and image layout

@@ -1,43 +1,129 @@
 /* 
- * MONACO EDITOR COMPONENT
- * Part of the AHA Starter Design System
- * This file contains styles for the monaco editor component
+ * Monaco Editor Component Styles
+ * Styles for the Monaco code editor integration
  */
 
-/* ==========================================================================
-   MONACO EDITOR COMPONENT
-   ========================================================================== */
-
+/* Monaco Editor Component Styles */
 .monaco-editor {
   position: relative;
-  width: 100%;
-  font-family: var(--font-family);
+  z-index: var(--z-dropdown);
+  width: auto;
+  height: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-elevated);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.monaco-editor:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-xl);
 }
 
 .monaco-editor-container {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  position: relative;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  background: var(--color-surface-elevated);
+  border-radius: var(--radius-md);
 }
 
-.monaco-editor-toolbar {
+.monaco-editor-loading {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  justify-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-secondary);
 }
 
-.monaco-editor-toolbar-button {
-  flex-shrink: 0;
+.monaco-editor-loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-8);
+}
+
+.monaco-editor-loading-spinner {
+  width: var(--space-8);
+  height: var(--space-8);
+  animation: spin 1s linear infinite;
+  color: var(--color-primary);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.monaco-editor-loading-text {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.monaco-editor-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-error);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  gap: var(--space-4);
+}
+
+.monaco-editor-error-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.monaco-editor-error-icon {
+  width: var(--space-12);
+  height: var(--space-12);
+  color: var(--color-danger);
+}
+
+.monaco-editor-error-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-danger);
+  margin: 0;
+}
+
+.monaco-editor-error-message {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.monaco-editor-error-retry {
+  margin-top: var(--space-2);
 }
 
 .monaco-editor-status {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
+  flex-wrap: wrap;
+  gap: var(--space-2);
 }
 
 .monaco-editor-status-info {
@@ -47,82 +133,22 @@
 }
 
 .monaco-editor-status-item {
-  font-size: var(--text-xs);
-  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
 }
 
 .monaco-editor-status-value {
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-normal);
   color: var(--color-text-primary);
 }
 
-/* Monaco Editor Loading State */
-.monaco-editor-loading {
+.monaco-editor-toolbar {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  gap: var(--space-1);
 }
 
-.monaco-editor-loading-content {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  color: var(--color-text-secondary);
-}
-
-.monaco-editor-loading-spinner {
-  width: var(--space-5);
-  height: var(--space-5);
-  animation: spin 1s linear infinite;
-}
-
-.monaco-editor-loading-text {
-  font-size: var(--text-sm);
-}
-
-/* Monaco Editor Error State */
-.monaco-editor-error {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-red-light);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-4);
-}
-
-.monaco-editor-error-content {
-  text-align: center;
-  color: var(--color-red-text);
-}
-
-.monaco-editor-error-icon {
-  width: var(--space-8);
-  height: var(--space-8);
-  margin: 0 auto var(--space-2);
-  color: var(--color-red);
-}
-
-.monaco-editor-error-title {
-  font-size: var(--text-sm);
-  font-weight: var(--font-weight-medium);
-  margin-bottom: var(--space-1);
-}
-
-.monaco-editor-error-message {
+.monaco-editor-toolbar-button {
   font-size: var(--text-xs);
-}
-
-.monaco-editor-error-retry {
-  margin-top: var(--space-3);
-}
-
-/* Spin animation for loading spinner */
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
 }

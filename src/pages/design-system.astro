@@ -41,6 +41,10 @@ import Quotes from '../components/ui/Quotes.astro';
 import Rating from '../components/ui/Rating.astro';
 import Table from '../components/ui/Table.astro';
 import TypingEffect from '../components/ui/TypingEffect.astro';
+
+// Page-specific styles
+import '../styles/pages/design-system.css';
+import '../styles/components/monaco-editor.css';
 ---
 
 <Layout title="Design System">
@@ -559,7 +563,7 @@ import TypingEffect from '../components/ui/TypingEffect.astro';
         <div class="stack">
           <h3>Centered Quote with Avatar</h3>
           <Quotes 
-            quote="The AHA Stack provides the perfect balance of performance and developer experience. It's exactly what we needed for our modern web applications."
+            quote="The Basis Stack provides the perfect balance of performance and developer experience. It's exactly what we needed for our modern web applications."
             author="Michael Chen"
             role="CTO"
             company="Innovation Labs"
@@ -1317,7 +1321,7 @@ import TypingEffect from '../components/ui/TypingEffect.astro';
             <div class="cluster">
               <strong>Slide:</strong>
               <TextAnimation 
-                text="Welcome to AHA Stack!" 
+                text="Welcome to Basis Stack!" 
                 animation="slide" 
                 stagger={0.05}
                 duration={0.6}
@@ -1380,7 +1384,7 @@ import TypingEffect from '../components/ui/TypingEffect.astro';
               errorMessage="Copy failed!"
             />
             <CopyToClipboard 
-              text="npm install aha-stack"
+              text="npm install basis-stack"
               variant="button"
               successMessage="Command copied!"
             />
@@ -1779,8 +1783,8 @@ import TypingEffect from '../components/ui/TypingEffect.astro';
           <Accordion 
             items={[
               { 
-                title: "What is the AHA Stack?", 
-                content: "The AHA Stack combines Astro, HTMX, and Alpine.js to create fast, interactive web applications with minimal JavaScript overhead." 
+                title: "What is the Basis Stack?", 
+                content: "The Basis Stack combines Astro, HTMX, and Alpine.js to create fast, interactive web applications with minimal JavaScript overhead." 
               },
               { 
                 title: "How does Alpine.js work?", 
@@ -1808,7 +1812,7 @@ import TypingEffect from '../components/ui/TypingEffect.astro';
               },
               { 
                 title: "Is this production ready?", 
-                content: "Yes! The AHA Stack is built on mature, production-tested technologies. Many companies use similar architectures for their web applications." 
+                content: "Yes! The Basis Stack is built on mature, production-tested technologies. Many companies use similar architectures for their web applications." 
               },
               { 
                 title: "Can I customize the components?", 
@@ -2309,7 +2313,7 @@ import TypingEffect from '../components/ui/TypingEffect.astro';
               
               <div slot="card">
                 <div class="hover-card-body" style="padding: var(--space-4);">
-                  <h4 style="margin: 0 0 var(--space-2) 0; font-weight: var(--font-weight-semibold);">AHA Design System</h4>
+                  <h4 style="margin: 0 0 var(--space-2) 0; font-weight: var(--font-weight-semibold);">Basis Design System</h4>
                   <p style="color: var(--color-text-secondary); margin-bottom: var(--space-3); font-size: var(--text-sm);">
                     A comprehensive design system built with Astro, HTMX, and Alpine.js for modern web applications.
                   </p>
@@ -2730,7 +2734,7 @@ print(greet(person["name"]))`}
           <h3>Read-Only Editor</h3>
           <MonacoEditor 
             value={`{
-  "name": "aha-design-system",
+  "name": "basis-design-system",
   "version": "1.0.0",
   "description": "A comprehensive design system built with Astro, HTMX, and Alpine.js",
   "main": "index.js",

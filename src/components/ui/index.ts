@@ -1,6 +1,6 @@
 // Pine UI Components for Astro
 // Based on Pine UI by DevDojo (https://devdojo.com/pines)
-// Converted for AHA Stack (Astro + HTMX + Alpine.js)
+// Converted for Basis Stack (Astro + HTMX + Alpine.js)
 // Complete collection of 42 Pine UI components
 
 // Basic Components

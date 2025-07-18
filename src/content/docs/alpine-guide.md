@@ -1,11 +1,11 @@
 ---
 title: Alpine.js Integration Guide
-description: Complete guide to using Alpine.js in the AHA Stack
+description: Complete guide to using Alpine.js in Basis
 ---
 
 # Alpine.js Integration Guide
 
-This guide covers everything you need to know about using Alpine.js in the AHA Stack.
+This guide covers everything you need to know about using Alpine.js in Basis.
 
 ## Setup & Configuration
 
@@ -114,7 +114,7 @@ alpinejs@3.14.9
 
 ## State Management with Alpine.store()
 
-The AHA Stack uses Alpine.store() for global state management. Here's how to create and use stores:
+Basis uses Alpine.store() for global state management. Here's how to create and use stores:
 
 ### Creating a Store
 ```javascript
@@ -255,7 +255,7 @@ Test your Alpine.js components at these routes:
 </div>
 ```
 
-## Integration with AHA Stack
+## Integration with Basis
 
 Alpine.js works seamlessly with:
 - **Astro Components**: Use Alpine in any .astro file

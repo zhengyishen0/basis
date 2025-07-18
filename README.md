@@ -1,19 +1,19 @@
-# Astro Alpine Starter
+# Basis
 
-🚀 Modern full-stack starter template powered by **Astro** and **Alpine.js** with Supabase integration, featuring a complete design system and 65+ pre-built components.
+🚀 A foundation for modern web development built on fundamental tools and clear architectural boundaries. Powered by **Astro**, **Alpine.js**, and **Supabase** with 65+ pre-built components.
 
 ## 🌟 Live Demo
 
-**[View Live Demo →](https://zhengyishen0.github.io/aha-stack-starter)**
+**[View Live Demo →](https://zhengyishen0.github.io/basis)**
 
-![Astro Alpine Starter Screenshot](./public/screen-shot.png)
+![Basis Screenshot](./public/screen-shot.png)
 
 ## ⚡ Quick Start
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/astro-alpine-starter.git
-cd astro-alpine-starter
+git clone https://github.com/yourusername/basis.git
+cd basis
 
 # Install dependencies
 npm install
@@ -23,6 +23,19 @@ npm run dev
 ```
 
 Visit `http://localhost:4321` to see your site.
+
+## 💡 Philosophy: Simplicity Through Separation
+
+This starter embodies a fundamental approach to web development - using basic, foundational tools instead of multi-layered abstraction frameworks. Each part of your application has a clear boundary and single responsibility:
+
+- **Design** → Real-time color system with clear token hierarchy (primitive → semantic → component → theme)
+- **Components** → Semantic HTML + CSS classes + Alpine.js with minimal JavaScript
+- **Pages** → Simple composition of component blocks
+- **Data** → Alpine stores with pre-built CRUD operations via Supabase
+- **Backend** → Supabase for database, auth, and serverless functions
+- **Content** → Markdown with frontmatter for structured content
+
+**The beauty**: Each layer can change independently without affecting the others. No framework lock-in, no magic, just clear boundaries and web standards.
 
 ## ✨ What's Included
 

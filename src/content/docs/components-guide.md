@@ -1,11 +1,11 @@
 ---
 title: Components Usage Guide
-description: How to use UI and Marketing components in the AHA Stack
+description: How to use UI and Marketing components in Basis
 ---
 
 # Components Usage Guide
 
-This guide covers how to use the 40+ UI components and 25+ marketing components included in the AHA Stack.
+This guide covers how to use the 40+ UI components and 25+ marketing components included in Basis.
 
 ## Component Categories
 
@@ -40,7 +40,7 @@ import { HeroCentered, FeatureGrid } from '@/components/marketing';
 
 <!-- Use them in your template -->
 <HeroCentered
-  title="Welcome to AHA Stack"
+  title="Welcome to Basis"
   description="Build fast, interactive web apps"
   primaryButtonText="Get Started"
   primaryButtonHref="/docs"
@@ -153,8 +153,8 @@ Most components accept props for customization:
 <Accordion
   items={[
     {
-      title: 'What is the AHA Stack?',
-      content: 'AHA Stack combines Astro, Alpine.js, and HTMX...'
+      title: 'What is Basis?',
+      content: 'Basis is a foundation for modern web development using fundamental tools...'
     },
     {
       title: 'How do I get started?',
@@ -250,7 +250,7 @@ Most components accept props for customization:
 #### FeatureGrid
 ```astro
 <FeatureGrid
-  title="Why Choose AHA Stack?"
+  title="Why Choose Basis?"
   features={[
     {
       icon: "🚀",

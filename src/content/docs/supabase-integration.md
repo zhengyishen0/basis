@@ -1,11 +1,11 @@
 ---
 title: Supabase Integration Guide
-description: Complete guide to integrating Supabase with the AHA Stack
+description: Complete guide to integrating Supabase with Basis
 ---
 
 # Supabase Integration Guide
 
-This guide covers how to integrate Supabase for backend functionality, real-time features, and authentication in the AHA Stack.
+This guide covers how to integrate Supabase for backend functionality, real-time features, and authentication in Basis.
 
 ## Overview
 
@@ -18,7 +18,7 @@ Supabase provides a complete Backend-as-a-Service (BaaS) solution with:
 
 ## Architecture
 
-The AHA Stack uses a pure frontend approach with Supabase:
+Basis uses a pure frontend approach with Supabase:
 
 ```
 Frontend (Astro Page)
@@ -505,7 +505,7 @@ if (error) {
 
 ## Testing
 
-The AHA Stack includes a complete Supabase todo app example:
+Basis includes a complete Supabase todo app example:
 - Live Demo: `/supabase-todo`
 - Source: `/src/pages/supabase-todo.astro`
 

@@ -1,6 +1,6 @@
 # UI Components for Astro
 
-A collection of custom UI components built specifically for the AHA stack (Astro + Alpine.js + HTMX). Inspired by modern design systems and optimized for performance and accessibility.
+A collection of custom UI components built specifically for the Basis stack (Astro + Alpine.js + HTMX). Inspired by modern design systems and optimized for performance and accessibility.
 
 ## ✨ Features
 
@@ -291,7 +291,7 @@ All components accept a `class` prop for additional styling:
 
 ## 📄 License
 
-Custom UI components inspired by modern design systems. Built specifically for the AHA stack.
+Custom UI components inspired by modern design systems. Built specifically for the Basis stack.
 
 ## 🔗 Links
 

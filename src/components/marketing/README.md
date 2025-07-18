@@ -1,6 +1,6 @@
 # Pine Marketing Components
 
-A complete collection of **26 marketing-focused Astro components** converted from Pine UI templates, optimized for the AHA stack (Astro + HTMX + Alpine.js).
+A complete collection of **26 marketing-focused Astro components** converted from Pine UI templates, optimized for the Basis stack (Astro + HTMX + Alpine.js).
 
 ## 📦 Available Components (26 Total)
 

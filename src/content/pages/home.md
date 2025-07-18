@@ -1,5 +1,5 @@
 ---
-title: "AHA Stack Demo"
+title: "Basis Stack Demo"
 features:
   - name: "Astro"
     title: "Static Site Generation"
@@ -12,7 +12,7 @@ features:
     description: "Lightweight framework for client-side interactivity"
 ---
 
-# AHA Stack: Alpine.js + HTMX + Astro
+# Basis Stack: Alpine.js + HTMX + Astro
 
 This demo showcases the three core technologies working together:
 
