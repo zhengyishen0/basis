@@ -14,6 +14,12 @@ features:
   - name: "Content"
     title: "Markdown-Driven Pages"
     description: "Write content in Markdown with frontmatter. Components handle the presentation."
+  - name: "Pages"
+    title: "Composable Page Building"
+    description: "Stack components like LEGO blocks. Each page is just HTML composition with zero JavaScript overhead."
+  - name: "Deploy"
+    title: "Zero Configuration"
+    description: "Push to GitHub, deploy automatically. No build configs, no CI/CD setup, it just works."
 quickstart:
   - file: "content/"
     icon: "✏️"

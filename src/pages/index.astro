@@ -44,21 +44,18 @@ const features: Array<{name: string; title: string; description: string;}> = hom
 				<Badge variant="solid" color="black" size="lg">Supabase</Badge>
 			</div>
 			<div class="hero-buttons">
+				<Button href="./supabase-todo" variant="solid" color="blue" size="lg">
+					Demo
+				</Button>
 				<Button href="./design-system" variant="outline" color="neutral" size="lg">
-					Design System
-				</Button>
-				<Button href="./anthropic_fork" variant="outline" color="neutral" size="lg">
-					Anthropic Fork
-				</Button>
-				<Button href="./supabase-todo" variant="outline" color="neutral" size="lg">
-					Supabase Todo
+					Components
 				</Button>
 			</div>
 		</div>
 		
 		<!-- Features Section -->
 		<div class="features-section">
-			<h2 class="features-title">What Makes Basis Different</h2>
+			<h2 class="features-title">What Makes <span class="basis-underline">Basis</span> Different</h2>
 			<div class="features-grid">
 				{features.map((feature) => (
 					<Card variant="elevated" class="feature-card">
@@ -69,91 +66,6 @@ const features: Array<{name: string; title: string; description: string;}> = hom
 						</div>
 					</Card>
 				))}
-			</div>
-		</div>
-		
-		<!-- Font Showcase Section -->
-		<div class="font-showcase-section">
-			<div class="font-showcase-container">
-				<h2 class="font-showcase-title">Font Options</h2>
-				<div class="font-showcase-grid">
-					<!-- Inter Font -->
-					<Card class="font-card">
-						<h3 class="font-card-title" style="font-family: 'Inter', sans-serif;">Inter</h3>
-						<p class="font-card-sample" style="font-family: 'Inter', sans-serif;">Welcome to Basis</p>
-						<p class="font-card-description">Modern, clean, excellent readability</p>
-					</Card>
-					
-					<!-- Poppins Font -->
-					<Card class="font-card">
-						<h3 class="font-card-title" style="font-family: 'Poppins', sans-serif;">Poppins</h3>
-						<p class="font-card-sample" style="font-family: 'Poppins', sans-serif;">Welcome to Basis</p>
-						<p class="font-card-description">Geometric, friendly, approachable</p>
-					</Card>
-					
-					<!-- Montserrat Font -->
-					<Card class="font-card">
-						<h3 class="font-card-title" style="font-family: 'Montserrat', sans-serif;">Montserrat</h3>
-						<p class="font-card-sample" style="font-family: 'Montserrat', sans-serif;">Welcome to Basis</p>
-						<p class="font-card-description">Professional, versatile, strong</p>
-					</Card>
-					
-					<!-- Roboto Font -->
-					<Card class="font-card">
-						<h3 class="font-card-title" style="font-family: 'Roboto', sans-serif;">Roboto</h3>
-						<p class="font-card-sample" style="font-family: 'Roboto', sans-serif;">Welcome to Basis</p>
-						<p class="font-card-description">Google's Material Design font</p>
-					</Card>
-					
-					<!-- Source Sans Pro Font -->
-					<Card class="font-card">
-						<h3 class="font-card-title" style="font-family: 'Source Sans Pro', sans-serif;">Source Sans Pro</h3>
-						<p class="font-card-sample" style="font-family: 'Source Sans Pro', sans-serif;">Welcome to Basis</p>
-						<p class="font-card-description">Adobe's open-source font</p>
-					</Card>
-					
-					<!-- Nunito Font -->
-					<Card class="font-card">
-						<h3 class="font-card-title" style="font-family: 'Nunito', sans-serif;">Nunito</h3>
-						<p class="font-card-sample" style="font-family: 'Nunito', sans-serif;">Welcome to Basis</p>
-						<p class="font-card-description">Rounded, warm, inviting</p>
-					</Card>
-					
-					<!-- Open Sans Font -->
-					<Card class="font-card">
-						<h3 class="font-card-title" style="font-family: 'Open Sans', sans-serif;">Open Sans</h3>
-						<p class="font-card-sample" style="font-family: 'Open Sans', sans-serif;">Welcome to Basis</p>
-						<p class="font-card-description">Optimized for web, highly legible</p>
-					</Card>
-					
-					<!-- Lato Font -->
-					<Card class="font-card">
-						<h3 class="font-card-title" style="font-family: 'Lato', sans-serif;">Lato</h3>
-						<p class="font-card-sample" style="font-family: 'Lato', sans-serif;">Welcome to Basis</p>
-						<p class="font-card-description">Humanist, warm yet stable</p>
-					</Card>
-					
-					<!-- Manrope Font -->
-					<Card class="font-card">
-						<h3 class="font-card-title" style="font-family: 'Manrope', sans-serif;">Manrope</h3>
-						<p class="font-card-sample" style="font-family: 'Manrope', sans-serif;">Welcome to Basis</p>
-						<p class="font-card-description">Modern geometric, trendy</p>
-					</Card>
-					
-					<!-- IBM Plex Sans Font -->
-					<Card class="font-card">
-						<h3 class="font-card-title" style="font-family: 'IBM Plex Sans', sans-serif;">IBM Plex Sans</h3>
-						<p class="font-card-sample" style="font-family: 'IBM Plex Sans', sans-serif;">Welcome to Basis</p>
-						<p class="font-card-description">Corporate, technical, reliable</p>
-					</Card>
-					
-					<!-- Work Sans Font -->
-					<Card class="font-card">
-						<h3 class="font-card-title" style="font-family: 'Work Sans', sans-serif;">Work Sans</h3>
-						<p class="font-card-sample" style="font-family: 'Work Sans', sans-serif;">Welcome to Basis</p>
-						<p class="font-card-description">Optimized for screens, versatile</p>
-					</Card>
-				</div>
 			</div>
 		</div>
 	</main>
