@@ -280,7 +280,7 @@
 }
 
 .integration-extended-link {
-  color: var(--purple-600);
+  color: var(--color-primary);
   font-weight: var(--font-weight-bold);
   font-size: var(--text-lg);
   margin-bottom: var(--space-8);
@@ -291,7 +291,7 @@
 }
 
 .integration-extended-link:hover {
-  color: var(--purple-700);
+  color: var(--color-primary-hover);
 }
 
 .integration-extended-link-text {

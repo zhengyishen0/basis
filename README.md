@@ -53,7 +53,6 @@ This starter embodies a fundamental approach to web development - using basic, f
 | **Astro**     | Static site generator with islands architecture | [Astro Docs](https://astro.build)               |
 | **Alpine.js** | Lightweight reactive framework                  | [Alpine Guide](/docs/alpine-guide)              |
 | **Supabase**  | Backend as a Service                            | [Integration Guide](/docs/supabase-integration) |
-| **Custom UI** | CSS Design System                               | [Components Guide](/docs/components-guide)      |
 
 ## 📁 Project Structure
 
@@ -83,23 +82,25 @@ Thanks to our separation of concerns, you only need to modify a few files to cus
 
 ```text
 src/
-├── content/pages/home.md     # ✏️ Homepage content (hero, features, etc.)
+├── content/              # ✏️ All your content (copy, blogs, docs)
+├── lib/
+│   └── todoStore.js     # 💾 Rename & add your custom logic
 ├── styles/
 │   └── design-system/
-│       └── tokens/
-│           └── primitives/
-│               └── colors.css # 🎨 Your brand colors
-├── lib/
-│   └── supabase.js           # 🔑 Your Supabase credentials
-└── public/                   # 🖼️ Your images and assets
+│       └── primitives/
+│           └── colors.css # 🎨 Brand colors & design tokens
+└── pages/               # 📄 Build your actual pages here
+
+.env                     # 🔑 Your Supabase credentials
 ```
 
 ### What to Change:
 
-1. **Content** → Edit `/src/content/pages/home.md` for all homepage text
-2. **Colors** → Update `/src/styles/design-system/tokens/primitives/colors.css` with your brand colors
-3. **Images** → Replace files in `/public/` with your assets
-4. **Backend** → Add your Supabase URL and key in `/src/lib/supabase.js`
+1. **Content** → Edit files in `/src/content/` for all your copy and blog posts
+2. **Business Logic** → Rename `todoStore.js` and add your custom stores/logic
+3. **Design** → Update colors in `primitives/colors.css` and page-specific CSS
+4. **Pages** → Build your site by creating/editing files in `/src/pages/`
+5. **Credentials** → Add Supabase URL and key to `.env` file
 
 That's it! No need to touch components, layouts, or most other files unless you want to.
 
@@ -143,7 +144,7 @@ The project auto-detects your GitHub username and repository name - no configura
 ### Developer Experience
 
 - ES6 module imports (no CDN dependencies)
-- Alpine.store() for state management
+- Alpine.store for state management
 - CSS custom properties for theming
 - Semantic HTML with ARIA attributes
 - TypeScript support included
