@@ -35,9 +35,9 @@ const features: Array<{name: string; title: string; description: string;}> = hom
 				A modern web development stack combining Astro, HTMX, and Alpine.js
 			</p>
 			<div class="hero-badges">
-				<Badge variant="solid" color="black">Astro</Badge>
-				<Badge variant="solid" color="black">HTMX</Badge>
-				<Badge variant="solid" color="black">Alpine.js</Badge>
+				<Badge variant="solid" color="black" size="lg">Astro</Badge>
+				<Badge variant="solid" color="black" size="lg">HTMX</Badge>
+				<Badge variant="solid" color="black" size="lg">Alpine.js</Badge>
 			</div>
 			<div class="hero-buttons">
 				<Button href="./design-system" variant="outline" color="neutral" size="lg">
@@ -59,7 +59,7 @@ const features: Array<{name: string; title: string; description: string;}> = hom
 				{features.map((feature) => (
 					<Card variant="elevated" class="feature-card">
 						<div class="feature-content">
-							<Badge variant="solid" color="black" class="feature-badge">{feature.name}</Badge>
+							<Badge variant="solid" color="black" size="lg" class="feature-badge">{feature.name}</Badge>
 							<h3 class="feature-card-title">{feature.title}</h3>
 							<p class="feature-card-description">{feature.description}</p>
 						</div>
