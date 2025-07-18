@@ -12,39 +12,36 @@ const features: Array<{name: string; title: string; description: string;}> = hom
 ---
 
 <Layout>
-	<main class="min-h-screen">
+	<main class="main-container">
 		<!-- GitHub Icon in upper right -->
-		<div class="fixed top-4 right-4 z-50">
+		<div class="github-icon">
 			<a href="https://github.com/zhengyishen0/aha_starter" 
-			   class="flex items-center justify-center w-10 h-10 bg-black text-white rounded-full hover:bg-gray-800 transition-colors"
+			   class="github-link"
 			   aria-label="GitHub Repository">
-				<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+				<svg class="github-svg" fill="currentColor" viewBox="0 0 20 20">
 					<path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
 				</svg>
 			</a>
 		</div>
 
 		<!-- Hero Section -->
-		<div class="text-center pt-48 pb-8 px-4 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+		<div class="hero-section">
 			<!-- Grid Background -->
-			<div class="absolute inset-0 opacity-10">
+			<div class="hero-background">
 				<div class="grid-pattern"></div>
 			</div>
-			<h1 class="text-8xl font-black mb-6 text-gray-900 leading-tight relative z-10">Welcome to AHA Stack</h1>
-			<p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto relative z-10">
+			<h1 class="hero-title">Welcome to AHA Stack</h1>
+			<p class="hero-description">
 				A modern web development stack combining Astro, HTMX, and Alpine.js
 			</p>
-			<div class="flex justify-center gap-3 mb-8 relative z-10">
-				<Badge class="bg-black text-white">Astro</Badge>
-				<Badge class="bg-black text-white">HTMX</Badge>
-				<Badge class="bg-black text-white">Alpine.js</Badge>
+			<div class="hero-badges">
+				<Badge variant="solid" color="black">Astro</Badge>
+				<Badge variant="solid" color="black">HTMX</Badge>
+				<Badge variant="solid" color="black">Alpine.js</Badge>
 			</div>
-			<div class="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
-				<Button href="./ui_components/" variant="outline" color="neutral" size="lg">
-					Pine Components
-				</Button>
-				<Button href="./templates" variant="outline" color="neutral" size="lg">
-					Templates
+			<div class="hero-buttons">
+				<Button href="./design-system" variant="outline" color="neutral" size="lg">
+					Design System
 				</Button>
 				<Button href="./anthropic_fork" variant="outline" color="neutral" size="lg">
 					Anthropic Fork
@@ -52,22 +49,19 @@ const features: Array<{name: string; title: string; description: string;}> = hom
 				<Button href="./supabase-todo" variant="outline" color="neutral" size="lg">
 					Supabase Todo
 				</Button>
-                <Button href="./design-system-test" variant="outline" color="neutral" size="lg">
-					Design System
-				</Button>
 			</div>
 		</div>
 		
 		<!-- Features Section -->
-		<div class="max-w-7xl mx-auto px-4 py-16">
-			<h2 class="text-3xl font-bold text-center mb-12 text-gray-900">Why AHA Stack?</h2>
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+		<div class="features-section">
+			<h2 class="features-title">Why AHA Stack?</h2>
+			<div class="features-grid">
 				{features.map((feature) => (
-					<Card class="hover:shadow-lg transition-shadow">
-						<div class="px-6 py-4">
-							<Badge class="bg-black text-white mb-3">{feature.name}</Badge>
-							<h3 class="text-lg font-semibold mb-2 text-gray-900">{feature.title}</h3>
-							<p class="text-gray-600 text-sm">{feature.description}</p>
+					<Card variant="elevated" class="feature-card">
+						<div class="feature-content">
+							<Badge variant="solid" color="black" class="feature-badge">{feature.name}</Badge>
+							<h3 class="feature-card-title">{feature.title}</h3>
+							<p class="feature-card-description">{feature.description}</p>
 						</div>
 					</Card>
 				))}
@@ -75,85 +69,85 @@ const features: Array<{name: string; title: string; description: string;}> = hom
 		</div>
 		
 		<!-- Font Showcase Section -->
-		<div class="bg-gray-100 py-16 px-4">
-			<div class="max-w-6xl mx-auto">
-				<h2 class="text-3xl font-bold text-center mb-12 text-gray-900">Font Options</h2>
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+		<div class="font-showcase-section">
+			<div class="font-showcase-container">
+				<h2 class="font-showcase-title">Font Options</h2>
+				<div class="font-showcase-grid">
 					<!-- Inter Font -->
-					<Card class="text-center p-6">
-						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Inter', sans-serif;">Inter</h3>
-						<p class="text-lg mb-2" style="font-family: 'Inter', sans-serif;">Welcome to AHA Stack</p>
-						<p class="text-sm text-gray-600">Modern, clean, excellent readability</p>
+					<Card class="font-card">
+						<h3 class="font-card-title" style="font-family: 'Inter', sans-serif;">Inter</h3>
+						<p class="font-card-sample" style="font-family: 'Inter', sans-serif;">Welcome to AHA Stack</p>
+						<p class="font-card-description">Modern, clean, excellent readability</p>
 					</Card>
 					
 					<!-- Poppins Font -->
-					<Card class="text-center p-6">
-						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Poppins', sans-serif;">Poppins</h3>
-						<p class="text-lg mb-2" style="font-family: 'Poppins', sans-serif;">Welcome to AHA Stack</p>
-						<p class="text-sm text-gray-600">Geometric, friendly, approachable</p>
+					<Card class="font-card">
+						<h3 class="font-card-title" style="font-family: 'Poppins', sans-serif;">Poppins</h3>
+						<p class="font-card-sample" style="font-family: 'Poppins', sans-serif;">Welcome to AHA Stack</p>
+						<p class="font-card-description">Geometric, friendly, approachable</p>
 					</Card>
 					
 					<!-- Montserrat Font -->
-					<Card class="text-center p-6">
-						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Montserrat', sans-serif;">Montserrat</h3>
-						<p class="text-lg mb-2" style="font-family: 'Montserrat', sans-serif;">Welcome to AHA Stack</p>
-						<p class="text-sm text-gray-600">Professional, versatile, strong</p>
+					<Card class="font-card">
+						<h3 class="font-card-title" style="font-family: 'Montserrat', sans-serif;">Montserrat</h3>
+						<p class="font-card-sample" style="font-family: 'Montserrat', sans-serif;">Welcome to AHA Stack</p>
+						<p class="font-card-description">Professional, versatile, strong</p>
 					</Card>
 					
 					<!-- Roboto Font -->
-					<Card class="text-center p-6">
-						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Roboto', sans-serif;">Roboto</h3>
-						<p class="text-lg mb-2" style="font-family: 'Roboto', sans-serif;">Welcome to AHA Stack</p>
-						<p class="text-sm text-gray-600">Google's Material Design font</p>
+					<Card class="font-card">
+						<h3 class="font-card-title" style="font-family: 'Roboto', sans-serif;">Roboto</h3>
+						<p class="font-card-sample" style="font-family: 'Roboto', sans-serif;">Welcome to AHA Stack</p>
+						<p class="font-card-description">Google's Material Design font</p>
 					</Card>
 					
 					<!-- Source Sans Pro Font -->
-					<Card class="text-center p-6">
-						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Source Sans Pro', sans-serif;">Source Sans Pro</h3>
-						<p class="text-lg mb-2" style="font-family: 'Source Sans Pro', sans-serif;">Welcome to AHA Stack</p>
-						<p class="text-sm text-gray-600">Adobe's open-source font</p>
+					<Card class="font-card">
+						<h3 class="font-card-title" style="font-family: 'Source Sans Pro', sans-serif;">Source Sans Pro</h3>
+						<p class="font-card-sample" style="font-family: 'Source Sans Pro', sans-serif;">Welcome to AHA Stack</p>
+						<p class="font-card-description">Adobe's open-source font</p>
 					</Card>
 					
 					<!-- Nunito Font -->
-					<Card class="text-center p-6">
-						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Nunito', sans-serif;">Nunito</h3>
-						<p class="text-lg mb-2" style="font-family: 'Nunito', sans-serif;">Welcome to AHA Stack</p>
-						<p class="text-sm text-gray-600">Rounded, warm, inviting</p>
+					<Card class="font-card">
+						<h3 class="font-card-title" style="font-family: 'Nunito', sans-serif;">Nunito</h3>
+						<p class="font-card-sample" style="font-family: 'Nunito', sans-serif;">Welcome to AHA Stack</p>
+						<p class="font-card-description">Rounded, warm, inviting</p>
 					</Card>
 					
 					<!-- Open Sans Font -->
-					<Card class="text-center p-6">
-						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Open Sans', sans-serif;">Open Sans</h3>
-						<p class="text-lg mb-2" style="font-family: 'Open Sans', sans-serif;">Welcome to AHA Stack</p>
-						<p class="text-sm text-gray-600">Optimized for web, highly legible</p>
+					<Card class="font-card">
+						<h3 class="font-card-title" style="font-family: 'Open Sans', sans-serif;">Open Sans</h3>
+						<p class="font-card-sample" style="font-family: 'Open Sans', sans-serif;">Welcome to AHA Stack</p>
+						<p class="font-card-description">Optimized for web, highly legible</p>
 					</Card>
 					
 					<!-- Lato Font -->
-					<Card class="text-center p-6">
-						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Lato', sans-serif;">Lato</h3>
-						<p class="text-lg mb-2" style="font-family: 'Lato', sans-serif;">Welcome to AHA Stack</p>
-						<p class="text-sm text-gray-600">Humanist, warm yet stable</p>
+					<Card class="font-card">
+						<h3 class="font-card-title" style="font-family: 'Lato', sans-serif;">Lato</h3>
+						<p class="font-card-sample" style="font-family: 'Lato', sans-serif;">Welcome to AHA Stack</p>
+						<p class="font-card-description">Humanist, warm yet stable</p>
 					</Card>
 					
 					<!-- Manrope Font -->
-					<Card class="text-center p-6">
-						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Manrope', sans-serif;">Manrope</h3>
-						<p class="text-lg mb-2" style="font-family: 'Manrope', sans-serif;">Welcome to AHA Stack</p>
-						<p class="text-sm text-gray-600">Modern geometric, trendy</p>
+					<Card class="font-card">
+						<h3 class="font-card-title" style="font-family: 'Manrope', sans-serif;">Manrope</h3>
+						<p class="font-card-sample" style="font-family: 'Manrope', sans-serif;">Welcome to AHA Stack</p>
+						<p class="font-card-description">Modern geometric, trendy</p>
 					</Card>
 					
 					<!-- IBM Plex Sans Font -->
-					<Card class="text-center p-6">
-						<h3 class="text-2xl font-bold mb-4" style="font-family: 'IBM Plex Sans', sans-serif;">IBM Plex Sans</h3>
-						<p class="text-lg mb-2" style="font-family: 'IBM Plex Sans', sans-serif;">Welcome to AHA Stack</p>
-						<p class="text-sm text-gray-600">Corporate, technical, reliable</p>
+					<Card class="font-card">
+						<h3 class="font-card-title" style="font-family: 'IBM Plex Sans', sans-serif;">IBM Plex Sans</h3>
+						<p class="font-card-sample" style="font-family: 'IBM Plex Sans', sans-serif;">Welcome to AHA Stack</p>
+						<p class="font-card-description">Corporate, technical, reliable</p>
 					</Card>
 					
 					<!-- Work Sans Font -->
-					<Card class="text-center p-6">
-						<h3 class="text-2xl font-bold mb-4" style="font-family: 'Work Sans', sans-serif;">Work Sans</h3>
-						<p class="text-lg mb-2" style="font-family: 'Work Sans', sans-serif;">Welcome to AHA Stack</p>
-						<p class="text-sm text-gray-600">Optimized for screens, versatile</p>
+					<Card class="font-card">
+						<h3 class="font-card-title" style="font-family: 'Work Sans', sans-serif;">Work Sans</h3>
+						<p class="font-card-sample" style="font-family: 'Work Sans', sans-serif;">Welcome to AHA Stack</p>
+						<p class="font-card-description">Optimized for screens, versatile</p>
 					</Card>
 				</div>
 			</div>

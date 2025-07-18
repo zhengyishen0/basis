@@ -6,7 +6,7 @@ const title = "Todo App with Supabase";
 
 <Layout title={title}>
     <div 
-        class="bg-gray-100 min-h-screen" 
+        class="todo-app-container" 
         x-data="{ 
             auth: $store.auth,
             todo: $store.todo,
@@ -26,106 +26,97 @@ const title = "Todo App with Supabase";
         x-init="init()"
     >
         <!-- Navigation Bar -->
-        <nav class="bg-white shadow-sm">
-            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <nav class="todo-nav">
+            <div class="todo-nav-container">
                 <Button href="../" variant="solid" color="neutral" size="sm">Back to Home</Button>
-                <h1 class="text-2xl font-bold text-neutral-800">Supabase Todo App</h1>
-                <div class="w-24"></div> <!-- Spacer to center the title -->
+                <h1 class="todo-nav-title">Supabase Todo App</h1>
+                <div class="todo-nav-spacer"></div>
             </div>
         </nav>
 
         <!-- Main Content -->
-        <div class="py-8">
-            <div class="max-w-6xl mx-auto">
+        <div class="todo-main">
+            <div class="todo-main-container">
             
                 <!-- Auth Status for Non-authenticated Users -->
-                <div x-show="!auth.isAuthenticated" class="mb-8 text-center py-4">
-                    <p class="text-gray-600 mb-2">Click to start using the app</p>
+                <div x-show="!auth.isAuthenticated" class="auth-prompt">
+                    <p class="auth-prompt-text">Click to start using the app</p>
                     <button 
                         @click="signInAnonymously()"
                         :disabled="auth.loading || todo.loading"
-                        class="px-4 py-2 bg-neutral-950 text-white hover:bg-neutral-900 focus:ring-neutral-900 rounded-md disabled:opacity-50 transition-colors"
+                        class="button button-solid-neutral button-loading"
                         x-text="auth.loading ? 'Signing in...' : 'Sign In Anonymously'"
                     >
                     </button>
                 </div>
 
                 <!-- Todo App - Two Column Layout -->
-                <div x-show="auth.isAuthenticated" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div x-show="auth.isAuthenticated" class="todo-columns">
                     
                     <!-- Left Column: My Todos -->
-                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col h-[calc(100vh-12rem)]">
+                    <div class="todo-column todo-column-user">
                         <!-- Title Row -->
-                        <h2 class="text-xl font-bold text-neutral-800 text-center mb-4">My Todos</h2>
+                        <h2 class="todo-column-title">My Todos</h2>
 
                         <!-- Filter Buttons and Auth Info -->
-                        <div class="flex items-center justify-between mb-4">
+                        <div class="todo-header">
                             <!-- Status Filter Buttons (Left) -->
-                            <div class="flex gap-2">
+                            <div class="filter-buttons">
                                 <button 
                                     @click="todo.setUserFilter('all')"
-                                    :class="todo.userFilter === 'all' ? 
-                                        'bg-neutral-950 text-white hover:bg-neutral-900' : 
-                                        'bg-white border-2 border-neutral-950 text-neutral-950 hover:bg-neutral-950 hover:text-white'"
-                                    class="px-3 py-1 rounded text-sm transition-colors focus:ring-neutral-900"
+                                    :class="todo.userFilter === 'all' ? 'filter-button filter-button-active' : 'filter-button'"
                                 >
                                     All
                                 </button>
                                 <button 
                                     @click="todo.setUserFilter('active')"
-                                    :class="todo.userFilter === 'active' ? 
-                                        'bg-neutral-950 text-white hover:bg-neutral-900' : 
-                                        'bg-white border-2 border-neutral-950 text-neutral-950 hover:bg-neutral-950 hover:text-white'"
-                                    class="px-3 py-1 rounded text-sm transition-colors focus:ring-neutral-900"
+                                    :class="todo.userFilter === 'active' ? 'filter-button filter-button-active' : 'filter-button'"
                                 >
                                     Active
                                 </button>
                                 <button 
                                     @click="todo.setUserFilter('completed')"
-                                    :class="todo.userFilter === 'completed' ? 
-                                        'bg-neutral-950 text-white hover:bg-neutral-900' : 
-                                        'bg-white border-2 border-neutral-950 text-neutral-950 hover:bg-neutral-950 hover:text-white'"
-                                    class="px-3 py-1 rounded text-sm transition-colors focus:ring-neutral-900"
+                                    :class="todo.userFilter === 'completed' ? 'filter-button filter-button-active' : 'filter-button'"
                                 >
                                     Completed
                                 </button>
                             </div>
                             
                             <!-- Auth Info (Right) -->
-                            <div class="text-sm text-gray-600 flex items-center gap-2">
-                                <span>Signed in as: <span x-text="auth.userDisplayId" class="text-neutral-800 font-medium"></span></span>
-                                <button @click="signOut()" class="px-2 py-1 bg-red-50 text-red-600 hover:bg-red-100 focus:ring-red-500 rounded text-xs transition-colors">Sign Out</button>
+                            <div class="auth-info">
+                                <span>Signed in as: <span x-text="auth.userDisplayId" class="auth-user-id"></span></span>
+                                <button @click="signOut()" class="button button-sm button-soft-red">Sign Out</button>
                             </div>
                         </div>
 
                         <!-- Error Message -->
-                        <div x-show="todo.error" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded" x-text="todo.error">
+                        <div x-show="todo.error" class="alert alert-error" x-text="todo.error">
                         </div>
 
                         <!-- Loading State -->
-                        <div x-show="todo.loading && todo.filteredUserTodos.length === 0" class="text-center py-8 text-gray-500">
+                        <div x-show="todo.loading && todo.filteredUserTodos.length === 0" class="loading-state">
                             Loading your todos...
                         </div>
 
                         <!-- User Todo List - Flex 1 to take remaining space -->
-                        <div class="space-y-2 overflow-y-auto flex-1 mb-4">
+                        <div class="todo-list">
                             <template x-for="todoItem in todo.filteredUserTodos" :key="todoItem.id">
-                                <div class="flex items-center gap-3 p-3 border border-neutral-200 rounded-md">
+                                <div class="todo-item">
                                     <input 
                                         type="checkbox" 
                                         :checked="todoItem.is_complete"
                                         @change="todo.toggleTodo(todoItem.id, $event.target.checked)"
-                                        class="w-4 h-4 text-neutral-950 bg-white border-2 border-neutral-300 rounded focus:ring-neutral-900 checked:bg-neutral-950 checked:border-neutral-950"
+                                        class="checkbox"
                                     >
-                                    <div class="flex-1">
+                                    <div class="todo-text">
                                         <span 
-                                            :class="todoItem.is_complete ? 'line-through text-gray-500' : 'text-neutral-800'"
+                                            :class="todoItem.is_complete ? 'todo-text-completed' : 'todo-text-active'"
                                             x-text="todoItem.task"
                                         ></span>
                                     </div>
                                     <button 
                                         @click="todo.deleteTodo(todoItem.id)"
-                                        class="px-2 py-1 bg-red-50 text-red-600 hover:bg-red-100 focus:ring-red-500 rounded text-sm transition-colors"
+                                        class="button button-sm button-soft-red"
                                     >
                                         Delete
                                     </button>
@@ -133,7 +124,7 @@ const title = "Todo App with Supabase";
                             </template>
                             
                             <!-- Empty State -->
-                            <div x-show="todo.filteredUserTodos.length === 0 && !todo.loading" class="text-center py-8 text-gray-500">
+                            <div x-show="todo.filteredUserTodos.length === 0 && !todo.loading" class="empty-state">
                                 <span x-show="todo.userFilter === 'all'">No todos yet. Add one below!</span>
                                 <span x-show="todo.userFilter === 'active'">No active todos.</span>
                                 <span x-show="todo.userFilter === 'completed'">No completed todos.</span>
@@ -141,25 +132,25 @@ const title = "Todo App with Supabase";
                         </div>
 
                         <!-- Stats -->
-                        <div x-show="todo.userTodos.length > 0" class="mb-4 text-sm text-gray-600 text-center">
+                        <div x-show="todo.userTodos.length > 0" class="todo-stats">
                             <span x-text="todo.userActiveCount"></span> active, 
                             <span x-text="todo.userCompletedCount"></span> completed
                         </div>
                         
                         <!-- Add Todo Form - Sticky at bottom -->
-                        <form @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="mt-auto">
-                            <div class="flex gap-2">
+                        <form @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="todo-form">
+                            <div class="todo-form-row">
                                 <input 
                                     x-ref="todoInput"
                                     type="text" 
                                     placeholder="Add a new todo..."
-                                    class="flex-1 px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-neutral-900"
+                                    class="text-input todo-input"
                                     required
                                 >
                                 <button 
                                     type="submit"
                                     :disabled="todo.loading"
-                                    class="px-4 py-2 bg-neutral-950 text-white hover:bg-neutral-900 focus:ring-neutral-900 rounded-md disabled:opacity-50 transition-colors"
+                                    class="button button-solid-neutral button-loading"
                                     x-text="todo.loading ? '...' : 'Add'"
                                 >
                                 </button>
@@ -168,82 +159,73 @@ const title = "Todo App with Supabase";
                     </div>
 
                     <!-- Right Column: All Todos -->
-                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col h-[calc(100vh-12rem)]">
-                        <h2 class="text-xl font-bold text-neutral-800 text-center mb-4">Realtime Todos</h2>
+                    <div class="todo-column todo-column-all">
+                        <h2 class="todo-column-title">Realtime Todos</h2>
                         
                         <!-- Filter Buttons and User Count -->
-                        <div class="flex items-center justify-between mb-4">
+                        <div class="todo-header">
                             <!-- Status Filter Buttons (Left) -->
-                            <div class="flex gap-2">
+                            <div class="filter-buttons">
                                 <button 
                                     @click="todo.setAllFilter('all')"
-                                    :class="todo.allFilter === 'all' ? 
-                                        'bg-blue-600 text-white hover:bg-blue-700' : 
-                                        'bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'"
-                                    class="px-3 py-1 rounded text-sm transition-colors focus:ring-blue-500"
+                                    :class="todo.allFilter === 'all' ? 'filter-button filter-button-blue-active' : 'filter-button filter-button-blue'"
                                 >
                                     All
                                 </button>
                                 <button 
                                     @click="todo.setAllFilter('active')"
-                                    :class="todo.allFilter === 'active' ? 
-                                        'bg-blue-600 text-white hover:bg-blue-700' : 
-                                        'bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'"
-                                    class="px-3 py-1 rounded text-sm transition-colors focus:ring-blue-500"
+                                    :class="todo.allFilter === 'active' ? 'filter-button filter-button-blue-active' : 'filter-button filter-button-blue'"
                                 >
                                     Active
                                 </button>
                                 <button 
                                     @click="todo.setAllFilter('completed')"
-                                    :class="todo.allFilter === 'completed' ? 
-                                        'bg-blue-600 text-white hover:bg-blue-700' : 
-                                        'bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'"
-                                    class="px-3 py-1 rounded text-sm transition-colors focus:ring-blue-500"
+                                    :class="todo.allFilter === 'completed' ? 'filter-button filter-button-blue-active' : 'filter-button filter-button-blue'"
                                 >
                                     Completed
                                 </button>
                             </div>
                             
                             <!-- User Count (Right) -->
-                            <div class="text-sm text-gray-600">
+                            <div class="user-count">
                                 <span x-text="todo.uniqueUserCount"></span> contributor<span x-show="todo.uniqueUserCount !== 1">s</span> online
                             </div>
                         </div>
 
                         <!-- Error Message -->
-                        <div x-show="todo.error" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded" x-text="todo.error">
+                        <div x-show="todo.error" class="alert alert-error" x-text="todo.error">
                         </div>
 
                         <!-- Loading State -->
-                        <div x-show="todo.loading && todo.filteredAllTodos.length === 0" class="text-center py-8 text-gray-500">
+                        <div x-show="todo.loading && todo.filteredAllTodos.length === 0" class="loading-state">
                             Loading all todos...
                         </div>
 
                         <!-- All Todos List - Flex 1 to take remaining space -->
-                        <div class="space-y-2 overflow-y-auto flex-1 mb-4">
+                        <div class="todo-list">
                             <template x-for="todoItem in todo.filteredAllTodos" :key="todoItem.id">
-                                <div class="flex items-center gap-3 p-3 border border-neutral-200 rounded-md bg-gray-50">
-                                    <div class="w-4 h-4 flex-shrink-0">
+                                <div class="todo-item todo-item-readonly">
+                                    <div class="todo-status-indicator">
                                         <div 
-                                            :class="todoItem.is_complete ? 'bg-green-500' : 'bg-gray-300'"
-                                            class="w-4 h-4 rounded"
+                                            :class="todoItem.is_complete ? 'status-indicator-complete' : 'status-indicator-active'"
+                                            class="status-indicator"
                                         ></div>
                                     </div>
-                                    <div class="flex-1">
+                                    <div class="todo-text">
                                         <span 
-                                            :class="todoItem.is_complete ? 'line-through text-gray-500' : 'text-neutral-800'"
+                                            :class="todoItem.is_complete ? 'todo-text-completed' : 'todo-text-active'"
                                             x-text="todoItem.task"
                                         ></span>
                                     </div>
-                                    <div class="text-xs text-gray-400 flex items-center gap-2">
+                                    <div class="todo-user-info">
                                         <span x-text="todoItem.user_id.slice(0, 8) + '...'"></span>
-                                        <span x-show="todoItem.user_id === auth.currentUser?.id" class="px-1 py-0.5 bg-blue-100 text-blue-600 rounded text-xs">You</span>
+                                        <span x-show="todoItem.user_id === auth.currentUser?.id" class="badge badge-sm badge-blue">You</span>
                                     </div>
                                 </div>
                             </template>
                             
                             <!-- Empty State -->
-                            <div x-show="todo.filteredAllTodos.length === 0 && !todo.loading" class="text-center py-8 text-gray-500">
+                            <div x-show="todo.filteredAllTodos.length === 0 && !todo.loading" class="empty-state">
                                 <span x-show="todo.allFilter === 'all'">No todos in database.</span>
                                 <span x-show="todo.allFilter === 'active'">No active todos.</span>
                                 <span x-show="todo.allFilter === 'completed'">No completed todos.</span>
@@ -251,7 +233,7 @@ const title = "Todo App with Supabase";
                         </div>
 
                         <!-- Stats -->
-                        <div x-show="todo.allTodos.length > 0" class="text-sm text-gray-600 text-center">
+                        <div x-show="todo.allTodos.length > 0" class="todo-stats">
                             <span x-text="todo.allActiveCount"></span> active, 
                             <span x-text="todo.allCompletedCount"></span> completed
                         </div>
