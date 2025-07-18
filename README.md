@@ -1,6 +1,6 @@
-# PASTA Stack Starter Kit
+# AHA Stack Starter Kit
 
-🚀 A modern web development starter template combining **Pine UI**, **Astro**, **Supabase**, **Tailwind CSS**, and **Alpine.js** for fast, interactive web applications.
+🚀 A modern web development starter template combining **Astro**, **HTMX**, and **Alpine.js** with **Pine UI** components for fast, interactive web applications.
 
 ## 🌟 Live Demo
 
@@ -43,7 +43,7 @@ To learn more about the folder structure of an Astro project, refer to [our guid
 
 ## 🎨 Pine UI Components
 
-This project includes a comprehensive collection of UI components from Pine UI, converted and optimized for the PASTA stack (Pine UI + Astro + Supabase + Tailwind CSS + Alpine.js):
+This project includes a comprehensive collection of UI components from Pine UI, converted and optimized for the AHA stack (Astro + HTMX + Alpine.js):
 
 ### Pine Marketing Components:
 
@@ -186,15 +186,15 @@ This project is configured for automatic deployment to GitHub Pages using GitHub
 
 ## 🎯 Tech Stack Overview
 
-Our PASTA stack is carefully chosen for optimal developer experience and application performance:
+Our AHA stack is carefully chosen for optimal developer experience and application performance:
 
 ### Core Technologies
 
 - **🚀 Astro** - Static site generator with component islands architecture
-- **🗄️ Supabase** - Backend-as-a-Service with real-time database and authentication
+- **🌐 HTMX** - Dynamic HTML over HTTP for enhanced interactivity
 - **⚡ Alpine.js** - Lightweight reactive framework for frontend interactivity
 - **🎨 Pine UI** - Complete component library built for Alpine.js
-- **🎨 Tailwind CSS** - Utility-first CSS framework
+- **🗄️ Supabase** - Backend-as-a-Service with real-time database and authentication
 - **📝 Markdown Content** - Content management via Astro Content Collections
 - **🔄 GitHub Actions** - CI/CD for automatic deployment to GitHub Pages
 
@@ -208,7 +208,7 @@ Our PASTA stack is carefully chosen for optimal developer experience and applica
 
 **Pine UI Components**: Pine UI gives us a complete set of production-ready components specifically designed for Alpine.js. All components are customizable with variants, colors, and sizes, following consistent design patterns throughout the application.
 
-**Tailwind CSS**: Provides utility-first styling that integrates seamlessly with our component system. We use Tailwind for rapid UI development while maintaining design consistency across all Pine UI components.
+**HTMX Integration**: HTMX allows us to add dynamic functionality to HTML without writing JavaScript, perfect for server-side interactions and partial page updates while maintaining SEO-friendly markup.
 
 **Content Collections**: Astro's Content Collections with frontmatter allow us to manage landing page content in Markdown files. Structured data (hero sections, features, testimonials) goes in frontmatter while long-form content uses markdown body, then renders with getEntry() and <Content /> components.
 
@@ -238,24 +238,24 @@ alpinejs@3.14.9
 
 ```astro
 <!-- Simple counter component -->
-<div x-data="{ count: 0 }" class="p-4">
+<div x-data="{ count: 0 }" class="counter-container">
   <button x-on:click="count--">-</button>
   <span x-text="count"></span>
   <button x-on:click="count++">+</button>
 </div>
 
 <!-- Form with validation -->
-<div x-data="{ email: '', valid: false }" class="space-y-4">
+<div x-data="{ email: '', valid: false }" class="form-container">
   <input
     x-model="email"
     x-on:input="valid = email.includes('@')"
     type="email"
     placeholder="Enter email"
-    class="w-full px-3 py-2 border rounded"
+    class="text-input"
   />
   <button
     x-show="valid"
-    class="px-4 py-2 bg-blue-500 text-white rounded"
+    class="button button-solid-blue"
   >
     Submit
   </button>
@@ -330,7 +330,7 @@ export const supabase = createClient(supabaseUrl, supabaseKey)
 
     <!-- Todo List -->
     <template x-for="todo in filteredTodos" :key="todo.id">
-      <div class="flex items-center gap-3">
+      <div class="todo-item">
         <input type="checkbox" 
                :checked="todo.is_complete"
                @change="toggleTodo(todo.id, $event.target.checked)">

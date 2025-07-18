@@ -28,11 +28,11 @@ import RadioGroup from '../components/pine/RadioGroup.astro';
 <Layout title="Design System">
   <main class="container">
     <!-- Navigation Bar -->
-    <nav class="bg-white shadow-sm">
-      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <nav class="design-nav">
+      <div class="design-nav-container">
         <Button href="../" variant="solid" color="neutral" size="sm">Back to Home</Button>
-        <h1 class="text-2xl font-bold text-neutral-800">Design System</h1>
-        <div class="w-24"></div> <!-- Spacer to center the title -->
+        <h1 class="design-nav-title">Design System</h1>
+        <div class="design-nav-spacer"></div> <!-- Spacer to center the title -->
       </div>
     </nav>
 
@@ -604,7 +604,7 @@ import RadioGroup from '../components/pine/RadioGroup.astro';
             <NavigationMenu orientation="horizontal" trigger="hover">
               <div slot="brand">
                 <a href="/" class="navigation-menu-link">
-                  <span class="font-bold text-xl">Brand</span>
+                  <span class="brand-text">Brand</span>
                 </a>
               </div>
               
@@ -616,7 +616,7 @@ import RadioGroup from '../components/pine/RadioGroup.astro';
                   <li class="navigation-menu-item" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                     <button class="navigation-menu-trigger">
                       Products
-                      <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg class="nav-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                       </svg>
                     </button>
@@ -646,7 +646,7 @@ import RadioGroup from '../components/pine/RadioGroup.astro';
             <NavigationMenu responsive={true}>
               <div slot="brand">
                 <a href="/" class="navigation-menu-link">
-                  <span class="font-bold text-xl">Responsive Brand</span>
+                  <span class="brand-text">Responsive Brand</span>
                 </a>
               </div>
               

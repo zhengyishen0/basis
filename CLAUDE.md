@@ -3,7 +3,7 @@ My tech stack is:
 - Supabase: for backend-as-a-service with real-time database and authentication
 - Alpine.js: for frontend reactivity using ES6 modules and Alpine.store() pattern
 - Pine UI: complete component library for Alpine.js with variants, colors, and sizes
-- Tailwind CSS: utility-first CSS framework for rapid UI development
+- HTMX: for dynamic HTML over HTTP for enhanced interactivity
 - Markdown Content: Use Astro Content Collections with frontmatter to store landing page content in MD files - put structured data (hero, features, testimonials) in frontmatter and long-form content in markdown body, then render with getEntry() and <Content /> components.
 - Github Actions: Host static pages on Github Pages
 

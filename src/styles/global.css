@@ -451,3 +451,46 @@
 .button-loading:disabled {
   opacity: 0.5;
 }
+
+/* Design System specific styles */
+.design-nav {
+  background-color: white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.design-nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.design-nav-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.design-nav-spacer {
+  width: 6rem;
+}
+
+.brand-text {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.nav-chevron {
+  margin-left: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Anthropic Fork specific styles */
+.hero-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 2rem;
+}

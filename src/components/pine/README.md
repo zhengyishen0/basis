@@ -4,7 +4,7 @@ A collection of Pine UI components converted for the AHA stack (Astro + HTMX + A
 
 ## ✨ Features
 
-- 🎨 **Tailwind CSS** styling
+- 🎨 **Pine UI** design system styling
 - ⚡ **Alpine.js** reactivity
 - 🚀 **Astro** framework optimized
 - 📱 **Responsive** design
@@ -93,7 +93,7 @@ import { Button, Modal, Alert } from '../components/pine';
 Make sure you have these dependencies installed:
 
 - **Alpine.js** - Required for component reactivity
-- **Tailwind CSS** - Required for styling
+- **Pine UI Design System** - Required for styling
 - **Alpine.js Collapse Plugin** - Required for Accordion component
 
 ```bash
@@ -297,4 +297,4 @@ Based on Pine UI by DevDojo. Components have been adapted for Astro and the AHA 
 
 - [Pine UI Documentation](https://devdojo.com/pines/docs)
 - [Alpine.js Documentation](https://alpinejs.dev)
-- [Tailwind CSS Documentation](https://tailwindcss.com)
+- [Pine UI Design System](https://devdojo.com/pines)

@@ -218,9 +218,9 @@ All components accept comprehensive props for customization:
 - Container sizing
 
 ### Styling
-Components use Tailwind CSS classes and can be further customized by:
+Components use Pine UI design system classes and can be further customized by:
 - Overriding CSS classes via props
-- Using Tailwind's utility classes
+- Using Pine UI utility classes
 - Adding custom CSS for advanced styling
 
 ## TypeScript Support
