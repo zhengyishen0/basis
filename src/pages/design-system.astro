@@ -25,6 +25,22 @@ import RangeSlider from '../components/ui/RangeSlider.astro';
 import RadioGroup from '../components/ui/RadioGroup.astro';
 import Alert from '../components/ui/Alert.astro';
 import Banner from '../components/ui/Banner.astro';
+import Accordion from '../components/ui/Accordion.astro';
+import Badge from '../components/ui/Badge.astro';
+import Card from '../components/ui/Card.astro';
+import Command from '../components/ui/Command.astro';
+import ContextMenu from '../components/ui/ContextMenu.astro';
+import DatePicker from '../components/ui/DatePicker.astro';
+import FullScreenModal from '../components/ui/FullScreenModal.astro';
+import HoverCard from '../components/ui/HoverCard.astro';
+import ImageGallery from '../components/ui/ImageGallery.astro';
+import Marquee from '../components/ui/Marquee.astro';
+import MonacoEditor from '../components/ui/MonacoEditor.astro';
+import Progress from '../components/ui/Progress.astro';
+import Quotes from '../components/ui/Quotes.astro';
+import Rating from '../components/ui/Rating.astro';
+import Table from '../components/ui/Table.astro';
+import TypingEffect from '../components/ui/TypingEffect.astro';
 ---
 
 <Layout title="Design System">
@@ -40,17 +56,6 @@ import Banner from '../components/ui/Banner.astro';
 
     <div class="stack-lg">
       <h1>Design System</h1>
-      
-      <!-- Theme Toggle -->
-      <div>
-        <button 
-          class="theme-toggle"
-          onclick="toggleTheme()"
-          type="button"
-        >
-          🌙 Toggle Dark Mode
-        </button>
-      </div>
 
       <!-- Typography Test -->
       <section class="stack">
@@ -295,14 +300,273 @@ import Banner from '../components/ui/Banner.astro';
 
       <!-- Card Test -->
       <section class="stack">
-        <h2>Cards & Layout</h2>
-        <div class="card card-shadow card-padding-md">
-          <h3>Test Card</h3>
-          <p>This is a test card using our design system. It should have proper spacing, colors, and shadows.</p>
-          <div class="cluster" style="margin-top: var(--space-4);">
-            <Button variant="solid" color="blue" size="sm">Primary Action</Button>
-            <Button variant="ghost" color="neutral" size="sm">Secondary</Button>
+        <h2>Card Component</h2>
+        
+        <div class="stack">
+          <h3>Card Variants</h3>
+          <div class="cluster">
+            <Card variant="default" padding="md" class="card-demo">
+              <div slot="header">
+                <h4>Default Card</h4>
+              </div>
+              <div slot="body">
+                <p>This is a default card with standard styling.</p>
+              </div>
+              <div slot="footer">
+                <Button variant="outline" color="blue" size="sm">Learn More</Button>
+              </div>
+            </Card>
+            
+            <Card variant="bordered" padding="md" class="card-demo">
+              <div slot="header">
+                <h4>Bordered Card</h4>
+              </div>
+              <div slot="body">
+                <p>This card has a visible border around it.</p>
+              </div>
+              <div slot="footer">
+                <Button variant="solid" color="green" size="sm">Get Started</Button>
+              </div>
+            </Card>
+            
+            <Card variant="shadow" padding="md" class="card-demo">
+              <div slot="header">
+                <h4>Shadow Card</h4>
+              </div>
+              <div slot="body">
+                <p>This card has a subtle shadow effect.</p>
+              </div>
+              <div slot="footer">
+                <Button variant="solid" color="purple" size="sm">Explore</Button>
+              </div>
+            </Card>
+            
+            <Card variant="elevated" padding="md" class="card-demo">
+              <div slot="header">
+                <h4>Elevated Card</h4>
+              </div>
+              <div slot="body">
+                <p>This card has a more pronounced elevation.</p>
+              </div>
+              <div slot="footer">
+                <Button variant="solid" color="red" size="sm">Try Now</Button>
+              </div>
+            </Card>
           </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Card Padding Options</h3>
+          <div class="cluster">
+            <Card variant="shadow" padding="sm" class="card-demo">
+              <div slot="body">
+                <h5>Small Padding</h5>
+                <p>Compact card with minimal spacing.</p>
+              </div>
+            </Card>
+            
+            <Card variant="shadow" padding="md" class="card-demo">
+              <div slot="body">
+                <h5>Medium Padding</h5>
+                <p>Standard card with normal spacing.</p>
+              </div>
+            </Card>
+            
+            <Card variant="shadow" padding="lg" class="card-demo">
+              <div slot="body">
+                <h5>Large Padding</h5>
+                <p>Spacious card with generous spacing.</p>
+              </div>
+            </Card>
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Complex Card Example</h3>
+          <Card variant="elevated" padding="lg" class="card-demo-wide">
+            <div slot="header">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                  <h3 style="margin: 0;">Product Dashboard</h3>
+                  <p style="margin: var(--space-1) 0 0 0; color: var(--color-text-secondary);">Analytics Overview</p>
+                </div>
+                <Badge variant="solid" color="green">Live</Badge>
+              </div>
+            </div>
+            <div slot="body">
+              <div class="stack">
+                <div class="cluster">
+                  <div style="text-align: center;">
+                    <h4 style="margin: 0; color: var(--color-blue);">1,234</h4>
+                    <p style="margin: 0; color: var(--color-text-secondary); font-size: var(--text-sm);">Total Users</p>
+                  </div>
+                  <div style="text-align: center;">
+                    <h4 style="margin: 0; color: var(--color-green);">98.5%</h4>
+                    <p style="margin: 0; color: var(--color-text-secondary); font-size: var(--text-sm);">Uptime</p>
+                  </div>
+                  <div style="text-align: center;">
+                    <h4 style="margin: 0; color: var(--color-purple);">156</h4>
+                    <p style="margin: 0; color: var(--color-text-secondary); font-size: var(--text-sm);">Active Sessions</p>
+                  </div>
+                </div>
+                <Progress value={78} max={100} color="blue" showLabel={true} />
+              </div>
+            </div>
+            <div slot="footer">
+              <div class="cluster">
+                <Button variant="solid" color="blue" size="sm">View Details</Button>
+                <Button variant="outline" color="neutral" size="sm">Export Data</Button>
+                <Button variant="ghost" color="neutral" size="sm">Settings</Button>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <!-- TypingEffect Test -->
+      <section class="stack">
+        <h2>TypingEffect Component</h2>
+        
+        <div class="stack">
+          <h3>Different Sizes</h3>
+          <div class="stack">
+            <TypingEffect 
+              texts={["Small typing effect", "Compact and subtle", "Perfect for small spaces"]}
+              size="sm"
+              color="primary"
+              typeSpeed={80}
+            />
+            
+            <TypingEffect 
+              texts={["Medium typing effect", "Standard size for most content", "Great balance of visibility"]}
+              size="md"
+              color="blue"
+              typeSpeed={100}
+            />
+            
+            <TypingEffect 
+              texts={["Large typing effect", "Eye-catching headlines", "Perfect for hero sections"]}
+              size="lg"
+              color="purple"
+              typeSpeed={120}
+            />
+            
+            <TypingEffect 
+              texts={["Extra Large Display", "Maximum Impact", "Hero Statement"]}
+              size="xl"
+              color="green"
+              typeSpeed={150}
+            />
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Different Colors</h3>
+          <div class="stack">
+            <TypingEffect 
+              texts={["Primary color theme", "Default brand styling"]}
+              color="primary"
+              size="md"
+            />
+            
+            <TypingEffect 
+              texts={["Secondary color option", "Subtle alternative styling"]}
+              color="secondary"
+              size="md"
+            />
+            
+            <TypingEffect 
+              texts={["Blue accent color", "Professional and trustworthy"]}
+              color="blue"
+              size="md"
+            />
+            
+            <TypingEffect 
+              texts={["Success green color", "Positive and encouraging"]}
+              color="green"
+              size="md"
+            />
+            
+            <TypingEffect 
+              texts={["Warning yellow color", "Attention-grabbing alerts"]}
+              color="yellow"
+              size="md"
+            />
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Custom Speed Settings</h3>
+          <div class="stack">
+            <TypingEffect 
+              texts={["Fast typing speed", "Quick and snappy", "Great for dynamic content"]}
+              typeSpeed={50}
+              deleteSpeed={25}
+              pauseEnd={1000}
+              color="red"
+              size="md"
+            />
+            
+            <TypingEffect 
+              texts={["Slow deliberate typing", "Thoughtful and measured", "Perfect for emphasis"]}
+              typeSpeed={200}
+              deleteSpeed={100}
+              pauseEnd={3000}
+              color="purple"
+              size="md"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Quotes Test -->
+      <section class="stack">
+        <h2>Quotes Component</h2>
+        
+        <div class="stack">
+          <h3>Default Quote Style</h3>
+          <Quotes 
+            quote="This design system has completely transformed our development workflow. The components are intuitive, well-designed, and incredibly easy to implement."
+            author="Sarah Johnson"
+            role="Lead Developer"
+            company="TechCorp"
+            size="md"
+          />
+        </div>
+        
+        <div class="stack">
+          <h3>Centered Quote with Avatar</h3>
+          <Quotes 
+            quote="The AHA Stack provides the perfect balance of performance and developer experience. It's exactly what we needed for our modern web applications."
+            author="Michael Chen"
+            role="CTO"
+            company="Innovation Labs"
+            avatar="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+            variant="centered"
+            size="lg"
+          />
+        </div>
+        
+        <div class="stack">
+          <h3>Minimal Quote Style</h3>
+          <Quotes 
+            quote="Clean, simple, effective. This is how design systems should be built."
+            author="Emma Rodriguez"
+            role="UI/UX Designer"
+            variant="minimal"
+            size="md"
+          />
+        </div>
+        
+        <div class="stack">
+          <h3>Small Quote</h3>
+          <Quotes 
+            quote="Perfect for smaller testimonials and reviews."
+            author="Alex Kim"
+            role="Product Manager"
+            company="StartupXYZ"
+            size="sm"
+          />
         </div>
       </section>
 
@@ -1484,11 +1748,998 @@ import Banner from '../components/ui/Banner.astro';
         </div>
       </section>
 
+      <!-- Accordion Test -->
+      <section class="stack">
+        <h2>Accordion Component</h2>
+        
+        <div class="stack">
+          <h3>Basic Accordion</h3>
+          <Accordion 
+            items={[
+              { 
+                title: "What is the AHA Stack?", 
+                content: "The AHA Stack combines Astro, HTMX, and Alpine.js to create fast, interactive web applications with minimal JavaScript overhead." 
+              },
+              { 
+                title: "How does Alpine.js work?", 
+                content: "Alpine.js provides reactive functionality directly in your HTML using x-data, x-show, x-if and other directives. It's lightweight and perfect for enhancing server-rendered content." 
+              },
+              { 
+                title: "Why use Astro?", 
+                content: "Astro generates static HTML by default and only hydrates components that need interactivity. This results in faster loading times and better SEO performance." 
+              },
+              { 
+                title: "What about HTMX?", 
+                content: "HTMX allows you to access modern browser features like AJAX, CSS Transitions, WebSockets and Server Sent Events directly from HTML, without writing JavaScript." 
+              }
+            ]}
+          />
+        </div>
+        
+        <div class="stack">
+          <h3>FAQ Accordion</h3>
+          <Accordion 
+            items={[
+              { 
+                title: "How do I get started?", 
+                content: "Clone the repository, install dependencies with npm install, and start the development server with npm run dev." 
+              },
+              { 
+                title: "Is this production ready?", 
+                content: "Yes! The AHA Stack is built on mature, production-tested technologies. Many companies use similar architectures for their web applications." 
+              },
+              { 
+                title: "Can I customize the components?", 
+                content: "Absolutely! All components are built with CSS custom properties and can be easily customized to match your brand and design requirements." 
+              }
+            ]}
+          />
+        </div>
+      </section>
+
+      <!-- Badge Test -->
+      <section class="stack">
+        <h2>Badge Component</h2>
+        
+        <div class="stack">
+          <h3>Badge Variants</h3>
+          <div class="cluster">
+            <Badge variant="solid" color="blue">New</Badge>
+            <Badge variant="solid" color="green">Active</Badge>
+            <Badge variant="solid" color="red">Error</Badge>
+            <Badge variant="solid" color="yellow">Warning</Badge>
+            <Badge variant="solid" color="purple">Premium</Badge>
+            <Badge variant="solid" color="gray">Draft</Badge>
+          </div>
+          
+          <div class="cluster">
+            <Badge variant="soft" color="blue">Info</Badge>
+            <Badge variant="soft" color="green">Success</Badge>
+            <Badge variant="soft" color="red">Danger</Badge>
+            <Badge variant="soft" color="yellow">Caution</Badge>
+            <Badge variant="soft" color="purple">Featured</Badge>
+            <Badge variant="soft" color="gray">Inactive</Badge>
+          </div>
+          
+          <div class="cluster">
+            <Badge variant="outline" color="blue">Beta</Badge>
+            <Badge variant="outline" color="green">Verified</Badge>
+            <Badge variant="outline" color="red">Urgent</Badge>
+            <Badge variant="outline" color="yellow">Pending</Badge>
+            <Badge variant="outline" color="purple">Pro</Badge>
+            <Badge variant="outline" color="gray">Archived</Badge>
+          </div>
+          
+          <div class="cluster">
+            <Badge variant="dot" color="blue">Online</Badge>
+            <Badge variant="dot" color="green">Available</Badge>
+            <Badge variant="dot" color="red">Busy</Badge>
+            <Badge variant="dot" color="yellow">Away</Badge>
+            <Badge variant="dot" color="gray">Offline</Badge>
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Badge Sizes</h3>
+          <div class="cluster">
+            <Badge variant="solid" color="blue" size="sm">Small</Badge>
+            <Badge variant="solid" color="blue" size="md">Medium</Badge>
+            <Badge variant="solid" color="blue" size="lg">Large</Badge>
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Contextual Usage</h3>
+          <div class="cluster">
+            <div style="display: flex; align-items: center; gap: var(--space-2);">
+              <span>John Doe</span>
+              <Badge variant="dot" color="green">Online</Badge>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-2);">
+              <span>New Feature</span>
+              <Badge variant="solid" color="blue" size="sm">Beta</Badge>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-2);">
+              <span>Task #123</span>
+              <Badge variant="outline" color="red" size="sm">High Priority</Badge>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Progress Test -->
+      <section class="stack">
+        <h2>Progress Component</h2>
+        
+        <div class="stack">
+          <h3>Basic Progress Bars</h3>
+          <div class="stack">
+            <Progress value={25} max={100} color="blue" showLabel={true} />
+            <Progress value={50} max={100} color="green" showLabel={true} />
+            <Progress value={75} max={100} color="purple" showLabel={true} />
+            <Progress value={90} max={100} color="red" showLabel={true} />
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Animated & Striped Progress</h3>
+          <div class="stack">
+            <Progress value={60} max={100} color="blue" animated={true} striped={true} showLabel={true} />
+            <Progress value={40} max={100} color="green" striped={true} showLabel={true} />
+            <Progress value={80} max={100} color="yellow" animated={true} showLabel={true} />
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Progress Sizes</h3>
+          <div class="stack">
+            <Progress value={70} max={100} color="blue" size="sm" showLabel={true} />
+            <Progress value={70} max={100} color="green" size="md" showLabel={true} />
+            <Progress value={70} max={100} color="purple" size="lg" showLabel={true} />
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Auto-Increment Progress</h3>
+          <div class="stack">
+            <Progress autoIncrement={true} incrementInterval={50} color="blue" showLabel={true} />
+            <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">This progress bar automatically increments and includes a reset button.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Rating Test -->
+      <section class="stack">
+        <h2>Rating Component</h2>
+        
+        <div class="stack">
+          <h3>Interactive Rating</h3>
+          <div class="cluster">
+            <Rating maxStars={5} initialValue={0} size="sm" name="rating-small" />
+            <Rating maxStars={5} initialValue={2} size="md" name="rating-medium" />
+            <Rating maxStars={5} initialValue={4} size="lg" name="rating-large" />
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Readonly Rating (Display Only)</h3>
+          <div class="cluster">
+            <Rating maxStars={5} initialValue={5} readonly={true} size="md" />
+            <Rating maxStars={5} initialValue={3} readonly={true} size="md" />
+            <Rating maxStars={5} initialValue={1} readonly={true} size="md" />
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Custom Star Count</h3>
+          <div class="cluster">
+            <Rating maxStars={3} initialValue={2} size="md" />
+            <Rating maxStars={10} initialValue={7} size="sm" />
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Disabled State</h3>
+          <div class="cluster">
+            <Rating maxStars={5} initialValue={3} disabled={true} size="md" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Table Test -->
+      <section class="stack">
+        <h2>Table Component</h2>
+        
+        <div class="stack">
+          <h3>Basic Table</h3>
+          <Table 
+            headers={['Name', 'Email', 'Role', 'Status']}
+            rows={[
+              ['John Doe', 'john@example.com', 'Admin', 'Active'],
+              ['Jane Smith', 'jane@example.com', 'Editor', 'Active'],
+              ['Bob Johnson', 'bob@example.com', 'User', 'Inactive'],
+              ['Alice Brown', 'alice@example.com', 'Moderator', 'Active']
+            ]}
+          />
+        </div>
+        
+        <div class="stack">
+          <h3>Striped Table with Hover</h3>
+          <Table 
+            headers={['Product', 'Price', 'Stock', 'Category']}
+            rows={[
+              ['Laptop Pro', '$1,299', '15', 'Electronics'],
+              ['Wireless Mouse', '$29', '50', 'Accessories'],
+              ['Keyboard', '$79', '25', 'Accessories'],
+              ['Monitor 27"', '$299', '8', 'Electronics'],
+              ['USB Cable', '$15', '100', 'Accessories']
+            ]}
+            striped={true}
+            hover={true}
+          />
+        </div>
+        
+        <div class="stack">
+          <h3>Bordered Compact Table</h3>
+          <Table 
+            headers={['ID', 'Task', 'Priority', 'Due Date']}
+            rows={[
+              ['#001', 'Fix login bug', 'High', '2024-01-15'],
+              ['#002', 'Update documentation', 'Medium', '2024-01-20'],
+              ['#003', 'Add new feature', 'Low', '2024-01-25'],
+              ['#004', 'Code review', 'High', '2024-01-12']
+            ]}
+            bordered={true}
+            compact={true}
+            hover={true}
+          />
+        </div>
+      </section>
+
+      <!-- Marquee Test -->
+      <section class="stack">
+        <h2>Marquee Component</h2>
+        
+        <div class="stack">
+          <h3>Basic Marquee (Left)</h3>
+          <Marquee direction="left" speed="normal" pauseOnHover={true}>
+            <div class="cluster">
+              <Badge variant="solid" color="blue">New Feature</Badge>
+              <Badge variant="solid" color="green">Bug Fix</Badge>
+              <Badge variant="solid" color="purple">Enhancement</Badge>
+              <Badge variant="solid" color="red">Critical Update</Badge>
+              <Badge variant="solid" color="yellow">Performance</Badge>
+              <Badge variant="solid" color="gray">Documentation</Badge>
+            </div>
+          </Marquee>
+        </div>
+        
+        <div class="stack">
+          <h3>Right Direction (Fast Speed)</h3>
+          <Marquee direction="right" speed="fast" pauseOnHover={true}>
+            <div style="display: flex; gap: var(--space-4); align-items: center;">
+              <span>🚀 New release available</span>
+              <span>💡 Check out our latest features</span>
+              <span>🔧 Performance improvements</span>
+              <span>📚 Updated documentation</span>
+              <span>🎉 Join our community</span>
+            </div>
+          </Marquee>
+        </div>
+        
+        <div class="stack">
+          <h3>Slow Speed (No Pause)</h3>
+          <Marquee direction="left" speed="slow" pauseOnHover={false}>
+            <div style="display: flex; gap: var(--space-6); align-items: center;">
+              <div style="display: flex; align-items: center; gap: var(--space-2);">
+                <span style="font-weight: var(--font-weight-bold);">Apple Inc</span>
+                <span style="color: var(--color-text-secondary);">$150.25</span>
+                <span style="color: var(--color-green);">+2.3%</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: var(--space-2);">
+                <span style="font-weight: var(--font-weight-bold);">Google</span>
+                <span style="color: var(--color-text-secondary);">$2,800.75</span>
+                <span style="color: var(--color-red);">-1.2%</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: var(--space-2);">
+                <span style="font-weight: var(--font-weight-bold);">Microsoft</span>
+                <span style="color: var(--color-text-secondary);">$380.45</span>
+                <span style="color: var(--color-green);">+0.8%</span>
+              </div>
+            </div>
+          </Marquee>
+        </div>
+      </section>
+
+      <!-- Command Test -->
+      <section class="stack">
+        <h2>Command Component</h2>
+        
+        <div class="stack">
+          <h3>Command Palette</h3>
+          <p style="color: var(--color-text-secondary); margin-bottom: var(--space-4);">
+            Press <kbd style="padding: var(--space-1) var(--space-2); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: var(--text-sm);">⌘K</kbd> or <kbd style="padding: var(--space-1) var(--space-2); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: var(--text-sm);">Ctrl+K</kbd> to open the command palette, or click the button below.
+          </p>
+          
+          <Command 
+            placeholder="Search commands or press ⌘K..." 
+            @command-selected="alert('Command selected: ' + $event.detail.text)"
+          >
+            <div slot="trigger">
+              <Button variant="outline" color="blue">Open Command Palette</Button>
+            </div>
+            
+            <div slot="commands">
+              <div data-group="Navigation">
+                <div data-command="home" data-keywords="home dashboard main page" data-shortcut="⌘H">
+                  <span>Go to Home</span>
+                </div>
+                <div data-command="design-system" data-keywords="design system components ui" data-shortcut="⌘D">
+                  <span>View Design System</span>
+                </div>
+                <div data-command="profile" data-keywords="profile user account settings" data-shortcut="⌘P">
+                  <span>View Profile</span>
+                </div>
+                <div data-command="settings" data-keywords="settings preferences config" data-shortcut="⌘,">
+                  <span>Open Settings</span>
+                </div>
+              </div>
+              
+              <div data-group="Actions">
+                <div data-command="create" data-keywords="create new add post article document" data-shortcut="⌘N">
+                  <span>Create New Document</span>
+                </div>
+                <div data-command="save" data-keywords="save document file" data-shortcut="⌘S">
+                  <span>Save Document</span>
+                </div>
+                <div data-command="copy" data-keywords="copy duplicate clone" data-shortcut="⌘C">
+                  <span>Copy to Clipboard</span>
+                </div>
+                <div data-command="search" data-keywords="search find lookup" data-shortcut="⌘F">
+                  <span>Search Content</span>
+                </div>
+              </div>
+              
+              <div data-group="Tools">
+                <div data-command="theme" data-keywords="theme dark light mode toggle" data-shortcut="⌘T">
+                  <span>Toggle Theme</span>
+                </div>
+                <div data-command="help" data-keywords="help documentation support" data-shortcut="⌘?">
+                  <span>Show Help</span>
+                </div>
+                <div data-command="shortcuts" data-keywords="shortcuts keyboard commands" data-shortcut="⌘/">
+                  <span>Keyboard Shortcuts</span>
+                </div>
+              </div>
+            </div>
+          </Command>
+        </div>
+      </section>
+
+      <!-- ContextMenu Test -->
+      <section class="stack">
+        <h2>ContextMenu Component</h2>
+        
+        <div class="stack">
+          <h3>Right-Click Context Menu</h3>
+          <ContextMenu 
+            trigger="right-click"
+            @context-menu-item-click="alert('Context menu item clicked: ' + $event.detail.text)"
+          >
+            <div slot="trigger" style="padding: var(--space-6); background: var(--color-surface); border: 2px dashed var(--color-border); border-radius: var(--radius-lg); text-align: center; cursor: pointer;">
+              <h4>Right-click me!</h4>
+              <p style="color: var(--color-text-secondary); margin: 0;">Try right-clicking this area to see the context menu.</p>
+            </div>
+            
+            <div slot="menu">
+              <div class="context-menu-content">
+                <a href="#" class="context-menu-item">
+                  <svg class="context-menu-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                  Edit Item
+                </a>
+                <a href="#" class="context-menu-item">
+                  <svg class="context-menu-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                  </svg>
+                  Copy
+                </a>
+                <a href="#" class="context-menu-item">
+                  <svg class="context-menu-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                  Duplicate
+                </a>
+                <hr class="context-menu-separator">
+                <a href="#" class="context-menu-item">
+                  <svg class="context-menu-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                  </svg>
+                  Download
+                </a>
+                <a href="#" class="context-menu-item">
+                  <svg class="context-menu-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+                  </svg>
+                  Share
+                </a>
+                <hr class="context-menu-separator">
+                <a href="#" class="context-menu-item context-menu-item-danger">
+                  <svg class="context-menu-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                  </svg>
+                  Delete
+                </a>
+              </div>
+            </div>
+          </ContextMenu>
+        </div>
+        
+        <div class="stack">
+          <h3>Click Context Menu</h3>
+          <ContextMenu trigger="click">
+            <div slot="trigger">
+              <Button variant="outline" color="green">Click for Menu</Button>
+            </div>
+            
+            <div slot="menu">
+              <div class="context-menu-content">
+                <a href="#" class="context-menu-item">
+                  <svg class="context-menu-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  View Details
+                </a>
+                <a href="#" class="context-menu-item">
+                  <svg class="context-menu-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  Settings
+                </a>
+                <a href="#" class="context-menu-item">
+                  <svg class="context-menu-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                  </svg>
+                  Add to Favorites
+                </a>
+              </div>
+            </div>
+          </ContextMenu>
+        </div>
+      </section>
+
+      <!-- HoverCard Test -->
+      <section class="stack">
+        <h2>HoverCard Component</h2>
+        
+        <div class="stack">
+          <h3>Simple Hover Cards</h3>
+          <div class="cluster">
+            <HoverCard 
+              content="This is a simple hover card with basic text content."
+              position="top"
+              showDelay={300}
+            >
+              <Button variant="outline" color="blue" size="sm">Hover Top</Button>
+            </HoverCard>
+            
+            <HoverCard 
+              content="This card appears on the right side with a slight delay."
+              position="right"
+              showDelay={500}
+            >
+              <Button variant="outline" color="green" size="sm">Hover Right</Button>
+            </HoverCard>
+            
+            <HoverCard 
+              content="Bottom positioned hover card with quick response."
+              position="bottom"
+              showDelay={200}
+            >
+              <Button variant="outline" color="purple" size="sm">Hover Bottom</Button>
+            </HoverCard>
+            
+            <HoverCard 
+              content="Left side hover card with extended content for testing."
+              position="left"
+              showDelay={400}
+            >
+              <Button variant="outline" color="yellow" size="sm">Hover Left</Button>
+            </HoverCard>
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Rich Content Hover Cards</h3>
+          <div class="cluster">
+            <HoverCard position="top" showDelay={300} maxWidth="350px">
+              <Button variant="solid" color="blue">User Profile</Button>
+              
+              <div slot="card">
+                <div class="hover-card-body" style="padding: var(--space-4);">
+                  <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+                    <img 
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
+                      alt="User avatar" 
+                      style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;"
+                    />
+                    <div>
+                      <h4 style="margin: 0; font-weight: var(--font-weight-semibold);">John Doe</h4>
+                      <p style="margin: 0; color: var(--color-text-secondary); font-size: var(--text-sm);">Senior Developer</p>
+                    </div>
+                  </div>
+                  <p style="color: var(--color-text-secondary); margin-bottom: var(--space-3); font-size: var(--text-sm);">
+                    Experienced full-stack developer with expertise in React, Node.js, and cloud architecture.
+                  </p>
+                  <div class="cluster">
+                    <Badge variant="soft" color="blue" size="sm">React</Badge>
+                    <Badge variant="soft" color="green" size="sm">Node.js</Badge>
+                    <Badge variant="soft" color="purple" size="sm">TypeScript</Badge>
+                  </div>
+                </div>
+              </div>
+            </HoverCard>
+            
+            <HoverCard position="bottom" showDelay={400} maxWidth="300px">
+              <Button variant="solid" color="green">Product Info</Button>
+              
+              <div slot="card">
+                <div class="hover-card-body" style="padding: var(--space-4);">
+                  <h4 style="margin: 0 0 var(--space-2) 0; font-weight: var(--font-weight-semibold);">AHA Design System</h4>
+                  <p style="color: var(--color-text-secondary); margin-bottom: var(--space-3); font-size: var(--text-sm);">
+                    A comprehensive design system built with Astro, HTMX, and Alpine.js for modern web applications.
+                  </p>
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                      <div style="display: flex; align-items: center; gap: var(--space-1);">
+                        <Rating maxStars={5} initialValue={5} readonly={true} size="sm" />
+                        <span style="font-size: var(--text-sm); color: var(--color-text-secondary);">(127)</span>
+                      </div>
+                    </div>
+                    <Badge variant="solid" color="green" size="sm">Free</Badge>
+                  </div>
+                </div>
+              </div>
+            </HoverCard>
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Click-to-Open Hover Card</h3>
+          <HoverCard 
+            position="right" 
+            openOnHover={false} 
+            openOnClick={true}
+            maxWidth="280px"
+          >
+            <Button variant="outline" color="red">Click for Info</Button>
+            
+            <div slot="card">
+              <div class="hover-card-body" style="padding: var(--space-4);">
+                <h4 style="margin: 0 0 var(--space-2) 0;">Click Trigger</h4>
+                <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">
+                  This hover card is triggered by clicking instead of hovering. Click again to close.
+                </p>
+              </div>
+            </div>
+          </HoverCard>
+        </div>
+      </section>
+
+      <!-- DatePicker Test -->
+      <section class="stack">
+        <h2>DatePicker Component</h2>
+        
+        <div class="stack">
+          <h3>Basic Date Picker</h3>
+          <div class="cluster">
+            <DatePicker 
+              name="birth_date"
+              placeholder="Select your birthdate"
+              format="Y-m-d"
+            />
+            
+            <DatePicker 
+              name="event_date"
+              placeholder="Event date"
+              format="M j, Y"
+              value="2024-12-25"
+            />
+            
+            <DatePicker 
+              name="appointment"
+              placeholder="Appointment date"
+              format="m/d/Y"
+            />
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Different Date Formats</h3>
+          <div class="stack">
+            <div>
+              <h4>ISO Format (Y-m-d)</h4>
+              <DatePicker 
+                name="iso_date"
+                placeholder="YYYY-MM-DD format"
+                format="Y-m-d"
+                value="2024-07-18"
+              />
+            </div>
+            
+            <div>
+              <h4>US Format (m/d/Y)</h4>
+              <DatePicker 
+                name="us_date"
+                placeholder="MM/DD/YYYY format"
+                format="m/d/Y"
+              />
+            </div>
+            
+            <div>
+              <h4>Long Format (j F Y)</h4>
+              <DatePicker 
+                name="long_date"
+                placeholder="Day Month Year format"
+                format="j F Y"
+              />
+            </div>
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>States</h3>
+          <div class="cluster">
+            <DatePicker 
+              name="disabled_date"
+              placeholder="Disabled date picker"
+              disabled={true}
+            />
+            
+            <DatePicker 
+              name="readonly_date"
+              placeholder="Readonly date picker"
+              readonly={true}
+              value="2024-01-01"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ImageGallery Test -->
+      <section class="stack">
+        <h2>ImageGallery Component</h2>
+        
+        <div class="stack">
+          <h3>Basic Image Gallery (3 columns)</h3>
+          <ImageGallery 
+            images={[
+              { 
+                src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop",
+                thumbnail: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop",
+                alt: "Mountain landscape",
+                caption: "Beautiful mountain landscape at sunset"
+              },
+              { 
+                src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop",
+                thumbnail: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=300&h=200&fit=crop",
+                alt: "Forest trees",
+                caption: "Dense forest with tall trees"
+              },
+              { 
+                src: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800&h=600&fit=crop",
+                thumbnail: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=300&h=200&fit=crop",
+                alt: "Alpine lake",
+                caption: "Crystal clear alpine lake"
+              },
+              { 
+                src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=600&fit=crop",
+                thumbnail: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=300&h=200&fit=crop",
+                alt: "Starry night",
+                caption: "Milky Way over mountains"
+              },
+              { 
+                src: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800&h=600&fit=crop",
+                thumbnail: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=300&h=200&fit=crop",
+                alt: "Tropical beach",
+                caption: "Pristine tropical beach"
+              },
+              { 
+                src: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop",
+                thumbnail: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=300&h=200&fit=crop",
+                alt: "Desert dunes",
+                caption: "Sand dunes in the desert"
+              }
+            ]}
+            columns={3}
+            gap="md"
+            aspectRatio="photo"
+          />
+        </div>
+        
+        <div class="stack">
+          <h3>Square Gallery (4 columns)</h3>
+          <ImageGallery 
+            images={[
+              { 
+                src: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600&h=600&fit=crop",
+                thumbnail: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=200&h=200&fit=crop",
+                alt: "Urban architecture"
+              },
+              { 
+                src: "https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?w=600&h=600&fit=crop",
+                thumbnail: "https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?w=200&h=200&fit=crop",
+                alt: "Wildflowers"
+              },
+              { 
+                src: "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=600&h=600&fit=crop",
+                thumbnail: "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=200&h=200&fit=crop",
+                alt: "Ocean waves"
+              },
+              { 
+                src: "https://images.unsplash.com/photo-1476231682828-37e571bc172f?w=600&h=600&fit=crop",
+                thumbnail: "https://images.unsplash.com/photo-1476231682828-37e571bc172f?w=200&h=200&fit=crop",
+                alt: "Autumn forest"
+              }
+            ]}
+            columns={4}
+            gap="sm"
+            aspectRatio="square"
+          />
+        </div>
+        
+        <div class="stack">
+          <h3>Compact Gallery (6 columns)</h3>
+          <ImageGallery 
+            images={[
+              { src: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=400&fit=crop", alt: "Sunrise lake" },
+              { src: "https://images.unsplash.com/photo-1485893086445-ed75865251e0?w=400&h=400&fit=crop", alt: "City lights" },
+              { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop", alt: "Mountain peak" },
+              { src: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=400&h=400&fit=crop", alt: "Coastal view" },
+              { src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=400&fit=crop", alt: "Rural landscape" },
+              { src: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400&h=400&fit=crop", alt: "Misty forest" }
+            ]}
+            columns={6}
+            gap="sm"
+            aspectRatio="square"
+          />
+        </div>
+      </section>
+
+      <!-- FullScreenModal Test -->
+      <section class="stack">
+        <h2>FullScreenModal Component</h2>
+        
+        <div class="stack">
+          <h3>Basic Full Screen Modal</h3>
+          <FullScreenModal id="basic-fullscreen" closeable={true} lockScroll={true}>
+            <div slot="trigger">
+              <Button variant="solid" color="blue">Open Full Screen Modal</Button>
+            </div>
+            
+            <div slot="header">
+              <h1 style="margin: 0; font-size: var(--text-2xl); font-weight: var(--font-weight-bold);">Full Screen Experience</h1>
+            </div>
+            
+            <div slot="body">
+              <div class="stack">
+                <p>This modal takes up the entire screen, providing an immersive experience perfect for detailed content, forms, or media viewing.</p>
+                
+                <div class="card card-default card-padding-md">
+                  <h3>Feature Highlights</h3>
+                  <ul>
+                    <li>Full viewport coverage</li>
+                    <li>Body scroll locking</li>
+                    <li>Escape key support</li>
+                    <li>Focus trapping</li>
+                    <li>Smooth transitions</li>
+                  </ul>
+                </div>
+                
+                <div class="cluster">
+                  <Badge variant="solid" color="blue">Responsive</Badge>
+                  <Badge variant="solid" color="green">Accessible</Badge>
+                  <Badge variant="solid" color="purple">Interactive</Badge>
+                </div>
+                
+                <Progress value={75} max={100} color="blue" showLabel={true} />
+                
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                
+                <Quotes 
+                  quote="Full screen modals are perfect for immersive experiences that require the user's complete attention."
+                  author="UI/UX Expert"
+                  variant="minimal"
+                  size="md"
+                />
+              </div>
+            </div>
+            
+            <div slot="footer">
+              <div class="cluster">
+                <Button variant="outline" color="neutral">Cancel</Button>
+                <Button variant="solid" color="blue">Save Changes</Button>
+                <Button variant="solid" color="green">Publish</Button>
+              </div>
+            </div>
+          </FullScreenModal>
+        </div>
+        
+        <div class="stack">
+          <h3>Media Full Screen Modal</h3>
+          <FullScreenModal id="media-fullscreen" closeable={true}>
+            <div slot="trigger">
+              <Button variant="outline" color="purple">View in Full Screen</Button>
+            </div>
+            
+            <div slot="header">
+              <h2 style="margin: 0;">Media Gallery</h2>
+            </div>
+            
+            <div slot="body">
+              <div class="stack">
+                <p>Perfect for showcasing media content, presentations, or detailed documentation.</p>
+                
+                <ImageGallery 
+                  images={[
+                    { 
+                      src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=500&fit=crop",
+                      thumbnail: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=150&fit=crop",
+                      alt: "Mountain view"
+                    },
+                    { 
+                      src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=500&fit=crop",
+                      thumbnail: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200&h=150&fit=crop",
+                      alt: "Forest"
+                    },
+                    { 
+                      src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=500&fit=crop",
+                      thumbnail: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=200&h=150&fit=crop",
+                      alt: "Night sky"
+                    }
+                  ]}
+                  columns={3}
+                  aspectRatio="photo"
+                />
+              </div>
+            </div>
+            
+            <div slot="footer">
+              <Button variant="outline" color="blue">Download All</Button>
+            </div>
+          </FullScreenModal>
+        </div>
+      </section>
+
+      <!-- MonacoEditor Test -->
+      <section class="stack">
+        <h2>MonacoEditor Component</h2>
+        
+        <div class="stack">
+          <h3>JavaScript Editor</h3>
+          <MonacoEditor 
+            id="js-editor"
+            value={`// Welcome to the Monaco Editor!
+console.log('Hello, World!');
+
+function fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// Calculate the 10th Fibonacci number
+const result = fibonacci(10);
+console.log(\`Fibonacci(10) = \${result}\`);
+
+// Array methods example
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map(n => n * 2);
+console.log('Original:', numbers);
+console.log('Doubled:', doubled);`}
+            language="javascript"
+            theme="vs-dark"
+            fontSize={14}
+            height="300px"
+          />
+        </div>
+        
+        <div class="stack">
+          <h3>Different Languages</h3>
+          <div class="cluster">
+            <MonacoEditor 
+              value={`# Python Example
+def greet(name):
+    return f"Hello, {name}!"
+
+# List comprehension
+squares = [x**2 for x in range(10)]
+print(squares)
+
+# Dictionary example
+person = {
+    "name": "Alice",
+    "age": 30,
+    "city": "New York"
+}
+
+print(greet(person["name"]))`}
+              language="python"
+              theme="vs-light"
+              height="250px"
+              fontSize={13}
+            />
+            
+            <MonacoEditor 
+              value={`/* CSS Styling */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-6);
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-fast);
+}`}
+              language="css"
+              theme="vs-dark"
+              height="250px"
+              fontSize={13}
+            />
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Read-Only Editor</h3>
+          <MonacoEditor 
+            value={`{
+  "name": "aha-design-system",
+  "version": "1.0.0",
+  "description": "A comprehensive design system built with Astro, HTMX, and Alpine.js",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "keywords": ["astro", "htmx", "alpine", "design-system", "ui"],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "astro": "^4.0.0",
+    "alpinejs": "^3.0.0"
+  }
+}`}
+            language="json"
+            theme="vs-light"
+            readOnly={true}
+            height="200px"
+            minimap={false}
+          />
+        </div>
+      </section>
+
       <!-- VideoPlayer Test -->
-      <section>
+      <section class="stack">
         <h2>VideoPlayer Component</h2>
-        <div class="stack-md">
-          <h3>Basic VideoPlayer</h3>
+        
+        <div class="stack">
+          <h3>HTML5 Video Player</h3>
           <div class="cluster">
             <VideoPlayer 
               src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
@@ -1503,29 +2754,107 @@ import Banner from '../components/ui/Banner.astro';
               showPlaybackSpeed={true}
             />
           </div>
-          
-          <h3>VideoPlayer with Multiple Sources</h3>
-          <div class="cluster">
-            <VideoPlayer 
-              sources={[
-                { src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", type: "video/mp4", label: "MP4" },
-                { src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.webm", type: "video/webm", label: "WebM" }
-              ]}
-              poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
-              width="480"
-              height="270"
-            />
-          </div>
-
-          <h3>Minimal VideoPlayer</h3>
+        </div>
+        
+        <div class="stack">
+          <h3>Different Sizes</h3>
           <div class="cluster">
             <VideoPlayer 
               src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+              width="480"
+              height="270"
+              showPlaybackSpeed={false}
+              showTime={true}
+            />
+            
+            <VideoPlayer 
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
               width="320"
               height="180"
               showPlaybackSpeed={false}
               showTime={false}
+              showVolumeControl={false}
             />
+          </div>
+        </div>
+      </section>
+
+      <!-- YouTube Integration Test -->
+      <section class="stack">
+        <h2>YouTube Video Integration</h2>
+        
+        <div class="stack">
+          <h3>Embedded YouTube Video</h3>
+          <p style="color: var(--color-text-secondary); margin-bottom: var(--space-4);">
+            While we have a custom VideoPlayer component for HTML5 videos, YouTube videos can be easily embedded using iframes.
+          </p>
+          
+          <div style="max-width: 800px;">
+            <div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);">
+              <iframe 
+                src="https://www.youtube.com/embed/Kn-WX4J8K6g?si=ERbVWWebnpZc37Eb" 
+                title="YouTube video player" 
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>Responsive YouTube Embed</h3>
+          <p style="color: var(--color-text-secondary); margin-bottom: var(--space-4);">
+            YouTube videos automatically scale to fit their container while maintaining aspect ratio.
+          </p>
+          
+          <div class="cluster">
+            <div style="width: 400px;">
+              <div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%; border-radius: var(--radius-md); overflow: hidden;">
+                <iframe 
+                  src="https://www.youtube.com/embed/Kn-WX4J8K6g?si=ERbVWWebnpZc37Eb" 
+                  title="YouTube video player" 
+                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowfullscreen
+                >
+                </iframe>
+              </div>
+            </div>
+            
+            <div style="width: 300px;">
+              <div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%; border-radius: var(--radius-md); overflow: hidden;">
+                <iframe 
+                  src="https://www.youtube.com/embed/Kn-WX4J8K6g?si=ERbVWWebnpZc37Eb&start=30" 
+                  title="YouTube video player" 
+                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowfullscreen
+                >
+                </iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="stack">
+          <h3>YouTube with Custom Styling</h3>
+          <div style="max-width: 600px; padding: var(--space-4); background: var(--color-surface); border-radius: var(--radius-xl); border: 1px solid var(--color-border);">
+            <h4 style="margin: 0 0 var(--space-3) 0;">Featured Video</h4>
+            <div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%; border-radius: var(--radius-lg); overflow: hidden;">
+              <iframe 
+                src="https://www.youtube.com/embed/Kn-WX4J8K6g?si=ERbVWWebnpZc37Eb" 
+                title="YouTube video player" 
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+            <p style="margin: var(--space-3) 0 0 0; color: var(--color-text-secondary); font-size: var(--text-sm);">
+              Watch this amazing video demonstration showcasing our design system capabilities.
+            </p>
           </div>
         </div>
       </section>

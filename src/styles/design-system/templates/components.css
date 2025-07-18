@@ -3066,9 +3066,15 @@
 
 .navigation-menu-chevron {
   margin-left: var(--space-1);
-  width: 1rem;
-  height: 1rem;
+  width: var(--space-4);
+  height: var(--space-4);
   display: block;
+}
+
+.nav-chevron {
+  width: var(--space-4);
+  height: var(--space-4);
+  display: inline-block;
 }
 
 .navigation-menu-mobile-icon {
@@ -3089,6 +3095,237 @@
 
 .navigation-menu-relative {
   position: relative;
+}
+
+/* ==========================================================================
+   ACCORDION COMPONENT
+   ========================================================================== */
+
+.accordion {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.accordion-item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.accordion-item:last-child {
+  border-bottom: none;
+}
+
+.accordion-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+  transition: background-color var(--transition-fast);
+}
+
+.accordion-button:hover {
+  background: var(--color-surface-hover);
+}
+
+.accordion-button:focus {
+  outline: none;
+  background: var(--color-surface-hover);
+}
+
+.accordion-title {
+  text-align: left;
+  flex: 1;
+}
+
+.accordion-icon {
+  width: var(--space-4);
+  height: var(--space-4);
+  color: var(--color-text-secondary);
+  transition: transform var(--transition-normal);
+  flex-shrink: 0;
+  margin-left: var(--space-2);
+}
+
+.accordion-icon-open {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  overflow: hidden;
+}
+
+.accordion-text {
+  padding: 0 var(--space-4) var(--space-4) var(--space-4);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   DATEPICKER COMPONENT
+   ========================================================================== */
+
+.date-picker {
+  position: relative;
+  display: inline-block;
+}
+
+.date-picker-wrapper {
+  position: relative;
+}
+
+.date-picker-input {
+  width: 100%;
+  padding: var(--space-2-5) var(--space-10) var(--space-2-5) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font-size: var(--text-sm);
+  transition: border-color var(--transition-fast);
+}
+
+.date-picker-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.date-picker-icon {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--space-4);
+  height: var(--space-4);
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+.date-picker-calendar {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 50;
+  margin-top: var(--space-1);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-3);
+  min-width: 280px;
+}
+
+.date-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.date-picker-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-8);
+  height: var(--space-8);
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.date-picker-nav:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
+
+.date-picker-nav svg {
+  width: var(--space-4);
+  height: var(--space-4);
+}
+
+.date-picker-title {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.date-picker-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.date-picker-weekday {
+  text-align: center;
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  padding: var(--space-1);
+}
+
+.date-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-1);
+}
+
+.date-picker-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-8);
+  height: var(--space-8);
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.date-picker-day:hover {
+  background: var(--color-surface-hover);
+}
+
+.date-picker-day-selected {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.date-picker-day-today {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.date-picker-footer {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.date-picker-today-button {
+  width: 100%;
+  padding: var(--space-2);
+  border: none;
+  background: var(--color-surface-hover);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.date-picker-today-button:hover {
+  background: var(--color-primary-light);
 }
 
 /* ==========================================================================
@@ -3555,8 +3792,8 @@
 }
 
 .date-picker-nav svg {
-  width: var(--space-5);
-  height: var(--space-5);
+  width: var(--space-4);
+  height: var(--space-4);
 }
 
 .date-picker-title {
@@ -5286,8 +5523,8 @@
 }
 
 .select-icon {
-  width: var(--space-5);
-  height: var(--space-5);
+  width: var(--space-4);
+  height: var(--space-4);
   color: var(--color-text-secondary);
   transition: transform var(--transition-normal);
 }
