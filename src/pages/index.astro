@@ -2,10 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import { getEntry } from 'astro:content';
 
-// Pine UI Components for better styling
-import Card from '../components/pine/Card.astro';
-import Badge from '../components/pine/Badge.astro';
-import Button from '../components/pine/Button.astro';
+// UI Components for better styling
+import Card from '../components/ui/Card.astro';
+import Badge from '../components/ui/Badge.astro';
+import Button from '../components/ui/Button.astro';
 
 const homeContent = await getEntry('pages', 'home');
 const features: Array<{name: string; title: string; description: string;}> = homeContent?.data?.features || [];

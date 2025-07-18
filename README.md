@@ -1,6 +1,6 @@
 # AHA Stack Starter Kit
 
-🚀 A modern web development starter template combining **Astro**, **HTMX**, and **Alpine.js** with **Pine UI** components for fast, interactive web applications.
+🚀 A modern web development starter template combining **Astro**, **Alpine.js**, and **HTMX** with custom UI components inspired by modern design systems for fast, interactive web applications.
 
 ## 🌟 Live Demo
 
@@ -12,9 +12,9 @@
 
 ## ✨ What's Included
 
-- ✅ **40+ Pine UI Components** - Complete component library
+- ✅ **40+ Custom UI Components** - Complete component library
 - ✅ **GitHub Actions CI/CD** - Automatic deployment to GitHub Pages
-- ✅ **Comprehensive Test Suite** - Individual test pages for all components
+- ✅ **Design System** - Comprehensive component showcase and documentation
 - ✅ **Dynamic Configuration** - Works with any GitHub username/repo
 - ✅ **Mobile Responsive** - All components work on mobile devices
 - ✅ **Zero Config Deployment** - Just push to deploy
@@ -41,18 +41,18 @@ Inside of your Astro project, you'll see the following folders and files:
 
 To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
 
-## 🎨 Pine UI Components
+## 🎨 UI Components
 
-This project includes a comprehensive collection of UI components from Pine UI, converted and optimized for the AHA stack (Astro + HTMX + Alpine.js):
+This project includes a comprehensive collection of UI components inspired by modern design systems, built specifically for the AHA stack (Astro + Alpine.js + HTMX):
 
-### Pine Marketing Components:
+### Marketing Components:
 
 - **HeroSideBySide**: Side-by-side hero layout with text and image
 - **HeroCentered**: Centered hero section with optional image below
 - **HeaderWithNav**: Complete header with navigation and hero content
 - **HeaderDark**: Dark-themed header with gradient background and newsletter signup
 
-### Pine Interactive Components:
+### Interactive Components:
 
 - **MonacoEditor**: Full-featured code editor with syntax highlighting, IntelliSense, and 15+ language support
 - **Button**: Customizable buttons with multiple variants and colors
@@ -60,15 +60,15 @@ This project includes a comprehensive collection of UI components from Pine UI, 
 - **Dropdown**: Interactive dropdown menus with keyboard navigation
 - **Tabs**: Tabbed interface components
 - **Accordion**: Collapsible content sections
-- **And 35+ more components** - see `/src/components/pine/` for the complete collection
+- **And 35+ more components** - see `/src/components/ui/` for the complete collection
 
 ### Usage Examples:
 
-#### Pine Marketing Components:
+#### Marketing Components:
 
 ```astro
 ---
-import { HeroSideBySide, HeaderWithNav } from '@/components/pine-marketing';
+import { HeroSideBySide, HeaderWithNav } from '@/components/marketing';
 ---
 
 <HeaderWithNav
@@ -88,7 +88,7 @@ import { HeroSideBySide, HeaderWithNav } from '@/components/pine-marketing';
 
 ```astro
 ---
-import { MonacoEditor } from '@/components/pine';
+import { MonacoEditor } from '@/components/ui';
 ---
 
 <!-- Basic JavaScript Editor -->
@@ -191,9 +191,9 @@ Our AHA stack is carefully chosen for optimal developer experience and applicati
 ### Core Technologies
 
 - **🚀 Astro** - Static site generator with component islands architecture
-- **🌐 HTMX** - Dynamic HTML over HTTP for enhanced interactivity
 - **⚡ Alpine.js** - Lightweight reactive framework for frontend interactivity
-- **🎨 Pine UI** - Complete component library built for Alpine.js
+- **🌐 HTMX** - Dynamic HTML over HTTP for enhanced interactivity
+- **🎨 Custom UI Library** - Complete component library built for Alpine.js
 - **🗄️ Supabase** - Backend-as-a-Service with real-time database and authentication
 - **📝 Markdown Content** - Content management via Astro Content Collections
 - **🔄 GitHub Actions** - CI/CD for automatic deployment to GitHub Pages
@@ -206,7 +206,7 @@ Our AHA stack is carefully chosen for optimal developer experience and applicati
 
 **Alpine.js + ES6 Modules**: Alpine.js provides reactive frontend functionality with a minimal footprint. We use ES6 module imports rather than CDN scripts for better reliability and Alpine.store() pattern for clean global state management. This approach eliminates timing issues and provides a more maintainable codebase.
 
-**Pine UI Components**: Pine UI gives us a complete set of production-ready components specifically designed for Alpine.js. All components are customizable with variants, colors, and sizes, following consistent design patterns throughout the application.
+**Custom UI Components**: Our component library provides a complete set of production-ready components specifically designed for Alpine.js. All components are customizable with variants, colors, and sizes, following consistent design patterns throughout the application.
 
 **HTMX Integration**: HTMX allows us to add dynamic functionality to HTML without writing JavaScript, perfect for server-side interactions and partial page updates while maintaining SEO-friendly markup.
 

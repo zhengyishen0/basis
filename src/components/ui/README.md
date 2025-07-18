@@ -1,10 +1,10 @@
-# Pine UI Components for Astro
+# UI Components for Astro
 
-A collection of Pine UI components converted for the AHA stack (Astro + HTMX + Alpine.js). Based on the excellent Pine UI library by DevDojo.
+A collection of custom UI components built specifically for the AHA stack (Astro + Alpine.js + HTMX). Inspired by modern design systems and optimized for performance and accessibility.
 
 ## ✨ Features
 
-- 🎨 **Pine UI** design system styling
+- 🎨 **Custom design system** styling with CSS variables
 - ⚡ **Alpine.js** reactivity
 - 🚀 **Astro** framework optimized
 - 📱 **Responsive** design
@@ -93,7 +93,7 @@ import { Button, Modal, Alert } from '../components/pine';
 Make sure you have these dependencies installed:
 
 - **Alpine.js** - Required for component reactivity
-- **Pine UI Design System** - Required for styling
+- **Custom Design System** - Built-in styling with CSS variables
 - **Alpine.js Collapse Plugin** - Required for Accordion component
 
 ```bash
@@ -291,10 +291,10 @@ All components accept a `class` prop for additional styling:
 
 ## 📄 License
 
-Based on Pine UI by DevDojo. Components have been adapted for Astro and the AHA stack.
+Custom UI components inspired by modern design systems. Built specifically for the AHA stack.
 
 ## 🔗 Links
 
-- [Pine UI Documentation](https://devdojo.com/pines/docs)
 - [Alpine.js Documentation](https://alpinejs.dev)
-- [Pine UI Design System](https://devdojo.com/pines)
+- [Astro Documentation](https://docs.astro.build)
+- [HTMX Documentation](https://htmx.org)

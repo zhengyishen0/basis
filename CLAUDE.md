@@ -2,7 +2,7 @@ My tech stack is:
 - Astro: for the fullstack and using dynamic island architecture to hydrate only interactive components
 - Supabase: for backend-as-a-service with real-time database and authentication
 - Alpine.js: for frontend reactivity using ES6 modules and Alpine.store() pattern
-- Pine UI: complete component library for Alpine.js with variants, colors, and sizes
+- Custom UI: complete component library for Alpine.js with variants, colors, and sizes
 - HTMX: for dynamic HTML over HTTP for enhanced interactivity
 - Markdown Content: Use Astro Content Collections with frontmatter to store landing page content in MD files - put structured data (hero, features, testimonials) in frontmatter and long-form content in markdown body, then render with getEntry() and <Content /> components.
 - Github Actions: Host static pages on Github Pages
