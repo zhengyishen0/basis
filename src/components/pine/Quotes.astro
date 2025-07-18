@@ -21,22 +21,48 @@ const {
   class: className = ""
 } = Astro.props;
 
-const containerClasses: { [key: string]: string } = {
-  default: 'text-left',
-  centered: 'text-center',
-  minimal: 'text-left border-l-4 border-neutral-200 pl-6'
+// Generate class names using our design system
+const getComponentClasses = () => {
+  const baseClass = 'quote';
+  const variantClass = `quote-${variant}`;
+  
+  return `${baseClass} ${variantClass}`;
 };
 
-const quoteClasses: { [key: string]: string } = {
-  sm: 'text-base',
-  md: 'text-lg', 
-  lg: 'text-xl'
+const getQuoteTextClasses = () => {
+  const baseClass = 'quote-text';
+  const sizeClass = `quote-text-${size}`;
+  const minimalClass = variant === 'minimal' ? 'quote-text-minimal' : '';
+  
+  return `${baseClass} ${sizeClass} ${minimalClass}`.trim();
 };
 
-const authorClasses: { [key: string]: string } = {
-  sm: 'text-sm',
-  md: 'text-base',
-  lg: 'text-lg'
+const getQuoteAuthorClasses = () => {
+  const baseClass = 'quote-author';
+  const sizeClass = `quote-author-${size}`;
+  
+  return `${baseClass} ${sizeClass}`;
+};
+
+const getQuoteIconClasses = () => {
+  const baseClass = 'quote-icon';
+  const centeredClass = variant === 'centered' ? 'quote-icon-centered' : '';
+  
+  return `${baseClass} ${centeredClass}`.trim();
+};
+
+const getQuoteFooterClasses = () => {
+  const baseClass = 'quote-footer';
+  const centeredClass = variant === 'centered' ? 'quote-footer-centered' : '';
+  
+  return `${baseClass} ${centeredClass}`.trim();
+};
+
+const getQuoteAttributionClasses = () => {
+  const baseClass = 'quote-attribution';
+  const centeredClass = variant === 'centered' ? 'quote-attribution-centered' : '';
+  
+  return `${baseClass} ${centeredClass}`.trim();
 };
 ---
 
@@ -65,33 +91,33 @@ Props:
 - class: Additional CSS classes
 -->
 
-<blockquote class={`${containerClasses[variant]} ${className}`}>
+<blockquote class={`${getComponentClasses()} ${className}`}>
   {variant !== 'minimal' && (
-    <svg class={`${variant === 'centered' ? 'mx-auto' : ''} mb-4 w-8 h-8 text-neutral-400`} fill="currentColor" viewBox="0 0 20 20">
+    <svg class={getQuoteIconClasses()} fill="currentColor" viewBox="0 0 20 20">
       <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
     </svg>
   )}
   
-  <p class={`text-neutral-700 font-medium italic ${quoteClasses[size]} ${variant === 'minimal' ? 'mb-2' : 'mb-6'}`}>
+  <p class={getQuoteTextClasses()}>
     "{quote}"
   </p>
   
-  <footer class={`${variant === 'centered' ? 'flex flex-col items-center' : 'flex items-center'} gap-3`}>
+  <footer class={getQuoteFooterClasses()}>
     {avatar && (
       <img 
-        class="w-12 h-12 rounded-full object-cover"
+        class="quote-avatar"
         src={avatar}
         alt={`${author} avatar`}
         loading="lazy"
       />
     )}
     
-    <div class={variant === 'centered' ? 'text-center' : ''}>
-      <cite class={`not-italic font-semibold text-neutral-900 ${authorClasses[size]}`}>
+    <div class={getQuoteAttributionClasses()}>
+      <cite class={getQuoteAuthorClasses()}>
         {author}
       </cite>
       {(role || company) && (
-        <p class="text-sm text-neutral-500 mt-1">
+        <p class="quote-role">
           {role && role}{role && company && ', '}{company && company}
         </p>
       )}

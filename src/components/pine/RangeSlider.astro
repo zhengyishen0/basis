@@ -8,6 +8,7 @@ export interface Props {
   name?: string;
   id?: string;
   showValue?: boolean;
+  size?: 'sm' | 'md' | 'lg';
   class?: string;
 }
 
@@ -20,8 +21,16 @@ const {
   name,
   id,
   showValue = true,
+  size = 'md',
   class: className = ""
 } = Astro.props;
+
+// Generate design system classes
+const getComponentClasses = () => {
+  const baseClass = 'range-slider';
+  const sizeClass = size ? `${baseClass}-${size}` : '';
+  return `${baseClass} ${sizeClass}`.trim();
+};
 ---
 
 <!-- 
@@ -53,9 +62,9 @@ Features:
     max: ${max},
     step: ${step}
   }`}
-  class={`w-full ${className}`}
+  class={`range-slider-wrapper ${className}`}
 >
-  <div class="flex items-center space-x-4">
+  <div class="range-slider-container">
     <!-- Range input -->
     <input 
       type="range"
@@ -66,87 +75,22 @@ Features:
       name={name}
       id={id}
       disabled={disabled}
-      class={`flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer 
-        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
-        slider-thumb:appearance-none slider-thumb:w-5 slider-thumb:h-5 
-        slider-thumb:bg-blue-600 slider-thumb:rounded-full slider-thumb:cursor-pointer
-        slider-thumb:border-2 slider-thumb:border-white slider-thumb:shadow-md
-        hover:slider-thumb:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed`}
+      class={`${getComponentClasses()} ${disabled ? 'disabled' : ''}`}
     />
     
     <!-- Value display -->
     {showValue && (
-      <div class="flex items-center justify-center w-16 px-2 py-1 text-sm font-medium text-gray-700 bg-gray-100 rounded-md">
+      <div class="range-slider-value">
         <span x-text="sliderValue"></span>
       </div>
     )}
   </div>
   
   <!-- Min/max labels -->
-  <div class="flex justify-between mt-2 text-xs text-gray-500">
-    <span>{min}</span>
-    <span>{max}</span>
+  <div class="range-slider-labels">
+    <span class="range-slider-min">{min}</span>
+    <span class="range-slider-max">{max}</span>
   </div>
 </div>
 
-<style>
-/* Custom slider styling for webkit browsers */
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-input[type="range"]::-webkit-slider-track {
-  height: 8px;
-  background: #e5e7eb;
-  border-radius: 4px;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 20px;
-  width: 20px;
-  background: #2563eb;
-  border-radius: 50%;
-  border: 2px solid #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-
-input[type="range"]::-webkit-slider-thumb:hover {
-  background: #1d4ed8;
-}
-
-input[type="range"]:disabled::-webkit-slider-thumb {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-/* Custom slider styling for Firefox */
-input[type="range"]::-moz-range-track {
-  height: 8px;
-  background: #e5e7eb;
-  border-radius: 4px;
-  border: none;
-}
-
-input[type="range"]::-moz-range-thumb {
-  height: 20px;
-  width: 20px;
-  background: #2563eb;
-  border-radius: 50%;
-  border: 2px solid #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-
-input[type="range"]::-moz-range-thumb:hover {
-  background: #1d4ed8;
-}
-
-/* Remove default focus outline */
-input[type="range"]:focus {
-  outline: none;
-}
-</style>
+<!-- Styles are now handled by the design system CSS -->

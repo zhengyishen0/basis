@@ -18,6 +18,12 @@ const {
   class: className = ""
 } = Astro.props;
 
+const getComponentClasses = () => {
+  const baseClass = 'breadcrumbs';
+  const separatorClass = `breadcrumbs-${separator}`;
+  return `${baseClass} ${separatorClass}`.trim();
+};
+
 const separatorIcons: { [key: string]: string } = {
   chevron: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>',
   slash: '/',
@@ -47,17 +53,17 @@ Features:
 - Accessible navigation
 -->
 
-<nav class={`flex justify-between ${className}`} aria-label="Breadcrumb">
-  <ol class="inline-flex items-center space-x-1 text-neutral-500">
+<nav class={`${getComponentClasses()} ${className}`} aria-label="Breadcrumb">
+  <ol class="breadcrumbs-list">
     <!-- Home icon -->
     {showHome && (
       <li>
         <a 
           href="/" 
-          class="text-neutral-500 hover:text-neutral-900 transition-colors duration-200"
+          class="breadcrumbs-home"
           aria-label="Home"
         >
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <svg class="breadcrumb-home-icon" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
           </svg>
         </a>
@@ -66,27 +72,27 @@ Features:
     
     <!-- Breadcrumb items -->
     {items.map((item, index) => (
-      <li class="flex items-center">
+      <li class="breadcrumb-item">
         <!-- Separator -->
         {(index > 0 || showHome) && (
-          <div class="flex items-center mx-1">
+          <div class="breadcrumb-separator">
             {separator === 'chevron' && (
-              <svg class="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <Fragment set:html={separatorIcons.chevron} />
               </svg>
             )}
             {separator === 'slash' && (
-              <span class="text-neutral-400">/</span>
+              <span>/</span>
             )}
             {separator === 'dot' && (
-              <span class="text-neutral-400">•</span>
+              <span>•</span>
             )}
           </div>
         )}
         
         <!-- Breadcrumb link or current page -->
         {item.current ? (
-          <span class="text-neutral-900 font-medium cursor-default" aria-current="page">
+          <span class="breadcrumb-current" aria-current="page">
             {item.icon && (
               <Fragment set:html={item.icon} />
             )}
@@ -95,7 +101,7 @@ Features:
         ) : (
           <a 
             href={item.href}
-            class="text-neutral-500 hover:text-neutral-900 transition-colors duration-200"
+            class="breadcrumb-link"
           >
             {item.icon && (
               <Fragment set:html={item.icon} />

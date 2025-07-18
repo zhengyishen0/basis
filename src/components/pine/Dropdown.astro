@@ -13,6 +13,14 @@ const {
   menuClass = ""
 } = Astro.props;
 
+const getComponentClasses = () => {
+  return 'dropdown';
+};
+
+const getMenuClasses = () => {
+  return 'dropdown-menu';
+};
+
 const placementClasses: { [key: string]: string } = {
   'bottom-start': 'top-full left-0 mt-2',
   'bottom-end': 'top-full right-0 mt-2',
@@ -31,10 +39,11 @@ Usage:
   </div>
   
   <div slot="menu">
-    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
-    <hr class="my-1">
-    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+    <div class="dropdown-header">Account</div>
+    <a href="#" class="dropdown-item">Profile</a>
+    <a href="#" class="dropdown-item">Settings</a>
+    <div class="dropdown-separator"></div>
+    <a href="#" class="dropdown-item dropdown-item-danger">Sign out</a>
   </div>
 </Dropdown>
 
@@ -43,15 +52,16 @@ Features:
 - Multiple placement options
 - Smooth transitions
 - Alpine.js powered
-- Customizable styling
+- Design system classes
+- Semantic structure
 -->
 
 <div 
   x-data="{ dropdownOpen: false }" 
-  class={`relative inline-block ${className}`}
+  class={`${getComponentClasses()} ${className}`}
 >
   <!-- Trigger -->
-  <div @click="dropdownOpen = !dropdownOpen">
+  <div class="dropdown-trigger" @click="dropdownOpen = !dropdownOpen">
     <slot name="trigger" />
   </div>
   
@@ -65,7 +75,7 @@ Features:
     x-transition:leave="transition ease-in duration-75"
     x-transition:leave-start="transform opacity-100 scale-100"
     x-transition:leave-end="transform opacity-0 scale-95"
-    class={`absolute z-50 ${placementClasses[placement]} min-w-48 bg-white border border-neutral-200 rounded-md shadow-lg py-1 ${menuClass}`}
+    class={`${getMenuClasses()} ${placementClasses[placement]} ${menuClass}`}
     x-cloak
   >
     <slot name="menu" />

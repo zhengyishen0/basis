@@ -1,91 +1,62 @@
 ---
 export interface Props {
   angle?: number;
+  animated?: boolean;
   class?: string;
 }
 
 const { 
   angle = 60,
+  animated = true,
   class: className = ""
 } = Astro.props;
+
+// Generate class names using our design system
+const getComponentClasses = () => {
+  const baseClass = 'retro-grid';
+  const animatedClass = animated ? 'retro-grid-animated' : '';
+  
+  return `${baseClass} ${animatedClass}`.trim();
+};
 ---
 
 <!-- 
 Pine UI Retro Grid Component
 
 Usage:
-<RetroGrid angle={60} class="h-screen" />
+<RetroGrid angle={60} animated={true} class="h-screen" />
 
 Features:
 - Animated scrolling grid background
 - Configurable grid angle
 - Retro/cyberpunk aesthetic
-- CSS animations
+- Design system integration
 - Dark/light mode support
 -->
 
 <div 
   x-data={`{ angle: ${angle} }`}
-  class={`relative overflow-hidden ${className}`}
+  class={`${getComponentClasses()} ${className}`}
 >
   <!-- Grid background -->
   <div 
-    class="absolute inset-0 opacity-30"
+    class="retro-grid-lines"
     :style="`transform: perspective(400px) rotateX(${angle}deg)`"
   >
     <!-- Horizontal lines -->
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-gray-500 to-transparent animate-grid-move">
-      <div class="h-full bg-grid-pattern"></div>
+    <div class="retro-grid-horizontal">
+      <div class="retro-grid-pattern-horizontal"></div>
     </div>
     
     <!-- Vertical lines -->
-    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-gray-500 to-transparent animate-grid-move-vertical">
-      <div class="w-full bg-grid-pattern-vertical"></div>
+    <div class="retro-grid-vertical">
+      <div class="retro-grid-pattern-vertical"></div>
     </div>
   </div>
   
   <!-- Content overlay -->
-  <div class="relative z-10">
+  <div class="retro-grid-content">
     <slot />
   </div>
 </div>
 
-<style>
-.bg-grid-pattern {
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 35px,
-    rgba(255, 255, 255, 0.1) 35px,
-    rgba(255, 255, 255, 0.1) 36px
-  );
-}
-
-.bg-grid-pattern-vertical {
-  background-image: repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 35px,
-    rgba(255, 255, 255, 0.1) 35px,
-    rgba(255, 255, 255, 0.1) 36px
-  );
-}
-
-@keyframes grid-move {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(35px); }
-}
-
-@keyframes grid-move-vertical {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(35px); }
-}
-
-.animate-grid-move {
-  animation: grid-move 1s linear infinite;
-}
-
-.animate-grid-move-vertical {
-  animation: grid-move-vertical 1s linear infinite;
-}
-</style>

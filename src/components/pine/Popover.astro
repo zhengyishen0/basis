@@ -34,6 +34,10 @@ const {
   maxWidth = '320px',
   zIndex = 1000
 } = Astro.props;
+
+const getComponentClasses = () => {
+  return 'popover';
+};
 ---
 
 <!-- 
@@ -46,31 +50,27 @@ Usage:
   </div>
   
   <div slot="content">
-    <div class="p-4">
-      <h3 class="font-medium mb-2">Popover Title</h3>
-      <p class="text-sm text-gray-600">This is the popover content.</p>
-    </div>
+    <div class="popover-header">Popover Title</div>
+    <div class="popover-body">This is the popover content.</div>
   </div>
 </Popover>
 
 <Popover placement="right-start" trigger="hover" delay={200}>
-  <span slot="trigger" class="text-blue-600 underline cursor-help">
+  <span slot="trigger" style="color: var(--color-primary); text-decoration: underline; cursor: help;">
     Hover for info
   </span>
   
   <div slot="content">
-    <div class="p-3 max-w-sm">
-      <p class="text-sm">Helpful information appears here!</p>
-    </div>
+    <div class="popover-body">Helpful information appears here!</div>
   </div>
 </Popover>
 
 <Popover trigger="focus" placement="bottom-end" arrow={false}>
-  <input slot="trigger" type="text" placeholder="Focus me" class="px-3 py-2 border rounded" />
+  <input slot="trigger" type="text" placeholder="Focus me" class="input" />
   
   <div slot="content">
-    <div class="p-4">
-      <ul class="text-sm space-y-1">
+    <div class="popover-body">
+      <ul class="stack-sm">
         <li>• Suggestion 1</li>
         <li>• Suggestion 2</li>
         <li>• Suggestion 3</li>
@@ -301,20 +301,7 @@ Trigger Types:
     },
 
     popoverGetArrowClasses() {
-      const baseClasses = 'absolute w-3 h-3 bg-white border transform rotate-45';
-      const placement = this.popoverActualPlacement;
-      
-      if (placement.startsWith('top')) {
-        return baseClasses + ' border-t-0 border-l-0';
-      } else if (placement.startsWith('bottom')) {
-        return baseClasses + ' border-b-0 border-r-0';
-      } else if (placement.startsWith('left')) {
-        return baseClasses + ' border-l-0 border-b-0';
-      } else if (placement.startsWith('right')) {
-        return baseClasses + ' border-r-0 border-t-0';
-      }
-      
-      return baseClasses;
+      return 'popover-arrow';
     },
 
     init() {
@@ -335,7 +322,7 @@ Trigger Types:
   }"
   x-init="init()"
   @keydown.escape.window="popoverCloseOnEscape && popoverOpen && popoverHide()"
-  class={`relative inline-block ${className}`}
+  class={`${getComponentClasses()} ${className}`}
 >
   <!-- Trigger Element -->
   <div 
@@ -345,7 +332,7 @@ Trigger Types:
     @mouseleave="popoverTrigger === 'hover' && popoverHide()"
     @focus="popoverTrigger === 'focus' && popoverShow()"
     @blur="popoverTrigger === 'focus' && popoverHide()"
-    class="inline-block"
+    class="popover-trigger"
   >
     <slot name="trigger" />
   </div>
@@ -364,7 +351,7 @@ Trigger Types:
       x-transition:leave="transition ease-in duration-150"
       x-transition:leave-start="opacity-100 scale-100"
       x-transition:leave-end="opacity-0 scale-95"
-      class={`absolute bg-white border border-gray-200 rounded-lg shadow-lg ${popoverClass}`}
+      class={`popover-content ${popoverClass}`}
       :style="`
         top: ${popoverPosition.top}px; 
         left: ${popoverPosition.left}px; 
@@ -388,7 +375,7 @@ Trigger Types:
       ></div>
 
       <!-- Content -->
-      <div class="relative z-10">
+      <div class="popover-body">
         <slot name="content" />
       </div>
     </div>

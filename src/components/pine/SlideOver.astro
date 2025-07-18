@@ -19,56 +19,29 @@ const {
   overlay = true
 } = Astro.props;
 
-const sizeClasses: { [key: string]: { [key: string]: string } } = {
-  left: {
-    'sm': 'w-80',
-    'md': 'w-96',
-    'lg': 'w-[32rem]',
-    'xl': 'w-[40rem]',
-    'full': 'w-full'
-  },
-  right: {
-    'sm': 'w-80',
-    'md': 'w-96',
-    'lg': 'w-[32rem]',
-    'xl': 'w-[40rem]',
-    'full': 'w-full'
-  },
-  top: {
-    'sm': 'h-80',
-    'md': 'h-96',
-    'lg': 'h-[32rem]',
-    'xl': 'h-[40rem]',
-    'full': 'h-full'
-  },
-  bottom: {
-    'sm': 'h-80',
-    'md': 'h-96',
-    'lg': 'h-[32rem]',
-    'xl': 'h-[40rem]',
-    'full': 'h-full'
-  }
+const getComponentClasses = () => {
+  const baseClass = 'slide-over';
+  const sideClass = `slide-over-${side}`;
+  const sizeClass = `slide-over-${size}`;
+  return `${baseClass} ${sideClass} ${sizeClass}`.trim();
 };
 
-const positionClasses: { [key: string]: string } = {
-  left: 'inset-y-0 left-0',
-  right: 'inset-y-0 right-0',
-  top: 'inset-x-0 top-0',
-  bottom: 'inset-x-0 bottom-0'
+const getBackdropClasses = () => {
+  return `slide-over-backdrop ${backdropClass}`.trim();
 };
 
-const enterTransitions: { [key: string]: string } = {
-  left: 'transform transition ease-in-out duration-300',
-  right: 'transform transition ease-in-out duration-300',
-  top: 'transform transition ease-in-out duration-300',
-  bottom: 'transform transition ease-in-out duration-300'
+const getEnterTransition = () => {
+  return 'transform transition ease-in-out duration-300';
 };
 
-const enterStartClasses: { [key: string]: string } = {
-  left: '-translate-x-full',
-  right: 'translate-x-full',
-  top: '-translate-y-full',
-  bottom: 'translate-y-full'
+const getEnterStartClass = () => {
+  const startClasses: { [key: string]: string } = {
+    left: '-translate-x-full',
+    right: 'translate-x-full',
+    top: '-translate-y-full',
+    bottom: 'translate-y-full'
+  };
+  return startClasses[side];
 };
 ---
 
@@ -120,7 +93,7 @@ Props:
 <div 
   x-data="{ slideOverOpen: false }"
   @keydown.escape.window="slideOverOpen = false"
-  class="relative z-50 w-auto h-auto"
+  class={getComponentClasses()}
 >
   <!-- Trigger -->
   <div @click="slideOverOpen = true">
@@ -133,7 +106,7 @@ Props:
       x-show="slideOverOpen" 
       x-transition.opacity.duration.300ms
       x-trap.inert.noscroll="slideOverOpen"
-      class={`fixed inset-0 z-[99] flex ${side === 'top' || side === 'bottom' ? 'flex-col' : ''} ${overlay ? 'bg-black bg-opacity-50' : ''} ${backdropClass}`}
+      class={`${getBackdropClasses()} ${side === 'top' || side === 'bottom' ? 'flex-col' : ''} ${!overlay ? '!bg-transparent' : ''}`}
       @click.self={closeable ? "slideOverOpen = false" : ""}
       role="dialog"
       aria-modal="true"
@@ -141,23 +114,23 @@ Props:
     >
       <div 
         x-show="slideOverOpen"
-        x-transition:enter={enterTransitions[side]}
-        x-transition:enter-start={enterStartClasses[side]}
+        x-transition:enter={getEnterTransition()}
+        x-transition:enter-start={getEnterStartClass()}
         x-transition:enter-end="translate-x-0 translate-y-0"
-        x-transition:leave={enterTransitions[side]}
+        x-transition:leave={getEnterTransition()}
         x-transition:leave-start="translate-x-0 translate-y-0"
-        x-transition:leave-end={enterStartClasses[side]}
-        class={`fixed ${positionClasses[side]} ${sizeClasses[side][size]} ${side === 'left' || side === 'right' ? 'h-full' : 'w-full'} bg-white shadow-xl overflow-hidden flex flex-col ${className}`}
+        x-transition:leave-end={getEnterStartClass()}
+        class={`slide-over-panel ${className}`}
       >
         <!-- Header -->
-        <div class="flex items-start justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
-          <div class="flex-1" id={`${id}-title`}>
+        <div class="slide-over-header">
+          <div id={`${id}-title`}>
             <slot name="header" />
           </div>
           {closeable && (
             <button 
               @click="slideOverOpen = false"
-              class="ml-3 text-gray-400 hover:text-gray-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-1"
+              class="slide-over-close"
               type="button"
               aria-label="Close panel"
             >
@@ -169,13 +142,13 @@ Props:
         </div>
         
         <!-- Body -->
-        <div class="flex-1 px-6 py-4 overflow-y-auto">
+        <div class="slide-over-body">
           <slot name="body" />
           <slot />
         </div>
         
         <!-- Footer -->
-        <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">
+        <div class="slide-over-footer">
           <slot name="footer" />
         </div>
       </div>

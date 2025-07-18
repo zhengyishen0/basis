@@ -17,18 +17,13 @@ const {
   footerClass = ""
 } = Astro.props;
 
-const variantClasses: { [key: string]: string } = {
-  'default': 'bg-white border border-neutral-200',
-  'bordered': 'bg-white border-2 border-neutral-300',
-  'shadow': 'bg-white border border-neutral-200 shadow-md',
-  'elevated': 'bg-white border border-neutral-200 shadow-lg'
-};
-
-const paddingClasses: { [key: string]: string } = {
-  'none': '',
-  'sm': 'p-4',
-  'md': 'p-6',
-  'lg': 'p-8'
+// Generate class names using our design system
+const getCardClasses = () => {
+  const baseClass = 'card';
+  const variantClass = `card-${variant}`;
+  const paddingClass = `card-padding-${padding}`;
+  
+  return `${baseClass} ${variantClass} ${paddingClass}`;
 };
 ---
 
@@ -58,23 +53,23 @@ Features:
 - Customizable styling
 -->
 
-<div class={`rounded-lg overflow-hidden ${variantClasses[variant]} ${className}`}>
+<div class={`${getCardClasses()} ${className}`}>
   <!-- Header -->
   {Astro.slots.header && (
-    <div class={`border-b border-neutral-200 ${paddingClasses[padding]} ${headerClass}`}>
+    <div class={`card-header ${headerClass}`}>
       <slot name="header" />
     </div>
   )}
   
   <!-- Body -->
-  <div class={`${paddingClasses[padding]} ${bodyClass}`}>
+  <div class={`card-body ${bodyClass}`}>
     <slot name="body" />
     <slot />
   </div>
   
   <!-- Footer -->
   {Astro.slots.footer && (
-    <div class={`border-t border-neutral-200 bg-neutral-50 ${paddingClasses[padding]} ${footerClass}`}>
+    <div class={`card-footer ${footerClass}`}>
       <slot name="footer" />
     </div>
   )}

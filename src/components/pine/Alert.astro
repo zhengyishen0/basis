@@ -15,16 +15,12 @@ const {
   dismissible = false 
 } = Astro.props;
 
-const variantClasses = {
-  'default': 'bg-white border-neutral-200 text-neutral-900',
-  'blue': 'bg-blue-600 border-blue-600 text-white',
-  'red': 'bg-red-600 border-red-600 text-white',
-  'green': 'bg-green-500 border-green-500 text-white',
-  'yellow': 'bg-yellow-500 border-yellow-500 text-white',
-  'soft-blue': 'bg-blue-50 border-blue-200 text-blue-800',
-  'soft-red': 'bg-red-50 border-red-200 text-red-800',
-  'soft-green': 'bg-green-50 border-green-200 text-green-800',
-  'soft-yellow': 'bg-yellow-50 border-yellow-200 text-yellow-800',
+// Generate class names using our design system
+const getAlertClasses = () => {
+  const baseClass = 'alert';
+  const variantClass = `alert-${variant}`;
+  
+  return `${baseClass} ${variantClass}`;
 };
 ---
 
@@ -48,11 +44,11 @@ Features:
 -->
 
 <div 
-  class={`relative w-full rounded-lg border p-4 ${variantClasses[variant]} ${className} ${icon ? '[&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&:has(svg)]:pl-11' : ''}`}
+  class={`${getAlertClasses()} ${className}`}
   {...(dismissible ? { 'x-data': '{ alertVisible: true }', 'x-show': 'alertVisible' } : {})}
 >
   {icon && (
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="position: absolute; left: 1rem; top: 1rem;">
       <Fragment set:html={icon} />
     </svg>
   )}
@@ -60,7 +56,7 @@ Features:
   {dismissible && (
     <button 
       @click="alertVisible = false"
-      class="absolute top-4 right-4 text-current hover:opacity-70"
+      class="alert-dismiss"
       type="button"
     >
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,13 +65,15 @@ Features:
     </button>
   )}
   
-  {title && (
-    <h5 class="mb-1 font-medium leading-none tracking-tight">
-      {title}
-    </h5>
-  )}
-  
-  <div class={title ? "text-sm opacity-70" : ""}>
-    <slot />
+  <div style={icon ? "padding-left: 2.75rem;" : ""}>
+    {title && (
+      <h5 class="alert-title">
+        {title}
+      </h5>
+    )}
+    
+    <div class={`alert-content ${title ? "has-title" : ""}`}>
+      <slot />
+    </div>
   </div>
 </div>

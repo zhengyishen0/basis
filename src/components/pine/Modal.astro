@@ -15,12 +15,14 @@ const {
   backdropClass = ""
 } = Astro.props;
 
-const sizeClasses: { [key: string]: string } = {
-  'sm': 'max-w-sm',
-  'md': 'max-w-md',
-  'lg': 'max-w-lg',
-  'xl': 'max-w-xl',
-  'full': 'max-w-none w-full h-full m-0 rounded-none'
+const getComponentClasses = () => {
+  const baseClass = 'modal';
+  const sizeClass = size ? `modal-${size}` : '';
+  return `${baseClass} ${sizeClass}`.trim();
+};
+
+const getBackdropClasses = () => {
+  return `modal-backdrop ${backdropClass}`.trim();
 };
 ---
 
@@ -59,7 +61,6 @@ Features:
 <div 
   x-data="{ modalOpen: false }"
   @keydown.escape.window="modalOpen = false"
-  class="relative z-50 w-auto h-auto"
 >
   <!-- Trigger -->
   <div @click="modalOpen = true">
@@ -72,7 +73,7 @@ Features:
       x-show="modalOpen" 
       x-transition.opacity.duration.200ms
       x-trap.inert.noscroll="modalOpen"
-      class={`fixed inset-0 z-[99] flex items-center justify-center w-screen h-screen bg-black bg-opacity-50 ${backdropClass}`}
+      class={getBackdropClasses()}
       @click.self={closeable ? "modalOpen = false" : ""}
     >
       <div 
@@ -83,17 +84,17 @@ Features:
         x-transition:leave="ease-in duration-200"
         x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95"
-        class={`w-full ${sizeClasses[size]} bg-white rounded-lg shadow-xl ${className}`}
+        class={`modal-content ${getComponentClasses()} ${className}`}
       >
         <!-- Header -->
-        <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-100">
-          <div class="flex-1">
+        <div class="modal-header">
+          <div>
             <slot name="header" />
           </div>
           {closeable && (
             <button 
               @click="modalOpen = false"
-              class="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+              class="modal-close"
               type="button"
             >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,13 +105,13 @@ Features:
         </div>
         
         <!-- Body -->
-        <div class="px-6 py-4">
+        <div class="modal-body">
           <slot name="body" />
           <slot />
         </div>
         
         <!-- Footer -->
-        <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-neutral-100">
+        <div class="modal-footer">
           <slot name="footer" />
         </div>
       </div>

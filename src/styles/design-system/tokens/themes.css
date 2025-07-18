@@ -1,0 +1,111 @@
+/* 
+ * Theme Variations
+ * Dark mode and other theme overrides
+ */
+
+/* Dark Mode Theme */
+[data-theme="dark"] {
+  /* Surface Colors - Inverted black and white */
+  --color-background: #111827;                 /* Dark background */
+  --color-surface: #1f2937;                    /* Slightly lighter dark */
+  --color-surface-hover: #374151;              /* Lighter for hover */
+  --color-surface-elevated: #1f2937;           /* Cards, modals */
+
+  /* Text Colors - Inverted hierarchy */
+  --color-text-primary: #f9fafb;               /* Light text - main */
+  --color-text-secondary: #d1d5db;             /* Medium light - secondary */
+  --color-text-tertiary: #9ca3af;              /* Medium gray - de-emphasized */
+  --color-text-disabled: #6b7280;              /* Darker gray - disabled */
+  --color-text-placeholder: #9ca3af;           /* Form placeholders */
+  --color-text-inverse: #111827;               /* Dark text on light backgrounds */
+
+  /* Border Colors - Adjusted for dark theme */
+  --color-border: #374151;                     /* Medium dark borders */
+  --color-border-hover: #4b5563;               /* Lighter for hover */
+  --color-border-focus: #ffffff;               /* White for focus */
+  --color-border-error: #f87171;               /* Lighter red for visibility */
+
+  /* Brand Colors - White as primary in dark mode */
+  --color-primary: #ffffff;                    /* White - main brand in dark */
+  --color-primary-hover: #f3f4f6;              /* Light gray hover */
+  --color-primary-active: #e5e7eb;             /* Medium light active */
+  --color-primary-light: #374151;              /* Dark variant */
+  --color-primary-text: #111827;               /* Dark text on white */
+
+  /* Semantic Status Colors - Dark theme variants */
+  --color-neutral: #ffffff;                    /* White - neutral in dark */
+  --color-neutral-hover: #f3f4f6;              /* Light gray hover */
+  --color-neutral-light: #374151;              /* Dark variant */
+
+  --color-success: #34d399;                    /* Brighter green for dark */
+  --color-success-hover: #10b981;              /* Standard green hover */
+  --color-success-light: #064e3b;              /* Dark green variant */
+  --color-success-text: #d1fae5;               /* Light green text */
+
+  --color-warning: #fbbf24;                    /* Brighter amber for dark */
+  --color-warning-hover: #f59e0b;              /* Standard amber hover */
+  --color-warning-light: #78350f;              /* Dark amber variant */
+  --color-warning-text: #fef3c7;               /* Light amber text */
+
+  --color-danger: #f87171;                     /* Brighter red for dark */
+  --color-danger-hover: #ef4444;               /* Standard red hover */
+  --color-danger-light: #7f1d1d;               /* Dark red variant */
+  --color-danger-text: #fee2e2;                /* Light red text */
+
+  /* Extended Colors - Dark theme variants */
+  --color-blue: #60a5fa;                       /* Brighter blue */
+  --color-blue-hover: #3b82f6;
+  --color-blue-light: #1e3a8a;
+  --color-blue-text: #dbeafe;
+
+  --color-green: #34d399;                      /* Same as success */
+  --color-green-hover: #10b981;
+  --color-green-light: #064e3b;
+  --color-green-text: #d1fae5;
+
+  --color-yellow: #fbbf24;                     /* Same as warning */
+  --color-yellow-hover: #f59e0b;
+  --color-yellow-light: #78350f;
+  --color-yellow-text: #fef3c7;
+
+  --color-red: #f87171;                        /* Same as danger */
+  --color-red-hover: #ef4444;
+  --color-red-light: #7f1d1d;
+  --color-red-text: #fee2e2;
+
+  --color-purple: #a78bfa;                     /* Brighter purple */
+  --color-purple-hover: #8b5cf6;
+  --color-purple-light: #581c87;
+  --color-purple-text: #ede9fe;
+
+  --color-pink: #f472b6;                       /* Brighter pink */
+  --color-pink-hover: #ec4899;
+  --color-pink-light: #831843;
+  --color-pink-text: #fce7f3;
+
+  --color-gray: #9ca3af;                       /* Lighter gray */
+  --color-gray-hover: #d1d5db;
+  --color-gray-light: #374151;
+  --color-gray-text: #f3f4f6;
+
+  /* Focus ring for dark theme */
+  --focus-ring-color: var(--color-primary);
+}
+
+/* High contrast theme (optional) */
+[data-theme="high-contrast"] {
+  --color-background: #ffffff;
+  --color-text-primary: #000000;
+  --color-primary: #0000ff;
+  --color-border: #000000;
+  /* Add more high contrast overrides as needed */
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-normal: 0ms;
+    --transition-slow: 0ms;
+  }
+}

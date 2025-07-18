@@ -21,30 +21,33 @@ const {
   class: className = ""
 } = Astro.props;
 
-const tableClasses = [
-  'min-w-full',
-  bordered ? 'border border-neutral-200' : '',
-  compact ? 'text-sm' : '',
-  className
-].filter(Boolean).join(' ');
+const getComponentClasses = () => {
+  const baseClass = 'table';
+  const variantClasses = [];
+  
+  if (bordered) variantClasses.push('table-bordered');
+  if (compact) variantClasses.push('table-compact');
+  if (striped) variantClasses.push('table-striped');
+  if (hover) variantClasses.push('table-hover');
+  
+  return `${baseClass} ${variantClasses.join(' ')} ${className}`.trim();
+};
 
-const headerClasses = [
-  'px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider',
-  compact ? 'px-4 py-2' : '',
-  bordered ? 'border-b border-neutral-200' : ''
-].filter(Boolean).join(' ');
+const getHeaderClasses = () => {
+  const baseClass = 'table-header';
+  const variantClass = compact ? 'table-header-compact' : '';
+  return `${baseClass} ${variantClass}`.trim();
+};
 
-const rowClasses = [
-  striped ? 'odd:bg-white even:bg-neutral-50' : 'bg-white',
-  hover ? 'hover:bg-neutral-50' : '',
-  bordered ? 'border-b border-neutral-200' : ''
-].filter(Boolean).join(' ');
+const getRowClasses = () => {
+  return 'table-row';
+};
 
-const cellClasses = [
-  'px-6 py-4 text-sm text-neutral-900',
-  compact ? 'px-4 py-2' : '',
-  bordered ? 'border-r border-neutral-200 last:border-r-0' : ''
-].filter(Boolean).join(' ');
+const getCellClasses = () => {
+  const baseClass = 'table-cell';
+  const variantClass = compact ? 'table-cell-compact' : '';
+  return `${baseClass} ${variantClass}`.trim();
+};
 ---
 
 <!-- 
@@ -74,22 +77,22 @@ Props:
 -->
 
 {responsive ? (
-  <div class="overflow-x-auto shadow-sm ring-1 ring-neutral-200 sm:rounded-lg">
-    <table class={tableClasses}>
-      <thead class="bg-neutral-50">
+  <div class="table-container">
+    <table class={getComponentClasses()}>
+      <thead class="table-thead">
         <tr>
           {headers.map((header) => (
-            <th scope="col" class={headerClasses}>
+            <th scope="col" class={getHeaderClasses()}>
               {header}
             </th>
           ))}
         </tr>
       </thead>
-      <tbody class="divide-y divide-neutral-200">
+      <tbody class="table-tbody">
         {rows.map((row) => (
-          <tr class={rowClasses}>
+          <tr class={getRowClasses()}>
             {row.map((cell) => (
-              <td class={cellClasses}>
+              <td class={getCellClasses()}>
                 {cell}
               </td>
             ))}
@@ -99,21 +102,21 @@ Props:
     </table>
   </div>
 ) : (
-  <table class={tableClasses}>
-    <thead class="bg-neutral-50">
+  <table class={getComponentClasses()}>
+    <thead class="table-thead">
       <tr>
         {headers.map((header) => (
-          <th scope="col" class={headerClasses}>
+          <th scope="col" class={getHeaderClasses()}>
             {header}
           </th>
         ))}
       </tr>
     </thead>
-    <tbody class="divide-y divide-neutral-200">
+    <tbody class="table-tbody">
       {rows.map((row) => (
-        <tr class={rowClasses}>
+        <tr class={getRowClasses()}>
           {row.map((cell) => (
-            <td class={cellClasses}>
+            <td class={getCellClasses()}>
               {cell}
             </td>
           ))}

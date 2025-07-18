@@ -17,9 +17,19 @@ const {
   responsive = true
 } = Astro.props;
 
-const orientationClasses: { [key: string]: string } = {
-  'horizontal': 'flex-row',
-  'vertical': 'flex-col'
+// Generate class names using our design system
+const getNavigationMenuClasses = () => {
+  const baseClass = 'navigation-menu';
+  
+  return `${baseClass}`;
+};
+
+const getMenuListClasses = () => {
+  const baseClass = 'navigation-menu-list';
+  const orientationClass = `navigation-menu-list-${orientation}`;
+  const responsiveClass = responsive ? 'navigation-menu-desktop' : '';
+  
+  return `${baseClass} ${orientationClass} ${responsiveClass}`.trim();
 };
 ---
 
@@ -29,41 +39,41 @@ Pine UI Navigation Menu Component
 Usage:
 <NavigationMenu orientation="horizontal" trigger="hover">
   <div slot="brand">
-    <a href="/" class="flex items-center space-x-2">
+    <a href="/" class="navigation-menu-link">
       <img src="/logo.svg" alt="Logo" class="w-8 h-8">
       <span class="font-bold text-xl">Brand</span>
     </a>
   </div>
   
   <nav slot="menu">
-    <ul class="flex space-x-6">
-      <li>
-        <a href="/" class="text-gray-700 hover:text-gray-900">Home</a>
+    <ul class="navigation-menu-list navigation-menu-list-horizontal">
+      <li class="navigation-menu-item">
+        <a href="/" class="navigation-menu-link">Home</a>
       </li>
-      <li x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
-        <button class="text-gray-700 hover:text-gray-900 flex items-center">
+      <li class="navigation-menu-item" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+        <button class="navigation-menu-trigger">
           Products
           <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
           </svg>
         </button>
-        <div x-show="open" x-transition class="absolute top-full left-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
-          <a href="/products/web" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Web Apps</a>
-          <a href="/products/mobile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mobile Apps</a>
-          <a href="/products/desktop" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Desktop Apps</a>
+        <div x-show="open" x-transition class="navigation-menu-content">
+          <a href="/products/web" class="navigation-menu-content-item">Web Apps</a>
+          <a href="/products/mobile" class="navigation-menu-content-item">Mobile Apps</a>
+          <a href="/products/desktop" class="navigation-menu-content-item">Desktop Apps</a>
         </div>
       </li>
-      <li>
-        <a href="/about" class="text-gray-700 hover:text-gray-900">About</a>
+      <li class="navigation-menu-item">
+        <a href="/about" class="navigation-menu-link">About</a>
       </li>
-      <li>
-        <a href="/contact" class="text-gray-700 hover:text-gray-900">Contact</a>
+      <li class="navigation-menu-item">
+        <a href="/contact" class="navigation-menu-link">Contact</a>
       </li>
     </ul>
   </nav>
   
   <div slot="actions">
-    <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+    <button class="button button-md button-solid-blue">
       Get Started
     </button>
   </div>
@@ -73,12 +83,12 @@ Advanced Multi-level Menu:
 <NavigationMenu>
   <nav slot="menu">
     <div x-data="navigationMenu()" class="relative">
-      <ul class="flex space-x-6">
-        <li>
+      <ul class="navigation-menu-list navigation-menu-list-horizontal">
+        <li class="navigation-menu-item">
           <button 
             @mouseenter="openMenu('products')" 
             @mouseleave="closeMenu('products')"
-            class="text-gray-700 hover:text-gray-900"
+            class="navigation-menu-trigger"
           >
             Products
           </button>
@@ -87,20 +97,20 @@ Advanced Multi-level Menu:
             @mouseenter="openMenu('products')"
             @mouseleave="closeMenu('products')"
             x-transition
-            class="absolute top-full left-0 mt-2 w-96 bg-white border rounded-lg shadow-xl p-6"
+            class="navigation-menu-content navigation-menu-content-mega"
           >
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <h3 class="font-semibold text-gray-900 mb-2">Development</h3>
-                <a href="/web-dev" class="block py-1 text-sm text-gray-600 hover:text-gray-900">Web Development</a>
-                <a href="/mobile-dev" class="block py-1 text-sm text-gray-600 hover:text-gray-900">Mobile Development</a>
-                <a href="/api-dev" class="block py-1 text-sm text-gray-600 hover:text-gray-900">API Development</a>
+                <h3 class="navigation-menu-content-header">Development</h3>
+                <a href="/web-dev" class="navigation-menu-content-item">Web Development</a>
+                <a href="/mobile-dev" class="navigation-menu-content-item">Mobile Development</a>
+                <a href="/api-dev" class="navigation-menu-content-item">API Development</a>
               </div>
               <div>
-                <h3 class="font-semibold text-gray-900 mb-2">Design</h3>
-                <a href="/ui-design" class="block py-1 text-sm text-gray-600 hover:text-gray-900">UI Design</a>
-                <a href="/ux-design" class="block py-1 text-sm text-gray-600 hover:text-gray-900">UX Design</a>
-                <a href="/branding" class="block py-1 text-sm text-gray-600 hover:text-gray-900">Branding</a>
+                <h3 class="navigation-menu-content-header">Design</h3>
+                <a href="/ui-design" class="navigation-menu-content-item">UI Design</a>
+                <a href="/ux-design" class="navigation-menu-content-item">UX Design</a>
+                <a href="/branding" class="navigation-menu-content-item">Branding</a>
               </div>
             </div>
           </div>
@@ -113,15 +123,15 @@ Advanced Multi-level Menu:
 Responsive Mobile Menu:
 <NavigationMenu responsive={true}>
   <div slot="brand">
-    <a href="/" class="flex items-center">
+    <a href="/" class="navigation-menu-link">
       <span class="font-bold text-xl">Brand</span>
     </a>
   </div>
   
-  <div slot="mobile-toggle" class="md:hidden">
+  <div slot="mobile-toggle" class="navigation-menu-mobile-only">
     <button 
       @click="mobileMenuOpen = !mobileMenuOpen"
-      class="text-gray-500 hover:text-gray-600"
+      class="navigation-menu-mobile-toggle"
     >
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -130,12 +140,12 @@ Responsive Mobile Menu:
     </button>
   </div>
   
-  <nav slot="menu" class="hidden md:flex">
+  <nav slot="menu" class="navigation-menu-desktop">
     <!-- Desktop menu items -->
   </nav>
   
-  <nav slot="mobile-menu" class="md:hidden">
-    <div x-show="mobileMenuOpen" x-transition class="absolute top-full left-0 w-full bg-white border-t shadow-lg">
+  <nav slot="mobile-menu" class="navigation-menu-mobile-only">
+    <div x-show="mobileMenuOpen" x-transition class="navigation-menu-mobile">
       <!-- Mobile menu items -->
     </div>
   </nav>
@@ -230,22 +240,22 @@ Features:
   }`}
   @click.away="closeAllMenus()"
   @keydown.escape="closeAllMenus()"
-  class={`relative ${className}`}
+  class={`${getNavigationMenuClasses()} ${className}`}
 >
-  <div class={`flex items-center justify-between ${responsive ? 'flex-wrap' : ''} ${orientationClasses[orientation]}`}>
+  <div class={`navigation-menu-list ${responsive ? 'flex-wrap' : ''} ${orientation === 'vertical' ? 'navigation-menu-list-vertical' : 'navigation-menu-list-horizontal'}`}>
     
     <!-- Brand/Logo -->
-    <div class="flex-shrink-0">
+    <div class="navigation-menu-brand">
       <slot name="brand" />
     </div>
     
     <!-- Mobile Menu Toggle -->
     {responsive && (
-      <div class="md:hidden">
+      <div class="navigation-menu-mobile-only">
         <slot name="mobile-toggle">
           <button 
             @click="mobileMenuOpen = !mobileMenuOpen"
-            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+            class="navigation-menu-mobile-toggle"
             aria-expanded="false"
           >
             <span class="sr-only">Open main menu</span>
@@ -275,19 +285,19 @@ Features:
     )}
     
     <!-- Desktop Navigation -->
-    <div class={`${responsive ? 'hidden md:flex md:items-center md:space-x-8' : 'flex items-center space-x-8'} ${menuClass}`}>
+    <div class={`${getMenuListClasses()} ${menuClass}`}>
       <slot name="menu" />
     </div>
     
     <!-- Actions (CTA buttons, etc.) -->
-    <div class={`${responsive ? 'hidden md:flex md:items-center md:space-x-4' : 'flex items-center space-x-4'}`}>
+    <div class={`navigation-menu-actions ${responsive ? 'navigation-menu-desktop' : ''}`}>
       <slot name="actions" />
     </div>
   </div>
   
   <!-- Mobile Navigation Menu -->
   {responsive && (
-    <div class="md:hidden">
+    <div class="navigation-menu-mobile-only">
       <div 
         x-show="mobileMenuOpen"
         x-transition:enter="transition ease-out duration-200"
@@ -296,26 +306,24 @@ Features:
         x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95"
-        class="absolute top-full left-0 w-full bg-white border-t border-gray-200 shadow-lg z-50"
+        class="navigation-menu-mobile"
       >
-        <div class="px-2 pt-2 pb-3 space-y-1">
+        <div class="navigation-menu-mobile-content">
           <slot name="mobile-menu">
             <!-- Default mobile menu content -->
-            <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Home</a>
-            <a href="/about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">About</a>
-            <a href="/contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Contact</a>
+            <a href="/" class="navigation-menu-mobile-item">Home</a>
+            <a href="/about" class="navigation-menu-mobile-item">About</a>
+            <a href="/contact" class="navigation-menu-mobile-item">Contact</a>
           </slot>
         </div>
         
         <!-- Mobile Actions -->
-        <div class="pt-4 pb-3 border-t border-gray-200">
-          <div class="px-2 space-y-1">
-            <slot name="mobile-actions">
-              <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-blue-600 hover:text-blue-500 hover:bg-gray-50">
-                Get Started
-              </button>
-            </slot>
-          </div>
+        <div class="navigation-menu-mobile-actions">
+          <slot name="mobile-actions">
+            <button class="navigation-menu-mobile-item button button-md button-ghost-blue">
+              Get Started
+            </button>
+          </slot>
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ export interface Props {
   label?: string;
   description?: string;
   variant?: 'default' | 'custom';
+  size?: 'sm' | 'md' | 'lg';
   class?: string;
   labelClass?: string;
 }
@@ -19,9 +20,18 @@ const {
   label,
   description,
   variant = 'default',
+  size = 'md',
   class: className = "",
   labelClass = ""
 } = Astro.props;
+
+// Generate design system classes
+const getComponentClasses = () => {
+  const baseClass = 'checkbox';
+  const sizeClass = size ? `${baseClass}-${size}` : '';
+  const variantClass = variant !== 'default' ? `${baseClass}-${variant}` : '';
+  return `${baseClass} ${sizeClass} ${variantClass}`.trim();
+};
 ---
 
 <!-- 
@@ -48,26 +58,26 @@ Features:
 -->
 
 {variant === 'default' && (
-  <div class={`flex items-start ${className}`}>
-    <div class="flex items-center h-5">
+  <div class={`checkbox-wrapper ${className}`}>
+    <div class="checkbox-input-wrapper">
       <input 
         id={id}
         name={name}
         type="checkbox" 
         checked={checked}
         disabled={disabled}
-        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-neutral-900 focus:ring-neutral-900 focus:ring-2 disabled:opacity-50"
+        class={getComponentClasses()}
       />
     </div>
     {(label || description) && (
-      <div class="ml-3 text-sm">
+      <div class="checkbox-content">
         {label && (
-          <label for={id} class={`font-medium text-gray-900 ${labelClass} ${disabled ? 'opacity-50' : ''}`}>
+          <label for={id} class={`checkbox-label ${labelClass} ${disabled ? 'disabled' : ''}`}>
             {label}
           </label>
         )}
         {description && (
-          <p class={`text-gray-500 ${disabled ? 'opacity-50' : ''}`}>
+          <p class={`checkbox-description ${disabled ? 'disabled' : ''}`}>
             {description}
           </p>
         )}
@@ -77,31 +87,31 @@ Features:
 )}
 
 {variant === 'custom' && (
-  <div class={`flex items-start ${className}`}>
-    <div class="flex items-center h-5">
+  <div class={`checkbox-wrapper ${className}`}>
+    <div class="checkbox-input-wrapper">
       <input 
         id={id}
         name={name}
         type="checkbox" 
         checked={checked}
         disabled={disabled}
-        class="hidden peer"
+        class={`${getComponentClasses()} checkbox-hidden`}
       />
-      <label for={id} class={`flex items-center space-x-3 cursor-pointer ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}>
-        <span class="flex items-center justify-center w-5 h-5 border-2 border-gray-300 rounded peer-checked:border-neutral-900 peer-checked:bg-neutral-900 transition-colors duration-200">
-          <svg class="w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200" fill="currentColor" viewBox="0 0 20 20">
+      <label for={id} class={`checkbox-custom-label ${disabled ? 'disabled' : ''}`}>
+        <span class="checkbox-custom-indicator">
+          <svg class="checkbox-check-icon" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
           </svg>
         </span>
         {(label || description) && (
-          <div>
+          <div class="checkbox-content">
             {label && (
-              <span class={`text-sm font-medium text-gray-900 ${labelClass}`}>
+              <span class={`checkbox-label ${labelClass}`}>
                 {label}
               </span>
             )}
             {description && (
-              <p class="text-sm text-gray-500">
+              <p class="checkbox-description">
                 {description}
               </p>
             )}

@@ -1,0 +1,1547 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/pine/Button.astro';
+import Modal from '../components/pine/Modal.astro';
+import Toast from '../components/pine/Toast.astro';
+import Tooltip from '../components/pine/Tooltip.astro';
+import Popover from '../components/pine/Popover.astro';
+import Dropdown from '../components/pine/Dropdown.astro';
+import RetroGrid from '../components/pine/RetroGrid.astro';
+import SlideOver from '../components/pine/SlideOver.astro';
+import TextAnimation from '../components/pine/TextAnimation.astro';
+import MenuBar from '../components/pine/MenuBar.astro';
+import NavigationMenu from '../components/pine/NavigationMenu.astro';
+import Pagination from '../components/pine/Pagination.astro';
+import Breadcrumbs from '../components/pine/Breadcrumbs.astro';
+import Tabs from '../components/pine/Tabs.astro';
+import CopyToClipboard from '../components/pine/CopyToClipboard.astro';
+import VideoPlayer from '../components/pine/VideoPlayer.astro';
+import TextInput from '../components/pine/TextInput.astro';
+import Textarea from '../components/pine/Textarea.astro';
+import Select from '../components/pine/Select.astro';
+import Checkbox from '../components/pine/Checkbox.astro';
+import Switch from '../components/pine/Switch.astro';
+import RangeSlider from '../components/pine/RangeSlider.astro';
+import RadioGroup from '../components/pine/RadioGroup.astro';
+---
+
+<Layout title="Design System Test">
+  <main class="container">
+    <div class="stack-lg">
+      <h1>Design System Test</h1>
+      
+      <!-- Theme Toggle -->
+      <div>
+        <button 
+          class="theme-toggle"
+          onclick="toggleTheme()"
+          type="button"
+        >
+          🌙 Toggle Dark Mode
+        </button>
+      </div>
+
+      <!-- Typography Test -->
+      <section class="stack">
+        <h2>Typography Scale</h2>
+        <h1>Heading 1 (5xl)</h1>
+        <h2>Heading 2 (4xl)</h2>
+        <h3>Heading 3 (3xl)</h3>
+        <h4>Heading 4 (2xl)</h4>
+        <h5>Heading 5 (xl)</h5>
+        <h6>Heading 6 (lg)</h6>
+        <p>Body text (base) - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <small>Small text (xs) - Additional information</small>
+      </section>
+
+      <!-- Button Tests -->
+      <section class="stack">
+        <h2>Button Variants & Colors</h2>
+        
+        <div class="stack">
+          <h3>Solid Buttons</h3>
+          <div class="cluster">
+            <Button variant="solid" color="neutral">Neutral</Button>
+            <Button variant="solid" color="blue">Blue</Button>
+            <Button variant="solid" color="red">Red</Button>
+            <Button variant="solid" color="green">Green</Button>
+            <Button variant="solid" color="yellow">Yellow</Button>
+            <Button variant="solid" color="purple">Purple</Button>
+          </div>
+        </div>
+
+        <div class="stack">
+          <h3>Outline Buttons</h3>
+          <div class="cluster">
+            <Button variant="outline" color="neutral">Neutral</Button>
+            <Button variant="outline" color="blue">Blue</Button>
+            <Button variant="outline" color="red">Red</Button>
+            <Button variant="outline" color="green">Green</Button>
+            <Button variant="outline" color="yellow">Yellow</Button>
+            <Button variant="outline" color="purple">Purple</Button>
+          </div>
+        </div>
+
+        <div class="stack">
+          <h3>Soft Buttons</h3>
+          <div class="cluster">
+            <Button variant="soft" color="neutral">Neutral</Button>
+            <Button variant="soft" color="blue">Blue</Button>
+            <Button variant="soft" color="red">Red</Button>
+            <Button variant="soft" color="green">Green</Button>
+            <Button variant="soft" color="yellow">Yellow</Button>
+            <Button variant="soft" color="purple">Purple</Button>
+          </div>
+        </div>
+
+        <div class="stack">
+          <h3>Ghost Buttons</h3>
+          <div class="cluster">
+            <Button variant="ghost" color="neutral">Neutral</Button>
+            <Button variant="ghost" color="blue">Blue</Button>
+            <Button variant="ghost" color="red">Red</Button>
+            <Button variant="ghost" color="green">Green</Button>
+            <Button variant="ghost" color="yellow">Yellow</Button>
+            <Button variant="ghost" color="purple">Purple</Button>
+          </div>
+        </div>
+
+        <div class="stack">
+          <h3>Button Sizes</h3>
+          <div class="cluster">
+            <Button variant="solid" color="blue" size="sm">Small</Button>
+            <Button variant="solid" color="blue" size="md">Medium</Button>
+            <Button variant="solid" color="blue" size="lg">Large</Button>
+            <Button variant="solid" color="blue" size="xl">X-Large</Button>
+          </div>
+        </div>
+
+        <div class="stack">
+          <h3>Disabled State</h3>
+          <div class="cluster">
+            <Button variant="solid" color="blue" disabled>Disabled Solid</Button>
+            <Button variant="outline" color="blue" disabled>Disabled Outline</Button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Card Test -->
+      <section class="stack">
+        <h2>Cards & Layout</h2>
+        <div class="card card-shadow card-padding-md">
+          <h3>Test Card</h3>
+          <p>This is a test card using our design system. It should have proper spacing, colors, and shadows.</p>
+          <div class="cluster" style="margin-top: var(--space-4);">
+            <Button variant="solid" color="blue" size="sm">Primary Action</Button>
+            <Button variant="ghost" color="neutral" size="sm">Secondary</Button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Form Components Test -->
+      <section class="stack">
+        <h2>Form Components</h2>
+        
+        <!-- Text Input Components -->
+        <div class="stack">
+          <h3>Text Input & Textarea</h3>
+          <div class="card card-default card-padding-md">
+            <div class="stack">
+              <TextInput 
+                label="Email Address"
+                type="email"
+                placeholder="Enter your email"
+                description="We'll never share your email with anyone"
+                size="md"
+                variant="default"
+                required={true}
+              />
+              
+              <TextInput 
+                label="Large Input"
+                placeholder="Large size input"
+                size="lg"
+                variant="filled"
+              />
+              
+              <TextInput 
+                label="Small Input"
+                placeholder="Small size input"
+                size="sm"
+                variant="underlined"
+              />
+              
+              <TextInput 
+                label="Error State"
+                placeholder="Input with error"
+                error="This field is required"
+                value="invalid value"
+              />
+              
+              <Textarea 
+                label="Message"
+                placeholder="Write your message here..."
+                description="Maximum 500 characters"
+                rows={4}
+                variant="default"
+              />
+              
+              <Textarea 
+                label="Filled Textarea"
+                placeholder="Filled variant"
+                variant="filled"
+                rows={3}
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Select Component -->
+        <div class="stack">
+          <h3>Select Dropdown</h3>
+          <div class="card card-default card-padding-md">
+            <div class="stack">
+              <Select 
+                options={[
+                  { value: "option1", label: "Option 1" },
+                  { value: "option2", label: "Option 2" },
+                  { value: "option3", label: "Option 3" },
+                  { value: "option4", label: "Option 4", disabled: true },
+                  { value: "option5", label: "Option 5" }
+                ]}
+                placeholder="Choose an option..."
+                searchable={true}
+                selectedValue="option2"
+              />
+              
+              <Select 
+                options={[
+                  { value: "red", label: "Red" },
+                  { value: "green", label: "Green" },
+                  { value: "blue", label: "Blue" }
+                ]}
+                placeholder="Select a color"
+                searchable={false}
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Checkbox & Switch -->
+        <div class="stack">
+          <h3>Checkbox & Switch</h3>
+          <div class="card card-default card-padding-md">
+            <div class="stack">
+              <Checkbox 
+                id="checkbox-1"
+                label="Accept terms and conditions"
+                description="You agree to our Terms of Service and Privacy Policy"
+                size="md"
+                checked={false}
+              />
+              
+              <Checkbox 
+                id="checkbox-2"
+                label="Small checkbox"
+                size="sm"
+                checked={true}
+              />
+              
+              <Checkbox 
+                id="checkbox-3"
+                label="Large checkbox"
+                description="This is a larger checkbox variant"
+                size="lg"
+                checked={false}
+              />
+              
+              <Switch 
+                id="switch-1"
+                label="Email notifications"
+                description="Receive email updates about your account"
+                size="md"
+                checked={true}
+              />
+              
+              <Switch 
+                id="switch-2"
+                label="Small switch"
+                size="sm"
+                checked={false}
+              />
+              
+              <Switch 
+                id="switch-3"
+                label="Large switch"
+                description="Enable advanced features"
+                size="lg"
+                checked={true}
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Range Slider -->
+        <div class="stack">
+          <h3>Range Slider</h3>
+          <div class="card card-default card-padding-md">
+            <div class="stack">
+              <div>
+                <h4>Default Range Slider</h4>
+                <RangeSlider 
+                  min={0}
+                  max={100}
+                  step={1}
+                  value={50}
+                  showValue={true}
+                  size="md"
+                />
+              </div>
+              
+              <div>
+                <h4>Small Range Slider</h4>
+                <RangeSlider 
+                  min={0}
+                  max={10}
+                  step={0.5}
+                  value={7.5}
+                  showValue={true}
+                  size="sm"
+                />
+              </div>
+              
+              <div>
+                <h4>Large Range Slider</h4>
+                <RangeSlider 
+                  min={0}
+                  max={500}
+                  step={25}
+                  value={250}
+                  showValue={true}
+                  size="lg"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Radio Group -->
+        <div class="stack">
+          <h3>Radio Group</h3>
+          <div class="card card-default card-padding-md">
+            <div class="stack">
+              <div>
+                <h4>Subscription Plan</h4>
+                <RadioGroup 
+                  name="plan"
+                  options={[
+                    { 
+                      value: "basic", 
+                      title: "Basic Plan", 
+                      description: "Perfect for individuals and small teams" 
+                    },
+                    { 
+                      value: "pro", 
+                      title: "Pro Plan", 
+                      description: "Best for growing businesses with advanced features" 
+                    },
+                    { 
+                      value: "enterprise", 
+                      title: "Enterprise Plan", 
+                      description: "Complete solution for large organizations" 
+                    }
+                  ]}
+                  selectedValue="pro"
+                  size="md"
+                />
+              </div>
+              
+              <div>
+                <h4>Small Radio Group</h4>
+                <RadioGroup 
+                  name="size"
+                  options={[
+                    { value: "small", title: "Small", description: "Compact size option" },
+                    { value: "medium", title: "Medium", description: "Standard size option" },
+                    { value: "large", title: "Large", description: "Extended size option" }
+                  ]}
+                  selectedValue="medium"
+                  size="sm"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form States Demo -->
+        <div class="stack">
+          <h3>Form States</h3>
+          <div class="card card-default card-padding-md">
+            <div class="stack">
+              <TextInput 
+                label="Disabled Input"
+                placeholder="This input is disabled"
+                disabled={true}
+                value="Disabled value"
+              />
+              
+              <TextInput 
+                label="Readonly Input"
+                placeholder="This input is readonly"
+                readonly={true}
+                value="Readonly value"
+              />
+              
+              <Checkbox 
+                id="disabled-checkbox"
+                label="Disabled checkbox"
+                disabled={true}
+                checked={true}
+              />
+              
+              <Switch 
+                id="disabled-switch"
+                label="Disabled switch"
+                disabled={true}
+                checked={false}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Popover Test -->
+      <section class="stack">
+        <h2>Popover Component</h2>
+        <div class="cluster">
+          <!-- Basic click popover -->
+          <Popover placement="top" trigger="click" arrow={true}>
+            <div slot="trigger">
+              <Button variant="solid" color="blue">Click Popover</Button>
+            </div>
+            <div slot="content">
+              <div class="popover-header">Popover Title</div>
+              <div class="popover-body">This is the popover content with header.</div>
+            </div>
+          </Popover>
+
+          <!-- Hover popover -->
+          <Popover placement="bottom" trigger="hover" delay={200}>
+            <div slot="trigger">
+              <Button variant="outline" color="green">Hover Popover</Button>
+            </div>
+            <div slot="content">
+              <div class="popover-body">Hover content appears here!</div>
+            </div>
+          </Popover>
+
+          <!-- Focus popover -->
+          <Popover trigger="focus" placement="right" arrow={true}>
+            <input slot="trigger" type="text" placeholder="Focus me" class="input" />
+            <div slot="content">
+              <div class="popover-body">
+                <ul class="stack-sm">
+                  <li>• Suggestion 1</li>
+                  <li>• Suggestion 2</li>
+                  <li>• Suggestion 3</li>
+                </ul>
+              </div>
+            </div>
+          </Popover>
+        </div>
+      </section>
+
+      <!-- SlideOver Test -->
+      <section class="stack">
+        <h2>SlideOver Component</h2>
+        <div class="stack">
+          <h3>SlideOver Directions & Sizes</h3>
+          <div class="cluster">
+            <!-- Right SlideOver -->
+            <SlideOver id="slideover-right" side="right" size="md" closeable={true}>
+              <div slot="trigger">
+                <Button variant="solid" color="blue">Right SlideOver</Button>
+              </div>
+              <div slot="header">
+                <h3 style="color: var(--color-text-primary); font-weight: var(--font-weight-medium); margin: 0;">Right Panel</h3>
+                <p style="color: var(--color-text-secondary); font-size: var(--text-sm); margin: var(--space-1) 0 0 0;">This panel slides from the right side</p>
+              </div>
+              <div slot="body">
+                <div class="stack">
+                  <p>This is the main content area of the SlideOver component.</p>
+                  <p>You can put any content here including forms, lists, or other components.</p>
+                  <div class="card card-default card-padding-sm">
+                    <p style="margin: 0;">Example nested content in a card</p>
+                  </div>
+                </div>
+              </div>
+              <div slot="footer">
+                <Button variant="outline" color="neutral" size="sm">Cancel</Button>
+                <Button variant="solid" color="blue" size="sm">Save Changes</Button>
+              </div>
+            </SlideOver>
+
+            <!-- Left SlideOver -->
+            <SlideOver id="slideover-left" side="left" size="sm" closeable={true}>
+              <div slot="trigger">
+                <Button variant="solid" color="green">Left SlideOver</Button>
+              </div>
+              <div slot="header">
+                <h3 style="color: var(--color-text-primary); font-weight: var(--font-weight-medium); margin: 0;">Navigation</h3>
+              </div>
+              <div slot="body">
+                <div class="stack">
+                  <a href="#" style="color: var(--color-text-secondary); text-decoration: none; padding: var(--space-2); border-radius: var(--radius-md); transition: background var(--transition-fast);">Home</a>
+                  <a href="#" style="color: var(--color-text-secondary); text-decoration: none; padding: var(--space-2); border-radius: var(--radius-md); transition: background var(--transition-fast);">About</a>
+                  <a href="#" style="color: var(--color-text-secondary); text-decoration: none; padding: var(--space-2); border-radius: var(--radius-md); transition: background var(--transition-fast);">Services</a>
+                  <a href="#" style="color: var(--color-text-secondary); text-decoration: none; padding: var(--space-2); border-radius: var(--radius-md); transition: background var(--transition-fast);">Contact</a>
+                </div>
+              </div>
+            </SlideOver>
+
+            <!-- Top SlideOver -->
+            <SlideOver id="slideover-top" side="top" size="lg" closeable={true}>
+              <div slot="trigger">
+                <Button variant="solid" color="purple">Top SlideOver</Button>
+              </div>
+              <div slot="header">
+                <h3 style="color: var(--color-text-primary); font-weight: var(--font-weight-medium); margin: 0;">Top Panel</h3>
+                <p style="color: var(--color-text-secondary); font-size: var(--text-sm); margin: var(--space-1) 0 0 0;">Slides down from the top</p>
+              </div>
+              <div slot="body">
+                <p>This SlideOver opens from the top of the screen and is useful for notifications or quick actions.</p>
+              </div>
+              <div slot="footer">
+                <Button variant="solid" color="purple" size="sm">Got it</Button>
+              </div>
+            </SlideOver>
+
+            <!-- Bottom SlideOver -->
+            <SlideOver id="slideover-bottom" side="bottom" size="md" closeable={true}>
+              <div slot="trigger">
+                <Button variant="solid" color="yellow">Bottom SlideOver</Button>
+              </div>
+              <div slot="header">
+                <h3 style="color: var(--color-text-primary); font-weight: var(--font-weight-medium); margin: 0;">Bottom Sheet</h3>
+              </div>
+              <div slot="body">
+                <p>This is a bottom sheet style SlideOver, common in mobile interfaces.</p>
+                <div class="cluster">
+                  <Button variant="soft" color="blue" size="sm">Option 1</Button>
+                  <Button variant="soft" color="green" size="sm">Option 2</Button>
+                  <Button variant="soft" color="red" size="sm">Option 3</Button>
+                </div>
+              </div>
+            </SlideOver>
+          </div>
+
+          <h3>Different Sizes</h3>
+          <div class="cluster">
+            <SlideOver id="slideover-small" side="right" size="sm" closeable={true}>
+              <div slot="trigger">
+                <Button variant="outline" color="blue" size="sm">Small (sm)</Button>
+              </div>
+              <div slot="header">
+                <h4 style="margin: 0;">Small Panel</h4>
+              </div>
+              <div slot="body">
+                <p>This is a small panel, good for quick actions or narrow content.</p>
+              </div>
+            </SlideOver>
+
+            <SlideOver id="slideover-large" side="right" size="lg" closeable={true}>
+              <div slot="trigger">
+                <Button variant="outline" color="blue" size="sm">Large (lg)</Button>
+              </div>
+              <div slot="header">
+                <h4 style="margin: 0;">Large Panel</h4>
+              </div>
+              <div slot="body">
+                <p>This is a large panel with more space for complex content and forms.</p>
+                <div class="stack">
+                  <input class="input" type="text" placeholder="Name" />
+                  <input class="input" type="email" placeholder="Email" />
+                  <textarea class="textarea" placeholder="Message" rows="4"></textarea>
+                </div>
+              </div>
+              <div slot="footer">
+                <Button variant="outline" color="neutral" size="sm">Cancel</Button>
+                <Button variant="solid" color="blue" size="sm">Send Message</Button>
+              </div>
+            </SlideOver>
+
+            <SlideOver id="slideover-fullwidth" side="right" size="full" closeable={true}>
+              <div slot="trigger">
+                <Button variant="outline" color="blue" size="sm">Full Width</Button>
+              </div>
+              <div slot="header">
+                <h4 style="margin: 0;">Full Width Panel</h4>
+              </div>
+              <div slot="body">
+                <p>This panel takes up the full width/height available, useful for detailed forms or complex layouts.</p>
+              </div>
+            </SlideOver>
+          </div>
+        </div>
+      </section>
+
+      <!-- NavigationMenu Test -->
+      <section class="stack">
+        <h2>NavigationMenu Component</h2>
+        
+        <div class="stack">
+          <h3>Basic Navigation Menu</h3>
+          <div style="border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-4);">
+            <NavigationMenu orientation="horizontal" trigger="hover">
+              <div slot="brand">
+                <a href="/" class="navigation-menu-link">
+                  <span class="font-bold text-xl">Brand</span>
+                </a>
+              </div>
+              
+              <nav slot="menu">
+                <ul class="navigation-menu-list navigation-menu-list-horizontal">
+                  <li class="navigation-menu-item">
+                    <a href="/" class="navigation-menu-link">Home</a>
+                  </li>
+                  <li class="navigation-menu-item" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                    <button class="navigation-menu-trigger">
+                      Products
+                      <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                      </svg>
+                    </button>
+                    <div x-show="open" x-transition class="navigation-menu-content">
+                      <a href="/products/web" class="navigation-menu-content-item">Web Apps</a>
+                      <a href="/products/mobile" class="navigation-menu-content-item">Mobile Apps</a>
+                      <a href="/products/desktop" class="navigation-menu-content-item">Desktop Apps</a>
+                    </div>
+                  </li>
+                  <li class="navigation-menu-item">
+                    <a href="/about" class="navigation-menu-link">About</a>
+                  </li>
+                  <li class="navigation-menu-item">
+                    <a href="/contact" class="navigation-menu-link">Contact</a>
+                  </li>
+                </ul>
+              </nav>
+              
+              <div slot="actions">
+                <Button variant="solid" color="blue" size="sm">Get Started</Button>
+              </div>
+            </NavigationMenu>
+          </div>
+
+          <h3>Responsive Navigation Menu (Test on mobile)</h3>
+          <div style="border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-4);">
+            <NavigationMenu responsive={true}>
+              <div slot="brand">
+                <a href="/" class="navigation-menu-link">
+                  <span class="font-bold text-xl">Responsive Brand</span>
+                </a>
+              </div>
+              
+              <nav slot="menu">
+                <ul class="navigation-menu-list navigation-menu-list-horizontal">
+                  <li class="navigation-menu-item">
+                    <a href="/" class="navigation-menu-link">Home</a>
+                  </li>
+                  <li class="navigation-menu-item">
+                    <a href="/services" class="navigation-menu-link">Services</a>
+                  </li>
+                  <li class="navigation-menu-item">
+                    <a href="/portfolio" class="navigation-menu-link">Portfolio</a>
+                  </li>
+                  <li class="navigation-menu-item">
+                    <a href="/contact" class="navigation-menu-link">Contact</a>
+                  </li>
+                </ul>
+              </nav>
+              
+              <div slot="actions">
+                <Button variant="outline" color="blue" size="sm">Login</Button>
+                <Button variant="solid" color="blue" size="sm">Sign Up</Button>
+              </div>
+            </NavigationMenu>
+          </div>
+        </div>
+      </section>
+
+      <!-- MenuBar Test -->
+      <section class="stack">
+        <h2>MenuBar Component</h2>
+        
+        <div class="stack">
+          <h3>Web Style MenuBar</h3>
+          <MenuBar 
+            variant="web"
+            items={[
+              {
+                label: 'File',
+                items: [
+                  { label: 'New', shortcut: 'Cmd+N', action: 'newFile' },
+                  { label: 'Open', shortcut: 'Cmd+O', action: 'openFile' },
+                  { separator: true },
+                  { label: 'Save', shortcut: 'Cmd+S', action: 'saveFile' },
+                  { label: 'Save As...', shortcut: 'Cmd+Shift+S', action: 'saveAsFile' },
+                  { separator: true },
+                  { label: 'Export', disabled: true },
+                  { label: 'Print', shortcut: 'Cmd+P', action: 'printFile' }
+                ]
+              },
+              {
+                label: 'Edit',
+                items: [
+                  { label: 'Undo', shortcut: 'Cmd+Z', action: 'undo' },
+                  { label: 'Redo', shortcut: 'Cmd+Shift+Z', action: 'redo' },
+                  { separator: true },
+                  { label: 'Cut', shortcut: 'Cmd+X', action: 'cut' },
+                  { label: 'Copy', shortcut: 'Cmd+C', action: 'copy' },
+                  { label: 'Paste', shortcut: 'Cmd+V', action: 'paste' }
+                ]
+              },
+              {
+                label: 'View',
+                items: [
+                  { label: 'Zoom In', shortcut: 'Cmd++', action: 'zoomIn' },
+                  { label: 'Zoom Out', shortcut: 'Cmd+-', action: 'zoomOut' },
+                  { label: 'Reset Zoom', shortcut: 'Cmd+0', action: 'resetZoom' },
+                  { separator: true },
+                  { label: 'Toggle Sidebar', shortcut: 'Cmd+B', action: 'toggleSidebar' }
+                ]
+              },
+              {
+                label: 'Help',
+                items: [
+                  { label: 'Documentation', action: 'openDocs' },
+                  { label: 'Keyboard Shortcuts', shortcut: 'Cmd+/', action: 'showShortcuts' },
+                  { separator: true },
+                  { label: 'About', action: 'showAbout' }
+                ]
+              }
+            ]}
+          />
+          
+          <h3>Desktop Style MenuBar</h3>
+          <MenuBar 
+            variant="desktop"
+            items={[
+              {
+                label: 'File',
+                items: [
+                  { label: 'New Document', shortcut: 'Ctrl+N' },
+                  { label: 'Open...', shortcut: 'Ctrl+O' },
+                  { separator: true },
+                  { label: 'Save', shortcut: 'Ctrl+S' },
+                  { label: 'Save As...', shortcut: 'Ctrl+Shift+S' },
+                  { separator: true },
+                  { label: 'Recent Files', disabled: true },
+                  { separator: true },
+                  { label: 'Exit', shortcut: 'Alt+F4' }
+                ]
+              },
+              {
+                label: 'Edit',
+                items: [
+                  { label: 'Undo', shortcut: 'Ctrl+Z' },
+                  { label: 'Redo', shortcut: 'Ctrl+Y' },
+                  { separator: true },
+                  { label: 'Find', shortcut: 'Ctrl+F' },
+                  { label: 'Replace', shortcut: 'Ctrl+H' }
+                ]
+              },
+              {
+                label: 'Tools',
+                items: [
+                  { label: 'Preferences', shortcut: 'Ctrl+,' },
+                  { label: 'Extensions' },
+                  { separator: true },
+                  { label: 'Terminal', shortcut: 'Ctrl+`' }
+                ]
+              }
+            ]}
+          />
+        </div>
+      </section>
+
+      <!-- Dropdown Test -->
+      <section class="stack">
+        <h2>Dropdown Component</h2>
+        
+        <div class="cluster">
+          <Dropdown placement="bottom-start">
+            <div slot="trigger">
+              <Button variant="outline" color="neutral">Account Menu</Button>
+            </div>
+            <div slot="menu">
+              <div class="dropdown-header">Account</div>
+              <a href="#" class="dropdown-item">
+                <svg class="dropdown-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                Profile
+              </a>
+              <a href="#" class="dropdown-item">
+                <svg class="dropdown-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Settings
+              </a>
+              <div class="dropdown-separator"></div>
+              <a href="#" class="dropdown-item dropdown-item-danger">
+                <svg class="dropdown-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Sign out
+              </a>
+            </div>
+          </Dropdown>
+
+          <Dropdown placement="bottom-end">
+            <div slot="trigger">
+              <Button variant="solid" color="blue">Options ▼</Button>
+            </div>
+            <div slot="menu">
+              <a href="#" class="dropdown-item">Edit</a>
+              <a href="#" class="dropdown-item">Duplicate</a>
+              <a href="#" class="dropdown-item">Share</a>
+              <div class="dropdown-separator"></div>
+              <a href="#" class="dropdown-item dropdown-item-danger">Delete</a>
+            </div>
+          </Dropdown>
+        </div>
+      </section>
+
+      <!-- RetroGrid Test -->
+      <section class="stack">
+        <h2>RetroGrid Component</h2>
+        <div class="stack">
+          <h3>Animated RetroGrid (Default)</h3>
+          <div style="height: 300px; position: relative; border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden;">
+            <RetroGrid angle={60} animated={true}>
+              <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--color-text-primary); font-weight: var(--font-weight-bold); text-align: center;">
+                <div>
+                  <h4>Retro Grid Background</h4>
+                  <p>Content overlay on animated grid</p>
+                </div>
+              </div>
+            </RetroGrid>
+          </div>
+
+          <h3>Static RetroGrid (No Animation)</h3>
+          <div style="height: 300px; position: relative; border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden;">
+            <RetroGrid angle={45} animated={false}>
+              <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--color-text-primary); font-weight: var(--font-weight-bold); text-align: center;">
+                <div>
+                  <h4>Static Grid</h4>
+                  <p>No animation, different angle</p>
+                </div>
+              </div>
+            </RetroGrid>
+          </div>
+        </div>
+      </section>
+
+      <!-- TextAnimation Test -->
+      <section class="stack">
+        <h2>TextAnimation Component</h2>
+        <div class="stack">
+          <h3>Animation Types</h3>
+          <div class="stack">
+            <div class="cluster">
+              <strong>Fade:</strong>
+              <TextAnimation 
+                text="Hello World!" 
+                animation="fade" 
+                stagger={0.1}
+                duration={0.5}
+                autoStart={true}
+              />
+            </div>
+            
+            <div class="cluster">
+              <strong>Slide:</strong>
+              <TextAnimation 
+                text="Welcome to Pine UI!" 
+                animation="slide" 
+                stagger={0.05}
+                duration={0.6}
+                autoStart={true}
+              />
+            </div>
+            
+            <div class="cluster">
+              <strong>Scale:</strong>
+              <TextAnimation 
+                text="Design System Rocks" 
+                animation="scale" 
+                stagger={0.08}
+                duration={0.4}
+                autoStart={true}
+              />
+            </div>
+            
+            <div class="cluster">
+              <strong>Bounce:</strong>
+              <TextAnimation 
+                text="Bouncy Text!" 
+                animation="bounce" 
+                stagger={0.1}
+                duration={0.8}
+                autoStart={true}
+              />
+            </div>
+          </div>
+
+          <h3>Manual Control</h3>
+          <div class="stack">
+            <div class="cluster">
+              <TextAnimation 
+                text="Click to animate me!" 
+                animation="fade" 
+                stagger={0.1}
+                duration={0.5}
+                autoStart={false}
+                class="manual-animation"
+              />
+              <Button variant="solid" color="blue" onclick="document.querySelector('.manual-animation').dispatchEvent(new CustomEvent('startAnimation'))">
+                Start Animation
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CopyToClipboard Test -->
+      <section class="stack">
+        <h2>CopyToClipboard Component</h2>
+        <div class="stack">
+          <h3>Button Variant</h3>
+          <div class="cluster">
+            <CopyToClipboard 
+              text="Hello, this is text to copy!"
+              variant="button"
+              successMessage="Successfully copied!"
+              errorMessage="Copy failed!"
+            />
+            <CopyToClipboard 
+              text="npm install @pine-ui/astro"
+              variant="button"
+              successMessage="Command copied!"
+            />
+          </div>
+
+          <h3>Icon Variant</h3>
+          <div class="cluster">
+            <CopyToClipboard 
+              text="This text will be copied when you click the icon"
+              variant="icon"
+            />
+            <CopyToClipboard 
+              text="git clone https://github.com/example/repo.git"
+              variant="icon"
+              successMessage="Git command copied!"
+            />
+          </div>
+
+          <h3>Custom Styling</h3>
+          <div class="cluster">
+            <CopyToClipboard 
+              text="Custom styled copy button"
+              variant="button"
+              class="custom-copy-button"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Pagination Test -->
+      <section class="stack">
+        <h2>Pagination Component</h2>
+        
+        <div class="stack">
+          <h3>Basic Pagination</h3>
+          <Pagination 
+            currentPage={3}
+            totalPages={10}
+            totalItems={89}
+            itemsPerPage={10}
+            showInfo={true}
+            baseUrl="/test?page="
+          />
+
+          <h3>Large Dataset Pagination</h3>
+          <Pagination 
+            currentPage={15}
+            totalPages={50}
+            totalItems={500}
+            itemsPerPage={10}
+            showInfo={true}
+            showFirstLast={true}
+            maxVisible={7}
+            baseUrl="/products?page="
+          />
+
+          <h3>Simple Pagination (No Info)</h3>
+          <Pagination 
+            currentPage={2}
+            totalPages={5}
+            totalItems={25}
+            itemsPerPage={5}
+            showInfo={false}
+            showFirstLast={false}
+            baseUrl="/blog?page="
+          />
+        </div>
+      </section>
+
+      <!-- Breadcrumbs Test -->
+      <section class="stack">
+        <h2>Breadcrumbs Component</h2>
+        
+        <div class="stack">
+          <h3>Chevron Separator</h3>
+          <Breadcrumbs 
+            items={[
+              { label: "Dashboard", href: "/dashboard" },
+              { label: "Users", href: "/users" },
+              { label: "Profile Settings", current: true }
+            ]}
+            separator="chevron"
+            showHome={true}
+          />
+
+          <h3>Slash Separator</h3>
+          <Breadcrumbs 
+            items={[
+              { label: "Products", href: "/products" },
+              { label: "Electronics", href: "/products/electronics" },
+              { label: "Laptops", href: "/products/electronics/laptops" },
+              { label: "MacBook Pro", current: true }
+            ]}
+            separator="slash"
+            showHome={true}
+          />
+
+          <h3>Dot Separator (No Home)</h3>
+          <Breadcrumbs 
+            items={[
+              { label: "Blog", href: "/blog" },
+              { label: "Technology", href: "/blog/technology" },
+              { label: "Web Development", current: true }
+            ]}
+            separator="dot"
+            showHome={false}
+          />
+        </div>
+      </section>
+
+      <!-- Tabs Test -->
+      <section class="stack">
+        <h2>Tabs Component</h2>
+        
+        <div class="stack">
+          <h3>Underline Tabs</h3>
+          <Tabs 
+            tabs={[
+              { id: "overview", label: "Overview", content: "<p>This is the overview content section. Here you can see general information about the product or service.</p>" },
+              { id: "features", label: "Features", content: "<p>Feature list and detailed descriptions would go here. This tab contains all the important features.</p>" },
+              { id: "pricing", label: "Pricing", content: "<p>Pricing information and plans would be displayed in this section.</p>" },
+              { id: "support", label: "Support", disabled: true }
+            ]}
+            defaultTab="overview"
+            variant="underline"
+          />
+
+          <h3>Pills Tabs</h3>
+          <Tabs 
+            tabs={[
+              { id: "profile", label: "Profile", content: "<div class='stack'><p><strong>User Profile</strong></p><p>Personal information and settings.</p></div>" },
+              { id: "account", label: "Account", content: "<div class='stack'><p><strong>Account Settings</strong></p><p>Billing and subscription management.</p></div>" },
+              { id: "security", label: "Security", content: "<div class='stack'><p><strong>Security Settings</strong></p><p>Password and two-factor authentication.</p></div>" }
+            ]}
+            defaultTab="profile"
+            variant="pills"
+          />
+
+          <h3>Enclosed Tabs</h3>
+          <Tabs 
+            tabs={[
+              { id: "code", label: "Code", content: "<pre style='background: var(--color-surface); padding: var(--space-4); border-radius: var(--radius-md); overflow-x: auto;'><code>function hello() {\n  console.log('Hello World!');\n}</code></pre>" },
+              { id: "preview", label: "Preview", content: "<div style='padding: var(--space-4); background: var(--color-surface); border-radius: var(--radius-md);'><button class='button button-solid-blue button-sm'>Hello World!</button></div>" },
+              { id: "docs", label: "Documentation", content: "<p>Component documentation and usage examples would be displayed here.</p>" }
+            ]}
+            defaultTab="code"
+            variant="enclosed"
+          />
+        </div>
+      </section>
+
+      <!-- Modal Test -->
+      <section class="stack">
+        <h2>Modal Component</h2>
+        <div class="cluster">
+          <!-- Basic Modal -->
+          <Modal id="basic-modal" size="md" closeable={true}>
+            <div slot="trigger">
+              <Button variant="solid" color="blue">Open Basic Modal</Button>
+            </div>
+            <div slot="header">
+              <h3 style="margin: 0; color: var(--color-text-primary);">Basic Modal</h3>
+            </div>
+            <div slot="body">
+              <p>This is a basic modal with header, body, and footer. It can be closed by clicking outside, pressing escape, or using the close button.</p>
+              <div class="stack-sm">
+                <input class="input" type="text" placeholder="Sample input" />
+                <textarea class="textarea" placeholder="Sample textarea" rows="3"></textarea>
+              </div>
+            </div>
+            <div slot="footer">
+              <Button variant="outline" color="neutral" size="sm">Cancel</Button>
+              <Button variant="solid" color="blue" size="sm">Save</Button>
+            </div>
+          </Modal>
+
+          <!-- Different Sizes -->
+          <Modal id="small-modal" size="sm" closeable={true}>
+            <div slot="trigger">
+              <Button variant="outline" color="green" size="sm">Small Modal</Button>
+            </div>
+            <div slot="header">
+              <h4 style="margin: 0;">Small Modal</h4>
+            </div>
+            <div slot="body">
+              <p>This is a small modal, perfect for quick confirmations.</p>
+            </div>
+            <div slot="footer">
+              <Button variant="solid" color="green" size="sm">Confirm</Button>
+            </div>
+          </Modal>
+
+          <Modal id="large-modal" size="lg" closeable={true}>
+            <div slot="trigger">
+              <Button variant="outline" color="purple" size="sm">Large Modal</Button>
+            </div>
+            <div slot="header">
+              <h3 style="margin: 0;">Large Modal</h3>
+            </div>
+            <div slot="body">
+              <div class="stack">
+                <p>This is a large modal with more space for complex content.</p>
+                <div class="card card-default card-padding-md">
+                  <h4>Form Example</h4>
+                  <div class="stack">
+                    <input class="input" type="text" placeholder="Name" />
+                    <input class="input" type="email" placeholder="Email" />
+                    <select class="select">
+                      <option>Choose option</option>
+                      <option>Option 1</option>
+                      <option>Option 2</option>
+                    </select>
+                    <textarea class="textarea" placeholder="Message" rows="4"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div slot="footer">
+              <Button variant="outline" color="neutral">Cancel</Button>
+              <Button variant="solid" color="purple">Submit</Button>
+            </div>
+          </Modal>
+
+          <!-- Non-closeable Modal -->
+          <Modal id="required-modal" size="md" closeable={false}>
+            <div slot="trigger">
+              <Button variant="solid" color="red" size="sm">Required Action</Button>
+            </div>
+            <div slot="header">
+              <h3 style="margin: 0;">Required Action</h3>
+            </div>
+            <div slot="body">
+              <p>This modal cannot be closed by clicking outside or pressing escape. You must complete the action.</p>
+            </div>
+            <div slot="footer">
+              <Button variant="solid" color="red">Complete Action</Button>
+            </div>
+          </Modal>
+        </div>
+      </section>
+
+      <!-- Toast Test -->
+      <section class="stack">
+        <h2>Toast Component</h2>
+        <div class="stack">
+          <h3>Toast Variants</h3>
+          <div class="cluster">
+            <Button 
+              variant="solid" 
+              color="green" 
+              onclick="showToast('success', 'Success!', 'Your action was completed successfully.')"
+            >
+              Success Toast
+            </Button>
+            <Button 
+              variant="solid" 
+              color="red" 
+              onclick="showToast('error', 'Error!', 'Something went wrong. Please try again.')"
+            >
+              Error Toast
+            </Button>
+            <Button 
+              variant="solid" 
+              color="yellow" 
+              onclick="showToast('warning', 'Warning!', 'Please review your input before proceeding.')"
+            >
+              Warning Toast
+            </Button>
+            <Button 
+              variant="solid" 
+              color="blue" 
+              onclick="showToast('info', 'Information', 'Here is some helpful information for you.')"
+            >
+              Info Toast
+            </Button>
+            <Button 
+              variant="outline" 
+              color="neutral" 
+              onclick="showToast('default', 'Default', 'This is a default toast notification.')"
+            >
+              Default Toast
+            </Button>
+          </div>
+
+          <h3>Toast Positions</h3>
+          <div class="cluster">
+            <Button 
+              variant="soft" 
+              color="blue" 
+              size="sm"
+              onclick="showPositionalToast('top-right', 'Top Right')"
+            >
+              Top Right
+            </Button>
+            <Button 
+              variant="soft" 
+              color="blue" 
+              size="sm"
+              onclick="showPositionalToast('top-left', 'Top Left')"
+            >
+              Top Left
+            </Button>
+            <Button 
+              variant="soft" 
+              color="blue" 
+              size="sm"
+              onclick="showPositionalToast('bottom-right', 'Bottom Right')"
+            >
+              Bottom Right
+            </Button>
+            <Button 
+              variant="soft" 
+              color="blue" 
+              size="sm"
+              onclick="showPositionalToast('bottom-left', 'Bottom Left')"
+            >
+              Bottom Left
+            </Button>
+            <Button 
+              variant="soft" 
+              color="blue" 
+              size="sm"
+              onclick="showPositionalToast('top-center', 'Top Center')"
+            >
+              Top Center
+            </Button>
+            <Button 
+              variant="soft" 
+              color="blue" 
+              size="sm"
+              onclick="showPositionalToast('bottom-center', 'Bottom Center')"
+            >
+              Bottom Center
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tooltip Test -->
+      <section class="stack">
+        <h2>Tooltip Component</h2>
+        <div class="stack">
+          <h3>Tooltip Positions</h3>
+          <div class="cluster">
+            <Tooltip content="This tooltip appears on top" position="top">
+              <Button variant="outline" color="blue" size="sm">Top Tooltip</Button>
+            </Tooltip>
+            <Tooltip content="This tooltip appears on the right" position="right">
+              <Button variant="outline" color="green" size="sm">Right Tooltip</Button>
+            </Tooltip>
+            <Tooltip content="This tooltip appears at the bottom" position="bottom">
+              <Button variant="outline" color="purple" size="sm">Bottom Tooltip</Button>
+            </Tooltip>
+            <Tooltip content="This tooltip appears on the left" position="left">
+              <Button variant="outline" color="yellow" size="sm">Left Tooltip</Button>
+            </Tooltip>
+          </div>
+
+          <h3>Tooltip with Delay</h3>
+          <div class="cluster">
+            <Tooltip content="This tooltip has a 500ms delay" position="top" delay={500}>
+              <Button variant="soft" color="blue" size="sm">Delayed Tooltip</Button>
+            </Tooltip>
+            <Tooltip content="This tooltip has no arrow" position="bottom" showArrow={false}>
+              <Button variant="soft" color="green" size="sm">No Arrow</Button>
+            </Tooltip>
+          </div>
+
+          <h3>Tooltips on Different Elements</h3>
+          <div class="cluster">
+            <Tooltip content="Input field tooltip" position="top">
+              <input class="input" type="text" placeholder="Hover for tooltip" style="width: 200px;" />
+            </Tooltip>
+            <Tooltip content="Select dropdown tooltip" position="bottom">
+              <select class="select" style="width: 150px;">
+                <option>Select option</option>
+                <option>Option 1</option>
+                <option>Option 2</option>
+              </select>
+            </Tooltip>
+            <Tooltip content="This text has a helpful tooltip" position="top">
+              <span style="text-decoration: underline; cursor: help; color: var(--color-primary);">
+                Hover this text
+              </span>
+            </Tooltip>
+          </div>
+        </div>
+      </section>
+
+      <!-- VideoPlayer Test -->
+      <section>
+        <h2>VideoPlayer Component</h2>
+        <div class="stack-md">
+          <h3>Basic VideoPlayer</h3>
+          <div class="cluster">
+            <VideoPlayer 
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+              poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
+              width="640"
+              height="360"
+              showControls={true}
+              showFullscreen={true}
+              showVolumeControl={true}
+              showProgress={true}
+              showTime={true}
+              showPlaybackSpeed={true}
+            />
+          </div>
+          
+          <h3>VideoPlayer with Multiple Sources</h3>
+          <div class="cluster">
+            <VideoPlayer 
+              sources={[
+                { src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", type: "video/mp4", label: "MP4" },
+                { src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.webm", type: "video/webm", label: "WebM" }
+              ]}
+              poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
+              width="480"
+              height="270"
+            />
+          </div>
+
+          <h3>Minimal VideoPlayer</h3>
+          <div class="cluster">
+            <VideoPlayer 
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+              width="320"
+              height="180"
+              showPlaybackSpeed={false}
+              showTime={false}
+            />
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+
+    // Toast notification functions
+    let toastContainer;
+    let toastId = 0;
+
+    function ensureToastContainer() {
+      if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toast-container';
+        toastContainer.style.cssText = `
+          position: fixed;
+          top: 1rem;
+          right: 1rem;
+          z-index: 9999;
+          pointer-events: none;
+          max-width: 24rem;
+        `;
+        document.body.appendChild(toastContainer);
+      }
+      return toastContainer;
+    }
+
+    function createToastElement(variant, title, message, position = 'top-right') {
+      const toast = document.createElement('div');
+      const id = `toast-${++toastId}`;
+      
+      const positionStyles = {
+        'top-right': 'top: 1rem; right: 1rem;',
+        'top-left': 'top: 1rem; left: 1rem;',
+        'bottom-right': 'bottom: 1rem; right: 1rem;',
+        'bottom-left': 'bottom: 1rem; left: 1rem;',
+        'top-center': 'top: 1rem; left: 50%; transform: translateX(-50%);',
+        'bottom-center': 'bottom: 1rem; left: 50%; transform: translateX(-50%);'
+      };
+
+      toast.innerHTML = `
+        <div class="toast toast-${variant}" style="position: fixed; ${positionStyles[position]} z-index: 9999; pointer-events: auto; max-width: 24rem; margin-bottom: 0.5rem;">
+          <svg class="toast-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            ${getToastIcon(variant)}
+          </svg>
+          <div class="toast-content">
+            <p class="toast-title">${title}</p>
+            <div class="toast-message has-title">${message}</div>
+          </div>
+          <button class="toast-close" onclick="removeToast('${id}')" type="button">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+          <div class="toast-progress" style="width: 100%; transition: width 5000ms linear; animation: toast-progress 5s linear forwards;"></div>
+        </div>
+      `;
+      
+      toast.id = id;
+      document.body.appendChild(toast);
+      
+      // Auto remove after 5 seconds
+      setTimeout(() => removeToast(id), 5000);
+      
+      return toast;
+    }
+
+    function getToastIcon(variant) {
+      const icons = {
+        'success': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>',
+        'error': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>',
+        'warning': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"></path>',
+        'info': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
+        'default': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>'
+      };
+      return icons[variant] || icons.default;
+    }
+
+    function removeToast(id) {
+      const toast = document.getElementById(id);
+      if (toast) {
+        toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-1rem) scale(0.95)';
+        setTimeout(() => toast.remove(), 300);
+      }
+    }
+
+    window.showToast = (variant, title, message) => {
+      createToastElement(variant, title, message);
+    };
+
+    window.showPositionalToast = (position, title) => {
+      createToastElement('info', title, `This toast appears in the ${position} position.`, position);
+    };
+
+    window.removeToast = removeToast;
+
+    // Demo functions for MenuBar actions
+    window.newFile = () => alert('New file created!');
+    window.openFile = () => alert('File dialog opened!');
+    window.saveFile = () => alert('File saved!');
+    window.saveAsFile = () => alert('Save As dialog opened!');
+    window.printFile = () => alert('Print dialog opened!');
+    window.undo = () => alert('Undo performed!');
+    window.redo = () => alert('Redo performed!');
+    window.cut = () => alert('Cut operation!');
+    window.copy = () => alert('Copy operation!');
+    window.paste = () => alert('Paste operation!');
+    window.zoomIn = () => alert('Zoomed in!');
+    window.zoomOut = () => alert('Zoomed out!');
+    window.resetZoom = () => alert('Zoom reset!');
+    window.toggleSidebar = () => alert('Sidebar toggled!');
+    window.openDocs = () => alert('Documentation opened!');
+    window.showShortcuts = () => alert('Keyboard shortcuts displayed!');
+    window.showAbout = () => alert('About dialog shown!');
+
+    // Load saved theme or default to light
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      
+      // Test navigation components functionality
+      console.log('Testing navigation components...');
+      
+      // Test if tabs are working
+      setTimeout(() => {
+        const tabButtons = document.querySelectorAll('.tab-item');
+        if (tabButtons.length > 0) {
+          console.log('✓ Tabs found:', tabButtons.length);
+          
+          // Test click functionality
+          tabButtons.forEach((btn, idx) => {
+            if (!btn.disabled && idx === 1) { // Click the second tab
+              btn.click();
+              console.log('✓ Tab clicked successfully');
+            }
+          });
+        } else {
+          console.warn('⚠ No tabs found');
+        }
+        
+        // Test pagination buttons
+        const paginationButtons = document.querySelectorAll('.pagination-button');
+        if (paginationButtons.length > 0) {
+          console.log('✓ Pagination buttons found:', paginationButtons.length);
+        } else {
+          console.warn('⚠ No pagination buttons found');
+        }
+        
+        // Test breadcrumbs
+        const breadcrumbs = document.querySelectorAll('.breadcrumb-link');
+        if (breadcrumbs.length > 0) {
+          console.log('✓ Breadcrumb links found:', breadcrumbs.length);
+        } else {
+          console.warn('⚠ No breadcrumb links found');
+        }
+        
+        // Test navigation menu
+        const navMenus = document.querySelectorAll('.navigation-menu');
+        if (navMenus.length > 0) {
+          console.log('✓ Navigation menus found:', navMenus.length);
+        } else {
+          console.warn('⚠ No navigation menus found');
+        }
+        
+        // Test menu bar
+        const menuBars = document.querySelectorAll('.menu-bar');
+        if (menuBars.length > 0) {
+          console.log('✓ Menu bars found:', menuBars.length);
+        } else {
+          console.warn('⚠ No menu bars found');
+        }
+      }, 1000);
+    });
+  </script>
+</Layout>

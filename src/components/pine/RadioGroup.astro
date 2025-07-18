@@ -7,6 +7,7 @@ export interface Props {
     description?: string;
   }>;
   selectedValue?: string;
+  size?: 'sm' | 'md' | 'lg';
   class?: string;
 }
 
@@ -14,8 +15,16 @@ const {
   name,
   options,
   selectedValue = '',
+  size = 'md',
   class: className = ""
 } = Astro.props;
+
+// Generate design system classes
+const getComponentClasses = () => {
+  const baseClass = 'radio';
+  const sizeClass = size ? `${baseClass}-${size}` : '';
+  return `${baseClass} ${sizeClass}`.trim();
+};
 ---
 
 <!-- 
@@ -51,30 +60,30 @@ Features:
     radioGroupSelectedValue: '${selectedValue}',
     radioGroupOptions: ${JSON.stringify(options)}
   }`}
-  class={`space-y-4 ${className}`}
+  class={`radio-group ${className}`}
 >
   <template x-for="(option, index) in radioGroupOptions" :key="option.value">
-    <div class="flex items-start">
-      <div class="flex items-center h-5">
+    <div class="radio-wrapper">
+      <div class="radio-input-wrapper">
         <input 
           :id="name + '-' + option.value"
           :name="name"
           type="radio" 
           :value="option.value"
           x-model="radioGroupSelectedValue"
-          class="w-4 h-4 border-gray-300 text-neutral-900 focus:ring-neutral-900 focus:ring-2"
+          class={getComponentClasses()}
         />
       </div>
-      <div class="ml-3 text-sm">
+      <div class="radio-content">
         <label 
           :for="name + '-' + option.value" 
-          class="font-medium text-gray-900 cursor-pointer"
+          class="radio-label"
           x-text="option.title"
         ></label>
         <p 
           x-show="option.description" 
           x-text="option.description"
-          class="text-gray-500"
+          class="radio-description"
         ></p>
       </div>
     </div>

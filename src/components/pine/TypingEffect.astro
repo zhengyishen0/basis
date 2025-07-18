@@ -6,6 +6,8 @@ export interface Props {
   pauseEnd?: number;
   pauseStart?: number;
   cursorChar?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  color?: 'primary' | 'secondary' | 'neutral' | 'blue' | 'red' | 'green' | 'yellow' | 'purple';
   class?: string;
 }
 
@@ -16,8 +18,19 @@ const {
   pauseEnd = 2000,
   pauseStart = 20,
   cursorChar = '|',
+  size = 'md',
+  color = 'primary',
   class: className = ""
 } = Astro.props;
+
+// Generate class names using our design system
+const getComponentClasses = () => {
+  const baseClass = 'typing-effect';
+  const sizeClass = `typing-effect-${size}`;
+  const colorClass = `typing-effect-${color}`;
+  
+  return `${baseClass} ${sizeClass} ${colorClass}`;
+};
 ---
 
 <!-- 
@@ -29,13 +42,18 @@ Usage:
   typeSpeed={100}
   deleteSpeed={50}
   pauseEnd={2000}
+  size="md"
+  color="primary"
 />
+
+Sizes: sm, md, lg, xl
+Colors: primary, secondary, neutral, blue, red, green, yellow, purple
 
 Features:
 - Multiple text cycling
 - Configurable typing speeds
-- Blinking cursor
-- Smooth text transitions
+- Blinking cursor animation
+- Design system integration
 - Alpine.js powered
 -->
 
@@ -92,7 +110,7 @@ Features:
     setTimeout(() => typeText(), pauseStart);
     blinkCursor();
   "
-  class={`inline-block ${className}`}
+  class={`${getComponentClasses()} ${className}`}
 >
-  <span x-text="text"></span><span x-show="cursor" x-text="cursorChar" class="animate-pulse"></span>
+  <span x-text="text" class="typing-effect-text"></span><span x-show="cursor" x-text="cursorChar" class="typing-effect-cursor"></span>
 </div>

@@ -25,19 +25,27 @@ const {
   class: className = ""
 } = Astro.props;
 
-const colorClasses: { [key: string]: string } = {
-  'blue': 'bg-blue-600',
-  'green': 'bg-green-600',
-  'red': 'bg-red-600',
-  'yellow': 'bg-yellow-500',
-  'purple': 'bg-purple-600',
-  'gray': 'bg-gray-600'
+// Generate class names using our design system
+const getProgressClasses = () => {
+  const baseClass = 'progress';
+  return `${baseClass} ${className}`.trim();
 };
 
-const sizeClasses: { [key: string]: string } = {
-  'sm': 'h-2',
-  'md': 'h-3',
-  'lg': 'h-4'
+const getProgressContainerClasses = () => {
+  const baseClass = 'progress-container';
+  const sizeClass = `progress-container-${size}`;
+  return `${baseClass} ${sizeClass}`.trim();
+};
+
+const getProgressBarClasses = () => {
+  const baseClass = 'progress-bar';
+  const colorClass = `progress-bar-${color}`;
+  const variantClasses = [];
+  
+  if (striped) variantClasses.push('progress-bar-striped');
+  if (animated) variantClasses.push('progress-bar-animated');
+  
+  return `${baseClass} ${colorClass} ${variantClasses.join(' ')}`.trim();
 };
 ---
 
@@ -109,37 +117,35 @@ Features:
       startAutoIncrement();
     }
   "
-  class={`w-full ${className}`}
+  class={getProgressClasses()}
 >
   <!-- Progress label -->
   {showLabel && (
-    <div class="flex justify-between items-center mb-2">
-      <span class="text-sm font-medium text-gray-700">Progress</span>
-      <span class="text-sm text-gray-500" x-text="`${Math.round(percentage)}%`"></span>
+    <div class="progress-label-container">
+      <span class="progress-label">Progress</span>
+      <span class="progress-value" x-text="`${Math.round(percentage)}%`"></span>
     </div>
   )}
   
   <!-- Progress bar container -->
-  <div class={`relative w-full ${sizeClasses[size]} overflow-hidden rounded-full bg-gray-200`}>
+  <div class={getProgressContainerClasses()}>
     <!-- Progress bar -->
     <div 
       :style="`width: ${percentage}%`"
-      class={`h-full transition-all duration-300 ease-linear ${colorClasses[color]} ${
-        striped ? 'bg-striped' : ''
-      } ${animated ? 'animate-progress' : ''}`}
+      class={getProgressBarClasses()}
       x-cloak
     >
       <!-- Optional inner glow effect -->
-      <div class="absolute inset-0 bg-gradient-to-r from-transparent to-white opacity-20"></div>
+      <div class="progress-inner-glow"></div>
     </div>
   </div>
   
   <!-- Auto-increment controls -->
   {autoIncrement && (
-    <div class="flex items-center justify-center mt-3 space-x-2">
+    <div class="progress-controls">
       <button 
         @click="resetProgress()"
-        class="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors duration-200"
+        class="button button-sm button-soft-neutral"
         type="button"
       >
         Reset
@@ -148,33 +154,3 @@ Features:
   )}
 </div>
 
-<style>
-/* Striped pattern */
-.bg-striped {
-  background-image: linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.15) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.15) 75%,
-    transparent 75%,
-    transparent
-  );
-  background-size: 1rem 1rem;
-}
-
-/* Animation for striped progress bars */
-@keyframes progress {
-  0% {
-    background-position: 1rem 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
-}
-
-.animate-progress {
-  animation: progress 1s linear infinite;
-}
-</style>

@@ -14,6 +14,35 @@ const {
   maxHeight = '400px',
   showShortcuts = true
 } = Astro.props;
+
+// Generate class names using our design system
+const getComponentClasses = () => {
+  return {
+    command: 'command',
+    backdrop: 'command-backdrop',
+    inputContainer: 'command-input-container',
+    inputIcon: 'command-input-icon',
+    input: 'command-input',
+    shortcuts: 'command-shortcuts',
+    list: 'command-list',
+    group: 'command-group',
+    groupHeader: 'command-group-header',
+    item: 'command-item',
+    itemActive: 'command-item-active',
+    itemText: 'command-item-text',
+    empty: 'command-empty',
+    emptyIcon: 'command-empty-icon',
+    emptyTitle: 'command-empty-title',
+    emptyDescription: 'command-empty-description',
+    footer: 'command-footer',
+    footerControls: 'command-footer-controls',
+    footerControl: 'command-footer-control',
+    footerShortcut: 'command-footer-shortcut',
+    kbd: 'command-kbd'
+  };
+};
+
+const classes = getComponentClasses();
 ---
 
 <!-- 
@@ -191,7 +220,7 @@ Events:
     <div 
       x-show="commandOpen" 
       x-transition.opacity.duration.200ms
-      class="fixed inset-0 z-[99] flex items-start justify-center w-screen h-screen bg-black bg-opacity-50 pt-[10vh]"
+      class={classes.backdrop}
       @click.self="closeCommand()"
       @keydown.escape="closeCommand()"
       @keydown.arrow-up.prevent="navigateCommand('up')"
@@ -206,37 +235,35 @@ Events:
         x-transition:leave="ease-in duration-200"
         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
         x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-        class={`w-full max-w-lg bg-white rounded-lg shadow-xl border border-neutral-200 overflow-hidden ${className}`}
+        class={`${classes.command} ${className}`}
       >
         <!-- Search Input -->
-        <div class="border-b border-neutral-100">
-          <div class="flex items-center px-4 py-3">
-            <svg class="w-5 h-5 text-neutral-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-            <input
-              x-ref="commandInput"
-              x-model="commandQuery"
-              @input="filterCommands()"
-              type="text"
-              placeholder={placeholder}
-              class="w-full text-sm text-neutral-900 placeholder-neutral-500 bg-transparent border-none outline-none"
-            />
-            <div class="flex items-center gap-1 text-xs text-neutral-400">
-              <kbd class="px-1.5 py-0.5 text-xs font-semibold text-neutral-600 bg-neutral-100 border border-neutral-200 rounded">Esc</kbd>
-            </div>
+        <div class={classes.inputContainer}>
+          <svg class={classes.inputIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input
+            x-ref="commandInput"
+            x-model="commandQuery"
+            @input="filterCommands()"
+            type="text"
+            placeholder={placeholder}
+            class={classes.input}
+          />
+          <div class={classes.shortcuts}>
+            <kbd class={classes.kbd}>Esc</kbd>
           </div>
         </div>
         
         <!-- Command List -->
         <div 
-          class="overflow-y-auto"
+          class={classes.list}
           :style="`max-height: ${maxHeight}`"
         >
           <template x-for="(group, groupName) in getGroupedCommands()" :key="groupName">
-            <div class="py-2">
+            <div class={classes.group}>
               <!-- Group Header -->
-              <div class="px-4 py-1.5 text-xs font-semibold text-neutral-500 uppercase tracking-wider bg-neutral-50">
+              <div class={classes.groupHeader}>
                 <span x-text="groupName"></span>
               </div>
               
@@ -245,15 +272,15 @@ Events:
                 <div
                   @click="selectCommand(item)"
                   :class="{
-                    'bg-neutral-100': commandItemsFiltered.indexOf(item) === commandItemActive
+                    'command-item-active': commandItemsFiltered.indexOf(item) === commandItemActive
                   }"
-                  class="flex items-center justify-between px-4 py-3 text-sm cursor-pointer hover:bg-neutral-50 transition-colors duration-150"
+                  class={classes.item}
                 >
-                  <span x-text="item.text" class="text-neutral-900"></span>
+                  <span x-text="item.text" class={classes.itemText}></span>
                   <template x-if="showShortcuts && item.shortcut">
                     <kbd 
                       x-text="item.shortcut"
-                      class="px-2 py-1 text-xs font-semibold text-neutral-600 bg-neutral-100 border border-neutral-200 rounded"
+                      class={classes.kbd}
                     ></kbd>
                   </template>
                 </div>
@@ -263,30 +290,30 @@ Events:
           
           <!-- No Results -->
           <template x-if="commandItemsFiltered.length === 0 && commandQuery.trim()">
-            <div class="px-4 py-8 text-center">
-              <svg class="w-8 h-8 text-neutral-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class={classes.empty}>
+              <svg class={classes.emptyIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.467-.881-6.084-2.324.208-.35.498-.644.849-.844L8 11.25c.287-.29.635-.447 1-.447s.713.157 1 .447l1.235.582c.351.2.641.494.849.844C13.467 14.119 11.34 15 9 15z"></path>
               </svg>
-              <p class="text-sm text-neutral-500">No commands found</p>
-              <p class="text-xs text-neutral-400 mt-1">Try a different search term</p>
+              <p class={classes.emptyTitle}>No commands found</p>
+              <p class={classes.emptyDescription}>Try a different search term</p>
             </div>
           </template>
         </div>
         
         <!-- Footer -->
-        <div class="flex items-center justify-between px-4 py-2 text-xs text-neutral-500 bg-neutral-50 border-t border-neutral-100">
-          <div class="flex items-center gap-4">
-            <div class="flex items-center gap-1">
-              <kbd class="px-1.5 py-0.5 font-semibold bg-white border border-neutral-200 rounded">↑↓</kbd>
+        <div class={classes.footer}>
+          <div class={classes.footerControls}>
+            <div class={classes.footerControl}>
+              <kbd class={classes.kbd}>↑↓</kbd>
               <span>Navigate</span>
             </div>
-            <div class="flex items-center gap-1">
-              <kbd class="px-1.5 py-0.5 font-semibold bg-white border border-neutral-200 rounded">↵</kbd>
+            <div class={classes.footerControl}>
+              <kbd class={classes.kbd}>↵</kbd>
               <span>Select</span>
             </div>
           </div>
-          <div class="flex items-center gap-1">
-            <kbd class="px-1.5 py-0.5 font-semibold bg-white border border-neutral-200 rounded">⌘K</kbd>
+          <div class={classes.footerShortcut}>
+            <kbd class={classes.kbd}>⌘K</kbd>
             <span>Open</span>
           </div>
         </div>

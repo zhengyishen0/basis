@@ -1,0 +1,267 @@
+---
+import Layout from '../layouts/Layout.astro';
+import RetroGrid from '../components/pine/RetroGrid.astro';
+import TextAnimation from '../components/pine/TextAnimation.astro';
+import VideoPlayer from '../components/pine/VideoPlayer.astro';
+import ImageGallery from '../components/pine/ImageGallery.astro';
+import CopyToClipboard from '../components/pine/CopyToClipboard.astro';
+import Card from '../components/pine/Card.astro';
+import Badge from '../components/pine/Badge.astro';
+import Alert from '../components/pine/Alert.astro';
+
+// Test data for ImageGallery
+const testImages = [
+  { 
+    src: 'https://picsum.photos/800/600?random=1', 
+    alt: 'Test Image 1', 
+    thumbnail: 'https://picsum.photos/300/300?random=1',
+    caption: 'Beautiful landscape photo'
+  },
+  { 
+    src: 'https://picsum.photos/800/600?random=2', 
+    alt: 'Test Image 2', 
+    thumbnail: 'https://picsum.photos/300/300?random=2',
+    caption: 'Urban architecture'
+  },
+  { 
+    src: 'https://picsum.photos/800/600?random=3', 
+    alt: 'Test Image 3', 
+    thumbnail: 'https://picsum.photos/300/300?random=3'
+  }
+];
+---
+
+<Layout title="Advanced Component Tests">
+  <main class="container">
+    <div class="stack-lg">
+      <h1>Advanced Component Tests</h1>
+      
+      <!-- Alert Tests -->
+      <section class="stack">
+        <h2>Alert Component</h2>
+        <div class="stack">
+          <Alert variant="blue" title="Information" dismissible={true}>
+            This is an informational alert with dismissible functionality.
+          </Alert>
+          <Alert variant="green" title="Success">
+            Operation completed successfully!
+          </Alert>
+          <Alert variant="red" title="Error">
+            Something went wrong. Please try again.
+          </Alert>
+          <Alert variant="yellow">
+            Warning: This action cannot be undone.
+          </Alert>
+        </div>
+      </section>
+
+      <!-- Badge Tests -->
+      <section class="stack">
+        <h2>Badge Component</h2>
+        <div class="cluster">
+          <Badge variant="solid" color="blue" size="sm">New</Badge>
+          <Badge variant="soft" color="green" size="md">Success</Badge>
+          <Badge variant="outline" color="red" size="lg">Error</Badge>
+          <Badge variant="dot" color="purple">Status</Badge>
+        </div>
+      </section>
+
+      <!-- Card Tests -->
+      <section class="stack">
+        <h2>Card Component</h2>
+        <div class="cluster">
+          <Card variant="default" padding="md">
+            <div slot="header">
+              <h3>Default Card</h3>
+            </div>
+            <div slot="body">
+              <p>This is a default card with header and body content.</p>
+            </div>
+          </Card>
+          
+          <Card variant="shadow" padding="lg">
+            <div slot="body">
+              <h3>Shadow Card</h3>
+              <p>This card has a shadow variant.</p>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <!-- CopyToClipboard Tests -->
+      <section class="stack">
+        <h2>CopyToClipboard Component</h2>
+        <div class="cluster">
+          <CopyToClipboard 
+            text="Hello, this text will be copied!"
+            variant="button"
+            successMessage="Text copied successfully!"
+          />
+          <CopyToClipboard 
+            text="npm install @pine-ui/astro"
+            variant="icon"
+            successMessage="Command copied!"
+          />
+        </div>
+      </section>
+
+      <!-- ImageGallery Tests -->
+      <section class="stack">
+        <h2>ImageGallery Component</h2>
+        <ImageGallery 
+          images={testImages}
+          columns={3}
+          gap="md"
+          aspectRatio="square"
+        />
+      </section>
+
+      <!-- VideoPlayer Tests -->
+      <section class="stack">
+        <h2>VideoPlayer Component</h2>
+        <div style="max-width: 640px;">
+          <VideoPlayer 
+            src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
+            width="640"
+            height="360"
+            showControls={true}
+            showFullscreen={true}
+            showVolumeControl={true}
+            showProgress={true}
+            showTime={true}
+            showPlaybackSpeed={true}
+          />
+        </div>
+      </section>
+
+      <!-- TextAnimation Tests -->
+      <section class="stack">
+        <h2>TextAnimation Component</h2>
+        <div class="stack">
+          <div>
+            <strong>Fade Animation:</strong>
+            <TextAnimation 
+              text="Hello World!" 
+              animation="fade" 
+              stagger={0.1}
+              duration={0.5}
+              autoStart={true}
+            />
+          </div>
+          
+          <div>
+            <strong>Scale Animation:</strong>
+            <TextAnimation 
+              text="Design System!" 
+              animation="scale" 
+              stagger={0.08}
+              duration={0.4}
+              autoStart={true}
+            />
+          </div>
+          
+          <div>
+            <strong>Slide Animation:</strong>
+            <TextAnimation 
+              text="Pine UI Components" 
+              animation="slide" 
+              stagger={0.05}
+              duration={0.6}
+              autoStart={true}
+            />
+          </div>
+          
+          <div>
+            <strong>Bounce Animation:</strong>
+            <TextAnimation 
+              text="Bouncy Text!" 
+              animation="bounce" 
+              stagger={0.1}
+              duration={0.8}
+              autoStart={true}
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- RetroGrid Tests -->
+      <section class="stack">
+        <h2>RetroGrid Component</h2>
+        <div class="stack">
+          <div style="height: 300px; position: relative; border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden;">
+            <RetroGrid angle={60} animated={true}>
+              <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--color-text-primary); font-weight: var(--font-weight-bold); text-align: center;">
+                <div>
+                  <h3>Animated RetroGrid</h3>
+                  <p>60° angle with animation</p>
+                </div>
+              </div>
+            </RetroGrid>
+          </div>
+
+          <div style="height: 200px; position: relative; border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden;">
+            <RetroGrid angle={45} animated={false}>
+              <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--color-text-primary); font-weight: var(--font-weight-bold); text-align: center;">
+                <div>
+                  <h4>Static RetroGrid</h4>
+                  <p>45° angle, no animation</p>
+                </div>
+              </div>
+            </RetroGrid>
+          </div>
+        </div>
+      </section>
+
+      <!-- Test Runner -->
+      <section class="stack">
+        <h2>Component Testing</h2>
+        <div class="card card-default card-padding-md">
+          <button 
+            onclick="runComponentTests()"
+            class="btn btn-solid btn-blue"
+            type="button"
+          >
+            Run Component Tests
+          </button>
+          <div id="test-results" style="margin-top: 1rem; font-family: monospace; white-space: pre-line;"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    async function runComponentTests() {
+      const resultsDiv = document.getElementById('test-results');
+      resultsDiv.textContent = 'Running tests...\n';
+      
+      // Capture console output
+      const originalLog = console.log;
+      let output = '';
+      console.log = (...args) => {
+        output += args.join(' ') + '\n';
+        originalLog(...args);
+      };
+
+      try {
+        // Load and run the test script
+        const response = await fetch('/test_components.js');
+        const testScript = await response.text();
+        eval(testScript);
+        
+        // Display results
+        resultsDiv.textContent = output;
+      } catch (error) {
+        resultsDiv.textContent = 'Error running tests: ' + error.message;
+      }
+      
+      // Restore console.log
+      console.log = originalLog;
+    }
+
+    // Auto-run tests on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(runComponentTests, 2000); // Wait for components to initialize
+    });
+  </script>
+</Layout>

@@ -30,25 +30,20 @@ const safeImages = Array.isArray(images) ? images.filter(img => img && img.src) 
 // Debug information (will be visible in server logs)
 console.log(`ImageGallery: Processing ${safeImages.length} images of ${images.length} provided`);
 
-const columnClasses: { [key: number]: string } = {
-  2: 'grid-cols-2',
-  3: 'grid-cols-2 md:grid-cols-3',
-  4: 'grid-cols-2 md:grid-cols-4',
-  5: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5',
-  6: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-6'
+// Generate class names using our design system
+const getComponentClasses = () => {
+  const baseClass = 'image-gallery';
+  const gridClass = `image-gallery-grid image-gallery-grid-${columns}`;
+  const gapClass = `image-gallery-gap-${gap}`;
+  
+  return `${baseClass} ${gridClass} ${gapClass}`;
 };
 
-const gapClasses: { [key: string]: string } = {
-  'sm': 'gap-2',
-  'md': 'gap-4',
-  'lg': 'gap-6'
-};
-
-const aspectRatioClasses: { [key: string]: string } = {
-  'square': 'aspect-square',
-  'video': 'aspect-video',
-  'photo': 'aspect-[4/3]',
-  'auto': ''
+const getItemClasses = () => {
+  const baseClass = 'image-gallery-item';
+  const aspectClass = aspectRatio !== 'auto' ? `image-gallery-item-${aspectRatio}` : 'image-gallery-item-auto';
+  
+  return `${baseClass} ${aspectClass}`;
 };
 ---
 
@@ -100,7 +95,7 @@ Props:
     imageGalleryOpened: false,
     imageGalleryActiveUrl: null,
     imageGalleryActiveIndex: 0,
-    imageGalleryImages: ${JSON.stringify(safeImages)},
+    imageGalleryImages: [],
     imageGalleryOpen(index) {
       this.imageGalleryActiveIndex = index;
       this.imageGalleryActiveUrl = this.imageGalleryImages[index].src;
@@ -129,43 +124,41 @@ Props:
       if (event.key === 'Escape') this.imageGalleryClose();
     }
   }"
+  x-init="imageGalleryImages = ${JSON.stringify(safeImages)}"
   @keydown.window="imageGalleryKeyHandler($event)"
-  class={className}
+  class={`${getComponentClasses()} ${className}`}
 >
   <!-- Image Grid -->
   {safeImages.length === 0 ? (
-    <div class="text-center py-8 text-gray-500">
-      <p>No images to display</p>
-      <p class="text-sm mt-2">Check console for debugging information</p>
+    <div class="image-gallery-empty">
+      <p class="image-gallery-empty-message">No images to display</p>
+      <p class="image-gallery-empty-hint">Check console for debugging information</p>
     </div>
   ) : (
-    <div class={`grid ${columnClasses[columns]} ${gapClasses[gap]}`}>
-      {safeImages.map((image, index) => (
+    {safeImages.map((image, index) => (
       <div 
-        class={`relative overflow-hidden rounded-lg cursor-pointer group ${aspectRatioClasses[aspectRatio]} ${thumbnailClass}`}
+        class={`${getItemClasses()} ${thumbnailClass}`}
         x-on:click={`imageGalleryOpen(${index})`}
       >
         <img 
           src={image.thumbnail || image.src}
           alt={image.alt || `Gallery image ${index + 1}`}
-          class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          class="image-gallery-thumbnail"
           loading="lazy"
-          onerror="console.error('Failed to load image:', this.src); this.style.display='none';"
         />
         <!-- Hover overlay -->
-        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-          <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="image-gallery-overlay">
+          <svg class="image-gallery-zoom-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
           </svg>
         </div>
         {image.caption && (
-          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
-            <p class="text-white text-sm font-medium truncate">{image.caption}</p>
+          <div class="image-gallery-caption">
+            <p class="image-gallery-caption-text">{image.caption}</p>
           </div>
         )}
         </div>
       ))}
-    </div>
   )}
 
   <!-- Lightbox Modal -->
@@ -174,16 +167,16 @@ Props:
       x-show="imageGalleryOpened" 
       x-transition.opacity.duration.300
       x-trap.inert.noscroll="imageGalleryOpened"
-      class={`fixed inset-0 z-[99] flex items-center justify-center bg-black bg-opacity-90 ${lightboxClass}`}
+      class={`image-gallery-modal ${lightboxClass}`}
       @click.self="imageGalleryClose()"
     >
       <!-- Close button -->
       <button 
         @click="imageGalleryClose()"
-        class="absolute top-4 right-4 z-10 p-2 text-white hover:text-gray-300 transition-colors duration-200"
+        class="image-gallery-nav image-gallery-nav-close"
         type="button"
       >
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="image-gallery-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
@@ -192,10 +185,10 @@ Props:
       <button 
         @click="imageGalleryPrev()"
         x-show="imageGalleryActiveIndex > 0"
-        class="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 p-2 text-white hover:text-gray-300 transition-colors duration-200"
+        class="image-gallery-nav image-gallery-nav-prev"
         type="button"
       >
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="image-gallery-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
       </button>
@@ -204,10 +197,10 @@ Props:
       <button 
         @click="imageGalleryNext()"
         x-show="imageGalleryActiveIndex < imageGalleryImages.length - 1"
-        class="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 p-2 text-white hover:text-gray-300 transition-colors duration-200"
+        class="image-gallery-nav image-gallery-nav-next"
         type="button"
       >
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="image-gallery-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
       </button>
@@ -221,30 +214,30 @@ Props:
         x-transition:leave="ease-in duration-200"
         x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95"
-        class="relative max-w-7xl max-h-full mx-auto p-4"
+        class="image-gallery-modal-content"
       >
         <img 
           x-show="imageGalleryActiveUrl"
           :src="imageGalleryActiveUrl" 
           :alt="imageGalleryImages[imageGalleryActiveIndex]?.alt || `Gallery image ${imageGalleryActiveIndex + 1}`"
-          class="max-w-full max-h-full object-contain"
+          class="image-gallery-modal-image"
           @load="console.log('Image loaded')"
         />
         
         <!-- Image info -->
         <div 
           x-show="imageGalleryImages[imageGalleryActiveIndex]?.caption"
-          class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6"
+          class="image-gallery-modal-info"
         >
           <p 
-            class="text-white text-lg font-medium text-center"
+            class="image-gallery-modal-caption"
             x-text="imageGalleryImages[imageGalleryActiveIndex]?.caption"
           ></p>
         </div>
 
         <!-- Image counter -->
-        <div class="absolute top-4 left-4 bg-black bg-opacity-50 rounded-full px-3 py-1">
-          <span class="text-white text-sm font-medium">
+        <div class="image-gallery-modal-counter">
+          <span class="image-gallery-modal-counter-text">
             <span x-text="imageGalleryActiveIndex + 1"></span>
             /
             <span x-text="imageGalleryImages.length"></span>
@@ -255,9 +248,9 @@ Props:
       <!-- Loading indicator -->
       <div 
         x-show="!imageGalleryActiveUrl"
-        class="absolute inset-0 flex items-center justify-center"
+        class="image-gallery-loading"
       >
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+        <div class="image-gallery-spinner"></div>
       </div>
     </div>
   </div>

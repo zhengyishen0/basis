@@ -16,6 +16,14 @@ const {
   variant = 'button',
   class: className = ""
 } = Astro.props;
+
+// Generate class names using our design system
+const getComponentClasses = () => {
+  const baseClass = 'copy-to-clipboard';
+  const variantClass = `copy-to-clipboard-${variant}`;
+  
+  return `${baseClass} ${variantClass}`;
+};
 ---
 
 <div 
@@ -65,31 +73,31 @@ const {
       document.body.removeChild(textArea);
     }
   }`}
-  class={`relative ${className}`}
+  class={`${getComponentClasses()} ${className}`}
 >
   {variant === 'button' && (
     <button 
       @click="copyToClipboard()"
-      class="flex items-center justify-center px-3 py-2 text-sm bg-white border border-neutral-200 rounded-md cursor-pointer hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+      class="copy-to-clipboard-button"
       type="button"
     >
-      <span x-show="!copyNotification" class="flex items-center">
+      <span x-show="!copyNotification" class="copy-to-clipboard-content">
         Copy to Clipboard
-        <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="copy-to-clipboard-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
         </svg>
       </span>
       
-      <span x-show="copyNotification && copySuccess" class="flex items-center text-green-600">
+      <span x-show="copyNotification && copySuccess" class="copy-to-clipboard-feedback copy-to-clipboard-feedback-success">
         <span x-text="successMessage"></span>
-        <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="copy-to-clipboard-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
         </svg>
       </span>
       
-      <span x-show="copyNotification && !copySuccess" class="flex items-center text-red-600">
+      <span x-show="copyNotification && !copySuccess" class="copy-to-clipboard-feedback copy-to-clipboard-feedback-error">
         <span x-text="errorMessage"></span>
-        <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="copy-to-clipboard-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       </span>
@@ -99,19 +107,19 @@ const {
   {variant === 'icon' && (
     <button 
       @click="copyToClipboard()"
-      class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+      class="copy-to-clipboard-icon-button"
       type="button"
       :title="copyNotification ? (copySuccess ? successMessage : errorMessage) : 'Copy to clipboard'"
     >
-      <svg x-show="!copyNotification" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg x-show="!copyNotification" class="copy-to-clipboard-icon-large" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
       </svg>
       
-      <svg x-show="copyNotification && copySuccess" class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg x-show="copyNotification && copySuccess" class="copy-to-clipboard-icon-large copy-to-clipboard-icon-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
       </svg>
       
-      <svg x-show="copyNotification && !copySuccess" class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg x-show="copyNotification && !copySuccess" class="copy-to-clipboard-icon-large copy-to-clipboard-icon-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
       </svg>
     </button>
@@ -125,10 +133,10 @@ const {
     x-transition:leave="transition ease-in duration-75"
     x-transition:leave-start="opacity-100 scale-100"
     x-transition:leave-end="opacity-0 scale-95"
-    class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 text-sm text-white bg-gray-800 rounded-lg shadow-lg whitespace-nowrap"
+    class="copy-to-clipboard-tooltip"
     x-cloak
   >
     <span x-text="copySuccess ? successMessage : errorMessage"></span>
-    <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-gray-800"></div>
+    <div class="copy-to-clipboard-tooltip-arrow"></div>
   </div>
 </div>

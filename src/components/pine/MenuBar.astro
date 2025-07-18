@@ -20,9 +20,12 @@ const {
   class: className = ""
 } = Astro.props;
 
-const menuBarClasses: { [key: string]: string } = {
-  desktop: 'bg-neutral-100 border-b border-neutral-200 px-2 py-1',
-  web: 'bg-white border-b border-neutral-200 shadow-sm'
+// Generate class names using our design system
+const getMenuBarClasses = () => {
+  const baseClass = 'menu-bar';
+  const variantClass = `menu-bar-${variant}`;
+  
+  return `${baseClass} ${variantClass}`;
 };
 ---
 
@@ -68,7 +71,7 @@ MenuItem Interface:
 -->
 
 <nav 
-  class={`${menuBarClasses[variant]} ${className}`}
+  class={`${getMenuBarClasses()} ${className}`}
   x-data="{ 
     activeMenu: null,
     openMenu(index) {
@@ -87,69 +90,63 @@ MenuItem Interface:
   @click.away="closeMenu()"
   @keydown.escape="closeMenu()"
 >
-  <ul class="flex items-center space-x-1">
-    {items.map((item, index) => (
-      <li class="relative">
-        <button
-          class={`px-3 py-1 text-sm font-medium rounded transition-colors duration-150 ${
-            variant === 'desktop' 
-              ? 'text-neutral-700 hover:bg-neutral-200 focus:bg-neutral-200' 
-              : 'text-neutral-600 hover:bg-neutral-100 focus:bg-neutral-100'
-          }`}
-          @click={`openMenu(${index})`}
-          @mouseenter={`openMenu(${index})`}
-          :class={`{ 'bg-neutral-200': activeMenu === ${index} }`}
-          type="button"
-        >
-          {item.label}
-        </button>
-        
-        {item.items && (
-          <div
-            x-show={`activeMenu === ${index}`}
-            x-transition:enter="transition ease-out duration-100"
-            x-transition:enter-start="transform opacity-0 scale-95"
-            x-transition:enter-end="transform opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-75"
-            x-transition:leave-start="transform opacity-100 scale-100"
-            x-transition:leave-end="transform opacity-0 scale-95"
-            class="absolute left-0 mt-1 w-56 bg-white border border-neutral-200 rounded-md shadow-lg z-50"
-            @click.stop
+  <div class="menu-bar-nav">
+    <ul class="menu-bar-list">
+      {items.map((item, index) => (
+        <li class="menu-bar-item">
+          <button
+            class={`menu-bar-trigger ${variant === 'desktop' ? 'menu-bar-trigger-desktop' : ''}`}
+            @click={`openMenu(${index})`}
+            @mouseenter={`openMenu(${index})`}
+            :class={`{ 'menu-bar-trigger-active': activeMenu === ${index} }`}
+            type="button"
           >
-            <ul class="py-1">
-              {item.items.map((subItem) => (
-                subItem.separator ? (
-                  <li>
-                    <hr class="my-1 border-neutral-200" />
-                  </li>
-                ) : (
-                  <li>
-                    <button
-                      class={`w-full px-4 py-2 text-sm text-left flex items-center justify-between transition-colors duration-150 ${
-                        subItem.disabled 
-                          ? 'text-neutral-400 cursor-not-allowed' 
-                          : 'text-neutral-700 hover:bg-neutral-100 focus:bg-neutral-100'
-                      }`}
-                      @click={subItem.action && !subItem.disabled ? `executeAction('${subItem.action}')` : ''}
-                      disabled={subItem.disabled}
-                      type="button"
-                    >
-                      <span>{subItem.label}</span>
-                      {subItem.shortcut && (
-                        <span class="text-xs text-neutral-500 ml-4">
-                          {subItem.shortcut}
-                        </span>
-                      )}
-                    </button>
-                  </li>
-                )
-              ))}
-            </ul>
-          </div>
-        )}
-      </li>
-    ))}
-  </ul>
+            {item.label}
+          </button>
+          
+          {item.items && (
+            <div
+              x-show={`activeMenu === ${index}`}
+              x-transition:enter="transition ease-out duration-100"
+              x-transition:enter-start="transform opacity-0 scale-95"
+              x-transition:enter-end="transform opacity-100 scale-100"
+              x-transition:leave="transition ease-in duration-75"
+              x-transition:leave-start="transform opacity-100 scale-100"
+              x-transition:leave-end="transform opacity-0 scale-95"
+              class="menu-bar-content"
+              @click.stop
+            >
+              <ul class="menu-bar-content-list">
+                {item.items.map((subItem) => (
+                  subItem.separator ? (
+                    <li class="menu-bar-content-item">
+                      <hr class="menu-bar-separator" />
+                    </li>
+                  ) : (
+                    <li class="menu-bar-content-item">
+                      <button
+                        class="menu-bar-content-button"
+                        @click={subItem.action && !subItem.disabled ? `executeAction('${subItem.action}')` : ''}
+                        disabled={subItem.disabled}
+                        type="button"
+                      >
+                        <span class="menu-bar-content-label">{subItem.label}</span>
+                        {subItem.shortcut && (
+                          <span class="menu-bar-content-shortcut">
+                            {subItem.shortcut}
+                          </span>
+                        )}
+                      </button>
+                    </li>
+                  )
+                ))}
+              </ul>
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
 </nav>
 
 <script>

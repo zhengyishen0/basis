@@ -20,25 +20,34 @@ const {
   contentClass = ""
 } = Astro.props;
 
-const variantClasses: { [key: string]: { [key: string]: string } } = {
-  underline: {
-    nav: 'border-b border-neutral-200',
-    tab: 'border-b-2 border-transparent hover:border-neutral-300 focus:border-neutral-300',
-    activeTab: 'border-blue-500 text-blue-600',
-    inactiveTab: 'text-neutral-500 hover:text-neutral-700'
-  },
-  pills: {
-    nav: '',
-    tab: 'rounded-md hover:bg-neutral-100 focus:bg-neutral-100',
-    activeTab: 'bg-blue-100 text-blue-700',
-    inactiveTab: 'text-neutral-500 hover:text-neutral-700'
-  },
-  enclosed: {
-    nav: 'border-b border-neutral-200',
-    tab: 'border border-transparent rounded-t-lg hover:border-neutral-300 focus:border-neutral-300',
-    activeTab: 'border-neutral-300 border-b-white bg-white text-neutral-900',
-    inactiveTab: 'text-neutral-500 hover:text-neutral-700'
-  }
+const getComponentClasses = () => {
+  const baseClass = 'tabs';
+  const variantClass = variant ? `tabs-${variant}` : '';
+  return `${baseClass} ${variantClass} ${className}`.trim();
+};
+
+const getTabListClasses = () => {
+  const baseClass = 'tab-list';
+  const variantClass = variant ? `tab-list-${variant}` : '';
+  return `${baseClass} ${variantClass}`.trim();
+};
+
+const getTabItemClasses = () => {
+  const baseClass = 'tab-item';
+  const variantClass = variant ? `tab-item-${variant}` : '';
+  return `${baseClass} ${variantClass}`;
+};
+
+const getTabActiveClasses = () => {
+  const baseClass = 'tab-active';
+  const variantClass = variant ? `tab-active-${variant}` : '';
+  return `${baseClass} ${variantClass}`;
+};
+
+const getTabInactiveClasses = () => {
+  const baseClass = 'tab-item';
+  const variantClass = variant ? `tab-item-${variant}` : '';
+  return `${baseClass} ${variantClass}`;
 };
 ---
 
@@ -81,18 +90,21 @@ Features:
       return this.tabSelected == tabContent.id.replace(this.tabId + '-content-', '');
     }
   }`}
-  x-init="tabRepositionMarker($refs.tabButtons.children[tabSelected]);"
-  class={`w-full ${className}`}
+  x-init="setTimeout(() => { 
+    const activeButton = Array.from($refs.tabButtons.children).find(btn => btn.id.includes(tabSelected));
+    if (activeButton && '${variant}' === 'pills') tabRepositionMarker(activeButton);
+  }, 0);"
+  class={getComponentClasses()}
 >
   <!-- Tab Navigation -->
-  <div class={`relative ${variantClasses[variant].nav}`}>
-    <div x-ref="tabButtons" class="flex space-x-1">
+  <div class={getTabListClasses()}>
+    <div x-ref="tabButtons" class="tab-list-container">
       {tabs.map((tab) => (
         <button 
           :id="`${tabId}-${tab.id}`"
           @click="tabButtonClicked($el)"
-          :class="tabSelected === '${tab.id}' ? '${variantClasses[variant].activeTab}' : '${variantClasses[variant].inactiveTab}'"
-          class={`px-4 py-2 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${variantClasses[variant].tab} ${tab.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+          :class="tabSelected === '${tab.id}' ? '${getTabActiveClasses()}' : '${getTabInactiveClasses()}'"
+          class={`${getTabItemClasses()} ${tab.disabled ? 'tab-item-disabled' : ''}`}
           disabled={tab.disabled}
           type="button"
         >
@@ -105,19 +117,18 @@ Features:
     {variant === 'pills' && (
       <div 
         x-ref="tabMarker" 
-        class="absolute top-0 z-10 bg-blue-500 rounded-md transition-all duration-300 ease-out"
-        style="height: 100%;"
+        class="tab-marker"
       ></div>
     )}
   </div>
   
   <!-- Tab Content -->
-  <div class={`mt-4 ${contentClass}`}>
+  <div class={`tab-content ${contentClass}`}>
     {tabs.map((tab) => (
       <div 
         :id="`${tabId}-content-${tab.id}`"
         x-show="tabSelected === '${tab.id}'"
-        class="tab-content"
+        class="tab-panel"
       >
         {tab.content ? (
           <div set:html={tab.content} />

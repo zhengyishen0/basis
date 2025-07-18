@@ -4,24 +4,24 @@ export interface Props {
   speed?: 'slow' | 'normal' | 'fast';
   pauseOnHover?: boolean;
   class?: string;
-  gradientColor?: string;
 }
 
 const { 
   direction = 'left',
   speed = 'normal',
   pauseOnHover = false,
-  class: className = "",
-  gradientColor = 'gray-900'
+  class: className = ""
 } = Astro.props;
 
-const speedClasses: { [key: string]: string } = {
-  'slow': 'duration-[40s]',
-  'normal': 'duration-[20s]',
-  'fast': 'duration-[10s]'
+// Generate class names using our design system
+const getComponentClasses = () => {
+  const baseClass = 'marquee';
+  const speedClass = `marquee-${speed}`;
+  const directionClass = `marquee-${direction}`;
+  const pauseClass = pauseOnHover ? 'marquee-pause' : '';
+  
+  return `${baseClass} ${speedClass} ${directionClass} ${pauseClass}`.trim();
 };
-
-const directionClass = direction === 'right' ? 'animate-marquee-reverse' : 'animate-marquee';
 ---
 
 <!-- 
@@ -54,45 +54,22 @@ Features:
       content.appendChild(clone);
     });
   "
-  class={`relative w-full overflow-hidden ${className}`}
+  class={`${getComponentClasses()} ${className}`}
 >
   <!-- Left gradient fade -->
-  <div class={`absolute left-0 z-20 w-40 h-full bg-gradient-to-r from-${gradientColor} to-transparent pointer-events-none`}></div>
+  <div class="marquee-gradient marquee-gradient-left"></div>
   
   <!-- Right gradient fade -->
-  <div class={`absolute right-0 z-20 w-40 h-full bg-gradient-to-l from-${gradientColor} to-transparent pointer-events-none`}></div>
+  <div class="marquee-gradient marquee-gradient-right"></div>
   
   <!-- Marquee content -->
   <div 
     x-ref="content" 
-    class={`flex ${directionClass} ${speedClasses[speed]} ${pauseOnHover ? 'hover:pause' : ''}`}
+    class="marquee-content"
   >
-    <div x-ref="item" class="flex items-center justify-around flex-shrink-0">
+    <div x-ref="item" class="marquee-item">
       <slot />
     </div>
   </div>
 </div>
 
-<style>
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
-}
-
-@keyframes marquee-reverse {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(0); }
-}
-
-.animate-marquee {
-  animation: marquee var(--tw-duration, 20s) linear infinite;
-}
-
-.animate-marquee-reverse {
-  animation: marquee-reverse var(--tw-duration, 20s) linear infinite;
-}
-
-.hover\\:pause:hover {
-  animation-play-state: paused;
-}
-</style>

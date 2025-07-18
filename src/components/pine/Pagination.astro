@@ -43,6 +43,11 @@ const getVisiblePages = () => {
 const visiblePages = getVisiblePages();
 const startItem = (currentPage - 1) * itemsPerPage + 1;
 const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+
+const getComponentClasses = () => {
+  const baseClass = 'pagination';
+  return baseClass;
+};
 ---
 
 <!-- 
@@ -67,42 +72,42 @@ Features:
 - Customizable visible pages
 -->
 
-<div class={`flex items-center justify-between w-full px-3 py-4 border-t border-neutral-200 ${className}`}>
+<div class={`${getComponentClasses()} ${className}`}>
   <!-- Results information -->
   {showInfo && (
-    <div class="flex-1 flex justify-between sm:hidden">
-      <p class="text-sm text-gray-700">
+    <div class="pagination-info-mobile">
+      <p class="pagination-info-text">
         Showing {startItem} to {endItem} of {totalItems} results
       </p>
     </div>
   )}
   
   {showInfo && (
-    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+    <div class="pagination-info-desktop">
       <div>
-        <p class="text-sm text-gray-700">
-          Showing <span class="font-medium">{startItem}</span> to <span class="font-medium">{endItem}</span> of{' '}
-          <span class="font-medium">{totalItems}</span> results
+        <p class="pagination-info-text">
+          Showing <span class="pagination-info-highlight">{startItem}</span> to <span class="pagination-info-highlight">{endItem}</span> of{' '}
+          <span class="pagination-info-highlight">{totalItems}</span> results
         </p>
       </div>
     </div>
   )}
   
   <!-- Pagination navigation -->
-  <div class={showInfo ? "mt-3 sm:mt-0" : ""}>
-    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+  <div class={showInfo ? "pagination-nav-container" : ""}>
+    <nav class="pagination-nav" aria-label="Pagination">
       <!-- Previous button -->
       <a 
         href={currentPage > 1 ? `${baseUrl}${currentPage - 1}` : '#'}
-        class={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium ${
+        class={`pagination-button pagination-prev ${
           currentPage > 1 
-            ? 'text-gray-500 hover:bg-gray-50' 
-            : 'text-gray-300 cursor-not-allowed'
+            ? 'pagination-button-enabled' 
+            : 'pagination-button-disabled'
         }`}
         aria-disabled={currentPage <= 1}
       >
-        <span class="sr-only">Previous</span>
-        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+        <span class="pagination-sr-only">Previous</span>
+        <svg class="pagination-icon" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
         </svg>
       </a>
@@ -112,12 +117,12 @@ Features:
         <>
           <a 
             href={`${baseUrl}1`}
-            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+            class="pagination-button pagination-page"
           >
             1
           </a>
           {visiblePages[0] > 2 && (
-            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+            <span class="pagination-ellipsis">
               ...
             </span>
           )}
@@ -128,10 +133,10 @@ Features:
       {visiblePages.map((page) => (
         <a 
           href={page === currentPage ? '#' : `${baseUrl}${page}`}
-          class={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+          class={`pagination-button pagination-page ${
             page === currentPage
-              ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
-              : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
+              ? 'pagination-page-current'
+              : 'pagination-page-normal'
           }`}
           aria-current={page === currentPage ? 'page' : undefined}
         >
@@ -143,13 +148,13 @@ Features:
       {showFirstLast && visiblePages[visiblePages.length - 1] < totalPages && (
         <>
           {visiblePages[visiblePages.length - 1] < totalPages - 1 && (
-            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+            <span class="pagination-ellipsis">
               ...
             </span>
           )}
           <a 
             href={`${baseUrl}${totalPages}`}
-            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+            class="pagination-button pagination-page"
           >
             {totalPages}
           </a>
@@ -159,15 +164,15 @@ Features:
       <!-- Next button -->
       <a 
         href={currentPage < totalPages ? `${baseUrl}${currentPage + 1}` : '#'}
-        class={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium ${
+        class={`pagination-button pagination-next ${
           currentPage < totalPages 
-            ? 'text-gray-500 hover:bg-gray-50' 
-            : 'text-gray-300 cursor-not-allowed'
+            ? 'pagination-button-enabled' 
+            : 'pagination-button-disabled'
         }`}
         aria-disabled={currentPage >= totalPages}
       >
-        <span class="sr-only">Next</span>
-        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+        <span class="pagination-sr-only">Next</span>
+        <svg class="pagination-icon" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
         </svg>
       </a>

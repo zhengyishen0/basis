@@ -36,6 +36,23 @@ const {
   editorClass = "",
   name = 'code'
 } = Astro.props;
+
+// Generate class names using our design system
+const getComponentClasses = () => {
+  return 'monaco-editor';
+};
+
+const getContainerClasses = () => {
+  return 'monaco-editor-container';
+};
+
+const getToolbarClasses = () => {
+  return 'monaco-editor-toolbar';
+};
+
+const getStatusClasses = () => {
+  return 'monaco-editor-status';
+};
 ---
 
 <!-- 
@@ -300,7 +317,7 @@ Themes:
   }"
   x-init="monacoInit()"
   @resize.window="monacoAutoResize && monacoResize()"
-  class={`monaco-editor-wrapper relative ${className}`}
+  class={`${getComponentClasses()} ${className}`}
 >
   <!-- Hidden input for form submission -->
   <input 
@@ -312,33 +329,33 @@ Themes:
   <!-- Loading State -->
   <div 
     x-show="!monacoLoaded && !monacoError" 
-    class="flex items-center justify-center bg-gray-100 border border-gray-300 rounded"
+    class="monaco-editor-loading"
     :style="`height: ${monacoHeight}; width: ${monacoWidth}`"
   >
-    <div class="flex items-center space-x-2 text-gray-600">
-      <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="monaco-editor-loading-content">
+      <svg class="monaco-editor-loading-spinner" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
       </svg>
-      <span class="text-sm">Loading Monaco Editor...</span>
+      <span class="monaco-editor-loading-text">Loading Monaco Editor...</span>
     </div>
   </div>
 
   <!-- Error State -->
   <div 
     x-show="monacoError" 
-    class="flex flex-col items-center justify-center bg-red-50 border border-red-300 rounded p-4"
+    class="monaco-editor-error"
     :style="`height: ${monacoHeight}; width: ${monacoWidth}`"
   >
-    <div class="text-red-600 text-center">
-      <svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="monaco-editor-error-content">
+      <svg class="monaco-editor-error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
       </svg>
-      <p class="text-sm font-medium">Failed to load Monaco Editor</p>
-      <p class="text-xs mt-1" x-text="monacoError"></p>
+      <p class="monaco-editor-error-title">Failed to load Monaco Editor</p>
+      <p class="monaco-editor-error-message" x-text="monacoError"></p>
     </div>
     <button 
       @click="monacoInit()" 
-      class="mt-3 px-4 py-2 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition-colors duration-200"
+      class="monaco-editor-error-retry button button-sm button-solid-red"
     >
       Retry
     </button>
@@ -348,39 +365,39 @@ Themes:
   <div 
     x-show="monacoLoaded"
     x-ref="monacoContainer"
-    class={`monaco-editor-container border border-gray-300 rounded overflow-hidden ${editorClass}`}
+    class={`${getContainerClasses()} ${editorClass}`}
     :style="`height: ${monacoHeight}; width: ${monacoWidth}`"
   ></div>
 
   <!-- Editor Controls (Optional) -->
   <div 
     x-show="monacoLoaded" 
-    class="flex items-center justify-between mt-2 text-xs text-gray-600"
+    class={`${getStatusClasses()}`}
   >
-    <div class="flex items-center space-x-4">
-      <span>Language: <span x-text="monacoLanguage" class="font-medium"></span></span>
-      <span>Lines: <span x-text="monacoEditor ? monacoEditor.getModel().getLineCount() : 0" class="font-medium"></span></span>
+    <div class="monaco-editor-status-info">
+      <span class="monaco-editor-status-item">Language: <span x-text="monacoLanguage" class="monaco-editor-status-value"></span></span>
+      <span class="monaco-editor-status-item">Lines: <span x-text="monacoEditor ? monacoEditor.getModel().getLineCount() : 0" class="monaco-editor-status-value"></span></span>
     </div>
-    <div class="flex items-center space-x-2">
+    <div class={`${getToolbarClasses()}`}>
       <button 
         @click="monacoFormat()" 
-        class="px-2 py-1 bg-gray-100 rounded hover:bg-gray-200 transition-colors duration-200"
+        class="monaco-editor-toolbar-button button button-sm button-ghost-neutral"
         title="Format Document (Alt+Shift+F)"
       >
         Format
       </button>
       <button 
         @click="monacoToggleMinimap()" 
-        class="px-2 py-1 bg-gray-100 rounded hover:bg-gray-200 transition-colors duration-200"
-        :class="{ 'bg-blue-100 text-blue-600': monacoMinimap }"
+        class="monaco-editor-toolbar-button button button-sm button-ghost-neutral"
+        :class="{ 'button-soft-blue': monacoMinimap }"
         title="Toggle Minimap"
       >
         Minimap
       </button>
       <button 
         @click="monacoToggleWordWrap()" 
-        class="px-2 py-1 bg-gray-100 rounded hover:bg-gray-200 transition-colors duration-200"
-        :class="{ 'bg-blue-100 text-blue-600': monacoWordWrap === 'on' }"
+        class="monaco-editor-toolbar-button button button-sm button-ghost-neutral"
+        :class="{ 'button-soft-blue': monacoWordWrap === 'on' }"
         title="Toggle Word Wrap"
       >
         Wrap

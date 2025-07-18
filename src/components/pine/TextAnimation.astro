@@ -16,6 +16,14 @@ const {
   autoStart = true,
   class: className = ""
 } = Astro.props;
+
+// Generate class names using our design system
+const getTextAnimationClasses = () => {
+  const baseClass = 'text-animation';
+  const animationClass = `text-animation-${animation}`;
+  
+  return `${baseClass} ${animationClass}`;
+};
 ---
 
 <!-- 
@@ -56,6 +64,11 @@ Features:
       });
     }
     
+    // Listen for custom event to trigger animation manually
+    $el.addEventListener('startAnimation', () => {
+      startAnimation();
+    });
+    
     function startAnimation() {
       if (!window.gsap) {
         addCNDScript = true;
@@ -71,10 +84,13 @@ Features:
     }
     
     function runAnimation() {
-      const chars = $refs.textContainer.querySelectorAll('.char');
+      const chars = $refs.textContainer.querySelectorAll('.text-animation-char');
       const tl = gsap.timeline();
       
-      // Set initial state
+      // Reset animation state first
+      $el.classList.remove('text-animation-animate');
+      
+      // Set initial state based on animation type
       gsap.set(chars, {
         opacity: animationType === 'fade' ? 0 : 1,
         scale: animationType === 'scale' ? 0 : 1,
@@ -82,7 +98,10 @@ Features:
         y: animationType === 'bounce' ? -20 : 0
       });
       
-      // Animate in
+      // Add animate class to trigger design system transitions
+      $el.classList.add('text-animation-animate');
+      
+      // Animate in with GSAP for staggered timing
       tl.to(chars, {
         opacity: 1,
         scale: 1,
@@ -94,12 +113,12 @@ Features:
       });
     }
   "
-  class={`inline-block ${className}`}
+  class={`${getTextAnimationClasses()} ${className}`}
 >
-  <div x-ref="textContainer" class="inline-block">
+  <div x-ref="textContainer" class="text-animation-container">
     <template x-for="(char, index) in text.split('')" :key="index">
       <span 
-        class="char inline-block"
+        class="text-animation-char"
         x-text="char === ' ' ? '\\u00A0' : char"
       ></span>
     </template>
