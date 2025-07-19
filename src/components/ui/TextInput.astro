@@ -1,4 +1,7 @@
 ---
+// Import component styles
+import '../../styles/components/text-input.css';
+
 export interface Props {
   type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
   placeholder?: string;
@@ -14,6 +17,7 @@ export interface Props {
   context?: 'default' | 'compact';
   class?: string;
   inputClass?: string;
+  'x-ref'?: string;
 }
 
 const { 
@@ -30,7 +34,9 @@ const {
   error,
   context = 'default',
   class: className = "",
-  inputClass = ""
+  inputClass = "",
+  'x-ref': xRef,
+  ...rest
 } = Astro.props;
 
 // Generate class names using true design system
@@ -85,6 +91,8 @@ Contextual Variants: default, compact
     required={required}
     class={`${getInputClasses()} ${inputClass}`}
     data-state={error ? 'error' : disabled ? 'disabled' : null}
+    {...(xRef && { 'x-ref': xRef })}
+    {...rest}
   />
   
   <!-- Description -->

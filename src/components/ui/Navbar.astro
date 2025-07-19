@@ -1,0 +1,75 @@
+---
+// Import component styles
+import '../../styles/components/navbar.css';
+import Row from './Row.astro';
+
+export interface Props {
+  variant?: 'default' | 'elevated';
+  maxWidth?: 'container' | 'full';
+  class?: string;
+}
+
+const { 
+  variant = 'default',
+  maxWidth = 'container',
+  class: className = "",
+  ...rest
+} = Astro.props;
+
+// Generate class names using true design system
+const getNavbarClasses = () => {
+  const baseClass = 'navbar';
+  const variantClass = variant !== 'default' ? `navbar-${variant}` : '';
+  const maxWidthClass = maxWidth === 'container' ? 'navbar-container' : 'navbar-full';
+  
+  return `${baseClass} ${variantClass} ${maxWidthClass} ${className}`.trim();
+};
+---
+
+<!-- 
+TRUE Design System Navbar Component
+
+Usage:
+<Navbar>
+  <div slot="start">
+    <Button href="/">Back</Button>
+  </div>
+  
+  <div slot="center">
+    <h1>Page Title</h1>
+  </div>
+  
+  <div slot="end">
+    <Button>Action</Button>
+  </div>
+</Navbar>
+
+<Navbar variant="elevated" maxWidth="full">
+  <div slot="start">Logo</div>
+  <nav slot="center">Navigation Links</nav>
+  <div slot="end">User Menu</div>
+</Navbar>
+
+Props:
+- variant: default, elevated (adds shadow)
+- maxWidth: container (max-width + center), full (full width)
+-->
+
+<nav class={getNavbarClasses()} {...rest}>
+  <Row justify="between" align="center" class="navbar-content">
+    <!-- Left section -->
+    <div class="navbar-section navbar-start">
+      <slot name="start" />
+    </div>
+    
+    <!-- Center section -->
+    <div class="navbar-section navbar-center">
+      <slot name="center" />
+    </div>
+    
+    <!-- Right section -->
+    <div class="navbar-section navbar-end">
+      <slot name="end" />
+    </div>
+  </Row>
+</nav>

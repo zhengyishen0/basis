@@ -1,4 +1,7 @@
 ---
+// Import component styles
+import '../../styles/components/checkbox.css';
+
 export interface Props {
   id?: string;
   name?: string;
@@ -52,8 +55,8 @@ States: default, disabled
     id={id}
     name={name}
     type="checkbox" 
-    checked={checked}
-    disabled={disabled}
+    checked={!colonChecked ? checked : undefined}
+    disabled={!colonDisabled ? disabled : undefined}
     class="checkbox"
     data-state={disabled ? 'disabled' : null}
     {...(colonChecked && { ':checked': colonChecked })}

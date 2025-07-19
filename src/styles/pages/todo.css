@@ -9,41 +9,6 @@
   min-height: 100vh;
 }
 
-.todo-nav {
-  background-color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border-bottom: 1px solid var(--neutral-200);
-}
-
-.todo-nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0.75rem 0.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-}
-
-@media (min-width: 768px) {
-  .todo-nav-container {
-    padding: 0.75rem 1rem;
-  }
-}
-
-.todo-nav-title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--color-text);
-  letter-spacing: -0.025em;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.todo-nav-spacer {
-  width: 6rem;
-}
 
 .todo-main {
   padding: 1.5rem 1.5rem;
@@ -129,14 +94,6 @@
 }
 
 
-.auth-info {
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
 
 .auth-user-id {
   color: var(--color-text);
@@ -165,25 +122,6 @@
   color: var(--color-text-secondary);
 }
 
-.todo-status-indicator {
-  width: 1rem;
-  height: 1rem;
-  flex-shrink: 0;
-}
-
-.status-indicator {
-  width: 1rem;
-  height: 1rem;
-  border-radius: 0.25rem;
-}
-
-.status-indicator-complete {
-  background-color: var(--success-500);
-}
-
-.status-indicator-active {
-  background-color: var(--neutral-300);
-}
 
 .todo-user-info {
   font-size: 0.75rem;
@@ -194,52 +132,10 @@
   min-height: 2rem;
 }
 
-.loading-state {
-  text-align: center;
-  padding: 3rem;
-  color: var(--color-text-secondary);
-  font-size: 1.125rem;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 3rem;
-  color: var(--color-text-secondary);
-  font-size: 1.125rem;
-  line-height: 1.6;
-}
-
-.todo-stats {
-  font-size: 0.75rem;
-  color: var(--color-text-secondary);
-  text-align: center;
-  padding: 0.5rem;
-  background: var(--neutral-50);
-  border-radius: 0.5rem;
-  font-weight: 500;
-}
 
 .todo-form {
   margin-top: auto;
 }
 
 
-.todo-input {
-  flex: 1;
-  border-radius: 0.5rem;
-  border: 2px solid var(--neutral-200);
-  padding: 0.5rem 0.75rem;
-  min-height: 2.5rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  transition: all 0.2s ease;
-}
 
-.todo-input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.1);
-}
-
-.button-loading:disabled {
-  opacity: 0.5;
-}

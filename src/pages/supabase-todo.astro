@@ -5,9 +5,13 @@ import Card from '../components/ui/Card.astro';
 import Checkbox from '../components/ui/Checkbox.astro';
 import List from '../components/ui/List.astro';
 import Row from '../components/ui/Row.astro';
+import TextInput from '../components/ui/TextInput.astro';
+import Navbar from '../components/ui/Navbar.astro';
 
 // Page-specific styles
 import '../styles/pages/todo.css';
+import '../styles/components/states.css';
+import '../styles/utilities.css';
 
 const title = "Todo App with Supabase";
 ---
@@ -34,13 +38,19 @@ const title = "Todo App with Supabase";
         x-init="init()"
     >
         <!-- Navigation Bar -->
-        <nav class="todo-nav">
-            <div class="todo-nav-container">
+        <Navbar variant="elevated" maxWidth="container">
+            <div slot="start">
                 <Button href="../" variant="solid" color="neutral" size="sm">Back to Home</Button>
-                <h1 class="todo-nav-title">Supabase Todo App</h1>
-                <div class="todo-nav-spacer"></div>
             </div>
-        </nav>
+            
+            <div slot="center">
+                <h1 class="navbar-title">Supabase Todo App</h1>
+            </div>
+            
+            <div slot="end">
+                <div class="navbar-spacer"></div>
+            </div>
+        </Navbar>
 
         <!-- Main Content -->
         <div class="todo-main">
@@ -154,7 +164,7 @@ const title = "Todo App with Supabase";
                         
                         <div slot="footer">
                             <!-- Stats -->
-                            <div x-show="todo.userTodos.length > 0" class="todo-stats">
+                            <div x-show="todo.userTodos.length > 0" class="stats">
                                 <span x-text="todo.userActiveCount"></span> active, 
                                 <span x-text="todo.userCompletedCount"></span> completed
                             </div>
@@ -162,13 +172,13 @@ const title = "Todo App with Supabase";
                             <!-- Add Todo Form -->
                             <form @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="todo-form">
                                 <Row gap="default">
-                                    <input 
+                                    <TextInput
                                         x-ref="todoInput"
                                         type="text" 
                                         placeholder="Add a new todo..."
-                                        class="text-input todo-input"
                                         required
-                                    >
+                                        class="flex-1"
+                                    />
                                     <Button 
                                         type="submit"
                                         :disabled="todo.loading"
@@ -237,12 +247,10 @@ const title = "Todo App with Supabase";
                             x-key="item.id"
                         >
                             <Row class="list-item list-item-readonly" align="center" justify="start">
-                                <div class="todo-status-indicator">
-                                    <div 
-                                        :class="item.is_complete ? 'status-indicator-complete' : 'status-indicator-active'"
-                                        class="status-indicator"
-                                    ></div>
-                                </div>
+                                <Checkbox 
+                                    :checked="item.is_complete"
+                                    disabled
+                                />
                                 <div class="todo-text">
                                     <span 
                                         :class="item.is_complete ? 'todo-text-completed' : 'todo-text-active'"
@@ -267,7 +275,7 @@ const title = "Todo App with Supabase";
                         
                         <div slot="footer">
                             <!-- Stats -->
-                            <div x-show="todo.allTodos.length > 0" class="todo-stats">
+                            <div x-show="todo.allTodos.length > 0" class="stats">
                                 <span x-text="todo.allActiveCount"></span> active, 
                                 <span x-text="todo.allCompletedCount"></span> completed
                             </div>

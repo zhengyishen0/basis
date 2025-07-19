@@ -8,8 +8,16 @@
    TEXT INPUT COMPONENT
    ========================================================================== */
 
+/* Form field wrapper for flex layouts */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Important for flex shrinking */
+}
+
 .input {
   width: 100%;
+  min-width: 0; /* Important for flex shrinking */
   font-family: var(--font-family);
   font-size: var(--text);
   line-height: 1.5;
