@@ -1,46 +1,29 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Button from '../components/ui/Button.astro';
-import Modal from '../components/ui/Modal.astro';
-import Toast from '../components/ui/Toast.astro';
-import Tooltip from '../components/ui/Tooltip.astro';
-import Popover from '../components/ui/Popover.astro';
-import Dropdown from '../components/ui/Dropdown.astro';
-import RetroGrid from '../components/ui/RetroGrid.astro';
-import SlideOver from '../components/ui/SlideOver.astro';
-import TextAnimation from '../components/ui/TextAnimation.astro';
-import MenuBar from '../components/ui/MenuBar.astro';
-import NavigationMenu from '../components/ui/NavigationMenu.astro';
-import Pagination from '../components/ui/Pagination.astro';
-import Breadcrumbs from '../components/ui/Breadcrumbs.astro';
-import Tabs from '../components/ui/Tabs.astro';
-import CopyToClipboard from '../components/ui/CopyToClipboard.astro';
-import VideoPlayer from '../components/ui/VideoPlayer.astro';
-import TextInput from '../components/ui/TextInput.astro';
-import Textarea from '../components/ui/Textarea.astro';
-import Select from '../components/ui/Select.astro';
-import Checkbox from '../components/ui/Checkbox.astro';
-import Switch from '../components/ui/Switch.astro';
-import RangeSlider from '../components/ui/RangeSlider.astro';
-import RadioGroup from '../components/ui/RadioGroup.astro';
-import Alert from '../components/ui/Alert.astro';
-import Banner from '../components/ui/Banner.astro';
-import Accordion from '../components/ui/Accordion.astro';
-import Badge from '../components/ui/Badge.astro';
-import Card from '../components/ui/Card.astro';
-import Command from '../components/ui/Command.astro';
-import ContextMenu from '../components/ui/ContextMenu.astro';
-import DatePicker from '../components/ui/DatePicker.astro';
-import FullScreenModal from '../components/ui/FullScreenModal.astro';
-import HoverCard from '../components/ui/HoverCard.astro';
-import ImageGallery from '../components/ui/ImageGallery.astro';
-import Marquee from '../components/ui/Marquee.astro';
-import MonacoEditor from '../components/ui/MonacoEditor.astro';
-import Progress from '../components/ui/Progress.astro';
-import Quotes from '../components/ui/Quotes.astro';
-import Rating from '../components/ui/Rating.astro';
-import Table from '../components/ui/Table.astro';
-import TypingEffect from '../components/ui/TypingEffect.astro';
+
+// Core components
+import { Button, Card } from '../components/ui/core';
+
+// Form components  
+import { TextInput, Textarea, Select, Checkbox, Switch, RangeSlider, RadioGroup, DatePicker } from '../components/ui/forms';
+
+// Navigation components
+import { MenuBar, NavigationMenu, Pagination, Breadcrumbs } from '../components/ui/navigation';
+
+// Overlay components
+import { Modal, Tooltip, Popover, Dropdown, SlideOver, FullScreenModal, HoverCard, ContextMenu } from '../components/ui/overlays';
+
+// Feedback components
+import { Toast, Alert, Banner, Progress } from '../components/ui/feedback';
+
+// Content components
+import { Tabs, VideoPlayer, Accordion, ImageGallery, Quotes, Table } from '../components/ui/content';
+
+// Interactive components
+import { CopyToClipboard, Command, MonacoEditor, Rating } from '../components/ui/interactive';
+
+// Effects components
+import { RetroGrid, TextAnimation, Marquee, Badge, TypingEffect } from '../components/ui/effects';
 
 // Page-specific styles
 import '../styles/pages/design-system.css';

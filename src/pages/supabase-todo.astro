@@ -1,19 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Button from '../components/ui/Button.astro';
-import Card from '../components/ui/Card.astro';
-import Checkbox from '../components/ui/Checkbox.astro';
-import List from '../components/ui/List.astro';
-import Row from '../components/ui/Row.astro';
-import TextInput from '../components/ui/TextInput.astro';
-import Navbar from '../components/ui/Navbar.astro';
-import Loading from '../components/ui/Loading.astro';
-import Error from '../components/ui/Error.astro';
-import Empty from '../components/ui/Empty.astro';
+import { Button, Card, List, Row } from '../components/ui/core';
+import { Checkbox, TextInput } from '../components/ui/forms';
+import { Navbar } from '../components/ui/navigation';
+import { Loading, Error, Empty } from '../components/ui/feedback';
 
 // Page-specific styles
 import '../styles/pages/todo.css';
-import '../styles/components/states.css';
 
 const title = "Todo App with Supabase";
 ---
