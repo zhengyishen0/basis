@@ -15,7 +15,6 @@
 
 /* Import Semantic Tokens - Meaningful mappings */
 @import './tokens/semantic/colors.css';
-@import './tokens/semantic/components.css';
 @import './tokens/semantic/layout.css';
 
 /* Import Themes - Contextual overrides */

@@ -92,7 +92,7 @@
 
 .integration-logos-description {
   color: var(--color-text-secondary);
-  font-size: var(--text-base);
+  font-size: var(--text);
   line-height: var(--leading-relaxed);
 }
 

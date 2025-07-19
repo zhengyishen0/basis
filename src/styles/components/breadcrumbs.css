@@ -86,6 +86,6 @@
 
 .breadcrumbs-slash .breadcrumb-separator span,
 .breadcrumbs-dot .breadcrumb-separator span {
-  font-size: var(--text-base);
+  font-size: var(--text);
   line-height: 1;
 }

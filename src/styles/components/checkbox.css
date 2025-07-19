@@ -119,7 +119,7 @@
 
 .checkbox-label {
   display: block;
-  font-size: var(--text-base);
+  font-size: var(--text);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
   cursor: pointer;

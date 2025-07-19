@@ -189,7 +189,7 @@
   padding: var(--space-3) var(--space-3);
   color: var(--color-text-secondary);
   text-decoration: none;
-  font-size: var(--text-base);
+  font-size: var(--text);
   font-weight: var(--font-weight-medium);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);

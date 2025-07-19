@@ -50,7 +50,7 @@
 }
 
 .typing-effect-md {
-  font-size: var(--text-base);
+  font-size: var(--text);
   min-width: 35ch;
   height: 1.75rem;
   line-height: 1.75rem;

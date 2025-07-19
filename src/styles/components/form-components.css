@@ -16,7 +16,7 @@
   background: var(--color-surface-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  font-size: var(--text-base);
+  font-size: var(--text);
   font-family: var(--font-family);
   color: var(--color-text-primary);
   transition: border-color var(--transition-fast);

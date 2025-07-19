@@ -50,7 +50,7 @@
 
 .button-lg {
   padding: var(--space-3) var(--space-6);
-  font-size: var(--text-base);
+  font-size: var(--text);
   gap: var(--space-2);
 }
 

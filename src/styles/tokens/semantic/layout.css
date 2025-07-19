@@ -53,4 +53,10 @@
   --sidebar-width: 16rem;   /* 256px */
   --sidebar-width-sm: 12rem; /* 192px */
   --sidebar-width-lg: 20rem; /* 320px */
+
+  /* Focus States */
+  --focus-ring-color: var(--color-primary);
+  --focus-ring-offset: 2px;
+  --focus-ring-width: 2px;
+  --focus-ring: var(--focus-ring-width) solid var(--focus-ring-color);
 }

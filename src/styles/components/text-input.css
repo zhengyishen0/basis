@@ -11,7 +11,7 @@
 .input {
   width: 100%;
   font-family: var(--font-family);
-  font-size: var(--text-base);
+  font-size: var(--text);
   line-height: 1.5;
   color: var(--color-text-primary);
   background: var(--color-surface);

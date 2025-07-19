@@ -39,7 +39,7 @@
 }
 
 .quote-text-sm {
-  font-size: var(--text-base);
+  font-size: var(--text);
   line-height: var(--leading-relaxed);
 }
 
@@ -64,7 +64,7 @@
 }
 
 .quote-author-md {
-  font-size: var(--text-base);
+  font-size: var(--text);
 }
 
 .quote-author-lg {
