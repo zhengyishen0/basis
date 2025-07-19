@@ -1,0 +1,31 @@
+---
+export interface Props {
+  direction?: 'horizontal' | 'vertical';
+  class?: string;
+}
+
+const { 
+  direction = 'horizontal',
+  class: className = ""
+} = Astro.props;
+
+// Generate class names using true design system
+const getDividerClasses = () => {
+  const baseClass = 'divider';
+  const directionClass = direction === 'vertical' ? 'divider-vertical' : 'divider-horizontal';
+  
+  return `${baseClass} ${directionClass} ${className}`.trim();
+};
+---
+
+<!-- 
+TRUE Design System Divider Component
+
+Usage:
+<Divider />
+<Divider direction="vertical" />
+
+Direction: horizontal (default), vertical
+-->
+
+<div class={getDividerClasses()} role="separator" aria-orientation={direction}></div>

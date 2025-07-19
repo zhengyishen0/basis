@@ -114,7 +114,7 @@
   height: 100%;
 }
 
-.todo-column .todo-list {
+.todo-column .list {
   flex: 1;
   overflow-y: auto;
   min-height: 0;
@@ -162,34 +162,6 @@
   font-weight: 500;
 }
 
-.todo-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  overflow-y: auto;
-  flex: 1;
-  padding-right: 0.25rem;
-}
-
-.todo-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--neutral-200);
-  border-radius: 0.5rem;
-  transition: all 0.2s ease;
-  background: white;
-}
-
-.todo-item:hover {
-  border-color: var(--neutral-300);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.todo-item-readonly {
-  background-color: var(--neutral-50);
-}
 
 .todo-text {
   flex: 1;

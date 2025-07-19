@@ -1,6 +1,6 @@
 ---
 export interface Props {
-  id: string;
+  id?: string;
   name?: string;
   checked?: boolean;
   disabled?: boolean;
@@ -8,6 +8,9 @@ export interface Props {
   description?: string;
   class?: string;
   labelClass?: string;
+  ':checked'?: string;
+  '@change'?: string;
+  ':disabled'?: string;
 }
 
 const { 
@@ -18,7 +21,10 @@ const {
   label,
   description,
   class: className = "",
-  labelClass = ""
+  labelClass = "",
+  ':checked': colonChecked,
+  '@change': atChange,
+  ':disabled': colonDisabled
 } = Astro.props;
 ---
 
@@ -50,6 +56,9 @@ States: default, disabled
     disabled={disabled}
     class="checkbox"
     data-state={disabled ? 'disabled' : null}
+    {...(colonChecked && { ':checked': colonChecked })}
+    {...(atChange && { '@change': atChange })}
+    {...(colonDisabled && { ':disabled': colonDisabled })}
   />
   {(label || description) && (
     <div class="checkbox-content">

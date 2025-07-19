@@ -1,0 +1,52 @@
+---
+export interface Props {
+  spacing?: 'tight' | 'default' | 'loose';
+  class?: string;
+}
+
+const { 
+  spacing = 'default',
+  class: className = "",
+  ...rest
+} = Astro.props;
+
+// Generate class names using true design system
+const getListClasses = () => {
+  const baseClass = 'list';
+  const spacingClass = spacing !== 'default' ? `list-${spacing}` : '';
+  
+  return `${baseClass} ${spacingClass} ${className}`.trim();
+};
+---
+
+<!-- 
+TRUE Design System List Component
+
+This component owns the template logic. Pass Alpine.js directives as props:
+
+Usage:
+<List 
+  x-data="{ items: todo.filteredUserTodos }"
+  x-for="item in items" 
+  x-key="item.id"
+>
+  <div class="list-item">
+    <span x-text="item.task"></span>
+  </div>
+</List>
+
+For static lists:
+<List>
+  <div class="list-item">Static item</div>
+</List>
+-->
+
+<div class={getListClasses()} {...rest}>
+  {rest['x-for'] ? (
+    <template x-for={rest['x-for']} :key={rest['x-key']}>
+      <slot />
+    </template>
+  ) : (
+    <slot />
+  )}
+</div>

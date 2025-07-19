@@ -1,0 +1,69 @@
+/* 
+ * LIST COMPONENT
+ * Part of the Basis Design System
+ * TRUE design system - makes decisions for developers
+ */
+
+/* ==========================================================================
+   LIST COMPONENT - BASE
+   ========================================================================== */
+
+/* THE list style - perfect vertical stacking with scroll */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; /* default spacing */
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0; /* important for flex scroll */
+}
+
+/* ==========================================================================
+   SPACING VARIANTS - Classes
+   ========================================================================== */
+
+/* Tight spacing - minimal gaps for dense content */
+.list-tight {
+  gap: 0.125rem;
+}
+
+/* Loose spacing - generous gaps for breathing room */
+.list-loose {
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
+   LIST ITEM STYLES - For items inside lists
+   ========================================================================== */
+
+/* Standard list item styling */
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--neutral-200);
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.list-item:hover {
+  border-color: var(--neutral-300);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Readonly variant for non-interactive items */
+.list-item-readonly {
+  background-color: var(--neutral-50);
+}
+
+/* Compact variant for tighter items */
+.list-item-compact {
+  padding: 0.375rem 0.5rem;
+}
+
+/* Spacious variant for more breathing room */
+.list-item-spacious {
+  padding: 0.75rem 1rem;
+}
