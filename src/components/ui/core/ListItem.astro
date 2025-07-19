@@ -1,0 +1,114 @@
+---
+import { Row } from '../core';
+
+export interface Props {
+  align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
+  gap?: 'tight' | 'default' | 'loose' | 'none';
+  interactive?: boolean;
+  class?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
+}
+
+const { 
+  align = 'center',
+  gap = 'default',
+  interactive = false,
+  class: className = "",
+  ...rest
+} = Astro.props;
+
+// Generate class names using true design system
+const getListItemClasses = () => {
+  const baseClass = 'list-item';
+  const interactiveClass = interactive ? 'list-item-interactive' : '';
+  
+  return `${baseClass} ${interactiveClass} ${className}`.trim();
+};
+---
+
+<!-- 
+TRUE Design System ListItem Component
+
+Usage:
+<ListItem>
+  <Checkbox slot="start" />
+  Task content goes here
+  <Button slot="end">Delete</Button>
+</ListItem>
+
+<ListItem interactive>
+  <Icon slot="start" />
+  Clickable list item
+  <Badge slot="end" />
+</ListItem>
+
+Props:
+- align: start, center, end, stretch, baseline (default: center)
+- gap: tight, default, loose, none (default: default)
+- interactive: boolean - adds hover/focus states
+-->
+
+<Row 
+  align={align}
+  gap={gap}
+  class={getListItemClasses()}
+  {...rest}
+>
+  <!-- Start content (icons, checkboxes, avatars) -->
+  {Astro.slots.start && (
+    <div class="list-item-start">
+      <slot name="start" />
+    </div>
+  )}
+  
+  <!-- Main content (flexible, takes remaining space) -->
+  <div class="list-item-content">
+    <slot />
+  </div>
+  
+  <!-- End content (actions, badges, metadata) -->
+  {Astro.slots.end && (
+    <div class="list-item-end">
+      <slot name="end" />
+    </div>
+  )}
+</Row>
+
+<style>
+  .list-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-border, var(--neutral-200));
+  }
+  
+  .list-item:last-child {
+    border-bottom: none;
+  }
+  
+  .list-item-interactive {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .list-item-interactive:hover {
+    background-color: var(--color-bg-subtle, var(--neutral-50));
+  }
+  
+  .list-item-interactive:focus-within {
+    background-color: var(--color-bg-subtle, var(--neutral-50));
+    outline: 2px solid var(--color-primary, var(--blue-500));
+    outline-offset: -2px;
+  }
+  
+  .list-item-start {
+    flex-shrink: 0;
+  }
+  
+  .list-item-content {
+    flex: 1;
+    min-width: 0; /* Allows text truncation */
+  }
+  
+  .list-item-end {
+    flex-shrink: 0;
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Button, Card, List, Row } from '../components/ui/core';
+import { Button, Card, List, Row, ListItem, Text } from '../components/ui/core';
 import { Checkbox, TextInput } from '../components/ui/forms';
 import { Navbar } from '../components/ui/navigation';
 import { Loading, Error, Empty } from '../components/ui/feedback';
@@ -39,7 +39,7 @@ const title = "Todo App with Supabase";
             </div>
             
             <div slot="center">
-                <h1 class="navbar-title">Supabase Todo App</h1>
+                <Text as="h1" class="navbar-title">Supabase Todo App</Text>
             </div>
             
             <div slot="end">
@@ -53,7 +53,7 @@ const title = "Todo App with Supabase";
                 <!-- Auth Status for Non-authenticated Users -->
                 <Card context="spacious" x-show="!auth.isAuthenticated" class="auth-prompt">
                         <div slot="body">
-                            <p class="auth-prompt-text">Click to start using the app</p>
+                            <Text as="p" class="auth-prompt-text">Click to start using the app</Text>
                             <Button 
                                 @click="signInAnonymously()"
                                 :disabled="auth.loading || todo.loading"
@@ -69,9 +69,7 @@ const title = "Todo App with Supabase";
                     
                     <!-- Left Column: My Todos -->
                     <Card class="todo-column todo-column-user">
-                        <div slot="header">
-                            <h2 class="todo-column-title">My Todos</h2>
-                        </div>
+                        <Text as="h2" slot="header" class="todo-column-title">My Todos</Text>
                         <div slot="body" class="todo-column-content">
 
                             <!-- Filter Buttons and Auth Info -->
@@ -103,7 +101,7 @@ const title = "Todo App with Supabase";
                                 
                                 <!-- Auth Info (Right) -->
                                 <Row gap="loose">
-                                    <span>Signed in as: <span x-text="auth.userDisplayId" class="auth-user-id"></span></span>
+                                    <Text>Signed in as: <strong x-text="auth.userDisplayId" class="auth-user-id"></strong></Text>
                                     <Button @click="signOut()" context="xs" class="button-solid-neutral">Sign Out</Button>
                                 </Row>
                             </Row>
@@ -122,45 +120,44 @@ const title = "Todo App with Supabase";
                                 x-for="item in todo.filteredUserTodos" 
                                 x-key="item.id"
                             >
-                                <Row class="list-item" align="center" justify="start">
+                                <ListItem align="center">
                                     <Checkbox 
+                                        slot="start"
                                         :checked="item.is_complete"
                                         @change="todo.toggleTodo(item.id, $event.target.checked)"
                                     />
-                                    <div class="todo-text">
-                                        <span 
-                                            :class="item.is_complete ? 'todo-text-completed' : 'todo-text-active'"
-                                            x-text="item.task"
-                                        ></span>
-                                    </div>
+                                    <Text 
+                                        :state="item.is_complete ? 'completed' : 'active'"
+                                        x-text="item.task"
+                                    ></Text>
                                     <Button 
+                                        slot="end"
                                         @click="todo.deleteTodo(item.id)"
                                         context="xs"
                                         class="button-solid-neutral"
                                     >
                                         Delete
                                     </Button>
-                                </Row>
+                                </ListItem>
                             </List>
                             
                             <!-- Empty State -->
                             <Empty x-show="todo.filteredUserTodos.length === 0 && !todo.loading">
-                                <span x-show="todo.userFilter === 'all'">No todos yet. Add one below!</span>
-                                <span x-show="todo.userFilter === 'active'">No active todos.</span>
-                                <span x-show="todo.userFilter === 'completed'">No completed todos.</span>
+                                <Text as="p" x-show="todo.userFilter === 'all'">No todos yet. Add one below!</Text>
+                                <Text as="p" x-show="todo.userFilter === 'active'">No active todos.</Text>
+                                <Text as="p" x-show="todo.userFilter === 'completed'">No completed todos.</Text>
                             </Empty>
 
                         </div>
                         
-                        <div slot="footer">
                             <!-- Stats -->
-                            <div x-show="todo.userTodos.length > 0" class="stats">
-                                <span x-text="todo.userActiveCount"></span> active, 
-                                <span x-text="todo.userCompletedCount"></span> completed
+                            <div slot="footer" x-show="todo.userTodos.length > 0" class="stats">
+                                <Text as="span" x-text="todo.userActiveCount"></Text> active, 
+                                <Text as="span" x-text="todo.userCompletedCount"></Text> completed
                             </div>
                             
                             <!-- Add Todo Form -->
-                            <form @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="todo-form">
+                            <form slot="footer" @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="todo-form">
                                 <Row gap="default">
                                     <TextInput
                                         x-ref="todoInput"
@@ -178,14 +175,11 @@ const title = "Todo App with Supabase";
                                     </Button>
                                 </Row>
                             </form>
-                        </div>
                     </Card>
 
                     <!-- Right Column: All Todos -->
                     <Card class="todo-column todo-column-all">
-                        <div slot="header">
-                            <h2 class="todo-column-title">Realtime Todos</h2>
-                        </div>
+                        <Text as="h2" slot="header" class="todo-column-title">Realtime Todos</Text>
                         <div slot="body" class="todo-column-content">
                         
                             <!-- Filter Buttons and User Count -->
@@ -217,7 +211,7 @@ const title = "Todo App with Supabase";
                                 
                                 <!-- User Count (Right) -->
                                 <div class="user-count">
-                                    <span x-text="todo.uniqueUserCount"></span> contributor<span x-show="todo.uniqueUserCount !== 1">s</span> online
+                                    <Text as="span" x-text="todo.uniqueUserCount"></Text> contributor<span x-show="todo.uniqueUserCount !== 1">s</span> online
                                 </div>
                             </Row>
 
@@ -235,39 +229,36 @@ const title = "Todo App with Supabase";
                                 x-for="item in todo.filteredAllTodos" 
                                 x-key="item.id"
                             >
-                                <Row class="list-item list-item-readonly" align="center" justify="start">
+                                <ListItem align="center">
                                     <Checkbox 
+                                        slot="start"
                                         :checked="item.is_complete"
                                         disabled
                                     />
-                                    <div class="todo-text">
-                                        <span 
-                                            :class="item.is_complete ? 'todo-text-completed' : 'todo-text-active'"
-                                            x-text="item.task"
-                                        ></span>
-                                    </div>
-                                    <Row gap="tight" class="todo-user-info">
-                                        <span x-text="item.user_id.slice(0, 8) + '...'"></span>
+                                    <Text 
+                                        :state="item.is_complete ? 'completed' : 'active'"
+                                        x-text="item.task"
+                                    ></Text>
+                                    <Row slot="end" gap="tight" class="todo-user-info">
+                                        <Text as="small" x-text="item.user_id.slice(0, 8) + '...'"></Text>
                                         <span x-show="item.user_id === auth.currentUser?.id" class="badge badge-sm badge-blue">You</span>
                                     </Row>
-                                </Row>
+                                </ListItem>
                             </List>
                             
                             <!-- Empty State -->
                             <Empty x-show="todo.filteredAllTodos.length === 0 && !todo.loading">
-                                <span x-show="todo.allFilter === 'all'">No todos in database.</span>
-                                <span x-show="todo.allFilter === 'active'">No active todos.</span>
-                                <span x-show="todo.allFilter === 'completed'">No completed todos.</span>
+                                <Text as="p" x-show="todo.allFilter === 'all'">No todos in database.</Text>
+                                <Text as="p" x-show="todo.allFilter === 'active'">No active todos.</Text>
+                                <Text as="p" x-show="todo.allFilter === 'completed'">No completed todos.</Text>
                             </Empty>
                         </div>
                         
-                        <div slot="footer">
                             <!-- Stats -->
-                            <div x-show="todo.allTodos.length > 0" class="stats">
-                                <span x-text="todo.allActiveCount"></span> active, 
-                                <span x-text="todo.allCompletedCount"></span> completed
+                            <div slot="footer" x-show="todo.allTodos.length > 0" class="stats">
+                                <Text as="span" x-text="todo.allActiveCount"></Text> active, 
+                                <Text as="span" x-text="todo.allCompletedCount"></Text> completed
                             </div>
-                        </div>
                     </Card>
                 </Row>
         </div>

@@ -10,12 +10,79 @@ This guide covers how to use the 40+ UI components and 25+ marketing components 
 ## Component Categories
 
 ### UI Components (`/src/components/ui/`)
-Interactive components for building user interfaces:
-- **Forms**: Button, TextInput, Textarea, Select, Checkbox, RadioGroup, Switch
-- **Overlays**: Modal, SlideOver, Popover, Tooltip, Toast, FullScreenModal
-- **Navigation**: Dropdown, Tabs, Breadcrumbs, Pagination, NavigationMenu
-- **Data Display**: Table, Card, Badge, Progress, Rating, Accordion
-- **Special**: MonacoEditor, VideoPlayer, DatePicker, Command, ImageGallery
+Interactive components for building user interfaces, organized by functional categories:
+
+#### Core Components (`/src/components/ui/core/`)
+Essential building blocks for layouts and basic interactions:
+- **Button** - Interactive buttons with variants
+- **Card** - Content containers with header/body/footer
+- **Row** - Horizontal layout component with flexbox options
+- **List** - Vertical list container with Alpine.js template support
+- **Divider** - Horizontal and vertical dividers
+
+#### Form Components (`/src/components/ui/forms/`)
+All form-related inputs and controls:
+- **TextInput** - Text input fields with variants
+- **Textarea** - Multi-line text areas with auto-resize
+- **Checkbox** - Form checkboxes with custom styling
+- **Switch** - Toggle controls
+- **Select** - Searchable dropdown selects
+- **RadioGroup** - Single-select option groups
+- **DatePicker** - Interactive calendar date selection
+- **RangeSlider** - Configurable range input sliders
+
+#### Navigation Components (`/src/components/ui/navigation/`)
+Navigation and wayfinding components:
+- **Navbar** - Application navigation bar
+- **NavigationMenu** - Advanced navigation with dropdowns
+- **Breadcrumbs** - Navigation breadcrumb trails
+- **Pagination** - Page navigation controls
+- **MenuBar** - Application-style menu bars
+
+#### Overlay Components (`/src/components/ui/overlays/`)
+Components that float above content:
+- **Modal** - Overlay dialogs
+- **FullScreenModal** - Full screen overlay modals
+- **Dropdown** - Toggleable menus
+- **Popover** - Positioned popup content
+- **Tooltip** - Hover information tooltips
+- **HoverCard** - Tooltip-like cards with delay
+- **SlideOver** - Side panel modals
+- **ContextMenu** - Right-click context menus
+
+#### Feedback Components (`/src/components/ui/feedback/`)
+User feedback and state indicators:
+- **Loading** - Loading state indicators
+- **Error** - Error message displays
+- **Empty** - Empty state messages
+- **Alert** - Notification messages with variants
+- **Toast** - Temporary notifications
+- **Banner** - Top/bottom page announcements
+- **Progress** - Progress bars with animations
+
+#### Content Components (`/src/components/ui/content/`)
+Content display and organization:
+- **Table** - Data tables with responsive wrapper
+- **Accordion** - Collapsible content sections
+- **Tabs** - Tabbed content interfaces
+- **Quotes** - Testimonial and citation blocks
+- **ImageGallery** - Image gallery with lightbox
+- **VideoPlayer** - Custom video player with controls
+
+#### Interactive Components (`/src/components/ui/interactive/`)
+Interactive widgets and tools:
+- **Command** - Command palette interface
+- **CopyToClipboard** - Copy text functionality
+- **Rating** - Star rating components
+- **MonacoEditor** - Code editor integration
+
+#### Effects Components (`/src/components/ui/effects/`)
+Visual effects and animations:
+- **Marquee** - Scrolling text/content
+- **TextAnimation** - Character-by-character text effects (GSAP)
+- **TypingEffect** - Typewriter text animations
+- **RetroGrid** - Animated grid backgrounds
+- **Badge** - Status indicators and labels
 
 ### Marketing Components (`/src/components/marketing/`)
 Pre-built sections for landing pages:
@@ -29,12 +96,23 @@ Pre-built sections for landing pages:
 
 ## Using Components
 
-### Basic Import and Usage
+### Component Import Structure
+
+Components are organized by functional categories for better organization and discoverability:
 
 ```astro
 ---
-// Import components you need
-import { Button, Modal, Card } from '@/components/ui';
+// Import from specific categories
+import { Button, Card, Row, List } from '@/components/ui/core';
+import { TextInput, Checkbox, Select } from '@/components/ui/forms';
+import { Navbar } from '@/components/ui/navigation';
+import { Modal, Dropdown } from '@/components/ui/overlays';
+import { Loading, Error, Empty } from '@/components/ui/feedback';
+import { Table, Accordion } from '@/components/ui/content';
+import { Rating, Command } from '@/components/ui/interactive';
+import { Badge, Marquee } from '@/components/ui/effects';
+
+// Marketing components (unchanged)
 import { HeroCentered, FeatureGrid } from '@/components/marketing';
 ---
 
@@ -50,6 +128,71 @@ import { HeroCentered, FeatureGrid } from '@/components/marketing';
   Click me
 </Button>
 ```
+
+### Alpine.js Integration
+
+All UI components support Alpine.js prop passing for seamless reactive behavior:
+
+```astro
+<!-- Core Components with Alpine.js -->
+<Button 
+  @click="handleClick()"
+  :disabled="isLoading"
+  :class="{ 'opacity-50': isLoading }"
+  variant="solid"
+>
+  Submit
+</Button>
+
+<Card x-show="isVisible" x-transition>
+  Dynamic content  <!-- Default slot goes to body -->
+</Card>
+
+<Row x-show="showFilters" justify="between">
+  <Button @click="filter('all')">All</Button>
+  <Button @click="filter('active')">Active</Button>
+</Row>
+
+<!-- Form Components with Alpine.js -->
+<TextInput 
+  x-model="searchQuery"
+  @input="handleSearch()"
+  placeholder="Search..."
+/>
+
+<Checkbox 
+  :checked="isSelected"
+  @change="toggleSelection($event.target.checked)"
+/>
+
+<!-- Feedback Components with Alpine.js -->
+<Loading x-show="isLoading">
+  Processing your request...
+</Loading>
+
+<Error x-show="hasError" x-text="errorMessage" />
+
+<Empty x-show="items.length === 0 && !isLoading">
+  <span>No items found</span>
+</Empty>
+```
+
+**Components with Internal Alpine.js State** (use their own Alpine.js internally):
+- **Navigation**: NavigationMenu, Pagination, MenuBar
+- **Overlays**: All overlay components (Modal, Dropdown, Popover, etc.)
+- **Content**: Accordion, Tabs, ImageGallery, VideoPlayer
+- **Interactive**: All interactive components
+- **Feedback**: Toast
+- **Effects**: TypingEffect
+- **Forms**: DatePicker
+
+**Components that Pass Alpine.js Props** (accept Alpine.js directives as props):
+- **Core**: All core components
+- **Forms**: Most form components (except DatePicker)
+- **Feedback**: Most feedback components (except Toast)
+- **Effects**: Most effects components (except TypingEffect)
+- **Navigation**: Navbar, Breadcrumbs
+- **Content**: Table, Quotes
 
 ### Component Props
 
@@ -335,24 +478,50 @@ All components use our CSS custom properties design system:
 ## Best Practices
 
 ### 1. Component Composition
+
+Components support both explicit slots and default content for cleaner syntax:
+
 ```astro
 ---
 // Create composite components
-import { Card, Button, Badge } from '@/components/ui';
+import { Card, Button, Badge } from '@/components/ui/core';
+import { Badge } from '@/components/ui/effects';
 ---
 
+<!-- Clean syntax using default slot -->
 <Card>
   <div slot="header">
     <h3>Product Name</h3>
     <Badge color="green">New</Badge>
   </div>
   
-  <p>Product description...</p>
+  <!-- Content goes to body by default -->
+  <p>Product description goes here automatically...</p>
+  <p>No need for slot="body"!</p>
   
   <div slot="footer">
     <Button variant="solid" color="blue">Buy Now</Button>
   </div>
 </Card>
+
+<!-- Simple cards are even cleaner -->
+<Card>
+  <h3>Simple Card</h3>
+  <p>Just content, no explicit slots needed.</p>
+</Card>
+
+<!-- Modal example -->
+<Modal>
+  <h2 slot="header">Confirm Action</h2>
+  
+  <!-- Default content goes to body -->
+  <p>Are you sure you want to delete this item?</p>
+  
+  <div slot="footer">
+    <Button variant="outline">Cancel</Button>
+    <Button variant="solid" color="red">Delete</Button>
+  </div>
+</Modal>
 ```
 
 ### 2. Responsive Design
