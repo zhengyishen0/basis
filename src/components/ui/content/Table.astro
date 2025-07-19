@@ -7,6 +7,7 @@ export interface Props {
   hover?: boolean;
   responsive?: boolean;
   class?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 
@@ -16,7 +17,8 @@ const {
   context = 'default',
   hover = false,
   responsive = true,
-  class: className = ""
+  class: className = "",
+  ...rest
 } = Astro.props;
 
 // Generate class names using true design system
@@ -71,6 +73,7 @@ Props:
       class={getComponentClasses()}
       data-variant={variant !== 'default' ? variant : null}
       data-state={hover ? 'hover' : null}
+      {...rest}
     >
       <thead class="table-thead">
         <tr>
@@ -99,6 +102,7 @@ Props:
     class={getComponentClasses()}
     data-variant={variant !== 'default' ? variant : null}
     data-state={hover ? 'hover' : null}
+    {...rest}
   >
     <thead class="table-thead">
       <tr>

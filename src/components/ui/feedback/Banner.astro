@@ -7,6 +7,7 @@ export interface Props {
   context?: 'default' | 'form' | 'hero';
   dismissible?: boolean;
   class?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 
@@ -16,7 +17,8 @@ const {
   variant = 'default',
   context = 'default',
   dismissible = true,
-  class: className = ""
+  class: className = "",
+  ...rest
 } = Astro.props;
 
 // Generate class names using true design system
@@ -60,6 +62,7 @@ Contextual Variants: default, form, hero
   class={getComponentClasses()}
   data-position={position !== 'top' ? position : null}
   data-variant={variant !== 'default' ? variant : null}
+  {...rest}
 >
   <div class="banner-container">
     <div class="banner-content">

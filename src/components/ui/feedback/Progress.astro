@@ -8,6 +8,7 @@ export interface Props {
   autoIncrement?: boolean;
   incrementInterval?: number;
   class?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 
@@ -18,7 +19,8 @@ const {
   showLabel = false,
   autoIncrement = false,
   incrementInterval = 100,
-  class: className = ""
+  class: className = "",
+  ...rest
 } = Astro.props;
 
 // Generate class names using true design system
@@ -82,6 +84,7 @@ Contextual Variants: default, thin, thick
     }
   "
   class="progress-wrapper"
+  {...rest}
 >
   <!-- Progress label -->
   {showLabel && (

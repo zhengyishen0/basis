@@ -6,6 +6,7 @@ export interface Props {
   duration?: number;
   autoStart?: boolean;
   class?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 
@@ -14,7 +15,8 @@ const {
   stagger = 0.1,
   duration = 0.5,
   autoStart = true,
-  class: className = ""
+  class: className = "",
+  ...rest
 } = Astro.props;
 
 // Generate class names using our design system
@@ -85,6 +87,7 @@ Features:
     }
   "
   class={`${getTextAnimationClasses()} ${className}`}
+  {...rest}
 >
   <div x-ref="textContainer" class="text-animation-container">
     <template x-for="(char, index) in text.split('')" :key="index">

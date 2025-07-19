@@ -2,11 +2,13 @@
 export interface Props {
   direction?: 'horizontal' | 'vertical';
   class?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 
   direction = 'horizontal',
-  class: className = ""
+  class: className = "",
+  ...rest
 } = Astro.props;
 
 // Generate class names using true design system
@@ -28,4 +30,4 @@ Usage:
 Direction: horizontal (default), vertical
 -->
 
-<div class={getDividerClasses()} role="separator" aria-orientation={direction}></div>
+<div class={getDividerClasses()} role="separator" aria-orientation={direction} {...rest}></div>

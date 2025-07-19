@@ -10,6 +10,7 @@ export interface Props {
   context?: 'default' | 'compact' | 'minimal';
   showHome?: boolean;
   class?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 
@@ -17,7 +18,8 @@ const {
   separator = 'default',
   context = 'default',
   showHome = true,
-  class: className = ""
+  class: className = "",
+  ...rest
 } = Astro.props;
 
 // Generate class names using true design system
@@ -61,6 +63,7 @@ Contextual Variants: default, compact, minimal
   class={`${getComponentClasses()} ${className}`} 
   aria-label="Breadcrumb"
   data-separator={separator !== 'default' ? separator : null}
+  {...rest}
 >
   <ol class="breadcrumbs-list">
     <!-- Home icon -->

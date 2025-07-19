@@ -8,6 +8,7 @@ export interface Props {
   variant?: 'default' | 'centered' | 'minimal';
   context?: 'default' | 'testimonial' | 'hero';
   class?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 
@@ -18,7 +19,8 @@ const {
   avatar,
   variant = 'default',
   context = 'default',
-  class: className = ""
+  class: className = "",
+  ...rest
 } = Astro.props;
 
 // Generate class names using true design system
@@ -77,6 +79,7 @@ Props:
 <blockquote 
   class={`${getComponentClasses()} ${className}`}
   data-variant={variant !== 'default' ? variant : null}
+  {...rest}
 >
   {variant !== 'minimal' && (
     <svg class={getQuoteIconClasses()} fill="currentColor" viewBox="0 0 20 20">

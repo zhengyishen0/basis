@@ -5,6 +5,7 @@ export interface Props {
   icon?: string;
   class?: string;
   dismissible?: boolean;
+  [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 
@@ -12,7 +13,8 @@ const {
   title, 
   icon, 
   class: className = "",
-  dismissible = false 
+  dismissible = false,
+  ...rest
 } = Astro.props;
 ---
 
@@ -34,6 +36,7 @@ Semantic Variants: default, info, success, warning, error
   class={`alert ${className}`}
   data-variant={variant !== 'default' ? variant : null}
   {...(dismissible ? { 'x-data': '{ alertVisible: true }', 'x-show': 'alertVisible' } : {})}
+  {...rest}
 >
   {icon && (
     <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
