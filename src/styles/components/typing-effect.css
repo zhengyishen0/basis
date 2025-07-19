@@ -17,6 +17,7 @@
   line-height: 2rem;
   vertical-align: top;
   overflow: hidden;
+  font-size: var(--text);
 }
 
 .typing-effect-text {
@@ -41,64 +42,58 @@
   }
 }
 
-/* Typing Effect Sizes */
-.typing-effect-sm {
+/* Contextual sizing */
+.small-typing-effect {
   font-size: var(--text-sm);
   min-width: 30ch;
   height: 1.5rem;
   line-height: 1.5rem;
 }
 
-.typing-effect-md {
-  font-size: var(--text);
-  min-width: 35ch;
-  height: 1.75rem;
-  line-height: 1.75rem;
-}
-
-.typing-effect-lg {
+.large-typing-effect {
   font-size: var(--text-lg);
   min-width: 30ch;
   height: 2rem;
   line-height: 2rem;
 }
 
-.typing-effect-xl {
+.hero-typing-effect {
   font-size: var(--text-xl);
   min-width: 25ch;
   height: 2.5rem;
   line-height: 2.5rem;
 }
 
-/* Typing Effect Colors */
-.typing-effect-primary {
+/* Semantic variants */
+.typing-effect[data-variant="primary"] {
   color: var(--color-primary);
 }
 
-.typing-effect-secondary {
+.typing-effect[data-variant="secondary"] {
   color: var(--color-text-secondary);
 }
 
-.typing-effect-neutral {
-  color: var(--color-neutral);
+.typing-effect[data-variant="success"] {
+  color: var(--color-success);
 }
 
-.typing-effect-blue {
-  color: var(--color-blue);
+.typing-effect[data-variant="warning"] {
+  color: var(--color-warning);
 }
 
-.typing-effect-red {
-  color: var(--color-red);
+.typing-effect[data-variant="danger"] {
+  color: var(--color-danger);
 }
 
-.typing-effect-green {
-  color: var(--color-green);
+/* States */
+.typing-effect[data-state="paused"] .typing-effect-cursor {
+  animation-play-state: paused;
 }
 
-.typing-effect-yellow {
-  color: var(--color-yellow);
+.typing-effect[data-state="fast"] .typing-effect-cursor {
+  animation-duration: 0.5s;
 }
 
-.typing-effect-purple {
-  color: var(--color-purple);
+.typing-effect[data-state="slow"] .typing-effect-cursor {
+  animation-duration: 2s;
 }

@@ -1,13 +1,14 @@
 /* 
  * DROPDOWN COMPONENT
  * Part of the Basis Design System
- * This file contains styles for the dropdown component
+ * TRUE design system - makes decisions for developers
  */
 
 /* ==========================================================================
-   DROPDOWN COMPONENT
+   DROPDOWN COMPONENT - BASE
    ========================================================================== */
 
+/* THE dropdown style - perfect overlay menu */
 .dropdown {
   position: relative;
   display: inline-block;
@@ -26,14 +27,14 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
-  padding: var(--space-1) 0;
+  padding: 0.25rem 0;
 }
 
 .dropdown-item {
   display: flex;
   align-items: center;
-  padding: var(--space-2) var(--space-4);
-  font-size: var(--text-sm);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
   color: var(--color-text-primary);
   text-decoration: none;
   cursor: pointer;
@@ -46,6 +47,12 @@
 
 .dropdown-item:hover {
   background: var(--color-surface);
+}
+
+.dropdown-item[data-state="disabled"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .dropdown-item:focus {

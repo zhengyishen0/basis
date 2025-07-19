@@ -41,11 +41,42 @@
   border-color: var(--color-primary);
 }
 
-.select--disabled .select-trigger {
+.select[data-state="disabled"] .select-trigger {
   background: var(--color-surface-disabled);
   color: var(--color-text-disabled);
   cursor: not-allowed;
   pointer-events: none;
+}
+
+.select[data-state="error"] .select-trigger {
+  border-color: var(--color-danger);
+}
+
+.select[data-state="error"] .select-trigger:focus {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--color-danger-light);
+}
+
+/* Contextual sizing */
+.form-select .select-trigger {
+  padding: var(--space-2) var(--space-2-5);
+  font-size: var(--text-sm);
+}
+
+.form-select .select-icon {
+  width: var(--space-3-5);
+  height: var(--space-3-5);
+}
+
+.hero-select .select-trigger {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-lg);
+}
+
+.hero-select .select-icon {
+  width: var(--space-5);
+  height: var(--space-5);
 }
 
 .select-icon {

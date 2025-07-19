@@ -4,12 +4,21 @@ export interface Props {
     id?: string;
     title: string;
     content: string;
+    disabled?: boolean;
   }>;
-  class?: string;
+  variant?: 'default' | 'bordered' | 'filled';
+  context?: 'default' | 'compact' | 'spacious';
   allowMultiple?: boolean;
+  class?: string;
 }
 
-const { items, class: className = "", allowMultiple = false } = Astro.props;
+const { 
+  items, 
+  variant = 'default',
+  context = 'default',
+  allowMultiple = false,
+  class: className = ""
+} = Astro.props;
 
 // Convert items to JSON for Alpine.js
 const itemsJson = JSON.stringify(items);
@@ -29,26 +38,16 @@ const accordionData = `{
   }
 }`;
 
-const getAccordionClasses = () => {
+// Generate class names using true design system
+const getComponentClasses = () => {
   const baseClass = 'accordion';
-  return `${baseClass} ${className}`.trim();
-};
-
-const getAccordionItemClasses = () => {
-  return 'accordion-item';
-};
-
-const getAccordionButtonClasses = () => {
-  return 'accordion-button';
-};
-
-const getAccordionContentClasses = () => {
-  return 'accordion-content';
+  const contextClass = context !== 'default' ? `${context}-accordion` : '';
+  return `${baseClass} ${contextClass} ${className}`.trim();
 };
 ---
 
 <!-- 
-Pine UI Accordion Component
+TRUE Design System Accordion Component
 
 Usage:
 <Accordion 
@@ -56,27 +55,29 @@ Usage:
     { title: "Question 1", content: "Answer content here" },
     { title: "Question 2", content: "More answer content" }
   ]} 
-  allowMultiple={false}
 />
 
-Features:
-- Native HTML details/summary for accessibility
-- Optional Alpine.js enhancement for single-open behavior
-- Smooth transitions
-- Accessible by default
+<Accordion variant="bordered" context="compact" items={...} />
+<Accordion variant="filled" context="spacious" allowMultiple={true} items={...} />
+
+Semantic Variants: default, bordered, filled
+Contextual Variants: default, compact, spacious
 -->
 
 <div 
   x-data={accordionData}
-  class={getAccordionClasses()}
+  class={getComponentClasses()}
+  data-variant={variant !== 'default' ? variant : null}
 >
   <template x-for="(item, index) in items" :key="item.id || ('accordion-' + index)">
     <details 
-      class={getAccordionItemClasses()}
+      class="accordion-item"
+      :data-state="item.disabled ? 'disabled' : null"
       @toggle="handleToggle($el)"
     >
       <summary 
-        class={getAccordionButtonClasses()}
+        class="accordion-button"
+        :disabled="item.disabled"
       >
         <span class="accordion-title" x-text="item.title"></span>
         <svg 
@@ -88,9 +89,7 @@ Features:
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
         </svg>
       </summary>
-      <div 
-        class={getAccordionContentClasses()}
-      >
+      <div class="accordion-content">
         <div class="accordion-text" x-text="item.content"></div>
       </div>
     </details>

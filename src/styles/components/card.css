@@ -1,66 +1,64 @@
 /* 
  * CARD COMPONENT
  * Part of the Basis Design System
- * This file contains styles for the card component
+ * TRUE design system - makes decisions for developers
  */
 
 /* ==========================================================================
-   CARD COMPONENT
+   CARD COMPONENT - BASE
    ========================================================================== */
 
+/* THE card style - perfect for most content containers */
 .card {
   background: var(--color-surface-elevated);
   color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
-.card-default {
-  border: 1px solid var(--color-border);
-}
+/* ==========================================================================
+   SEMANTIC VARIANTS - Data Attributes
+   ========================================================================== */
 
-.card-bordered {
-  border: 2px solid var(--color-border-hover);
-}
-
-.card-shadow {
-  border: 1px solid var(--color-border);
+/* Only for content that needs visual emphasis */
+.card[data-variant="elevated"] {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
 }
 
-.card-elevated {
-  border: 1px solid var(--color-border);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-}
-
-/* Card Padding */
-.card-padding-none {
-  padding: 0;
-}
-
-.card-padding-sm {
-  padding: var(--space-4);
-}
-
-.card-padding-md {
-  padding: var(--space-6);
-}
-
-.card-padding-lg {
-  padding: var(--space-8);
-}
+/* ==========================================================================
+   CARD SECTIONS - Fixed padding decisions
+   ========================================================================== */
 
 .card-header {
   border-bottom: 1px solid var(--color-border);
-  padding: var(--space-6);
+  padding: 1.5rem;
 }
 
 .card-body {
-  padding: var(--space-6);
+  padding: 1.5rem;
 }
 
 .card-footer {
   border-top: 1px solid var(--color-border);
   background: var(--color-surface);
-  padding: var(--space-6);
+  padding: 1.5rem;
+}
+
+/* ==========================================================================
+   CONTEXTUAL VARIANTS - Classes
+   ========================================================================== */
+
+/* For cards in tight spaces */
+.compact-card .card-header,
+.compact-card .card-body,
+.compact-card .card-footer {
+  padding: 1rem;
+}
+
+/* For cards that need more breathing room */
+.spacious-card .card-header,
+.spacious-card .card-body,
+.spacious-card .card-footer {
+  padding: 2rem;
 }

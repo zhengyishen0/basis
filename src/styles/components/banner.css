@@ -13,14 +13,12 @@
   left: 0;
   z-index: var(--z-toast);
   width: 100%;
-}
-
-/* Banner positioning */
-.banner-position-top {
   top: 0;
 }
 
-.banner-position-bottom {
+/* Positioning */
+.banner[data-position="bottom"] {
+  top: auto;
   bottom: 0;
 }
 
@@ -29,6 +27,44 @@
   color: var(--color-primary-text);
   padding: var(--space-3) var(--space-4);
   box-shadow: var(--shadow-lg);
+}
+
+/* Semantic variants */
+.banner[data-variant="warning"] .banner-container {
+  background: var(--color-warning);
+  color: var(--color-warning-text);
+}
+
+.banner[data-variant="danger"] .banner-container {
+  background: var(--color-danger);
+  color: var(--color-danger-text);
+}
+
+.banner[data-variant="success"] .banner-container {
+  background: var(--color-success);
+  color: var(--color-success-text);
+}
+
+.banner[data-variant="info"] .banner-container {
+  background: var(--color-info);
+  color: var(--color-info-text);
+}
+
+/* Contextual sizing */
+.form-banner .banner-container {
+  padding: var(--space-2) var(--space-3);
+}
+
+.form-banner .banner-message {
+  font-size: var(--text-xs);
+}
+
+.hero-banner .banner-container {
+  padding: var(--space-4) var(--space-6);
+}
+
+.hero-banner .banner-message {
+  font-size: var(--text);
 }
 
 .banner-content {

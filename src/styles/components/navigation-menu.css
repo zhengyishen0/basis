@@ -32,13 +32,18 @@
   gap: var(--space-6);
 }
 
-.navigation-menu-list-horizontal {
-  flex-direction: row;
-}
-
-.navigation-menu-list-vertical {
+.navigation-menu[data-direction="vertical"] .navigation-menu-list {
   flex-direction: column;
   gap: var(--space-2);
+}
+
+/* Contextual variants */
+.mobile-navigation-menu .navigation-menu-list {
+  gap: var(--space-4);
+}
+
+.desktop-navigation-menu .navigation-menu-list {
+  gap: var(--space-8);
 }
 
 .navigation-menu-item {

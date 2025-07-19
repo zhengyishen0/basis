@@ -1,33 +1,61 @@
 /* 
  * CHECKBOX COMPONENT
  * Part of the Basis Design System
- * This file contains styles for the checkbox component
+ * TRUE design system - makes decisions for developers
  */
 
 /* ==========================================================================
-   CHECKBOX COMPONENT
+   CHECKBOX COMPONENT - BASE
    ========================================================================== */
 
+/* THE checkbox style - perfect for selection */
 .checkbox-wrapper {
   display: flex;
-  gap: var(--space-3);
+  gap: 0.75rem;
   align-items: flex-start;
-}
-
-.checkbox-input-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: var(--space-0-5);
 }
 
 .checkbox {
   appearance: none;
-  width: var(--space-4);
-  height: var(--space-4);
+  width: 1rem;
+  height: 1rem;
   border: 2px solid var(--color-border);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  margin-top: 0.125rem;
+}
+
+.checkbox:hover {
+  border-color: var(--color-primary);
+}
+
+.checkbox:checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.checkbox:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0.375rem;
+  height: 0.25rem;
+  border: 2px solid white;
+  border-top: none;
+  border-right: none;
+  transform: translate(-50%, -60%) rotate(-45deg);
+}
+
+.checkbox[data-state="disabled"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
   cursor: pointer;
   transition: all var(--transition-normal);
   position: relative;

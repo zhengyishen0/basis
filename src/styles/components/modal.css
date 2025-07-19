@@ -1,23 +1,14 @@
 /* 
  * MODAL COMPONENT
  * Part of the Basis Design System
- * This file contains styles for the modal component
+ * TRUE design system - makes decisions for developers
  */
 
 /* ==========================================================================
-   MODAL COMPONENT
+   MODAL COMPONENT - BASE
    ========================================================================== */
 
-.modal {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  background: var(--color-surface-elevated);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
-  overflow: hidden;
-}
-
+/* THE modal style - perfect overlay component */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -30,33 +21,55 @@
   background: var(--color-overlay);
 }
 
-.modal-content {
+.modal {
   position: relative;
-  width: 100%;
+  width: 90%;
+  max-width: 32rem;
   background: var(--color-surface-elevated);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
   overflow: hidden;
 }
 
+/* ==========================================================================
+   CONTEXTUAL VARIANTS - Classes
+   ========================================================================== */
+
+/* Large modal for complex content */
+.large-modal {
+  max-width: 48rem;
+}
+
+/* Full screen modal for mobile-first experiences */
+.fullscreen-modal {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  border-radius: 0;
+}
+
+/* ==========================================================================
+   MODAL STRUCTURE - Fixed decisions
+   ========================================================================== */
+
 .modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-6);
+  padding: 1.5rem;
   border-bottom: 1px solid var(--color-border);
 }
 
 .modal-body {
-  padding: var(--space-6);
+  padding: 1.5rem;
 }
 
 .modal-footer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--space-3);
-  padding: var(--space-6);
+  gap: 0.75rem;
+  padding: 1.5rem;
   border-top: 1px solid var(--color-border);
 }
 
@@ -75,105 +88,8 @@
 .modal-close:hover {
   color: var(--color-text-primary);
 }
+
 .modal-close-icon {
   width: 1.5rem;
   height: 1.5rem;
-}
-
-/* Modal Sizes */
-.modal-sm {
-  max-width: 20rem;
-}
-
-.modal-md {
-  max-width: 28rem;
-}
-
-.modal-lg {
-  max-width: 32rem;
-}
-
-.modal-xl {
-  max-width: 48rem;
-}
-
-.modal-full {
-  max-width: 90vw;
-  max-height: 90vh;
-}
-
-/* Fullscreen Modal Component */
-.fullscreen-modal {
-  position: fixed;
-  inset: 0;
-  z-index: var(--z-modal);
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  background: var(--color-surface-elevated);
-}
-
-.fullscreen-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: var(--z-modal);
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  background: var(--color-surface-elevated);
-}
-
-.fullscreen-modal-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  overflow-y: auto;
-}
-
-.fullscreen-modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-6) var(--space-6);
-  border-bottom: 1px solid var(--color-border);
-  background: var(--color-surface-elevated);
-  z-index: 10;
-}
-
-.fullscreen-modal-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: var(--space-6);
-  min-height: 100%;
-}
-
-.fullscreen-modal-footer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--space-3);
-  padding: var(--space-6);
-  border-top: 1px solid var(--color-border);
-  background: var(--color-surface-elevated);
-  z-index: 10;
-}
-
-.fullscreen-modal-close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-2);
-  background: transparent;
-  border: none;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
-}
-
-.fullscreen-modal-close:hover {
-  color: var(--color-text-primary);
-  background: var(--color-surface-hover);
 }

@@ -17,6 +17,19 @@
   vertical-align: top;
 }
 
+/* Contextual sizing */
+.large-text-animation {
+  height: 2rem;
+  line-height: 2rem;
+  font-size: var(--text-lg);
+}
+
+.small-text-animation {
+  height: 1.25rem;
+  line-height: 1.25rem;
+  font-size: var(--text-sm);
+}
+
 .text-animation-container {
   display: inline-block;
   height: 1.5rem;
@@ -39,21 +52,21 @@
   height: 1.5rem;
 }
 
-/* Text Animation Variants */
-.text-animation-fade .text-animation-char {
+/* Animation variants via data attributes */
+.text-animation[data-animation="fade"] .text-animation-char {
   opacity: 0;
 }
 
-.text-animation-fade.text-animation-animate .text-animation-char {
+.text-animation[data-animation="fade"][data-state="animate"] .text-animation-char {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
-.text-animation-slide .text-animation-char {
+.text-animation[data-animation="slide"] .text-animation-char {
   opacity: 0;
   transform: translateX(-20px);
 }
 
-.text-animation-slide.text-animation-animate .text-animation-char {
+.text-animation[data-animation="slide"][data-state="animate"] .text-animation-char {
   animation: slideIn 0.6s ease-out forwards;
 }
 

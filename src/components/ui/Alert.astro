@@ -1,6 +1,6 @@
 ---
 export interface Props {
-  variant?: 'default' | 'blue' | 'red' | 'green' | 'yellow' | 'soft-blue' | 'soft-red' | 'soft-green' | 'soft-yellow';
+  variant?: 'default' | 'info' | 'success' | 'warning' | 'error';
   title?: string;
   icon?: string;
   class?: string;
@@ -14,38 +14,25 @@ const {
   class: className = "",
   dismissible = false 
 } = Astro.props;
-
-// Generate class names using our design system
-const getAlertClasses = () => {
-  const baseClass = 'alert';
-  const variantClass = `alert-${variant}`;
-  
-  return `${baseClass} ${variantClass}`;
-};
 ---
 
 <!-- 
-Pine UI Alert Component
+TRUE Design System Alert Component
 
 Usage:
-<Alert 
-  variant="blue" 
-  title="Information" 
-  dismissible={true}
->
-  This is an informational alert message.
-</Alert>
+<Alert>Default alert message</Alert>
+<Alert variant="info" title="Information">This is an informational alert.</Alert>
+<Alert variant="success" dismissible={true}>Operation completed successfully!</Alert>
+<Alert variant="warning">Please check your input.</Alert>
+<Alert variant="error">Something went wrong.</Alert>
 
-Variants: default, blue, red, green, yellow, soft-blue, soft-red, soft-green, soft-yellow
-Features:
-- Optional dismissible functionality
-- Custom icons
-- Multiple color variants
+Semantic Variants: default, info, success, warning, error
 -->
 
 <aside 
   role="alert"
-  class={`${getAlertClasses()} ${className}`}
+  class={`alert ${className}`}
+  data-variant={variant !== 'default' ? variant : null}
   {...(dismissible ? { 'x-data': '{ alertVisible: true }', 'x-show': 'alertVisible' } : {})}
 >
   {icon && (
@@ -66,14 +53,14 @@ Features:
     </button>
   )}
   
-  <div class={icon ? "alert-content-with-icon" : ""}>
+  <div class="alert-body">
     {title && (
       <h5 class="alert-title">
         {title}
       </h5>
     )}
     
-    <div class={`alert-content ${title ? "has-title" : ""}`}>
+    <div class="alert-content">
       <slot />
     </div>
   </div>

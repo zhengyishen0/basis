@@ -19,6 +19,33 @@
   overflow: hidden;
 }
 
+/* Contextual sizing */
+.form-command {
+  max-width: 24rem;
+}
+
+.hero-command {
+  max-width: 40rem;
+}
+
+.form-command .command-input {
+  font-size: var(--text-xs);
+}
+
+.hero-command .command-input {
+  font-size: var(--text);
+}
+
+.form-command .command-item {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+}
+
+.hero-command .command-item {
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--text);
+}
+
 .command-backdrop {
   position: fixed;
   inset: 0;
@@ -101,8 +128,14 @@
   background: var(--color-surface);
 }
 
-.command-item-active {
+.command-item[data-state="active"] {
   background: var(--color-surface-hover);
+}
+
+.command-item[data-state="disabled"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .command-item-text {

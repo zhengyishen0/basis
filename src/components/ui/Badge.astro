@@ -1,44 +1,31 @@
 ---
 export interface Props {
-  variant?: 'solid' | 'soft' | 'outline' | 'dot';
-  color?: 'black' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'pink' | 'gray';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: 'default' | 'info' | 'success' | 'warning' | 'error';
   class?: string;
-  dotColor?: string;
 }
 
 const { 
-  variant = 'solid', 
-  color = 'black',
-  size = 'md',
-  class: className = "",
-  dotColor = color
+  variant = 'default',
+  class: className = ""
 } = Astro.props;
-
-// Generate class names using our design system
-const getBadgeClasses = () => {
-  const baseClass = 'badge';
-  const sizeClass = `badge-${size}`;
-  const variantColorClass = `badge-${variant}-${color}`;
-  
-  return `${baseClass} ${sizeClass} ${variantColorClass}`;
-};
 ---
 
 <!-- 
-Pine UI Badge Component
+TRUE Design System Badge Component
 
 Usage:
-<Badge variant="solid" color="blue">New</Badge>
-<Badge variant="soft" color="green">Success</Badge>
-<Badge variant="outline" color="red">Error</Badge>
-<Badge variant="dot" color="blue" dotColor="blue">Status</Badge>
+<Badge>Default Label</Badge>
+<Badge variant="info">Information</Badge>
+<Badge variant="success">Completed</Badge>
+<Badge variant="warning">Pending</Badge>
+<Badge variant="error">Failed</Badge>
 
-Variants: solid, soft, outline, dot
-Colors: black, blue, red, green, yellow, purple, pink, gray
-Sizes: sm, md, lg
+Semantic Variants: default, info, success, warning, error
 -->
 
-<span class={`${getBadgeClasses()} ${variant === 'dot' ? 'badge-dot' : ''} ${className}`}>
+<span 
+  class={`badge ${className}`}
+  data-variant={variant !== 'default' ? variant : null}
+>
   <slot />
 </span>

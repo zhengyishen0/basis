@@ -11,8 +11,7 @@ export interface Props {
   label?: string;
   description?: string;
   error?: string;
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'default' | 'filled' | 'underlined';
+  context?: 'default' | 'compact';
   class?: string;
   inputClass?: string;
 }
@@ -29,28 +28,22 @@ const {
   label,
   description,
   error,
-  size = 'md',
-  variant = 'default',
+  context = 'default',
   class: className = "",
   inputClass = ""
 } = Astro.props;
 
+// Generate class names using true design system
 const getInputClasses = () => {
   const baseClass = 'input';
-  const sizeClass = size !== 'md' ? `input--${size}` : '';
-  const variantClass = variant !== 'default' ? `input--${variant}` : '';
-  const stateClass = error ? 'input--error' : '';
-  const disabledClass = disabled ? 'input--disabled' : '';
-  const readonlyClass = readonly ? 'input--readonly' : '';
+  const contextClass = context !== 'default' ? `${context}-input` : '';
   
-  return [baseClass, sizeClass, variantClass, stateClass, disabledClass, readonlyClass]
-    .filter(Boolean)
-    .join(' ');
+  return `${baseClass} ${contextClass}`.trim();
 };
 ---
 
 <!-- 
-Pine UI Text Input Component
+TRUE Design System Text Input Component
 
 Usage:
 <TextInput 
@@ -62,13 +55,10 @@ Usage:
   name="email"
 />
 
-Features:
-- Multiple input types
-- Various sizes and variants
-- Label and description support
-- Error state handling
-- Disabled/readonly states
-- Focus management
+<TextInput context="compact" placeholder="Search..." />
+
+States: default, error, disabled
+Contextual Variants: default, compact
 -->
 
 <div class={`form-field ${className}`}>
@@ -94,6 +84,7 @@ Features:
     readonly={readonly}
     required={required}
     class={`${getInputClasses()} ${inputClass}`}
+    data-state={error ? 'error' : disabled ? 'disabled' : null}
   />
   
   <!-- Description -->

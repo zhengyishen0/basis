@@ -1,28 +1,58 @@
 /* 
  * SWITCH COMPONENT
  * Part of the Basis Design System
- * This file contains styles for the switch component
+ * TRUE design system - makes decisions for developers
  */
 
 /* ==========================================================================
-   SWITCH COMPONENT
+   SWITCH COMPONENT - BASE
    ========================================================================== */
 
+/* THE switch style - perfect for toggles */
 .switch-wrapper {
   display: flex;
-  gap: var(--space-3);
-  align-items: flex-start;
-}
-
-.switch-input-wrapper {
-  display: flex;
+  gap: 0.75rem;
   align-items: center;
-  justify-content: center;
-  margin-top: var(--space-0-5);
 }
 
 .switch {
   position: relative;
+  width: 2.75rem;
+  height: 1.5rem;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  appearance: none;
+}
+
+.switch:checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1rem;
+  height: 1rem;
+  background: white;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+}
+
+.switch:checked::after {
+  transform: translateX(1.25rem);
+}
+
+.switch[data-state="disabled"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
   display: inline-block;
   width: var(--space-11);
   height: var(--space-6);

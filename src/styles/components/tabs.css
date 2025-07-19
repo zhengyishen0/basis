@@ -1,13 +1,14 @@
 /* 
  * TABS COMPONENT
  * Part of the Basis Design System
- * This file contains styles for the tabs component
+ * TRUE design system - makes decisions for developers
  */
 
 /* ==========================================================================
-   TABS COMPONENT
+   TABS COMPONENT - BASE
    ========================================================================== */
 
+/* THE tabs style - perfect navigation pattern */
 .tabs {
   font-family: var(--font-family);
 }
@@ -16,21 +17,17 @@
   display: flex;
   align-items: center;
   position: relative;
-}
-
-.tab-list-container {
-  display: flex;
-  align-items: center;
-  position: relative;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .tab-item {
-  padding: var(--space-3) var(--space-4);
-  font-size: var(--text-sm);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
   font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
   background: transparent;
   border: none;
+  border-bottom: 2px solid transparent;
   cursor: pointer;
   transition: all var(--transition-fast);
   white-space: nowrap;
@@ -40,44 +37,48 @@
   color: var(--color-text-primary);
 }
 
-.tab-item-disabled {
+.tab-item[data-state="disabled"] {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-.tab-active {
-  color: var(--color-text-primary);
+.tab-item[data-state="active"] {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
 }
 
 .tab-content {
-  margin-top: var(--space-4);
+  margin-top: 1rem;
 }
 
 .tab-panel {
   outline: none;
 }
 
-/* Underline variant */
-.tabs-underline .tab-list {
-  border-bottom: 1px solid var(--color-border);
-}
+/* ==========================================================================
+   CONTEXTUAL VARIANTS - Classes
+   ========================================================================== */
 
-.tabs-underline .tab-item {
-  position: relative;
-  border-bottom: 2px solid transparent;
-}
-
-.tabs-underline .tab-active {
-  border-bottom-color: var(--color-primary);
-}
-
-/* Pills variant */
-.tabs-pills .tab-list {
+/* Pills context - for grouped navigation */
+.pills-tabs .tab-list {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
-  padding: var(--space-1);
-  position: relative;
+  padding: 0.25rem;
+  border: none;
+}
+
+.pills-tabs .tab-item {
+  border-radius: var(--radius-md);
+  border-bottom: none;
+}
+
+.pills-tabs .tab-item[data-state="active"] {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-primary);
+  border-bottom-color: transparent;
+}
 }
 
 .tabs-pills .tab-item {

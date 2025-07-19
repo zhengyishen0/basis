@@ -1,7 +1,7 @@
 ---
 export interface Props {
-  variant?: 'default' | 'bordered' | 'shadow' | 'elevated';
-  padding?: 'none' | 'sm' | 'md' | 'lg';
+  variant?: 'default' | 'elevated';
+  context?: 'default' | 'compact' | 'spacious';
   class?: string;
   headerClass?: string;
   bodyClass?: string;
@@ -10,28 +10,27 @@ export interface Props {
 
 const { 
   variant = 'default',
-  padding = 'md',
+  context = 'default',
   class: className = "",
   headerClass = "",
   bodyClass = "",
   footerClass = ""
 } = Astro.props;
 
-// Generate class names using our design system
+// Generate class names using true design system
 const getCardClasses = () => {
   const baseClass = 'card';
-  const variantClass = `card-${variant}`;
-  const paddingClass = `card-padding-${padding}`;
+  const contextClass = context !== 'default' ? `${context}-card` : '';
   
-  return `${baseClass} ${variantClass} ${paddingClass}`;
+  return `${baseClass} ${contextClass}`.trim();
 };
 ---
 
 <!-- 
-Pine UI Card Component
+TRUE Design System Card Component
 
 Usage:
-<Card variant="shadow" padding="md">
+<Card>
   <div slot="header">
     <h2>Card Title</h2>
   </div>
@@ -45,15 +44,18 @@ Usage:
   </div>
 </Card>
 
-Features:
-- Multiple variants (default, bordered, shadow, elevated)
-- Configurable padding
-- Header, body, footer slots
-- Responsive design
-- Customizable styling
+<Card variant="elevated" context="compact">
+  <div slot="body">Compact elevated card</div>
+</Card>
+
+Semantic Variants: default, elevated
+Contextual Variants: default, compact, spacious
 -->
 
-<article class={`${getCardClasses()} ${className}`}>
+<article 
+  class={`${getCardClasses()} ${className}`}
+  data-variant={variant !== 'default' ? variant : null}
+>
   <!-- Header -->
   {Astro.slots.header && (
     <header class={`card-header ${headerClass}`}>

@@ -25,6 +25,9 @@
   border-radius: var(--radius-sm);
   transition: all var(--transition-normal);
   cursor: pointer;
+  width: var(--space-6);
+  height: var(--space-6);
+  color: var(--color-border-hover);
 }
 
 .rating-star:focus {
@@ -46,37 +49,41 @@
   transform: none;
 }
 
-.rating-readonly .rating-star {
+.rating[data-state="readonly"] .rating-star {
   cursor: default;
 }
 
-.rating-readonly .rating-star:hover {
+.rating[data-state="readonly"] .rating-star:hover {
   transform: none;
 }
 
-/* Star Sizes */
-.rating-star-sm {
+.rating[data-state="disabled"] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Contextual sizing */
+.form-rating .rating-star {
   width: var(--space-4);
   height: var(--space-4);
 }
 
-.rating-star-md {
-  width: var(--space-6);
-  height: var(--space-6);
-}
-
-.rating-star-lg {
+.hero-rating .rating-star {
   width: var(--space-8);
   height: var(--space-8);
 }
 
 /* Star States */
-.rating-star-filled {
+.rating-star[data-state="filled"] {
   color: var(--color-yellow);
 }
 
-.rating-star-empty {
+.rating-star[data-state="empty"] {
   color: var(--color-border-hover);
+}
+
+.rating-star[data-state="hover"] {
+  color: var(--color-yellow-light);
 }
 
 /* Rating Controls */

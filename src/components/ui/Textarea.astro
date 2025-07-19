@@ -11,7 +11,7 @@ export interface Props {
   description?: string;
   error?: string;
   rows?: number;
-  variant?: 'default' | 'filled' | 'underlined';
+  context?: 'default' | 'form' | 'hero';
   class?: string;
   textareaClass?: string;
 }
@@ -28,21 +28,23 @@ const {
   description,
   error,
   rows = 4,
-  variant = 'default',
+  context = 'default',
   class: className = "",
   textareaClass = ""
 } = Astro.props;
 
-const getTextareaClasses = () => {
+// Generate class names using true design system
+const getComponentClasses = () => {
   const baseClass = 'textarea';
-  const variantClass = variant !== 'default' ? `textarea--${variant}` : '';
-  const stateClass = error ? 'textarea--error' : '';
-  const disabledClass = disabled ? 'textarea--disabled' : '';
-  const readonlyClass = readonly ? 'textarea--readonly' : '';
-  
-  return [baseClass, variantClass, stateClass, disabledClass, readonlyClass]
-    .filter(Boolean)
-    .join(' ');
+  const contextClass = context !== 'default' ? `${context}-textarea` : '';
+  return `${baseClass} ${contextClass} ${textareaClass}`.trim();
+};
+
+const getTextareaState = () => {
+  if (disabled) return 'disabled';
+  if (readonly) return 'readonly';
+  if (error) return 'error';
+  return null;
 };
 ---
 
@@ -65,7 +67,8 @@ const getTextareaClasses = () => {
     readonly={readonly}
     required={required}
     rows={rows}
-    class={`${getTextareaClasses()} ${textareaClass}`}
+    class={getComponentClasses()}
+    data-state={getTextareaState()}
   >{value}</textarea>
   
   {description && !error && (

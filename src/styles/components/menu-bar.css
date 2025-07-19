@@ -8,11 +8,6 @@
    MENU BAR COMPONENT
    ========================================================================== */
 
-.menu-bar {
-  position: relative;
-  width: 100%;
-  font-family: var(--font-family);
-}
 
 .menu-bar-nav {
   display: flex;
@@ -20,12 +15,21 @@
   padding: var(--space-1) var(--space-2);
 }
 
-.menu-bar-desktop {
+.menu-bar {
+  position: relative;
+  width: 100%;
+  font-family: var(--font-family);
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
 }
 
-.menu-bar-web {
+/* Contextual variants */
+.desktop-menu-bar {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.web-menu-bar {
   background: var(--color-surface-elevated);
   border-bottom: 1px solid var(--color-border);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
@@ -65,17 +69,17 @@
   color: var(--color-text-primary);
 }
 
-.menu-bar-trigger-active {
+.menu-bar-trigger[data-state="active"] {
   background: var(--color-surface-hover);
   color: var(--color-text-primary);
 }
 
-.menu-bar-trigger-desktop {
+.desktop-menu-bar .menu-bar-trigger {
   color: var(--color-text-primary);
 }
 
-.menu-bar-trigger-desktop:hover,
-.menu-bar-trigger-desktop:focus {
+.desktop-menu-bar .menu-bar-trigger:hover,
+.desktop-menu-bar .menu-bar-trigger:focus {
   background: var(--color-border-hover);
 }
 

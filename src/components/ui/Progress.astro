@@ -2,10 +2,8 @@
 export interface Props {
   value?: number;
   max?: number;
-  animated?: boolean;
-  striped?: boolean;
-  color?: 'blue' | 'green' | 'red' | 'yellow' | 'purple' | 'gray';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: 'default' | 'success' | 'warning' | 'error';
+  context?: 'default' | 'thin' | 'thick';
   showLabel?: boolean;
   autoIncrement?: boolean;
   incrementInterval?: number;
@@ -15,58 +13,33 @@ export interface Props {
 const { 
   value = 0,
   max = 100,
-  animated = false,
-  striped = false,
-  color = 'blue',
-  size = 'md',
+  variant = 'default',
+  context = 'default',
   showLabel = false,
   autoIncrement = false,
   incrementInterval = 100,
   class: className = ""
 } = Astro.props;
 
-// Generate class names using our design system
+// Generate class names using true design system
 const getProgressClasses = () => {
   const baseClass = 'progress';
-  const sizeClass = `progress-${size}`;
-  const colorClass = `progress-${color}`;
-  const variantClasses = [];
-  
-  if (striped) variantClasses.push('progress-striped');
-  if (animated) variantClasses.push('progress-animated');
-  
-  return `${baseClass} ${sizeClass} ${colorClass} ${variantClasses.join(' ')} ${className}`.trim();
+  const contextClass = context !== 'default' ? `${context}-progress` : '';
+  return `${baseClass} ${contextClass} ${className}`.trim();
 };
 ---
 
 <!-- 
-Pine UI Progress Component
+TRUE Design System Progress Component
 
 Usage:
-<Progress 
-  value={75}
-  max={100}
-  animated={true}
-  striped={true}
-  color="blue"
-  size="md"
-  showLabel={true}
-/>
+<Progress value={75} max={100} />
+<Progress variant="success" value={100} />
+<Progress variant="warning" value={50} showLabel={true} />
+<Progress context="thin" variant="error" value={25} />
 
-<Progress 
-  autoIncrement={true}
-  incrementInterval={100}
-  color="green"
-/>
-
-Features:
-- Native HTML progress element
-- Configurable progress value
-- Multiple colors and sizes
-- Animated and striped variants
-- Auto-increment functionality
-- Optional labels
-- Alpine.js powered
+Semantic Variants: default, success, warning, error
+Contextual Variants: default, thin, thick
 -->
 
 <div 
@@ -118,28 +91,15 @@ Features:
     </div>
   )}
   
-  <!-- Native progress element with custom styling overlay -->
-  <div class="progress-container">
-    <progress 
-      :value="progress"
-      :max="max"
-      class={getProgressClasses()}
-      x-cloak
-    >
-      <span x-text="`${Math.round(percentage)}%`"></span>
-    </progress>
-    
-    <!-- Custom overlay for advanced styling (striped, animated) -->
-    {(striped || animated) && (
-      <div class="progress-overlay">
-        <div 
-          :style="`width: ${percentage}%`"
-          class={`progress-bar ${striped ? 'progress-bar-striped' : ''} ${animated ? 'progress-bar-animated' : ''} progress-bar-${color}`}
-        >
-          <div class="progress-inner-glow"></div>
-        </div>
-      </div>
-    )}
+  <!-- Progress element -->
+  <div 
+    class={getProgressClasses()}
+    data-variant={variant !== 'default' ? variant : null}
+  >
+    <div 
+      class="progress-bar"
+      :style="`width: ${percentage}%`"
+    ></div>
   </div>
   
   <!-- Auto-increment controls -->
@@ -147,7 +107,7 @@ Features:
     <div class="progress-controls">
       <button 
         @click="resetProgress()"
-        class="button button-sm button-soft-neutral"
+        class="button nav-button"
         type="button"
       >
         Reset

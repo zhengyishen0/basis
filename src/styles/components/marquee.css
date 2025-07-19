@@ -25,6 +25,10 @@
 }
 
 .marquee-content {
+  animation: marquee 20s linear infinite;
+}
+
+.marquee-content {
   display: flex;
 }
 
@@ -54,29 +58,30 @@
   background: linear-gradient(to left, var(--color-background), transparent);
 }
 
-/* Speed Variants */
-.marquee-slow .marquee-content {
+/* Semantic variants */
+.marquee[data-speed="slow"] .marquee-content {
   animation-duration: 40s;
 }
 
-.marquee-normal .marquee-content {
-  animation-duration: 20s;
-}
-
-.marquee-fast .marquee-content {
+.marquee[data-speed="fast"] .marquee-content {
   animation-duration: 10s;
 }
 
-/* Direction Variants */
-.marquee-left .marquee-content {
-  animation: marquee linear infinite;
+.marquee[data-direction="reverse"] .marquee-content {
+  animation-name: marquee-reverse;
 }
 
-.marquee-right .marquee-content {
-  animation: marquee-reverse linear infinite;
-}
-
-/* Pause on Hover */
-.marquee-pause:hover .marquee-content {
+.marquee[data-state="paused"] .marquee-content,
+.marquee:hover .marquee-content {
   animation-play-state: paused;
+}
+
+/* Contextual variants */
+.subtle-marquee {
+  opacity: 0.7;
+}
+
+.prominent-marquee .marquee-item {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-medium);
 }

@@ -11,6 +11,22 @@
 .retro-grid {
   position: relative;
   overflow: hidden;
+  background: var(--color-background);
+}
+
+/* Contextual variants */
+.subtle-retro-grid {
+  opacity: 0.5;
+}
+
+.prominent-retro-grid .retro-grid-lines {
+  opacity: 0.6;
+}
+
+.neon-retro-grid .retro-grid-horizontal,
+.neon-retro-grid .retro-grid-vertical {
+  background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
+  filter: blur(1px);
 }
 
 .retro-grid-lines {
@@ -19,12 +35,27 @@
   opacity: 0.3;
 }
 
-.retro-grid-animated .retro-grid-horizontal {
+.retro-grid[data-state="animated"] .retro-grid-horizontal {
   animation: retro-grid-move 1s linear infinite;
 }
 
-.retro-grid-animated .retro-grid-vertical {
+.retro-grid[data-state="animated"] .retro-grid-vertical {
   animation: retro-grid-move-vertical 1s linear infinite;
+}
+
+.retro-grid[data-state="paused"] .retro-grid-horizontal,
+.retro-grid[data-state="paused"] .retro-grid-vertical {
+  animation-play-state: paused;
+}
+
+.retro-grid[data-speed="fast"] .retro-grid-horizontal,
+.retro-grid[data-speed="fast"] .retro-grid-vertical {
+  animation-duration: 0.5s;
+}
+
+.retro-grid[data-speed="slow"] .retro-grid-horizontal,
+.retro-grid[data-speed="slow"] .retro-grid-vertical {
+  animation-duration: 2s;
 }
 
 .retro-grid-horizontal {
@@ -45,8 +76,8 @@
     0deg,
     transparent,
     transparent 35px,
-    rgba(107, 114, 128, 0.1) 35px,
-    rgba(107, 114, 128, 0.1) 36px
+    var(--color-border) 35px,
+    var(--color-border) 36px
   );
 }
 
@@ -56,8 +87,8 @@
     90deg,
     transparent,
     transparent 35px,
-    rgba(107, 114, 128, 0.1) 35px,
-    rgba(107, 114, 128, 0.1) 36px
+    var(--color-border) 35px,
+    var(--color-border) 36px
   );
 }
 

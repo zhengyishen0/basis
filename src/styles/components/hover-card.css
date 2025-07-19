@@ -25,6 +25,29 @@
   box-shadow: var(--shadow-lg);
   z-index: 1000;
   overflow: hidden;
+  max-width: 300px;
+  min-width: 200px;
+}
+
+/* Contextual sizing */
+.form-hover-card .hover-card-content {
+  max-width: 250px;
+  min-width: 150px;
+}
+
+.hero-hover-card .hover-card-content {
+  max-width: 400px;
+  min-width: 300px;
+}
+
+.form-hover-card .hover-card-body {
+  padding: var(--space-2-5) var(--space-3) var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+}
+
+.hero-hover-card .hover-card-body {
+  padding: var(--space-5) var(--space-5) var(--space-4) var(--space-5);
+  font-size: var(--text);
 }
 
 .hover-card-arrow {
@@ -34,15 +57,15 @@
   border: 4px solid transparent;
 }
 
-/* Hover Card Positioning */
-.hover-card-top {
+/* Positioning via data attributes */
+.hover-card-content[data-placement="top"] {
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
   margin-bottom: var(--space-2);
 }
 
-.hover-card-top .hover-card-arrow {
+.hover-card-content[data-placement="top"] .hover-card-arrow {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
@@ -52,44 +75,14 @@
   border-right-color: transparent;
 }
 
-.hover-card-top-start {
-  bottom: 100%;
-  left: 0;
-  margin-bottom: var(--space-2);
-}
-
-.hover-card-top-start .hover-card-arrow {
-  top: 100%;
-  left: var(--space-3);
-  border-top-color: var(--color-surface-elevated);
-  border-bottom-width: 0;
-  border-left-color: transparent;
-  border-right-color: transparent;
-}
-
-.hover-card-top-end {
-  bottom: 100%;
-  right: 0;
-  margin-bottom: var(--space-2);
-}
-
-.hover-card-top-end .hover-card-arrow {
-  top: 100%;
-  right: var(--space-3);
-  border-top-color: var(--color-surface-elevated);
-  border-bottom-width: 0;
-  border-left-color: transparent;
-  border-right-color: transparent;
-}
-
-.hover-card-bottom {
+.hover-card-content[data-placement="bottom"] {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
   margin-top: var(--space-2);
 }
 
-.hover-card-bottom .hover-card-arrow {
+.hover-card-content[data-placement="bottom"] .hover-card-arrow {
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
@@ -99,44 +92,14 @@
   border-right-color: transparent;
 }
 
-.hover-card-bottom-start {
-  top: 100%;
-  left: 0;
-  margin-top: var(--space-2);
-}
-
-.hover-card-bottom-start .hover-card-arrow {
-  bottom: 100%;
-  left: var(--space-3);
-  border-bottom-color: var(--color-surface-elevated);
-  border-top-width: 0;
-  border-left-color: transparent;
-  border-right-color: transparent;
-}
-
-.hover-card-bottom-end {
-  top: 100%;
-  right: 0;
-  margin-top: var(--space-2);
-}
-
-.hover-card-bottom-end .hover-card-arrow {
-  bottom: 100%;
-  right: var(--space-3);
-  border-bottom-color: var(--color-surface-elevated);
-  border-top-width: 0;
-  border-left-color: transparent;
-  border-right-color: transparent;
-}
-
-.hover-card-left {
+.hover-card-content[data-placement="left"] {
   right: 100%;
   top: 50%;
   transform: translateY(-50%);
   margin-right: var(--space-2);
 }
 
-.hover-card-left .hover-card-arrow {
+.hover-card-content[data-placement="left"] .hover-card-arrow {
   left: 100%;
   top: 50%;
   transform: translateY(-50%);
@@ -146,77 +109,17 @@
   border-bottom-color: transparent;
 }
 
-.hover-card-left-start {
-  right: 100%;
-  top: 0;
-  margin-right: var(--space-2);
-}
-
-.hover-card-left-start .hover-card-arrow {
-  left: 100%;
-  top: var(--space-3);
-  border-left-color: var(--color-surface-elevated);
-  border-right-width: 0;
-  border-top-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.hover-card-left-end {
-  right: 100%;
-  bottom: 0;
-  margin-right: var(--space-2);
-}
-
-.hover-card-left-end .hover-card-arrow {
-  left: 100%;
-  bottom: var(--space-3);
-  border-left-color: var(--color-surface-elevated);
-  border-right-width: 0;
-  border-top-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.hover-card-right {
+.hover-card-content[data-placement="right"] {
   left: 100%;
   top: 50%;
   transform: translateY(-50%);
   margin-left: var(--space-2);
 }
 
-.hover-card-right .hover-card-arrow {
+.hover-card-content[data-placement="right"] .hover-card-arrow {
   right: 100%;
   top: 50%;
   transform: translateY(-50%);
-  border-right-color: var(--color-surface-elevated);
-  border-left-width: 0;
-  border-top-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.hover-card-right-start {
-  left: 100%;
-  top: 0;
-  margin-left: var(--space-2);
-}
-
-.hover-card-right-start .hover-card-arrow {
-  right: 100%;
-  top: var(--space-3);
-  border-right-color: var(--color-surface-elevated);
-  border-left-width: 0;
-  border-top-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.hover-card-right-end {
-  left: 100%;
-  bottom: 0;
-  margin-left: var(--space-2);
-}
-
-.hover-card-right-end .hover-card-arrow {
-  right: 100%;
-  bottom: var(--space-3);
   border-right-color: var(--color-surface-elevated);
   border-left-width: 0;
   border-top-color: transparent;

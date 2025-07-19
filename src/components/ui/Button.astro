@@ -1,8 +1,7 @@
 ---
 export interface Props {
-  variant?: 'solid' | 'outline' | 'soft' | 'ghost';
-  color?: 'neutral' | 'blue' | 'red' | 'green' | 'yellow' | 'purple';
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  variant?: 'default' | 'danger';
+  context?: 'default' | 'hero' | 'nav' | 'form' | 'icon';
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   href?: string;
@@ -11,9 +10,8 @@ export interface Props {
 }
 
 const { 
-  variant = 'solid',
-  color = 'neutral',
-  size = 'md',
+  variant = 'default',
+  context = 'default',
   disabled = false,
   type = 'button',
   href,
@@ -21,33 +19,35 @@ const {
   class: className = ""
 } = Astro.props;
 
-// Generate class names using our design system
+// Generate class names using true design system
 const getButtonClasses = () => {
   const baseClass = 'button';
-  const sizeClass = `button-${size}`;
-  const variantColorClass = `button-${variant}-${color}`;
+  const contextClass = context !== 'default' ? `${context}-button` : '';
   
-  return `${baseClass} ${sizeClass} ${variantColorClass}`;
+  return `${baseClass} ${contextClass}`.trim();
 };
 ---
 
 <!-- 
-Pine UI Button Component
+TRUE Design System Button Component
 
 Usage:
-<Button variant="solid" color="blue" size="md">Click me</Button>
-<Button variant="outline" color="red" disabled>Disabled</Button>
+<Button>Default Action</Button>
+<Button variant="danger">Delete Item</Button>
+<Button context="hero">Get Started</Button>
+<Button context="nav">Menu</Button>
 
-Variants: solid, outline, soft, ghost
-Colors: neutral, blue, red, green, yellow, purple
-Sizes: sm, md, lg, xl
+Semantic Variants: default, danger
+Contextual Variants: default, hero, nav, form, icon
 -->
 
 {href ? (
   <a
     href={href}
     target={target}
-    class={`${getButtonClasses()} ${disabled ? 'button-disabled' : ''} ${className}`}
+    class={`${getButtonClasses()} ${className}`}
+    data-variant={variant !== 'default' ? variant : null}
+    data-state={disabled ? 'disabled' : null}
     style="text-decoration: none;"
   >
     <slot />
@@ -56,7 +56,9 @@ Sizes: sm, md, lg, xl
   <button 
     type={type}
     disabled={disabled}
-    class={`${getButtonClasses()} ${disabled ? 'button-disabled' : ''} ${className}`}
+    class={`${getButtonClasses()} ${className}`}
+    data-variant={variant !== 'default' ? variant : null}
+    data-state={disabled ? 'disabled' : null}
   >
     <slot />
   </button>

@@ -1,20 +1,19 @@
 /* 
  * TABLE COMPONENT
  * Part of the Basis Design System
- * This file contains styles for the table component
+ * TRUE design system - makes decisions for developers
  */
 
 /* ==========================================================================
-   TABLE COMPONENT
+   TABLE COMPONENT - BASE
    ========================================================================== */
 
+/* THE table style - perfect for data display */
 .table {
   width: 100%;
   border-collapse: collapse;
   background: var(--color-surface-elevated);
   color: var(--color-text-primary);
-  border-radius: var(--radius-md);
-  overflow: hidden;
 }
 
 .table-container {
@@ -23,38 +22,30 @@
   border: 1px solid var(--color-border);
 }
 
-.table-container .table {
-  border: none;
+/* ==========================================================================
+   CONTEXTUAL VARIANTS - Classes  
+   ========================================================================== */
+
+/* Compact table for dense data */
+.compact-table .table-header,
+.compact-table .table-cell {
+  padding: 0.5rem 0.75rem;
 }
 
-/* Table Sections */
-.table-thead {
-  background: var(--color-surface);
-  border-bottom: 2px solid var(--color-border);
-}
+/* ==========================================================================
+   TABLE STRUCTURE - Fixed decisions
+   ========================================================================== */
 
-.table-tbody {
-  background: var(--color-surface-elevated);
-}
-
-.table-footer {
-  background: var(--color-surface);
-  border-top: 2px solid var(--color-border);
-}
-
-/* Table Elements */
 .table-header {
-  padding: var(--space-3) var(--space-4);
+  padding: 0.75rem 1rem;
   text-align: left;
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
-  font-size: var(--text-sm);
+  font-size: 0.875rem;
   letter-spacing: 0.025em;
   text-transform: uppercase;
-}
-
-.table-header-compact {
-  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .table-row {
@@ -66,44 +57,34 @@
   border-bottom: none;
 }
 
+.table-row:hover {
+  background: var(--color-surface);
+}
+
 .table-cell {
-  padding: var(--space-3) var(--space-4);
-  font-size: var(--text-sm);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
   color: var(--color-text-primary);
   vertical-align: top;
 }
 
-.table-cell-compact {
+/* Contextual variants */
+.dense-table .table-header,
+.dense-table .table-cell {
   padding: var(--space-2) var(--space-3);
 }
 
-/* Table Variants */
-.table-striped .table-tbody .table-row:nth-child(even) {
-  background: var(--color-surface);
+.spacious-table .table-header,
+.spacious-table .table-cell {
+  padding: var(--space-4) var(--space-5);
 }
 
-.table-bordered {
-  border: 1px solid var(--color-border);
+/* States */
+.table-row[data-state="selected"] {
+  background: var(--color-primary-bg);
 }
 
-.table-bordered .table-header,
-.table-bordered .table-cell {
-  border-right: 1px solid var(--color-border);
-}
-
-.table-bordered .table-header:last-child,
-.table-bordered .table-cell:last-child {
-  border-right: none;
-}
-
-.table-hover .table-tbody .table-row:hover {
-  background: var(--color-surface);
-}
-
-.table-compact .table-header {
-  padding: var(--space-2) var(--space-3);
-}
-
-.table-compact .table-cell {
-  padding: var(--space-2) var(--space-3);
+.table-row[data-state="disabled"] {
+  opacity: 0.6;
+  pointer-events: none;
 }

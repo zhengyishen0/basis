@@ -24,6 +24,39 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   z-index: 1000;
+  max-width: 300px;
+  min-width: 200px;
+}
+
+/* Contextual sizing */
+.form-popover .popover-content {
+  max-width: 250px;
+  min-width: 150px;
+}
+
+.hero-popover .popover-content {
+  max-width: 400px;
+  min-width: 300px;
+}
+
+.form-popover .popover-header {
+  padding: var(--space-2-5) var(--space-3) var(--space-1-5) var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.form-popover .popover-body {
+  padding: var(--space-3);
+  font-size: var(--text-xs);
+}
+
+.hero-popover .popover-header {
+  padding: var(--space-5) var(--space-5) var(--space-3) var(--space-5);
+  font-size: var(--text-lg);
+}
+
+.hero-popover .popover-body {
+  padding: var(--space-5);
+  font-size: var(--text);
 }
 
 .popover-arrow {

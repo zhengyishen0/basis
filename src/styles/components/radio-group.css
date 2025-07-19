@@ -30,7 +30,18 @@
   background: var(--color-primary-bg);
 }
 
-.radio-option.radio-option-selected {
+.radio-option[data-state="disabled"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--color-surface-disabled);
+}
+
+.radio-option[data-state="disabled"]:hover {
+  border-color: var(--color-border);
+  background: var(--color-surface-disabled);
+}
+
+.radio-option[data-state="selected"] {
   border-color: var(--color-primary);
   background: var(--color-primary-bg);
 }
@@ -78,23 +89,23 @@
   border-radius: var(--radius-full);
 }
 
-/* Radio Sizes */
-.radio-sm {
+/* Contextual sizing */
+.form-radio .radio {
   width: var(--space-3-5);
   height: var(--space-3-5);
 }
 
-.radio-sm:checked::after {
+.form-radio .radio:checked::after {
   width: 4px;
   height: 4px;
 }
 
-.radio-lg {
+.hero-radio .radio {
   width: var(--space-5);
   height: var(--space-5);
 }
 
-.radio-lg:checked::after {
+.hero-radio .radio:checked::after {
   width: 8px;
   height: 8px;
 }

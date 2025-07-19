@@ -1,13 +1,14 @@
 /* 
  * TOOLTIP COMPONENT
  * Part of the Basis Design System
- * This file contains styles for the tooltip component
+ * TRUE design system - makes decisions for developers
  */
 
 /* ==========================================================================
-   TOOLTIP COMPONENT
+   TOOLTIP COMPONENT - BASE
    ========================================================================== */
 
+/* THE tooltip style - perfect for contextual help */
 .tooltip-container {
   position: relative;
   display: inline-block;
@@ -16,17 +17,21 @@
 .tooltip {
   position: absolute;
   z-index: var(--z-tooltip);
-  padding: var(--space-2) var(--space-3);
-  font-size: var(--text-sm);
-  background: var(--color-surface-inverse);
-  color: var(--color-text-on-dark);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  background: var(--color-neutral);
+  color: var(--color-text-inverse);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   white-space: nowrap;
+  max-width: 16rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
 }
 
-.tooltip-content {
-  display: block;
+.tooltip[data-state="visible"] {
+  opacity: 1;
 }
 
 .tooltip-arrow {

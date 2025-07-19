@@ -1,18 +1,20 @@
 /* 
  * TOAST COMPONENT
  * Part of the Basis Design System
- * This file contains styles for the toast component
+ * TRUE design system - makes decisions for developers
  */
 
 /* ==========================================================================
-   TOAST COMPONENT
+   TOAST COMPONENT - BASE
    ========================================================================== */
 
+/* THE toast style - perfect for notifications */
 .toast {
   position: relative;
   display: flex;
   width: 100%;
-  padding: var(--space-4);
+  max-width: 24rem;
+  padding: 1rem;
   background: var(--color-surface-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -21,6 +23,30 @@
   transition: all var(--transition-normal);
 }
 
+/* ==========================================================================
+   SEMANTIC VARIANTS - Data Attributes
+   ========================================================================== */
+
+.toast[data-variant="success"] {
+  border-left: 4px solid var(--color-green);
+}
+
+.toast[data-variant="warning"] {
+  border-left: 4px solid var(--color-yellow);
+}
+
+.toast[data-variant="error"] {
+  border-left: 4px solid var(--color-red);
+}
+
+.toast[data-variant="info"] {
+  border-left: 4px solid var(--color-blue);
+}
+
+/* ==========================================================================
+   TOAST STRUCTURE - Fixed decisions
+   ========================================================================== */
+
 .toast-content {
   flex: 1;
   min-width: 0;
@@ -28,6 +54,8 @@
 
 .toast-title {
   font-weight: var(--font-weight-medium);
+  margin-bottom: 0.25rem;
+}
   font-size: var(--text-sm);
   margin-bottom: var(--space-1);
   color: currentColor;

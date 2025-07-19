@@ -5,9 +5,11 @@ export interface Props {
     value: string;
     title: string;
     description?: string;
+    disabled?: boolean;
   }>;
   selectedValue?: string;
-  size?: 'sm' | 'md' | 'lg';
+  context?: 'default' | 'form' | 'hero';
+  disabled?: boolean;
   class?: string;
 }
 
@@ -15,20 +17,21 @@ const {
   name,
   options,
   selectedValue = '',
-  size = 'md',
+  context = 'default',
+  disabled = false,
   class: className = ""
 } = Astro.props;
 
-// Generate design system classes
+// Generate class names using true design system
 const getComponentClasses = () => {
-  const baseClass = 'radio';
-  const sizeClass = size ? `${baseClass}-${size}` : '';
-  return `${baseClass} ${sizeClass}`.trim();
+  const baseClass = 'radio-group';
+  const contextClass = context !== 'default' ? `${context}-radio` : '';
+  return `${baseClass} ${contextClass} ${className}`.trim();
 };
 ---
 
 <!-- 
-Pine UI Radio Group Component
+TRUE Design System RadioGroup Component
 
 Usage:
 <RadioGroup 
@@ -48,11 +51,11 @@ Usage:
   selectedValue="basic"
 />
 
-Features:
-- Alpine.js powered selection
-- Optional descriptions
-- Accessible radio group
-- Dynamic rendering
+<RadioGroup context="form" name="settings" options={...} />
+<RadioGroup context="hero" name="plan" options={...} />
+
+Contextual Variants: default, form (small), hero (large)
+States: default, disabled
 -->
 
 <div 
@@ -60,10 +63,14 @@ Features:
     radioGroupSelectedValue: '${selectedValue}',
     radioGroupOptions: ${JSON.stringify(options)}
   }`}
-  class={`radio-group ${className}`}
+  class={getComponentClasses()}
 >
   <template x-for="(option, index) in radioGroupOptions" :key="option.value">
-    <div class="radio-wrapper">
+    <div 
+      class="radio-option"
+      :data-state="(option.disabled || ${disabled}) ? 'disabled' : (radioGroupSelectedValue === option.value ? 'selected' : null)"
+      @click="if (!option.disabled && !${disabled}) { radioGroupSelectedValue = option.value }"
+    >
       <div class="radio-input-wrapper">
         <input 
           :id="name + '-' + option.value"
@@ -71,13 +78,14 @@ Features:
           type="radio" 
           :value="option.value"
           x-model="radioGroupSelectedValue"
-          class={getComponentClasses()}
+          :disabled="option.disabled || ${disabled}"
+          class="radio"
         />
       </div>
       <div class="radio-content">
         <label 
           :for="name + '-' + option.value" 
-          class="radio-label"
+          class="radio-title"
           x-text="option.title"
         ></label>
         <p 

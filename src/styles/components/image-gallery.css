@@ -17,67 +17,29 @@
 .image-gallery-grid {
   display: grid;
   gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-.image-gallery-grid-2 {
-  grid-template-columns: repeat(2, 1fr);
+/* Contextual variants */
+.masonry-image-gallery .image-gallery-grid {
+  columns: 3;
+  column-gap: var(--space-4);
+  display: block;
 }
 
-.image-gallery-grid-3 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.image-gallery-grid-4 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.image-gallery-grid-5 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.image-gallery-grid-6 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-@media (min-width: 768px) {
-  .image-gallery-grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  
-  .image-gallery-grid-4 {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  
-  .image-gallery-grid-5 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  
-  .image-gallery-grid-6 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .image-gallery-grid-5 {
-    grid-template-columns: repeat(5, 1fr);
-  }
-  
-  .image-gallery-grid-6 {
-    grid-template-columns: repeat(6, 1fr);
-  }
-}
-
-/* Gap Variants */
-.image-gallery-gap-sm {
+.compact-image-gallery .image-gallery-grid {
   gap: var(--space-2);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
-.image-gallery-gap-md {
-  gap: var(--space-4);
-}
-
-.image-gallery-gap-lg {
+.spacious-image-gallery .image-gallery-grid {
   gap: var(--space-6);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.portfolio-image-gallery .image-gallery-grid {
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: var(--space-8);
 }
 
 .image-gallery-item {
@@ -92,19 +54,20 @@
   transform: scale(1.02);
 }
 
-.image-gallery-item-square {
-  aspect-ratio: 1 / 1;
-}
-
-.image-gallery-item-video {
-  aspect-ratio: 16 / 9;
-}
-
-.image-gallery-item-photo {
+.image-gallery-item {
   aspect-ratio: 4 / 3;
 }
 
-.image-gallery-item-auto {
+/* Contextual aspect ratios */
+.square-image-gallery .image-gallery-item {
+  aspect-ratio: 1 / 1;
+}
+
+.video-image-gallery .image-gallery-item {
+  aspect-ratio: 16 / 9;
+}
+
+.auto-image-gallery .image-gallery-item {
   aspect-ratio: auto;
 }
 
@@ -173,8 +136,17 @@
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.9);
+  background: var(--color-overlay);
   backdrop-filter: blur(4px);
+}
+
+/* States */
+.image-gallery[data-state="loading"] .image-gallery-loading {
+  display: flex;
+}
+
+.image-gallery[data-state="empty"] .image-gallery-empty {
+  display: block;
 }
 
 .image-gallery-modal-content {

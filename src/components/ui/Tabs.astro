@@ -7,7 +7,7 @@ export interface Props {
     disabled?: boolean;
   }>;
   defaultTab?: string;
-  variant?: 'underline' | 'pills' | 'enclosed';
+  context?: 'default' | 'pills';
   class?: string;
   contentClass?: string;
 }
@@ -15,44 +15,21 @@ export interface Props {
 const { 
   tabs,
   defaultTab = tabs[0]?.id,
-  variant = 'underline',
+  context = 'default',
   class: className = "",
   contentClass = ""
 } = Astro.props;
 
+// Generate class names using true design system
 const getComponentClasses = () => {
   const baseClass = 'tabs';
-  const variantClass = variant ? `tabs-${variant}` : '';
-  return `${baseClass} ${variantClass} ${className}`.trim();
-};
-
-const getTabListClasses = () => {
-  const baseClass = 'tab-list';
-  const variantClass = variant ? `tab-list-${variant}` : '';
-  return `${baseClass} ${variantClass}`.trim();
-};
-
-const getTabItemClasses = () => {
-  const baseClass = 'tab-item';
-  const variantClass = variant ? `tab-item-${variant}` : '';
-  return `${baseClass} ${variantClass}`;
-};
-
-const getTabActiveClasses = () => {
-  const baseClass = 'tab-active';
-  const variantClass = variant ? `tab-active-${variant}` : '';
-  return `${baseClass} ${variantClass}`;
-};
-
-const getTabInactiveClasses = () => {
-  const baseClass = 'tab-item';
-  const variantClass = variant ? `tab-item-${variant}` : '';
-  return `${baseClass} ${variantClass}`;
+  const contextClass = context !== 'default' ? `${context}-tabs` : '';
+  return `${baseClass} ${contextClass} ${className}`.trim();
 };
 ---
 
 <!-- 
-Pine UI Tabs Component
+TRUE Design System Tabs Component
 
 Usage:
 <Tabs 
@@ -62,15 +39,11 @@ Usage:
     { id: "tab3", label: "Settings", content: "Settings content...", disabled: true }
   ]}
   defaultTab="tab1"
-  variant="underline"
 />
 
-Features:
-- Multiple variants (underline, pills, enclosed)
-- Disabled tabs
-- Keyboard navigation
-- Content slots or props
-- Alpine.js powered switching
+<Tabs context="pills" tabs={...} />
+
+Contextual Variants: default (underlined), pills
 -->
 
 <div 
@@ -79,32 +52,22 @@ Features:
     tabId: $id('tab'),
     tabButtonClicked(tabButton) {
       this.tabSelected = tabButton.id.replace(this.tabId + '-', '');
-      this.tabRepositionMarker(tabButton);
-    },
-    tabRepositionMarker(tabButton) {
-      this.$refs.tabMarker.style.width = tabButton.offsetWidth + 'px';
-      this.$refs.tabMarker.style.height = tabButton.offsetHeight + 'px';
-      this.$refs.tabMarker.style.left = tabButton.offsetLeft + 'px';
     },
     tabContentActive(tabContent) {
       return this.tabSelected == tabContent.id.replace(this.tabId + '-content-', '');
     }
   }`}
-  x-init="setTimeout(() => { 
-    const activeButton = Array.from($refs.tabButtons.children).find(btn => btn.id.includes(tabSelected));
-    if (activeButton && '${variant}' === 'pills') tabRepositionMarker(activeButton);
-  }, 0);"
   class={getComponentClasses()}
 >
   <!-- Tab Navigation -->
-  <div class={getTabListClasses()}>
-    <div x-ref="tabButtons" class="tab-list-container">
+  <div class="tab-list">
+    <div x-ref="tabButtons">
       {tabs.map((tab) => (
         <button 
           :id="`${tabId}-${tab.id}`"
           @click="tabButtonClicked($el)"
-          :class="tabSelected === '${tab.id}' ? '${getTabActiveClasses()}' : '${getTabInactiveClasses()}'"
-          class={`${getTabItemClasses()} ${tab.disabled ? 'tab-item-disabled' : ''}`}
+          class="tab-item"
+          data-state={tab.disabled ? 'disabled' : `tabSelected === '${tab.id}' ? 'active' : null`}
           disabled={tab.disabled}
           type="button"
         >
@@ -112,14 +75,6 @@ Features:
         </button>
       ))}
     </div>
-    
-    <!-- Moving marker for pills variant -->
-    {variant === 'pills' && (
-      <div 
-        x-ref="tabMarker" 
-        class="tab-marker"
-      ></div>
-    )}
   </div>
   
   <!-- Tab Content -->

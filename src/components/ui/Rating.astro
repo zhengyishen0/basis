@@ -4,7 +4,7 @@ export interface Props {
   initialValue?: number;
   disabled?: boolean;
   readonly?: boolean;
-  size?: 'sm' | 'md' | 'lg';
+  context?: 'default' | 'form' | 'hero';
   name?: string;
   class?: string;
 }
@@ -14,47 +14,40 @@ const {
   initialValue = 0,
   disabled = false,
   readonly = false,
-  size = 'md',
+  context = 'default',
   name,
   class: className = ""
 } = Astro.props;
 
-// Generate class names using our design system
-const getRatingClasses = () => {
+// Generate class names using true design system
+const getComponentClasses = () => {
   const baseClass = 'rating';
-  const readonlyClass = readonly ? 'rating-readonly' : '';
-  
-  return `${baseClass} ${readonlyClass}`.trim();
+  const contextClass = context !== 'default' ? `${context}-rating` : '';
+  return `${baseClass} ${contextClass} ${className}`.trim();
 };
 
-const getStarClasses = () => {
-  const baseClass = 'rating-star';
-  const sizeClass = `rating-star-${size}`;
-  
-  return `${baseClass} ${sizeClass}`;
+const getRatingState = () => {
+  if (disabled) return 'disabled';
+  if (readonly) return 'readonly';
+  return null;
 };
 ---
 
 <!-- 
-Pine UI Rating Component
+TRUE Design System Rating Component
 
 Usage:
 <Rating 
   maxStars={5}
   initialValue={3}
-  disabled={false}
-  readonly={false}
-  size="md"
   name="rating"
 />
 
-Features:
-- Configurable star count
-- Hover effects
-- Click to rate
-- Reset functionality
-- Disabled/readonly states
-- Alpine.js powered
+<Rating context="form" maxStars={5} initialValue={3} />
+<Rating context="hero" readonly={true} initialValue={4} />
+
+Contextual Variants: default, form (small), hero (large)
+States: default, disabled, readonly
 -->
 
 <div 
@@ -96,7 +89,8 @@ Features:
     }
   }`}
   x-init="stars = value"
-  class={`${getRatingClasses()} ${className}`}
+  class={getComponentClasses()}
+  data-state={getRatingState()}
 >
   <!-- Hidden input for form submission -->
   {name && (
@@ -115,14 +109,11 @@ Features:
       @mouseenter="hoverStar(star)"
       @mouseleave="mouseLeftStar()"
       :disabled="disabled"
-      class={getStarClasses()}
+      :data-state="(stars >= star) || (value >= star && stars === 0) ? 'filled' : ((stars < star) && (value < star || stars > 0) ? 'empty' : (stars === star ? 'hover' : 'empty'))"
+      class="rating-star"
       type="button"
     >
       <svg 
-        :class="{
-          'rating-star-filled': (stars >= star) || (value >= star && stars === 0),
-          'rating-star-empty': (stars < star) && (value < star || stars > 0)
-        }"
         fill="currentColor" 
         viewBox="0 0 20 20"
       >

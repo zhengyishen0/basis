@@ -9,6 +9,8 @@ export interface Props {
   selectedValue?: string;
   searchable?: boolean;
   disabled?: boolean;
+  hasError?: boolean;
+  context?: 'default' | 'form' | 'hero';
   name?: string;
   id?: string;
   class?: string;
@@ -20,23 +22,29 @@ const {
   selectedValue = '',
   searchable = false,
   disabled = false,
+  hasError = false,
+  context = 'default',
   name,
   id,
   class: className = ""
 } = Astro.props;
 
-const getSelectClasses = () => {
-  const baseClass = 'select-trigger';
-  const disabledClass = disabled ? 'select--disabled' : '';
-  
-  return [baseClass, disabledClass]
-    .filter(Boolean)
-    .join(' ');
+// Generate class names using true design system
+const getComponentClasses = () => {
+  const baseClass = 'select';
+  const contextClass = context !== 'default' ? `${context}-select` : '';
+  return `${baseClass} ${contextClass} ${className}`.trim();
+};
+
+const getSelectState = () => {
+  if (disabled) return 'disabled';
+  if (hasError) return 'error';
+  return null;
 };
 ---
 
 <!-- 
-Pine UI Select Component
+TRUE Design System Select Component
 
 Usage:
 <Select 
@@ -50,12 +58,11 @@ Usage:
   selectedValue="option1"
 />
 
-Features:
-- Searchable dropdown
-- Keyboard navigation
-- Disabled options
-- Custom positioning
-- Alpine.js powered
+<Select context="form" options={...} />
+<Select context="hero" hasError={true} options={...} />
+
+Contextual Variants: default, form (small), hero (large)
+States: default, disabled, error
 -->
 
 <div 
@@ -95,7 +102,8 @@ Features:
   }`}
   @click.away="selectOpen = false"
   @keydown="selectKeydown"
-  class={`select-container ${className}`}
+  class={getComponentClasses()}
+  data-state={getSelectState()}
 >
   <!-- Hidden input for form submission -->
   <input 
@@ -110,13 +118,18 @@ Features:
   <button 
     @click="selectOpen = !selectOpen"
     :disabled="disabled"
-    class={getSelectClasses()}
+    :aria-expanded="selectOpen"
+    class="select-trigger"
     type="button"
   >
-    <span class="select-label" x-text="selectedLabel"></span>
+    <span 
+      class="select-value"
+      :class="{ 'select-placeholder': selectedItem === '' }"
+      x-text="selectedLabel"
+    ></span>
     <span class="select-icon">
-      <svg class="select-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
       </svg>
     </span>
   </button>
@@ -135,42 +148,25 @@ Features:
   >
     <!-- Search input -->
     {searchable && (
-      <div class="select-search">
-        <input 
-          x-model="searchTerm"
-          type="text"
-          class="select-search-input"
-          placeholder="Search options..."
-        />
-      </div>
+      <input 
+        x-model="searchTerm"
+        type="text"
+        class="select-search"
+        placeholder="Search options..."
+      />
     )}
     
     <!-- Options -->
     <template x-for="item in filteredItems" :key="item.value">
-      <div 
+      <button 
         @click="selectItem(item)"
-        :class="{ 
-          'select-option--selected': selectedItem === item.value,
-          'select-option--disabled': item.disabled
-        }"
+        :aria-selected="selectedItem === item.value"
+        :disabled="item.disabled"
         class="select-option"
+        type="button"
       >
-        <span 
-          :class="{ 'select-option-label--selected': selectedItem === item.value }"
-          class="select-option-label"
-          x-text="item.label"
-        ></span>
-        
-        <!-- Selected checkmark -->
-        <span 
-          x-show="selectedItem === item.value"
-          class="select-option-check"
-        >
-          <svg class="select-check-icon" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-          </svg>
-        </span>
-      </div>
+        <span x-text="item.label"></span>
+      </button>
     </template>
     
     <!-- No results -->

@@ -1,200 +1,48 @@
 /* 
  * BADGE COMPONENT
  * Part of the Basis Design System
- * This file contains styles for the badge component
+ * TRUE design system - makes decisions for developers
  */
 
 /* ==========================================================================
-   BADGE COMPONENT
+   BADGE COMPONENT - BASE
    ========================================================================== */
 
+/* THE badge style - perfect size and appearance */
 .badge {
   display: inline-flex;
   align-items: center;
-  border-radius: var(--radius-full);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
   font-weight: var(--font-weight-semibold);
-  white-space: nowrap;
-}
-
-/* Badge Sizes */
-.badge-sm {
-  padding: var(--space-0-5) var(--space-2);
-  font-size: var(--text-xs);
-  gap: var(--space-1);
-}
-
-.badge-md {
-  padding: var(--space-0-5) var(--space-2-5);
-  font-size: var(--text-xs);
-  gap: var(--space-1);
-}
-
-.badge-lg {
-  padding: var(--space-1) var(--space-3);
-  font-size: var(--text-sm);
-  gap: var(--space-1-5);
-}
-
-/* Badge Variants */
-.badge-solid-black {
   background: var(--color-neutral);
   color: var(--color-text-inverse);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  gap: 0.25rem;
 }
 
-.badge-solid-blue {
+/* ==========================================================================
+   SEMANTIC VARIANTS - Data Attributes
+   ========================================================================== */
+
+/* Only meaningful semantic states */
+.badge[data-variant="info"] {
   background: var(--color-blue);
-  color: var(--color-primary-text);
-}
-
-.badge-solid-red {
-  background: var(--color-red);
-  color: var(--color-primary-text);
-}
-
-.badge-solid-green {
-  background: var(--color-green);
-  color: var(--color-primary-text);
-}
-
-.badge-solid-yellow {
-  background: var(--color-yellow);
-  color: var(--color-primary-text);
-}
-
-.badge-solid-purple {
-  background: var(--color-purple);
-  color: var(--color-primary-text);
-}
-
-.badge-solid-pink {
-  background: var(--color-pink);
-  color: var(--color-primary-text);
-}
-
-.badge-solid-gray {
-  background: var(--color-gray);
-  color: var(--color-primary-text);
-}
-
-/* Soft Badge Variants */
-.badge-soft-black {
-  background: var(--color-neutral-light);
-  color: var(--color-text-primary);
-}
-
-.badge-soft-blue {
-  background: var(--color-blue-light);
   color: var(--color-blue-text);
 }
 
-.badge-soft-red {
-  background: var(--color-red-light);
-  color: var(--color-red-text);
-}
-
-.badge-soft-green {
-  background: var(--color-green-light);
+.badge[data-variant="success"] {
+  background: var(--color-green);
   color: var(--color-green-text);
 }
 
-.badge-soft-yellow {
-  background: var(--color-yellow-light);
+.badge[data-variant="warning"] {
+  background: var(--color-yellow);
   color: var(--color-yellow-text);
 }
 
-.badge-soft-purple {
-  background: var(--color-purple-light);
-  color: var(--color-purple-text);
+.badge[data-variant="error"] {
+  background: var(--color-red);
+  color: var(--color-red-text);
 }
-
-.badge-soft-pink {
-  background: var(--color-pink-light);
-  color: var(--color-pink-text);
-}
-
-.badge-soft-gray {
-  background: var(--color-gray-light);
-  color: var(--color-gray-text);
-}
-
-/* Outline Badge Variants */
-.badge-outline-black {
-  background: transparent;
-  color: var(--color-neutral);
-  border: 1px solid var(--color-neutral);
-}
-
-.badge-outline-blue {
-  background: transparent;
-  color: var(--color-blue);
-  border: 1px solid var(--color-blue);
-}
-
-.badge-outline-red {
-  background: transparent;
-  color: var(--color-red);
-  border: 1px solid var(--color-red);
-}
-
-.badge-outline-green {
-  background: transparent;
-  color: var(--color-green);
-  border: 1px solid var(--color-green);
-}
-
-.badge-outline-yellow {
-  background: transparent;
-  color: var(--color-yellow);
-  border: 1px solid var(--color-yellow);
-}
-
-.badge-outline-purple {
-  background: transparent;
-  color: var(--color-purple);
-  border: 1px solid var(--color-purple);
-}
-
-.badge-outline-pink {
-  background: transparent;
-  color: var(--color-pink);
-  border: 1px solid var(--color-pink);
-}
-
-.badge-outline-gray {
-  background: transparent;
-  color: var(--color-gray);
-  border: 1px solid var(--color-gray);
-}
-
-/* Dot Badge Variants */
-.badge-dot-black,
-.badge-dot-blue,
-.badge-dot-red,
-.badge-dot-green,
-.badge-dot-yellow,
-.badge-dot-purple,
-.badge-dot-pink,
-.badge-dot-gray {
-  background: transparent;
-  border: 1px solid var(--color-border-hover);
-  color: var(--color-text-primary);
-}
-
-.badge-dot::before {
-  content: '';
-  display: block;
-  width: var(--space-1-5);
-  height: var(--space-1-5);
-  border-radius: var(--radius-full);
-  margin-right: var(--space-1);
-  margin-left: calc(var(--space-0-5) * -1);
-}
-
-.badge-dot-black::before { background: var(--color-neutral); }
-.badge-dot-blue::before { background: var(--color-blue); }
-.badge-dot-red::before { background: var(--color-red); }
-.badge-dot-green::before { background: var(--color-green); }
-.badge-dot-yellow::before { background: var(--color-yellow); }
-.badge-dot-purple::before { background: var(--color-purple); }
-.badge-dot-pink::before { background: var(--color-pink); }
-.badge-dot-gray::before { background: var(--color-gray); }

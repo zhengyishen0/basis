@@ -6,7 +6,6 @@ export interface Props {
   disabled?: boolean;
   label?: string;
   description?: string;
-  size?: 'sm' | 'md' | 'lg';
   class?: string;
 }
 
@@ -17,26 +16,12 @@ const {
   disabled = false,
   label,
   description,
-  size = 'md',
   class: className = ""
 } = Astro.props;
-
-// Generate design system classes
-const getComponentClasses = () => {
-  const baseClass = 'switch';
-  const sizeClass = size ? `${baseClass}-${size}` : '';
-  return `${baseClass} ${sizeClass}`.trim();
-};
-
-const getThumbClasses = () => {
-  const baseClass = 'switch-thumb';
-  const sizeClass = size ? `${baseClass}-${size}` : '';
-  return `${baseClass} ${sizeClass}`.trim();
-};
 ---
 
 <!-- 
-Pine UI Switch Component
+TRUE Design System Switch Component
 
 Usage:
 <Switch 
@@ -44,42 +29,31 @@ Usage:
   label="Email notifications" 
   description="Receive email updates about your account activity"
   checked={true}
-  size="md"
 />
 
-Features:
-- Alpine.js powered toggle
-- Multiple sizes
-- Optional labels and descriptions
-- Smooth animations
-- Disabled state
+<Switch 
+  id="disabled-switch" 
+  label="Disabled switch" 
+  disabled={true}
+/>
+
+States: default, disabled
 -->
 
 <div 
   x-data={`{ switchOn: ${checked} }`}
   class={`switch-wrapper ${className}`}
 >
-  <div class="switch-input-wrapper">
-    <input 
-      type="checkbox" 
-      :checked="switchOn" 
-      id={id}
-      name={name}
-      disabled={disabled}
-      class="switch-input-hidden"
-    />
-    <button 
-      type="button"
-      @click="switchOn = !switchOn"
-      :class="switchOn ? 'switch-on' : ''"
-      :disabled="disabled"
-      class={`${getComponentClasses()} ${disabled ? 'disabled' : ''}`}
-    >
-      <span 
-        class={getThumbClasses()}
-      ></span>
-    </button>
-  </div>
+  <input 
+    type="checkbox" 
+    :checked="switchOn" 
+    id={id}
+    name={name}
+    disabled={disabled}
+    class="switch"
+    data-state={disabled ? 'disabled' : null}
+    @change="switchOn = !switchOn"
+  />
   
   {(label || description) && (
     <div class="switch-content">

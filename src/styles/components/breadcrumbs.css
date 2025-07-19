@@ -1,16 +1,17 @@
 /* 
  * BREADCRUMBS COMPONENT
  * Part of the Basis Design System
- * This file contains styles for the breadcrumbs component
+ * TRUE design system - makes decisions for developers
  */
 
 /* ==========================================================================
-   BREADCRUMBS COMPONENT
+   BREADCRUMBS COMPONENT - BASE
    ========================================================================== */
 
+/* THE breadcrumbs style - perfect for navigation */
 .breadcrumbs {
   font-family: var(--font-family);
-  font-size: var(--text-sm);
+  font-size: 0.875rem;
 }
 
 .breadcrumbs-list {
@@ -20,7 +21,33 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  gap: 0;
+  gap: 0.5rem;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  color: var(--color-text-secondary);
+}
+
+.breadcrumb-link {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.breadcrumb-link:hover {
+  color: var(--color-text-primary);
+}
+
+.breadcrumb-current {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.breadcrumb-separator {
+  margin: 0 0.5rem;
+  color: var(--color-text-secondary);
 }
 
 .breadcrumbs-list li {

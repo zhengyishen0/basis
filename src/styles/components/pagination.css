@@ -1,32 +1,58 @@
 /* 
  * PAGINATION COMPONENT
  * Part of the Basis Design System
- * This file contains styles for the pagination component
+ * TRUE design system - makes decisions for developers
  */
 
 /* ==========================================================================
-   PAGINATION COMPONENT
+   PAGINATION COMPONENT - BASE
    ========================================================================== */
 
+/* THE pagination style - perfect for data navigation */
 .pagination {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   font-family: var(--font-family);
 }
 
-.pagination-info-mobile {
-  display: block;
-}
-
-.pagination-info-desktop {
-  display: none;
-}
-
-.pagination-info-text {
-  font-size: var(--text-sm);
+.pagination-info {
+  font-size: 0.875rem;
   color: var(--color-text-secondary);
-  margin: 0;
+}
+
+.pagination-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pagination-button {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pagination-button:hover {
+  background: var(--color-surface);
+}
+
+.pagination-button[data-state="active"] {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  border-color: var(--color-primary);
+}
+
+.pagination-button[data-state="disabled"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .pagination-info-highlight {

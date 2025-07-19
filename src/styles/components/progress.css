@@ -1,98 +1,60 @@
 /* 
  * PROGRESS COMPONENT
  * Part of the Basis Design System
- * This file contains styles for the progress component
+ * TRUE design system - makes decisions for developers
  */
 
 /* ==========================================================================
-   PROGRESS COMPONENT
+   PROGRESS COMPONENT - BASE
    ========================================================================== */
 
+/* THE progress style - perfect for loading states */
 .progress {
   position: relative;
   width: 100%;
-}
-
-.progress-container {
-  position: relative;
-  width: 100%;
+  height: 0.5rem;
   overflow: hidden;
   border-radius: var(--radius-full);
   background: var(--color-surface);
 }
 
-.progress-container-sm {
-  height: var(--space-1);
-}
-
-.progress-container-md {
-  height: var(--space-2);
-}
-
-.progress-container-lg {
-  height: var(--space-3);
-}
-
 .progress-bar {
   height: 100%;
-  transition: all var(--transition-normal);
-  position: relative;
+  background: var(--color-primary);
   border-radius: var(--radius-full);
+  transition: width var(--transition-normal);
 }
 
-/* Progress Bar Colors */
-.progress-bar-blue {
-  background: var(--color-blue);
+/* ==========================================================================
+   SEMANTIC VARIANTS - Data Attributes
+   ========================================================================== */
+
+.progress[data-variant="success"] .progress-bar {
+  background: var(--color-success);
 }
 
-.progress-bar-green {
-  background: var(--color-green);
+.progress[data-variant="warning"] .progress-bar {
+  background: var(--color-warning);
 }
 
-.progress-bar-red {
-  background: var(--color-red);
+.progress[data-variant="error"] .progress-bar {
+  background: var(--color-danger);
 }
 
-.progress-bar-yellow {
-  background: var(--color-yellow);
+/* ==========================================================================
+   CONTEXTUAL VARIANTS - Classes
+   ========================================================================== */
+
+/* Thin progress for subtle loading */
+.thin-progress {
+  height: 0.25rem;
 }
 
-.progress-bar-purple {
-  background: var(--color-purple);
+/* Thick progress for prominent loading */
+.thick-progress {
+  height: 0.75rem;
 }
 
-.progress-bar-gray {
-  background: var(--color-gray);
-}
-
-/* Progress Bar Striped Pattern */
-.progress-bar-striped {
-  background-image: linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.15) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.15) 75%,
-    transparent 75%,
-    transparent
-  );
-  background-size: 1rem 1rem;
-}
-
-/* Progress Bar Animation */
-.progress-bar-animated {
-  animation: progress-stripe 1s linear infinite;
-}
-
-@keyframes progress-stripe {
-  0% {
-    background-position: 1rem 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
-}
 
 /* Progress Labels */
 .progress-label {
