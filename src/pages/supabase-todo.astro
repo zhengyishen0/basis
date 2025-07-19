@@ -4,10 +4,10 @@ import Button from '../components/ui/Button.astro';
 import Card from '../components/ui/Card.astro';
 import Checkbox from '../components/ui/Checkbox.astro';
 import List from '../components/ui/List.astro';
+import Row from '../components/ui/Row.astro';
 
 // Page-specific styles
 import '../styles/pages/todo.css';
-import '../styles/components/list.css';
 
 const title = "Todo App with Supabase";
 ---
@@ -74,9 +74,9 @@ const title = "Todo App with Supabase";
                         <div slot="body" class="todo-column-content">
 
                         <!-- Filter Buttons and Auth Info -->
-                        <div class="todo-header">
+                        <Row justify="between" wrap>
                             <!-- Status Filter Buttons (Left) -->
-                            <div class="filter-buttons">
+                            <Row gap="tight">
                                 <Button 
                                     @click="todo.setUserFilter('all')"
                                     :class="todo.userFilter === 'all' ? 'button-solid-neutral' : 'button-soft-neutral'"
@@ -98,14 +98,14 @@ const title = "Todo App with Supabase";
                                 >
                                     Completed
                                 </Button>
-                            </div>
+                            </Row>
                             
                             <!-- Auth Info (Right) -->
-                            <div class="auth-info">
+                            <Row gap="loose">
                                 <span>Signed in as: <span x-text="auth.userDisplayId" class="auth-user-id"></span></span>
                                 <Button @click="signOut()" context="xs" class="button-solid-neutral">Sign Out</Button>
-                            </div>
-                        </div>
+                            </Row>
+                        </Row>
 
                         <!-- Error Message -->
                         <div x-show="todo.error" class="alert alert-error" x-text="todo.error">
@@ -122,7 +122,7 @@ const title = "Todo App with Supabase";
                             x-for="item in todo.filteredUserTodos" 
                             x-key="item.id"
                         >
-                            <div class="list-item">
+                            <Row class="list-item" align="center" justify="start">
                                 <Checkbox 
                                     :checked="item.is_complete"
                                     @change="todo.toggleTodo(item.id, $event.target.checked)"
@@ -140,7 +140,7 @@ const title = "Todo App with Supabase";
                                 >
                                     Delete
                                 </Button>
-                            </div>
+                            </Row>
                         </List>
                         
                         <!-- Empty State -->
@@ -161,7 +161,7 @@ const title = "Todo App with Supabase";
                             
                             <!-- Add Todo Form -->
                             <form @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="todo-form">
-                                <div class="todo-form-row">
+                                <Row gap="default">
                                     <input 
                                         x-ref="todoInput"
                                         type="text" 
@@ -176,7 +176,7 @@ const title = "Todo App with Supabase";
                                         x-text="todo.loading ? '...' : 'Add'"
                                     >
                                     </Button>
-                                </div>
+                                </Row>
                             </form>
                         </div>
                     </Card>
@@ -189,9 +189,9 @@ const title = "Todo App with Supabase";
                         <div slot="body" class="todo-column-content">
                         
                         <!-- Filter Buttons and User Count -->
-                        <div class="todo-header">
+                        <Row justify="between" wrap>
                             <!-- Status Filter Buttons (Left) -->
-                            <div class="filter-buttons">
+                            <Row gap="tight">
                                 <Button 
                                     @click="todo.setAllFilter('all')"
                                     :class="todo.allFilter === 'all' ? 'button-solid-neutral' : 'button-soft-neutral'"
@@ -213,13 +213,13 @@ const title = "Todo App with Supabase";
                                 >
                                     Completed
                                 </Button>
-                            </div>
+                            </Row>
                             
                             <!-- User Count (Right) -->
                             <div class="user-count">
                                 <span x-text="todo.uniqueUserCount"></span> contributor<span x-show="todo.uniqueUserCount !== 1">s</span> online
                             </div>
-                        </div>
+                        </Row>
 
                         <!-- Error Message -->
                         <div x-show="todo.error" class="alert alert-error" x-text="todo.error">
@@ -236,7 +236,7 @@ const title = "Todo App with Supabase";
                             x-for="item in todo.filteredAllTodos" 
                             x-key="item.id"
                         >
-                            <div class="list-item list-item-readonly">
+                            <Row class="list-item list-item-readonly" align="center" justify="start">
                                 <div class="todo-status-indicator">
                                     <div 
                                         :class="item.is_complete ? 'status-indicator-complete' : 'status-indicator-active'"
@@ -253,7 +253,7 @@ const title = "Todo App with Supabase";
                                     <span x-text="item.user_id.slice(0, 8) + '...'"></span>
                                     <span x-show="item.user_id === auth.currentUser?.id" class="badge badge-sm badge-blue">You</span>
                                 </div>
-                            </div>
+                            </Row>
                         </List>
                         
                         <!-- Empty State -->

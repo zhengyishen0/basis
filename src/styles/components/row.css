@@ -1,0 +1,93 @@
+/* 
+ * ROW COMPONENT
+ * Part of the Basis Design System
+ * TRUE design system - makes decisions for developers
+ */
+
+/* ==========================================================================
+   ROW COMPONENT - BASE
+   ========================================================================== */
+
+/* THE row style - perfect horizontal layout */
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem; /* default gap */
+}
+
+/* ==========================================================================
+   JUSTIFY CONTENT VARIANTS - Classes
+   ========================================================================== */
+
+.row-justify-start {
+  justify-content: flex-start;
+}
+
+.row-justify-center {
+  justify-content: center;
+}
+
+.row-justify-end {
+  justify-content: flex-end;
+}
+
+.row-justify-between {
+  justify-content: space-between;
+}
+
+.row-justify-around {
+  justify-content: space-around;
+}
+
+.row-justify-evenly {
+  justify-content: space-evenly;
+}
+
+/* ==========================================================================
+   ALIGN ITEMS VARIANTS - Classes
+   ========================================================================== */
+
+.row-align-start {
+  align-items: flex-start;
+}
+
+.row-align-center {
+  align-items: center;
+}
+
+.row-align-end {
+  align-items: flex-end;
+}
+
+.row-align-stretch {
+  align-items: stretch;
+}
+
+.row-align-baseline {
+  align-items: baseline;
+}
+
+/* ==========================================================================
+   GAP VARIANTS - Classes
+   ========================================================================== */
+
+.row-gap-none {
+  gap: 0;
+}
+
+.row-gap-tight {
+  gap: 0.25rem;
+}
+
+.row-gap-loose {
+  gap: 1rem;
+}
+
+/* ==========================================================================
+   WRAP VARIANT - Class
+   ========================================================================== */
+
+.row-wrap {
+  flex-wrap: wrap;
+}

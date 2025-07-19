@@ -38,9 +38,6 @@
 
 /* Standard list item styling */
 .list-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
   padding: 0.5rem 0.75rem;
   border: 1px solid var(--neutral-200);
   border-radius: 0.5rem;

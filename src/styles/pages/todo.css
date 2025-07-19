@@ -128,19 +128,6 @@
   letter-spacing: -0.025em;
 }
 
-.todo-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.filter-buttons {
-  display: flex;
-  gap: 0.375rem;
-  flex-wrap: wrap;
-}
 
 .auth-info {
   font-size: 0.875rem;
@@ -236,10 +223,6 @@
   margin-top: auto;
 }
 
-.todo-form-row {
-  display: flex;
-  gap: 0.5rem;
-}
 
 .todo-input {
   flex: 1;
