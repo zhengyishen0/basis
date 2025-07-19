@@ -38,6 +38,7 @@
 
 .breadcrumb-link:hover {
   color: var(--color-text-primary);
+  text-decoration: underline;
 }
 
 .breadcrumb-current {
@@ -46,8 +47,10 @@
 }
 
 .breadcrumb-separator {
-  margin: 0 0.5rem;
-  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  margin: 0 var(--space-2);
+  color: var(--color-text-muted);
 }
 
 .breadcrumbs-list li {
@@ -72,33 +75,6 @@
   height: var(--space-4);
 }
 
-.breadcrumb-item {
-  display: flex;
-  align-items: center;
-}
-
-.breadcrumb-link {
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  transition: color var(--transition-fast);
-}
-
-.breadcrumb-link:hover {
-  color: var(--color-text-primary);
-  text-decoration: underline;
-}
-
-.breadcrumb-current {
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-medium);
-}
-
-.breadcrumb-separator {
-  display: flex;
-  align-items: center;
-  margin: 0 var(--space-2);
-  color: var(--color-text-muted);
-}
 
 .breadcrumb-separator svg {
   width: var(--space-4);

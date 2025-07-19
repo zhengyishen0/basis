@@ -35,15 +35,12 @@
   font-weight: var(--font-weight-medium);
   font-style: italic;
   margin-bottom: var(--space-6);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
 }
 
 .quote-text-minimal {
   margin-bottom: var(--space-2);
-}
-
-.quote-text {
-  font-size: var(--text-lg);
-  line-height: var(--leading-relaxed);
 }
 
 /* Contextual sizing */
@@ -59,9 +56,6 @@
   color: var(--color-text-primary);
   font-weight: var(--font-weight-semibold);
   font-style: normal;
-}
-
-.quote-author {
   font-size: var(--text);
 }
 

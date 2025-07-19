@@ -32,34 +32,11 @@
   border-color: var(--color-primary);
 }
 
-.checkbox:checked {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-}
-
-.checkbox:checked::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 0.375rem;
-  height: 0.25rem;
-  border: 2px solid white;
-  border-top: none;
-  border-right: none;
-  transform: translate(-50%, -60%) rotate(-45deg);
-}
 
 .checkbox[data-state="disabled"] {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
-}
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  position: relative;
-  flex-shrink: 0;
 }
 
 .checkbox:focus {

@@ -47,7 +47,6 @@
   color: var(--color-primary);
   border-bottom-color: var(--color-primary);
 }
-}
 
 .tab-content {
   margin-top: 1rem;
@@ -78,7 +77,6 @@
   background: var(--color-surface-elevated);
   color: var(--color-text-primary);
   border-bottom-color: transparent;
-}
 }
 
 .tabs-pills .tab-item {

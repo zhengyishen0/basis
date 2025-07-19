@@ -54,8 +54,6 @@
 
 .toast-title {
   font-weight: var(--font-weight-medium);
-  margin-bottom: 0.25rem;
-}
   font-size: var(--text-sm);
   margin-bottom: var(--space-1);
   color: currentColor;

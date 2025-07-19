@@ -53,16 +53,6 @@
   cursor: not-allowed;
   pointer-events: none;
 }
-  display: inline-block;
-  width: var(--space-11);
-  height: var(--space-6);
-  background: var(--color-border);
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: background var(--transition-normal);
-  border: none;
-  outline: none;
-}
 
 .switch:focus {
   box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
