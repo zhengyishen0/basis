@@ -4,6 +4,7 @@ export interface Props {
   value?: string;
   placeholder?: string;
   format?: string;
+  context?: 'default' | 'compact' | 'inline';
   disabled?: boolean;
   readonly?: boolean;
   class?: string;
@@ -16,6 +17,7 @@ const {
   value = '',
   placeholder = 'Select a date',
   format = 'Y-m-d',
+  context = 'default',
   disabled = false,
   readonly = false,
   class: className = "",
@@ -26,21 +28,19 @@ const {
 // Generate a unique ID for this instance
 const componentId = `datepicker-${Math.random().toString(36).substr(2, 9)}`;
 
-// Generate class names using our design system
+// Generate class names using true design system
 const getComponentClasses = () => {
   const baseClass = 'date-picker';
-  return baseClass;
+  const contextClass = context !== 'default' ? `${context}-date-picker` : '';
+  return `${baseClass} ${contextClass}`.trim();
 };
 
 const getInputClasses = () => {
-  const baseClass = 'date-picker-input';
-  const disabledClass = disabled ? 'date-picker-input--disabled' : '';
-  return `${baseClass} ${disabledClass}`;
+  return 'date-picker-input';
 };
 
 const getCalendarClasses = () => {
-  const baseClass = 'date-picker-calendar';
-  return baseClass;
+  return 'date-picker-calendar';
 };
 ---
 
@@ -217,6 +217,7 @@ Date Format Options:
       readonly={readonly}
       disabled={disabled}
       class={`${getInputClasses()} ${inputClass}`}
+      data-state={disabled ? 'disabled' : null}
     />
     <div class="date-picker-icon">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">

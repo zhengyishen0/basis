@@ -8,7 +8,7 @@ export interface Props {
   name?: string;
   id?: string;
   showValue?: boolean;
-  size?: 'sm' | 'md' | 'lg';
+  context?: 'default' | 'compact' | 'minimal';
   class?: string;
 }
 
@@ -21,15 +21,15 @@ const {
   name,
   id,
   showValue = true,
-  size = 'md',
+  context = 'default',
   class: className = ""
 } = Astro.props;
 
-// Generate design system classes
+// Generate class names using true design system
 const getComponentClasses = () => {
   const baseClass = 'range-slider';
-  const sizeClass = size ? `${baseClass}-${size}` : '';
-  return `${baseClass} ${sizeClass}`.trim();
+  const contextClass = context !== 'default' ? `${context}-range-slider` : '';
+  return `${baseClass} ${contextClass}`.trim();
 };
 ---
 
@@ -75,7 +75,8 @@ Features:
       name={name}
       id={id}
       disabled={disabled}
-      class={`${getComponentClasses()} ${disabled ? 'disabled' : ''}`}
+      class={getComponentClasses()}
+      data-state={disabled ? 'disabled' : null}
     />
     
     <!-- Value display -->

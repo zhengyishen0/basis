@@ -2,6 +2,7 @@
 export interface Props {
   orientation?: 'horizontal' | 'vertical';
   trigger?: 'hover' | 'click';
+  context?: 'default' | 'compact' | 'minimal';
   delay?: number;
   class?: string;
   menuClass?: string;
@@ -11,17 +12,18 @@ export interface Props {
 const { 
   orientation = 'horizontal',
   trigger = 'hover',
+  context = 'default',
   delay = 150,
   class: className = "",
   menuClass = "",
   responsive = true
 } = Astro.props;
 
-// Generate class names using our design system
+// Generate class names using true design system
 const getNavigationMenuClasses = () => {
   const baseClass = 'navigation-menu';
-  
-  return `${baseClass}`;
+  const contextClass = context !== 'default' ? `${context}-navigation-menu` : '';
+  return `${baseClass} ${contextClass}`.trim();
 };
 
 const getMenuListClasses = () => {
@@ -241,6 +243,8 @@ Features:
   @click.away="closeAllMenus()"
   @keydown.escape="closeAllMenus()"
   class={`${getNavigationMenuClasses()} ${className}`}
+  data-orientation={orientation !== 'horizontal' ? orientation : null}
+  data-trigger={trigger !== 'hover' ? trigger : null}
 >
   <div class={`navigation-menu-list ${responsive ? 'navigation-menu-list-wrap' : ''} ${orientation === 'vertical' ? 'navigation-menu-list-vertical' : 'navigation-menu-list-horizontal'}`}>
     

@@ -4,7 +4,8 @@ export interface Props {
   successMessage?: string;
   errorMessage?: string;
   timeout?: number;
-  variant?: 'button' | 'icon';
+  variant?: 'default' | 'icon';
+  context?: 'default' | 'inline' | 'floating';
   class?: string;
 }
 
@@ -13,16 +14,16 @@ const {
   successMessage = 'Copied!',
   errorMessage = 'Failed to copy',
   timeout = 3000,
-  variant = 'button',
+  variant = 'default',
+  context = 'default',
   class: className = ""
 } = Astro.props;
 
-// Generate class names using our design system
+// Generate class names using true design system
 const getComponentClasses = () => {
   const baseClass = 'copy-to-clipboard';
-  const variantClass = `copy-to-clipboard-${variant}`;
-  
-  return `${baseClass} ${variantClass}`;
+  const contextClass = context !== 'default' ? `${context}-copy-to-clipboard` : '';
+  return `${baseClass} ${contextClass}`.trim();
 };
 ---
 
@@ -74,8 +75,9 @@ const getComponentClasses = () => {
     }
   }`}
   class={`${getComponentClasses()} ${className}`}
+  data-variant={variant !== 'default' ? variant : null}
 >
-  {variant === 'button' && (
+  {variant === 'default' && (
     <button 
       @click="copyToClipboard()"
       class="copy-to-clipboard-button"

@@ -2,6 +2,7 @@
 export interface Props {
   id?: string;
   placeholder?: string;
+  context?: 'default' | 'compact' | 'minimal';
   class?: string;
   maxHeight?: string;
   showShortcuts?: boolean;
@@ -10,43 +11,46 @@ export interface Props {
 const { 
   id = 'command-palette',
   placeholder = 'Type a command or search...',
+  context = 'default',
   class: className = "",
   maxHeight = '400px',
   showShortcuts = true
 } = Astro.props;
 
-// Generate class names using our design system
+// Generate class names using true design system
 const getComponentClasses = () => {
-  return {
-    command: 'command',
-    backdrop: 'command-backdrop',
-    inputContainer: 'command-input-container',
-    inputIcon: 'command-input-icon',
-    input: 'command-input',
-    shortcuts: 'command-shortcuts',
-    list: 'command-list',
-    group: 'command-group',
-    groupHeader: 'command-group-header',
-    item: 'command-item',
-    itemActive: 'command-item-active',
-    itemText: 'command-item-text',
-    empty: 'command-empty',
-    emptyIcon: 'command-empty-icon',
-    emptyTitle: 'command-empty-title',
-    emptyDescription: 'command-empty-description',
-    footer: 'command-footer',
-    footerControls: 'command-footer-controls',
-    footerControl: 'command-footer-control',
-    footerShortcut: 'command-footer-shortcut',
-    kbd: 'command-kbd'
-  };
+  const baseClass = 'command';
+  const contextClass = context !== 'default' ? `${context}-command` : '';
+  return `${baseClass} ${contextClass}`.trim();
 };
 
-const classes = getComponentClasses();
+const classes = {
+  command: getComponentClasses(),
+  backdrop: 'command-backdrop',
+  inputContainer: 'command-input-container',
+  inputIcon: 'command-input-icon',
+  input: 'command-input',
+  shortcuts: 'command-shortcuts',
+  list: 'command-list',
+  group: 'command-group',
+  groupHeader: 'command-group-header',
+  item: 'command-item',
+  itemActive: 'command-item-active',
+  itemText: 'command-item-text',
+  empty: 'command-empty',
+  emptyIcon: 'command-empty-icon',
+  emptyTitle: 'command-empty-title',
+  emptyDescription: 'command-empty-description',
+  footer: 'command-footer',
+  footerControls: 'command-footer-controls',
+  footerControl: 'command-footer-control',
+  footerShortcut: 'command-footer-shortcut',
+  kbd: 'command-kbd'
+};
 ---
 
 <!-- 
-Pine UI Command Component
+TRUE Design System Command Component
 
 Usage:
 <Command placeholder="Search commands...">
@@ -75,24 +79,11 @@ Usage:
   </div>
 </Command>
 
-Features:
-- Real-time search filtering
-- Keyboard navigation (↑↓ arrows, Enter, Escape)
-- Command grouping
-- Keyboard shortcuts display
-- Click outside to close
-- Customizable placeholder and styling
-- Alpine.js powered
-- Accessible focus management
+<Command context="compact" showShortcuts={false}>
+  <!-- Compact command palette -->
+</Command>
 
-Data Attributes:
-- data-group: Group name for command organization
-- data-command: Unique command identifier
-- data-keywords: Space-separated search terms
-- data-shortcut: Keyboard shortcut display (optional)
-
-Events:
-- Dispatches 'command-selected' event with command data when item is selected
+Contextual Variants: default, compact, minimal
 -->
 
 <div 

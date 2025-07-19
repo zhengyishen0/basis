@@ -2,41 +2,32 @@
 export interface Props {
   headers: string[];
   rows: (string | number)[][];
-  striped?: boolean;
-  bordered?: boolean;
+  variant?: 'default' | 'striped' | 'bordered';
+  context?: 'default' | 'compact' | 'dense';
   hover?: boolean;
   responsive?: boolean;
-  compact?: boolean;
   class?: string;
 }
 
 const { 
   headers,
   rows,
-  striped = false,
-  bordered = false,
+  variant = 'default',
+  context = 'default',
   hover = false,
   responsive = true,
-  compact = false,
   class: className = ""
 } = Astro.props;
 
+// Generate class names using true design system
 const getComponentClasses = () => {
   const baseClass = 'table';
-  const variantClasses = [];
-  
-  if (bordered) variantClasses.push('table-bordered');
-  if (compact) variantClasses.push('table-compact');
-  if (striped) variantClasses.push('table-striped');
-  if (hover) variantClasses.push('table-hover');
-  
-  return `${baseClass} ${variantClasses.join(' ')} ${className}`.trim();
+  const contextClass = context !== 'default' ? `${context}-table` : '';
+  return `${baseClass} ${contextClass} ${className}`.trim();
 };
 
 const getHeaderClasses = () => {
-  const baseClass = 'table-header';
-  const variantClass = compact ? 'table-header-compact' : '';
-  return `${baseClass} ${variantClass}`.trim();
+  return 'table-header';
 };
 
 const getRowClasses = () => {
@@ -44,9 +35,7 @@ const getRowClasses = () => {
 };
 
 const getCellClasses = () => {
-  const baseClass = 'table-cell';
-  const variantClass = compact ? 'table-cell-compact' : '';
-  return `${baseClass} ${variantClass}`.trim();
+  return 'table-cell';
 };
 ---
 
@@ -78,7 +67,11 @@ Props:
 
 {responsive ? (
   <div class="table-container">
-    <table class={getComponentClasses()}>
+    <table 
+      class={getComponentClasses()}
+      data-variant={variant !== 'default' ? variant : null}
+      data-state={hover ? 'hover' : null}
+    >
       <thead class="table-thead">
         <tr>
           {headers.map((header) => (
@@ -102,7 +95,11 @@ Props:
     </table>
   </div>
 ) : (
-  <table class={getComponentClasses()}>
+  <table 
+    class={getComponentClasses()}
+    data-variant={variant !== 'default' ? variant : null}
+    data-state={hover ? 'hover' : null}
+  >
     <thead class="table-thead">
       <tr>
         {headers.map((header) => (

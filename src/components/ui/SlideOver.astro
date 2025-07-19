@@ -3,6 +3,7 @@ export interface Props {
   id: string;
   side?: 'left' | 'right' | 'top' | 'bottom';
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  context?: 'default' | 'form' | 'content';
   closeable?: boolean;
   class?: string;
   backdropClass?: string;
@@ -13,17 +14,18 @@ const {
   id,
   side = 'right',
   size = 'md',
+  context = 'default',
   closeable = true,
   class: className = "",
   backdropClass = "",
   overlay = true
 } = Astro.props;
 
+// Generate class names using true design system
 const getComponentClasses = () => {
   const baseClass = 'slide-over';
-  const sideClass = `slide-over-${side}`;
-  const sizeClass = `slide-over-${size}`;
-  return `${baseClass} ${sideClass} ${sizeClass}`.trim();
+  const contextClass = context !== 'default' ? `${context}-slide-over` : '';
+  return `${baseClass} ${contextClass}`.trim();
 };
 
 const getBackdropClasses = () => {
@@ -117,6 +119,8 @@ Props:
         x-transition:leave-start="slide-over-enter-end"
         x-transition:leave-end={getEnterStartClass()}
         class={`slide-over-panel ${className}`}
+        data-side={side !== 'right' ? side : null}
+        data-size={size !== 'md' ? size : null}
         x-trap="slideOverOpen"
         aria-modal="true"
         aria-labelledby={`${id}-title`}

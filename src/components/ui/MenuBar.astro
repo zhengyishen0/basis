@@ -10,22 +10,23 @@ export interface MenuItem {
 
 export interface Props {
   items: MenuItem[];
-  variant?: 'desktop' | 'web';
+  variant?: 'default' | 'desktop';
+  context?: 'default' | 'compact' | 'minimal';
   class?: string;
 }
 
 const { 
   items,
-  variant = 'web',
+  variant = 'default',
+  context = 'default',
   class: className = ""
 } = Astro.props;
 
-// Generate class names using our design system
+// Generate class names using true design system
 const getMenuBarClasses = () => {
   const baseClass = 'menu-bar';
-  const variantClass = `menu-bar-${variant}`;
-  
-  return `${baseClass} ${variantClass}`;
+  const contextClass = context !== 'default' ? `${context}-menu-bar` : '';
+  return `${baseClass} ${contextClass}`.trim();
 };
 ---
 
@@ -95,7 +96,8 @@ MenuItem Interface:
       {items.map((item, index) => (
         <li class="menu-bar-item">
           <button
-            class={`menu-bar-trigger ${variant === 'desktop' ? 'menu-bar-trigger-desktop' : ''}`}
+            class="menu-bar-trigger"
+            data-variant={variant !== 'default' ? variant : null}
             @click={`openMenu(${index})`}
             @mouseenter={`openMenu(${index})`}
             :class={`{ 'menu-bar-trigger-active': activeMenu === ${index} }`}

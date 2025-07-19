@@ -2,6 +2,7 @@
 export interface Props {
   content?: string;
   position?: 'top' | 'top-start' | 'top-end' | 'right' | 'right-start' | 'right-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end';
+  context?: 'default' | 'compact' | 'minimal';
   showDelay?: number;
   hideDelay?: number;
   openOnHover?: boolean;
@@ -16,6 +17,7 @@ export interface Props {
 const { 
   content = "",
   position = 'top',
+  context = 'default',
   showDelay = 500,
   hideDelay = 300,
   openOnHover = true,
@@ -27,8 +29,11 @@ const {
   arrowClass = ""
 } = Astro.props;
 
+// Generate class names using true design system
 const getComponentClasses = () => {
-  return 'hover-card';
+  const baseClass = 'hover-card';
+  const contextClass = context !== 'default' ? `${context}-hover-card` : '';
+  return `${baseClass} ${contextClass}`.trim();
 };
 
 const getPositionClasses = (position: string) => {
@@ -148,6 +153,7 @@ Features:
     x-cloak
     class={`hover-card-content ${getPositionClasses(position)} ${cardClass}`}
     :style="`max-width: ${hoverCardMaxWidth}`"
+    data-position={position !== 'top' ? position : null}
   >
     <!-- Custom card content slot takes precedence -->
     <slot name="card">

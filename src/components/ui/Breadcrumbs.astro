@@ -6,33 +6,36 @@ export interface Props {
     icon?: string;
     current?: boolean;
   }>;
-  separator?: 'chevron' | 'slash' | 'dot';
+  separator?: 'default' | 'slash' | 'dot';
+  context?: 'default' | 'compact' | 'minimal';
   showHome?: boolean;
   class?: string;
 }
 
 const { 
   items,
-  separator = 'chevron',
+  separator = 'default',
+  context = 'default',
   showHome = true,
   class: className = ""
 } = Astro.props;
 
+// Generate class names using true design system
 const getComponentClasses = () => {
   const baseClass = 'breadcrumbs';
-  const separatorClass = `breadcrumbs-${separator}`;
-  return `${baseClass} ${separatorClass}`.trim();
+  const contextClass = context !== 'default' ? `${context}-breadcrumbs` : '';
+  return `${baseClass} ${contextClass}`.trim();
 };
 
 const separatorIcons: { [key: string]: string } = {
-  chevron: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>',
+  default: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>',
   slash: '/',
   dot: '•'
 };
 ---
 
 <!-- 
-Pine UI Breadcrumbs Component
+TRUE Design System Breadcrumbs Component
 
 Usage:
 <Breadcrumbs 
@@ -41,19 +44,24 @@ Usage:
     { label: "Users", href: "/users" },
     { label: "Profile", current: true }
   ]}
-  separator="chevron"
-  showHome={true}
 />
 
-Features:
-- Multiple separator styles
-- Optional home icon
-- Current page indication
-- Hover states
-- Accessible navigation
+<Breadcrumbs 
+  separator="slash"
+  context="compact"
+  showHome={false}
+  items={breadcrumbItems}
+/>
+
+Semantic Variants: default (chevron), slash, dot separators
+Contextual Variants: default, compact, minimal
 -->
 
-<nav class={`${getComponentClasses()} ${className}`} aria-label="Breadcrumb">
+<nav 
+  class={`${getComponentClasses()} ${className}`} 
+  aria-label="Breadcrumb"
+  data-separator={separator !== 'default' ? separator : null}
+>
   <ol class="breadcrumbs-list">
     <!-- Home icon -->
     {showHome && (
@@ -76,9 +84,9 @@ Features:
         <!-- Separator -->
         {(index > 0 || showHome) && (
           <div class="breadcrumb-separator">
-            {separator === 'chevron' && (
+            {separator === 'default' && (
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <Fragment set:html={separatorIcons.chevron} />
+                <Fragment set:html={separatorIcons.default} />
               </svg>
             )}
             {separator === 'slash' && (

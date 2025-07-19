@@ -2,6 +2,7 @@
 export interface Props {
   id: string;
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  context?: 'default' | 'form' | 'alert';
   closeable?: boolean;
   class?: string;
   backdropClass?: string;
@@ -10,15 +11,17 @@ export interface Props {
 const { 
   id,
   size = 'md',
+  context = 'default',
   closeable = true,
   class: className = "",
   backdropClass = ""
 } = Astro.props;
 
+// Generate class names using true design system
 const getComponentClasses = () => {
   const baseClass = 'modal';
-  const sizeClass = size ? `modal-${size}` : '';
-  return `${baseClass} ${sizeClass}`.trim();
+  const contextClass = context !== 'default' ? `${context}-modal` : '';
+  return `${baseClass} ${contextClass}`.trim();
 };
 
 const getBackdropClasses = () => {
@@ -84,6 +87,7 @@ Features:
         x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95"
         class={`modal-content ${getComponentClasses()} ${className}`}
+        data-size={size !== 'md' ? size : null}
         x-trap="modalOpen"
         open
       >

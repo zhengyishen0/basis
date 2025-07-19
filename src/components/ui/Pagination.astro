@@ -4,6 +4,7 @@ export interface Props {
   totalPages: number;
   totalItems: number;
   itemsPerPage: number;
+  context?: 'default' | 'compact' | 'minimal';
   showInfo?: boolean;
   showFirstLast?: boolean;
   maxVisible?: number;
@@ -16,6 +17,7 @@ const {
   totalPages,
   totalItems,
   itemsPerPage,
+  context = 'default',
   showInfo = true,
   showFirstLast = true,
   maxVisible = 5,
@@ -44,9 +46,11 @@ const visiblePages = getVisiblePages();
 const startItem = (currentPage - 1) * itemsPerPage + 1;
 const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
+// Generate class names using true design system
 const getComponentClasses = () => {
   const baseClass = 'pagination';
-  return baseClass;
+  const contextClass = context !== 'default' ? `${context}-pagination` : '';
+  return `${baseClass} ${contextClass}`.trim();
 };
 ---
 

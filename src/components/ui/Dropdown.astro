@@ -2,6 +2,7 @@
 export interface Props {
   id?: string;
   placement?: 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
+  context?: 'default' | 'compact' | 'minimal';
   class?: string;
   menuClass?: string;
 }
@@ -9,12 +10,16 @@ export interface Props {
 const { 
   id = 'dropdown',
   placement = 'bottom-start',
+  context = 'default',
   class: className = "",
   menuClass = ""
 } = Astro.props;
 
+// Generate class names using true design system
 const getComponentClasses = () => {
-  return 'dropdown';
+  const baseClass = 'dropdown';
+  const contextClass = context !== 'default' ? `${context}-dropdown` : '';
+  return `${baseClass} ${contextClass}`.trim();
 };
 
 const getMenuClasses = () => {
@@ -76,6 +81,7 @@ Features:
     x-transition:leave-start="transition-leave-start"
     x-transition:leave-end="transition-leave-end"
     class={`${getMenuClasses()} ${placementClasses[placement]} ${menuClass}`}
+    data-placement={placement !== 'bottom-start' ? placement : null}
     x-cloak
   >
     <slot name="menu" />

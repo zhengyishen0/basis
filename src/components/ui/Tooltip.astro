@@ -2,6 +2,7 @@
 export interface Props {
   content: string;
   position?: 'top' | 'right' | 'bottom' | 'left';
+  context?: 'default' | 'compact' | 'minimal';
   showArrow?: boolean;
   delay?: number;
   class?: string;
@@ -11,16 +12,18 @@ export interface Props {
 const { 
   content,
   position = 'top',
+  context = 'default',
   showArrow = true,
   delay = 0,
   class: className = "",
   tooltipClass = ""
 } = Astro.props;
 
+// Generate class names using true design system
 const getComponentClasses = () => {
   const baseClass = 'tooltip';
-  const positionClass = position ? `tooltip-${position}` : '';
-  return `${baseClass} ${positionClass} ${tooltipClass}`.trim();
+  const contextClass = context !== 'default' ? `${context}-tooltip` : '';
+  return `${baseClass} ${contextClass} ${tooltipClass}`.trim();
 };
 ---
 
@@ -65,6 +68,7 @@ Features:
     x-transition:leave-start="transition-leave-start"
     x-transition:leave-end="transition-leave-end"
     class={getComponentClasses()}
+    data-position={position !== 'top' ? position : null}
     x-cloak
   >
     <span class="tooltip-content" x-text="tooltipText"></span>
