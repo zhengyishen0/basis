@@ -1,7 +1,10 @@
 ---
+// Import component styles
+import '/src/styles/components/button.css';
+
 export interface Props {
-  variant?: 'default' | 'danger';
-  context?: 'default' | 'hero' | 'nav' | 'form' | 'icon' | 'xs';
+  variant?: 'solid' | 'outline';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   href?: string;
@@ -11,8 +14,8 @@ export interface Props {
 }
 
 const { 
-  variant = 'default',
-  context = 'default',
+  variant = 'solid',
+  size = 'md',
   disabled = false,
   type = 'button',
   href,
@@ -24,9 +27,10 @@ const {
 // Generate class names using true design system
 const getButtonClasses = () => {
   const baseClass = 'button';
-  const contextClass = context !== 'default' ? `${context}-button` : '';
+  const variantClass = `button-${variant}`;
+  const sizeClass = size !== 'md' ? `button-${size}` : '';
   
-  return `${baseClass} ${contextClass}`.trim();
+  return `${baseClass} ${variantClass} ${sizeClass} ${className}`.trim();
 };
 ---
 
@@ -35,20 +39,22 @@ TRUE Design System Button Component
 
 Usage:
 <Button>Default Action</Button>
-<Button variant="danger">Delete Item</Button>
-<Button context="hero">Get Started</Button>
-<Button context="nav">Menu</Button>
+<Button variant="outline">Secondary Action</Button>
+<Button size="lg">Large Button</Button>
+<Button size="sm">Small Button</Button>
 
-Semantic Variants: default, danger
-Contextual Variants: default, hero, nav, form, icon
+Props:
+- variant: solid (default), outline
+- size: xs, sm, md (default), lg, xl
 -->
 
 {href ? (
   <a
     href={href}
     target={target}
-    class={`${getButtonClasses()} ${className}`}
-    data-variant={variant !== 'default' ? variant : null}
+    class={getButtonClasses()}
+    data-variant={variant}
+    data-size={size}
     data-state={disabled ? 'disabled' : null}
     style="text-decoration: none;"
     {...rest}
@@ -59,8 +65,9 @@ Contextual Variants: default, hero, nav, form, icon
   <button 
     type={type}
     disabled={disabled}
-    class={`${getButtonClasses()} ${className}`}
-    data-variant={variant !== 'default' ? variant : null}
+    class={getButtonClasses()}
+    data-variant={variant}
+    data-size={size}
     data-state={disabled ? 'disabled' : null}
     {...rest}
   >

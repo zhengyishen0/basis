@@ -32,7 +32,7 @@ TRUE Design System Navbar Component
 
 Usage:
 <Navbar>
-  <div slot="start">
+  <div slot="left">
     <Button href="/">Back</Button>
   </div>
   
@@ -40,15 +40,15 @@ Usage:
     <h1>Page Title</h1>
   </div>
   
-  <div slot="end">
+  <div slot="right">
     <Button>Action</Button>
   </div>
 </Navbar>
 
 <Navbar variant="elevated" maxWidth="full">
-  <div slot="start">Logo</div>
+  <div slot="left">Logo</div>
   <nav slot="center">Navigation Links</nav>
-  <div slot="end">User Menu</div>
+  <div slot="right">User Menu</div>
 </Navbar>
 
 Props:
@@ -59,8 +59,8 @@ Props:
 <nav class={getNavbarClasses()} {...rest}>
   <Row justify="between" align="center" class="navbar-content">
     <!-- Left section -->
-    <div class="navbar-section navbar-start">
-      <slot name="start" />
+    <div class="navbar-section navbar-left">
+      <slot name="left" />
     </div>
     
     <!-- Center section -->
@@ -69,8 +69,8 @@ Props:
     </div>
     
     <!-- Right section -->
-    <div class="navbar-section navbar-end">
-      <slot name="end" />
+    <div class="navbar-section navbar-right">
+      <slot name="right" />
     </div>
   </Row>
 </nav>

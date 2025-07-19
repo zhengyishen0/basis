@@ -46,51 +46,60 @@
 }
 
 /* ==========================================================================
-   SEMANTIC VARIANTS - Data Attributes
+   BUTTON VARIANTS - Modern API
    ========================================================================== */
 
-/* Only meaningful variants based on user intent */
-.button[data-variant="danger"] {
-  background: var(--color-danger);
-  color: var(--color-danger-text);
+/* Solid variant (default) */
+.button-solid {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  border: 2px solid transparent;
 }
 
-.button[data-variant="danger"]:hover {
-  background: var(--color-danger-hover);
+.button-solid:hover {
+  background: var(--color-primary-hover);
+}
+
+/* Outline variant */
+.button-outline {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.button-outline:hover {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 /* ==========================================================================
-   CONTEXTUAL VARIANTS - Classes
+   BUTTON SIZES - T-shirt sizing
    ========================================================================== */
 
-/* Hero context - larger, more prominent */
-.hero-button {
-  font-size: 1.125rem;
-  padding: 1rem 2rem;
+/* Extra small */
+.button-xs {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  font-weight: 500;
 }
 
-/* Navigation context - smaller, subtle */
-.nav-button {
+/* Small */
+.button-sm {
   font-size: 0.875rem;
   padding: 0.5rem 1rem;
 }
 
-/* Form context - full width in forms */
-.form-button {
-  width: 100%;
-  justify-content: center;
+/* Medium (default - no class needed) */
+/* .button already has default medium size */
+
+/* Large */
+.button-lg {
+  font-size: 1.125rem;
+  padding: 1rem 2rem;
 }
 
-/* Icon context - square for icon-only buttons */
-.icon-button {
-  padding: 0.75rem;
-  width: auto;
-  aspect-ratio: 1;
-}
-
-/* Extra small context - smallest possible buttons for filters/tags */
-.xs-button {
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
-  font-weight: 500;
+/* Extra large */
+.button-xl {
+  font-size: 1.25rem;
+  padding: 1.25rem 2.5rem;
 }

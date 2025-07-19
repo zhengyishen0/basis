@@ -31,15 +31,15 @@ TRUE Design System ListItem Component
 
 Usage:
 <ListItem>
-  <Checkbox slot="start" />
+  <Checkbox slot="left" />
   Task content goes here
-  <Button slot="end">Delete</Button>
+  <Button slot="right">Delete</Button>
 </ListItem>
 
 <ListItem interactive>
-  <Icon slot="start" />
+  <Icon slot="left" />
   Clickable list item
-  <Badge slot="end" />
+  <Badge slot="right" />
 </ListItem>
 
 Props:
@@ -54,10 +54,10 @@ Props:
   class={getListItemClasses()}
   {...rest}
 >
-  <!-- Start content (icons, checkboxes, avatars) -->
-  {Astro.slots.start && (
-    <div class="list-item-start">
-      <slot name="start" />
+  <!-- Left content (icons, checkboxes, avatars) -->
+  {Astro.slots.left && (
+    <div class="list-item-left">
+      <slot name="left" />
     </div>
   )}
   
@@ -66,10 +66,10 @@ Props:
     <slot />
   </div>
   
-  <!-- End content (actions, badges, metadata) -->
-  {Astro.slots.end && (
-    <div class="list-item-end">
-      <slot name="end" />
+  <!-- Right content (actions, badges, metadata) -->
+  {Astro.slots.right && (
+    <div class="list-item-right">
+      <slot name="right" />
     </div>
   )}
 </Row>
@@ -99,7 +99,7 @@ Props:
     outline-offset: -2px;
   }
   
-  .list-item-start {
+  .list-item-left {
     flex-shrink: 0;
   }
   
@@ -108,7 +108,7 @@ Props:
     min-width: 0; /* Allows text truncation */
   }
   
-  .list-item-end {
+  .list-item-right {
     flex-shrink: 0;
   }
 </style>

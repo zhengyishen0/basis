@@ -34,11 +34,11 @@ const title = "Todo App with Supabase";
     >
         <!-- Navigation Bar -->
         <Navbar variant="elevated" maxWidth="container">
-            <Button slot="start" href="../" variant="solid" color="neutral" size="sm">Back to Home</Button>
+            <Button slot="left" href="../" variant="solid" size="sm">Back to Home</Button>
             
             <Text slot="center" as="h1" class="navbar-title">Supabase Todo App</Text>
             
-            <Space slot="end" />
+            <Space slot="right" />
         </Navbar>
 
         <!-- Main Content -->
@@ -50,7 +50,7 @@ const title = "Todo App with Supabase";
                             <Button 
                                 @click="signInAnonymously()"
                                 :disabled="auth.loading || todo.loading"
-                                context="nav"
+                                size="md"
                                 x-text="auth.loading ? 'Signing in...' : 'Sign In Anonymously'"
                             >
                             </Button>
@@ -70,22 +70,22 @@ const title = "Todo App with Supabase";
                                 <Row gap="tight">
                                     <Button 
                                         @click="todo.setUserFilter('all')"
-                                        :class="todo.userFilter === 'all' ? 'button-solid-neutral' : 'button-soft-neutral'"
-                                        context="xs"
+                                        :class="todo.userFilter === 'all' ? 'button-solid' : 'button-outline'"
+                                        size="xs"
                                     >
                                         All
                                     </Button>
                                     <Button 
                                         @click="todo.setUserFilter('active')"
-                                        :class="todo.userFilter === 'active' ? 'button-solid-neutral' : 'button-soft-neutral'"
-                                        context="xs"
+                                        :class="todo.userFilter === 'active' ? 'button-solid' : 'button-outline'"
+                                        size="xs"
                                     >
                                         Active
                                     </Button>
                                     <Button 
                                         @click="todo.setUserFilter('completed')"
-                                        :class="todo.userFilter === 'completed' ? 'button-solid-neutral' : 'button-soft-neutral'"
-                                        context="xs"
+                                        :class="todo.userFilter === 'completed' ? 'button-solid' : 'button-outline'"
+                                        size="xs"
                                     >
                                         Completed
                                     </Button>
@@ -94,7 +94,7 @@ const title = "Todo App with Supabase";
                                 <!-- Auth Info (Right) -->
                                 <Row gap="loose">
                                     <Text>Signed in as: <strong x-text="auth.userDisplayId" class="auth-user-id"></strong></Text>
-                                    <Button @click="signOut()" context="xs" class="button-solid-neutral">Sign Out</Button>
+                                    <Button @click="signOut()" size="xs" class="button-solid">Sign Out</Button>
                                 </Row>
                             </Row>
 
@@ -114,7 +114,7 @@ const title = "Todo App with Supabase";
                             >
                                 <ListItem align="center">
                                     <Checkbox 
-                                        slot="start"
+                                        slot="left"
                                         :checked="item.is_complete"
                                         @change="todo.toggleTodo(item.id, $event.target.checked)"
                                     />
@@ -123,10 +123,10 @@ const title = "Todo App with Supabase";
                                         x-text="item.task"
                                     ></Text>
                                     <Button 
-                                        slot="end"
+                                        slot="right"
                                         @click="todo.deleteTodo(item.id)"
-                                        context="xs"
-                                        class="button-solid-neutral"
+                                        size="xs"
+                                        class="button-solid"
                                     >
                                         Delete
                                     </Button>
@@ -161,7 +161,7 @@ const title = "Todo App with Supabase";
                                     <Button 
                                         type="submit"
                                         :disabled="todo.loading"
-                                        context="nav"
+                                        size="sm"
                                         x-text="todo.loading ? '...' : 'Add'"
                                     >
                                     </Button>
@@ -180,22 +180,22 @@ const title = "Todo App with Supabase";
                                 <Row gap="tight">
                                     <Button 
                                         @click="todo.setAllFilter('all')"
-                                        :class="todo.allFilter === 'all' ? 'button-solid-neutral' : 'button-soft-neutral'"
-                                        context="xs"
+                                        :class="todo.allFilter === 'all' ? 'button-solid' : 'button-outline'"
+                                        size="xs"
                                     >
                                         All
                                     </Button>
                                     <Button 
                                         @click="todo.setAllFilter('active')"
-                                        :class="todo.allFilter === 'active' ? 'button-solid-neutral' : 'button-soft-neutral'"
-                                        context="xs"
+                                        :class="todo.allFilter === 'active' ? 'button-solid' : 'button-outline'"
+                                        size="xs"
                                     >
                                         Active
                                     </Button>
                                     <Button 
                                         @click="todo.setAllFilter('completed')"
-                                        :class="todo.allFilter === 'completed' ? 'button-solid-neutral' : 'button-soft-neutral'"
-                                        context="xs"
+                                        :class="todo.allFilter === 'completed' ? 'button-solid' : 'button-outline'"
+                                        size="xs"
                                     >
                                         Completed
                                     </Button>
@@ -223,7 +223,7 @@ const title = "Todo App with Supabase";
                             >
                                 <ListItem align="center">
                                     <Checkbox 
-                                        slot="start"
+                                        slot="left"
                                         :checked="item.is_complete"
                                         disabled
                                     />
@@ -231,7 +231,7 @@ const title = "Todo App with Supabase";
                                         :state="item.is_complete ? 'completed' : 'active'"
                                         x-text="item.task"
                                     ></Text>
-                                    <Row slot="end" gap="tight" class="todo-user-info">
+                                    <Row slot="right" gap="tight" class="todo-user-info">
                                         <Text as="small" x-text="item.user_id.slice(0, 8) + '...'"></Text>
                                         <span x-show="item.user_id === auth.currentUser?.id" class="badge badge-sm badge-blue">You</span>
                                     </Row>

@@ -33,7 +33,7 @@
   min-width: 0; /* Important for flex shrinking */
 }
 
-.navbar-start {
+.navbar-left {
   justify-content: flex-start;
   flex: 0 0 auto;
 }
@@ -44,7 +44,7 @@
   text-align: center;
 }
 
-.navbar-end {
+.navbar-right {
   justify-content: flex-end;
   flex: 0 0 auto;
 }
