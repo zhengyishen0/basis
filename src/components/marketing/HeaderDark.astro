@@ -164,7 +164,7 @@ const {
           placeholder={emailPlaceholder} 
           variant="default"
           size="lg"
-          class="flex-1"
+          class="header-dark-email-input"
           inputClass="border-0 rounded-none h-12 px-6 py-2 font-medium text-gray-800 focus:ring-0 focus:border-transparent"
         />
         <span class="relative top-0 right-0 block">
@@ -187,4 +187,9 @@ const {
 <style>
   /* Ensure Alpine.js x-cloak directive works */
   [x-cloak] { display: none !important; }
+  
+  /* Component-specific styles */
+  .header-dark-email-input {
+    flex: 1;
+  }
 </style>

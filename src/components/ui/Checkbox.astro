@@ -11,9 +11,7 @@ export interface Props {
   description?: string;
   class?: string;
   labelClass?: string;
-  ':checked'?: string;
-  '@change'?: string;
-  ':disabled'?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 
@@ -25,9 +23,7 @@ const {
   description,
   class: className = "",
   labelClass = "",
-  ':checked': colonChecked,
-  '@change': atChange,
-  ':disabled': colonDisabled
+  ...rest
 } = Astro.props;
 ---
 
@@ -55,13 +51,11 @@ States: default, disabled
     id={id}
     name={name}
     type="checkbox" 
-    checked={!colonChecked ? checked : undefined}
-    disabled={!colonDisabled ? disabled : undefined}
+    checked={!rest[':checked'] ? checked : undefined}
+    disabled={!rest[':disabled'] ? disabled : undefined}
     class="checkbox"
     data-state={disabled ? 'disabled' : null}
-    {...(colonChecked && { ':checked': colonChecked })}
-    {...(atChange && { '@change': atChange })}
-    {...(colonDisabled && { ':disabled': colonDisabled })}
+    {...rest}
   />
   {(label || description) && (
     <div class="checkbox-content">

@@ -8,6 +8,7 @@ export interface Props {
   gap?: 'tight' | 'default' | 'loose' | 'none';
   wrap?: boolean;
   class?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 

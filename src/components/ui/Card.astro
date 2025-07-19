@@ -6,6 +6,7 @@ export interface Props {
   headerClass?: string;
   bodyClass?: string;
   footerClass?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 
@@ -14,7 +15,8 @@ const {
   class: className = "",
   headerClass = "",
   bodyClass = "",
-  footerClass = ""
+  footerClass = "",
+  ...rest
 } = Astro.props;
 
 // Generate class names using true design system
@@ -55,6 +57,7 @@ Contextual Variants: default, compact, spacious
 <article 
   class={`${getCardClasses()} ${className}`}
   data-variant={variant !== 'default' ? variant : null}
+  {...rest}
 >
   <!-- Header -->
   {Astro.slots.header && (

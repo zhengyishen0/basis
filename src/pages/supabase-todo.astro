@@ -7,11 +7,13 @@ import List from '../components/ui/List.astro';
 import Row from '../components/ui/Row.astro';
 import TextInput from '../components/ui/TextInput.astro';
 import Navbar from '../components/ui/Navbar.astro';
+import Loading from '../components/ui/Loading.astro';
+import Error from '../components/ui/Error.astro';
+import Empty from '../components/ui/Empty.astro';
 
 // Page-specific styles
 import '../styles/pages/todo.css';
 import '../styles/components/states.css';
-import '../styles/utilities.css';
 
 const title = "Todo App with Supabase";
 ---
@@ -53,28 +55,24 @@ const title = "Todo App with Supabase";
         </Navbar>
 
         <!-- Main Content -->
-        <div class="todo-main">
-            <div class="todo-main-container">
+        <div class="todo-main todo-main-container">
             
                 <!-- Auth Status for Non-authenticated Users -->
-                <div x-show="!auth.isAuthenticated" class="auth-prompt">
-                    <Card context="spacious">
+                <Card context="spacious" x-show="!auth.isAuthenticated" class="auth-prompt">
                         <div slot="body">
                             <p class="auth-prompt-text">Click to start using the app</p>
                             <Button 
                                 @click="signInAnonymously()"
                                 :disabled="auth.loading || todo.loading"
-                                class="button-loading"
                                 context="nav"
                                 x-text="auth.loading ? 'Signing in...' : 'Sign In Anonymously'"
                             >
                             </Button>
                         </div>
-                    </Card>
-                </div>
+                </Card>
 
                 <!-- Todo App - Two Column Layout -->
-                <div x-show="auth.isAuthenticated" class="todo-columns">
+                <Row x-show="auth.isAuthenticated" class="todo-columns">
                     
                     <!-- Left Column: My Todos -->
                     <Card class="todo-column todo-column-user">
@@ -118,13 +116,12 @@ const title = "Todo App with Supabase";
                         </Row>
 
                         <!-- Error Message -->
-                        <div x-show="todo.error" class="alert alert-error" x-text="todo.error">
-                        </div>
+                        <Error x-show="todo.error" x-text="todo.error" />
 
                         <!-- Loading State -->
-                        <div x-show="todo.loading && todo.filteredUserTodos.length === 0" class="loading-state">
+                        <Loading x-show="todo.loading && todo.filteredUserTodos.length === 0">
                             Loading your todos...
-                        </div>
+                        </Loading>
 
                         <!-- User Todo List - Flex 1 to take remaining space -->
                         <List 
@@ -154,11 +151,11 @@ const title = "Todo App with Supabase";
                         </List>
                         
                         <!-- Empty State -->
-                        <div x-show="todo.filteredUserTodos.length === 0 && !todo.loading" class="empty-state">
+                        <Empty x-show="todo.filteredUserTodos.length === 0 && !todo.loading">
                             <span x-show="todo.userFilter === 'all'">No todos yet. Add one below!</span>
                             <span x-show="todo.userFilter === 'active'">No active todos.</span>
                             <span x-show="todo.userFilter === 'completed'">No completed todos.</span>
-                        </div>
+                        </Empty>
 
                         </div>
                         
@@ -177,7 +174,7 @@ const title = "Todo App with Supabase";
                                         type="text" 
                                         placeholder="Add a new todo..."
                                         required
-                                        class="flex-1"
+                                        class="todo-input-field"
                                     />
                                     <Button 
                                         type="submit"
@@ -232,13 +229,12 @@ const title = "Todo App with Supabase";
                         </Row>
 
                         <!-- Error Message -->
-                        <div x-show="todo.error" class="alert alert-error" x-text="todo.error">
-                        </div>
+                        <Error x-show="todo.error" x-text="todo.error" />
 
                         <!-- Loading State -->
-                        <div x-show="todo.loading && todo.filteredAllTodos.length === 0" class="loading-state">
+                        <Loading x-show="todo.loading && todo.filteredAllTodos.length === 0">
                             Loading all todos...
-                        </div>
+                        </Loading>
 
                         <!-- All Todos List - Flex 1 to take remaining space -->
                         <List 
@@ -257,19 +253,19 @@ const title = "Todo App with Supabase";
                                         x-text="item.task"
                                     ></span>
                                 </div>
-                                <div class="todo-user-info">
+                                <Row gap="tight" class="todo-user-info">
                                     <span x-text="item.user_id.slice(0, 8) + '...'"></span>
                                     <span x-show="item.user_id === auth.currentUser?.id" class="badge badge-sm badge-blue">You</span>
-                                </div>
+                                </Row>
                             </Row>
                         </List>
                         
                         <!-- Empty State -->
-                        <div x-show="todo.filteredAllTodos.length === 0 && !todo.loading" class="empty-state">
+                        <Empty x-show="todo.filteredAllTodos.length === 0 && !todo.loading">
                             <span x-show="todo.allFilter === 'all'">No todos in database.</span>
                             <span x-show="todo.allFilter === 'active'">No active todos.</span>
                             <span x-show="todo.allFilter === 'completed'">No completed todos.</span>
-                        </div>
+                        </Empty>
 
                         </div>
                         
@@ -281,8 +277,7 @@ const title = "Todo App with Supabase";
                             </div>
                         </div>
                     </Card>
-                </div>
-            </div>
+                </Row>
         </div>
     </div>
 

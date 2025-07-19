@@ -17,7 +17,7 @@ export interface Props {
   context?: 'default' | 'compact';
   class?: string;
   inputClass?: string;
-  'x-ref'?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 
@@ -35,7 +35,6 @@ const {
   context = 'default',
   class: className = "",
   inputClass = "",
-  'x-ref': xRef,
   ...rest
 } = Astro.props;
 
@@ -91,7 +90,6 @@ Contextual Variants: default, compact
     required={required}
     class={`${getInputClasses()} ${inputClass}`}
     data-state={error ? 'error' : disabled ? 'disabled' : null}
-    {...(xRef && { 'x-ref': xRef })}
     {...rest}
   />
   

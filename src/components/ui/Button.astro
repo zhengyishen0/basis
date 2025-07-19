@@ -7,10 +7,7 @@ export interface Props {
   href?: string;
   target?: string;
   class?: string;
-  '@click'?: string;
-  'x-text'?: string;
-  ':class'?: string;
-  ':disabled'?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 
@@ -21,10 +18,7 @@ const {
   href,
   target,
   class: className = "",
-  '@click': atClick,
-  'x-text': xText,
-  ':class': colonClass,
-  ':disabled': colonDisabled
+  ...rest
 } = Astro.props;
 
 // Generate class names using true design system
@@ -57,6 +51,7 @@ Contextual Variants: default, hero, nav, form, icon
     data-variant={variant !== 'default' ? variant : null}
     data-state={disabled ? 'disabled' : null}
     style="text-decoration: none;"
+    {...rest}
   >
     <slot />
   </a>
@@ -67,10 +62,7 @@ Contextual Variants: default, hero, nav, form, icon
     class={`${getButtonClasses()} ${className}`}
     data-variant={variant !== 'default' ? variant : null}
     data-state={disabled ? 'disabled' : null}
-    {...(atClick && { '@click': atClick })}
-    {...(xText && { 'x-text': xText })}
-    {...(colonClass && { ':class': colonClass })}
-    {...(colonDisabled && { ':disabled': colonDisabled })}
+    {...rest}
   >
     <slot />
   </button>

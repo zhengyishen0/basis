@@ -1,0 +1,31 @@
+---
+// Import component styles
+import '../../styles/components/states.css';
+
+export interface Props {
+  class?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
+}
+
+const { 
+  class: className = "",
+  ...rest
+} = Astro.props;
+---
+
+<!-- 
+TRUE Design System Loading Component
+
+Usage:
+<Loading x-show="todo.loading && todos.length === 0">
+  Loading your todos...
+</Loading>
+
+<Loading x-show="isLoading">
+  Please wait...
+</Loading>
+-->
+
+<div class={`loading-state ${className}`} {...rest}>
+  <slot />
+</div>
