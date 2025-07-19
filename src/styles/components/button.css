@@ -87,3 +87,10 @@
   width: auto;
   aspect-ratio: 1;
 }
+
+/* Extra small context - smallest possible buttons for filters/tags */
+.xs-button {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  font-weight: 500;
+}

@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Button from '../components/ui/Button.astro';
+import Card from '../components/ui/Card.astro';
 
 // Page-specific styles
 import '../styles/pages/todo.css';
@@ -44,52 +45,62 @@ const title = "Todo App with Supabase";
             
                 <!-- Auth Status for Non-authenticated Users -->
                 <div x-show="!auth.isAuthenticated" class="auth-prompt">
-                    <p class="auth-prompt-text">Click to start using the app</p>
-                    <button 
-                        @click="signInAnonymously()"
-                        :disabled="auth.loading || todo.loading"
-                        class="button button-solid-neutral button-loading"
-                        x-text="auth.loading ? 'Signing in...' : 'Sign In Anonymously'"
-                    >
-                    </button>
+                    <Card context="spacious">
+                        <div slot="body">
+                            <p class="auth-prompt-text">Click to start using the app</p>
+                            <Button 
+                                @click="signInAnonymously()"
+                                :disabled="auth.loading || todo.loading"
+                                class="button-loading"
+                                context="nav"
+                                x-text="auth.loading ? 'Signing in...' : 'Sign In Anonymously'"
+                            >
+                            </Button>
+                        </div>
+                    </Card>
                 </div>
 
                 <!-- Todo App - Two Column Layout -->
                 <div x-show="auth.isAuthenticated" class="todo-columns">
                     
                     <!-- Left Column: My Todos -->
-                    <div class="todo-column todo-column-user">
-                        <!-- Title Row -->
-                        <h2 class="todo-column-title">My Todos</h2>
+                    <Card class="todo-column todo-column-user">
+                        <div slot="header">
+                            <h2 class="todo-column-title">My Todos</h2>
+                        </div>
+                        <div slot="body" class="todo-column-content">
 
                         <!-- Filter Buttons and Auth Info -->
                         <div class="todo-header">
                             <!-- Status Filter Buttons (Left) -->
                             <div class="filter-buttons">
-                                <button 
+                                <Button 
                                     @click="todo.setUserFilter('all')"
-                                    :class="todo.userFilter === 'all' ? 'filter-button filter-button-active' : 'filter-button'"
+                                    :class="todo.userFilter === 'all' ? 'button-solid-neutral' : 'button-soft-neutral'"
+                                    context="xs"
                                 >
                                     All
-                                </button>
-                                <button 
+                                </Button>
+                                <Button 
                                     @click="todo.setUserFilter('active')"
-                                    :class="todo.userFilter === 'active' ? 'filter-button filter-button-active' : 'filter-button'"
+                                    :class="todo.userFilter === 'active' ? 'button-solid-neutral' : 'button-soft-neutral'"
+                                    context="xs"
                                 >
                                     Active
-                                </button>
-                                <button 
+                                </Button>
+                                <Button 
                                     @click="todo.setUserFilter('completed')"
-                                    :class="todo.userFilter === 'completed' ? 'filter-button filter-button-active' : 'filter-button'"
+                                    :class="todo.userFilter === 'completed' ? 'button-solid-neutral' : 'button-soft-neutral'"
+                                    context="xs"
                                 >
                                     Completed
-                                </button>
+                                </Button>
                             </div>
                             
                             <!-- Auth Info (Right) -->
                             <div class="auth-info">
                                 <span>Signed in as: <span x-text="auth.userDisplayId" class="auth-user-id"></span></span>
-                                <button @click="signOut()" class="button button-sm button-soft-red">Sign Out</button>
+                                <Button @click="signOut()" context="nav" class="button-solid-neutral">Sign Out</Button>
                             </div>
                         </div>
 
@@ -135,59 +146,69 @@ const title = "Todo App with Supabase";
                             </div>
                         </div>
 
-                        <!-- Stats -->
-                        <div x-show="todo.userTodos.length > 0" class="todo-stats">
-                            <span x-text="todo.userActiveCount"></span> active, 
-                            <span x-text="todo.userCompletedCount"></span> completed
                         </div>
                         
-                        <!-- Add Todo Form - Sticky at bottom -->
-                        <form @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="todo-form">
-                            <div class="todo-form-row">
-                                <input 
-                                    x-ref="todoInput"
-                                    type="text" 
-                                    placeholder="Add a new todo..."
-                                    class="text-input todo-input"
-                                    required
-                                >
-                                <button 
-                                    type="submit"
-                                    :disabled="todo.loading"
-                                    class="button button-solid-neutral button-lg button-loading"
-                                    x-text="todo.loading ? '...' : 'Add'"
-                                >
-                                </button>
+                        <div slot="footer">
+                            <!-- Stats -->
+                            <div x-show="todo.userTodos.length > 0" class="todo-stats">
+                                <span x-text="todo.userActiveCount"></span> active, 
+                                <span x-text="todo.userCompletedCount"></span> completed
                             </div>
-                        </form>
-                    </div>
+                            
+                            <!-- Add Todo Form -->
+                            <form @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="todo-form">
+                                <div class="todo-form-row">
+                                    <input 
+                                        x-ref="todoInput"
+                                        type="text" 
+                                        placeholder="Add a new todo..."
+                                        class="text-input todo-input"
+                                        required
+                                    >
+                                    <button 
+                                        type="submit"
+                                        :disabled="todo.loading"
+                                        class="button button-solid-neutral button-lg button-loading"
+                                        x-text="todo.loading ? '...' : 'Add'"
+                                    >
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </Card>
 
                     <!-- Right Column: All Todos -->
-                    <div class="todo-column todo-column-all">
-                        <h2 class="todo-column-title">Realtime Todos</h2>
+                    <Card class="todo-column todo-column-all">
+                        <div slot="header">
+                            <h2 class="todo-column-title">Realtime Todos</h2>
+                        </div>
+                        <div slot="body" class="todo-column-content">
                         
                         <!-- Filter Buttons and User Count -->
                         <div class="todo-header">
                             <!-- Status Filter Buttons (Left) -->
                             <div class="filter-buttons">
-                                <button 
+                                <Button 
                                     @click="todo.setAllFilter('all')"
-                                    :class="todo.allFilter === 'all' ? 'filter-button filter-button-blue-active' : 'filter-button filter-button-blue'"
+                                    :class="todo.allFilter === 'all' ? 'button-solid-neutral' : 'button-soft-neutral'"
+                                    context="xs"
                                 >
                                     All
-                                </button>
-                                <button 
+                                </Button>
+                                <Button 
                                     @click="todo.setAllFilter('active')"
-                                    :class="todo.allFilter === 'active' ? 'filter-button filter-button-blue-active' : 'filter-button filter-button-blue'"
+                                    :class="todo.allFilter === 'active' ? 'button-solid-neutral' : 'button-soft-neutral'"
+                                    context="xs"
                                 >
                                     Active
-                                </button>
-                                <button 
+                                </Button>
+                                <Button 
                                     @click="todo.setAllFilter('completed')"
-                                    :class="todo.allFilter === 'completed' ? 'filter-button filter-button-blue-active' : 'filter-button filter-button-blue'"
+                                    :class="todo.allFilter === 'completed' ? 'button-solid-neutral' : 'button-soft-neutral'"
+                                    context="xs"
                                 >
                                     Completed
-                                </button>
+                                </Button>
                             </div>
                             
                             <!-- User Count (Right) -->
@@ -236,12 +257,16 @@ const title = "Todo App with Supabase";
                             </div>
                         </div>
 
-                        <!-- Stats -->
-                        <div x-show="todo.allTodos.length > 0" class="todo-stats">
-                            <span x-text="todo.allActiveCount"></span> active, 
-                            <span x-text="todo.allCompletedCount"></span> completed
                         </div>
-                    </div>
+                        
+                        <div slot="footer">
+                            <!-- Stats -->
+                            <div x-show="todo.allTodos.length > 0" class="todo-stats">
+                                <span x-text="todo.allActiveCount"></span> active, 
+                                <span x-text="todo.allCompletedCount"></span> completed
+                            </div>
+                        </div>
+                    </Card>
                 </div>
             </div>
         </div>

@@ -63,10 +63,6 @@
 .auth-prompt {
   margin-bottom: 1.5rem;
   text-align: center;
-  padding: 1.5rem 1rem;
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   max-width: 28rem;
   margin-left: auto;
   margin-right: auto;
@@ -92,15 +88,36 @@
   }
 }
 
-.todo-column {
-  background-color: white;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+/* Todo column specific overrides for Card component */
+.todo-column.card {
+  height: calc(100vh - 10rem);
+  padding: 0;
+}
+
+.todo-column .card-header {
   padding: 1.25rem;
+}
+
+.todo-column .card-body {
+  padding: 0 1.25rem;
+  overflow: hidden;
+}
+
+.todo-column .card-footer {
+  padding: 0.75rem 1.25rem 1.25rem 1.25rem;
+  background: transparent;
+}
+
+.todo-column-content {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 10rem);
-  border: 1px solid var(--neutral-200);
+  height: 100%;
+}
+
+.todo-column .todo-list {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .todo-column-title {
@@ -108,7 +125,6 @@
   font-weight: 700;
   color: var(--color-text);
   text-align: center;
-  margin-bottom: 1rem;
   letter-spacing: -0.025em;
 }
 
@@ -116,7 +132,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
@@ -125,49 +140,6 @@
   display: flex;
   gap: 0.375rem;
   flex-wrap: wrap;
-}
-
-.filter-button {
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  border: 2px solid var(--color-primary);
-  background-color: white;
-  color: var(--color-primary);
-  cursor: pointer;
-}
-
-.filter-button:hover {
-  background-color: var(--color-primary);
-  color: white;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.filter-button-active {
-  background-color: var(--color-primary);
-  color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.filter-button-blue {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-
-.filter-button-blue:hover {
-  background-color: var(--color-primary);
-  color: white;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.filter-button-blue-active {
-  background-color: var(--color-primary);
-  color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .auth-info {
@@ -196,7 +168,6 @@
   gap: 0.25rem;
   overflow-y: auto;
   flex: 1;
-  margin-bottom: 1rem;
   padding-right: 0.25rem;
 }
 
@@ -280,7 +251,6 @@
 }
 
 .todo-stats {
-  margin-bottom: 1rem;
   font-size: 0.75rem;
   color: var(--color-text-secondary);
   text-align: center;
@@ -292,8 +262,6 @@
 
 .todo-form {
   margin-top: auto;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--neutral-200);
 }
 
 .todo-form-row {

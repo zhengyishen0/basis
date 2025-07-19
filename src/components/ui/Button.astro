@@ -1,12 +1,16 @@
 ---
 export interface Props {
   variant?: 'default' | 'danger';
-  context?: 'default' | 'hero' | 'nav' | 'form' | 'icon';
+  context?: 'default' | 'hero' | 'nav' | 'form' | 'icon' | 'xs';
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   href?: string;
   target?: string;
   class?: string;
+  '@click'?: string;
+  'x-text'?: string;
+  ':class'?: string;
+  ':disabled'?: string;
 }
 
 const { 
@@ -16,7 +20,11 @@ const {
   type = 'button',
   href,
   target,
-  class: className = ""
+  class: className = "",
+  '@click': atClick,
+  'x-text': xText,
+  ':class': colonClass,
+  ':disabled': colonDisabled
 } = Astro.props;
 
 // Generate class names using true design system
@@ -59,6 +67,10 @@ Contextual Variants: default, hero, nav, form, icon
     class={`${getButtonClasses()} ${className}`}
     data-variant={variant !== 'default' ? variant : null}
     data-state={disabled ? 'disabled' : null}
+    {...(atClick && { '@click': atClick })}
+    {...(xText && { 'x-text': xText })}
+    {...(colonClass && { ':class': colonClass })}
+    {...(colonDisabled && { ':disabled': colonDisabled })}
   >
     <slot />
   </button>
