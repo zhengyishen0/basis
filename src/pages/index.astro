@@ -12,6 +12,7 @@ import {
     Grid,
     Page,
     Row,
+    Section,
     Text,
 } from '../components/ui/core';
 
@@ -22,10 +23,11 @@ import githubIcon from '../assets/github-icon.svg';
 import '../styles/pages/home.css';
 
 const homeContent = await getEntry('pages', 'home');
+const pageData = JSON.stringify(homeContent?.data || []);
 ---
 
 <Layout>
-    <Page maxWidth="full" content={homeContent}>
+    <Page maxWidth="full" x-data={pageData}>
         <!-- Navigation -->
         <Row justify="end" class="navbar-row">
             <Avatar
@@ -39,19 +41,16 @@ const homeContent = await getEntry('pages', 'home');
 
         <Column class="main-container">
             <!-- Hero Section -->
-            <Column gap="default" align="center" class="hero-section">
+            <Section class="hero-section">
                 <Text as="h1" class="hero-title">Basis</Text>
                 <Text as="p" class="hero-description">
                     Build on Fundamentals - A methodology for modern web
                     development using basic tools and clear boundaries
                 </Text>
                 <Row justify="center" gap="tight" wrap class="hero-badges">
-                    <Badge variant="solid" color="black" size="lg">Astro</Badge>
-                    <Badge variant="solid" color="black" size="lg">Alpine</Badge
-                    >
-                    <Badge variant="solid" color="black" size="lg"
-                        >Supabase</Badge
-                    >
+                    <Badge variant="default" size="lg">Astro</Badge>
+                    <Badge variant="default" size="lg">Alpine</Badge>
+                    <Badge variant="default" size="lg">Supabase</Badge>
                 </Row>
                 <Row justify="center" gap="default" class="hero-buttons">
                     <Button
@@ -66,10 +65,10 @@ const homeContent = await getEntry('pages', 'home');
 					Components
 				</Button> -->
                 </Row>
-            </Column>
+            </Section>
 
             <!-- Features Section -->
-            <Column gap="loose" class="features-section">
+            <Section class="features-section">
                 <Text as="h2" class="features-title"
                     >What Makes <span class="basis-underline">Basis</span> Different</Text
                 >
@@ -83,8 +82,7 @@ const homeContent = await getEntry('pages', 'home');
                     <Card variant="elevated" class="feature-card">
                         <div class="feature-content">
                             <Badge
-                                variant="solid"
-                                color="black"
+                                variant="default"
                                 size="lg"
                                 class="feature-badge"
                                 x-text="feature.name"
@@ -102,7 +100,7 @@ const homeContent = await getEntry('pages', 'home');
                         </div>
                     </Card>
                 </Grid>
-            </Column>
+            </Section>
         </Column>
     </Page>
 </Layout>

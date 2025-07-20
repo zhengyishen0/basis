@@ -20,13 +20,8 @@ import { Navbar } from '../components/ui/navigation';
 import '../styles/pages/todo.css';
 
 const title = 'Todo App with Supabase';
----
 
-<Layout title={title}>
-    <Page 
-        maxWidth="full"
-        class="page-background"
-        x-data={`{ 
+const pageData = `{ 
             auth: $store.auth,
             todo: $store.todo,
             async init() {
@@ -41,7 +36,14 @@ const title = 'Todo App with Supabase';
                 await this.auth.signOut();
                 this.todo.cleanup();
             }
-        }`}
+        }`;
+---
+
+<Layout title={title}>
+    <Page
+        maxWidth="full"
+        class="page-background"
+        x-data={pageData}
         x-init="init()"
     >
         <!-- Navigation Bar -->

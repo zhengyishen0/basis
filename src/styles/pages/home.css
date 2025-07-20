@@ -34,6 +34,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: var(--space-4);
 }
 
 .hero-background {
@@ -117,6 +118,9 @@
   margin: 0 auto;
   padding: 4rem 1rem;
   background: white;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
 }
 
 .features-title {
