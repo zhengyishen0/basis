@@ -19,7 +19,7 @@
   font-family: var(--font-family);
   font-weight: var(--font-weight-medium);
   letter-spacing: 0.025em;
-  border-radius: var(--radius-md);
+  border-radius: var(--btn-radius, var(--radius-md));
   border: var(--border-md) solid transparent;
   cursor: pointer;
   text-decoration: none;
@@ -59,13 +59,6 @@
   padding: var(--space-sm);
 }
 
-.btn:has([slot="icon-start"]) {
-  padding-inline-start: var(--space-sm);
-}
-
-.btn:has([slot="icon-end"]) {
-  padding-inline-end: var(--space-sm);
-}
 
 /* ==========================================================================
    SIZE UTILITIES (U - Utilities)
@@ -99,11 +92,12 @@
   --btn-hover-shadow: var(--shadow-lg);
 }
 
-.size-xl {
-  --btn-padding: var(--space-lg) var(--space-2xl);
-  --btn-font-size: var(--text-xl);
-  --btn-hover-lift: calc(-1 * var(--space-sm));
-  --btn-hover-shadow: var(--shadow-lg);
+.size-icon {
+  --btn-padding: var(--space-sm);
+  --btn-font-size: var(--text-md);
+  --btn-hover-lift: calc(-1 * var(--space-xs));
+  --btn-hover-shadow: var(--shadow-sm);
+  aspect-ratio: 1;
 }
 
 /* ==========================================================================
@@ -122,10 +116,10 @@
   --btn-bg-hover: var(--color-secondary-hover);
 }
 
-.color-danger {
-  --btn-bg: var(--color-danger);
-  --btn-color: var(--color-danger-text);
-  --btn-bg-hover: var(--color-danger-hover);
+.color-destructive {
+  --btn-bg: var(--color-destructive);
+  --btn-color: var(--color-destructive-text);
+  --btn-bg-hover: var(--color-destructive-hover);
 }
 
 .color-success {
@@ -147,7 +141,7 @@
 /* Store base color for variants */
 .color-primary { --btn-bg-base: var(--color-primary); }
 .color-secondary { --btn-bg-base: var(--color-secondary); }
-.color-danger { --btn-bg-base: var(--color-danger); }
+.color-destructive { --btn-bg-base: var(--color-destructive); }
 .color-success { --btn-bg-base: var(--color-success); }
 .color-neutral { --btn-bg-base: var(--color-neutral); }
 
@@ -275,3 +269,12 @@
   transform: translateY(var(--btn-hover-lift));
   box-shadow: var(--btn-hover-shadow);
 }
+
+/* ==========================================================================
+   SHAPE UTILITIES (U - Utilities)
+   ========================================================================== */
+
+/* Semantic shape presets */
+.shape-square { --btn-radius: var(--radius-sm); }
+.shape-round { --btn-radius: var(--radius-md); }
+.shape-pill { --btn-radius: var(--radius-full); }

@@ -3,10 +3,9 @@
 import './badge.css';
 
 export interface Props {
-  variant?: 'solid' | 'outline' | 'soft' | 'dot';
-  color?: 'neutral' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
-  size?: 'xs' | 'sm' | 'md' | 'lg';
-  rounded?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
+  variant?: 'solid' | 'outline' | 'soft';
+  color?: 'primary' | 'success' | 'warning' | 'destructive';
+  shape?: 'square' | 'round' | 'pill';
   pulsing?: boolean;
   removable?: boolean;
   class?: string;
@@ -15,9 +14,8 @@ export interface Props {
 
 const { 
   variant = 'solid',
-  color = 'neutral',
-  size = 'sm',
-  rounded = 'full',
+  color = 'primary',
+  shape = 'pill',
   pulsing = false,
   removable = false,
   class: className = "",
@@ -28,9 +26,8 @@ const {
 const classes = [
   'badge',
   `color-${color}`,
-  `size-${size}`,
   variant !== 'solid' && `variant-${variant}`,
-  rounded !== 'full' && `rounded-${rounded}`,
+  shape !== 'pill' && `shape-${shape}`,
   pulsing && 'is-pulsing',
   removable && 'is-removable',
   className
@@ -38,29 +35,32 @@ const classes = [
 ---
 
 <!-- 
-CUBE CSS Badge Component
+TRUE Design System Badge Component
 
 Usage:
 <Badge>Default</Badge>
 <Badge color="success">Completed</Badge>
-<Badge color="danger" variant="outline">Error</Badge>
-<Badge variant="dot" color="primary">Status</Badge>
-<Badge size="lg" pulsing>Live</Badge>
+<Badge color="destructive" variant="outline">Error</Badge>
+<Badge pulsing><Icon /> Live</Badge>
+<Badge><StatusIcon /></Badge>
 
-New Props:
-- variant: solid (default), outline, soft, dot
-- color: neutral (default), primary, secondary, success, warning, danger, info
-- size: xs, sm (default), md, lg
-- rounded: none, xs, sm, md, lg, xl, 2xl, 3xl, full (default)
+Focused Props (covering 80% of use cases):
+- variant: solid (default), outline, soft
+- color: primary (default), success, warning, destructive
+- shape: square, round, pill (default)
 - pulsing: boolean - subtle animation
-- removable: boolean - shows as clickable
+- removable: boolean - shows close icon
+
+For edge cases (size, dot variant, neutral colors) use CSS classes:
+<Badge class="text-xs">Small badge</Badge>
+<Badge class="variant-dot">Dot badge</Badge>
+<Badge class="color-neutral">Neutral badge</Badge>
 -->
 
 <span 
   class={classes}
   {...rest}
 >
-  <slot name="icon" />
   <slot />
   {removable && (
     <svg 

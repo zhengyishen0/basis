@@ -3,13 +3,9 @@
 import './card.css';
 
 export interface Props {
-  variant?: 'flat' | 'subtle' | 'elevated' | 'floating';
-  color?: 'default' | 'primary' | 'danger' | 'success' | 'warning';
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  rounded?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
-  loading?: boolean;
-  disabled?: boolean;
-  selected?: boolean;
+  variant?: 'flat' | 'elevated';
+  size?: 'sm' | 'md' | 'lg';
+  shape?: 'square' | 'round' | 'pill';
   clickable?: boolean;
   href?: string;
   class?: string;
@@ -21,12 +17,8 @@ export interface Props {
 
 const { 
   variant = 'flat',
-  color = 'default',
-  size = 'lg',
-  rounded = 'lg',
-  loading = false,
-  disabled = false,
-  selected = false,
+  size = 'md',
+  shape = 'round',
   clickable = false,
   href,
   class: className = "",
@@ -40,12 +32,8 @@ const {
 const classes = [
   'card',
   variant !== 'flat' && `variant-${variant}`,
-  color !== 'default' && `color-${color}`,
   `size-${size}`,
-  rounded !== 'lg' && `rounded-${rounded}`,
-  loading && 'is-loading',
-  disabled && 'is-disabled',
-  selected && 'is-selected',
+  shape !== 'round' && `shape-${shape}`,
   (clickable || href) && 'clickable',
   className
 ].filter(Boolean).join(' ');
@@ -57,7 +45,7 @@ const tagProps = href
 ---
 
 <!-- 
-CUBE CSS Card Component
+TRUE Design System Card Component
 
 Usage:
 <Card>
@@ -72,22 +60,25 @@ Usage:
   </div>
 </Card>
 
-<Card variant="elevated" size="sm">
+<Card variant="elevated" size="md">
   <p>Simple card content</p>
 </Card>
 
-<Card href="/link" variant="subtle">
+<Card href="/link" clickable>
   <p>Clickable card</p>
 </Card>
 
-New Props:
-- variant: flat (default), subtle, elevated, floating
-- color: default, primary, danger, success, warning
-- size: xs, sm, md, lg (default), xl
-- rounded: none, xs, sm, md, lg (default), xl, 2xl, 3xl, full
-- loading, disabled, selected: boolean states
+Focused Props (covering 80% of use cases):
+- variant: flat (default), elevated
+- size: sm, md (default), lg
+- shape: square, round (default), pill
 - clickable: makes card interactive
 - href: makes card a link
+
+For edge cases (colors, custom shapes, states) use CSS classes:
+<Card class="color-primary">Colored card</Card>
+<Card class="shape-rounded-2xl">Custom shape card</Card>
+<Card class="is-selected">Selected state</Card>
 -->
 
 <Tag 

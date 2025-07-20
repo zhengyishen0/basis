@@ -17,7 +17,7 @@
   /* Base styling */
   font-weight: var(--font-weight-semibold);
   white-space: nowrap;
-  border-radius: var(--radius-full);
+  border-radius: var(--badge-radius, var(--radius-full));
   
   /* CSS Variables (modified by utilities) */
   padding: var(--badge-padding, var(--space-xs) var(--space-sm));
@@ -33,11 +33,6 @@
     padding: var(--space-xs);
   }
   
-  &:has([slot="icon"]:only-child) {
-    /* Icon slot only */
-    aspect-ratio: 1;
-    padding: var(--space-xs);
-  }
 }
 
 /* ==========================================================================
@@ -200,3 +195,12 @@
   --badge-bg: var(--color-danger);
   --badge-color: var(--color-danger-text);
 }
+
+/* ==========================================================================
+   ROUNDED UTILITIES (U - Utilities)
+   ========================================================================== */
+
+/* Semantic shape presets */
+.shape-square { --badge-radius: var(--radius-sm); }
+.shape-round { --badge-radius: var(--radius-md); }
+.shape-pill { --badge-radius: var(--radius-full); }

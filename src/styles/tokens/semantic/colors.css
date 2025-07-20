@@ -4,36 +4,36 @@
  */
 
 :root {
-  /* Surface Colors - Clean black and white aesthetic */
-  --color-background: var(--background-base); /* Pure white background */
-  --color-surface: var(--neutral-50); /* Very light gray for subtle layering */
-  --color-surface-hover: var(--neutral-100); /* Slightly darker for hover */
-  --color-surface-elevated: var(
-    --background-base
-  ); /* Cards, modals - pure white */
+  /* Core colors using light-dark() function */
+  --color-background: light-dark(#ffffff, #0a0a0a);
+  --color-surface: light-dark(#f9fafb, #1a1a1a);
+  --color-surface-hover: light-dark(#f3f4f6, #262626);
+  --color-surface-elevated: light-dark(#ffffff, #1a1a1a);
 
-  /* Text Colors - Black and white hierarchy */
-  --color-text-primary: var(--neutral-900); /* Very dark gray - main text */
-  --color-text-secondary: var(--neutral-600); /* Medium gray - secondary text */
-  --color-text-tertiary: var(--neutral-400); /* Light gray - de-emphasized */
-  --color-text-disabled: var(--neutral-300); /* Very light gray - disabled */
-  --color-text-placeholder: var(--neutral-400); /* Form placeholders */
-  --color-text-inverse: var(
-    --background-base
-  ); /* White text on dark backgrounds */
+  /* Text colors using light-dark() */
+  --color-text: light-dark(#1f2937, #f3f4f6);
+  --color-text-muted: light-dark(#6b7280, #9ca3af);
+  --color-text-inverse: light-dark(#ffffff, #0a0a0a);
+  --color-text-disabled: light-dark(#d1d5db, #6b7280);
+  --color-text-placeholder: light-dark(#9ca3af, #6b7280);
 
-  /* Border Colors - Subtle grays */
-  --color-border: var(--neutral-200); /* Light gray borders */
-  --color-border-hover: var(--neutral-300); /* Medium gray for hover */
-  --color-border-focus: var(--neutral-950); /* Black for focus */
-  --color-border-error: var(--danger-600); /* Red for errors */
+  /* Border colors using light-dark() */
+  --color-border: light-dark(#e5e7eb, #374151);
+  --color-border-hover: light-dark(#d1d5db, #4b5563);
+  --color-border-focus: light-dark(#000000, #ffffff);
 
-  /* Brand Colors - Black-based primary */
-  --color-primary: var(--primary-950); /* Black primary */
-  --color-primary-hover: var(--primary-800); /* Darker on hover */
-  --color-primary-active: var(--primary-900); /* Active state */
-  --color-primary-light: var(--primary-100); /* Light variant */
-  --color-primary-text: var(--background-base); /* White text on dark */
+  /* Intent-based color system */
+  --color-primary: light-dark(#000000, #ffffff);
+  --color-primary-hover: light-dark(#1f2937, #f3f4f6);
+  --color-primary-text: light-dark(#ffffff, #000000);
+
+  --color-secondary: light-dark(#6b7280, #9ca3af);
+  --color-secondary-hover: light-dark(#4b5563, #d1d5db);
+  --color-secondary-text: light-dark(#ffffff, #000000);
+
+  --color-destructive: light-dark(#dc2626, #ef4444);
+  --color-destructive-hover: light-dark(#b91c1c, #f87171);
+  --color-destructive-text: light-dark(#ffffff, #000000);
 
   /* Semantic Status Colors - Using primitive tokens */
   --color-neutral: var(--neutral-950); /* Black neutral */

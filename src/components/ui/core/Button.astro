@@ -3,10 +3,10 @@
 import './button.css';
 
 export interface Props {
-  variant?: 'solid' | 'outline' | 'ghost' | 'soft';
-  color?: 'primary' | 'secondary' | 'danger' | 'success' | 'neutral';
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  rounded?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
+  variant?: 'solid' | 'outline' | 'ghost';
+  color?: 'primary' | 'secondary' | 'destructive';
+  size?: 'sm' | 'md' | 'icon';
+  shape?: 'square' | 'round' | 'pill';
   disabled?: boolean;
   loading?: boolean;
   type?: 'button' | 'submit' | 'reset';
@@ -20,7 +20,7 @@ const {
   variant = 'solid',
   color = 'primary',
   size = 'md',
-  rounded = 'md',
+  shape = 'round',
   disabled = false,
   loading = false,
   type = 'button',
@@ -36,7 +36,7 @@ const classes = [
   `color-${color}`,
   `size-${size}`,
   variant !== 'solid' && `variant-${variant}`,
-  rounded !== 'md' && `rounded-${rounded}`,
+  shape !== 'round' && `shape-${shape}`,
   loading && 'is-loading',
   disabled && 'is-disabled',
   className
@@ -49,19 +49,25 @@ const tagProps = href
 ---
 
 <!-- 
-CUBE CSS Button Component
+TRUE Design System Button Component
 
 Usage:
 <Button>Default</Button>
-<Button color="danger" variant="outline">Delete</Button>
-<Button size="lg" loading>Loading...</Button>
+<Button color="destructive" variant="outline">Delete</Button>
+<Button size="icon"><Icon /></Button>
+<Button variant="outline"><Icon /> New Branch</Button>
 
-New Props:
-- color: primary (default), secondary, danger, success, neutral
-- variant: solid (default), outline, ghost, soft
-- size: xs, sm, md (default), lg, xl
-- rounded: none, xs, sm, md (default), lg, xl, 2xl, 3xl, full
+Focused Props (covering 80% of use cases):
+- variant: solid (default), outline, ghost
+- color: primary (default), secondary, destructive  
+- size: sm, md (default), icon
+- shape: square, round (default), pill
 - loading: boolean - shows spinner
+- disabled: boolean
+
+For edge cases (more colors, custom shapes) use CSS classes:
+<Button class="color-success">Success button</Button>
+<Button class="shape-rounded-2xl">Custom shape button</Button>
 -->
 
 <Tag 
@@ -69,7 +75,5 @@ New Props:
   {...tagProps}
   {...rest}
 >
-  <slot name="icon-start" />
   <slot />
-  <slot name="icon-end" />
 </Tag>

@@ -16,7 +16,7 @@
   /* Base styling */
   background: var(--color-surface-elevated);
   color: var(--color-text-primary);
-  border-radius: var(--radius-lg);
+  border-radius: var(--card-radius, var(--radius-lg));
   transition: all var(--transition-normal) var(--ease-in-out);
   
   /* CSS Variables (modified by utilities) */
@@ -85,10 +85,6 @@
    SIZE UTILITIES (U - Utilities)
    ========================================================================== */
 
-.size-xs {
-  --card-section-padding: var(--space-xs);
-}
-
 .size-sm {
   --card-section-padding: var(--space-sm);
 }
@@ -101,9 +97,6 @@
   --card-section-padding: var(--space-lg);
 }
 
-.size-xl {
-  --card-section-padding: var(--space-xl);
-}
 
 /* ==========================================================================
    ELEVATION UTILITIES (U - Utilities)
@@ -234,3 +227,12 @@
   /* Use size-xl utility instead */
   --card-section-padding: var(--space-xl);
 }
+
+/* ==========================================================================
+   ROUNDED UTILITIES (U - Utilities)
+   ========================================================================== */
+
+/* Semantic shape presets */
+.shape-square { --card-radius: var(--radius-sm); }
+.shape-round { --card-radius: var(--radius-lg); }
+.shape-pill { --card-radius: var(--radius-full); }
