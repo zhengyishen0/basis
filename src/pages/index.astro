@@ -3,19 +3,15 @@ import Layout from '../layouts/Layout.astro';
 import { getEntry } from 'astro:content';
 
 // UI Components for better styling
-import { Card, Button } from '../components/ui/core';
+import { Card, Button, Column, Row, Text } from '../components/ui/core';
 import { Badge } from '../components/ui/effects';
 
-// Page-specific styles
-import '../styles/pages/home.css';
-import '../styles/components/integration-logos.css';
-
 const homeContent = await getEntry('pages', 'home');
-const features: Array<{name: string; title: string; description: string;}> = homeContent?.data?.features || [];
 ---
 
 <Layout>
-	<main class="main-container">
+<div x-data={`{ features: ${JSON.stringify(homeContent?.data?.features || [])} }`}>
+	<Column as="main" height="screen" gap="none">
 		<!-- GitHub Icon in upper right -->
 		<div class="github-icon">
 			<a href="https://github.com/zhengyishen0/basis" 
@@ -37,37 +33,38 @@ const features: Array<{name: string; title: string; description: string;}> = hom
 			<p class="hero-description">
 				Build on Fundamentals - A methodology for modern web development using basic tools and clear boundaries
 			</p>
-			<div class="hero-badges">
+			<Row justify="center" gap="tight" wrap class="hero-badges">
 				<Badge variant="solid" color="black" size="lg">Astro</Badge>
 				<Badge variant="solid" color="black" size="lg">Alpine</Badge>
 				<Badge variant="solid" color="black" size="lg">Supabase</Badge>
-			</div>
-			<div class="hero-buttons">
+			</Row>
+			<Row justify="center" gap="default" class="hero-buttons">
 				<Button href="./todo" variant="solid" color="blue" size="lg">
 					Demo
 				</Button>
 				<!-- <Button href="./design-system" variant="outline" color="neutral" size="lg">
 					Components
 				</Button> -->
-			</div>
+			</Row>
 		</div>
 		
 		<!-- Features Section -->
-		<div class="features-section">
-			<h2 class="features-title">What Makes <span class="basis-underline">Basis</span> Different</h2>
-			<div class="features-grid">
-				{features.map((feature) => (
+		<Column gap="loose" class="features-section">
+			<Text as="h2" class="features-title">What Makes <span class="basis-underline">Basis</span> Different</Text>
+			<Row justify="center" wrap gap="default" class="features-grid">
+				<template x-for="feature in features" :key="feature.name">
 					<Card variant="elevated" class="feature-card">
 						<div class="feature-content">
-							<Badge variant="solid" color="black" size="lg" class="feature-badge">{feature.name}</Badge>
-							<h3 class="feature-card-title">{feature.title}</h3>
-							<p class="feature-card-description">{feature.description}</p>
+							<Badge variant="solid" color="black" size="lg" class="feature-badge" x-text="feature.name"></Badge>
+							<Text as="h3" class="feature-card-title" x-text="feature.title"></Text>
+							<Text as="p" class="feature-card-description" x-text="feature.description"></Text>
 						</div>
 					</Card>
-				))}
-			</div>
-		</div>
-	</main>
+				</template>
+			</Row>
+		</Column>
+	</Column>
+</div>
 </Layout>
 
 <style>
