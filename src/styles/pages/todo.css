@@ -4,142 +4,116 @@
  */
 
 /* ==========================================================================
-   APP LAYOUT
+   PAGE LAYOUT
    ========================================================================== */
 
-.todo-app-container {
-  background: linear-gradient(to bottom, var(--neutral-50), var(--neutral-100));
-  min-height: 100vh;
+.page-background {
+    background: linear-gradient(
+        to bottom,
+        var(--neutral-50),
+        var(--neutral-100)
+    );
+    min-height: 100vh;
 }
 
-.todo-main {
-  padding: 1.5rem;
-}
 
-@media (min-width: 768px) {
-  .todo-main {
-    padding: 1.5rem 2rem;
-  }
-}
-
-.todo-main-container {
-  max-width: 75rem;
-  margin: 0 auto;
+.page-container {
+    max-width: var(--container-7xl);
+    margin: 0 auto;
 }
 
 /* ==========================================================================
    AUTH SECTION
    ========================================================================== */
 
-.auth-prompt {
-  margin-bottom: 1.5rem;
-  text-align: center;
-  max-width: 28rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.auth-prompt-text {
-  color: var(--color-text-secondary);
-  margin-bottom: 0.75rem;
-  font-size: 1rem;
-  line-height: 1.6;
+.auth-card {
+    margin-bottom: var(--space-6);
+    text-align: center;
+    max-width: var(--container-md);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* ==========================================================================
-   TODO COLUMNS LAYOUT
+   TWO-COLUMN LAYOUT
    ========================================================================== */
 
-.todo-columns {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
+.two-column-grid {
+    display: grid;
 }
 
 @media (min-width: 768px) {
-  .todo-columns {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
+    .two-column-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--grid-gap);
+    }
 }
 
-/* Todo column card overrides */
-.todo-column.card {
-  height: calc(100vh - 10rem);
-  padding: 0;
+/* Full-height cards for todo columns */
+.fullheight-card.card {
+    height: calc(100vh - 10rem);
+    padding: 0;
 }
 
-.todo-column .card-header {
-  padding: 1.25rem;
+.fullheight-card .card-header {
+    padding: var(--space-5);
 }
 
-.todo-column .card-body {
-  padding: 0 1.25rem;
-  overflow: hidden;
+.fullheight-card .card-body {
+    padding: 0 var(--space-5);
+    overflow: hidden;
 }
 
-.todo-column .card-footer {
-  padding: 0.75rem 1.25rem 1.25rem 1.25rem;
-  background: transparent;
-}
-
-.todo-column-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.todo-column .list {
-  flex: 1;
-  overflow-y: auto;
-  min-height: 0;
+.fullheight-card .card-footer {
+    padding: var(--space-3) var(--space-5) var(--space-5) var(--space-5);
+    background: transparent;
 }
 
 /* ==========================================================================
-   COMPONENT-SPECIFIC STYLES
+   TEXT AND UI ELEMENTS
    ========================================================================== */
 
 /* Page titles - navbar and column headers */
-.navbar-title,
-.todo-column-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--color-text);
-  text-align: center;
-  letter-spacing: -0.025em;
+.page-title,
+.column-title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text);
+    text-align: center;
+    letter-spacing: -0.025em;
 }
 
-/* User info styling */
-.auth-user-id {
-  color: var(--color-text);
-  font-weight: 600;
+/* User authentication display */
+.user-display-name {
+    color: var(--color-text);
+    font-weight: var(--font-semibold);
 }
 
-.user-count {
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-  font-weight: 500;
+.user-count-badge {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-medium);
 }
 
-.todo-user-info {
-  font-size: 0.75rem;
-  color: var(--neutral-500);
-  min-height: 2rem;
+.user-info-badge {
+    font-size: var(--text-xs);
+    color: var(--neutral-500);
+    min-height: var(--space-8);
 }
 
-/* Form styling */
-.todo-form {
-  margin-top: auto;
+/* Form elements */
+.bottom-aligned-form {
+    margin-top: auto;
 }
 
-.todo-input-field {
-  flex: 1;
+.flexible-input {
+    flex: 1;
 }
 
-/* Stats display */
-.stats {
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-  text-align: center;
-  margin-bottom: 0.75rem;
+/* Statistics display */
+.centered-stats {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    text-align: center;
+    margin-bottom: var(--space-3);
 }

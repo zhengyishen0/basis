@@ -1,6 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Button, Card, List, Row, ListItem, Text } from '../components/ui/core';
+import {
+    Button,
+    Card,
+    Column,
+    List,
+    Row,
+    ListItem,
+    Text,
+} from '../components/ui/core';
 import { Checkbox, TextInput } from '../components/ui/forms';
 import { Navbar } from '../components/ui/navigation';
 import { Loading, Error, Empty } from '../components/ui/feedback';
@@ -13,7 +21,7 @@ const title = 'Todo App with Supabase';
 
 <Layout title={title}>
     <div
-        class="todo-app-container"
+        class="page-background"
         x-data="{ 
             auth: $store.auth,
             todo: $store.todo,
@@ -38,22 +46,18 @@ const title = 'Todo App with Supabase';
                 >Back to Home</Button
             >
 
-            <Text slot="center" as="h1" class="navbar-title"
-                >Supabase Todo App</Text
-            >
+            <Text slot="center" as="h4" class="page-title">Supabase Todo App</Text>
         </Navbar>
 
         <!-- Main Content -->
-        <div class="todo-main todo-main-container">
+        <Column class="page-container">
             <!-- Auth Status for Non-authenticated Users -->
             <Card
                 context="spacious"
                 x-show="!auth.isAuthenticated"
-                class="auth-prompt"
+                class="auth-card"
             >
-                <Text as="p" class="auth-prompt-text"
-                    >Click to start using the app</Text
-                >
+                <Text as="p">Click to start using the app</Text>
                 <Button
                     @click="signInAnonymously()"
                     :disabled="auth.loading || todo.loading"
@@ -63,13 +67,13 @@ const title = 'Todo App with Supabase';
             </Card>
 
             <!-- Todo App - Two Column Layout -->
-            <Row x-show="auth.isAuthenticated" class="todo-columns">
+            <Row x-show="auth.isAuthenticated" class="two-column-grid">
                 <!-- Left Column: My Todos -->
-                <Card class="todo-column todo-column-user">
-                    <Text as="h2" slot="header" class="todo-column-title"
+                <Card class="fullheight-card">
+                    <Text as="h2" slot="header" class="column-title"
                         >My Todos</Text
                     >
-                    <div slot="body" class="todo-column-content">
+                    <Column slot="body">
                         <!-- Filter Buttons and Auth Info -->
                         <Row justify="between" wrap>
                             <!-- Status Filter Buttons (Left) -->
@@ -102,7 +106,7 @@ const title = 'Todo App with Supabase';
                                 <Text
                                     >Signed in as: <strong
                                         x-text="auth.userDisplayId"
-                                        class="auth-user-id"></strong></Text
+                                        class="user-display-name"></strong></Text
                                 >
                                 <Button
                                     @click="signOut()"
@@ -165,13 +169,13 @@ const title = 'Todo App with Supabase';
                                 >No completed todos.</Text
                             >
                         </Empty>
-                    </div>
+                    </Column>
 
                     <!-- Stats -->
                     <div
                         slot="footer"
                         x-show="todo.userTodos.length > 0"
-                        class="stats"
+                        class="centered-stats"
                     >
                         <Text as="span" x-text="todo.userActiveCount" /> active,
                         <Text as="span" x-text="todo.userCompletedCount" /> completed
@@ -181,7 +185,7 @@ const title = 'Todo App with Supabase';
                     <form
                         slot="footer"
                         @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''"
-                        class="todo-form"
+                        class="bottom-aligned-form"
                     >
                         <Row gap="default">
                             <TextInput
@@ -189,7 +193,7 @@ const title = 'Todo App with Supabase';
                                 type="text"
                                 placeholder="Add a new todo..."
                                 required
-                                class="todo-input-field"
+                                class="flexible-input"
                             />
                             <Button
                                 type="submit"
@@ -202,11 +206,11 @@ const title = 'Todo App with Supabase';
                 </Card>
 
                 <!-- Right Column: All Todos -->
-                <Card class="todo-column todo-column-all">
-                    <Text as="h2" slot="header" class="todo-column-title"
+                <Card class="fullheight-card">
+                    <Text as="h2" slot="header" class="column-title"
                         >Realtime Todos</Text
                     >
-                    <div slot="body" class="todo-column-content">
+                    <Column slot="body">
                         <!-- Filter Buttons and User Count -->
                         <Row justify="between" wrap>
                             <!-- Status Filter Buttons (Left) -->
@@ -235,7 +239,7 @@ const title = 'Todo App with Supabase';
                             </Row>
 
                             <!-- User Count (Right) -->
-                            <div class="user-count">
+                            <div class="user-count-badge">
                                 <Text
                                     ><Text
                                         as="span"
@@ -278,7 +282,7 @@ const title = 'Todo App with Supabase';
                                 <Row
                                     slot="right"
                                     gap="tight"
-                                    class="todo-user-info"
+                                    class="user-info-badge"
                                 >
                                     <Text
                                         as="small"
@@ -307,19 +311,19 @@ const title = 'Todo App with Supabase';
                                 >No completed todos.</Text
                             >
                         </Empty>
-                    </div>
+                    </Column>
 
                     <!-- Stats -->
                     <div
                         slot="footer"
                         x-show="todo.allTodos.length > 0"
-                        class="stats"
+                        class="centered-stats"
                     >
                         <Text as="span" x-text="todo.allActiveCount" /> active,
                         <Text as="span" x-text="todo.allCompletedCount" /> completed
                     </div>
                 </Card>
             </Row>
-        </div>
+        </Column>
     </div>
 </Layout>

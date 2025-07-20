@@ -1,0 +1,66 @@
+/* 
+ * COLUMN COMPONENT
+ * Part of the Basis Design System
+ * TRUE design system - makes decisions for developers
+ */
+
+/* ==========================================================================
+   COLUMN COMPONENT - BASE
+   ========================================================================== */
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   HEIGHT VARIANTS
+   ========================================================================== */
+
+.column-height-auto {
+  height: auto;
+}
+
+.column-height-full {
+  height: 100%;
+}
+
+.column-height-fit {
+  height: fit-content;
+}
+
+.column-height-screen {
+  height: 100vh;
+}
+
+/* ==========================================================================
+   WIDTH VARIANTS
+   ========================================================================== */
+
+.column-width-auto {
+  width: auto;
+}
+
+.column-width-full {
+  width: 100%;
+}
+
+.column-width-fit {
+  width: fit-content;
+}
+
+/* ==========================================================================
+   GAP VARIANTS
+   ========================================================================== */
+
+.column-gap-tight {
+  gap: var(--space-1);
+}
+
+.column-gap-default {
+  gap: var(--space-3);
+}
+
+.column-gap-loose {
+  gap: var(--space-6);
+}

@@ -1,0 +1,46 @@
+---
+// Import component styles
+import '/src/styles/components/column.css';
+
+export interface Props {
+  height?: 'auto' | 'full' | 'fit' | 'screen';
+  maxHeight?: string;
+  width?: 'auto' | 'full' | 'fit';
+  maxWidth?: string;
+  gap?: 'none' | 'tight' | 'default' | 'loose';
+  class?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
+}
+
+const { 
+  height = 'full',
+  maxHeight,
+  width = 'auto',
+  maxWidth,
+  gap = 'none',
+  class: className = "",
+  ...rest
+} = Astro.props;
+
+// Generate class names using true design system
+const getColumnClasses = () => {
+  const baseClass = 'column';
+  const heightClass = height !== 'auto' ? `column-height-${height}` : '';
+  const widthClass = width !== 'auto' ? `column-width-${width}` : '';
+  const gapClass = gap !== 'none' ? `column-gap-${gap}` : '';
+  
+  return `${baseClass} ${heightClass} ${widthClass} ${gapClass} ${className}`.trim();
+};
+
+// Generate inline styles for custom values
+const getColumnStyles = () => {
+  const styles = [];
+  if (maxHeight) styles.push(`max-height: ${maxHeight}`);
+  if (maxWidth) styles.push(`max-width: ${maxWidth}`);
+  return styles.length > 0 ? styles.join('; ') : undefined;
+};
+---
+
+<div class={getColumnClasses()} style={getColumnStyles()} {...rest}>
+  <slot />
+</div>
