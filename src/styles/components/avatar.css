@@ -9,25 +9,25 @@
    ========================================================================== */
 
 .avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-  font-weight: var(--font-medium);
-  color: var(--color-text);
-  text-decoration: none;
-  transform: translateY(0);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    font-weight: var(--font-medium);
+    color: var(--color-text);
+    text-decoration: none;
+    transform: translateY(0);
 }
 
 .avatar-image,
 .avatar-icon {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: opacity var(--transition-normal);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity var(--transition-normal);
 }
 
 /* ==========================================================================
@@ -35,27 +35,27 @@
    ========================================================================== */
 
 .avatar-sm {
-  width: var(--space-8);
-  height: var(--space-8);
-  font-size: var(--text-xs);
+    width: var(--space-8);
+    height: var(--space-8);
+    font-size: var(--text-xs);
 }
 
 .avatar-md {
-  width: var(--space-12);
-  height: var(--space-12);
-  font-size: var(--text-sm);
+    width: var(--space-12);
+    height: var(--space-12);
+    font-size: var(--text-sm);
 }
 
 .avatar-lg {
-  width: var(--space-16);
-  height: var(--space-16);
-  font-size: var(--text-base);
+    width: var(--space-16);
+    height: var(--space-16);
+    font-size: var(--text-base);
 }
 
 .avatar-xl {
-  width: var(--space-20);
-  height: var(--space-20);
-  font-size: var(--text-lg);
+    width: var(--space-20);
+    height: var(--space-20);
+    font-size: var(--text-lg);
 }
 
 /* ==========================================================================
@@ -63,11 +63,11 @@
    ========================================================================== */
 
 .avatar-circle {
-  border-radius: 50%;
+    border-radius: 50%;
 }
 
 .avatar-square {
-  border-radius: var(--radius-md);
+    border-radius: var(--radius-md);
 }
 
 /* ==========================================================================
@@ -75,40 +75,40 @@
    ========================================================================== */
 
 /* Subtle elevation - gentle lift for interactive avatars */
-.avatar[data-elevation="subtle"]:hover {
-  transform: translateY(-0.5px);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+.avatar[data-elevation='subtle']:hover {
+    transform: translateY(-0.5px);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Elevated - standard interactive elevation */
-.avatar[data-elevation="elevated"]:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+.avatar[data-elevation='elevated']:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.avatar[data-elevation='elevated']:hover .avatar-icon {
+    opacity: 0;
 }
 
 /* Floating - dramatic elevation for primary avatars */
-.avatar[data-elevation="floating"]:hover {
-  transform: translateY(-2px) scale(1.025);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+.avatar[data-elevation='floating']:hover {
+    transform: translateY(-2px) scale(1.025);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.avatar[data-elevation="floating"]:hover .avatar-icon {
-  opacity: 0;
-}
-
-.avatar[data-elevation="floating"]:active {
-  transform: translateY(-1px) scale(1.01);
-  transition: all var(--transition-fast);
+.avatar[data-elevation='floating']:active {
+    transform: translateY(-1px) scale(1.01);
+    transition: all var(--transition-fast);
 }
 
 /* Size-based elevation adjustments */
-.avatar[data-size="sm"][data-elevation]:hover {
-  transform: translateY(-0.5px);
+.avatar[data-size='sm'][data-elevation]:hover {
+    transform: translateY(-0.5px);
 }
 
-.avatar[data-size="xl"][data-elevation="floating"]:hover {
-  transform: translateY(-3px) scale(1.04);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+.avatar[data-size='xl'][data-elevation='floating']:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 
 /* ==========================================================================
@@ -116,15 +116,15 @@
    ========================================================================== */
 
 /* Dark theme - black background for icons */
-.avatar[data-theme="dark"] {
-  background-color: #000000;
-  border-color: #333333;
+.avatar[data-theme='dark'] {
+    background-color: #000000;
+    border-color: #333333;
 }
 
 /* Brand theme - primary color background */
-.avatar[data-theme="brand"] {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
+.avatar[data-theme='brand'] {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
 }
 
 /* ==========================================================================
@@ -132,25 +132,25 @@
    ========================================================================== */
 
 /* Small icon scale - icon takes 60% of avatar space */
-.avatar[data-icon-scale="sm"] .avatar-icon {
-  width: 60%;
-  height: 60%;
+.avatar[data-icon-scale='sm'] .avatar-icon {
+    width: 60%;
+    height: 60%;
 }
 
 /* Medium icon scale - icon takes 70% of avatar space (default) */
-.avatar[data-icon-scale="md"] .avatar-icon {
-  width: 70%;
-  height: 70%;
+.avatar[data-icon-scale='md'] .avatar-icon {
+    width: 70%;
+    height: 70%;
 }
 
 /* Large icon scale - icon takes 80% of avatar space */
-.avatar[data-icon-scale="lg"] .avatar-icon {
-  width: 80%;
-  height: 80%;
+.avatar[data-icon-scale='lg'] .avatar-icon {
+    width: 80%;
+    height: 80%;
 }
 
 /* Full icon scale - icon takes 100% of avatar space */
-.avatar[data-icon-scale="full"] .avatar-icon {
-  width: 100%;
-  height: 100%;
+.avatar[data-icon-scale='full'] .avatar-icon {
+    width: 100%;
+    height: 100%;
 }
