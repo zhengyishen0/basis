@@ -10,6 +10,7 @@ This guide covers how to integrate Supabase for backend functionality, real-time
 ## Overview
 
 Supabase provides a complete Backend-as-a-Service (BaaS) solution with:
+
 - **PostgreSQL Database**: Full SQL database with real-time subscriptions
 - **Authentication**: Built-in auth with multiple providers
 - **Real-time**: Subscribe to database changes
@@ -41,10 +42,10 @@ Frontend (Astro Page)
 Update `/src/lib/supabase.js`:
 
 ```javascript
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = 'YOUR_SUPABASE_URL';
-const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
+const supabaseUrl = "YOUR_SUPABASE_URL";
+const supabaseAnonKey = "YOUR_SUPABASE_ANON_KEY";
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 ```
@@ -159,22 +160,24 @@ Example todo store with Supabase integration:
 
 ```javascript
 // /src/lib/todoStore.js
-import Alpine from 'alpinejs';
-import { supabase } from './supabase';
+import Alpine from "alpinejs";
+import { supabase } from "./supabase";
 
-Alpine.store('todo', {
+Alpine.store("todo", {
   // State
   todos: [],
   loading: false,
   error: null,
   isAuthenticated: false,
   user: null,
-  filter: 'all',
+  filter: "all",
 
   // Initialize
   async init() {
     // Check if user is already logged in
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (user) {
       this.user = user;
       this.isAuthenticated = true;
@@ -216,10 +219,10 @@ Alpine.store('todo', {
     this.loading = true;
     try {
       const { data, error } = await supabase
-        .from('todos')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
+        .from("todos")
+        .select("*")
+        .order("created_at", { ascending: false });
+
       if (error) throw error;
       this.todos = data;
     } catch (error) {
@@ -231,14 +234,14 @@ Alpine.store('todo', {
 
   async addTodo(task) {
     if (!task.trim()) return;
-    
+
     try {
       const { data, error } = await supabase
-        .from('todos')
+        .from("todos")
         .insert([{ task, user_id: this.user.id }])
         .select()
         .single();
-      
+
       if (error) throw error;
       this.todos.unshift(data);
     } catch (error) {
@@ -249,13 +252,13 @@ Alpine.store('todo', {
   async toggleTodo(id, isComplete) {
     try {
       const { error } = await supabase
-        .from('todos')
+        .from("todos")
         .update({ is_complete: isComplete })
-        .eq('id', id);
-      
+        .eq("id", id);
+
       if (error) throw error;
-      
-      const todo = this.todos.find(t => t.id === id);
+
+      const todo = this.todos.find((t) => t.id === id);
       if (todo) todo.is_complete = isComplete;
     } catch (error) {
       this.error = error.message;
@@ -264,13 +267,10 @@ Alpine.store('todo', {
 
   async deleteTodo(id) {
     try {
-      const { error } = await supabase
-        .from('todos')
-        .delete()
-        .eq('id', id);
-      
+      const { error } = await supabase.from("todos").delete().eq("id", id);
+
       if (error) throw error;
-      this.todos = this.todos.filter(t => t.id !== id);
+      this.todos = this.todos.filter((t) => t.id !== id);
     } catch (error) {
       this.error = error.message;
     }
@@ -279,14 +279,14 @@ Alpine.store('todo', {
   // Computed properties
   get filteredTodos() {
     switch (this.filter) {
-      case 'active':
-        return this.todos.filter(t => !t.is_complete);
-      case 'completed':
-        return this.todos.filter(t => t.is_complete);
+      case "active":
+        return this.todos.filter((t) => !t.is_complete);
+      case "completed":
+        return this.todos.filter((t) => t.is_complete);
       default:
         return this.todos;
     }
-  }
+  },
 });
 ```
 
@@ -309,9 +309,9 @@ Alpine.store('todo', {
   <div x-show="isAuthenticated" class="todo-container">
     <!-- Add Todo Form -->
     <form @submit.prevent="addTodo($refs.todoInput.value); $refs.todoInput.value = ''">
-      <input 
-        x-ref="todoInput" 
-        type="text" 
+      <input
+        x-ref="todoInput"
+        type="text"
         placeholder="What needs to be done?"
         class="text-input"
         required
@@ -336,17 +336,17 @@ Alpine.store('todo', {
 
     <!-- Todo List -->
     <div x-show="loading">Loading todos...</div>
-    
+
     <ul x-show="!loading" class="todo-list">
       <template x-for="todo in filteredTodos" :key="todo.id">
         <li class="todo-item">
-          <input 
+          <input
             type="checkbox"
             :checked="todo.is_complete"
             @change="toggleTodo(todo.id, $event.target.checked)"
           />
-          <span 
-            x-text="todo.task" 
+          <span
+            x-text="todo.task"
             :class="{ 'line-through': todo.is_complete }"
           ></span>
           <button @click="deleteTodo(todo.id)" class="delete-button">
@@ -371,30 +371,31 @@ Alpine.store('todo', {
 ```javascript
 // Subscribe to real-time changes
 const subscription = supabase
-  .channel('todos')
-  .on('postgres_changes', 
-    { event: '*', schema: 'public', table: 'todos' },
+  .channel("todos")
+  .on(
+    "postgres_changes",
+    { event: "*", schema: "public", table: "todos" },
     (payload) => {
-      console.log('Change received!', payload);
-      
+      console.log("Change received!", payload);
+
       switch (payload.eventType) {
-        case 'INSERT':
+        case "INSERT":
           // Add new todo to local state
           this.todos.unshift(payload.new);
           break;
-        case 'UPDATE':
+        case "UPDATE":
           // Update existing todo
-          const index = this.todos.findIndex(t => t.id === payload.new.id);
+          const index = this.todos.findIndex((t) => t.id === payload.new.id);
           if (index !== -1) {
             this.todos[index] = payload.new;
           }
           break;
-        case 'DELETE':
+        case "DELETE":
           // Remove deleted todo
-          this.todos = this.todos.filter(t => t.id !== payload.old.id);
+          this.todos = this.todos.filter((t) => t.id !== payload.old.id);
           break;
       }
-    }
+    },
   )
   .subscribe();
 
@@ -410,21 +411,21 @@ subscription.unsubscribe();
 async uploadAvatar(file) {
   const fileExt = file.name.split('.').pop();
   const fileName = `${this.user.id}-${Date.now()}.${fileExt}`;
-  
+
   const { data, error } = await supabase.storage
     .from('avatars')
     .upload(fileName, file);
-  
+
   if (error) {
     console.error('Error uploading file:', error);
     return;
   }
-  
+
   // Get public URL
   const { data: { publicUrl } } = supabase.storage
     .from('avatars')
     .getPublicUrl(fileName);
-  
+
   return publicUrl;
 }
 ```
@@ -432,23 +433,23 @@ async uploadAvatar(file) {
 ## Best Practices
 
 ### 1. Error Handling
+
 Always handle errors gracefully:
 
 ```javascript
 try {
-  const { data, error } = await supabase
-    .from('table')
-    .select('*');
-  
+  const { data, error } = await supabase.from("table").select("*");
+
   if (error) throw error;
   // Handle data
 } catch (error) {
-  console.error('Error:', error.message);
+  console.error("Error:", error.message);
   // Show user-friendly error message
 }
 ```
 
 ### 2. Loading States
+
 Provide feedback during async operations:
 
 ```javascript
@@ -461,6 +462,7 @@ try {
 ```
 
 ### 3. Row Level Security
+
 Always use RLS policies to secure your data:
 
 ```sql
@@ -470,6 +472,7 @@ CREATE POLICY "Authenticated users only" ON table_name
 ```
 
 ### 4. Environment Variables
+
 Never commit credentials. Use environment variables:
 
 ```javascript
@@ -479,6 +482,7 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 ```
 
 ### 5. Optimistic Updates
+
 Update UI immediately for better UX:
 
 ```javascript
@@ -488,17 +492,17 @@ this.todos.unshift(tempTodo);
 
 // Then sync with database
 const { data, error } = await supabase
-  .from('todos')
+  .from("todos")
   .insert([{ task }])
   .select()
   .single();
 
 if (error) {
   // Rollback on error
-  this.todos = this.todos.filter(t => t.id !== tempTodo.id);
+  this.todos = this.todos.filter((t) => t.id !== tempTodo.id);
 } else {
   // Replace temp with real data
-  const index = this.todos.findIndex(t => t.id === tempTodo.id);
+  const index = this.todos.findIndex((t) => t.id === tempTodo.id);
   this.todos[index] = data;
 }
 ```
@@ -506,10 +510,12 @@ if (error) {
 ## Testing
 
 Basis includes a complete Supabase todo app example:
+
 - Live Demo: `/supabase-todo`
 - Source: `/src/pages/supabase-todo.astro`
 
 This demonstrates:
+
 - Anonymous authentication
 - Real-time CRUD operations
 - Alpine.js state management
@@ -520,15 +526,20 @@ This demonstrates:
 ## Deployment Considerations
 
 ### 1. Environment Variables
+
 Set these in your deployment platform:
+
 - `PUBLIC_SUPABASE_URL`
 - `PUBLIC_SUPABASE_ANON_KEY`
 
 ### 2. CORS Configuration
+
 Configure allowed origins in Supabase dashboard:
+
 - Dashboard → Settings → API → CORS Allowed Origins
 
 ### 3. Security
+
 - Use RLS policies for all tables
 - Never expose service role key
 - Validate data on the frontend

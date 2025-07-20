@@ -25,7 +25,7 @@ quickstart:
     icon: "✏️"
     description: "All your content, copy, and blogs"
   - file: "lib/todoStore.js"
-    icon: "💾" 
+    icon: "💾"
     description: "Rename & add your custom logic"
   - file: "styles/.../colors.css"
     icon: "🎨"

@@ -33,8 +33,10 @@
 .select-trigger:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
-              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  box-shadow:
+    0 0 0 var(--focus-ring-offset) var(--color-background),
+    0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width))
+      var(--focus-ring-color);
 }
 
 .select-trigger[aria-expanded="true"] {
@@ -54,8 +56,10 @@
 
 .select[data-state="error"] .select-trigger:focus {
   border-color: var(--color-danger);
-  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
-              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--color-danger-light);
+  box-shadow:
+    0 0 0 var(--focus-ring-offset) var(--color-background),
+    0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width))
+      var(--color-danger-light);
 }
 
 /* Contextual sizing */

@@ -1,9 +1,9 @@
 /**
  * Pine Marketing Components
- * 
+ *
  * A collection of marketing-focused Astro components converted from Pine UI templates.
  * These components are optimized for the Basis stack (Astro + HTMX + Alpine.js).
- * 
+ *
  * Components:
  * - HeroSideBySide: Hero section with side-by-side text and image layout
  * - HeroCentered: Centered hero section with optional image below
@@ -34,99 +34,152 @@
  */
 
 // Hero Components
-export { default as HeroSideBySide } from './HeroSideBySide.astro';
-export { default as HeroCentered } from './HeroCentered.astro';
+export { default as HeroSideBySide } from "./HeroSideBySide.astro";
+export { default as HeroCentered } from "./HeroCentered.astro";
 
 // Header Components
-export { default as HeaderWithNav } from './HeaderWithNav.astro';
-export { default as HeaderDark } from './HeaderDark.astro';
+export { default as HeaderWithNav } from "./HeaderWithNav.astro";
+export { default as HeaderDark } from "./HeaderDark.astro";
 
 // Feature Components
-export { default as FeatureGrid } from './FeatureGrid.astro';
-export { default as FeatureSideBySide } from './FeatureSideBySide.astro';
+export { default as FeatureGrid } from "./FeatureGrid.astro";
+export { default as FeatureSideBySide } from "./FeatureSideBySide.astro";
 
 // Testimonial Components
-export { default as TestimonialSideBySide } from './TestimonialSideBySide.astro';
-export { default as TestimonialGrid } from './TestimonialGrid.astro';
+export { default as TestimonialSideBySide } from "./TestimonialSideBySide.astro";
+export { default as TestimonialGrid } from "./TestimonialGrid.astro";
 
 // Pricing Components
-export { default as PricingCards } from './PricingCards.astro';
-export { default as PricingSimple } from './PricingSimple.astro';
+export { default as PricingCards } from "./PricingCards.astro";
+export { default as PricingSimple } from "./PricingSimple.astro";
 
 // FAQ Components
-export { default as FAQCards } from './FAQCards.astro';
-export { default as FAQColumns } from './FAQColumns.astro';
+export { default as FAQCards } from "./FAQCards.astro";
+export { default as FAQColumns } from "./FAQColumns.astro";
 
 // Form Components
-export { default as LoginForm } from './LoginForm.astro';
-export { default as SignupForm } from './SignupForm.astro';
+export { default as LoginForm } from "./LoginForm.astro";
+export { default as SignupForm } from "./SignupForm.astro";
 
 // Footer Components
-export { default as FooterWithSocial } from './FooterWithSocial.astro';
-export { default as FooterSimple } from './FooterSimple.astro';
+export { default as FooterWithSocial } from "./FooterWithSocial.astro";
+export { default as FooterSimple } from "./FooterSimple.astro";
 
 // Blog Components
-export { default as BlogHero } from './BlogHero.astro';
-export { default as BlogGrid } from './BlogGrid.astro';
-export { default as BlogOverlayCards } from './BlogOverlayCards.astro';
+export { default as BlogHero } from "./BlogHero.astro";
+export { default as BlogGrid } from "./BlogGrid.astro";
+export { default as BlogOverlayCards } from "./BlogOverlayCards.astro";
 
 // Content Components
-export { default as ContentHero } from './ContentHero.astro';
-export { default as ContentFeatures } from './ContentFeatures.astro';
+export { default as ContentHero } from "./ContentHero.astro";
+export { default as ContentFeatures } from "./ContentFeatures.astro";
 
 // Team Components
-export { default as TeamGrid } from './TeamGrid.astro';
+export { default as TeamGrid } from "./TeamGrid.astro";
 
 // Integration Components
-export { default as IntegrationLogos } from './IntegrationLogos.astro';
+export { default as IntegrationLogos } from "./IntegrationLogos.astro";
 
 // Logo Components
-export { default as LogoGrid } from './LogoGrid.astro';
+export { default as LogoGrid } from "./LogoGrid.astro";
 
 // Title/Hero Components
-export { default as TitleSections } from './TitleSections.astro';
+export { default as TitleSections } from "./TitleSections.astro";
 
 // Navigation Components
-export { default as Navigation } from './Navigation.astro';
+export { default as Navigation } from "./Navigation.astro";
 
 // Type definitions for better TypeScript support
-export type { Props as HeroSideBySideProps } from './HeroSideBySide.astro';
-export type { Props as HeroCenteredProps } from './HeroCentered.astro';
-export type { Props as HeaderWithNavProps, NavItem as HeaderNavItem } from './HeaderWithNav.astro';
-export type { Props as HeaderDarkProps, NavItem as DarkNavItem } from './HeaderDark.astro';
-export type { Props as FeatureGridProps, Feature as GridFeature } from './FeatureGrid.astro';
-export type { Props as FeatureSideBySideProps, Benefit as SideBySideBenefit } from './FeatureSideBySide.astro';
-export type { Props as TestimonialSideBySideProps, Testimonial } from './TestimonialSideBySide.astro';
-export type { Props as TestimonialGridProps, Testimonial as GridTestimonial } from './TestimonialGrid.astro';
-export type { Props as PricingCardsProps, PricingPlan } from './PricingCards.astro';
-export type { Props as PricingSimpleProps, SimplePricingPlan } from './PricingSimple.astro';
-export type { Props as FAQCardsProps, FAQItem } from './FAQCards.astro';
-export type { Props as FAQColumnsProps, FAQColumnItem } from './FAQColumns.astro';
-export type { Props as LoginFormProps } from './LoginForm.astro';
-export type { Props as SignupFormProps } from './SignupForm.astro';
-export type { Props as FooterWithSocialProps, NavItem as FooterNavItem, SocialLink as FooterSocialLink } from './FooterWithSocial.astro';
-export type { Props as FooterSimpleProps, SocialLink as SimpleSocialLink } from './FooterSimple.astro';
+export type { Props as HeroSideBySideProps } from "./HeroSideBySide.astro";
+export type { Props as HeroCenteredProps } from "./HeroCentered.astro";
+export type {
+  Props as HeaderWithNavProps,
+  NavItem as HeaderNavItem,
+} from "./HeaderWithNav.astro";
+export type {
+  Props as HeaderDarkProps,
+  NavItem as DarkNavItem,
+} from "./HeaderDark.astro";
+export type {
+  Props as FeatureGridProps,
+  Feature as GridFeature,
+} from "./FeatureGrid.astro";
+export type {
+  Props as FeatureSideBySideProps,
+  Benefit as SideBySideBenefit,
+} from "./FeatureSideBySide.astro";
+export type {
+  Props as TestimonialSideBySideProps,
+  Testimonial,
+} from "./TestimonialSideBySide.astro";
+export type {
+  Props as TestimonialGridProps,
+  Testimonial as GridTestimonial,
+} from "./TestimonialGrid.astro";
+export type {
+  Props as PricingCardsProps,
+  PricingPlan,
+} from "./PricingCards.astro";
+export type {
+  Props as PricingSimpleProps,
+  SimplePricingPlan,
+} from "./PricingSimple.astro";
+export type { Props as FAQCardsProps, FAQItem } from "./FAQCards.astro";
+export type {
+  Props as FAQColumnsProps,
+  FAQColumnItem,
+} from "./FAQColumns.astro";
+export type { Props as LoginFormProps } from "./LoginForm.astro";
+export type { Props as SignupFormProps } from "./SignupForm.astro";
+export type {
+  Props as FooterWithSocialProps,
+  NavItem as FooterNavItem,
+  SocialLink as FooterSocialLink,
+} from "./FooterWithSocial.astro";
+export type {
+  Props as FooterSimpleProps,
+  SocialLink as SimpleSocialLink,
+} from "./FooterSimple.astro";
 
 // Blog Component Types
-export type { Props as BlogHeroProps } from './BlogHero.astro';
-export type { Props as BlogGridProps, BlogPost } from './BlogGrid.astro';
-export type { Props as BlogOverlayCardsProps, OverlayCard, SmallCard } from './BlogOverlayCards.astro';
+export type { Props as BlogHeroProps } from "./BlogHero.astro";
+export type { Props as BlogGridProps, BlogPost } from "./BlogGrid.astro";
+export type {
+  Props as BlogOverlayCardsProps,
+  OverlayCard,
+  SmallCard,
+} from "./BlogOverlayCards.astro";
 
 // Content Component Types
-export type { Props as ContentHeroProps } from './ContentHero.astro';
-export type { Props as ContentFeaturesProps, Feature as ContentFeature, Benefit as ContentBenefit } from './ContentFeatures.astro';
+export type { Props as ContentHeroProps } from "./ContentHero.astro";
+export type {
+  Props as ContentFeaturesProps,
+  Feature as ContentFeature,
+  Benefit as ContentBenefit,
+} from "./ContentFeatures.astro";
 
 // Team Component Types
-export type { Props as TeamGridProps, TeamMember, SocialLink as TeamSocialLink } from './TeamGrid.astro';
+export type {
+  Props as TeamGridProps,
+  TeamMember,
+  SocialLink as TeamSocialLink,
+} from "./TeamGrid.astro";
 
 // Integration Component Types
-export type { Props as IntegrationLogosProps, Integration } from './IntegrationLogos.astro';
+export type {
+  Props as IntegrationLogosProps,
+  Integration,
+} from "./IntegrationLogos.astro";
 
 // Logo Component Types
-export type { Props as LogoGridProps, Logo } from './LogoGrid.astro';
+export type { Props as LogoGridProps, Logo } from "./LogoGrid.astro";
 
 // Title/Hero Component Types
-export type { Props as TitleSectionsProps } from './TitleSections.astro';
+export type { Props as TitleSectionsProps } from "./TitleSections.astro";
 
 // Navigation Component Types
-export type { Props as NavigationProps, NavItem as NavigationNavItem, CTAButton } from './Navigation.astro';
+export type {
+  Props as NavigationProps,
+  NavItem as NavigationNavItem,
+  CTAButton,
+} from "./Navigation.astro";

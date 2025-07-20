@@ -1,7 +1,7 @@
-import { defineCollection } from 'astro:content';
+import { defineCollection } from "astro:content";
 
 const pages = defineCollection({
-  type: 'content',
+  type: "content",
   // Schema will be automatically inferred from frontmatter
 });
 

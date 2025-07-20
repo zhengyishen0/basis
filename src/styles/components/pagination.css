@@ -28,8 +28,6 @@
   gap: 0.5rem;
 }
 
-
-
 .pagination-button[data-state="active"] {
   background: var(--color-primary);
   color: var(--color-primary-text);
@@ -137,15 +135,15 @@
     align-items: center;
     justify-content: space-between;
   }
-  
+
   .pagination-info-mobile {
     display: none;
   }
-  
+
   .pagination-info-desktop {
     display: block;
   }
-  
+
   .pagination-nav-container {
     flex-direction: row;
     align-items: center;

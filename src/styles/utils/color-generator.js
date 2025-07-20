@@ -1,7 +1,7 @@
 /**
  * Color Palette Generator
  * Based on Matthew Strom's article: https://matthewstrom.com/writing/generating-color-palettes
- * 
+ *
  * Generates color palettes using the OKHsl color space for better perceptual uniformity.
  * Requires a library like colorjs.io or culori for OKHsl to sRGB conversion.
  */
@@ -83,7 +83,7 @@ export {
   computeScaleHue,
   computeScaleChroma,
   computeScaleLightness,
-  computeColorAtScaleNumber
+  computeColorAtScaleNumber,
 };
 
 // TODO: Implement convertToHex function using colorjs.io or culori

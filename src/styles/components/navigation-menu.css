@@ -75,8 +75,10 @@
 
 .navigation-menu-trigger:focus {
   outline: none;
-  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
-              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  box-shadow:
+    0 0 0 var(--focus-ring-offset) var(--color-background),
+    0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width))
+      var(--focus-ring-color);
 }
 
 .navigation-menu-link {
@@ -98,8 +100,10 @@
 
 .navigation-menu-link:focus {
   outline: none;
-  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
-              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  box-shadow:
+    0 0 0 var(--focus-ring-offset) var(--color-background),
+    0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width))
+      var(--focus-ring-color);
 }
 
 .navigation-menu-content {
@@ -168,8 +172,10 @@
 
 .navigation-menu-mobile-toggle:focus {
   outline: none;
-  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
-              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  box-shadow:
+    0 0 0 var(--focus-ring-offset) var(--color-background),
+    0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width))
+      var(--focus-ring-color);
 }
 
 .navigation-menu-mobile {
@@ -229,7 +235,7 @@
   .navigation-menu-desktop {
     display: flex;
   }
-  
+
   .navigation-menu-mobile-only {
     display: none;
   }

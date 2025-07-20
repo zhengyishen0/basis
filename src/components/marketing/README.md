@@ -5,55 +5,68 @@ A complete collection of **26 marketing-focused Astro components** converted fro
 ## 📦 Available Components (26 Total)
 
 ### Hero Components (4)
+
 - **HeroCentered** - Centered hero with large text and optional image
 - **HeroSideBySide** - Side-by-side layout with text and image
 - **HeaderDark** - Dark themed header with gradient and newsletter signup
 - **HeaderWithNav** - Complete header with navigation and hero content
 
-### Blog Components (3) 
+### Blog Components (3)
+
 - **BlogGrid** - Responsive grid layout for blog posts
 - **BlogHero** - Featured blog post hero section
 - **BlogOverlayCards** - Striking blog cards with background images
 
 ### Content Components (2)
+
 - **ContentFeatures** - Alternating feature sections with benefits
 - **ContentHero** - Large typography hero with positioned image
 
 ### Feature Components (2)
+
 - **FeatureGrid** - Responsive grid for showcasing features with icons
 - **FeatureSideBySide** - Side-by-side layout with bullet points
 
 ### Testimonial Components (2)
+
 - **TestimonialGrid** - Clean 3-column testimonial layout
 - **TestimonialSideBySide** - Split layout with promotional content
 
 ### Pricing Components (2)
+
 - **PricingCards** - Comprehensive pricing with detailed features
 - **PricingSimple** - Clean, minimal pricing display
 
 ### FAQ Components (2)
+
 - **FAQCards** - Simple FAQ with individual card layouts
 - **FAQColumns** - Two-column FAQ layout
 
 ### Form Components (2)
+
 - **LoginForm** - Split-screen login with promotional content
 - **SignupForm** - Full-width signup with validation
 
 ### Footer Components (2)
+
 - **FooterWithSocial** - Comprehensive footer with social media
 - **FooterSimple** - Minimal horizontal footer layout
 
 ### Team Components (1)
+
 - **TeamGrid** - Team member grid with multiple layouts
 
 ### Integration Components (2)
+
 - **IntegrationLogos** - Grid for showcasing app integrations
 - **LogoGrid** - Company/partner logo grid
 
 ### Navigation Components (1)
+
 - **Navigation** - Interactive navigation header with Alpine.js
 
 ### Title Components (1)
+
 - **TitleSections** - Hero title sections with gradient highlights
 
 ## 🎯 Quick Reference
@@ -61,9 +74,11 @@ A complete collection of **26 marketing-focused Astro components** converted fro
 ### Hero Components
 
 #### HeroSideBySide
+
 A flexible hero section with side-by-side layout featuring text content on the left and an image on the right.
 
 **Features:**
+
 - Responsive design (stacks on mobile)
 - Customizable primary colors (indigo, purple, blue, green, red, yellow)
 - Flexible button configuration
@@ -71,6 +86,7 @@ A flexible hero section with side-by-side layout featuring text content on the l
 - Full TypeScript support
 
 **Usage:**
+
 ```astro
 ---
 import { HeroSideBySide } from '@/components/pine-marketing';
@@ -91,9 +107,11 @@ import { HeroSideBySide } from '@/components/pine-marketing';
 ```
 
 #### HeroCentered
+
 A centered hero section with large text, description, call-to-action buttons, and an optional image below.
 
 **Features:**
+
 - Fully centered text alignment
 - Customizable primary color themes
 - Optional image section
@@ -101,6 +119,7 @@ A centered hero section with large text, description, call-to-action buttons, an
 - Flexible button configuration
 
 **Usage:**
+
 ```astro
 ---
 import { HeroCentered } from '@/components/pine-marketing';
@@ -121,9 +140,11 @@ import { HeroCentered } from '@/components/pine-marketing';
 ### Header Components
 
 #### HeaderWithNav
+
 A complete header section with navigation, logo, and hero content. Features a mobile-responsive navigation menu with Alpine.js interactivity.
 
 **Features:**
+
 - Responsive navigation with mobile hamburger menu
 - Alpine.js powered mobile menu toggle
 - Customizable logo and branding
@@ -132,6 +153,7 @@ A complete header section with navigation, logo, and hero content. Features a mo
 - Search icon integration
 
 **Usage:**
+
 ```astro
 ---
 import { HeaderWithNav } from '@/components/pine-marketing';
@@ -154,9 +176,11 @@ import { HeaderWithNav } from '@/components/pine-marketing';
 ```
 
 #### HeaderDark
+
 A dark-themed header with gradient background, navigation, and newsletter signup. Features an elegant navigation with hover effects and email subscription form.
 
 **Features:**
+
 - Dark gradient background (gray-900 to black)
 - Alpine.js powered mobile menu
 - Animated navigation hover effects
@@ -165,6 +189,7 @@ A dark-themed header with gradient background, navigation, and newsletter signup
 - Customizable branding
 
 **Usage:**
+
 ```astro
 ---
 import { HeaderDark } from '@/components/pine-marketing';
@@ -187,6 +212,7 @@ import { HeaderDark } from '@/components/pine-marketing';
 ## Color Themes
 
 All components support the following primary colors:
+
 - `indigo` (default for some components)
 - `purple` (default for some components)
 - `blue`
@@ -205,11 +231,14 @@ These components require Alpine.js for interactive functionality:
 ## Customization
 
 ### Slots
+
 - **HeroSideBySide**: Use the `image` slot to provide custom image content
 - **HeroCentered**: Use the `image` slot to provide custom image content
 
 ### Props
+
 All components accept comprehensive props for customization:
+
 - Colors and themes
 - Text content
 - Button configurations
@@ -218,7 +247,9 @@ All components accept comprehensive props for customization:
 - Container sizing
 
 ### Styling
+
 Components use Pine UI design system classes and can be further customized by:
+
 - Overriding CSS classes via props
 - Using Pine UI utility classes
 - Adding custom CSS for advanced styling
@@ -226,8 +257,9 @@ Components use Pine UI design system classes and can be further customized by:
 ## TypeScript Support
 
 All components include full TypeScript interfaces:
+
 - `HeroSideBySideProps`
-- `HeroCenteredProps` 
+- `HeroCenteredProps`
 - `HeaderWithNavProps`
 - `HeaderDarkProps`
 - `NavItem` interface for navigation items
@@ -235,6 +267,7 @@ All components include full TypeScript interfaces:
 ## Browser Support
 
 These components work in all modern browsers and include:
+
 - Progressive enhancement for JavaScript features
 - Responsive design for all screen sizes
 - Accessible markup and keyboard navigation

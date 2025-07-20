@@ -35,8 +35,10 @@
 }
 
 .copy-to-clipboard-button:focus {
-  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
-              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  box-shadow:
+    0 0 0 var(--focus-ring-offset) var(--color-background),
+    0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width))
+      var(--focus-ring-color);
 }
 
 /* Contextual variants */
@@ -135,4 +137,3 @@
   border-right: var(--space-1) solid transparent;
   border-top: var(--space-1) solid var(--color-neutral-dark);
 }
-

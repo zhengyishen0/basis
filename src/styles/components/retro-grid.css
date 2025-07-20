@@ -25,7 +25,11 @@
 
 .neon-retro-grid .retro-grid-horizontal,
 .neon-retro-grid .retro-grid-vertical {
-  background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
+  background: linear-gradient(
+    45deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
   filter: blur(1px);
 }
 
@@ -61,13 +65,23 @@
 .retro-grid-horizontal {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent, var(--color-text-secondary), transparent);
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-text-secondary),
+    transparent
+  );
 }
 
 .retro-grid-vertical {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, transparent, var(--color-text-secondary), transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-text-secondary),
+    transparent
+  );
 }
 
 .retro-grid-pattern-horizontal {
@@ -99,11 +113,19 @@
 
 /* Retro Grid Animations */
 @keyframes retro-grid-move {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(35px); }
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(35px);
+  }
 }
 
 @keyframes retro-grid-move-vertical {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(35px); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(35px);
+  }
 }

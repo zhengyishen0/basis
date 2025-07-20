@@ -42,7 +42,12 @@
 .hero-section {
   text-align: center;
   padding: 4rem 1rem 3rem;
-  background: linear-gradient(135deg, var(--neutral-50) 0%, white 50%, var(--neutral-100) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--neutral-50) 0%,
+    white 50%,
+    var(--neutral-100) 100%
+  );
   position: relative;
   overflow: hidden;
   min-height: 60vh;
@@ -72,7 +77,7 @@
 }
 
 .hero-title::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -8px;
   left: -5%;
@@ -104,7 +109,7 @@
 }
 
 .basis-underline::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: -8%;

@@ -26,8 +26,10 @@
 .textarea:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
-              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  box-shadow:
+    0 0 0 var(--focus-ring-offset) var(--color-background),
+    0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width))
+      var(--focus-ring-color);
 }
 
 .textarea::placeholder {
@@ -42,8 +44,10 @@
 
 .textarea[data-state="error"]:focus {
   border-color: var(--color-danger);
-  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
-              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--color-danger-light);
+  box-shadow:
+    0 0 0 var(--focus-ring-offset) var(--color-background),
+    0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width))
+      var(--color-danger-light);
 }
 
 .textarea[data-state="disabled"] {

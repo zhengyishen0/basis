@@ -65,7 +65,12 @@ template,
    Typography - Headings
    ========================================================================== */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 0;
   margin-bottom: var(--space-4);
   font-weight: var(--font-weight-bold);
@@ -229,7 +234,7 @@ blockquote cite {
 }
 
 q {
-  quotes: """ """ "'" "'";
+  quotes: "" " " "" "'" "'";
 }
 
 q::before {

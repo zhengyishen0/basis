@@ -10,10 +10,13 @@ This guide covers how to use the 40+ UI components and 25+ marketing components 
 ## Component Categories
 
 ### UI Components (`/src/components/ui/`)
+
 Interactive components for building user interfaces, organized by functional categories:
 
 #### Core Components (`/src/components/ui/core/`)
+
 Essential building blocks for layouts and basic interactions:
+
 - **Button** - Interactive buttons with variants
 - **Card** - Content containers with header/body/footer
 - **Row** - Horizontal layout component with flexbox options
@@ -21,7 +24,9 @@ Essential building blocks for layouts and basic interactions:
 - **Divider** - Horizontal and vertical dividers
 
 #### Form Components (`/src/components/ui/forms/`)
+
 All form-related inputs and controls:
+
 - **TextInput** - Text input fields with variants
 - **Textarea** - Multi-line text areas with auto-resize
 - **Checkbox** - Form checkboxes with custom styling
@@ -32,7 +37,9 @@ All form-related inputs and controls:
 - **RangeSlider** - Configurable range input sliders
 
 #### Navigation Components (`/src/components/ui/navigation/`)
+
 Navigation and wayfinding components:
+
 - **Navbar** - Application navigation bar
 - **NavigationMenu** - Advanced navigation with dropdowns
 - **Breadcrumbs** - Navigation breadcrumb trails
@@ -40,7 +47,9 @@ Navigation and wayfinding components:
 - **MenuBar** - Application-style menu bars
 
 #### Overlay Components (`/src/components/ui/overlays/`)
+
 Components that float above content:
+
 - **Modal** - Overlay dialogs
 - **FullScreenModal** - Full screen overlay modals
 - **Dropdown** - Toggleable menus
@@ -51,7 +60,9 @@ Components that float above content:
 - **ContextMenu** - Right-click context menus
 
 #### Feedback Components (`/src/components/ui/feedback/`)
+
 User feedback and state indicators:
+
 - **Loading** - Loading state indicators
 - **Error** - Error message displays
 - **Empty** - Empty state messages
@@ -61,7 +72,9 @@ User feedback and state indicators:
 - **Progress** - Progress bars with animations
 
 #### Content Components (`/src/components/ui/content/`)
+
 Content display and organization:
+
 - **Table** - Data tables with responsive wrapper
 - **Accordion** - Collapsible content sections
 - **Tabs** - Tabbed content interfaces
@@ -70,14 +83,18 @@ Content display and organization:
 - **VideoPlayer** - Custom video player with controls
 
 #### Interactive Components (`/src/components/ui/interactive/`)
+
 Interactive widgets and tools:
+
 - **Command** - Command palette interface
 - **CopyToClipboard** - Copy text functionality
 - **Rating** - Star rating components
 - **MonacoEditor** - Code editor integration
 
 #### Effects Components (`/src/components/ui/effects/`)
+
 Visual effects and animations:
+
 - **Marquee** - Scrolling text/content
 - **TextAnimation** - Character-by-character text effects (GSAP)
 - **TypingEffect** - Typewriter text animations
@@ -85,7 +102,9 @@ Visual effects and animations:
 - **Badge** - Status indicators and labels
 
 ### Marketing Components (`/src/components/marketing/`)
+
 Pre-built sections for landing pages:
+
 - **Heroes**: HeroCentered, HeroSideBySide, HeaderWithNav, HeaderDark
 - **Features**: FeatureGrid, FeatureSideBySide, ContentFeatures
 - **Social Proof**: TestimonialGrid, TestimonialSideBySide, LogoGrid
@@ -135,7 +154,7 @@ All UI components support Alpine.js prop passing for seamless reactive behavior:
 
 ```astro
 <!-- Core Components with Alpine.js -->
-<Button 
+<Button
   @click="handleClick()"
   :disabled="isLoading"
   :class="{ 'opacity-50': isLoading }"
@@ -154,13 +173,13 @@ All UI components support Alpine.js prop passing for seamless reactive behavior:
 </Row>
 
 <!-- Form Components with Alpine.js -->
-<TextInput 
+<TextInput
   x-model="searchQuery"
   @input="handleSearch()"
   placeholder="Search..."
 />
 
-<Checkbox 
+<Checkbox
   :checked="isSelected"
   @change="toggleSelection($event.target.checked)"
 />
@@ -178,6 +197,7 @@ All UI components support Alpine.js prop passing for seamless reactive behavior:
 ```
 
 **Components with Internal Alpine.js State** (use their own Alpine.js internally):
+
 - **Navigation**: NavigationMenu, Pagination, MenuBar
 - **Overlays**: All overlay components (Modal, Dropdown, Popover, etc.)
 - **Content**: Accordion, Tabs, ImageGallery, VideoPlayer
@@ -187,6 +207,7 @@ All UI components support Alpine.js prop passing for seamless reactive behavior:
 - **Forms**: DatePicker
 
 **Components that Pass Alpine.js Props** (accept Alpine.js directives as props):
+
 - **Core**: All core components
 - **Forms**: Most form components (except DatePicker)
 - **Feedback**: Most feedback components (except Toast)
@@ -215,6 +236,7 @@ Most components accept props for customization:
 ### Forms
 
 #### TextInput with Alpine.js
+
 ```astro
 <div x-data="{ value: '' }">
   <TextInput
@@ -227,6 +249,7 @@ Most components accept props for customization:
 ```
 
 #### Select Component
+
 ```astro
 <Select
   options={[
@@ -241,10 +264,11 @@ Most components accept props for customization:
 ### Overlays
 
 #### Modal with Alpine.js
+
 ```astro
 <div x-data="{ open: false }">
   <Button @click="open = true">Open Modal</Button>
-  
+
   <Modal
     title="Confirm Action"
     description="Are you sure you want to proceed?"
@@ -260,12 +284,13 @@ Most components accept props for customization:
 ```
 
 #### Toast Notifications
+
 ```astro
 <div x-data="{ showToast: false }">
   <Button @click="showToast = true; setTimeout(() => showToast = false, 3000)">
     Show Toast
   </Button>
-  
+
   <Toast
     x-show="showToast"
     x-transition
@@ -279,6 +304,7 @@ Most components accept props for customization:
 ### Data Display
 
 #### Table Component
+
 ```astro
 <Table
   headers={['Name', 'Email', 'Role']}
@@ -292,6 +318,7 @@ Most components accept props for customization:
 ```
 
 #### Accordion
+
 ```astro
 <Accordion
   items={[
@@ -311,6 +338,7 @@ Most components accept props for customization:
 ### Special Components
 
 #### MonacoEditor
+
 ```astro
 <!-- Basic JavaScript Editor -->
 <MonacoEditor
@@ -345,6 +373,7 @@ Most components accept props for customization:
 ```
 
 **MonacoEditor Features:**
+
 - 15+ Programming Languages: JavaScript, TypeScript, Python, Rust, Go, Java, C#, HTML, CSS, JSON, YAML, SQL, and more
 - 3 Built-in Themes: Dark (`vs-dark`), Light (`vs-light`), High Contrast (`hc-black`)
 - IntelliSense & Code Completion
@@ -358,6 +387,7 @@ Most components accept props for customization:
 ### Hero Sections
 
 #### HeroSideBySide
+
 ```astro
 <HeroSideBySide
   title="Build Amazing Web Apps"
@@ -372,6 +402,7 @@ Most components accept props for customization:
 ```
 
 #### HeaderWithNav
+
 ```astro
 <HeaderWithNav
   logo="Your Brand"
@@ -391,6 +422,7 @@ Most components accept props for customization:
 ### Feature Sections
 
 #### FeatureGrid
+
 ```astro
 <FeatureGrid
   title="Why Choose Basis?"
@@ -417,6 +449,7 @@ Most components accept props for customization:
 ### Social Proof
 
 #### TestimonialGrid
+
 ```astro
 <TestimonialGrid
   testimonials={[
@@ -463,14 +496,17 @@ All components use our CSS custom properties design system:
 ### Common Variants
 
 #### Button Variants
+
 - **solid**: Filled background
 - **outline**: Border only
 - **ghost**: No border, subtle hover
 
 #### Color Options
+
 - blue, green, red, yellow, gray
 
 #### Size Options
+
 - **sm**: Small size
 - **md**: Medium size (default)
 - **lg**: Large size
@@ -494,11 +530,11 @@ import { Badge } from '@/components/ui/effects';
     <h3>Product Name</h3>
     <Badge color="green">New</Badge>
   </div>
-  
+
   <!-- Content goes to body by default -->
   <p>Product description goes here automatically...</p>
   <p>No need for slot="body"!</p>
-  
+
   <div slot="footer">
     <Button variant="solid" color="blue">Buy Now</Button>
   </div>
@@ -513,10 +549,10 @@ import { Badge } from '@/components/ui/effects';
 <!-- Modal example -->
 <Modal>
   <h2 slot="header">Confirm Action</h2>
-  
+
   <!-- Default content goes to body -->
   <p>Are you sure you want to delete this item?</p>
-  
+
   <div slot="footer">
     <Button variant="outline">Cancel</Button>
     <Button variant="solid" color="red">Delete</Button>
@@ -525,6 +561,7 @@ import { Badge } from '@/components/ui/effects';
 ```
 
 ### 2. Responsive Design
+
 All components are mobile-responsive by default. Use Astro's built-in responsive utilities:
 
 ```astro
@@ -536,11 +573,13 @@ All components are mobile-responsive by default. Use Astro's built-in responsive
 ```
 
 ### 3. Performance
+
 - Components are optimized for minimal JavaScript
 - Use Alpine.js only where interactivity is needed
 - Leverage Astro's partial hydration
 
 ### 4. Accessibility
+
 - All components include proper ARIA attributes
 - Keyboard navigation is supported
 - Focus management is built-in
@@ -548,6 +587,7 @@ All components are mobile-responsive by default. Use Astro's built-in responsive
 ## Testing Components
 
 Visit the design system showcase to see all components in action:
+
 - Design System: `/design-system`
 - Component Tests: `/test/[component-name]`
 
@@ -577,12 +617,12 @@ const { title, variant = 'primary', class: className } = Astro.props;
     padding: var(--spacing-4);
     border-radius: var(--radius-md);
   }
-  
+
   .my-component-primary {
     background: var(--color-blue-500);
     color: var(--color-white);
   }
-  
+
   .my-component-secondary {
     background: var(--color-gray-100);
     color: var(--color-gray-900);

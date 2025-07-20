@@ -14,6 +14,7 @@ A collection of custom UI components built specifically for the Basis stack (Ast
 ## 📦 Available Components (42 Total)
 
 ### Basic Components (7)
+
 - **Accordion** - Collapsible content sections
 - **Alert** - Notification messages with variants
 - **Badge** - Status indicators and labels
@@ -23,6 +24,7 @@ A collection of custom UI components built specifically for the Basis stack (Ast
 - **Table** - Data tables with responsive wrapper
 
 ### Form Components (10)
+
 - **Button** - Interactive buttons with variants
 - **Checkbox** - Form checkboxes with custom styling
 - **DatePicker** - Interactive calendar date selection
@@ -35,6 +37,7 @@ A collection of custom UI components built specifically for the Basis stack (Ast
 - **Textarea** - Multi-line text areas with auto-resize
 
 ### Navigation Components (7)
+
 - **Breadcrumbs** - Navigation breadcrumb trails
 - **Dropdown** - Toggleable menus
 - **MenuBar** - Application-style menu bars
@@ -44,6 +47,7 @@ A collection of custom UI components built specifically for the Basis stack (Ast
 - **Tabs** - Tabbed content interfaces
 
 ### Interactive Components (7)
+
 - **Command** - Command palette interface
 - **ContextMenu** - Right-click context menus
 - **FullScreenModal** - Full screen overlay modals
@@ -53,6 +57,7 @@ A collection of custom UI components built specifically for the Basis stack (Ast
 - **Toast** - Temporary notifications
 
 ### Animation Components (5)
+
 - **Marquee** - Scrolling text/content
 - **Progress** - Progress bars with animations
 - **RetroGrid** - Animated grid backgrounds
@@ -60,10 +65,12 @@ A collection of custom UI components built specifically for the Basis stack (Ast
 - **TypingEffect** - Typewriter text animations
 
 ### Media Components (2)
+
 - **ImageGallery** - Image gallery with lightbox
 - **VideoPlayer** - Custom video player with controls
 
 ### Utility Components (3)
+
 - **CopyToClipboard** - Copy text functionality
 - **MonacoEditor** - Code editor integration
 - **Tooltip** - Hover information tooltips
@@ -71,6 +78,7 @@ A collection of custom UI components built specifically for the Basis stack (Ast
 ## 🚀 Quick Start
 
 1. Import the component you need:
+
 ```astro
 ---
 import { Button, Modal, Alert } from '../components/pine';
@@ -78,6 +86,7 @@ import { Button, Modal, Alert } from '../components/pine';
 ```
 
 2. Use in your Astro component:
+
 ```astro
 <Button variant="solid" color="blue" size="lg">
   Click me!
@@ -114,11 +123,11 @@ Initialize Alpine.js in your main layout:
 </head>
 <body>
   <!-- Your content -->
-  
+
   <script>
     import Alpine from 'alpinejs'
     import collapse from '@alpinejs/collapse'
-    
+
     Alpine.plugin(collapse)
     Alpine.start()
   </script>
@@ -131,9 +140,9 @@ Initialize Alpine.js in your main layout:
 ### Button
 
 ```astro
-<Button 
-  variant="solid" 
-  color="blue" 
+<Button
+  variant="solid"
+  color="blue"
   size="md"
   disabled={false}
 >
@@ -142,6 +151,7 @@ Initialize Alpine.js in your main layout:
 ```
 
 **Props:**
+
 - `variant`: 'solid' | 'outline' | 'soft' | 'ghost'
 - `color`: 'neutral' | 'blue' | 'red' | 'green' | 'yellow' | 'purple'
 - `size`: 'sm' | 'md' | 'lg' | 'xl'
@@ -151,8 +161,8 @@ Initialize Alpine.js in your main layout:
 ### Alert
 
 ```astro
-<Alert 
-  variant="soft-blue" 
+<Alert
+  variant="soft-blue"
   title="Information"
   dismissible={true}
 >
@@ -161,7 +171,8 @@ Initialize Alpine.js in your main layout:
 ```
 
 **Props:**
-- `variant`: 'default' | 'blue' | 'red' | 'green' | 'yellow' | 'soft-*'
+
+- `variant`: 'default' | 'blue' | 'red' | 'green' | 'yellow' | 'soft-\*'
 - `title`: string (optional)
 - `dismissible`: boolean
 - `icon`: string (SVG content)
@@ -171,13 +182,13 @@ Initialize Alpine.js in your main layout:
 ```astro
 <Modal id="example-modal" size="md">
   <Button slot="trigger">Open Modal</Button>
-  
+
   <h2 slot="header">Modal Title</h2>
-  
+
   <div slot="body">
     <p>Modal content...</p>
   </div>
-  
+
   <div slot="footer">
     <Button variant="outline">Cancel</Button>
     <Button>Confirm</Button>
@@ -188,18 +199,18 @@ Initialize Alpine.js in your main layout:
 ### Accordion
 
 ```astro
-<Accordion 
+<Accordion
   items={[
     { title: "Question 1", content: "Answer 1" },
     { title: "Question 2", content: "Answer 2" }
-  ]} 
+  ]}
 />
 ```
 
 ### Switch
 
 ```astro
-<Switch 
+<Switch
   id="notifications"
   label="Email notifications"
   description="Receive updates via email"
@@ -211,7 +222,7 @@ Initialize Alpine.js in your main layout:
 ### Select
 
 ```astro
-<Select 
+<Select
   options={[
     { value: "option1", label: "Option 1" },
     { value: "option2", label: "Option 2" }
@@ -224,7 +235,7 @@ Initialize Alpine.js in your main layout:
 ### Rating
 
 ```astro
-<Rating 
+<Rating
   maxStars={5}
   initialValue={3}
   size="md"
@@ -235,7 +246,7 @@ Initialize Alpine.js in your main layout:
 ### Progress
 
 ```astro
-<Progress 
+<Progress
   value={75}
   max={100}
   color="blue"
@@ -247,7 +258,7 @@ Initialize Alpine.js in your main layout:
 ### Tabs
 
 ```astro
-<Tabs 
+<Tabs
   tabs={[
     { id: "tab1", label: "Overview" },
     { id: "tab2", label: "Settings" }
@@ -262,7 +273,7 @@ Initialize Alpine.js in your main layout:
 ### TypingEffect
 
 ```astro
-<TypingEffect 
+<TypingEffect
   texts={["Hello World!", "Welcome to Pine UI", "Built with Alpine.js"]}
   typeSpeed={100}
   deleteSpeed={50}
@@ -272,7 +283,7 @@ Initialize Alpine.js in your main layout:
 ### CopyToClipboard
 
 ```astro
-<CopyToClipboard 
+<CopyToClipboard
   text="Hello, World!"
   variant="button"
   successMessage="Copied!"

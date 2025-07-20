@@ -33,7 +33,7 @@
 }
 
 .switch::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0.125rem;
   left: 0.125rem;
@@ -55,8 +55,10 @@
 }
 
 .switch:focus {
-  box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-background), 
-              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  box-shadow:
+    0 0 0 var(--focus-ring-offset) var(--color-background),
+    0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width))
+      var(--focus-ring-color);
 }
 
 .switch.switch-on {

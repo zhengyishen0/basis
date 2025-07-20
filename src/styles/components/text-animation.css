@@ -57,7 +57,8 @@
   opacity: 0;
 }
 
-.text-animation[data-animation="fade"][data-state="animate"] .text-animation-char {
+.text-animation[data-animation="fade"][data-state="animate"]
+  .text-animation-char {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
@@ -66,7 +67,8 @@
   transform: translateX(-20px);
 }
 
-.text-animation[data-animation="slide"][data-state="animate"] .text-animation-char {
+.text-animation[data-animation="slide"][data-state="animate"]
+  .text-animation-char {
   animation: slideIn 0.6s ease-out forwards;
 }
 
