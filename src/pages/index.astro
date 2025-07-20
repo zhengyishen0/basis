@@ -27,30 +27,25 @@ const homeContent = await getEntry('pages', 'home');
     <div
         x-data={`{ features: ${JSON.stringify(homeContent?.data?.features || [])} }`}
     >
-        <main class="main-container">
-            <!-- GitHub Icon in upper right -->
+        <!-- Navigation -->
+        <Row justify="end" class="navbar-row">
+            <Avatar
+                icon={githubIcon.src}
+                href="https://github.com/zhengyishen0/basis"
+                alt="GitHub Repository"
+                size="md"
+                variant="circle"
+            />
+        </Row>
 
-            <div class="github-icon">
-                <Avatar
-                    icon={githubIcon.src}
-                    href="https://github.com/zhengyishen0/basis"
-                    alt="GitHub Repository"
-                    size="md"
-                    variant="circle"
-                />
-            </div>
-
+        <Column class="main-container">
             <!-- Hero Section -->
-            <div class="hero-section">
-                <!-- Grid Background -->
-                <div class="hero-background">
-                    <div class="grid-pattern"></div>
-                </div>
-                <h1 class="hero-title">Basis</h1>
-                <p class="hero-description">
+            <Column gap="default" align="center" class="hero-section">
+                <Text as="h1" class="hero-title">Basis</Text>
+                <Text as="p" class="hero-description">
                     Build on Fundamentals - A methodology for modern web
                     development using basic tools and clear boundaries
-                </p>
+                </Text>
                 <Row justify="center" gap="tight" wrap class="hero-badges">
                     <Badge variant="solid" color="black" size="lg">Astro</Badge>
                     <Badge variant="solid" color="black" size="lg">Alpine</Badge
@@ -64,15 +59,15 @@ const homeContent = await getEntry('pages', 'home');
                         href="./todo"
                         variant="solid"
                         color="blue"
-                        size="lg"
+                        size="md"
                     >
                         Demo
                     </Button>
-                    <!-- <Button href="./design-system" variant="outline" color="neutral" size="lg">
+                    <!-- <Button href="./design-system" variant="outline" color="neutral" size="md">
 					Components
 				</Button> -->
                 </Row>
-            </div>
+            </Column>
 
             <!-- Features Section -->
             <Column gap="loose" class="features-section">
@@ -80,36 +75,33 @@ const homeContent = await getEntry('pages', 'home');
                     >What Makes <span class="basis-underline">Basis</span> Different</Text
                 >
                 <Grid
-                    columns="auto"
+                    columns="3"
                     gap="default"
                     justify="center"
-                    class="features-grid"
                     x-for="feature in features"
                     x-key="feature.name"
                 >
-                    <Card variant="elevated" class="feature-card">
-                        <div class="feature-content">
-                            <Badge
-                                variant="solid"
-                                color="black"
-                                size="lg"
-                                class="feature-badge"
-                                x-text="feature.name"
-                            />
-                            <Text
-                                as="h3"
-                                class="feature-card-title"
-                                x-text="feature.title"
-                            />
-                            <Text
-                                as="p"
-                                class="feature-card-description"
-                                x-text="feature.description"
-                            />
-                        </div>
+                    <Card variant="elevated" class="feature-content">
+                        <Badge
+                            variant="solid"
+                            color="black"
+                            size="lg"
+                            class="feature-badge"
+                            x-text="feature.name"
+                        />
+                        <Text
+                            as="h3"
+                            class="feature-card-title"
+                            x-text="feature.title"
+                        />
+                        <Text
+                            as="p"
+                            class="feature-card-description"
+                            x-text="feature.description"
+                        />
                     </Card>
                 </Grid>
             </Column>
-        </main>
+        </Column>
     </div>
 </Layout>
