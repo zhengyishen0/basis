@@ -277,7 +277,7 @@ const pageData = `{
                                 <Checkbox
                                     slot="left"
                                     :checked="item.is_complete"
-                                    disabled
+                                    style="pointer-events: none;"
                                 />
                                 <Text
                                     :state="item.is_complete ? 'completed' : 'active'"
