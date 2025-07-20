@@ -1,4 +1,7 @@
 ---
+// Import component styles
+import '/src/styles/components/section.css';
+
 export interface Props {
   class?: string;
   [key: string]: any; // Allow any Alpine.js attributes
@@ -8,10 +11,15 @@ const {
   class: className = '',
   ...rest
 } = Astro.props;
+
+// Generate class names
+const getSectionClasses = () => {
+  return `section ${className}`.trim();
+};
 ---
 
 <section 
-  class={className}
+  class={getSectionClasses()}
   {...rest}
 >
   <slot />

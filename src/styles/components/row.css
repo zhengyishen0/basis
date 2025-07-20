@@ -91,3 +91,16 @@
 .row-wrap {
   flex-wrap: wrap;
 }
+
+/* ==========================================================================
+   VISIBILITY VARIANTS - Classes
+   ========================================================================== */
+
+.row-invisible {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  z-index: 50;
+  padding: var(--space-4) var(--space-6);
+}

@@ -7,6 +7,9 @@ export interface Props {
   alt?: string;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   variant?: 'circle' | 'square';
+  elevation?: 'none' | 'subtle' | 'elevated' | 'floating';
+  theme?: 'default' | 'dark' | 'brand';
+  iconScale?: 'sm' | 'md' | 'lg' | 'full';
   icon?: string;
   href?: string;
   class?: string;
@@ -18,6 +21,9 @@ const {
   alt = '',
   size = 'md',
   variant = 'circle',
+  elevation = 'none',
+  theme = 'default',
+  iconScale = 'md',
   icon,
   href,
   class: className = "",
@@ -62,6 +68,11 @@ Props:
 <Element 
   class={getAvatarClasses()} 
   href={isLink ? href : undefined}
+  data-size={size}
+  data-variant={variant}
+  data-elevation={elevation !== 'none' ? elevation : null}
+  data-theme={theme !== 'default' ? theme : null}
+  data-icon-scale={iconScale !== 'md' ? iconScale : null}
   {...rest}
 >
   {src && <img src={src} alt={alt} class="avatar-image" />}

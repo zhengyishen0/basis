@@ -16,6 +16,8 @@
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
+  transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0);
 }
 
 /* ==========================================================================
@@ -23,10 +25,47 @@
    ========================================================================== */
 
 /* Only for content that needs visual emphasis */
+/* Subtle elevation - minimal shadow with gentle hover */
+.card[data-variant="subtle"] {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.card[data-variant="subtle"]:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Elevated - current elevated behavior */
 .card[data-variant="elevated"] {
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.card[data-variant="elevated"]:hover {
+  box-shadow:
+    0 10px 25px -3px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+/* Floating - dramatic elevation for hero cards */
+.card[data-variant="floating"] {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.card[data-variant="floating"]:hover {
+  box-shadow:
+    0 25px 50px -5px rgba(0, 0, 0, 0.15),
+    0 20px 25px -8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px) scale(1.02);
+}
+
+.card[data-variant="floating"]:active {
+  transform: translateY(-4px) scale(1.01);
+  transition: all var(--transition-fast);
 }
 
 /* ==========================================================================

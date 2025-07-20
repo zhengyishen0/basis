@@ -17,7 +17,7 @@ import {
 } from '../components/ui/core';
 
 // Import GitHub icon
-import githubIcon from '../assets/github-icon.svg';
+import githubIconUrl from '../assets/github-icon-white.svg?url';
 
 // Import essential styles
 import '../styles/pages/home.css';
@@ -28,18 +28,21 @@ const pageData = JSON.stringify(homeContent?.data || []);
 
 <Layout>
     <Page maxWidth="full" x-data={pageData}>
-        <!-- Navigation -->
-        <Row justify="end" class="navbar-row">
-            <Avatar
-                icon={githubIcon.src}
-                href="https://github.com/zhengyishen0/basis"
-                alt="GitHub Repository"
-                size="md"
-                variant="circle"
-            />
-        </Row>
-
         <Column class="main-container">
+            <!-- Navigation -->
+            <Row justify="end" variant="invisible">
+                <Avatar
+                    icon={githubIconUrl}
+                    href="https://github.com/zhengyishen0/basis"
+                    alt="GitHub Repository"
+                    size="md"
+                    variant="circle"
+                    elevation="elevated"
+                    theme="dark"
+                    iconScale="sm"
+                />
+            </Row>
+
             <!-- Hero Section -->
             <Section class="hero-section">
                 <Text as="h1" class="hero-title">Basis</Text>
@@ -79,7 +82,7 @@ const pageData = JSON.stringify(homeContent?.data || []);
                     x-for="feature in features"
                     x-key="feature.name"
                 >
-                    <Card variant="elevated" class="feature-card">
+                    <Card variant="floating" class="feature-card">
                         <div class="feature-content">
                             <Badge
                                 variant="default"

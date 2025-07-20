@@ -7,15 +7,6 @@
   min-height: 100vh;
 }
 
-.navbar-row {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  padding: var(--space-4) var(--space-6);
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
 
 
 .hero-section {
@@ -132,16 +123,7 @@
   letter-spacing: -0.025em;
 }
 
-.feature-card {
-  transition: all 0.3s ease;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-
-.feature-card:hover {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  transform: translateY(-4px);
-}
+/* Feature card animations now handled by Card component variant="floating" */
 
 .feature-content {
   padding: 1.25rem;

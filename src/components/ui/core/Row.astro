@@ -7,6 +7,7 @@ export interface Props {
   align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
   gap?: 'tight' | 'default' | 'loose' | 'none';
   wrap?: boolean;
+  variant?: 'default' | 'invisible';
   class?: string;
   [key: string]: any; // Allow any Alpine.js attributes
 }
@@ -16,6 +17,7 @@ const {
   align = 'center',
   gap = 'default',
   wrap = false,
+  variant = 'default',
   class: className = "",
   ...rest
 } = Astro.props;
@@ -27,8 +29,9 @@ const getRowClasses = () => {
   const alignClass = align !== 'center' ? `row-align-${align}` : '';
   const gapClass = gap !== 'default' ? `row-gap-${gap}` : '';
   const wrapClass = wrap ? 'row-wrap' : '';
+  const variantClass = variant !== 'default' ? `row-${variant}` : '';
   
-  return `${baseClass} ${justifyClass} ${alignClass} ${gapClass} ${wrapClass} ${className}`.trim();
+  return `${baseClass} ${justifyClass} ${alignClass} ${gapClass} ${wrapClass} ${variantClass} ${className}`.trim();
 };
 ---
 

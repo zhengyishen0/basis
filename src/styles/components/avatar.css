@@ -14,16 +14,12 @@
   justify-content: center;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
-  transition: all 0.2s ease;
+  transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   font-weight: var(--font-medium);
   color: var(--color-text);
   text-decoration: none;
-}
-
-.avatar:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transform: translateY(0);
 }
 
 .avatar-image,
@@ -31,6 +27,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: opacity var(--transition-normal);
 }
 
 /* ==========================================================================
@@ -71,4 +68,89 @@
 
 .avatar-square {
   border-radius: var(--radius-md);
+}
+
+/* ==========================================================================
+   ELEVATION VARIANTS - Using data attributes
+   ========================================================================== */
+
+/* Subtle elevation - gentle lift for interactive avatars */
+.avatar[data-elevation="subtle"]:hover {
+  transform: translateY(-0.5px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Elevated - standard interactive elevation */
+.avatar[data-elevation="elevated"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Floating - dramatic elevation for primary avatars */
+.avatar[data-elevation="floating"]:hover {
+  transform: translateY(-2px) scale(1.025);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.avatar[data-elevation="floating"]:hover .avatar-icon {
+  opacity: 0;
+}
+
+.avatar[data-elevation="floating"]:active {
+  transform: translateY(-1px) scale(1.01);
+  transition: all var(--transition-fast);
+}
+
+/* Size-based elevation adjustments */
+.avatar[data-size="sm"][data-elevation]:hover {
+  transform: translateY(-0.5px);
+}
+
+.avatar[data-size="xl"][data-elevation="floating"]:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================================================================
+   THEME VARIANTS
+   ========================================================================== */
+
+/* Dark theme - black background for icons */
+.avatar[data-theme="dark"] {
+  background-color: #000000;
+  border-color: #333333;
+}
+
+/* Brand theme - primary color background */
+.avatar[data-theme="brand"] {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* ==========================================================================
+   ICON SCALE VARIANTS
+   ========================================================================== */
+
+/* Small icon scale - icon takes 60% of avatar space */
+.avatar[data-icon-scale="sm"] .avatar-icon {
+  width: 60%;
+  height: 60%;
+}
+
+/* Medium icon scale - icon takes 70% of avatar space (default) */
+.avatar[data-icon-scale="md"] .avatar-icon {
+  width: 70%;
+  height: 70%;
+}
+
+/* Large icon scale - icon takes 80% of avatar space */
+.avatar[data-icon-scale="lg"] .avatar-icon {
+  width: 80%;
+  height: 80%;
+}
+
+/* Full icon scale - icon takes 100% of avatar space */
+.avatar[data-icon-scale="full"] .avatar-icon {
+  width: 100%;
+  height: 100%;
 }
