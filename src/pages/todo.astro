@@ -11,6 +11,7 @@ import {
     Loading,
     Page,
     Row,
+    Switch,
     Text,
 } from '../components/ui/core';
 import { Checkbox, TextInput } from '../components/ui/forms';
@@ -56,13 +57,9 @@ const pageData = `{
         </Navbar>
 
         <!-- Main Content -->
-        <Column class="page-container">
-            <!-- Auth Status for Non-authenticated Users -->
-            <Card
-                context="spacious"
-                x-show="!auth.isAuthenticated"
-                class="auth-card"
-            >
+        <Switch condition="auth.isAuthenticated" class="page-container">
+            <!-- Not authenticated state -->
+            <Card slot="false" context="spacious" class="auth-card">
                 <Text as="p">Click to start using the app</Text>
                 <Button
                     @click="signInAnonymously()"
@@ -72,8 +69,8 @@ const pageData = `{
                 />
             </Card>
 
-            <!-- Todo App - Two Column Layout -->
-            <Row x-show="auth.isAuthenticated" class="two-column-grid">
+            <!-- Authenticated state - Todo App -->
+            <Row slot="true" class="two-column-grid">
                 <!-- Left Column: My Todos -->
                 <Card class="fullheight-card">
                     <Text as="h2" slot="header" class="column-title"
@@ -331,6 +328,6 @@ const pageData = `{
                     </div>
                 </Card>
             </Row>
-        </Column>
+        </Switch>
     </Page>
 </Layout>
