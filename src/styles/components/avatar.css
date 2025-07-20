@@ -1,0 +1,74 @@
+/* 
+ * AVATAR COMPONENT
+ * Part of the Basis Design System
+ * TRUE design system - makes decisions for developers
+ */
+
+/* ==========================================================================
+   AVATAR COMPONENT - BASE
+   ========================================================================== */
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: all 0.2s ease;
+  overflow: hidden;
+  font-weight: var(--font-medium);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.avatar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-image,
+.avatar-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   SIZE VARIANTS
+   ========================================================================== */
+
+.avatar-sm {
+  width: var(--space-8);
+  height: var(--space-8);
+  font-size: var(--text-xs);
+}
+
+.avatar-md {
+  width: var(--space-12);
+  height: var(--space-12);
+  font-size: var(--text-sm);
+}
+
+.avatar-lg {
+  width: var(--space-16);
+  height: var(--space-16);
+  font-size: var(--text-base);
+}
+
+.avatar-xl {
+  width: var(--space-20);
+  height: var(--space-20);
+  font-size: var(--text-lg);
+}
+
+/* ==========================================================================
+   SHAPE VARIANTS
+   ========================================================================== */
+
+.avatar-circle {
+  border-radius: 50%;
+}
+
+.avatar-square {
+  border-radius: var(--radius-md);
+}

@@ -3,84 +3,100 @@ import Layout from '../layouts/Layout.astro';
 import { getEntry } from 'astro:content';
 
 // UI Components for better styling
-import { Card, Button, Column, Row, Text } from '../components/ui/core';
+import { Avatar, Card, Button, Column, Row, Text } from '../components/ui/core';
 import { Badge } from '../components/ui/effects';
+
+// Import GitHub icon
+import githubIcon from '../assets/github-icon.svg';
+
+// Import essential styles
+import '../styles/pages/home.css';
 
 const homeContent = await getEntry('pages', 'home');
 ---
 
 <Layout>
-<div x-data={`{ features: ${JSON.stringify(homeContent?.data?.features || [])} }`}>
-	<Column as="main" height="screen" gap="none">
-		<!-- GitHub Icon in upper right -->
-		<div class="github-icon">
-			<a href="https://github.com/zhengyishen0/basis" 
-			   class="github-link"
-			   aria-label="GitHub Repository">
-				<svg class="github-svg" fill="currentColor" viewBox="0 0 20 20">
-					<path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
-				</svg>
-			</a>
-		</div>
+    <div
+        x-data={`{ features: ${JSON.stringify(homeContent?.data?.features || [])} }`}
+    >
+        <main class="main-container">
+            <!-- GitHub Icon in upper right -->
 
-		<!-- Hero Section -->
-		<div class="hero-section">
-			<!-- Grid Background -->
-			<div class="hero-background">
-				<div class="grid-pattern"></div>
-			</div>
-			<h1 class="hero-title">Basis</h1>
-			<p class="hero-description">
-				Build on Fundamentals - A methodology for modern web development using basic tools and clear boundaries
-			</p>
-			<Row justify="center" gap="tight" wrap class="hero-badges">
-				<Badge variant="solid" color="black" size="lg">Astro</Badge>
-				<Badge variant="solid" color="black" size="lg">Alpine</Badge>
-				<Badge variant="solid" color="black" size="lg">Supabase</Badge>
-			</Row>
-			<Row justify="center" gap="default" class="hero-buttons">
-				<Button href="./todo" variant="solid" color="blue" size="lg">
-					Demo
-				</Button>
-				<!-- <Button href="./design-system" variant="outline" color="neutral" size="lg">
+            <div class="github-icon">
+                <Avatar
+                    icon={githubIcon.src}
+                    href="https://github.com/zhengyishen0/basis"
+                    alt="GitHub Repository"
+                    size="md"
+                    variant="circle"
+                />
+            </div>
+
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <!-- Grid Background -->
+                <div class="hero-background">
+                    <div class="grid-pattern"></div>
+                </div>
+                <h1 class="hero-title">Basis</h1>
+                <p class="hero-description">
+                    Build on Fundamentals - A methodology for modern web
+                    development using basic tools and clear boundaries
+                </p>
+                <Row justify="center" gap="tight" wrap class="hero-badges">
+                    <Badge variant="solid" color="black" size="lg">Astro</Badge>
+                    <Badge variant="solid" color="black" size="lg">Alpine</Badge
+                    >
+                    <Badge variant="solid" color="black" size="lg"
+                        >Supabase</Badge
+                    >
+                </Row>
+                <Row justify="center" gap="default" class="hero-buttons">
+                    <Button
+                        href="./todo"
+                        variant="solid"
+                        color="blue"
+                        size="lg"
+                    >
+                        Demo
+                    </Button>
+                    <!-- <Button href="./design-system" variant="outline" color="neutral" size="lg">
 					Components
 				</Button> -->
-			</Row>
-		</div>
-		
-		<!-- Features Section -->
-		<Column gap="loose" class="features-section">
-			<Text as="h2" class="features-title">What Makes <span class="basis-underline">Basis</span> Different</Text>
-			<Row justify="center" wrap gap="default" class="features-grid">
-				<template x-for="feature in features" :key="feature.name">
-					<Card variant="elevated" class="feature-card">
-						<div class="feature-content">
-							<Badge variant="solid" color="black" size="lg" class="feature-badge" x-text="feature.name"></Badge>
-							<Text as="h3" class="feature-card-title" x-text="feature.title"></Text>
-							<Text as="p" class="feature-card-description" x-text="feature.description"></Text>
-						</div>
-					</Card>
-				</template>
-			</Row>
-		</Column>
-	</Column>
-</div>
-</Layout>
+                </Row>
+            </div>
 
-<style>
-	@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Poppins:wght@400;600;700;900&family=Montserrat:wght@400;600;700;900&family=Roboto:wght@400;700;900&family=Source+Sans+Pro:wght@400;600;700;900&family=Nunito:wght@400;600;700;900&family=Open+Sans:wght@400;600;700;900&family=Lato:wght@400;700;900&family=Manrope:wght@400;600;700;900&family=IBM+Plex+Sans:wght@400;600;700&family=Work+Sans:wght@400;600;700;900&family=DM+Sans:wght@400;500;700&display=swap');
-	
-	.grid-pattern {
-		width: 100%;
-		height: 100%;
-		background-image: 
-			linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-		background-size: 50px 50px;
-		background-position: -1px -1px;
-	}
-	
-	h1 {
-		text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	}
-</style>
+            <!-- Features Section -->
+            <Column gap="loose" class="features-section">
+                <Text as="h2" class="features-title"
+                    >What Makes <span class="basis-underline">Basis</span> Different</Text
+                >
+                <Row justify="center" wrap gap="default" class="features-grid">
+                    <template x-for="feature in features" :key="feature.name">
+                        <Card variant="elevated" class="feature-card">
+                            <div class="feature-content">
+                                <Badge
+                                    variant="solid"
+                                    color="black"
+                                    size="lg"
+                                    class="feature-badge"
+                                    x-text="feature.name"
+                                />
+                                <Text
+                                    as="h3"
+                                    class="feature-card-title"
+                                    x-text="feature.title"
+                                />
+                                <Text
+                                    as="p"
+                                    class="feature-card-description"
+                                    x-text="feature.description"
+                                />
+                            </div>
+                        </Card>
+                    </template>
+                </Row>
+            </Column>
+        </main>
+    </div>
+</Layout>

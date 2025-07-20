@@ -1,4 +1,5 @@
 // Core Components - Essential building blocks
+export { default as Avatar } from "./Avatar.astro";
 export { default as Button } from "./Button.astro";
 export { default as Card } from "./Card.astro";
 export { default as Column } from "./Column.astro";
