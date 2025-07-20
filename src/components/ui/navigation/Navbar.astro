@@ -57,7 +57,7 @@ Props:
 -->
 
 <nav class={getNavbarClasses()} {...rest}>
-  <Row justify="between" align="center" class="navbar-content">
+  <div class="navbar-content">
     <!-- Left section -->
     <div class="navbar-section navbar-left">
       <slot name="left" />
@@ -72,5 +72,5 @@ Props:
     <div class="navbar-section navbar-right">
       <slot name="right" />
     </div>
-  </Row>
+  </div>
 </nav>

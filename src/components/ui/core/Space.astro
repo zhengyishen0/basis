@@ -1,4 +1,7 @@
 ---
+// Import component styles
+import '/src/styles/components/space.css';
+
 export interface Props {
   class?: string;
   [key: string]: any;
@@ -13,9 +16,3 @@ const {
 <!-- Space Component - Flexible spacer -->
 
 <div class={`space ${className}`.trim()} {...rest}></div>
-
-<style>
-  .space {
-    flex: 1;
-  }
-</style>

@@ -1,17 +1,19 @@
 /* 
  * Todo App Styles
- * All styles specific to the todo application
+ * Page-specific styles that can't be handled by components
  */
 
-/* Todo app specific styles */
+/* ==========================================================================
+   APP LAYOUT
+   ========================================================================== */
+
 .todo-app-container {
   background: linear-gradient(to bottom, var(--neutral-50), var(--neutral-100));
   min-height: 100vh;
 }
 
-
 .todo-main {
-  padding: 1.5rem 1.5rem;
+  padding: 1.5rem;
 }
 
 @media (min-width: 768px) {
@@ -24,6 +26,10 @@
   max-width: 75rem;
   margin: 0 auto;
 }
+
+/* ==========================================================================
+   AUTH SECTION
+   ========================================================================== */
 
 .auth-prompt {
   margin-bottom: 1.5rem;
@@ -40,8 +46,24 @@
   line-height: 1.6;
 }
 
+/* ==========================================================================
+   TODO COLUMNS LAYOUT
+   ========================================================================== */
 
-/* Todo column specific overrides for Card component */
+.todo-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .todo-columns {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Todo column card overrides */
 .todo-column.card {
   height: calc(100vh - 10rem);
   padding: 0;
@@ -73,6 +95,12 @@
   min-height: 0;
 }
 
+/* ==========================================================================
+   COMPONENT-SPECIFIC STYLES
+   ========================================================================== */
+
+/* Page titles - navbar and column headers */
+.navbar-title,
 .todo-column-title {
   font-size: 1.25rem;
   font-weight: 700;
@@ -81,8 +109,7 @@
   letter-spacing: -0.025em;
 }
 
-
-
+/* User info styling */
 .auth-user-id {
   color: var(--color-text);
   font-weight: 600;
@@ -94,28 +121,13 @@
   font-weight: 500;
 }
 
-
-.todo-columns {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-}
-
-@media (min-width: 768px) {
-  .todo-columns {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-}
-
-
 .todo-user-info {
   font-size: 0.75rem;
   color: var(--neutral-500);
   min-height: 2rem;
 }
 
-
+/* Form styling */
 .todo-form {
   margin-top: auto;
 }
@@ -124,5 +136,10 @@
   flex: 1;
 }
 
-
-
+/* Stats display */
+.stats {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-bottom: 0.75rem;
+}

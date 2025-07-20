@@ -19,6 +19,10 @@
 }
 
 .navbar-content {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-areas: "left center right";
+  align-items: center;
   padding: 0.75rem 1rem;
   min-height: 4rem;
 }
@@ -30,23 +34,24 @@
 .navbar-section {
   display: flex;
   align-items: center;
-  min-width: 0; /* Important for flex shrinking */
+  min-width: 0;
 }
 
 .navbar-left {
+  grid-area: left;
   justify-content: flex-start;
-  flex: 0 0 auto;
 }
 
 .navbar-center {
+  grid-area: center;
   justify-content: center;
-  flex: 1 1 auto;
   text-align: center;
+  white-space: nowrap; /* Prevents center content from wrapping */
 }
 
 .navbar-right {
+  grid-area: right;
   justify-content: flex-end;
-  flex: 0 0 auto;
 }
 
 /* ==========================================================================

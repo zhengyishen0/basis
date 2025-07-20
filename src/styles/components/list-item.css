@@ -1,0 +1,53 @@
+/* 
+ * LIST ITEM COMPONENT
+ * Part of the Basis Design System
+ * TRUE design system - makes decisions for developers
+ */
+
+/* ==========================================================================
+   LIST ITEM COMPONENT - BASE
+   ========================================================================== */
+
+.list-item {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border, var(--neutral-200));
+  min-height: fit-content;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.list-item-interactive {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.list-item-interactive:hover {
+  background-color: var(--color-bg-subtle, var(--neutral-50));
+}
+
+.list-item-interactive:focus-within {
+  background-color: var(--color-bg-subtle, var(--neutral-50));
+  outline: 2px solid var(--color-primary, var(--blue-500));
+  outline-offset: -2px;
+}
+
+/* ==========================================================================
+   LIST ITEM SECTIONS
+   ========================================================================== */
+
+.list-item-left {
+  flex-shrink: 0;
+  margin-right: var(--space-3);
+}
+
+.list-item-content {
+  flex: 1;
+  min-width: 0; /* Allows text truncation */
+}
+
+.list-item-right {
+  flex-shrink: 0;
+  margin-left: var(--space-3);
+}

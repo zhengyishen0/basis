@@ -1,4 +1,6 @@
 ---
+// Import component styles
+import '/src/styles/components/list-item.css';
 import { Row } from '../core';
 
 export interface Props {
@@ -73,42 +75,3 @@ Props:
     </div>
   )}
 </Row>
-
-<style>
-  .list-item {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--color-border, var(--neutral-200));
-  }
-  
-  .list-item:last-child {
-    border-bottom: none;
-  }
-  
-  .list-item-interactive {
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .list-item-interactive:hover {
-    background-color: var(--color-bg-subtle, var(--neutral-50));
-  }
-  
-  .list-item-interactive:focus-within {
-    background-color: var(--color-bg-subtle, var(--neutral-50));
-    outline: 2px solid var(--color-primary, var(--blue-500));
-    outline-offset: -2px;
-  }
-  
-  .list-item-left {
-    flex-shrink: 0;
-  }
-  
-  .list-item-content {
-    flex: 1;
-    min-width: 0; /* Allows text truncation */
-  }
-  
-  .list-item-right {
-    flex-shrink: 0;
-  }
-</style>

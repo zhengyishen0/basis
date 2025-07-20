@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Button, Card, List, Row, ListItem, Text, Space } from '../components/ui/core';
+import { Button, Card, List, Row, ListItem, Text } from '../components/ui/core';
 import { Checkbox, TextInput } from '../components/ui/forms';
 import { Navbar } from '../components/ui/navigation';
 import { Loading, Error, Empty } from '../components/ui/feedback';
@@ -37,8 +37,6 @@ const title = "Todo App with Supabase";
             <Button slot="left" href="../" variant="solid" size="sm">Back to Home</Button>
             
             <Text slot="center" as="h1" class="navbar-title">Supabase Todo App</Text>
-            
-            <Space slot="right" />
         </Navbar>
 
         <!-- Main Content -->
@@ -142,31 +140,31 @@ const title = "Todo App with Supabase";
 
                         </div>
                         
-                            <!-- Stats -->
-                            <div slot="footer" x-show="todo.userTodos.length > 0" class="stats">
-                                <Text as="span" x-text="todo.userActiveCount"></Text> active, 
-                                <Text as="span" x-text="todo.userCompletedCount"></Text> completed
-                            </div>
-                            
-                            <!-- Add Todo Form -->
-                            <form slot="footer" @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="todo-form">
-                                <Row gap="default">
-                                    <TextInput
-                                        x-ref="todoInput"
-                                        type="text" 
-                                        placeholder="Add a new todo..."
-                                        required
-                                        class="todo-input-field"
-                                    />
-                                    <Button 
-                                        type="submit"
-                                        :disabled="todo.loading"
-                                        size="sm"
-                                        x-text="todo.loading ? '...' : 'Add'"
-                                    >
-                                    </Button>
-                                </Row>
-                            </form>
+                        <!-- Stats -->
+                        <div slot="footer" x-show="todo.userTodos.length > 0" class="stats">
+                            <Text as="span" x-text="todo.userActiveCount"></Text> active, 
+                            <Text as="span" x-text="todo.userCompletedCount"></Text> completed
+                        </div>
+                        
+                        <!-- Add Todo Form -->
+                        <form slot="footer" @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''" class="todo-form">
+                            <Row gap="default">
+                                <TextInput
+                                    x-ref="todoInput"
+                                    type="text" 
+                                    placeholder="Add a new todo..."
+                                    required
+                                    class="todo-input-field"
+                                />
+                                <Button 
+                                    type="submit"
+                                    :disabled="todo.loading"
+                                    size="sm"
+                                    x-text="todo.loading ? '...' : 'Add'"
+                                >
+                                </Button>
+                            </Row>
+                        </form>
                     </Card>
 
                     <!-- Right Column: All Todos -->
