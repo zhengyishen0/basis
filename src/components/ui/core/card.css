@@ -1,0 +1,236 @@
+/* 
+ * CARD COMPONENT - CUBE CSS
+ * Part of the Basis Design System
+ * Uses B (Block) + U (Utilities) + C (Composition)
+ */
+
+/* ==========================================================================
+   CARD BASE (B - Block)
+   ========================================================================== */
+
+.card {
+  /* Structure */
+  display: flex;
+  flex-direction: column;
+  
+  /* Base styling */
+  background: var(--color-surface-elevated);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-normal) var(--ease-in-out);
+  
+  /* CSS Variables (modified by utilities) */
+  border: var(--card-border, var(--border-sm) solid var(--color-border));
+  box-shadow: var(--card-shadow, none);
+  transform: var(--card-transform, translateY(0));
+  
+}
+
+/* Smart content detection with :has() */
+.card:has(.card-header + .card-body + .card-footer) {
+  /* Full card with all sections */
+  --card-structure: complete;
+}
+
+.card:has(.card-header:only-child) {
+  /* Header-only card */
+  --card-structure: header-only;
+}
+
+.card:has(.card-body:only-child) {
+  /* Body-only card (most common) */
+  --card-structure: body-only;
+}
+
+/* Card hover effects */
+.card:hover {
+  box-shadow: var(--card-hover-shadow, var(--card-shadow));
+  transform: var(--card-hover-transform, var(--card-transform));
+}
+
+.card:active {
+  transform: var(--card-active-transform, translateY(0));
+  transition: all var(--transition-fast);
+}
+
+/* ==========================================================================
+   CARD SECTIONS - Let composition handle spacing
+   ========================================================================== */
+
+.card-header,
+.card-body,
+.card-footer {
+  padding: var(--card-section-padding, var(--space-lg));
+}
+
+.card-body {
+  flex: 1; /* Take remaining space */
+}
+
+.card-footer {
+  background: var(--card-footer-bg, var(--color-surface));
+  border-block-start: var(--card-footer-border, var(--border-sm) solid var(--color-border));
+}
+
+/* Smart padding adjustments with :has() */
+.card:has(.card-header + .card-body) .card-body {
+  padding-block-start: 0; /* Remove top padding when following header */
+}
+
+.card:has(.card-body + .card-footer) .card-footer {
+  padding-block-start: var(--space-md);
+}
+
+/* ==========================================================================
+   SIZE UTILITIES (U - Utilities)
+   ========================================================================== */
+
+.size-xs {
+  --card-section-padding: var(--space-xs);
+}
+
+.size-sm {
+  --card-section-padding: var(--space-sm);
+}
+
+.size-md {
+  --card-section-padding: var(--space-md);
+}
+
+.size-lg {
+  --card-section-padding: var(--space-lg);
+}
+
+.size-xl {
+  --card-section-padding: var(--space-xl);
+}
+
+/* ==========================================================================
+   ELEVATION UTILITIES (U - Utilities)
+   ========================================================================== */
+
+.variant-flat {
+  --card-shadow: none;
+  --card-border: var(--border-sm) solid var(--color-border);
+}
+
+.variant-subtle {
+  --card-shadow: var(--shadow-xs);
+  --card-hover-shadow: var(--shadow-sm);
+  --card-hover-transform: translateY(calc(-1 * var(--space-xs)));
+}
+
+.variant-elevated {
+  --card-shadow: var(--shadow-md);
+  --card-hover-shadow: var(--shadow-lg);
+  --card-hover-transform: translateY(calc(-1 * var(--space-xs)));
+}
+
+.variant-floating {
+  --card-shadow: var(--shadow-lg);
+  --card-hover-shadow: var(--shadow-2xl);
+  --card-hover-transform: translateY(calc(-1 * var(--space-sm))) scale(1.02);
+  --card-active-transform: translateY(calc(-1 * var(--space-xs))) scale(1.01);
+}
+
+/* ==========================================================================
+   COLOR UTILITIES (U - Utilities)
+   ========================================================================== */
+
+.color-primary {
+  --card-border: var(--border-sm) solid var(--color-primary-soft);
+  background: var(--color-primary-surface);
+}
+
+.color-danger {
+  --card-border: var(--border-sm) solid var(--color-danger-soft);
+  background: var(--color-danger-surface);
+}
+
+.color-success {
+  --card-border: var(--border-sm) solid var(--color-success-soft);
+  background: var(--color-success-surface);
+}
+
+.color-warning {
+  --card-border: var(--border-sm) solid var(--color-warning-soft);
+  background: var(--color-warning-surface);
+}
+
+/* ==========================================================================
+   STATES (E - Exceptions)
+   ========================================================================== */
+
+.card.is-loading {
+  opacity: 0.7;
+  pointer-events: none;
+  position: relative;
+}
+
+.card.is-loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2rem;
+  height: 2rem;
+  margin: -1rem 0 0 -1rem;
+  border: var(--border-md) solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.card.is-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.card.is-selected {
+  --card-border: var(--border-md) solid var(--color-primary);
+  --card-shadow: 0 0 0 1px var(--color-primary-soft);
+}
+
+/* ==========================================================================
+   INTERACTIVE CARDS
+   ========================================================================== */
+
+/* Clickable cards */
+.card[href],
+.card[onclick],
+.card.clickable {
+  cursor: pointer;
+  
+}
+
+.card[href]:focus-visible,
+.card[onclick]:focus-visible,
+.card.clickable:focus-visible {
+  outline: var(--border-md) solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   LEGACY SUPPORT (Remove after migration)
+   ========================================================================== */
+
+/* Map old classes to composition patterns */
+.compact-card {
+  /* Use size-sm utility instead */
+  --card-section-padding: var(--space-sm);
+}
+
+.spacious-card {
+  /* Use size-xl utility instead */
+  --card-section-padding: var(--space-xl);
+}

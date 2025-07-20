@@ -1,11 +1,14 @@
 ---
-// Import component styles
-import '/src/styles/components/button.css';
+// Import co-located component styles
+import './button.css';
 
 export interface Props {
-  variant?: 'solid' | 'outline';
+  variant?: 'solid' | 'outline' | 'ghost' | 'soft';
+  color?: 'primary' | 'secondary' | 'danger' | 'success' | 'neutral';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  rounded?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
   disabled?: boolean;
+  loading?: boolean;
   type?: 'button' | 'submit' | 'reset';
   href?: string;
   target?: string;
@@ -15,8 +18,11 @@ export interface Props {
 
 const { 
   variant = 'solid',
+  color = 'primary',
   size = 'md',
+  rounded = 'md',
   disabled = false,
+  loading = false,
   type = 'button',
   href,
   target,
@@ -24,53 +30,46 @@ const {
   ...rest
 } = Astro.props;
 
-// Generate class names using true design system
-const getButtonClasses = () => {
-  const baseClass = 'button';
-  const variantClass = `button-${variant}`;
-  const sizeClass = size !== 'md' ? `button-${size}` : '';
-  
-  return `${baseClass} ${variantClass} ${sizeClass} ${className}`.trim();
-};
+// Generate CUBE CSS classes
+const classes = [
+  'btn',
+  `color-${color}`,
+  `size-${size}`,
+  variant !== 'solid' && `variant-${variant}`,
+  rounded !== 'md' && `rounded-${rounded}`,
+  loading && 'is-loading',
+  disabled && 'is-disabled',
+  className
+].filter(Boolean).join(' ');
+
+const Tag = href ? 'a' : 'button';
+const tagProps = href 
+  ? { href, target, style: "text-decoration: none;" }
+  : { type, disabled: disabled && !loading };
 ---
 
 <!-- 
-TRUE Design System Button Component
+CUBE CSS Button Component
 
 Usage:
-<Button>Default Action</Button>
-<Button variant="outline">Secondary Action</Button>
-<Button size="lg">Large Button</Button>
-<Button size="sm">Small Button</Button>
+<Button>Default</Button>
+<Button color="danger" variant="outline">Delete</Button>
+<Button size="lg" loading>Loading...</Button>
 
-Props:
-- variant: solid (default), outline
+New Props:
+- color: primary (default), secondary, danger, success, neutral
+- variant: solid (default), outline, ghost, soft
 - size: xs, sm, md (default), lg, xl
+- rounded: none, xs, sm, md (default), lg, xl, 2xl, 3xl, full
+- loading: boolean - shows spinner
 -->
 
-{href ? (
-  <a
-    href={href}
-    target={target}
-    class={getButtonClasses()}
-    data-variant={variant}
-    data-size={size}
-    data-state={disabled ? 'disabled' : null}
-    style="text-decoration: none;"
-    {...rest}
-  >
-    <slot />
-  </a>
-) : (
-  <button 
-    type={type}
-    disabled={disabled}
-    class={getButtonClasses()}
-    data-variant={variant}
-    data-size={size}
-    data-state={disabled ? 'disabled' : null}
-    {...rest}
-  >
-    <slot />
-  </button>
-)}
+<Tag 
+  class={classes}
+  {...tagProps}
+  {...rest}
+>
+  <slot name="icon-start" />
+  <slot />
+  <slot name="icon-end" />
+</Tag>

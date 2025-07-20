@@ -4,11 +4,11 @@
  * Part of the Basis Design System
  */
 
-/* Core UI Components */
-@import "./button.css";
-@import "./card.css";
+/* Core UI Components - Co-located with components */
+@import "../../components/ui/core/button.css";
+@import "../../components/ui/core/card.css";
+@import "../../components/ui/core/badge.css";
 @import "./alert.css";
-@import "./badge.css";
 @import "./toast.css";
 @import "./modal.css";
 @import "./popover.css";

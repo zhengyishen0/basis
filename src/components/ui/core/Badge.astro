@@ -1,34 +1,78 @@
 ---
+// Import co-located component styles
+import './badge.css';
+
 export interface Props {
-  variant?: 'default' | 'info' | 'success' | 'warning' | 'error';
+  variant?: 'solid' | 'outline' | 'soft' | 'dot';
+  color?: 'neutral' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  rounded?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
+  pulsing?: boolean;
+  removable?: boolean;
   class?: string;
   [key: string]: any; // Allow any Alpine.js attributes
 }
 
 const { 
-  variant = 'default',
+  variant = 'solid',
+  color = 'neutral',
+  size = 'sm',
+  rounded = 'full',
+  pulsing = false,
+  removable = false,
   class: className = "",
   ...rest
 } = Astro.props;
+
+// Generate CUBE CSS classes
+const classes = [
+  'badge',
+  `color-${color}`,
+  `size-${size}`,
+  variant !== 'solid' && `variant-${variant}`,
+  rounded !== 'full' && `rounded-${rounded}`,
+  pulsing && 'is-pulsing',
+  removable && 'is-removable',
+  className
+].filter(Boolean).join(' ');
 ---
 
 <!-- 
-TRUE Design System Badge Component
+CUBE CSS Badge Component
 
 Usage:
-<Badge>Default Label</Badge>
-<Badge variant="info">Information</Badge>
-<Badge variant="success">Completed</Badge>
-<Badge variant="warning">Pending</Badge>
-<Badge variant="error">Failed</Badge>
+<Badge>Default</Badge>
+<Badge color="success">Completed</Badge>
+<Badge color="danger" variant="outline">Error</Badge>
+<Badge variant="dot" color="primary">Status</Badge>
+<Badge size="lg" pulsing>Live</Badge>
 
-Semantic Variants: default, info, success, warning, error
+New Props:
+- variant: solid (default), outline, soft, dot
+- color: neutral (default), primary, secondary, success, warning, danger, info
+- size: xs, sm (default), md, lg
+- rounded: none, xs, sm, md, lg, xl, 2xl, 3xl, full (default)
+- pulsing: boolean - subtle animation
+- removable: boolean - shows as clickable
 -->
 
 <span 
-  class={`badge ${className}`}
-  data-variant={variant !== 'default' ? variant : null}
+  class={classes}
   {...rest}
 >
+  <slot name="icon" />
   <slot />
+  {removable && (
+    <svg 
+      width="12" 
+      height="12" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      stroke-width="2"
+    >
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  )}
 </span>

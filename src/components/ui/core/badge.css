@@ -1,0 +1,202 @@
+/* 
+ * BADGE COMPONENT - CUBE CSS
+ * Part of the Basis Design System
+ * Uses B (Block) + U (Utilities)
+ */
+
+/* ==========================================================================
+   BADGE BASE (B - Block)
+   ========================================================================== */
+
+.badge {
+  /* Structure */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  
+  /* Base styling */
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+  border-radius: var(--radius-full);
+  
+  /* CSS Variables (modified by utilities) */
+  padding: var(--badge-padding, var(--space-xs) var(--space-sm));
+  font-size: var(--badge-font-size, var(--text-xs));
+  background: var(--badge-bg, var(--color-neutral));
+  color: var(--badge-color, var(--color-text-inverse));
+  border: var(--badge-border, transparent);
+  
+  /* Smart content detection with :has() */
+  &:has(svg:only-child) {
+    /* Icon-only badge */
+    aspect-ratio: 1;
+    padding: var(--space-xs);
+  }
+  
+  &:has([slot="icon"]:only-child) {
+    /* Icon slot only */
+    aspect-ratio: 1;
+    padding: var(--space-xs);
+  }
+}
+
+/* ==========================================================================
+   SIZE UTILITIES (U - Utilities)
+   ========================================================================== */
+
+.size-xs {
+  --badge-padding: var(--space-0-5) var(--space-sm);
+  --badge-font-size: var(--text-xs);
+}
+
+.size-sm {
+  --badge-padding: var(--space-xs) var(--space-sm);
+  --badge-font-size: var(--text-xs);
+}
+
+.size-md {
+  --badge-padding: var(--space-sm) var(--space-md);
+  --badge-font-size: var(--text-sm);
+}
+
+.size-lg {
+  --badge-padding: var(--space-sm) var(--space-lg);
+  --badge-font-size: var(--text-md);
+}
+
+/* ==========================================================================
+   COLOR UTILITIES (U - Utilities)
+   ========================================================================== */
+
+.color-neutral {
+  --badge-bg: var(--color-neutral);
+  --badge-color: var(--color-neutral-text);
+}
+
+.color-primary {
+  --badge-bg: var(--color-primary);
+  --badge-color: var(--color-primary-text);
+}
+
+.color-secondary {
+  --badge-bg: var(--color-secondary);
+  --badge-color: var(--color-secondary-text);
+}
+
+.color-success {
+  --badge-bg: var(--color-success);
+  --badge-color: var(--color-success-text);
+}
+
+.color-warning {
+  --badge-bg: var(--color-warning);
+  --badge-color: var(--color-warning-text);
+}
+
+.color-danger {
+  --badge-bg: var(--color-danger);
+  --badge-color: var(--color-danger-text);
+}
+
+.color-info {
+  --badge-bg: var(--color-info, var(--color-blue));
+  --badge-color: var(--color-info-text, var(--color-blue-text));
+}
+
+/* ==========================================================================
+   VARIANT UTILITIES (U - Utilities)
+   ========================================================================== */
+
+/* Store base color for variants */
+.color-primary { --badge-bg-base: var(--color-primary); }
+.color-secondary { --badge-bg-base: var(--color-secondary); }
+.color-success { --badge-bg-base: var(--color-success); }
+.color-warning { --badge-bg-base: var(--color-warning); }
+.color-danger { --badge-bg-base: var(--color-danger); }
+.color-info { --badge-bg-base: var(--color-info, var(--color-blue)); }
+.color-neutral { --badge-bg-base: var(--color-neutral); }
+
+.variant-outline {
+  --badge-bg: transparent;
+  --badge-color: var(--badge-bg-base, var(--color-neutral));
+  --badge-border: var(--border-sm) solid var(--badge-bg-base, var(--color-neutral));
+}
+
+.variant-soft {
+  --badge-bg: var(--color-surface-soft);
+  --badge-color: var(--badge-bg-base, var(--color-neutral));
+}
+
+.variant-dot {
+  position: relative;
+  --badge-bg: transparent;
+  --badge-color: var(--color-text-secondary);
+  padding-inline-start: 1rem;
+}
+
+.variant-dot::before {
+  content: "";
+  position: absolute;
+  left: var(--space-xs);
+  top: 50%;
+  width: var(--space-sm);
+  height: var(--space-sm);
+  background: var(--badge-bg-base, var(--color-neutral));
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+/* ==========================================================================
+   STATES (E - Exceptions)
+   ========================================================================== */
+
+.badge.is-pulsing {
+  animation: pulse 2s infinite;
+}
+
+.badge.is-removable {
+  cursor: pointer;
+  padding-inline-end: var(--space-sm);
+}
+
+.badge.is-removable:hover {
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* ==========================================================================
+   LEGACY SUPPORT (Remove after migration)
+   ========================================================================== */
+
+/* Map old data-variant attributes to new classes */
+.badge[data-variant="info"] {
+  --badge-bg: var(--color-info, var(--color-blue));
+  --badge-color: var(--color-info-text, var(--color-blue-text));
+}
+
+.badge[data-variant="success"] {
+  --badge-bg: var(--color-success);
+  --badge-color: var(--color-success-text);
+}
+
+.badge[data-variant="warning"] {
+  --badge-bg: var(--color-warning);
+  --badge-color: var(--color-warning-text);
+}
+
+.badge[data-variant="error"] {
+  --badge-bg: var(--color-danger);
+  --badge-color: var(--color-danger-text);
+}

@@ -1,0 +1,297 @@
+/*
+ * CUBE CSS - Composition Layer
+ * Layout primitives that handle ALL spacing between elements
+ * Components should never have margins - let composition handle layout
+ */
+
+/* ==========================================================================
+   STACK - Vertical spacing between elements
+   ========================================================================== */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.stack > * {
+  margin-block: 0;
+}
+
+.stack > * + * {
+  margin-block-start: var(--stack-space, var(--space-md));
+}
+
+/* Stack variants */
+.stack.space-xs { --stack-space: var(--space-xs); }
+.stack.space-sm { --stack-space: var(--space-sm); }
+.stack.space-md { --stack-space: var(--space-md); }
+.stack.space-lg { --stack-space: var(--space-lg); }
+.stack.space-xl { --stack-space: var(--space-xl); }
+.stack.space-2xl { --stack-space: var(--space-2xl); }
+
+/* Recursive stacks - nested stacks use smaller spacing */
+.stack .stack {
+  --stack-space: var(--space-sm);
+}
+
+/* ==========================================================================
+   CLUSTER - Horizontal spacing with wrapping
+   ========================================================================== */
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cluster-space, var(--space-md));
+  justify-content: var(--cluster-justify, flex-start);
+  align-items: var(--cluster-align, center);
+}
+
+/* Cluster variants */
+.cluster.space-xs { --cluster-space: var(--space-xs); }
+.cluster.space-sm { --cluster-space: var(--space-sm); }
+.cluster.space-md { --cluster-space: var(--space-md); }
+.cluster.space-lg { --cluster-space: var(--space-lg); }
+.cluster.space-xl { --cluster-space: var(--space-xl); }
+
+/* Cluster alignment */
+.cluster.justify-center { --cluster-justify: center; }
+.cluster.justify-end { --cluster-justify: flex-end; }
+.cluster.justify-between { --cluster-justify: space-between; }
+.cluster.align-start { --cluster-align: flex-start; }
+.cluster.align-end { --cluster-align: flex-end; }
+
+/* ==========================================================================
+   SIDEBAR - Sidebar + main content layout
+   ========================================================================== */
+
+.sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sidebar-space, var(--space-lg));
+}
+
+.sidebar > :first-child {
+  flex-basis: var(--sidebar-width, 20rem);
+  flex-grow: 1;
+}
+
+.sidebar > :last-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-inline-size: var(--sidebar-content-min, 50%);
+}
+
+/* Sidebar variants */
+.sidebar.space-sm { --sidebar-space: var(--space-sm); }
+.sidebar.space-md { --sidebar-space: var(--space-md); }
+.sidebar.space-lg { --sidebar-space: var(--space-lg); }
+.sidebar.space-xl { --sidebar-space: var(--space-xl); }
+
+/* ==========================================================================
+   AUTO-GRID - Responsive grid that adapts to content
+   ========================================================================== */
+
+.auto-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(var(--auto-grid-min, 16rem), 1fr)
+  );
+  gap: var(--auto-grid-space, var(--space-lg));
+}
+
+/* Auto-grid variants */
+.auto-grid.space-sm { --auto-grid-space: var(--space-sm); }
+.auto-grid.space-md { --auto-grid-space: var(--space-md); }
+.auto-grid.space-lg { --auto-grid-space: var(--space-lg); }
+.auto-grid.space-xl { --auto-grid-space: var(--space-xl); }
+
+/* Auto-grid minimum widths */
+.auto-grid.min-12 { --auto-grid-min: 12rem; }
+.auto-grid.min-16 { --auto-grid-min: 16rem; }
+.auto-grid.min-20 { --auto-grid-min: 20rem; }
+.auto-grid.min-24 { --auto-grid-min: 24rem; }
+
+/* ==========================================================================
+   CENTER - Center content with max-width
+   ========================================================================== */
+
+.center {
+  box-sizing: content-box;
+  margin-inline: auto;
+  max-inline-size: var(--center-max, 60ch);
+  padding-inline: var(--center-padding, var(--space-md));
+}
+
+/* Center variants */
+.center.narrow { --center-max: 45ch; }
+.center.wide { --center-max: 80ch; }
+.center.full { --center-max: 100ch; }
+
+/* ==========================================================================
+   COVER - Full-height centered content
+   ========================================================================== */
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  min-block-size: var(--cover-height, 100vh);
+}
+
+.cover > * {
+  margin-block: var(--cover-space, var(--space-md));
+}
+
+.cover > :first-child:not(.cover-center) {
+  margin-block-start: 0;
+}
+
+.cover > :last-child:not(.cover-center) {
+  margin-block-end: 0;
+}
+
+.cover > .cover-center {
+  margin-block: auto;
+}
+
+/* ==========================================================================
+   FLOW - Prose content with vertical rhythm
+   ========================================================================== */
+
+.flow > * + * {
+  margin-block-start: var(--flow-space, var(--space-md));
+}
+
+/* Flow variants for different content types */
+.flow.prose {
+  --flow-space: var(--space-sm);
+}
+
+.flow.prose > h2,
+.flow.prose > h3,
+.flow.prose > h4 {
+  --flow-space: var(--space-lg);
+}
+
+.flow.prose > p + p {
+  --flow-space: var(--space-sm);
+}
+
+/* ==========================================================================
+   BOX - Container with consistent padding
+   ========================================================================== */
+
+.box {
+  padding: var(--box-padding, var(--space-md));
+  border: var(--box-border, var(--border-width-sm) solid var(--color-border));
+  border-radius: var(--box-radius, var(--border-radius-md));
+}
+
+/* Box variants */
+.box.padding-sm { --box-padding: var(--space-sm); }
+.box.padding-lg { --box-padding: var(--space-lg); }
+.box.padding-xl { --box-padding: var(--space-xl); }
+
+.box.borderless { --box-border: none; }
+.box.rounded-sm { --box-radius: var(--border-radius-sm); }
+.box.rounded-lg { --box-radius: var(--border-radius-lg); }
+
+/* ==========================================================================
+   REGION - Page sections with consistent spacing
+   ========================================================================== */
+
+.region {
+  padding-block: var(--region-space, var(--space-2xl));
+}
+
+/* Region variants */
+.region.space-lg { --region-space: var(--space-lg); }
+.region.space-xl { --region-space: var(--space-xl); }
+.region.space-2xl { --region-space: var(--space-2xl); }
+.region.space-3xl { --region-space: var(--space-3xl); }
+
+/* ==========================================================================
+   UTILITIES (U - Semantic Modifiers)
+   Cross-component utilities that work with any element
+   ========================================================================== */
+
+/* Size utilities (semantic, not primitive) */
+.size-xs { --component-size: xs; }
+.size-sm { --component-size: sm; }
+.size-md { --component-size: md; }
+.size-lg { --component-size: lg; }
+.size-xl { --component-size: xl; }
+
+/* Color utilities (semantic) */
+.color-primary { --component-color: primary; }
+.color-secondary { --component-color: secondary; }
+.color-danger { --component-color: danger; }
+.color-success { --component-color: success; }
+.color-warning { --component-color: warning; }
+.color-neutral { --component-color: neutral; }
+
+/* Variant utilities (semantic) */
+.variant-solid { --component-variant: solid; }
+.variant-outline { --component-variant: outline; }
+.variant-ghost { --component-variant: ghost; }
+.variant-soft { --component-variant: soft; }
+
+/* State utilities */
+.is-loading { --component-state: loading; }
+.is-disabled { --component-state: disabled; }
+.is-active { --component-state: active; }
+.is-selected { --component-state: selected; }
+
+/* Visual utilities */
+.bordered { border: var(--border-sm) solid var(--color-border); }
+
+/* Elevation/Shadow utilities - using t-shirt primitives */
+.shadow-none { box-shadow: var(--shadow-none); }
+.shadow-xs { box-shadow: var(--shadow-xs); }
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+.shadow-2xl { box-shadow: var(--shadow-2xl); }
+
+/* Legacy support */
+.elevated { box-shadow: var(--shadow-md); }
+
+/* Border radius utilities - using t-shirt primitives */
+.rounded-none { border-radius: var(--radius-none); }
+.rounded-xs { border-radius: var(--radius-xs); }
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded { border-radius: var(--radius-md); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-2xl { border-radius: var(--radius-2xl); }
+.rounded-3xl { border-radius: var(--radius-3xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* Responsive utilities */
+.hidden-mobile { 
+  @media (max-width: 768px) { 
+    display: none; 
+  } 
+}
+
+.hidden-desktop { 
+  @media (min-width: 769px) { 
+    display: none; 
+  } 
+}
+
+/* Accessibility utilities */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

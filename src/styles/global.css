@@ -21,6 +21,9 @@
 @import "./tokens/themes/light.css";
 @import "./tokens/themes/dark.css";
 
+/* Import Composition Layer - Layout primitives */
+@import "./composition.css";
+
 /* Import Base HTML Element Styles */
 @import "./base.css";
 

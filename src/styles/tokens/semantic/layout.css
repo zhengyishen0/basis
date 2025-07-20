@@ -1,62 +1,94 @@
 /* 
  * Layout Semantic Tokens
- * Layout-specific design decisions
+ * Semantic layout values using t-shirt sized primitives
  */
 
 :root {
-  /* Z-index Scale */
-  --z-base: 0;
-  --z-dropdown: 1000;
-  --z-sticky: 1020;
-  --z-fixed: 1030;
-  --z-modal-backdrop: 1040;
-  --z-modal: 1050;
-  --z-popover: 1060;
-  --z-tooltip: 1070;
-  --z-toast: 1100;
+  /* Semantic Spacing - Using t-shirt primitives */
+  --space-tight: var(--space-xs); /* 4px - Very tight spacing */
+  --space-default: var(--space-md); /* 16px - Default spacing */
+  --space-loose: var(--space-lg); /* 24px - Loose spacing */
+  --space-looser: var(--space-xl); /* 32px - Even looser spacing */
 
-  /* Container Widths */
-  --container-xs: 20rem; /* 320px */
-  --container-sm: 24rem; /* 384px */
-  --container-md: 28rem; /* 448px */
-  --container-lg: 32rem; /* 512px */
-  --container-xl: 36rem; /* 576px */
-  --container-2xl: 42rem; /* 672px */
-  --container-3xl: 48rem; /* 768px */
-  --container-4xl: 56rem; /* 896px */
-  --container-5xl: 64rem; /* 1024px */
-  --container-6xl: 72rem; /* 1152px */
-  --container-7xl: 80rem; /* 1280px */
 
-  /* Section Spacing */
-  --section-padding-y: var(--space-16);
-  --section-padding-y-sm: var(--space-8);
-  --section-padding-y-lg: var(--space-24);
+  /* Container Widths - Using t-shirt primitives */
+  --container-tight: var(--container-xs);
+  --container-default: var(--container-lg);
+  --container-wide: var(--container-2xl);
+  --container-full: var(--container-5xl);
 
-  /* Grid & Gaps */
-  --grid-gap: var(--space-6);
-  --grid-gap-sm: var(--space-4);
-  --grid-gap-lg: var(--space-8);
+  /* Section Spacing - T-shirt semantics */
+  --section-padding-tight: var(--space-lg);
+  --section-padding-default: var(--space-2xl);
+  --section-padding-loose: var(--space-3xl);
 
-  /* Page Gutters */
-  --gutter: var(--space-4);
-  --gutter-sm: var(--space-3);
-  --gutter-lg: var(--space-6);
-  --gutter-xl: var(--space-8);
+  /* Grid & Gaps - T-shirt semantics */
+  --grid-gap-tight: var(--space-sm);
+  --grid-gap-default: var(--space-md);
+  --grid-gap-loose: var(--space-lg);
 
-  /* Header Heights */
-  --header-height: 4rem; /* 64px */
-  --header-height-sm: 3.5rem; /* 56px */
-  --header-height-lg: 5rem; /* 80px */
+  /* Page Gutters - T-shirt semantics */
+  --gutter-tight: var(--space-sm);
+  --gutter-default: var(--space-md);
+  --gutter-loose: var(--space-lg);
 
-  /* Sidebar Widths */
-  --sidebar-width: 16rem; /* 256px */
-  --sidebar-width-sm: 12rem; /* 192px */
-  --sidebar-width-lg: 20rem; /* 320px */
+  /* Component Heights - T-shirt semantics */
+  --header-height-compact: var(--space-3xl);
+  --header-height-default: var(--space-4xl);
+  --header-height-spacious: var(--space-5xl);
 
-  /* Focus States */
+  /* Sidebar Widths - T-shirt semantics */
+  --sidebar-width-narrow: var(--container-xs);
+  --sidebar-width-default: var(--container-sm);
+  --sidebar-width-wide: var(--container-md);
+
+  /* Border Radius - Semantic using t-shirt primitives */
+  --border-radius-tight: var(--radius-xs);
+  --border-radius-default: var(--radius-md);
+  --border-radius-loose: var(--radius-lg);
+  --border-radius-pill: var(--radius-full);
+
+  /* Shadows - Semantic using t-shirt primitives */
+  --shadow-subtle: var(--shadow-xs);
+  --shadow-default: var(--shadow-sm);
+  --shadow-prominent: var(--shadow-md);
+  --shadow-dramatic: var(--shadow-lg);
+
+  /* Borders - Semantic using t-shirt primitives */
+  --border-width-thin: var(--border-xs);
+  --border-width-default: var(--border-sm);
+  --border-width-thick: var(--border-md);
+
+  /* Transitions - Semantic using new naming */
+  --transition-quick: var(--transition-fast);
+  --transition-default: var(--transition-normal);
+  --transition-smooth: var(--transition-normal);
+  --transition-slow: var(--transition-slow);
+
+  /* Focus States - Using t-shirt primitives */
   --focus-ring-color: var(--color-primary);
-  --focus-ring-offset: 2px;
-  --focus-ring-width: 2px;
+  --focus-ring-offset: var(--space-xs);
+  --focus-ring-width: var(--border-sm);
   --focus-ring: var(--focus-ring-width) solid var(--focus-ring-color);
+
+  /* Legacy compatibility (maps to new t-shirt system) */
+  --section-padding-y: var(--section-padding-default);
+  --section-padding-y-sm: var(--section-padding-tight);
+  --section-padding-y-lg: var(--section-padding-loose);
+  
+  --grid-gap: var(--grid-gap-default);
+  --grid-gap-sm: var(--grid-gap-tight);
+  --grid-gap-lg: var(--grid-gap-loose);
+  
+  --gutter: var(--gutter-default);
+  --gutter-sm: var(--gutter-tight);
+  --gutter-lg: var(--gutter-loose);
+  
+  --header-height: var(--header-height-default);
+  --header-height-sm: var(--header-height-compact);
+  --header-height-lg: var(--header-height-spacious);
+  
+  --sidebar-width: var(--sidebar-width-default);
+  --sidebar-width-sm: var(--sidebar-width-narrow);
+  --sidebar-width-lg: var(--sidebar-width-wide);
 }

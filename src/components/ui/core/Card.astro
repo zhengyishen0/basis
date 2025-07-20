@@ -1,7 +1,17 @@
 ---
+// Import co-located component styles
+import './card.css';
+
 export interface Props {
-  variant?: 'default' | 'elevated' | 'floating' | 'subtle';
-  context?: 'default' | 'compact' | 'spacious';
+  variant?: 'flat' | 'subtle' | 'elevated' | 'floating';
+  color?: 'default' | 'primary' | 'danger' | 'success' | 'warning';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  rounded?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
+  loading?: boolean;
+  disabled?: boolean;
+  selected?: boolean;
+  clickable?: boolean;
+  href?: string;
   class?: string;
   headerClass?: string;
   bodyClass?: string;
@@ -10,8 +20,15 @@ export interface Props {
 }
 
 const { 
-  variant = 'default',
-  context = 'default',
+  variant = 'flat',
+  color = 'default',
+  size = 'lg',
+  rounded = 'lg',
+  loading = false,
+  disabled = false,
+  selected = false,
+  clickable = false,
+  href,
   class: className = "",
   headerClass = "",
   bodyClass = "",
@@ -19,44 +36,63 @@ const {
   ...rest
 } = Astro.props;
 
-// Generate class names using true design system
-const getCardClasses = () => {
-  const baseClass = 'card';
-  const contextClass = context !== 'default' ? `${context}-card` : '';
-  
-  return `${baseClass} ${contextClass}`.trim();
-};
+// Generate CUBE CSS classes
+const classes = [
+  'card',
+  variant !== 'flat' && `variant-${variant}`,
+  color !== 'default' && `color-${color}`,
+  `size-${size}`,
+  rounded !== 'lg' && `rounded-${rounded}`,
+  loading && 'is-loading',
+  disabled && 'is-disabled',
+  selected && 'is-selected',
+  (clickable || href) && 'clickable',
+  className
+].filter(Boolean).join(' ');
+
+const Tag = href ? 'a' : 'article';
+const tagProps = href 
+  ? { href, style: "text-decoration: none;" }
+  : {};
 ---
 
 <!-- 
-TRUE Design System Card Component
+CUBE CSS Card Component
 
 Usage:
 <Card>
   <div slot="header">
-    <h2>Card Title</h2>
+    <h2>Title</h2>
   </div>
-  
   <div slot="body">
-    <p>Card content goes here...</p>
+    <p>Content goes here...</p>
   </div>
-  
   <div slot="footer">
     <Button>Action</Button>
   </div>
 </Card>
 
-<Card variant="elevated" context="compact">
-  <div slot="body">Compact elevated card</div>
+<Card variant="elevated" size="sm">
+  <p>Simple card content</p>
 </Card>
 
-Semantic Variants: default, elevated
-Contextual Variants: default, compact, spacious
+<Card href="/link" variant="subtle">
+  <p>Clickable card</p>
+</Card>
+
+New Props:
+- variant: flat (default), subtle, elevated, floating
+- color: default, primary, danger, success, warning
+- size: xs, sm, md, lg (default), xl
+- rounded: none, xs, sm, md, lg (default), xl, 2xl, 3xl, full
+- loading, disabled, selected: boolean states
+- clickable: makes card interactive
+- href: makes card a link
 -->
 
-<article 
-  class={`${getCardClasses()} ${className}`}
-  data-variant={variant !== 'default' ? variant : null}
+<Tag 
+  class={classes}
+  {...tagProps}
   {...rest}
 >
   <!-- Header -->
@@ -66,11 +102,11 @@ Contextual Variants: default, compact, spacious
     </header>
   )}
   
-  <!-- Body -->
-  <section class={`card-body ${bodyClass}`}>
+  <!-- Body - main content area -->
+  <div class={`card-body ${bodyClass}`}>
     <slot name="body" />
     <slot />
-  </section>
+  </div>
   
   <!-- Footer -->
   {Astro.slots.footer && (
@@ -78,4 +114,4 @@ Contextual Variants: default, compact, spacious
       <slot name="footer" />
     </footer>
   )}
-</article>
+</Tag>
