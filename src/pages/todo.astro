@@ -46,7 +46,7 @@ const title = 'Todo App with Supabase';
                 >Back to Home</Button
             >
 
-            <Text slot="center" as="h4" class="page-title">Supabase Todo App</Text>
+            <Text slot="center" as="h5">Supabase Todo App</Text>
         </Navbar>
 
         <!-- Main Content -->
@@ -106,7 +106,8 @@ const title = 'Todo App with Supabase';
                                 <Text
                                     >Signed in as: <strong
                                         x-text="auth.userDisplayId"
-                                        class="user-display-name"></strong></Text
+                                        class="user-display-name"
+                                    ></strong></Text
                                 >
                                 <Button
                                     @click="signOut()"

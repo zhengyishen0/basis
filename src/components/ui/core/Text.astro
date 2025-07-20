@@ -1,4 +1,7 @@
 ---
+// Import component styles
+import '/src/styles/components/text.css';
+
 export interface Props {
   state?: 'active' | 'completed' | 'pending' | 'disabled';
   as?: 'span' | 'div' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'strong' | 'em' | 'small';
@@ -42,29 +45,3 @@ Props:
 <Element class={getStateTextClasses()} {...rest}>
   <slot />
 </Element>
-
-<style>
-  .state-text {
-    line-height: 1.5;
-  }
-  
-  .state-text-active {
-    color: var(--color-text);
-    font-weight: 500;
-  }
-  
-  .state-text-completed {
-    color: var(--color-text-secondary);
-    text-decoration: line-through;
-  }
-  
-  .state-text-pending {
-    color: var(--color-text-secondary);
-    font-style: italic;
-  }
-  
-  .state-text-disabled {
-    color: var(--color-text-disabled, var(--neutral-400));
-    opacity: 0.6;
-  }
-</style>

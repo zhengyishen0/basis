@@ -1,0 +1,37 @@
+/* 
+ * TEXT COMPONENT
+ * Part of the Basis Design System
+ * TRUE design system - makes decisions for developers
+ */
+
+/* ==========================================================================
+   TEXT COMPONENT - BASE
+   ========================================================================== */
+
+.state-text {
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   STATE VARIANTS
+   ========================================================================== */
+
+.state-text-active {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.state-text-completed {
+  color: var(--color-text-secondary);
+  text-decoration: line-through;
+}
+
+.state-text-pending {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.state-text-disabled {
+  color: var(--color-text-disabled, var(--neutral-400));
+  opacity: 0.6;
+}
