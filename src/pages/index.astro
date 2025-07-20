@@ -10,6 +10,7 @@ import {
     Card,
     Column,
     Grid,
+    Page,
     Row,
     Text,
 } from '../components/ui/core';
@@ -24,9 +25,7 @@ const homeContent = await getEntry('pages', 'home');
 ---
 
 <Layout>
-    <div
-        x-data={`{ features: ${JSON.stringify(homeContent?.data?.features || [])} }`}
-    >
+    <Page maxWidth="full" content={homeContent}>
         <!-- Navigation -->
         <Row justify="end" class="navbar-row">
             <Avatar
@@ -81,27 +80,29 @@ const homeContent = await getEntry('pages', 'home');
                     x-for="feature in features"
                     x-key="feature.name"
                 >
-                    <Card variant="elevated" class="feature-content">
-                        <Badge
-                            variant="solid"
-                            color="black"
-                            size="lg"
-                            class="feature-badge"
-                            x-text="feature.name"
-                        />
-                        <Text
-                            as="h3"
-                            class="feature-card-title"
-                            x-text="feature.title"
-                        />
-                        <Text
-                            as="p"
-                            class="feature-card-description"
-                            x-text="feature.description"
-                        />
+                    <Card variant="elevated" class="feature-card">
+                        <div class="feature-content">
+                            <Badge
+                                variant="solid"
+                                color="black"
+                                size="lg"
+                                class="feature-badge"
+                                x-text="feature.name"
+                            />
+                            <Text
+                                as="h3"
+                                class="feature-card-title"
+                                x-text="feature.title"
+                            />
+                            <Text
+                                as="p"
+                                class="feature-card-description"
+                                x-text="feature.description"
+                            />
+                        </div>
                     </Card>
                 </Grid>
             </Column>
         </Column>
-    </div>
+    </Page>
 </Layout>

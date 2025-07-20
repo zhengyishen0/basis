@@ -1,0 +1,36 @@
+---
+// Import component styles
+import '/src/styles/components/page.css';
+
+export interface Props {
+  content?: any; // Astro content collection entry
+  data?: Record<string, any>; // Custom data object
+  maxWidth?: 'container' | 'full' | 'narrow' | 'wide';
+  class?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
+}
+
+const { 
+  content,
+  data,
+  maxWidth = 'container',
+  class: className = "",
+  ...rest
+} = Astro.props;
+
+// Generate class names using true design system
+const getPageClasses = () => {
+  const baseClass = 'page';
+  const maxWidthClass = `page-${maxWidth}`;
+  
+  return `${baseClass} ${maxWidthClass} ${className}`.trim();
+};
+
+---
+
+<div 
+  class={getPageClasses()}
+  {...rest}
+>
+  <slot />
+</div>

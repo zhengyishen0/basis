@@ -9,6 +9,7 @@ import {
     List,
     ListItem,
     Loading,
+    Page,
     Row,
     Text,
 } from '../components/ui/core';
@@ -22,28 +23,29 @@ const title = 'Todo App with Supabase';
 ---
 
 <Layout title={title}>
-    <div
+    <Page 
+        maxWidth="full"
         class="page-background"
-        x-data="{ 
+        x-data={`{ 
             auth: $store.auth,
             todo: $store.todo,
             async init() {
-                await this.auth.init()
-                await this.todo.loadTodos()
+                await this.auth.init();
+                await this.todo.loadTodos();
             },
             async signInAnonymously() {
-                await this.auth.signInAnonymously()
-                await this.todo.loadTodos()
+                await this.auth.signInAnonymously();
+                await this.todo.loadTodos();
             },
             async signOut() {
-                await this.auth.signOut()
-                this.todo.cleanup()
+                await this.auth.signOut();
+                this.todo.cleanup();
             }
-        }"
+        }`}
         x-init="init()"
     >
         <!-- Navigation Bar -->
-        <Navbar variant="elevated" maxWidth="container">
+        <Navbar variant="elevated" maxWidth="full">
             <Button slot="left" href="../" variant="solid" size="sm"
                 >Back to Home</Button
             >
@@ -328,5 +330,5 @@ const title = 'Todo App with Supabase';
                 </Card>
             </Row>
         </Column>
-    </div>
+    </Page>
 </Layout>
