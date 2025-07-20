@@ -1,0 +1,77 @@
+---
+// Import component styles
+import '/src/styles/components/grid.css';
+
+export interface Props {
+  columns?: 'auto' | '1' | '2' | '3' | '4' | '5' | '6' | '12';
+  gap?: 'none' | 'tight' | 'default' | 'loose' | 'extra-loose';
+  align?: 'start' | 'center' | 'end' | 'stretch';
+  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
+  class?: string;
+  [key: string]: any; // Allow any Alpine.js attributes
+}
+
+const { 
+  columns = 'auto',
+  gap = 'default',
+  align = 'stretch',
+  justify = 'start',
+  class: className = "",
+  ...rest
+} = Astro.props;
+
+// Generate class names using true design system
+const getGridClasses = () => {
+  const baseClass = 'grid';
+  const columnsClass = `grid-cols-${columns}`;
+  const gapClass = `grid-gap-${gap}`;
+  const alignClass = `grid-align-${align}`;
+  const justifyClass = `grid-justify-${justify}`;
+  
+  return `${baseClass} ${columnsClass} ${gapClass} ${alignClass} ${justifyClass} ${className}`.trim();
+};
+---
+
+<!-- 
+TRUE Design System Grid Component
+
+This component owns the template logic. Pass Alpine.js directives as props:
+
+Usage:
+<Grid 
+  columns="auto" 
+  gap="default"
+  x-data="{ items: features }"
+  x-for="item in items" 
+  x-key="item.id"
+>
+  <Card>
+    <span x-text="item.title"></span>
+  </Card>
+</Grid>
+
+For static grids:
+<Grid columns="3" gap="default">
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+</Grid>
+
+Props:
+- columns: 'auto' | '1' | '2' | '3' | '4' | '5' | '6' | '12' (default: 'auto')
+- gap: 'none' | 'tight' | 'default' | 'loose' | 'extra-loose' (default: 'default')
+- align: 'start' | 'center' | 'end' | 'stretch' (default: 'stretch')
+- justify: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly' (default: 'start')
+- class: Additional CSS classes
+- ...rest: Any Alpine.js attributes
+-->
+
+<div class={getGridClasses()} {...rest}>
+  {rest['x-for'] ? (
+    <template x-for={rest['x-for']} :key={rest['x-key']}>
+      <slot />
+    </template>
+  ) : (
+    <slot />
+  )}
+</div>

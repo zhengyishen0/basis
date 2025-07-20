@@ -3,7 +3,15 @@ import Layout from '../layouts/Layout.astro';
 import { getEntry } from 'astro:content';
 
 // UI Components for better styling
-import { Avatar, Card, Button, Column, Row, Text } from '../components/ui/core';
+import {
+    Avatar,
+    Card,
+    Button,
+    Column,
+    Grid,
+    Text,
+    Row,
+} from '../components/ui/core';
 import { Badge } from '../components/ui/effects';
 
 // Import GitHub icon
@@ -71,31 +79,36 @@ const homeContent = await getEntry('pages', 'home');
                 <Text as="h2" class="features-title"
                     >What Makes <span class="basis-underline">Basis</span> Different</Text
                 >
-                <Row justify="center" wrap gap="default" class="features-grid">
-                    <template x-for="feature in features" :key="feature.name">
-                        <Card variant="elevated" class="feature-card">
-                            <div class="feature-content">
-                                <Badge
-                                    variant="solid"
-                                    color="black"
-                                    size="lg"
-                                    class="feature-badge"
-                                    x-text="feature.name"
-                                />
-                                <Text
-                                    as="h3"
-                                    class="feature-card-title"
-                                    x-text="feature.title"
-                                />
-                                <Text
-                                    as="p"
-                                    class="feature-card-description"
-                                    x-text="feature.description"
-                                />
-                            </div>
-                        </Card>
-                    </template>
-                </Row>
+                <Grid
+                    columns="auto"
+                    gap="default"
+                    justify="center"
+                    class="features-grid"
+                    x-for="feature in features"
+                    x-key="feature.name"
+                >
+                    <Card variant="elevated" class="feature-card">
+                        <div class="feature-content">
+                            <Badge
+                                variant="solid"
+                                color="black"
+                                size="lg"
+                                class="feature-badge"
+                                x-text="feature.name"
+                            />
+                            <Text
+                                as="h3"
+                                class="feature-card-title"
+                                x-text="feature.title"
+                            />
+                            <Text
+                                as="p"
+                                class="feature-card-description"
+                                x-text="feature.description"
+                            />
+                        </div>
+                    </Card>
+                </Grid>
             </Column>
         </main>
     </div>
