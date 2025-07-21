@@ -1,0 +1,99 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Badge from '@/components/ui/Badge.astro';
+---
+
+<Layout title="Badge Component Demo">
+    <main class="max-w-4xl mx-auto py-8 px-4">
+        <h1 class="text-3xl font-bold mb-8">Badge Component Demo</h1>
+
+        <section class="space-y-8">
+            <!-- Basic Variants -->
+            <div>
+                <h2 class="text-xl font-semibold mb-4">Basic Variants</h2>
+                <div class="flex flex-wrap gap-4">
+                    <Badge variant="default">Default</Badge>
+                    <Badge variant="secondary">Secondary</Badge>
+                    <Badge variant="destructive">Destructive</Badge>
+                    <Badge variant="outline">Outline</Badge>
+                </div>
+            </div>
+
+            <!-- With Custom Classes -->
+            <div>
+                <h2 class="text-xl font-semibold mb-4">With Custom Classes</h2>
+                <div class="flex flex-wrap gap-4">
+                    <Badge variant="default" class="animate-pulse"
+                        >Animated</Badge
+                    >
+                    <Badge variant="secondary" class="scale-110">Scaled</Badge>
+                </div>
+            </div>
+
+            <!-- Alpine.js Integration -->
+            <div>
+                <h2 class="text-xl font-semibold mb-4">
+                    Alpine.js Integration
+                </h2>
+                <div
+                    x-data="{ count: 0, variant: 'default' }"
+                    class="space-y-4"
+                >
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <Badge
+                            x-data="{ clicked: false }"
+                            @click="clicked = !clicked; count++"
+                            :class="clicked && 'scale-110 transition-transform'"
+                            variant="default"
+                        >
+                            <span x-text="count"></span>
+                        </Badge>
+                        <span>← Click to increment</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-world Examples -->
+            <div>
+                <h2 class="text-xl font-semibold mb-4">Real-world Examples</h2>
+                <div class="space-y-4">
+                    <!-- Status indicators -->
+                    <div class="border p-4 rounded-lg">
+                        <h3 class="font-medium mb-2">User Profile</h3>
+                        <div class="flex items-center gap-2">
+                            <span>John Doe</span>
+                            <Badge variant="secondary">Premium</Badge>
+                            <Badge variant="default">Verified</Badge>
+                        </div>
+                    </div>
+
+                    <!-- Number badges -->
+                    <div class="border p-4 rounded-lg">
+                        <h3 class="font-medium mb-2">Number Badges</h3>
+                        <div class="flex items-center gap-4">
+                            <div class="flex items-center gap-2">
+                                <span>Messages</span>
+                                <Badge variant="destructive">5</Badge>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span>Notifications</span>
+                                <Badge variant="default">12</Badge>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span>Updates</span>
+                                <Badge variant="secondary">99999</Badge>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>
+
+<script>
+    // Test Alpine.js initialization
+    document.addEventListener('alpine:init', () => {
+        console.log('Badge demo: Alpine.js initialized');
+    });
+</script>
