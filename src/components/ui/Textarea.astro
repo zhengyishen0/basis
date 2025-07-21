@@ -109,20 +109,21 @@ Features:
     x-model="textareaValue"
     x-init="resize()"
     @input="resize()"
-    class={`w-full px-3 py-2 text-sm transition-colors duration-200 focus:outline-none resize-none ${variantClasses[variant]} ${
-      error 
-        ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
-        : ''
-    } ${disabled ? 'opacity-50 cursor-not-allowed bg-gray-50' : ''} ${
-      readonly ? 'bg-gray-50' : ''
-    } ${textareaClass}`}
+    class={[
+      'w-full px-3 py-2 text-sm transition-colors duration-200 focus:outline-none resize-none',
+      variantClasses[variant],
+      error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : '',
+      disabled ? 'opacity-50 cursor-not-allowed bg-gray-50' : '',
+      readonly ? 'bg-gray-50' : '',
+      textareaClass
+    ].filter(Boolean).join(' ')}
   >{value}</textarea>
   
   <!-- Character count -->
   {showCount && maxLength && (
     <div class="flex justify-end mt-1">
       <span 
-        {autoResize ? 'x-text="`${textareaValue.length}/${maxLength}`"' : `class="text-xs text-gray-500"`}
+        x-text={autoResize ? "`${textareaValue.length}/${maxLength}`" : undefined}
         class="text-xs text-gray-500"
       >
         {!autoResize && `${value.length}/${maxLength}`}

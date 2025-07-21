@@ -119,11 +119,7 @@ Features:
         x-show="tabSelected === '${tab.id}'"
         class="tab-content"
       >
-        {tab.content ? (
-          <div set:html={tab.content} />
-        ) : (
-          <slot name={tab.id} />
-        )}
+        <div set:html={tab.content || ''} />
       </div>
     ))}
   </div>

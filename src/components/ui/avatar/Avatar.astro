@@ -21,15 +21,19 @@ const avatarVariants = cva(
 
 export interface Props extends VariantProps<typeof avatarVariants> {
   class?: string;
+  href?: string;
   [key: string]: any; // Alpine.js pass-through
 }
 
-const { size, class: className, ...alpineProps } = Astro.props;
+const { size, class: className, href, ...alpineProps } = Astro.props;
+
+const Tag = href ? 'a' : 'div';
 ---
 
-<div 
+<Tag 
   class={cn(avatarVariants({ size }), className)}
+  {...(href ? { href } : {})}
   {...alpineProps}
 >
   <slot />
-</div>
+</Tag>

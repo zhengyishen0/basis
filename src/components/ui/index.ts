@@ -4,11 +4,11 @@
 // Complete collection of 42 Pine UI components
 
 // Basic Components
-export { default as Accordion } from './Accordion.astro';
+export { default as Accordion } from './accordion/Accordion.astro';
 export { default as Alert } from './Alert.astro';
 export { default as Badge } from './Badge.astro';
 export { default as Banner } from './Banner.astro';
-export { default as Card } from './Card.astro';
+export { default as Card } from './card/Card.astro';
 export { default as Quotes } from './Quotes.astro';
 export { default as Table } from './Table.astro';
 

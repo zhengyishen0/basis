@@ -3,68 +3,110 @@ import Layout from '../layouts/Layout.astro';
 import { getEntry } from 'astro:content';
 
 // UI Components for better styling
-import {
-    Badge,
-    Button,
-    Card,
-} from '../components/ui';
+import { Badge, Button, Card } from '../components/ui';
+import Avatar from '../components/ui/avatar/Avatar.astro';
+import AvatarImage from '../components/ui/avatar/AvatarImage.astro';
 
 // Import GitHub icon
 import githubIconUrl from '../assets/github-icon-white.svg?url';
 
 // Import essential styles
-import './home.css';
-
 const homeContent = await getEntry('pages', 'home');
 const pageData = JSON.stringify(homeContent?.data || []);
 ---
 
 <Layout>
-    <main class="main-container" x-data={pageData}>
-        <!-- GitHub Icon in upper right -->
-        <div class="github-icon">
-            <a href="https://github.com/zhengyishen0/basis" 
-               class="github-link"
-               aria-label="GitHub Repository">
-                <img src={githubIconUrl} alt="GitHub" class="w-6 h-6" />
-            </a>
+    <main class="min-h-screen" x-data={pageData}>
+        <!-- GitHub Avatar in upper right -->
+        <div class="absolute top-4 right-4 z-20">
+            <Avatar
+                size="default"
+                href="https://github.com/zhengyishen0/basis"
+                class="bg-black hover:bg-gray-800 hover:scale-110 transition-all duration-200 cursor-pointer ring-2 ring-white shadow-lg"
+                aria-label="GitHub Repository"
+            >
+                <AvatarImage src={githubIconUrl} alt="GitHub" class="p-2" />
+            </Avatar>
         </div>
 
         <!-- Hero Section -->
-        <div class="hero-section">
-            <h1 class="hero-title">Basis</h1>
-            <p class="hero-description">
-                Build on Fundamentals - A methodology for modern web
-                development using basic tools and clear boundaries
+        <div
+            class="text-center py-16 px-4 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden min-h-[60vh] flex flex-col justify-center items-center gap-4"
+        >
+            <h1
+                class="text-5xl md:text-7xl font-black mb-4 text-gray-900 leading-tight relative z-10 drop-shadow-sm tracking-tight inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-[-5%] after:w-[110%] after:h-[5px] after:bg-black after:rounded-sm after:animate-[underline-grow_0.8s_ease-out] after:origin-left"
+            >
+                Basis
+            </h1>
+            <p
+                class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto relative z-10 leading-relaxed"
+            >
+                Build on Fundamentals - A methodology for modern web development
+                using basic tools and clear boundaries
             </p>
-            <div class="hero-badges flex justify-center gap-2 flex-wrap">
+            <div class="flex justify-center gap-2 flex-wrap mb-6">
                 <Badge size="lg" color="black">Astro</Badge>
                 <Badge size="lg" color="black">Alpine</Badge>
                 <Badge size="lg" color="black">Supabase</Badge>
             </div>
-            <div class="hero-buttons flex justify-center gap-4">
-                <Button href="./todo" variant="solid" color="blue" size="lg">
-                    Demo
-                </Button>
+            <div class="flex justify-center gap-4">
+                <Button href="./todo" size="lg"> Demo </Button>
             </div>
         </div>
 
         <!-- Features Section -->
-        <div class="features-section">
-            <h2 class="features-title">
-                What Makes <span class="basis-underline">Basis</span> Different
+        <div class="max-w-7xl mx-auto py-16 px-4 bg-white flex flex-col gap-6">
+            <h2
+                class="text-3xl font-semibold text-center mb-8 text-gray-900 tracking-tight"
+            >
+                What Makes <span
+                    class="relative inline-block font-extrabold text-lg after:content-[''] after:absolute after:bottom-[-2px] after:left-[-8%] after:w-[116%] after:h-[3px] after:bg-black after:rounded-sm after:animate-[underline-grow_0.8s_ease-out_0.3s_both]"
+                    >Basis</span
+                > Different
             </h2>
-            <div class="features-grid grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div
+                class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto"
+            >
                 <template x-for="feature in features" x-key="feature.name">
-                    <Card variant="shadow" class="feature-card">
-                        <div class="feature-content p-6">
-                            <Badge variant="solid" color="black" size="lg" class="feature-badge mb-4" x-text="feature.name"></Badge>
-                            <h3 class="feature-card-title text-xl font-semibold mb-2" x-text="feature.title"></h3>
-                            <p class="feature-card-description text-gray-600" x-text="feature.description"></p>
+                    <Card
+                        variant="shadow"
+                        class="transform hover:scale-105 transition-transform duration-200"
+                    >
+                        <div class="p-6">
+                            <Badge
+                                variant="solid"
+                                color="black"
+                                size="lg"
+                                class="mb-4 inline-block"
+                                x-text="feature.name"
+                            />
+                            <h3
+                                class="text-xl font-bold mb-2 text-gray-900 leading-tight"
+                                x-text="feature.title"
+                            >
+                            </h3>
+                            <p
+                                class="text-gray-600 text-base leading-relaxed"
+                                x-text="feature.description"
+                            >
+                            </p>
                         </div>
                     </Card>
                 </template>
             </div>
         </div>
     </main>
+
+    <style>
+        @keyframes underline-grow {
+            from {
+                transform: scaleX(0);
+                opacity: 0;
+            }
+            to {
+                transform: scaleX(1);
+                opacity: 1;
+            }
+        }
+    </style>
 </Layout>

@@ -48,8 +48,8 @@ Features:
 -->
 
 <div 
-  {dismissible ? 'x-data="{ alertVisible: true }"' : ''}
-  {dismissible ? 'x-show="alertVisible"' : ''}
+  x-data={dismissible ? '{ alertVisible: true }' : undefined}
+  x-show={dismissible ? 'alertVisible' : undefined}
   class={`relative w-full rounded-lg border p-4 ${variantClasses[variant]} ${className} ${icon ? '[&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&:has(svg)]:pl-11' : ''}`}
 >
   {icon && (
