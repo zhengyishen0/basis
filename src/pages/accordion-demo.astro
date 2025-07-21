@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Accordion from '../components/ui/Accordion.astro';
+
+const basicItems = [
+  { title: "What is Pines?", content: "Pines is a UI library built for AlpineJS and TailwindCSS." },
+  { title: "How do I install it?", content: "You can install it via npm or use the CDN links." },
+  { title: "Is it free to use?", content: "Yes, Pines is completely free and open source." }
+];
+
+const faqItems = [
+  { title: "How does billing work?", content: "We charge monthly based on your usage. You can upgrade or downgrade at any time." },
+  { title: "Can I cancel anytime?", content: "Yes, you can cancel your subscription at any time with no penalties." },
+  { title: "Do you offer refunds?", content: "We offer a 30-day money-back guarantee on all plans." }
+];
+---
+
+<Layout title="Accordion Demo">
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-4xl mx-auto px-6">
+      <h1 class="text-3xl font-bold text-gray-900 mb-8">Accordion Component Demo</h1>
+      
+      <!-- Basic Example -->
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Basic Accordion (Chevron)</h2>
+        <Accordion items={basicItems} />
+      </section>
+
+      <!-- Plus Icon Example -->
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Plus Icon Accordion</h2>
+        <Accordion 
+          items={faqItems}
+          iconType="plus"
+        />
+      </section>
+
+      <!-- Custom Styled Example -->
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Custom Styled Accordion</h2>
+        <Accordion 
+          items={basicItems}
+          iconType="chevron"
+          containerClass="max-w-2xl"
+          itemClass="border-blue-200 shadow-lg hover:shadow-xl"
+          buttonClass="text-blue-900 hover:bg-blue-50"
+          contentClass="text-gray-600 p-6 bg-blue-50/50"
+          iconClass="text-blue-600"
+        />
+      </section>
+
+      <!-- Dark Theme Example -->
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Dark Theme Accordion</h2>
+        <Accordion 
+          items={faqItems}
+          iconType="plus"
+          containerClass="max-w-xl"
+          itemClass="bg-gray-800 border-gray-600 text-white"
+          buttonClass="text-white hover:bg-gray-700"
+          contentClass="text-gray-300 p-6"
+          iconClass="text-gray-400"
+        />
+      </section>
+
+      <!-- Large Size Example -->
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Large Size Accordion</h2>
+        <Accordion 
+          items={basicItems}
+          iconType="chevron"
+          containerClass="max-w-3xl text-base"
+          itemClass="mb-4"
+          buttonClass="px-8 py-6 text-lg font-bold"
+          contentClass="p-8 text-base"
+          iconClass="w-6 h-6"
+        />
+      </section>
+
+      <!-- Usage Examples -->
+      <section class="bg-white rounded-lg p-6 shadow-sm">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Usage Examples</h2>
+        
+        <div class="space-y-4 text-sm">
+          <div>
+            <h3 class="font-medium text-gray-900 mb-2">Basic Usage:</h3>
+            <pre class="bg-gray-100 p-3 rounded overflow-x-auto"><code>&lt;Accordion items={[
+  { title: "Question", content: "Answer" }
+]} /&gt;</code></pre>
+          </div>
+
+          <div>
+            <h3 class="font-medium text-gray-900 mb-2">With Custom Styling:</h3>
+            <pre class="bg-gray-100 p-3 rounded overflow-x-auto"><code>&lt;Accordion 
+  items={items}
+  iconType="plus"
+  containerClass="max-w-lg"
+  itemClass="border-blue-200 shadow-lg"
+  buttonClass="text-blue-900 hover:bg-blue-50"
+  contentClass="text-gray-600 p-8"
+/&gt;</code></pre>
+          </div>
+
+          <div>
+            <h3 class="font-medium text-gray-900 mb-2">Available Props:</h3>
+            <ul class="list-disc list-inside space-y-1 text-gray-600">
+              <li><code>items</code>: Array of {title, content} objects</li>
+              <li><code>iconType</code>: 'chevron' | 'plus' (default: 'chevron')</li>
+              <li><code>containerClass</code>: Override/extend container styling</li>
+              <li><code>itemClass</code>: Override/extend accordion item styling</li>
+              <li><code>buttonClass</code>: Override/extend button styling</li>
+              <li><code>contentClass</code>: Override/extend content styling</li>
+              <li><code>iconClass</code>: Override/extend icon styling</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>

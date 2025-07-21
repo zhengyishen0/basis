@@ -28,7 +28,7 @@
 @import "./base.css";
 
 /* Import Component Styles */
-@import "./components/index.css";
+/* @import "./components/index.css"; */ /* Disabled: Using Tailwind-based Pine components instead */
 
 /* 
  * Additional global styles can be added here if needed
