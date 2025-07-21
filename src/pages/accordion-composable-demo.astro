@@ -1,0 +1,53 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+    Accordion,
+    AccordionItem,
+    AccordionTrigger,
+    AccordionContent,
+} from '@/components/ui/accordion';
+
+const faqData = [
+    {
+        id: 'faq-1',
+        question: 'What is this accordion?',
+        answer: 'This is a composable accordion component built with Alpine.js and Astro.',
+    },
+    {
+        id: 'faq-2',
+        question: 'How do I use it?',
+        answer: 'Import the components and pass data through x-for loops or use static content.',
+    },
+    {
+        id: 'faq-3',
+        question: 'Can I customize it?',
+        answer: 'Yes, you can pass className props and use different icon types.',
+    },
+];
+---
+
+<Layout title="Composable Accordion Demo">
+    <div class="min-h-screen bg-gray-50 py-12">
+        <div class="max-w-2xl mx-auto px-6">
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">
+                Accordion Demo
+            </h1>
+
+            <div>
+                <Accordion
+                    x-data="{items: ${JSON.stringify(faqData)}}"
+                    x-for="item in items"
+                    x-key="item.id"
+                >
+                    <AccordionItem>
+                        <AccordionTrigger
+                            iconType="chevron"
+                            text="item.question"
+                        />
+                        <AccordionContent text="item.answer" />
+                    </AccordionItem>
+                </Accordion>
+            </div>
+        </div>
+    </div>
+</Layout>

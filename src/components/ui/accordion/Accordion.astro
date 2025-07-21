@@ -1,0 +1,34 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+  className?: string;
+  [key: string]: any;
+}
+
+const {
+  className,
+  ...alpineProps
+} = Astro.props;
+
+const defaultXData = `{
+  activeAccordion: '',
+  setActiveAccordion(id) { 
+    this.activeAccordion = (this.activeAccordion == id) ? '' : id 
+  }
+}`;
+---
+
+<div 
+  x-data={defaultXData}
+  {...alpineProps}
+  class={cn("relative w-full max-w-md mx-auto", className)}
+>
+  {alpineProps['x-for'] ? (
+    <template x-for={alpineProps['x-for']} :key={alpineProps['x-key'] || 'index'}>
+      <slot />
+    </template>
+  ) : (
+    <slot />
+  )}
+</div>

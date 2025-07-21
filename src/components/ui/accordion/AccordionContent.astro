@@ -1,0 +1,32 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+  className?: string;
+  text?: string;
+  [key: string]: any;
+}
+
+const {
+  className,
+  text,
+  ...alpineProps
+} = Astro.props;
+---
+
+<div 
+  x-show="activeAccordion==id" 
+  x-collapse 
+  x-cloak
+  {...alpineProps}
+>
+  <div 
+    :class={`"${cn('p-5 pt-0 opacity-70', className)}"`}
+  >
+    {text ? (
+      <span x-text={text}></span>
+    ) : (
+      <slot />
+    )}
+  </div>
+</div>
