@@ -44,10 +44,11 @@ This guide outlines our process for creating high-quality Astro components based
 
 ## Key Considerations & Lessons Learned
 
-### **Astro-Specific Limitations & Workarounds**
-- **No True Slots**: Astro doesn't support dynamic slot composition like Vue/React
-- **Use Named Slots Instead**: Better than attempting complex slot patterns  
-- **Expose Style Classes**: Since slot flexibility is limited, provide granular styling props
+### **Astro-Specific Patterns & Requirements**
+- **Use True Slots**: Follow shadcn style with proper slot composition (always check shadcn components first for inspiration and guidance)
+- **Use @path imports**: Import components using Astro's @path syntax from astro config
+- **Component Organization**: Keep all components in folders with index.ts files containing component comments (never put comments in component files themselves)
+- **Demo Pages**: Only show one basic example per demo page
 - **Pass Alpine Props Through**: Enable x-data, @click, :class pass-through to parent components
 - **Server vs Client Rendering**: Understand what runs where
 
@@ -95,13 +96,16 @@ This guide outlines our process for creating high-quality Astro components based
 5. **Maintain Pine UI fidelity** - Stay true to original design while adding Astro-specific improvements
 
 ### **Code Implementation Standards**
-1. **Alpine x-for over Astro .map()** - Better for dynamic content that needs reactivity
-2. **Comprehensive styling props** - Container, item, button, content, icon class levels
-3. **Class merging everywhere** - Use cn() utility for all dynamic class combinations
-4. **Pass-through Alpine props** - Enable x-data, @click, :class, and other Alpine directive pass-through
-5. **Proper TypeScript interfaces** - Document all props clearly with good examples
-6. **Lucide icons only** - Use consistent icon library, don't mix sources
-7. **Error handling** - Gracefully handle missing props and edge cases
+1. **Follow shadcn patterns** - Always check shadcn components first for inspiration and guidance on slot composition
+2. **Use @path imports** - Import all components using Astro's @path syntax (e.g., `import { cn } from '@/lib/utils'`)
+3. **Component organization** - Keep components in folders with index.ts containing comments, never in component files
+4. **Alpine x-for over Astro .map()** - Better for dynamic content that needs reactivity
+5. **True slot composition** - Use proper slot patterns following shadcn style
+6. **Class merging everywhere** - Use cn() utility for all dynamic class combinations
+7. **Pass-through Alpine props** - Enable x-data, @click, :class, and other Alpine directive pass-through
+8. **Proper TypeScript interfaces** - Document all props clearly with good examples
+9. **Lucide icons only** - Use consistent icon library, don't mix sources
+10. **Demo simplicity** - Only show one basic example per demo page
 
 ### **Quality Assurance Process**
 1. **Build demo pages** - Test all variations, edge cases, and styling combinations
@@ -115,7 +119,7 @@ This guide outlines our process for creating high-quality Astro components based
 ### **Flexible Styling Pattern**
 ```astro
 ---
-import { cn } from '../../lib/utils';
+import { cn } from '@/lib/utils';
 
 export interface Props {
   // Core functionality
