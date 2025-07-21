@@ -1,47 +1,51 @@
 ---
-// Import component styles
-import '/src/styles/components/text.css';
+import { cn } from '@/lib/utils';
 
 export interface Props {
   state?: 'active' | 'completed' | 'pending' | 'disabled';
   as?: 'span' | 'div' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'strong' | 'em' | 'small';
+  size?: 'xs' | 'sm' | 'base' | 'lg' | 'xl';
+  weight?: 'normal' | 'medium' | 'semibold' | 'bold';
   class?: string;
-  [key: string]: any; // Allow any Alpine.js attributes
+  [key: string]: any; // Alpine.js pass-through
 }
 
 const { 
   state = 'active',
   as: Element = 'span',
-  class: className = "",
+  size = 'base',
+  weight = 'normal',
+  class: className = '',
   ...rest
 } = Astro.props;
 
-// Generate class names using true design system
-const getStateTextClasses = () => {
-  const baseClass = 'state-text';
-  const stateClass = state !== 'active' ? `state-text-${state}` : '';
+const classes = cn(
+  // Base text styling
+  'leading-normal',
   
-  return `${baseClass} ${stateClass} ${className}`.trim();
-};
+  // Size variants
+  size === 'xs' && 'text-xs',
+  size === 'sm' && 'text-sm', 
+  size === 'base' && 'text-base',
+  size === 'lg' && 'text-lg',
+  size === 'xl' && 'text-xl',
+  
+  // Weight variants
+  weight === 'normal' && 'font-normal',
+  weight === 'medium' && 'font-medium',
+  weight === 'semibold' && 'font-semibold',
+  weight === 'bold' && 'font-bold',
+  
+  // State variants
+  state === 'active' && 'text-gray-900 font-medium',
+  state === 'completed' && 'text-gray-500 line-through',
+  state === 'pending' && 'text-gray-500 italic',
+  state === 'disabled' && 'text-gray-400 opacity-60',
+  
+  className
+);
 ---
 
-<!-- 
-TRUE Design System Text Component
-
-Usage:
-<Text state="active">Active task</Text>
-<Text state="completed">Completed task</Text>
-<Text state="pending" as="p">Pending paragraph</Text>
-<Text state="disabled" as="h3">Disabled heading</Text>
-<Text as="h2" slot="header">Header text</Text>
-
-Props:
-- state: active (default), completed, pending, disabled
-- as: span (default), div, p, h1-h6, strong, em, small
-- slot: any slot name (passed through)
-- All other props passed through (Alpine.js, classes, etc.)
--->
-
-<Element class={getStateTextClasses()} {...rest}>
+<Element class={classes} {...rest}>
   <slot />
 </Element>

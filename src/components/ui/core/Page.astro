@@ -1,36 +1,36 @@
 ---
-// Import component styles
-import '/src/styles/components/page.css';
+import { cn } from '@/lib/utils';
 
 export interface Props {
   content?: any; // Astro content collection entry
   data?: Record<string, any>; // Custom data object
   maxWidth?: 'container' | 'full' | 'narrow' | 'wide';
   class?: string;
-  [key: string]: any; // Allow any Alpine.js attributes
+  [key: string]: any; // Alpine.js pass-through
 }
 
 const { 
   content,
   data,
   maxWidth = 'container',
-  class: className = "",
+  class: className = '',
   ...rest
 } = Astro.props;
 
-// Generate class names using true design system
-const getPageClasses = () => {
-  const baseClass = 'page';
-  const maxWidthClass = `page-${maxWidth}`;
+const classes = cn(
+  // Base page layout
+  'min-h-screen w-full',
   
-  return `${baseClass} ${maxWidthClass} ${className}`.trim();
-};
-
+  // Max-width variants with responsive padding
+  maxWidth === 'container' && 'max-w-7xl mx-auto px-6 md:px-6 lg:px-8',
+  maxWidth === 'full' && 'w-full px-0',
+  maxWidth === 'narrow' && 'max-w-2xl mx-auto px-6 md:px-4 lg:px-3',
+  maxWidth === 'wide' && 'max-w-screen-xl mx-auto px-6 md:px-6 lg:px-8',
+  
+  className
+);
 ---
 
-<div 
-  class={getPageClasses()}
-  {...rest}
->
+<div class={classes} {...rest}>
   <slot />
 </div>

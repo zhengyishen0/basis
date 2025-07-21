@@ -1,51 +1,59 @@
 ---
-// Import component styles
-import '/src/styles/components/list.css';
+import { cn } from '@/lib/utils';
 
 export interface Props {
-  spacing?: 'tight' | 'default' | 'loose';
+  // Layout
+  gap?: '1' | '2' | '3' | '4' | '6';
+  
+  // Sizing
+  maxHeight?: 'none' | '32' | '48' | '64' | '96' | 'screen';
+  
+  // Visual styling
+  padding?: '2' | '3' | '4' | '6';
+  divided?: boolean; // Add divider lines between items
+  
   class?: string;
-  [key: string]: any; // Allow any Alpine.js attributes
+  [key: string]: any; // Alpine.js pass-through
 }
 
-const { 
-  spacing = 'default',
-  class: className = "",
+const {
+  gap = '1',
+  maxHeight = 'none',
+  padding = '0',
+  divided = false,
+  class: className = '',
   ...rest
 } = Astro.props;
 
-// Generate class names using true design system
-const getListClasses = () => {
-  const baseClass = 'list';
-  const spacingClass = spacing !== 'default' ? `list-${spacing}` : '';
+const classes = cn(
+  // Base list layout
+  'flex flex-col',
   
-  return `${baseClass} ${spacingClass} ${className}`.trim();
-};
+  // Scrolling behavior
+  'overflow-y-auto',
+  'flex-1',
+  'min-h-0', // Important for flex scroll
+  
+  // Spacing
+  `gap-${gap}`,
+  padding !== '0' && `p-${padding}`,
+  
+  // Max height constraints
+  maxHeight === '32' && 'max-h-32',
+  maxHeight === '48' && 'max-h-48',
+  maxHeight === '64' && 'max-h-64', 
+  maxHeight === '96' && 'max-h-96',
+  maxHeight === 'screen' && 'max-h-screen',
+  
+  // Dividers
+  divided && 'divide-y divide-gray-200',
+  
+  className
+);
 ---
 
-<!-- 
-TRUE Design System List Component
 
-This component owns the template logic. Pass Alpine.js directives as props:
-
-Usage:
-<List 
-  x-data="{ items: todo.filteredUserTodos }"
-  x-for="item in items" 
-  x-key="item.id"
->
-  <div class="list-item">
-    <span x-text="item.task"></span>
-  </div>
-</List>
-
-For static lists:
-<List>
-  <div class="list-item">Static item</div>
-</List>
--->
-
-<div class={getListClasses()} {...rest}>
+<div class={classes} {...rest}>
   {rest['x-for'] ? (
     <template x-for={rest['x-for']} :key={rest['x-key']}>
       <slot />

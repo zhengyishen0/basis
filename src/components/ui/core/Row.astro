@@ -1,67 +1,63 @@
 ---
-// Import component styles
-import '/src/styles/components/row.css';
+import { cn } from '@/lib/utils';
 
 export interface Props {
-  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
+  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly' | 'grid';
   align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
-  gap?: 'tight' | 'default' | 'loose' | 'none';
+  gap?: '1' | '2' | '3' | '4' | '6' | '8';
   wrap?: boolean;
-  variant?: 'default' | 'invisible';
+  
+  // Visual styling
+  padding?: '2' | '3' | '4' | '6' | '8';
+  interactive?: boolean;
+  bordered?: boolean;
+  sticky?: boolean;
+  
   class?: string;
-  [key: string]: any; // Allow any Alpine.js attributes
+  [key: string]: any; // Alpine.js pass-through
 }
 
-const { 
+const {
   justify = 'start',
   align = 'center',
-  gap = 'default',
+  gap = '4',
   wrap = false,
-  variant = 'default',
-  class: className = "",
+  padding = '0',
+  interactive = false,
+  bordered = false,
+  sticky = false,
+  class: className = '',
   ...rest
 } = Astro.props;
 
-// Generate class names using true design system
-const getRowClasses = () => {
-  const baseClass = 'row';
-  const justifyClass = justify !== 'start' ? `row-justify-${justify}` : '';
-  const alignClass = align !== 'center' ? `row-align-${align}` : '';
-  const gapClass = gap !== 'default' ? `row-gap-${gap}` : '';
-  const wrapClass = wrap ? 'row-wrap' : '';
-  const variantClass = variant !== 'default' ? `row-${variant}` : '';
+const useGrid = justify === 'grid';
+const useFlexbox = justify !== 'grid';
+
+const classes = cn(
+  // Layout method
+  useGrid && 'grid grid-cols-[auto_1fr_auto] items-center',
+  useGrid && '[&>:nth-child(2)]:justify-self-center',
+  useFlexbox && 'flex flex-row',
   
-  return `${baseClass} ${justifyClass} ${alignClass} ${gapClass} ${wrapClass} ${variantClass} ${className}`.trim();
-};
+  // Flexbox properties
+  useFlexbox && `items-${align}`,
+  useFlexbox && `justify-${justify}`,
+  useFlexbox && wrap && 'flex-wrap',
+  
+  // Spacing
+  `gap-${gap}`,
+  padding !== '0' && `p-${padding}`,
+  
+  // Visual states
+  interactive && 'cursor-pointer hover:bg-gray-50 transition-colors',
+  bordered && 'border-b border-gray-200',
+  sticky && 'sticky top-0 z-40',
+  
+  className
+);
 ---
 
-<!-- 
-TRUE Design System Row Component
 
-Usage:
-<Row>
-  <div>Item 1</div>
-  <div>Item 2</div>
-</Row>
-
-<Row justify="between" gap="loose">
-  <div>Left side</div>
-  <div>Right side</div>
-</Row>
-
-<Row justify="center" align="start" wrap>
-  <Button>Filter 1</Button>
-  <Button>Filter 2</Button>
-  <Button>Filter 3</Button>
-</Row>
-
-Props:
-- justify: start, center, end, between, around, evenly
-- align: start, center, end, stretch, baseline
-- gap: none, tight, default, loose
-- wrap: boolean for flex-wrap
--->
-
-<div class={getRowClasses()} {...rest}>
+<div class={classes} {...rest}>
   <slot />
 </div>

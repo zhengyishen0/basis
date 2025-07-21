@@ -1,72 +1,54 @@
 ---
-// Import component styles
-import '/src/styles/components/grid.css';
+import { cn } from '@/lib/utils';
 
 export interface Props {
   columns?: 'auto' | '1' | '2' | '3' | '4' | '5' | '6' | '12';
-  gap?: 'none' | 'tight' | 'default' | 'loose' | 'extra-loose';
+  gap?: '0' | '2' | '4' | '6' | '8';
   align?: 'start' | 'center' | 'end' | 'stretch';
   justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
   class?: string;
-  [key: string]: any; // Allow any Alpine.js attributes
+  [key: string]: any; // Alpine.js pass-through
 }
 
 const { 
   columns = 'auto',
-  gap = 'default',
+  gap = '4',
   align = 'stretch',
   justify = 'start',
-  class: className = "",
+  class: className = '',
   ...rest
 } = Astro.props;
 
-// Generate class names using true design system
-const getGridClasses = () => {
-  const baseClass = 'grid';
-  const columnsClass = `grid-cols-${columns}`;
-  const gapClass = `grid-gap-${gap}`;
-  const alignClass = `grid-align-${align}`;
-  const justifyClass = `grid-justify-${justify}`;
+const classes = cn(
+  // Base grid
+  'grid',
   
-  return `${baseClass} ${columnsClass} ${gapClass} ${alignClass} ${justifyClass} ${className}`.trim();
-};
+  // Column variants
+  columns === 'auto' && 'grid-cols-[repeat(auto-fit,minmax(280px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]',
+  columns === '1' && 'grid-cols-1',
+  columns === '2' && 'grid-cols-1 md:grid-cols-2',
+  columns === '3' && 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+  columns === '4' && 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
+  columns === '5' && 'grid-cols-1 md:grid-cols-3 lg:grid-cols-5',
+  columns === '6' && 'grid-cols-2 md:grid-cols-4 lg:grid-cols-6',
+  columns === '12' && 'grid-cols-4 md:grid-cols-8 lg:grid-cols-12',
+  
+  // Gap variants
+  gap === '0' && 'gap-0',
+  gap === '2' && 'gap-2',
+  gap === '4' && 'gap-4',
+  gap === '6' && 'gap-6',
+  gap === '8' && 'gap-8',
+  
+  // Alignment
+  `items-${align}`,
+  `justify-${justify}`,
+  
+  className
+);
 ---
 
-<!-- 
-TRUE Design System Grid Component
-
-This component owns the template logic. Pass Alpine.js directives as props:
-
-Usage:
-<Grid 
-  columns="auto" 
-  gap="default"
-  x-data="{ items: features }"
-  x-for="item in items" 
-  x-key="item.id"
->
-  <Card>
-    <span x-text="item.title"></span>
-  </Card>
-</Grid>
-
-For static grids:
-<Grid columns="3" gap="default">
-  <div>Item 1</div>
-  <div>Item 2</div>
-  <div>Item 3</div>
-</Grid>
-
-Props:
-- columns: 'auto' | '1' | '2' | '3' | '4' | '5' | '6' | '12' (default: 'auto')
-- gap: 'none' | 'tight' | 'default' | 'loose' | 'extra-loose' (default: 'default')
-- align: 'start' | 'center' | 'end' | 'stretch' (default: 'stretch')
-- justify: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly' (default: 'start')
-- class: Additional CSS classes
-- ...rest: Any Alpine.js attributes
--->
-
-<div class={getGridClasses()} {...rest}>
+<div class={classes} {...rest}>
   {rest['x-for'] ? (
     <template x-for={rest['x-for']} :key={rest['x-key']}>
       <slot />

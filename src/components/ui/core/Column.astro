@@ -1,46 +1,58 @@
 ---
-// Import component styles
-import '/src/styles/components/column.css';
+import { cn } from '@/lib/utils';
 
 export interface Props {
-  height?: 'auto' | 'full' | 'fit' | 'screen';
-  maxHeight?: string;
+  // Layout
+  align?: 'start' | 'center' | 'end' | 'stretch';
+  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
+  gap?: '1' | '2' | '3' | '4' | '6' | '8';
+  
+  // Sizing
+  height?: 'auto' | 'full' | 'screen' | 'fit';
   width?: 'auto' | 'full' | 'fit';
-  maxWidth?: string;
-  gap?: 'none' | 'tight' | 'default' | 'loose';
+  
+  // Visual styling
+  padding?: '2' | '3' | '4' | '6' | '8';
+  
   class?: string;
-  [key: string]: any; // Allow any Alpine.js attributes
+  [key: string]: any; // Alpine.js pass-through
 }
 
-const { 
-  height = 'full',
-  maxHeight,
+const {
+  align = 'stretch',
+  justify = 'start',
+  gap = '4',
+  height = 'auto',
   width = 'auto',
-  maxWidth,
-  gap = 'none',
-  class: className = "",
+  padding = '0',
+  class: className = '',
   ...rest
 } = Astro.props;
 
-// Generate class names using true design system
-const getColumnClasses = () => {
-  const baseClass = 'column';
-  const heightClass = height !== 'auto' ? `column-height-${height}` : '';
-  const widthClass = width !== 'auto' ? `column-width-${width}` : '';
-  const gapClass = gap !== 'none' ? `column-gap-${gap}` : '';
+const classes = cn(
+  // Base column layout
+  'flex flex-col',
   
-  return `${baseClass} ${heightClass} ${widthClass} ${gapClass} ${className}`.trim();
-};
-
-// Generate inline styles for custom values
-const getColumnStyles = () => {
-  const styles = [];
-  if (maxHeight) styles.push(`max-height: ${maxHeight}`);
-  if (maxWidth) styles.push(`max-width: ${maxWidth}`);
-  return styles.length > 0 ? styles.join('; ') : undefined;
-};
+  // Alignment
+  `items-${align}`,
+  `justify-${justify}`,
+  
+  // Spacing
+  `gap-${gap}`,
+  padding !== '0' && `p-${padding}`,
+  
+  // Sizing
+  height === 'full' && 'h-full',
+  height === 'screen' && 'h-screen',
+  height === 'fit' && 'h-fit',
+  width === 'full' && 'w-full',
+  width === 'fit' && 'w-fit',
+  
+  className
+);
 ---
 
-<div class={getColumnClasses()} style={getColumnStyles()} {...rest}>
+
+<div class={classes} {...rest}>
   <slot />
 </div>

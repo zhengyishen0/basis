@@ -1,32 +1,31 @@
 ---
-// Import component styles
-import '/src/styles/components/states.css';
+import { cn } from '@/lib/utils';
 
 export interface Props {
+  size?: 'sm' | 'md' | 'lg';
   class?: string;
-  [key: string]: any; // Allow any Alpine.js attributes
+  [key: string]: any; // Alpine.js pass-through
 }
 
 const { 
-  class: className = "",
+  size = 'md',
+  class: className = '',
   ...rest
 } = Astro.props;
+
+const classes = cn(
+  // Base empty state styling
+  'text-center text-gray-500',
+  
+  // Size variants
+  size === 'sm' && 'py-6 text-sm',
+  size === 'md' && 'py-12 text-lg leading-relaxed',
+  size === 'lg' && 'py-16 text-xl leading-relaxed',
+  
+  className
+);
 ---
 
-<!-- 
-TRUE Design System Empty Component
-
-Usage:
-<Empty x-show="todos.length === 0 && !loading">
-  <span x-show="filter === 'all'">No todos yet!</span>
-  <span x-show="filter === 'active'">No active todos.</span>
-</Empty>
-
-<Empty x-show="items.length === 0">
-  No items found.
-</Empty>
--->
-
-<div class={`empty-state ${className}`} {...rest}>
+<div class={classes} {...rest}>
   <slot />
 </div>

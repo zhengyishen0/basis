@@ -1,26 +1,30 @@
 ---
-// Import component styles
-import '/src/styles/components/section.css';
+import { cn } from '@/lib/utils';
 
 export interface Props {
+  padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   class?: string;
-  [key: string]: any; // Allow any Alpine.js attributes
+  [key: string]: any; // Alpine.js pass-through
 }
 
 const {
+  padding = 'md',
   class: className = '',
   ...rest
 } = Astro.props;
 
-// Generate class names
-const getSectionClasses = () => {
-  return `section ${className}`.trim();
-};
+const classes = cn(
+  // Responsive padding variants
+  padding === 'none' && '',
+  padding === 'sm' && 'py-4 px-3 md:py-6 md:px-4 lg:py-8 lg:px-6',
+  padding === 'md' && 'py-6 px-4 md:py-8 md:px-6 lg:py-12 lg:px-8',
+  padding === 'lg' && 'py-8 px-6 md:py-12 md:px-8 lg:py-16 lg:px-12',
+  padding === 'xl' && 'py-12 px-8 md:py-16 md:px-12 lg:py-24 lg:px-16',
+  
+  className
+);
 ---
 
-<section 
-  class={getSectionClasses()}
-  {...rest}
->
+<section class={classes} {...rest}>
   <slot />
 </section>

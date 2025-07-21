@@ -10,10 +10,10 @@ import Column from '../components/ui/core/Column.astro';
 import Empty from '../components/ui/core/Empty.astro';
 import Error from '../components/ui/core/Error.astro';
 import List from '../components/ui/core/List.astro';
-import ListItem from '../components/ui/core/ListItem.astro';
 import Loading from '../components/ui/core/Loading.astro';
 import Page from '../components/ui/core/Page.astro';
 import Row from '../components/ui/core/Row.astro';
+import Spacer from '../components/ui/core/Spacer.astro';
 import Switch from '../components/ui/core/Switch.astro';
 import Text from '../components/ui/core/Text.astro';
 import Checkbox from '../components/ui/Checkbox.astro';
@@ -42,15 +42,12 @@ const pageData = `{
 <Layout title={title}>
     <Page maxWidth="full" x-data={pageData} x-init="init()">
         <!-- Navigation Bar -->
-        <Row justify="between" align="center">
+        <Row justify="grid" sticky padding="4" class="bg-white border-b">
             <Button href="../" variant="default" size="sm">
                 Back to Home
             </Button>
-
             <Text as="h5"> Supabase Todo App </Text>
-
-            <div></div>
-            <!-- Spacer to center the title -->
+            <Spacer />
         </Row>
 
         <!-- Main Content -->
@@ -70,9 +67,9 @@ const pageData = `{
             </Card>
 
             <!-- Authenticated state - Todo App -->
-            <Row slot="true">
+            <Row slot="true" justify="center" align="start" gap="4">
                 <!-- Left Column: My Todos -->
-                <Card variant="default">
+                <Card variant="default" class="w-96 h-96">
                     <CardHeader>
                         <Text as="h2"> My Todos </Text>
                     </CardHeader>
@@ -80,7 +77,7 @@ const pageData = `{
                         <!-- Filter Buttons and Auth Info -->
                         <Row justify="between" wrap>
                             <!-- Status Filter Buttons (Left) -->
-                            <Row gap="tight">
+                            <Row gap="2">
                                 <Button
                                     @click="todo.setUserFilter('all')"
                                     :variant="todo.userFilter === 'all' ? 'default' : 'outline'"
@@ -105,7 +102,7 @@ const pageData = `{
                             </Row>
 
                             <!-- Auth Info (Right) -->
-                            <Row gap="loose">
+                            <Row gap="6">
                                 <Text
                                     >Signed in as: <strong
                                         x-text="auth.userDisplayId"
@@ -130,31 +127,30 @@ const pageData = `{
                         </Loading>
 
                         <!-- Scrollable Container for List -->
-                        <List>
+                        <List maxHeight="48">
                             <!-- User Todo List -->
                             <List
                                 x-for="item in todo.filteredUserTodos"
                                 x-key="item.id"
                             >
-                                <ListItem align="center">
+                                <Row interactive bordered padding="3" align="center" gap="3">
                                     <Checkbox
-                                        slot="left"
                                         :checked="item.is_complete"
                                         @change="todo.toggleTodo(item.id, $event.target.checked)"
                                     />
                                     <Text
+                                        class="flex-1 min-w-0"
                                         :state="item.is_complete ? 'completed' : 'active'"
                                         x-text="item.task"
                                     />
                                     <Button
-                                        slot="right"
                                         @click="todo.deleteTodo(item.id)"
                                         size="sm"
                                         variant="destructive"
                                     >
                                         Delete
                                     </Button>
-                                </ListItem>
+                                </Row>
                             </List>
 
                             <!-- Empty State -->
@@ -210,7 +206,7 @@ const pageData = `{
                 </Card>
 
                 <!-- Right Column: All Todos -->
-                <Card variant="default">
+                <Card variant="default" class="w-96 h-96">
                     <CardHeader>
                         <Text as="h2"> Realtime Todos </Text>
                     </CardHeader>
@@ -218,7 +214,7 @@ const pageData = `{
                         <!-- Filter Buttons and User Count -->
                         <Row justify="between" wrap>
                             <!-- Status Filter Buttons (Left) -->
-                            <Row gap="tight">
+                            <Row gap="2">
                                 <Button
                                     @click="todo.setAllFilter('all')"
                                     :variant="todo.allFilter === 'all' ? 'default' : 'outline'"
@@ -268,23 +264,23 @@ const pageData = `{
                         </Loading>
 
                         <!-- Scrollable Container for List -->
-                        <div>
+                        <List maxHeight="48">
                             <!-- All Todos List -->
                             <List
                                 x-for="item in todo.filteredAllTodos"
                                 x-key="item.id"
                             >
-                                <ListItem align="center">
+                                <Row bordered padding="3" align="center" gap="3">
                                     <Checkbox
-                                        slot="left"
                                         :checked="item.is_complete"
                                         style="pointer-events: none;"
                                     />
                                     <Text
+                                        class="flex-1 min-w-0"
                                         :state="item.is_complete ? 'completed' : 'active'"
                                         x-text="item.task"
                                     />
-                                    <Row slot="right" gap="tight">
+                                    <Row gap="2">
                                         <Text
                                             as="small"
                                             x-text="item.user_id.slice(0, 8) + '...'"
@@ -295,7 +291,7 @@ const pageData = `{
                                             color="primary">You</Badge
                                         >
                                     </Row>
-                                </ListItem>
+                                </Row>
                             </List>
 
                             <!-- Empty State -->
@@ -316,7 +312,7 @@ const pageData = `{
                                     >No completed todos.</Text
                                 >
                             </Empty>
-                        </div>
+                        </List>
                     </CardContent>
 
                     <CardFooter>
