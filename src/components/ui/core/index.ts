@@ -10,6 +10,10 @@ export { default as List } from './List.astro';
 export { default as Row } from './Row.astro';
 export { default as Spacer } from './Spacer.astro';
 
+// Content components
+export { default as Text } from './Text.astro';
+export { default as Switch } from './Switch.astro';
+
 // Utility components
 export { default as Divider } from './Divider.astro';
 export { default as Empty } from './Empty.astro';
@@ -18,8 +22,6 @@ export { default as Grid } from './Grid.astro';
 export { default as Loading } from './Loading.astro';
 export { default as Page } from './Page.astro';
 export { default as Section } from './Section.astro';
-export { default as Switch } from './Switch.astro';
-export { default as Text } from './Text.astro';
 
 /**
  * Row Component
@@ -149,6 +151,54 @@ export { default as Text } from './Text.astro';
  *     <span x-text="item.name"></span>
  *   </Row>
  * </List>
+ */
+
+/**
+ * Text Component
+ * 
+ * Enhanced text component with size, weight, and state variants for consistent typography.
+ * 
+ * Props:
+ * - state: 'active' | 'completed' | 'pending' | 'disabled'
+ * - as: 'span' | 'div' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'strong' | 'em' | 'small'
+ * - size: 'xs' | 'sm' | 'base' | 'lg' | 'xl'
+ * - weight: 'normal' | 'medium' | 'semibold' | 'bold'
+ * 
+ * Usage Examples:
+ * 
+ * Basic text with states:
+ * <Text state="active">Active task</Text>
+ * <Text state="completed">Completed task with line-through</Text>
+ * <Text state="pending">Pending task in italics</Text>
+ * <Text state="disabled">Disabled grayed out text</Text>
+ * 
+ * Different elements and sizes:
+ * <Text as="h2" size="xl" weight="bold">Page Title</Text>
+ * <Text as="p" size="sm">Small paragraph text</Text>
+ * <Text as="strong" weight="semibold">Important text</Text>
+ */
+
+/**
+ * Switch Component
+ * 
+ * Conditional rendering component using Alpine.js x-show for true/false states.
+ * 
+ * Props:
+ * - condition: string (Alpine.js expression to evaluate)
+ * 
+ * Usage Examples:
+ * 
+ * Basic conditional rendering:
+ * <Switch condition="isLoggedIn">
+ *   <div slot="true">Welcome back!</div>
+ *   <div slot="false">Please log in</div>
+ * </Switch>
+ * 
+ * Complex conditions:
+ * <Switch condition="user.role === 'admin' && user.isActive">
+ *   <AdminPanel slot="true" />
+ *   <AccessDenied slot="false" />
+ * </Switch>
  */
 
 /**
