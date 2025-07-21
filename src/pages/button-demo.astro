@@ -1,0 +1,96 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Button from '@/components/ui/Button.astro';
+---
+
+<Layout title="Button Demo">
+  <main class="container mx-auto p-8 max-w-4xl">
+    <h1 class="text-3xl font-bold mb-8">Button Component Demo</h1>
+    
+    <!-- Variants Demo -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6">Variants</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button variant="default">Default</Button>
+        <Button variant="destructive">Destructive</Button>
+        <Button variant="outline">Outline</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Button variant="link">Link</Button>
+      </div>
+    </section>
+
+    <!-- Sizes Demo -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6">Sizes</h2>
+      <div class="flex flex-wrap items-center gap-4">
+        <Button variant="default" size="sm">Small</Button>
+        <Button variant="default" size="default">Default</Button>
+        <Button variant="default" size="lg">Large</Button>
+        <Button variant="default" size="icon">🔥</Button>
+      </div>
+    </section>
+
+    <!-- States Demo -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6">States</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button variant="default">Normal</Button>
+        <Button variant="default" disabled>Disabled</Button>
+      </div>
+    </section>
+
+    <!-- Alpine.js Integration Demo -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6">Alpine.js Integration</h2>
+      <div class="space-y-4">
+        <div x-data="{ count: 0 }">
+          <p class="mb-2">Count: <span x-text="count"></span></p>
+          <Button 
+            variant="default" 
+            @click="count++"
+            className="mr-2"
+          >
+            Increment
+          </Button>
+          <Button 
+            variant="outline" 
+            @click="count = 0"
+          >
+            Reset
+          </Button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom Classes Demo -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6">Custom Styling</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button variant="default" className="bg-blue-600 hover:bg-blue-700">Custom Blue</Button>
+        <Button variant="outline" className="border-green-500 text-green-600 hover:bg-green-50">Custom Green</Button>
+        <Button variant="ghost" className="text-purple-600 hover:bg-purple-50">Custom Purple</Button>
+      </div>
+    </section>
+
+    <!-- Form Integration Demo -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6">Form Integration</h2>
+      <form class="space-y-4" x-data="{ submitted: false }" @submit.prevent="submitted = true">
+        <div>
+          <input 
+            type="text" 
+            placeholder="Enter your name" 
+            class="border border-neutral-300 rounded-md px-3 py-2 mr-4"
+          >
+        </div>
+        <div class="flex gap-2">
+          <Button type="submit" variant="default">Submit</Button>
+          <Button type="reset" variant="outline">Reset</Button>
+          <Button type="button" variant="ghost">Cancel</Button>
+        </div>
+        <div x-show="submitted" class="text-green-600 text-sm">Form submitted!</div>
+      </form>
+    </section>
+  </main>
+</Layout>

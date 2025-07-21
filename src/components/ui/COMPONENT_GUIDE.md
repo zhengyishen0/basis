@@ -13,7 +13,8 @@ This guide outlines our process for creating high-quality Astro components based
 - **Execute with Check-ins**: Code → Validate with you → Adjust based on feedback
 
 ### 2. **Technical Research**
-- Fetch original Pine UI component examples from devdojo.com
+- **ALWAYS fetch shadcn/ui component examples first** from ui.shadcn.com for implementation patterns
+- Fetch original Pine UI component examples from devdojo.com for design reference
 - Compare with current implementation to identify issues
 - Understand Alpine.js patterns and state management
 - Identify gaps and overcomplications in existing code
@@ -87,6 +88,7 @@ This guide outlines our process for creating high-quality Astro components based
 2. **Report change plans** - List exactly what files and functionality will be modified  
 3. **Ask for preferences** - When multiple approaches exist, let user choose
 4. **Get explicit approval** - Don't proceed without clear green light from user
+5. **ONLY test demo pages** - Do not touch other parts of the codebase, only create/test demo pages
 
 ### **Component Architecture Requirements**
 1. **Deep thinking required** - Component structure and interface design needs careful consideration
