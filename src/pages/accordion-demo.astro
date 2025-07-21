@@ -33,12 +33,8 @@ const faqData = [
                 Accordion Demo
             </h1>
 
-            <div>
-                <Accordion
-                    x-data="{items: ${JSON.stringify(faqData)}}"
-                    x-for="item in items"
-                    x-key="item.id"
-                >
+            <div x-data="{items: ${JSON.stringify(faqData)}}">
+                <Accordion x-for="item in items" x-key="item.id">
                     <AccordionItem>
                         <AccordionTrigger
                             iconType="chevron"
