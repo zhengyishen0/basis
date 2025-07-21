@@ -1,0 +1,77 @@
+---
+export interface Props {
+  variant?: 'default' | 'bordered' | 'shadow' | 'elevated';
+  padding?: 'none' | 'sm' | 'md' | 'lg';
+  class?: string;
+  headerClass?: string;
+  bodyClass?: string;
+  footerClass?: string;
+}
+
+const { 
+  variant = 'default',
+  padding = 'md',
+  class: className = "",
+  headerClass = "",
+  bodyClass = "",
+  footerClass = ""
+} = Astro.props;
+
+const variantClasses = {
+  'default': 'bg-white border border-neutral-200',
+  'bordered': 'bg-white border-2 border-neutral-300',
+  'shadow': 'bg-white border border-neutral-200 shadow-md',
+  'elevated': 'bg-white border border-neutral-200 shadow-lg'
+};
+
+const paddingClasses = {
+  'none': '',
+  'sm': 'p-4',
+  'md': 'p-6',
+  'lg': 'p-8'
+};
+---
+
+<!-- 
+Pine UI Card Component
+
+Usage:
+<Card variant="shadow" padding="md">
+  <div slot="header">
+    <h2>Card Title</h2>
+  </div>
+  
+  <div slot="body">
+    <p>Card content goes here...</p>
+  </div>
+  
+  <div slot="footer">
+    <Button>Action</Button>
+  </div>
+</Card>
+
+Features:
+- Multiple variants (default, bordered, shadow, elevated)
+- Configurable padding
+- Header, body, footer slots
+- Responsive design
+- Customizable styling
+-->
+
+<div class={`rounded-lg overflow-hidden ${variantClasses[variant]} ${className}`}>
+  <!-- Header -->
+  <div class={`border-b border-neutral-200 ${paddingClasses[padding]} ${headerClass}`}>
+    <slot name="header" />
+  </div>
+  
+  <!-- Body -->
+  <div class={`${paddingClasses[padding]} ${bodyClass}`}>
+    <slot name="body" />
+    <slot />
+  </div>
+  
+  <!-- Footer -->
+  <div class={`border-t border-neutral-200 bg-neutral-50 ${paddingClasses[padding]} ${footerClass}`}>
+    <slot name="footer" />
+  </div>
+</div>

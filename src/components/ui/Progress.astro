@@ -1,0 +1,180 @@
+---
+export interface Props {
+  value?: number;
+  max?: number;
+  animated?: boolean;
+  striped?: boolean;
+  color?: 'blue' | 'green' | 'red' | 'yellow' | 'purple' | 'gray';
+  size?: 'sm' | 'md' | 'lg';
+  showLabel?: boolean;
+  autoIncrement?: boolean;
+  incrementInterval?: number;
+  class?: string;
+}
+
+const { 
+  value = 0,
+  max = 100,
+  animated = false,
+  striped = false,
+  color = 'blue',
+  size = 'md',
+  showLabel = false,
+  autoIncrement = false,
+  incrementInterval = 100,
+  class: className = ""
+} = Astro.props;
+
+const colorClasses = {
+  'blue': 'bg-blue-600',
+  'green': 'bg-green-600',
+  'red': 'bg-red-600',
+  'yellow': 'bg-yellow-500',
+  'purple': 'bg-purple-600',
+  'gray': 'bg-gray-600'
+};
+
+const sizeClasses = {
+  'sm': 'h-2',
+  'md': 'h-3',
+  'lg': 'h-4'
+};
+---
+
+<!-- 
+Pine UI Progress Component
+
+Usage:
+<Progress 
+  value={75}
+  max={100}
+  animated={true}
+  striped={true}
+  color="blue"
+  size="md"
+  showLabel={true}
+/>
+
+<Progress 
+  autoIncrement={true}
+  incrementInterval={100}
+  color="green"
+/>
+
+Features:
+- Configurable progress value
+- Multiple colors and sizes
+- Animated and striped variants
+- Auto-increment functionality
+- Optional labels
+- Alpine.js powered
+-->
+
+<div 
+  x-data={`{
+    progress: ${value},
+    max: ${max},
+    autoIncrement: ${autoIncrement},
+    incrementInterval: ${incrementInterval},
+    progressInterval: null,
+    
+    get percentage() {
+      return Math.min((this.progress / this.max) * 100, 100);
+    },
+    
+    startAutoIncrement() {
+      if (!this.autoIncrement) return;
+      
+      this.progressInterval = setInterval(() => {
+        if (this.progress < this.max) {
+          this.progress += 1;
+        } else {
+          clearInterval(this.progressInterval);
+        }
+      }, this.incrementInterval);
+    },
+    
+    resetProgress() {
+      this.progress = 0;
+      if (this.progressInterval) {
+        clearInterval(this.progressInterval);
+      }
+      if (this.autoIncrement) {
+        this.startAutoIncrement();
+      }
+    }
+  }`}
+  x-init="
+    if (autoIncrement) {
+      startAutoIncrement();
+    }
+  "
+  class={`w-full ${className}`}
+>
+  <!-- Progress label -->
+  {showLabel && (
+    <div class="flex justify-between items-center mb-2">
+      <span class="text-sm font-medium text-gray-700">Progress</span>
+      <span class="text-sm text-gray-500" x-text="`${Math.round(percentage)}%`"></span>
+    </div>
+  )}
+  
+  <!-- Progress bar container -->
+  <div class={`relative w-full ${sizeClasses[size]} overflow-hidden rounded-full bg-gray-200`}>
+    <!-- Progress bar -->
+    <div 
+      :style="`width: ${percentage}%`"
+      class={`h-full transition-all duration-300 ease-linear ${colorClasses[color]} ${
+        striped ? 'bg-striped' : ''
+      } ${animated ? 'animate-progress' : ''}`}
+      x-cloak
+    >
+      <!-- Optional inner glow effect -->
+      <div class="absolute inset-0 bg-gradient-to-r from-transparent to-white opacity-20"></div>
+    </div>
+  </div>
+  
+  <!-- Auto-increment controls -->
+  {autoIncrement && (
+    <div class="flex items-center justify-center mt-3 space-x-2">
+      <button 
+        @click="resetProgress()"
+        class="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors duration-200"
+        type="button"
+      >
+        Reset
+      </button>
+    </div>
+  )}
+</div>
+
+<style>
+/* Striped pattern */
+.bg-striped {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 1rem 1rem;
+}
+
+/* Animation for striped progress bars */
+@keyframes progress {
+  0% {
+    background-position: 1rem 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.animate-progress {
+  animation: progress 1s linear infinite;
+}
+</style>

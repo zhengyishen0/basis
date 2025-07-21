@@ -1,0 +1,75 @@
+---
+export interface Props {
+  visible?: boolean;
+  visibleAfter?: number;
+  position?: 'top' | 'bottom';
+  dismissible?: boolean;
+  class?: string;
+}
+
+const { 
+  visible = false,
+  visibleAfter = 300,
+  position = 'top',
+  dismissible = true,
+  class: className = ""
+} = Astro.props;
+
+const positionClasses = {
+  'top': 'top-0',
+  'bottom': 'bottom-0'
+};
+---
+
+<!-- 
+Pine UI Banner Component
+
+Usage:
+<Banner visible={true} visibleAfter={500} position="top" dismissible={true}>
+  <p>Important announcement message here</p>
+</Banner>
+
+Features:
+- Configurable visibility delay
+- Top or bottom positioning
+- Dismissible functionality
+- Smooth transitions
+- Alpine.js powered
+-->
+
+<div 
+  x-data={`{ 
+    bannerVisible: ${visible}, 
+    bannerVisibleAfter: ${visibleAfter} 
+  }`}
+  x-init="setTimeout(() => { bannerVisible = true }, bannerVisibleAfter)"
+  x-show="bannerVisible"
+  x-transition:enter="transition ease-out duration-500"
+  x-transition:enter-start="-translate-y-10"
+  x-transition:enter-end="translate-y-0"
+  x-transition:leave="transition ease-in duration-300"
+  x-transition:leave-start="translate-y-0"
+  x-transition:leave-end="-translate-y-10"
+  class={`fixed ${positionClasses[position]} left-0 z-50 w-full bg-white border-b border-neutral-200 shadow-sm ${className}`}
+>
+  <div class="container px-4 py-3 mx-auto">
+    <div class="flex items-center justify-between">
+      <div class="flex-1">
+        <slot />
+      </div>
+      
+      {dismissible && (
+        <button 
+          @click="bannerVisible = false"
+          class="ml-4 text-neutral-500 hover:text-neutral-700 transition-colors duration-200"
+          type="button"
+          aria-label="Close banner"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      )}
+    </div>
+  </div>
+</div>

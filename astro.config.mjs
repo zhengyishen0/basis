@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
+import tailwind from "@astrojs/tailwind";
 
 // Dynamic configuration for GitHub Pages
 const isGitHubPages = process.env.GITHUB_ACTIONS === "true";
@@ -19,6 +20,6 @@ export default defineConfig({
   // Static output for GitHub Pages - API routes will be ignored in build
   output: "static", //  'server' | 'static'
 
-  // Enable client-side hydration for Alpine.js
-  integrations: [],
+  // Enable client-side hydration for Alpine.js and Tailwind CSS
+  integrations: [tailwind()],
 });

@@ -1,0 +1,325 @@
+---
+export interface Props {
+  orientation?: 'horizontal' | 'vertical';
+  trigger?: 'hover' | 'click';
+  delay?: number;
+  class?: string;
+  menuClass?: string;
+  responsive?: boolean;
+}
+
+const { 
+  orientation = 'horizontal',
+  trigger = 'hover',
+  delay = 150,
+  class: className = "",
+  menuClass = "",
+  responsive = true
+} = Astro.props;
+
+const orientationClasses = {
+  'horizontal': 'flex-row',
+  'vertical': 'flex-col'
+};
+---
+
+<!-- 
+Pine UI Navigation Menu Component
+
+Usage:
+<NavigationMenu orientation="horizontal" trigger="hover">
+  <div slot="brand">
+    <a href="/" class="flex items-center space-x-2">
+      <img src="/logo.svg" alt="Logo" class="w-8 h-8">
+      <span class="font-bold text-xl">Brand</span>
+    </a>
+  </div>
+  
+  <nav slot="menu">
+    <ul class="flex space-x-6">
+      <li>
+        <a href="/" class="text-gray-700 hover:text-gray-900">Home</a>
+      </li>
+      <li x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+        <button class="text-gray-700 hover:text-gray-900 flex items-center">
+          Products
+          <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div x-show="open" x-transition class="absolute top-full left-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
+          <a href="/products/web" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Web Apps</a>
+          <a href="/products/mobile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mobile Apps</a>
+          <a href="/products/desktop" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Desktop Apps</a>
+        </div>
+      </li>
+      <li>
+        <a href="/about" class="text-gray-700 hover:text-gray-900">About</a>
+      </li>
+      <li>
+        <a href="/contact" class="text-gray-700 hover:text-gray-900">Contact</a>
+      </li>
+    </ul>
+  </nav>
+  
+  <div slot="actions">
+    <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+      Get Started
+    </button>
+  </div>
+</NavigationMenu>
+
+Advanced Multi-level Menu:
+<NavigationMenu>
+  <nav slot="menu">
+    <div x-data="navigationMenu()" class="relative">
+      <ul class="flex space-x-6">
+        <li>
+          <button 
+            @mouseenter="openMenu('products')" 
+            @mouseleave="closeMenu('products')"
+            class="text-gray-700 hover:text-gray-900"
+          >
+            Products
+          </button>
+          <div 
+            x-show="activeMenu === 'products'"
+            @mouseenter="openMenu('products')"
+            @mouseleave="closeMenu('products')"
+            x-transition
+            class="absolute top-full left-0 mt-2 w-96 bg-white border rounded-lg shadow-xl p-6"
+          >
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <h3 class="font-semibold text-gray-900 mb-2">Development</h3>
+                <a href="/web-dev" class="block py-1 text-sm text-gray-600 hover:text-gray-900">Web Development</a>
+                <a href="/mobile-dev" class="block py-1 text-sm text-gray-600 hover:text-gray-900">Mobile Development</a>
+                <a href="/api-dev" class="block py-1 text-sm text-gray-600 hover:text-gray-900">API Development</a>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-900 mb-2">Design</h3>
+                <a href="/ui-design" class="block py-1 text-sm text-gray-600 hover:text-gray-900">UI Design</a>
+                <a href="/ux-design" class="block py-1 text-sm text-gray-600 hover:text-gray-900">UX Design</a>
+                <a href="/branding" class="block py-1 text-sm text-gray-600 hover:text-gray-900">Branding</a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</NavigationMenu>
+
+Responsive Mobile Menu:
+<NavigationMenu responsive={true}>
+  <div slot="brand">
+    <a href="/" class="flex items-center">
+      <span class="font-bold text-xl">Brand</span>
+    </a>
+  </div>
+  
+  <div slot="mobile-toggle" class="md:hidden">
+    <button 
+      @click="mobileMenuOpen = !mobileMenuOpen"
+      class="text-gray-500 hover:text-gray-600"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        <path x-show="mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+  
+  <nav slot="menu" class="hidden md:flex">
+    <!-- Desktop menu items -->
+  </nav>
+  
+  <nav slot="mobile-menu" class="md:hidden">
+    <div x-show="mobileMenuOpen" x-transition class="absolute top-full left-0 w-full bg-white border-t shadow-lg">
+      <!-- Mobile menu items -->
+    </div>
+  </nav>
+</NavigationMenu>
+
+<script>
+function navigationMenu() {
+  return {
+    activeMenu: null,
+    timeoutId: null,
+    
+    openMenu(menu) {
+      if (this.timeoutId) {
+        clearTimeout(this.timeoutId);
+        this.timeoutId = null;
+      }
+      this.activeMenu = menu;
+    },
+    
+    closeMenu(menu) {
+      this.timeoutId = setTimeout(() => {
+        if (this.activeMenu === menu) {
+          this.activeMenu = null;
+        }
+      }, 150);
+    },
+    
+    closeAllMenus() {
+      this.activeMenu = null;
+      if (this.timeoutId) {
+        clearTimeout(this.timeoutId);
+        this.timeoutId = null;
+      }
+    }
+  }
+}
+</script>
+
+Features:
+- Hover and click trigger options
+- Multi-level dropdown support
+- Configurable delay for hover interactions
+- Responsive mobile menu toggle
+- Mega menu support with grid layouts
+- Active state management
+- Smooth transitions and animations
+- Alpine.js powered interactivity
+- Accessible keyboard navigation
+- Customizable styling and positioning
+-->
+
+<nav 
+  x-data={`{ 
+    mobileMenuOpen: false,
+    activeMenu: null,
+    timeoutId: null,
+    trigger: '${trigger}',
+    delay: ${delay},
+    
+    openMenu(menu) {
+      if (this.trigger === 'hover') {
+        if (this.timeoutId) {
+          clearTimeout(this.timeoutId);
+          this.timeoutId = null;
+        }
+        this.activeMenu = menu;
+      }
+    },
+    
+    closeMenu(menu) {
+      if (this.trigger === 'hover') {
+        this.timeoutId = setTimeout(() => {
+          if (this.activeMenu === menu) {
+            this.activeMenu = null;
+          }
+        }, this.delay);
+      }
+    },
+    
+    toggleMenu(menu) {
+      if (this.trigger === 'click') {
+        this.activeMenu = this.activeMenu === menu ? null : menu;
+      }
+    },
+    
+    closeAllMenus() {
+      this.activeMenu = null;
+      this.mobileMenuOpen = false;
+      if (this.timeoutId) {
+        clearTimeout(this.timeoutId);
+        this.timeoutId = null;
+      }
+    }
+  }`}
+  @click.away="closeAllMenus()"
+  @keydown.escape="closeAllMenus()"
+  class={`relative ${className}`}
+>
+  <div class={`flex items-center justify-between ${responsive ? 'flex-wrap' : ''} ${orientationClasses[orientation]}`}>
+    
+    <!-- Brand/Logo -->
+    <div class="flex-shrink-0">
+      <slot name="brand" />
+    </div>
+    
+    <!-- Mobile Menu Toggle -->
+    {responsive && (
+      <div class="md:hidden">
+        <slot name="mobile-toggle">
+          <button 
+            @click="mobileMenuOpen = !mobileMenuOpen"
+            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Open main menu</span>
+            <!-- Hamburger icon -->
+            <svg 
+              x-show="!mobileMenuOpen" 
+              class="block h-6 w-6" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <!-- Close icon -->
+            <svg 
+              x-show="mobileMenuOpen" 
+              class="block h-6 w-6" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </slot>
+      </div>
+    )}
+    
+    <!-- Desktop Navigation -->
+    <div class={`${responsive ? 'hidden md:flex md:items-center md:space-x-8' : 'flex items-center space-x-8'} ${menuClass}`}>
+      <slot name="menu" />
+    </div>
+    
+    <!-- Actions (CTA buttons, etc.) -->
+    <div class={`${responsive ? 'hidden md:flex md:items-center md:space-x-4' : 'flex items-center space-x-4'}`}>
+      <slot name="actions" />
+    </div>
+  </div>
+  
+  <!-- Mobile Navigation Menu -->
+  {responsive && (
+    <div class="md:hidden">
+      <div 
+        x-show="mobileMenuOpen"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        class="absolute top-full left-0 w-full bg-white border-t border-gray-200 shadow-lg z-50"
+      >
+        <div class="px-2 pt-2 pb-3 space-y-1">
+          <slot name="mobile-menu">
+            <!-- Default mobile menu content -->
+            <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Home</a>
+            <a href="/about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">About</a>
+            <a href="/contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Contact</a>
+          </slot>
+        </div>
+        
+        <!-- Mobile Actions -->
+        <div class="pt-4 pb-3 border-t border-gray-200">
+          <div class="px-2 space-y-1">
+            <slot name="mobile-actions">
+              <button class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-blue-600 hover:text-blue-500 hover:bg-gray-50">
+                Get Started
+              </button>
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+</nav>

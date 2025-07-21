@@ -25,8 +25,10 @@
     "typescript": "^5.8.3"
   },
   "devDependencies": {
+    "@astrojs/tailwind": "^6.0.2",
     "autoprefixer": "^10.4.21",
     "cssnano": "^7.1.0",
-    "postcss": "^8.5.6"
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17"
   }
 }

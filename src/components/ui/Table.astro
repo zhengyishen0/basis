@@ -1,0 +1,124 @@
+---
+export interface Props {
+  headers: string[];
+  rows: (string | number)[][];
+  striped?: boolean;
+  bordered?: boolean;
+  hover?: boolean;
+  responsive?: boolean;
+  compact?: boolean;
+  class?: string;
+}
+
+const { 
+  headers,
+  rows,
+  striped = false,
+  bordered = false,
+  hover = false,
+  responsive = true,
+  compact = false,
+  class: className = ""
+} = Astro.props;
+
+const tableClasses = [
+  'min-w-full',
+  bordered ? 'border border-neutral-200' : '',
+  compact ? 'text-sm' : '',
+  className
+].filter(Boolean).join(' ');
+
+const headerClasses = [
+  'px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider',
+  compact ? 'px-4 py-2' : '',
+  bordered ? 'border-b border-neutral-200' : ''
+].filter(Boolean).join(' ');
+
+const rowClasses = [
+  striped ? 'odd:bg-white even:bg-neutral-50' : 'bg-white',
+  hover ? 'hover:bg-neutral-50' : '',
+  bordered ? 'border-b border-neutral-200' : ''
+].filter(Boolean).join(' ');
+
+const cellClasses = [
+  'px-6 py-4 text-sm text-neutral-900',
+  compact ? 'px-4 py-2' : '',
+  bordered ? 'border-r border-neutral-200 last:border-r-0' : ''
+].filter(Boolean).join(' ');
+---
+
+<!-- 
+Pine UI Table Component
+
+Usage:
+<Table 
+  headers={['Name', 'Email', 'Role']}
+  rows={[
+    ['John Doe', 'john@example.com', 'Admin'],
+    ['Jane Smith', 'jane@example.com', 'User']
+  ]}
+  striped
+  hover
+  responsive
+/>
+
+Props:
+- headers: Array of header strings
+- rows: Array of row data (each row is an array of strings/numbers)
+- striped: Alternating row background colors
+- bordered: Add borders to table and cells
+- hover: Add hover effect on rows
+- responsive: Enable horizontal scrolling on small screens
+- compact: Reduce padding for compact view
+- class: Additional CSS classes
+-->
+
+{responsive ? (
+  <div class="overflow-x-auto shadow-sm ring-1 ring-neutral-200 sm:rounded-lg">
+    <table class={tableClasses}>
+      <thead class="bg-neutral-50">
+        <tr>
+          {headers.map((header) => (
+            <th scope="col" class={headerClasses}>
+              {header}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-neutral-200">
+        {rows.map((row) => (
+          <tr class={rowClasses}>
+            {row.map((cell) => (
+              <td class={cellClasses}>
+                {cell}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+) : (
+  <table class={tableClasses}>
+    <thead class="bg-neutral-50">
+      <tr>
+        {headers.map((header) => (
+          <th scope="col" class={headerClasses}>
+            {header}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-neutral-200">
+      {rows.map((row) => (
+        <tr class={rowClasses}>
+          {row.map((cell) => (
+            <td class={cellClasses}>
+              {cell}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+)}

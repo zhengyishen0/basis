@@ -1,0 +1,98 @@
+---
+export interface Props {
+  direction?: 'left' | 'right';
+  speed?: 'slow' | 'normal' | 'fast';
+  pauseOnHover?: boolean;
+  class?: string;
+  gradientColor?: string;
+}
+
+const { 
+  direction = 'left',
+  speed = 'normal',
+  pauseOnHover = false,
+  class: className = "",
+  gradientColor = 'gray-900'
+} = Astro.props;
+
+const speedClasses = {
+  'slow': 'duration-[40s]',
+  'normal': 'duration-[20s]',
+  'fast': 'duration-[10s]'
+};
+
+const directionClass = direction === 'right' ? 'animate-marquee-reverse' : 'animate-marquee';
+---
+
+<!-- 
+Pine UI Marquee Component
+
+Usage:
+<Marquee direction="left" speed="normal" pauseOnHover={true}>
+  <div class="flex items-center space-x-8">
+    <span>Item 1</span>
+    <span>Item 2</span>
+    <span>Item 3</span>
+  </div>
+</Marquee>
+
+Features:
+- Continuous scrolling animation
+- Configurable direction and speed
+- Optional pause on hover
+- Gradient fade effects
+- Alpine.js initialization
+-->
+
+<div 
+  x-data
+  x-init="
+    $nextTick(() => {
+      const content = $refs.content;
+      const item = $refs.item;
+      const clone = item.cloneNode(true);
+      content.appendChild(clone);
+    });
+  "
+  class={`relative w-full overflow-hidden ${className}`}
+>
+  <!-- Left gradient fade -->
+  <div class={`absolute left-0 z-20 w-40 h-full bg-gradient-to-r from-${gradientColor} to-transparent pointer-events-none`}></div>
+  
+  <!-- Right gradient fade -->
+  <div class={`absolute right-0 z-20 w-40 h-full bg-gradient-to-l from-${gradientColor} to-transparent pointer-events-none`}></div>
+  
+  <!-- Marquee content -->
+  <div 
+    x-ref="content" 
+    class={`flex ${directionClass} ${speedClasses[speed]} ${pauseOnHover ? 'hover:pause' : ''}`}
+  >
+    <div x-ref="item" class="flex items-center justify-around flex-shrink-0">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-marquee {
+  animation: marquee var(--tw-duration, 20s) linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse var(--tw-duration, 20s) linear infinite;
+}
+
+.hover\\:pause:hover {
+  animation-play-state: paused;
+}
+</style>

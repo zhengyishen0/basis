@@ -1,0 +1,174 @@
+---
+export interface Props {
+  options: Array<{
+    value: string;
+    label: string;
+    disabled?: boolean;
+  }>;
+  placeholder?: string;
+  selectedValue?: string;
+  searchable?: boolean;
+  disabled?: boolean;
+  name?: string;
+  id?: string;
+  class?: string;
+}
+
+const { 
+  options,
+  placeholder = "Select an option...",
+  selectedValue = '',
+  searchable = false,
+  disabled = false,
+  name,
+  id,
+  class: className = ""
+} = Astro.props;
+---
+
+<!-- 
+Pine UI Select Component
+
+Usage:
+<Select 
+  options={[
+    { value: "option1", label: "Option 1" },
+    { value: "option2", label: "Option 2" },
+    { value: "option3", label: "Option 3", disabled: true }
+  ]}
+  placeholder="Choose an option..."
+  searchable={true}
+  selectedValue="option1"
+/>
+
+Features:
+- Searchable dropdown
+- Keyboard navigation
+- Disabled options
+- Custom positioning
+- Alpine.js powered
+-->
+
+<div 
+  x-data={`{
+    selectOpen: false,
+    selectedItem: '${selectedValue}',
+    selectableItems: ${JSON.stringify(options)},
+    searchTerm: '',
+    selectId: $id('select'),
+    
+    get filteredItems() {
+      if (!this.searchTerm) return this.selectableItems;
+      return this.selectableItems.filter(item => 
+        item.label.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    },
+    
+    get selectedLabel() {
+      const item = this.selectableItems.find(item => item.value === this.selectedItem);
+      return item ? item.label : '${placeholder}';
+    },
+    
+    selectItem(item) {
+      if (item.disabled) return;
+      this.selectedItem = item.value;
+      this.selectOpen = false;
+      this.searchTerm = '';
+      this.$refs.hiddenInput.value = item.value;
+      this.$refs.hiddenInput.dispatchEvent(new Event('change'));
+    },
+    
+    selectKeydown(event) {
+      if (event.key === 'Escape') {
+        this.selectOpen = false;
+      }
+    }
+  }`}
+  @click.away="selectOpen = false"
+  @keydown="selectKeydown"
+  class={`relative ${className}`}
+>
+  <!-- Hidden input for form submission -->
+  <input 
+    x-ref="hiddenInput"
+    type="hidden" 
+    :name="name"
+    :id="id"
+    :value="selectedItem"
+  />
+  
+  <!-- Select button -->
+  <button 
+    @click="selectOpen = !selectOpen"
+    :disabled="disabled"
+    class={`relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+    type="button"
+  >
+    <span class="block truncate" x-text="selectedLabel"></span>
+    <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+      <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+      </svg>
+    </span>
+  </button>
+  
+  <!-- Dropdown menu -->
+  <div 
+    x-show="selectOpen"
+    x-transition:enter="transition ease-out duration-100"
+    x-transition:enter-start="transform opacity-0 scale-95"
+    x-transition:enter-end="transform opacity-100 scale-100"
+    x-transition:leave="transition ease-in duration-75"
+    x-transition:leave-start="transform opacity-100 scale-100"
+    x-transition:leave-end="transform opacity-0 scale-95"
+    class="absolute z-50 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none"
+    x-cloak
+  >
+    <!-- Search input -->
+    {searchable && (
+      <div class="px-3 py-2 border-b border-gray-200">
+        <input 
+          x-model="searchTerm"
+          type="text"
+          class="w-full px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Search options..."
+        />
+      </div>
+    )}
+    
+    <!-- Options -->
+    <template x-for="item in filteredItems" :key="item.value">
+      <div 
+        @click="selectItem(item)"
+        :class="{ 
+          'bg-blue-50 text-blue-900': selectedItem === item.value,
+          'text-gray-900': selectedItem !== item.value,
+          'opacity-50 cursor-not-allowed': item.disabled,
+          'cursor-pointer hover:bg-gray-100': !item.disabled
+        }"
+        class="relative py-2 pl-3 pr-9 select-none"
+      >
+        <span 
+          :class="{ 'font-semibold': selectedItem === item.value, 'font-normal': selectedItem !== item.value }"
+          class="block truncate"
+          x-text="item.label"
+        ></span>
+        
+        <!-- Selected checkmark -->
+        <span 
+          x-show="selectedItem === item.value"
+          class="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </span>
+      </div>
+    </template>
+    
+    <!-- No results -->
+    <div x-show="filteredItems.length === 0" class="py-2 px-3 text-gray-500 text-sm">
+      No options found
+    </div>
+  </div>
+</div>

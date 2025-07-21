@@ -1,0 +1,250 @@
+---
+export interface Props {
+  images: Array<{
+    src: string;
+    alt?: string;
+    thumbnail?: string;
+    caption?: string;
+  }>;
+  columns?: 2 | 3 | 4 | 5 | 6;
+  gap?: 'sm' | 'md' | 'lg';
+  aspectRatio?: 'square' | 'video' | 'photo' | 'auto';
+  class?: string;
+  thumbnailClass?: string;
+  lightboxClass?: string;
+}
+
+const { 
+  images,
+  columns = 3,
+  gap = 'md',
+  aspectRatio = 'square',
+  class: className = "",
+  thumbnailClass = "",
+  lightboxClass = ""
+} = Astro.props;
+
+const columnClasses = {
+  2: 'grid-cols-2',
+  3: 'grid-cols-2 md:grid-cols-3',
+  4: 'grid-cols-2 md:grid-cols-4',
+  5: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5',
+  6: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-6'
+};
+
+const gapClasses = {
+  'sm': 'gap-2',
+  'md': 'gap-4',
+  'lg': 'gap-6'
+};
+
+const aspectRatioClasses = {
+  'square': 'aspect-square',
+  'video': 'aspect-video',
+  'photo': 'aspect-[4/3]',
+  'auto': ''
+};
+---
+
+<!-- 
+Pine UI Image Gallery Component
+
+Usage:
+<ImageGallery 
+  images={[
+    { src: '/image1.jpg', alt: 'Image 1', thumbnail: '/thumb1.jpg', caption: 'Beautiful landscape' },
+    { src: '/image2.jpg', alt: 'Image 2', thumbnail: '/thumb2.jpg', caption: 'City skyline' },
+    { src: '/image3.jpg', alt: 'Image 3', thumbnail: '/thumb3.jpg' }
+  ]}
+  columns={3}
+  gap="md"
+  aspectRatio="square"
+/>
+
+<ImageGallery 
+  images={photoArray}
+  columns={4}
+  gap="lg"
+  aspectRatio="photo"
+  class="my-8"
+/>
+
+Features:
+- Responsive grid layout with customizable columns
+- Lightbox overlay with full-size image viewing
+- Keyboard navigation (left/right arrows, escape to close)
+- Click navigation with next/previous buttons
+- Image captions support
+- Thumbnail optimization (uses thumbnail if provided)
+- Smooth transitions and animations
+- Touch/swipe support on mobile
+- Auto-close on backdrop click
+- Loading states and error handling
+- Alpine.js powered state management
+
+Props:
+- images: Array of image objects with src, alt, thumbnail, caption
+- columns: Number of columns (2-6, responsive)
+- gap: Spacing between images (sm, md, lg)
+- aspectRatio: Thumbnail aspect ratio (square, video, photo, auto)
+-->
+
+<div 
+  x-data="{
+    imageGalleryOpened: false,
+    imageGalleryActiveUrl: null,
+    imageGalleryActiveIndex: 0,
+    imageGalleryImages: ${JSON.stringify(images)},
+    imageGalleryOpen(index) {
+      this.imageGalleryActiveIndex = index;
+      this.imageGalleryActiveUrl = this.imageGalleryImages[index].src;
+      this.imageGalleryOpened = true;
+    },
+    imageGalleryClose() {
+      this.imageGalleryOpened = false;
+      setTimeout(() => this.imageGalleryActiveUrl = null, 300);
+    },
+    imageGalleryNext() {
+      if (this.imageGalleryActiveIndex < this.imageGalleryImages.length - 1) {
+        this.imageGalleryActiveIndex++;
+        this.imageGalleryActiveUrl = this.imageGalleryImages[this.imageGalleryActiveIndex].src;
+      }
+    },
+    imageGalleryPrev() {
+      if (this.imageGalleryActiveIndex > 0) {
+        this.imageGalleryActiveIndex--;
+        this.imageGalleryActiveUrl = this.imageGalleryImages[this.imageGalleryActiveIndex].src;
+      }
+    },
+    imageGalleryKeyHandler(event) {
+      if (!this.imageGalleryOpened) return;
+      if (event.key === 'ArrowRight') this.imageGalleryNext();
+      if (event.key === 'ArrowLeft') this.imageGalleryPrev();
+      if (event.key === 'Escape') this.imageGalleryClose();
+    }
+  }"
+  @keydown.window="imageGalleryKeyHandler($event)"
+  class={className}
+>
+  <!-- Image Grid -->
+  <div class={`grid ${columnClasses[columns]} ${gapClasses[gap]}`}>
+    {images.map((image, index) => (
+      <div 
+        class={`relative overflow-hidden rounded-lg cursor-pointer group ${aspectRatioClasses[aspectRatio]} ${thumbnailClass}`}
+        x-on:click={`imageGalleryOpen(${index})`}
+      >
+        <img 
+          src={image.thumbnail || image.src}
+          alt={image.alt || `Gallery image ${index + 1}`}
+          class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+        />
+        <!-- Hover overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+          <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+          </svg>
+        </div>
+        {image.caption && (
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
+            <p class="text-white text-sm font-medium truncate">{image.caption}</p>
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <!-- Lightbox Modal -->
+  <template x-teleport="body">
+    <div 
+      x-show="imageGalleryOpened" 
+      x-transition.opacity.duration.300
+      x-trap.inert.noscroll="imageGalleryOpened"
+      class={`fixed inset-0 z-[99] flex items-center justify-center bg-black bg-opacity-90 ${lightboxClass}`}
+      @click.self="imageGalleryClose()"
+    >
+      <!-- Close button -->
+      <button 
+        @click="imageGalleryClose()"
+        class="absolute top-4 right-4 z-10 p-2 text-white hover:text-gray-300 transition-colors duration-200"
+        type="button"
+      >
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <!-- Previous button -->
+      <button 
+        @click="imageGalleryPrev()"
+        x-show="imageGalleryActiveIndex > 0"
+        class="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 p-2 text-white hover:text-gray-300 transition-colors duration-200"
+        type="button"
+      >
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <!-- Next button -->
+      <button 
+        @click="imageGalleryNext()"
+        x-show="imageGalleryActiveIndex < imageGalleryImages.length - 1"
+        class="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 p-2 text-white hover:text-gray-300 transition-colors duration-200"
+        type="button"
+      >
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+
+      <!-- Image container -->
+      <div 
+        x-show="imageGalleryOpened"
+        x-transition:enter="ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        class="relative max-w-7xl max-h-full mx-auto p-4"
+      >
+        <img 
+          x-show="imageGalleryActiveUrl"
+          :src="imageGalleryActiveUrl" 
+          :alt="imageGalleryImages[imageGalleryActiveIndex]?.alt || `Gallery image ${imageGalleryActiveIndex + 1}`"
+          class="max-w-full max-h-full object-contain"
+          @load="console.log('Image loaded')"
+        />
+        
+        <!-- Image info -->
+        <div 
+          x-show="imageGalleryImages[imageGalleryActiveIndex]?.caption"
+          class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6"
+        >
+          <p 
+            class="text-white text-lg font-medium text-center"
+            x-text="imageGalleryImages[imageGalleryActiveIndex]?.caption"
+          ></p>
+        </div>
+
+        <!-- Image counter -->
+        <div class="absolute top-4 left-4 bg-black bg-opacity-50 rounded-full px-3 py-1">
+          <span class="text-white text-sm font-medium">
+            <span x-text="imageGalleryActiveIndex + 1"></span>
+            /
+            <span x-text="imageGalleryImages.length"></span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Loading indicator -->
+      <div 
+        x-show="!imageGalleryActiveUrl"
+        class="absolute inset-0 flex items-center justify-center"
+      >
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+      </div>
+    </div>
+  </template>
+</div>

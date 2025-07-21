@@ -4,17 +4,10 @@ import { getEntry } from 'astro:content';
 
 // UI Components for better styling
 import {
-    Avatar,
     Badge,
     Button,
     Card,
-    Column,
-    Grid,
-    Page,
-    Row,
-    Section,
-    Text,
-} from '../components/ui/core';
+} from '../components/ui';
 
 // Import GitHub icon
 import githubIconUrl from '../assets/github-icon-white.svg?url';
@@ -27,83 +20,51 @@ const pageData = JSON.stringify(homeContent?.data || []);
 ---
 
 <Layout>
-    <Page maxWidth="full" x-data={pageData}>
-        <Column class="main-container">
-            <!-- Navigation -->
-            <Row justify="end" variant="invisible">
-                <Avatar
-                    icon={githubIconUrl}
-                    href="https://github.com/zhengyishen0/basis"
-                    alt="GitHub Repository"
-                    size="md"
-                    variant="circle"
-                    elevation="elevated"
-                    theme="dark"
-                    iconScale="sm"
-                />
-            </Row>
+    <main class="main-container" x-data={pageData}>
+        <!-- GitHub Icon in upper right -->
+        <div class="github-icon">
+            <a href="https://github.com/zhengyishen0/basis" 
+               class="github-link"
+               aria-label="GitHub Repository">
+                <img src={githubIconUrl} alt="GitHub" class="w-6 h-6" />
+            </a>
+        </div>
 
-            <!-- Hero Section -->
-            <Section class="hero-section">
-                <Text as="h1" class="hero-title">Basis</Text>
-                <Text as="p" class="hero-description">
-                    Build on Fundamentals - A methodology for modern web
-                    development using basic tools and clear boundaries
-                </Text>
-                <Row justify="center" gap="tight" wrap class="hero-badges">
-                    <Badge size="lg" color="primary">Astro</Badge>
-                    <Badge size="lg" color="primary">Alpine</Badge>
-                    <Badge size="lg" color="primary">Supabase</Badge>
-                </Row>
-                <Row justify="center" gap="default" class="hero-buttons">
-                    <Button
-                        href="./todo"
-                        variant="solid"
-                        color="primary"
-                        size="md"
-                    >
-                        Demo
-                    </Button>
-                    <!-- <Button href="./design-system" variant="outline" color="neutral" size="md">
-					Components
-				</Button> -->
-                </Row>
-            </Section>
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">Basis</h1>
+            <p class="hero-description">
+                Build on Fundamentals - A methodology for modern web
+                development using basic tools and clear boundaries
+            </p>
+            <div class="hero-badges flex justify-center gap-2 flex-wrap">
+                <Badge size="lg" color="black">Astro</Badge>
+                <Badge size="lg" color="black">Alpine</Badge>
+                <Badge size="lg" color="black">Supabase</Badge>
+            </div>
+            <div class="hero-buttons flex justify-center gap-4">
+                <Button href="./todo" variant="solid" color="blue" size="lg">
+                    Demo
+                </Button>
+            </div>
+        </div>
 
-            <!-- Features Section -->
-            <Section class="features-section">
-                <Text as="h2" class="features-title"
-                    >What Makes <span class="basis-underline">Basis</span> Different</Text
-                >
-                <Grid
-                    columns="3"
-                    gap="default"
-                    justify="center"
-                    x-for="feature in features"
-                    x-key="feature.name"
-                >
-                    <Card variant="floating" class="feature-card">
-                        <div class="feature-content">
-                            <Badge
-                                variant="default"
-                                size="lg"
-                                class="feature-badge"
-                                x-text="feature.name"
-                            />
-                            <Text
-                                as="h3"
-                                class="feature-card-title"
-                                x-text="feature.title"
-                            />
-                            <Text
-                                as="p"
-                                class="feature-card-description"
-                                x-text="feature.description"
-                            />
+        <!-- Features Section -->
+        <div class="features-section">
+            <h2 class="features-title">
+                What Makes <span class="basis-underline">Basis</span> Different
+            </h2>
+            <div class="features-grid grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <template x-for="feature in features" x-key="feature.name">
+                    <Card variant="shadow" class="feature-card">
+                        <div class="feature-content p-6">
+                            <Badge variant="solid" color="black" size="lg" class="feature-badge mb-4" x-text="feature.name"></Badge>
+                            <h3 class="feature-card-title text-xl font-semibold mb-2" x-text="feature.title"></h3>
+                            <p class="feature-card-description text-gray-600" x-text="feature.description"></p>
                         </div>
                     </Card>
-                </Grid>
-            </Section>
-        </Column>
-    </Page>
+                </template>
+            </div>
+        </div>
+    </main>
 </Layout>

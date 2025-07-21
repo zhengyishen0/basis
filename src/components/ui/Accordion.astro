@@ -1,0 +1,71 @@
+---
+export interface Props {
+  items: Array<{
+    id?: string;
+    title: string;
+    content: string;
+  }>;
+  class?: string;
+}
+
+const { items, class: className = "" } = Astro.props;
+---
+
+<!-- 
+Pine UI Accordion Component
+
+Usage:
+<Accordion 
+  items={[
+    { title: "Question 1", content: "Answer content here" },
+    { title: "Question 2", content: "More answer content" }
+  ]} 
+/>
+
+Features:
+- Collapse/expand animation
+- Only one item open at a time
+- Alpine.js powered reactivity
+- Requires Alpine.js and Collapse plugin
+-->
+
+<div 
+  x-data="{ 
+    activeAccordion: '', 
+    setActiveAccordion(id) { 
+      this.activeAccordion = (this.activeAccordion == id) ? '' : id 
+    } 
+  }"
+  class={`w-full ${className}`}
+>
+  {items.map((item, index) => (
+    <div x-data={`{ id: $id('accordion-${index}') }`} class="border-b border-neutral-200">
+      <button 
+        @click="setActiveAccordion(id)"
+        class="flex items-center justify-between w-full px-6 py-4 text-left bg-white hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2"
+        type="button"
+      >
+        <span class="text-lg font-medium text-neutral-900">{item.title}</span>
+        <svg 
+          class="w-5 h-5 text-neutral-500 transition-transform duration-200"
+          :class="{ 'rotate-180': activeAccordion === id }"
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      <div 
+        x-show="activeAccordion === id" 
+        x-collapse 
+        x-cloak
+        class="bg-white"
+      >
+        <div class="px-6 py-4 text-neutral-600">
+          {item.content}
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
