@@ -240,3 +240,106 @@ When starting a new component:
 7. **Refine**: Gather feedback → Make improvements → Document patterns
 
 Remember: **Collaboration and approval before coding is the most critical step.**
+
+## Universal Theme System
+
+### Theme Color Architecture
+
+All components use a consistent theme system defined in `tailwind.config.js`:
+
+```js
+// Universal color tokens - defined in tailwind.config.js
+colors: {
+  // Base colors
+  background: "hsl(0, 0%, 100%)",
+  foreground: "hsl(222.2, 84%, 4.9%)",
+  
+  // Brand colors
+  primary: {
+    DEFAULT: "hsl(222.2, 47.4%, 11.2%)",
+    foreground: "hsl(210, 40%, 98%)",
+  },
+  secondary: {
+    DEFAULT: "hsl(210, 40%, 96%)",
+    foreground: "hsl(222.2, 84%, 4.9%)",
+  },
+  destructive: {
+    DEFAULT: "hsl(0, 84.2%, 60.2%)",
+    foreground: "hsl(210, 40%, 98%)",
+  },
+  
+  // UI colors
+  accent: {
+    DEFAULT: "hsl(210, 40%, 96%)",
+    foreground: "hsl(222.2, 84%, 4.9%)",
+  },
+  border: "hsl(214.3, 31.8%, 91.4%)",
+  input: "hsl(214.3, 31.8%, 91.4%)",
+  ring: "hsl(222.2, 84%, 4.9%)",
+  // ... other colors
+}
+```
+
+### Variant System with CVA
+
+Use `class-variance-authority` for systematic variant management:
+
+```astro
+---
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+
+const componentVariants = cva(
+  "base-classes-here",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80", 
+        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground"
+      },
+      size: {
+        sm: "h-8 px-3 text-xs",
+        default: "h-9 px-4 py-2", 
+        lg: "h-11 px-8"
+      }
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default"
+    }
+  }
+);
+
+export interface Props extends VariantProps<typeof componentVariants> {
+  class?: string;
+  [key: string]: any; // Alpine.js pass-through
+}
+
+const { variant, size, class: className, ...alpineProps } = Astro.props;
+---
+
+<element 
+  class={cn(componentVariants({ variant, size }), className)}
+  {...alpineProps}
+>
+  <slot />
+</element>
+```
+
+### Benefits of This System
+
+1. **Universal Theming**: All components automatically use the same color palette
+2. **Systematic Variants**: CVA ensures consistent variant patterns across components  
+3. **Theme Changes**: Modify colors once in `tailwind.config.js`, all components update
+4. **Type Safety**: VariantProps provides full TypeScript support for variants
+5. **Class Merging**: `cn()` utility properly handles Tailwind class conflicts
+6. **Alpine Integration**: `{...alpineProps}` enables x-data, @click, :class pass-through
+
+### Current Components Using This System
+
+- **Badge**: `/src/components/ui/Badge.astro` - Circular design with universal theme colors
+- **Button**: `/src/components/ui/Button.astro` - Full variant system with theme integration
+
+When creating new components, always use this theme + variant architecture for consistency.
