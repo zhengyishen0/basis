@@ -1,0 +1,20 @@
+---
+import { cn } from "@/lib/utils";
+
+export interface Props {
+  class?: string;
+  [key: string]: any; // Alpine.js pass-through
+}
+
+const { class: className, ...alpineProps } = Astro.props;
+---
+
+<div 
+  class={cn(
+    "flex h-full w-full items-center justify-center rounded-full bg-muted text-muted-foreground font-medium text-sm",
+    className
+  )}
+  {...alpineProps}
+>
+  <slot />
+</div>

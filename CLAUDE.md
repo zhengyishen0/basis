@@ -10,10 +10,11 @@ My tech stack is:
 # Component Development Reminder
 
 **ALWAYS READ**: Component development guide at `/src/components/ui/COMPONENT_GUIDE.md`
+**AND MUST FOLLOW THE GUIDE !!!!**
 
 **Component Locations**:
 
-- UI Components Index: `/src/components/ui/`
+- UI Components Index: `/src/components/ui/{component-name}.astro`
 
 **Universal Theme System**:
 

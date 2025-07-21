@@ -1,0 +1,108 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+---
+
+<Layout title="Avatar Demo">
+  <main class="container mx-auto p-8">
+    <h1 class="text-3xl font-bold mb-8">Avatar Component Demo</h1>
+    
+    <div class="space-y-8">
+      <!-- Basic Usage -->
+      <section>
+        <h2 class="text-xl font-semibold mb-4">Basic Avatar</h2>
+        <div class="flex items-center gap-4">
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          
+          <Avatar>
+            <AvatarImage src="https://invalid-url.jpg" alt="Broken" />
+            <AvatarFallback>BR</AvatarFallback>
+          </Avatar>
+          
+          <Avatar>
+            <AvatarFallback>JD</AvatarFallback>
+          </Avatar>
+        </div>
+      </section>
+
+      <!-- Size Variants -->
+      <section>
+        <h2 class="text-xl font-semibold mb-4">Size Variants</h2>
+        <div class="flex items-center gap-4">
+          <Avatar size="sm">
+            <AvatarImage src="https://github.com/shadcn.png" alt="Small" />
+            <AvatarFallback>SM</AvatarFallback>
+          </Avatar>
+          
+          <Avatar size="default">
+            <AvatarImage src="https://github.com/shadcn.png" alt="Default" />
+            <AvatarFallback>DF</AvatarFallback>
+          </Avatar>
+          
+          <Avatar size="lg">
+            <AvatarImage src="https://github.com/shadcn.png" alt="Large" />
+            <AvatarFallback>LG</AvatarFallback>
+          </Avatar>
+          
+          <Avatar size="xl">
+            <AvatarImage src="https://github.com/shadcn.png" alt="Extra Large" />
+            <AvatarFallback>XL</AvatarFallback>
+          </Avatar>
+        </div>
+      </section>
+
+      <!-- Custom Styling -->
+      <section>
+        <h2 class="text-xl font-semibold mb-4">Custom Styling</h2>
+        <div class="flex items-center gap-4">
+          <Avatar class="border-2 border-primary">
+            <AvatarImage src="https://github.com/shadcn.png" alt="Bordered" />
+            <AvatarFallback>BD</AvatarFallback>
+          </Avatar>
+          
+          <Avatar class="rounded-lg">
+            <AvatarImage src="https://github.com/shadcn.png" alt="Square" />
+            <AvatarFallback class="rounded-lg bg-primary text-primary-foreground">SQ</AvatarFallback>
+          </Avatar>
+        </div>
+      </section>
+
+      <!-- Alpine.js Integration -->
+      <section>
+        <h2 class="text-xl font-semibold mb-4">Alpine.js Integration</h2>
+        <div class="flex items-center gap-4">
+          <Avatar 
+            x-data="{ clicked: false }"
+            x-on:click="clicked = !clicked"
+            :class="clicked ? 'ring-2 ring-primary' : ''"
+            class="cursor-pointer transition-all"
+          >
+            <AvatarImage src="https://github.com/shadcn.png" alt="Interactive" />
+            <AvatarFallback>IN</AvatarFallback>
+          </Avatar>
+          
+          <Avatar 
+            x-data="{ hovered: false }"
+            x-on:mouseenter="hovered = true"
+            x-on:mouseleave="hovered = false"
+            :class="hovered ? 'scale-110' : 'scale-100'"
+            class="transition-transform duration-200"
+          >
+            <AvatarImage src="https://github.com/shadcn.png" alt="Hover Effect" />
+            <AvatarFallback>HV</AvatarFallback>
+          </Avatar>
+        </div>
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<script>
+// Initialize Alpine.js for this page
+document.addEventListener('alpine:init', () => {
+  console.log('Avatar demo page Alpine.js initialized');
+});
+</script>
