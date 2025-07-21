@@ -1,507 +1,383 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
+import {
+    Card,
+    CardHeader,
+    CardContent,
+    CardFooter,
+} from '@/components/ui/card';
 import Image from '@/components/ui/Image.astro';
 import Button from '@/components/ui/Button.astro';
 ---
 
 <Layout title="Card Demo">
-  <main class="container mx-auto p-8 max-w-6xl">
-    <h1 class="text-3xl font-bold mb-8">Card Component Demo</h1>
-    
-    <!-- Universal Variants Demo -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-6">Universal Variants</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card variant="default">
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Default Card</h3>
-            <p class="text-sm text-muted-foreground">Basic card with border</p>
-          </CardHeader>
-          <CardContent>
-            <p>This is the default card variant.</p>
-          </CardContent>
-        </Card>
+    <main class="container mx-auto p-8 max-w-6xl">
+        <h1 class="text-3xl font-bold mb-8">Card Component Demo</h1>
 
-        <Card variant="outline">
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Outline Card</h3>
-            <p class="text-sm text-muted-foreground">Enhanced 2px border</p>
-          </CardHeader>
-          <CardContent>
-            <p>This card has a thicker border.</p>
-          </CardContent>
-        </Card>
+        <!-- Universal Variants Demo -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">Universal Variants</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <Card variant="default">
+                    <CardHeader>
+                        <h3 class="text-lg font-semibold">Default Card</h3>
+                        <p class="text-sm text-muted-foreground">
+                            Basic card with border
+                        </p>
+                    </CardHeader>
+                    <CardContent>
+                        <p>This is the default card variant.</p>
+                    </CardContent>
+                </Card>
 
-        <Card variant="shadow">
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Shadow Card</h3>
-            <p class="text-sm text-muted-foreground">Card with medium shadow</p>
-          </CardHeader>
-          <CardContent>
-            <p>This card has a subtle shadow effect.</p>
-          </CardContent>
-        </Card>
+                <Card variant="outline">
+                    <CardHeader>
+                        <h3 class="text-lg font-semibold">Outline Card</h3>
+                        <p class="text-sm text-muted-foreground">
+                            Enhanced 2px border
+                        </p>
+                    </CardHeader>
+                    <CardContent>
+                        <p>This card has a thicker border.</p>
+                    </CardContent>
+                </Card>
 
-        <Card variant="elevated">
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Elevated Card</h3>
-            <p class="text-sm text-muted-foreground">Card with large shadow</p>
-          </CardHeader>
-          <CardContent>
-            <p>This card appears more elevated.</p>
-          </CardContent>
-        </Card>
+                <Card variant="shadow">
+                    <CardHeader>
+                        <h3 class="text-lg font-semibold">Shadow Card</h3>
+                        <p class="text-sm text-muted-foreground">
+                            Card with medium shadow
+                        </p>
+                    </CardHeader>
+                    <CardContent>
+                        <p>This card has a subtle shadow effect.</p>
+                    </CardContent>
+                </Card>
 
-        <Card variant="ghost">
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Ghost Card</h3>
-            <p class="text-sm text-muted-foreground">Transparent card</p>
-          </CardHeader>
-          <CardContent>
-            <p>This card is transparent.</p>
-          </CardContent>
-        </Card>
+                <Card variant="elevated">
+                    <CardHeader>
+                        <h3 class="text-lg font-semibold">Elevated Card</h3>
+                        <p class="text-sm text-muted-foreground">
+                            Card with large shadow
+                        </p>
+                    </CardHeader>
+                    <CardContent>
+                        <p>This card appears more elevated.</p>
+                    </CardContent>
+                </Card>
 
-        <Card variant="muted">
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Muted Card</h3>
-            <p class="text-sm text-muted-foreground">Card with muted background</p>
-          </CardHeader>
-          <CardContent>
-            <p>This card has a muted background.</p>
-          </CardContent>
-        </Card>
-      </div>
-    </section>
+                <Card variant="ghost">
+                    <CardHeader>
+                        <h3 class="text-lg font-semibold">Ghost Card</h3>
+                        <p class="text-sm text-muted-foreground">
+                            Transparent card
+                        </p>
+                    </CardHeader>
+                    <CardContent>
+                        <p>This card is transparent.</p>
+                    </CardContent>
+                </Card>
 
-    <!-- Product Card Examples - Natural Height -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-6">Product Cards - Natural Height</h2>
-      <p class="text-sm text-muted-foreground mb-4">Cards expand naturally with content, footers align to bottom</p>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card variant="shadow" className="max-w-sm">
-          <CardHeader>
-            <h3 class="text-xl font-semibold">Wireless Headphones</h3>
-            <p class="text-sm text-muted-foreground">Premium audio experience</p>
-          </CardHeader>
-          <CardContent>
-            <div class="bg-gray-100 h-32 rounded mb-4 flex items-center justify-center">
-              <span class="text-gray-500">Product Image</span>
+                <Card variant="muted">
+                    <CardHeader>
+                        <h3 class="text-lg font-semibold">Muted Card</h3>
+                        <p class="text-sm text-muted-foreground">
+                            Card with muted background
+                        </p>
+                    </CardHeader>
+                    <CardContent>
+                        <p>This card has a muted background.</p>
+                    </CardContent>
+                </Card>
             </div>
-            <p class="text-2xl font-bold text-primary">$199.99</p>
-            <p class="text-sm text-gray-600">Free shipping included</p>
-          </CardContent>
-          <CardFooter>
-            <Button variant="default" className="w-full">Add to Cart</Button>
-          </CardFooter>
-        </Card>
+        </section>
 
-        <Card variant="elevated" className="max-w-sm">
-          <CardHeader>
-            <h3 class="text-xl font-semibold">Smart Watch</h3>
-            <p class="text-sm text-muted-foreground">Track your fitness goals with advanced health monitoring</p>
-          </CardHeader>
-          <CardContent>
-            <div class="bg-blue-100 h-32 rounded mb-4 flex items-center justify-center">
-              <span class="text-blue-600">⌚</span>
-            </div>
-            <p class="text-2xl font-bold text-primary">$299.99</p>
-            <p class="text-sm text-gray-600">2-year warranty</p>
-            <p class="text-xs text-gray-500">Heart rate, sleep tracking, GPS</p>
-          </CardContent>
-          <CardFooter className="gap-2">
-            <Button variant="outline" className="flex-1">Details</Button>
-            <Button variant="default" className="flex-1">Buy Now</Button>
-          </CardFooter>
-        </Card>
+        <!-- Pine UI Style Cards -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">Pine UI Style Cards</h2>
+            <p class="text-sm text-muted-foreground mb-6">
+                Cards with images using our new CardImage component and layout
+                options
+            </p>
 
-        <Card variant="outline" className="max-w-sm">
-          <CardHeader>
-            <h3 class="text-xl font-semibold">Laptop Stand</h3>
-            <p class="text-sm text-muted-foreground">Ergonomic workspace solution</p>
-          </CardHeader>
-          <CardContent>
-            <div class="bg-green-100 h-32 rounded mb-4 flex items-center justify-center">
-              <span class="text-green-600">💻</span>
-            </div>
-            <p class="text-2xl font-bold text-primary">$79.99</p>
-            <p class="text-sm text-gray-600">Adjustable height</p>
-          </CardContent>
-          <CardFooter>
-            <Button variant="secondary" className="w-full">Add to Wishlist</Button>
-          </CardFooter>
-        </Card>
-      </div>
-    </section>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Profile Card with Overlapping Avatar -->
+                <Card variant="shadow" imagePosition="top" className="max-w-sm">
+                    <Image
+                        slot="image"
+                        src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=200&fit=crop"
+                        aspectRatio="16/9"
+                        alt="Background"
+                        overlay="bg-gradient-to-t from-black/20"
+                        className="h-32"
+                    />
+                    <CardHeader className="text-center">
+                        <!-- Profile avatar, name, and handle in header (semantic) -->
+                        <div class="flex justify-center -mt-16">
+                            <div
+                                class="w-20 h-20 p-1 bg-white rounded-full shadow-lg"
+                            >
+                                <img
+                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
+                                    class="w-full h-full rounded-full object-cover"
+                                />
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold">Adam Wathan</h3>
+                        <p class="text-sm text-muted-foreground">@adamwathan</p>
+                    </CardHeader>
+                    <CardContent className="text-center">
+                        <p class="text-sm text-gray-600 mb-4">
+                            Creator of Tailwind CSS. Lover of great design and
+                            clean code.
+                        </p>
 
-    <!-- Fixed Height Cards Demo -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-6">Fixed Height Cards</h2>
-      <p class="text-sm text-muted-foreground mb-4">All cards have uniform height using Tailwind classes, footers stay aligned</p>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card variant="shadow" className="max-w-sm h-80">
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Short Content</h3>
-            <p class="text-sm text-muted-foreground">Minimal description</p>
-          </CardHeader>
-          <CardContent>
-            <p>This card has less content but same height using <code>className="h-80"</code>.</p>
-          </CardContent>
-          <CardFooter>
-            <Button variant="default" className="w-full">Action</Button>
-          </CardFooter>
-        </Card>
+                        <!-- Stats -->
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="relative flex w-16">
+                                <img
+                                    src="https://images.unsplash.com/photo-1494790108755-2616b6d8b8e4?w=32&h=32&fit=crop&crop=face"
+                                    class="relative z-30 w-8 h-8 border-2 border-white rounded-full"
+                                />
+                                <img
+                                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face"
+                                    class="z-20 w-8 h-8 -translate-x-4 border-2 border-white rounded-full"
+                                />
+                                <img
+                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face"
+                                    class="z-10 w-8 h-8 border-2 border-white rounded-full -translate-x-7"
+                                />
+                            </div>
+                            <span class="text-gray-600"
+                                ><strong>673</strong> Following</span
+                            >
+                            <span class="text-gray-600"
+                                ><strong>168K</strong> Followers</span
+                            >
+                        </div>
+                    </CardContent>
+                    <CardFooter>
+                        <Button variant="default" className="w-full"
+                            >Follow</Button
+                        >
+                    </CardFooter>
+                </Card>
 
-        <Card variant="elevated" className="max-w-sm h-80">
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Medium Content</h3>
-            <p class="text-sm text-muted-foreground">More detailed description here</p>
-          </CardHeader>
-          <CardContent>
-            <p>This card has medium amount of content that fills more space but still maintains consistent height.</p>
-          </CardContent>
-          <CardFooter className="gap-2">
-            <Button variant="outline" className="flex-1">Cancel</Button>
-            <Button variant="default" className="flex-1">Confirm</Button>
-          </CardFooter>
-        </Card>
-
-        <Card variant="outline" className="max-w-sm h-80">
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Long Content</h3>
-            <p class="text-sm text-muted-foreground">Very detailed description with lots of information</p>
-          </CardHeader>
-          <CardContent>
-            <p>This card has the most content with multiple lines of text to show how the layout handles overflow and maintains consistent card heights across the grid.</p>
-            <p class="text-sm text-gray-500 mt-2">Additional details here.</p>
-          </CardContent>
-          <CardFooter>
-            <Button variant="ghost" className="w-full">Read More</Button>
-          </CardFooter>
-        </Card>
-      </div>
-    </section>
-
-    <!-- Alpine.js Integration Demo -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-6">Alpine.js Integration</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        <!-- Expandable Card -->
-        <Card 
-          variant="shadow" 
-          x-data="{ expanded: false }"
-          className="max-w-md"
-        >
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Expandable Card</h3>
-            <p class="text-sm text-muted-foreground">Click to expand content</p>
-          </CardHeader>
-          <CardContent>
-            <p class="mb-3">Always visible content here.</p>
-            <div x-show="expanded" x-transition>
-              <p class="text-sm text-gray-600 mb-2">This content appears when expanded!</p>
-              <ul class="text-sm space-y-1">
-                <li>• Feature 1: Advanced functionality</li>
-                <li>• Feature 2: Premium support</li>
-                <li>• Feature 3: Extended warranty</li>
-              </ul>
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button 
-              variant="outline" 
-              @click="expanded = !expanded"
-              className="w-full"
-            >
-              <span x-text="expanded ? 'Show Less' : 'Show More'"></span>
-            </Button>
-          </CardFooter>
-        </Card>
-
-        <!-- Interactive Counter Card -->
-        <Card 
-          variant="elevated" 
-          x-data="{ count: 0, liked: false }"
-          className="max-w-md"
-        >
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Interactive Card</h3>
-            <p class="text-sm text-muted-foreground">Alpine.js state management</p>
-          </CardHeader>
-          <CardContent>
-            <div class="text-center space-y-4">
-              <div>
-                <span class="text-3xl font-bold" x-text="count"></span>
-                <p class="text-sm text-muted-foreground">Current count</p>
-              </div>
-              <div>
-                <button 
-                  @click="liked = !liked"
-                  :class="liked ? 'text-red-500' : 'text-gray-400'"
-                  class="text-2xl transition-colors"
+                <!-- Product Card with Image -->
+                <Card
+                    variant="elevated"
+                    imagePosition="top"
+                    className="max-w-sm"
                 >
-                  ♥
-                </button>
-                <p class="text-xs text-muted-foreground" x-text="liked ? 'Liked!' : 'Click to like'"></p>
-              </div>
+                    <Image
+                        slot="image"
+                        src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=240&fit=crop"
+                        aspectRatio="16/9"
+                        alt="Headphones"
+                    />
+                    <CardHeader>
+                        <h3 class="text-xl font-semibold">
+                            Wireless Headphones
+                        </h3>
+                        <p class="text-sm text-muted-foreground">
+                            Premium sound quality
+                        </p>
+                    </CardHeader>
+                    <CardContent>
+                        <p class="text-2xl font-bold text-primary mb-2">
+                            $199.99
+                        </p>
+                        <p class="text-sm text-gray-600">
+                            Free shipping • 2-year warranty
+                        </p>
+                    </CardContent>
+                    <CardFooter>
+                        <Button variant="default" className="w-full"
+                            >Add to Cart</Button
+                        >
+                    </CardFooter>
+                </Card>
+
+                <!-- Article Card -->
+                <Card
+                    variant="outline"
+                    imagePosition="top"
+                    className="max-w-sm"
+                >
+                    <Image
+                        slot="image"
+                        src="https://images.unsplash.com/photo-1486312338219-ce68e2c31de3?w=400&h=240&fit=crop"
+                        aspectRatio="16/9"
+                        alt="Laptop and coffee"
+                    />
+                    <CardHeader>
+                        <h3 class="text-lg font-semibold">
+                            Getting Started with Web Development
+                        </h3>
+                        <p class="text-sm text-muted-foreground">
+                            March 15, 2024
+                        </p>
+                    </CardHeader>
+                    <CardContent>
+                        <p class="text-sm text-gray-600">
+                            Learn the fundamentals of modern web development
+                            with this comprehensive guide.
+                        </p>
+                    </CardContent>
+                    <CardFooter>
+                        <Button variant="ghost" className="w-full"
+                            >Read More</Button
+                        >
+                    </CardFooter>
+                </Card>
             </div>
-          </CardContent>
-          <CardFooter className="gap-2">
-            <Button variant="outline" @click="count--" :disabled="count <= 0">-</Button>
-            <Button variant="ghost" @click="count = 0" className="flex-1">Reset</Button>
-            <Button variant="outline" @click="count++">+</Button>
-          </CardFooter>
-        </Card>
-      </div>
-    </section>
+        </section>
 
-    <!-- Custom Styling Demo -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-6">Custom Styling</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <Card variant="default" className="border-blue-200 max-w-sm">
-          <CardHeader className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-t-lg -m-px mb-0">
-            <h3 class="text-lg font-semibold">Custom Header</h3>
-            <p class="text-blue-100">Gradient background header</p>
-          </CardHeader>
-          <CardContent>
-            <p>Content with custom header styling.</p>
-          </CardContent>
-          <CardFooter>
-            <Button variant="outline" className="border-blue-500 text-blue-600 hover:bg-blue-50">Action</Button>
-          </CardFooter>
-        </Card>
+        <!-- Image Position Variations -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">
+                Image Position Variations
+            </h2>
+            <p class="text-sm text-muted-foreground mb-6">
+                Different image layout options
+            </p>
 
-        <Card variant="muted" className="max-w-sm">
-          <CardHeader>
-            <h3 class="text-lg font-semibold text-green-700">Success Card</h3>
-            <p class="text-sm text-green-600">Operation completed successfully</p>
-          </CardHeader>
-          <CardContent className="bg-green-50 rounded">
-            <div class="flex items-center gap-2 text-green-700">
-              <span class="text-green-500">✓</span>
-              <p>Your changes have been saved.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Image on Left -->
+                <Card
+                    variant="shadow"
+                    imagePosition="left"
+                    className="max-w-2xl"
+                >
+                    <Image
+                        slot="image"
+                        src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=200&h=160&fit=crop&crop=face"
+                        aspectRatio="4/3"
+                        className="w-32"
+                        alt="Profile"
+                    />
+                    <CardHeader>
+                        <h3 class="text-lg font-semibold">Sarah Chen</h3>
+                        <p class="text-sm text-muted-foreground">
+                            Senior Developer
+                        </p>
+                    </CardHeader>
+                    <CardContent>
+                        <p class="text-sm text-gray-600">
+                            Full-stack developer with 8 years of experience in
+                            React and Node.js. Passionate about creating
+                            scalable applications.
+                        </p>
+                    </CardContent>
+                    <CardFooter>
+                        <Button variant="outline" className="mr-2"
+                            >Message</Button
+                        >
+                        <Button variant="default">Connect</Button>
+                    </CardFooter>
+                </Card>
+
+                <!-- Image on Right -->
+                <Card
+                    variant="muted"
+                    imagePosition="right"
+                    className="max-w-2xl"
+                >
+                    <Image
+                        slot="image"
+                        src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=200&h=160&fit=crop"
+                        aspectRatio="4/3"
+                        className="w-32"
+                        alt="Baking"
+                    />
+                    <CardHeader>
+                        <h3 class="text-lg font-semibold">Artisan Bakery</h3>
+                        <p class="text-sm text-muted-foreground">
+                            Fresh daily • Local ingredients
+                        </p>
+                    </CardHeader>
+                    <CardContent>
+                        <p class="text-sm text-gray-600">
+                            Handcrafted breads and pastries made with locally
+                            sourced ingredients. Open 6 AM - 8 PM daily.
+                        </p>
+                    </CardContent>
+                    <CardFooter>
+                        <Button variant="default">Order Now</Button>
+                    </CardFooter>
+                </Card>
             </div>
-          </CardContent>
-        </Card>
+        </section>
 
-        <Card variant="outline" className="border-purple-200 max-w-sm">
-          <CardHeader>
-            <h3 class="text-lg font-semibold text-purple-700">Premium Plan</h3>
-            <p class="text-sm text-purple-600">Unlock all features</p>
-          </CardHeader>
-          <CardContent>
-            <div class="text-center">
-              <p class="text-3xl font-bold text-purple-700">$29</p>
-              <p class="text-sm text-gray-600">per month</p>
+        <!-- Layout Variations -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">Layout Variations</h2>
+
+            <!-- Wide Card -->
+            <Card variant="shadow" className="mb-6">
+                <CardHeader>
+                    <h3 class="text-xl font-semibold">Wide Layout Card</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Full-width card example
+                    </p>
+                </CardHeader>
+                <CardContent>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <h4 class="font-medium mb-2">Column 1</h4>
+                            <p class="text-sm text-gray-600">
+                                Content for first column goes here.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="font-medium mb-2">Column 2</h4>
+                            <p class="text-sm text-gray-600">
+                                Content for second column goes here.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="font-medium mb-2">Column 3</h4>
+                            <p class="text-sm text-gray-600">
+                                Content for third column goes here.
+                            </p>
+                        </div>
+                    </div>
+                </CardContent>
+                <CardFooter className="justify-between">
+                    <span class="text-sm text-muted-foreground"
+                        >Last updated: 2 hours ago</span
+                    >
+                    <div class="space-x-2">
+                        <Button variant="outline">Cancel</Button>
+                        <Button variant="default">Save Changes</Button>
+                    </div>
+                </CardFooter>
+            </Card>
+
+            <!-- Minimal Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card variant="ghost">
+                    <CardContent>
+                        <div class="text-center py-8">
+                            <h3 class="text-lg font-semibold mb-2">
+                                Minimal Card
+                            </h3>
+                            <p class="text-gray-600">
+                                Content-only layout without header or footer.
+                            </p>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <Card variant="default">
+                    <CardHeader>
+                        <h3 class="text-lg font-semibold">No Footer Card</h3>
+                    </CardHeader>
+                    <CardContent>
+                        <p>This card only has header and content sections.</p>
+                    </CardContent>
+                </Card>
             </div>
-          </CardContent>
-          <CardFooter>
-            <Button className="w-full bg-purple-600 hover:bg-purple-700">Upgrade Now</Button>
-          </CardFooter>
-        </Card>
-      </div>
-    </section>
-
-    <!-- Pine UI Style Cards -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-6">Pine UI Style Cards</h2>
-      <p class="text-sm text-muted-foreground mb-6">Cards with images using our new CardImage component and layout options</p>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <!-- Profile Card with Overlapping Avatar -->
-        <Card variant="shadow" imagePosition="top" className="max-w-sm">
-          <Image 
-            slot="image"
-            src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=200&fit=crop"
-            aspectRatio="16/9"
-            alt="Background"
-            overlay="bg-gradient-to-t from-black/20"
-            className="h-32"
-          />
-          <CardHeader className="text-center">
-            <!-- Profile avatar, name, and handle in header (semantic) -->
-            <div class="flex justify-center">
-              <div class="w-20 h-20 p-1 bg-white rounded-full shadow-lg">
-                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" class="w-full h-full rounded-full object-cover" />
-              </div>
-            </div>
-            <h3 class="text-lg font-semibold">Adam Wathan</h3>
-            <p class="text-sm text-muted-foreground">@adamwathan</p>
-          </CardHeader>
-          <CardContent className="text-center">
-            <p class="text-sm text-gray-600 mb-4">Creator of Tailwind CSS. Lover of great design and clean code.</p>
-            
-            <!-- Stats -->
-            <div class="flex items-center justify-between text-sm">
-              <div class="relative flex w-16">
-                <img src="https://images.unsplash.com/photo-1494790108755-2616b6d8b8e4?w=32&h=32&fit=crop&crop=face" class="relative z-30 w-8 h-8 border-2 border-white rounded-full" />
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" class="z-20 w-8 h-8 -translate-x-4 border-2 border-white rounded-full" />
-                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" class="z-10 w-8 h-8 border-2 border-white rounded-full -translate-x-7" />
-              </div>
-              <span class="text-gray-600"><strong>673</strong> Following</span>
-              <span class="text-gray-600"><strong>168K</strong> Followers</span>
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button variant="default" className="w-full">Follow</Button>
-          </CardFooter>
-        </Card>
-
-        <!-- Product Card with Image -->
-        <Card variant="elevated" imagePosition="top" className="max-w-sm">
-          <Image 
-            slot="image"
-            src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=240&fit=crop"
-            aspectRatio="16/9"
-            alt="Headphones"
-          />
-          <CardHeader>
-            <h3 class="text-xl font-semibold">Wireless Headphones</h3>
-            <p class="text-sm text-muted-foreground">Premium sound quality</p>
-          </CardHeader>
-          <CardContent>
-            <p class="text-2xl font-bold text-primary mb-2">$199.99</p>
-            <p class="text-sm text-gray-600">Free shipping • 2-year warranty</p>
-          </CardContent>
-          <CardFooter>
-            <Button variant="default" className="w-full">Add to Cart</Button>
-          </CardFooter>
-        </Card>
-
-        <!-- Article Card -->
-        <Card variant="outline" imagePosition="top" className="max-w-sm">
-          <Image 
-            slot="image"
-            src="https://images.unsplash.com/photo-1486312338219-ce68e2c31de3?w=400&h=240&fit=crop"
-            aspectRatio="16/9"
-            alt="Laptop and coffee"
-          />
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Getting Started with Web Development</h3>
-            <p class="text-sm text-muted-foreground">March 15, 2024</p>
-          </CardHeader>
-          <CardContent>
-            <p class="text-sm text-gray-600">Learn the fundamentals of modern web development with this comprehensive guide.</p>
-          </CardContent>
-          <CardFooter>
-            <Button variant="ghost" className="w-full">Read More</Button>
-          </CardFooter>
-        </Card>
-      </div>
-    </section>
-
-    <!-- Image Position Variations -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-6">Image Position Variations</h2>
-      <p class="text-sm text-muted-foreground mb-6">Different image layout options</p>
-      
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        <!-- Image on Left -->
-        <Card variant="shadow" imagePosition="left" className="max-w-2xl">
-          <Image 
-            slot="image"
-            src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=200&h=160&fit=crop&crop=face"
-            aspectRatio="4/3"
-            className="w-32"
-            alt="Profile"
-          />
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Sarah Chen</h3>
-            <p class="text-sm text-muted-foreground">Senior Developer</p>
-          </CardHeader>
-          <CardContent>
-            <p class="text-sm text-gray-600">Full-stack developer with 8 years of experience in React and Node.js. Passionate about creating scalable applications.</p>
-          </CardContent>
-          <CardFooter>
-            <Button variant="outline" className="mr-2">Message</Button>
-            <Button variant="default">Connect</Button>
-          </CardFooter>
-        </Card>
-
-        <!-- Image on Right -->
-        <Card variant="muted" imagePosition="right" className="max-w-2xl">
-          <Image 
-            slot="image"
-            src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=200&h=160&fit=crop"
-            aspectRatio="4/3"
-            className="w-32"
-            alt="Baking"
-          />
-          <CardHeader>
-            <h3 class="text-lg font-semibold">Artisan Bakery</h3>
-            <p class="text-sm text-muted-foreground">Fresh daily • Local ingredients</p>
-          </CardHeader>
-          <CardContent>
-            <p class="text-sm text-gray-600">Handcrafted breads and pastries made with locally sourced ingredients. Open 6 AM - 8 PM daily.</p>
-          </CardContent>
-          <CardFooter>
-            <Button variant="default">Order Now</Button>
-          </CardFooter>
-        </Card>
-      </div>
-    </section>
-
-    <!-- Layout Variations -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-6">Layout Variations</h2>
-      
-      <!-- Wide Card -->
-      <Card variant="shadow" className="mb-6">
-        <CardHeader>
-          <h3 class="text-xl font-semibold">Wide Layout Card</h3>
-          <p class="text-sm text-muted-foreground">Full-width card example</p>
-        </CardHeader>
-        <CardContent>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <h4 class="font-medium mb-2">Column 1</h4>
-              <p class="text-sm text-gray-600">Content for first column goes here.</p>
-            </div>
-            <div>
-              <h4 class="font-medium mb-2">Column 2</h4>
-              <p class="text-sm text-gray-600">Content for second column goes here.</p>
-            </div>
-            <div>
-              <h4 class="font-medium mb-2">Column 3</h4>
-              <p class="text-sm text-gray-600">Content for third column goes here.</p>
-            </div>
-          </div>
-        </CardContent>
-        <CardFooter className="justify-between">
-          <span class="text-sm text-muted-foreground">Last updated: 2 hours ago</span>
-          <div class="space-x-2">
-            <Button variant="outline">Cancel</Button>
-            <Button variant="default">Save Changes</Button>
-          </div>
-        </CardFooter>
-      </Card>
-
-      <!-- Minimal Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card variant="ghost">
-          <CardContent>
-            <div class="text-center py-8">
-              <h3 class="text-lg font-semibold mb-2">Minimal Card</h3>
-              <p class="text-gray-600">Content-only layout without header or footer.</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card variant="default">
-          <CardHeader>
-            <h3 class="text-lg font-semibold">No Footer Card</h3>
-          </CardHeader>
-          <CardContent>
-            <p>This card only has header and content sections.</p>
-          </CardContent>
-        </Card>
-      </div>
-    </section>
-  </main>
+        </section>
+    </main>
 </Layout>
