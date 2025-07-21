@@ -1,0 +1,62 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+  src: string;
+  alt?: string;
+  aspectRatio?: '1/1' | '4/3' | '16/9' | '3/2' | 'auto';
+  objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
+  overlay?: string;
+  loading?: 'lazy' | 'eager';
+  className?: string;
+  // Alpine.js pass-through
+  [key: string]: any;
+}
+
+const { 
+  src,
+  alt = '',
+  aspectRatio = 'auto',
+  objectFit = 'cover',
+  overlay,
+  loading = 'lazy',
+  className,
+  ...alpineProps
+} = Astro.props;
+
+const aspectRatioClasses = {
+  'auto': '',
+  '1/1': 'aspect-square',
+  '4/3': 'aspect-[4/3]',
+  '16/9': 'aspect-video',
+  '3/2': 'aspect-[3/2]'
+};
+
+const objectFitClasses = {
+  'cover': 'object-cover',
+  'contain': 'object-contain', 
+  'fill': 'object-fill',
+  'none': 'object-none',
+  'scale-down': 'object-scale-down'
+};
+---
+
+<div 
+  class={cn(
+    "relative overflow-hidden",
+    aspectRatioClasses[aspectRatio],
+    className
+  )}
+  {...alpineProps}
+>
+  <img 
+    src={src}
+    alt={alt}
+    loading={loading}
+    class={cn("w-full h-full", objectFitClasses[objectFit])}
+  />
+  {overlay && (
+    <div class={cn("absolute inset-0", overlay)}></div>
+  )}
+  <slot />
+</div>

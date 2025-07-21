@@ -1,0 +1,55 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+
+const cardVariants = cva(
+  "rounded-lg border text-card-foreground shadow-sm [&_.card-header]:relative [&_.card-content]:relative [&_.card-footer]:relative [&_.card-header>*:first-child]:relative [&_.card-header>*:first-child]:z-10 [&_.card-content>*:first-child]:relative [&_.card-content>*:first-child]:z-10 [&_.card-footer>*:first-child]:relative [&_.card-footer>*:first-child]:z-10",
+  {
+    variants: {
+      variant: {
+        default: "border-border bg-background",
+        outline: "border-2 border-border bg-background", 
+        shadow: "border-border bg-background shadow-md",
+        elevated: "border-border bg-background shadow-lg",
+        ghost: "border-transparent bg-transparent shadow-none",
+        muted: "border-border bg-muted"
+      },
+      imagePosition: {
+        none: "flex flex-col",
+        top: "flex flex-col [&_.card-header>*:first-child]:-mt-16 [&_.card-header>*:first-child]:mb-6 [&_.card-content>*:first-child]:-mt-16 [&_.card-content>*:first-child]:mb-6 [&_.card-footer>*:first-child]:-mt-16 [&_.card-footer>*:first-child]:mb-6",
+        left: "flex flex-row [&_.card-header>*:first-child]:-ml-16 [&_.card-header>*:first-child]:mr-6 [&_.card-content>*:first-child]:-ml-16 [&_.card-content>*:first-child]:mr-6 [&_.card-footer>*:first-child]:-ml-16 [&_.card-footer>*:first-child]:mr-6",
+        right: "flex flex-row-reverse [&_.card-header>*:first-child]:-mr-16 [&_.card-header>*:first-child]:ml-6 [&_.card-content>*:first-child]:-mr-16 [&_.card-content>*:first-child]:ml-6 [&_.card-footer>*:first-child]:-mr-16 [&_.card-footer>*:first-child]:ml-6",
+        bottom: "flex flex-col-reverse [&_.card-header>*:first-child]:-mb-16 [&_.card-header>*:first-child]:mt-6 [&_.card-content>*:first-child]:-mb-16 [&_.card-content>*:first-child]:mt-6 [&_.card-footer>*:first-child]:-mb-16 [&_.card-footer>*:first-child]:mt-6"
+      }
+    },
+    defaultVariants: {
+      variant: "default",
+      imagePosition: "none"
+    }
+  }
+);
+
+export interface Props extends VariantProps<typeof cardVariants> {
+  className?: string;
+  // Alpine.js pass-through
+  [key: string]: any;
+}
+
+const { 
+  variant,
+  imagePosition,
+  className,
+  ...alpineProps
+} = Astro.props;
+---
+
+
+<div 
+  class={cn(cardVariants({ variant, imagePosition }), "overflow-hidden", className)}
+  {...alpineProps}
+>
+  <slot name="image" />
+  <div class="flex flex-col flex-1">
+    <slot />
+  </div>
+</div>
