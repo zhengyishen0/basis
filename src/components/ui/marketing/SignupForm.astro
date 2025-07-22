@@ -1,0 +1,319 @@
+---
+/**
+ * SignupForm Component
+ *
+ * A comprehensive signup form with promotional content on the left and registration form on the right.
+ * Features a split-screen layout with customizable content, form validation, and social login options.
+ * Uses Pine UI components for form elements and buttons.
+ *
+ * Usage:
+ * ```astro
+ * <SignupForm
+ *   tagline="Work smarter"
+ *   headline="Features to help you work smarter"
+ *   description="We've created a simple formula to follow in order to gain more out of your business and your application."
+ *   ctaText="Get Started Today"
+ *   ctaUrl="/demo"
+ *   formTitle="Signup"
+ *   signInText="or, if you have an account you can"
+ *   signInLinkText="sign in"
+ *   signInUrl="/login"
+ *   includeGoogleSignup={true}
+ * />
+ * ```
+ */
+
+// Core components
+import { Button } from '../core';
+// Form components
+import { TextInput } from '../forms';
+
+export interface Props {
+    tagline?: string;
+    headline?: string;
+    description?: string;
+    ctaText?: string;
+    ctaUrl?: string;
+    formTitle?: string;
+    signInText?: string;
+    signInLinkText?: string;
+    signInUrl?: string;
+    namePlaceholder?: string;
+    emailPlaceholder?: string;
+    passwordPlaceholder?: string;
+    submitText?: string;
+    googleSignupText?: string;
+    includeGoogleSignup?: boolean;
+    actionUrl?: string;
+    primaryColor?: 'neutral' | 'blue' | 'green' | 'red' | 'yellow' | 'purple';
+    className?: string;
+}
+
+const {
+    tagline = 'Work smarter',
+    headline = 'Features to help you work smarter',
+    description = "We've created a simple formula to follow in order to gain more out of your business and your application.",
+    ctaText = 'Get Started Today',
+    ctaUrl = '/demo',
+    formTitle = 'Signup',
+    signInText = 'or, if you have an account you can',
+    signInLinkText = 'sign in',
+    signInUrl = '/login',
+    namePlaceholder = 'Enter Your Name',
+    emailPlaceholder = 'Enter Your Email Address',
+    passwordPlaceholder = 'Password',
+    submitText = 'Create Account',
+    googleSignupText = 'Sign up with Google',
+    includeGoogleSignup = true,
+    actionUrl = '/api/auth/signup',
+    primaryColor = 'blue' as const,
+    className = '',
+} = Astro.props;
+
+// Pine-compatible color mappings
+const linkColorMap = {
+    neutral: 'text-gray-600',
+    blue: 'text-blue-600',
+    green: 'text-green-600',
+    red: 'text-red-600',
+    yellow: 'text-yellow-600',
+    purple: 'text-purple-600',
+};
+
+const focusRingColorMap = {
+    neutral: 'focus:ring-gray-500',
+    blue: 'focus:ring-blue-500',
+    green: 'focus:ring-green-500',
+    red: 'focus:ring-red-500',
+    yellow: 'focus:ring-yellow-500',
+    purple: 'focus:ring-purple-500',
+};
+
+const linkColor = linkColorMap[primaryColor];
+const focusRingColor = focusRingColorMap[primaryColor];
+---
+
+<section class={`w-full bg-white ${className}`}>
+    <div class="mx-auto max-w-7xl">
+        <div class="flex flex-col lg:flex-row">
+            <!-- Left Promotional Content -->
+            <div
+                class="relative w-full bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-gray-100"
+            >
+                <div
+                    class="relative flex flex-col items-center justify-center w-full h-full px-10 my-20 lg:px-16 lg:my-0"
+                >
+                    <div
+                        class="flex flex-col items-start space-y-8 tracking-tight lg:max-w-3xl"
+                    >
+                        <div class="relative">
+                            <p class="mb-2 font-medium text-gray-700 uppercase">
+                                {tagline}
+                            </p>
+                            <h2
+                                class="text-5xl font-bold text-gray-900 xl:text-6xl"
+                            >
+                                {headline}
+                            </h2>
+                        </div>
+                        <p class="text-2xl text-gray-700">{description}</p>
+                        <Button
+                            href={ctaUrl}
+                            variant="solid"
+                            color={primaryColor}
+                            size="xl"
+                        >
+                            {ctaText}
+                        </Button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Form Section -->
+            <div class="w-full bg-white lg:w-6/12 xl:w-5/12">
+                <div
+                    class="flex flex-col items-start justify-start w-full h-full p-10 lg:p-16 xl:p-24"
+                >
+                    <h4 class="w-full text-3xl font-bold">{formTitle}</h4>
+                    <p class="text-lg text-gray-500">
+                        {signInText}
+                        <a href={signInUrl} class={`underline ${linkColor}`}>
+                            {signInLinkText}
+                        </a>
+                    </p>
+
+                    <div class="relative w-full mt-10 space-y-8">
+                        <form
+                            method="POST"
+                            action={actionUrl}
+                            hx-post={actionUrl}
+                            hx-target="#signup-result"
+                            hx-indicator="#signup-loading"
+                            x-data="signupForm()"
+                            @submit="handleSubmit"
+                        >
+                            <!-- Name Field -->
+                            <div class="relative">
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                >
+                                    Name
+                                    <span class="text-red-500 ml-1">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    required
+                                    x-model="form.name"
+                                    placeholder={namePlaceholder}
+                                    class={`w-full px-4 py-3 text-base transition-colors duration-200 focus:outline-none border-0 rounded-md bg-gray-100 focus:bg-white focus:ring-2 ${focusRingColor}`}
+                                />
+                            </div>
+
+                            <!-- Email Field -->
+                            <div class="relative">
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                >
+                                    Email
+                                    <span class="text-red-500 ml-1">*</span>
+                                </label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    required
+                                    x-model="form.email"
+                                    placeholder={emailPlaceholder}
+                                    class={`w-full px-4 py-3 text-base transition-colors duration-200 focus:outline-none border-0 rounded-md bg-gray-100 focus:bg-white focus:ring-2 ${focusRingColor}`}
+                                />
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="relative">
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                >
+                                    Password
+                                    <span class="text-red-500 ml-1">*</span>
+                                </label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    required
+                                    x-model="form.password"
+                                    placeholder={passwordPlaceholder}
+                                    class={`w-full px-4 py-3 text-base transition-colors duration-200 focus:outline-none border-0 rounded-md bg-gray-100 focus:bg-white focus:ring-2 ${focusRingColor}`}
+                                />
+                            </div>
+
+                            <!-- Submit Buttons -->
+                            <div class="relative">
+                                <Button
+                                    type="submit"
+                                    variant="solid"
+                                    color={primaryColor}
+                                    size="lg"
+                                    class="w-full"
+                                >
+                                    <span
+                                        class="htmx-indicator"
+                                        id="signup-loading"
+                                        style="display: none;"
+                                    >
+                                        <svg
+                                            class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <circle
+                                                class="opacity-25"
+                                                cx="12"
+                                                cy="12"
+                                                r="10"
+                                                stroke="currentColor"
+                                                stroke-width="4"></circle>
+                                            <path
+                                                class="opacity-75"
+                                                fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                            ></path>
+                                        </svg>
+                                        Creating Account...
+                                    </span>
+                                    <span class="htmx-indicator-default"
+                                        >{submitText}</span
+                                    >
+                                </Button>
+
+                                {
+                                    includeGoogleSignup && (
+                                        <Button
+                                            href="/auth/google"
+                                            variant="outline"
+                                            color="neutral"
+                                            size="lg"
+                                            class="w-full mt-3"
+                                        >
+                                            {googleSignupText}
+                                        </Button>
+                                    )
+                                }
+                            </div>
+                        </form>
+
+                        <!-- Form result container for HTMX responses -->
+                        <div id="signup-result" class="mt-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Alpine.js component for form handling
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('signupForm', () => ({
+            form: {
+                name: '',
+                email: '',
+                password: '',
+            },
+
+            handleSubmit(event) {
+                // Basic client-side validation
+                if (!this.form.name.trim()) {
+                    event.preventDefault();
+                    alert('Please enter your name');
+                    return;
+                }
+
+                if (!this.form.email.trim()) {
+                    event.preventDefault();
+                    alert('Please enter your email');
+                    return;
+                }
+
+                if (this.form.password.length < 6) {
+                    event.preventDefault();
+                    alert('Password must be at least 6 characters long');
+                    return;
+                }
+
+                // Form is valid, let HTMX handle the submission
+            },
+        }));
+    });
+</script>
+
+<style>
+    /* Custom styles for HTMX indicators */
+    .htmx-request .htmx-indicator {
+        display: inline !important;
+    }
+
+    .htmx-request .htmx-indicator-default {
+        display: none;
+    }
+</style>
