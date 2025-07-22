@@ -1,53 +1,42 @@
 ---
 import { cn } from '@/lib/utils';
+import { createLayoutComponent, type LayoutComponentProps, type VariantProps } from '@/lib/component-variants';
 
-export interface Props {
-  // Layout
-  align?: 'start' | 'center' | 'end' | 'stretch';
-  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
-  gap?: '1' | '2' | '3' | '4' | '6' | '8';
-  
-  // Sizing
+const columnVariants = createLayoutComponent(
+  'flex flex-col',
+  {
+    height: {
+      auto: '',
+      full: 'h-full',
+      screen: 'h-screen',
+      fit: 'h-fit'
+    },
+    width: {
+      auto: '',
+      full: 'w-full', 
+      fit: 'w-fit'
+    }
+  }
+);
+
+export interface Props extends LayoutComponentProps, VariantProps<typeof columnVariants> {
   height?: 'auto' | 'full' | 'screen' | 'fit';
   width?: 'auto' | 'full' | 'fit';
-  
-  // Visual styling
-  padding?: '2' | '3' | '4' | '6' | '8';
-  
-  class?: string;
-  [key: string]: any; // Alpine.js pass-through
 }
 
 const {
   align = 'stretch',
   justify = 'start',
-  gap = '4',
+  gap = 'md',
+  padding = 'none',
   height = 'auto',
   width = 'auto',
-  padding = '0',
   class: className = '',
   ...rest
 } = Astro.props;
 
 const classes = cn(
-  // Base column layout
-  'flex flex-col',
-  
-  // Alignment
-  `items-${align}`,
-  `justify-${justify}`,
-  
-  // Spacing
-  `gap-${gap}`,
-  padding !== '0' && `p-${padding}`,
-  
-  // Sizing
-  height === 'full' && 'h-full',
-  height === 'screen' && 'h-screen',
-  height === 'fit' && 'h-fit',
-  width === 'full' && 'w-full',
-  width === 'fit' && 'w-fit',
-  
+  columnVariants({ align, justify, gap, padding, height, width }),
   className
 );
 ---

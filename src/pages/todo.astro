@@ -42,7 +42,7 @@ const pageData = `{
 <Layout title={title}>
     <Page maxWidth="full" x-data={pageData} x-init="init()">
         <!-- Navigation Bar -->
-        <Row justify="grid" sticky padding="4" class="bg-white border-b">
+        <Row justify="grid" sticky p="md" class="bg-white border-b">
             <Button href="../" variant="default" size="sm">
                 Back to Home
             </Button>
@@ -133,7 +133,7 @@ const pageData = `{
                                 x-for="item in todo.filteredUserTodos"
                                 x-key="item.id"
                             >
-                                <Row interactive bordered padding="3" align="center" gap="3">
+                                <Row interactive bordered p="sm" align="center" gap="sm">
                                     <Checkbox
                                         :checked="item.is_complete"
                                         @change="todo.toggleTodo(item.id, $event.target.checked)"
@@ -186,7 +186,7 @@ const pageData = `{
                         <form
                             @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''"
                         >
-                            <Row gap="default">
+                            <Row gap="md">
                                 <TextInput
                                     x-ref="todoInput"
                                     type="text"
@@ -270,7 +270,7 @@ const pageData = `{
                                 x-for="item in todo.filteredAllTodos"
                                 x-key="item.id"
                             >
-                                <Row bordered padding="3" align="center" gap="3">
+                                <Row bordered p="sm" align="center" gap="sm">
                                     <Checkbox
                                         :checked="item.is_complete"
                                         style="pointer-events: none;"

@@ -1,18 +1,32 @@
 ---
 import { cn } from '@/lib/utils';
+import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
 import { ChevronDown, Plus, Minus } from 'lucide-astro';
 
-export interface Props {
+const accordionTriggerVariants = createUIComponent(
+  'flex items-center justify-between w-full font-semibold text-left select-none text-foreground',
+  {
+    variant: {
+      default: 'hover:text-foreground/80',
+      subtle: 'text-muted-foreground hover:text-foreground'
+    }
+  }
+);
+
+export interface Props extends UIComponentProps, VariantProps<typeof accordionTriggerVariants> {
   iconType?: 'chevron' | 'plus';
-  className?: string;
   text?: string;
-  [key: string]: any;
+  variant?: 'default' | 'subtle';
 }
 
 const {
   iconType = 'chevron',
-  className,
+  size,
+  padding = 'lg',
+  elevation,
+  variant = 'default',
   text,
+  class: className,
   ...alpineProps
 } = Astro.props;
 ---
@@ -21,7 +35,7 @@ const {
   @click="setActiveAccordion(id)"
   {...alpineProps}
   :class={`"${cn(
-    'flex items-center justify-between w-full px-5 py-4 font-semibold text-left select-none text-neutral-800',
+    accordionTriggerVariants({ size, padding, elevation, variant }),
     className
   )}"`}
   type="button"
@@ -42,17 +56,17 @@ const {
       {iconType === 'plus' ? (
         <div class="relative flex items-center justify-center">
           <Plus 
-            class="w-4 h-4 text-neutral-500 group-hover:text-neutral-800 transition-all duration-300"
+            class="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-all duration-300"
             :class="{ 'opacity-0': activeAccordion==id }"
           />
           <Minus 
-            class="absolute w-4 h-4 text-neutral-500 group-hover:text-neutral-800 transition-all duration-300"
+            class="absolute w-4 h-4 text-muted-foreground group-hover:text-foreground transition-all duration-300"
             :class="{ 'opacity-0': activeAccordion!=id }"
           />
         </div>
       ) : (
         <ChevronDown 
-          class="w-5 h-5 text-neutral-500 group-hover:text-neutral-800 transition-transform duration-200"
+          class="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-transform duration-200"
           :class="{ 'rotate-180': activeAccordion==id }"
         />
       )}

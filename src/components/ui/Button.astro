@@ -9,6 +9,9 @@ const buttonVariants = cva(
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        success: "bg-success text-success-foreground hover:bg-success/90",
+        warning: "bg-warning text-warning-foreground hover:bg-warning/90",
+        info: "bg-info text-info-foreground hover:bg-info/90",
         outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
@@ -19,11 +22,18 @@ const buttonVariants = cva(
         sm: "h-8 px-3 text-xs",
         lg: "h-11 px-8",
         icon: "h-9 w-9"
+      },
+      elevation: {
+        none: "shadow-none",
+        flat: "shadow-flat",
+        elevated: "shadow-elevated",
+        floating: "shadow-floating"
       }
     },
     defaultVariants: {
       variant: "default",
-      size: "default"
+      size: "default",
+      elevation: "none"
     }
   }
 );
@@ -40,6 +50,7 @@ export interface Props extends VariantProps<typeof buttonVariants> {
 const { 
   variant,
   size,
+  elevation,
   disabled = false,
   type = 'button',
   className,
@@ -69,7 +80,7 @@ Props: href (renders as <a> tag when provided)
   type={href ? undefined : type}
   href={href}
   disabled={href ? undefined : disabled}
-  class={cn(buttonVariants({ variant, size }), className)}
+  class={cn(buttonVariants({ variant, size, elevation }), className)}
   {...alpineProps}
 >
   <slot />

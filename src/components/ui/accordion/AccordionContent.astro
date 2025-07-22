@@ -1,15 +1,29 @@
 ---
 import { cn } from '@/lib/utils';
+import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
 
-export interface Props {
-  className?: string;
+const accordionContentVariants = createUIComponent(
+  'pt-0 text-muted-foreground',
+  {
+    variant: {
+      default: 'text-muted-foreground',
+      emphasized: 'text-foreground'
+    }
+  }
+);
+
+export interface Props extends UIComponentProps, VariantProps<typeof accordionContentVariants> {
   text?: string;
-  [key: string]: any;
+  variant?: 'default' | 'emphasized';
 }
 
 const {
-  className,
+  size,
+  padding = 'lg',
+  elevation,
+  variant = 'default',
   text,
+  class: className,
   ...alpineProps
 } = Astro.props;
 ---
@@ -21,7 +35,7 @@ const {
   {...alpineProps}
 >
   <div 
-    :class={`"${cn('p-5 pt-0 opacity-70', className)}"`}
+    :class={`"${cn(accordionContentVariants({ size, padding, elevation, variant }), className)}"`}
   >
     {text ? (
       <span x-text={text}></span>

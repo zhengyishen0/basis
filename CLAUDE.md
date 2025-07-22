@@ -9,7 +9,7 @@ My tech stack is:
 
 # Component Development Reminder
 
-**ALWAYS READ**: Component development guide at `/src/components/ui/COMPONENT_GUIDE.md`
+**ALWAYS READ**: Component development guide at `/COMPONENT_GUIDE_COMPRESSED.md`
 **AND MUST FOLLOW THE GUIDE !!!!**
 
 **Component Locations**:

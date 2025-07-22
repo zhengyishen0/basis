@@ -1,49 +1,39 @@
 ---
 import { cn } from '@/lib/utils';
+import { createLayoutComponent, type LayoutComponentProps, type VariantProps } from '@/lib/component-variants';
 
-export interface Props {
+const gridVariants = createLayoutComponent(
+  'grid',
+  {
+    columns: {
+      auto: 'grid-cols-[repeat(auto-fit,minmax(280px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]',
+      1: 'grid-cols-1',
+      2: 'grid-cols-1 md:grid-cols-2', 
+      3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+      4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
+      5: 'grid-cols-1 md:grid-cols-3 lg:grid-cols-5',
+      6: 'grid-cols-2 md:grid-cols-4 lg:grid-cols-6',
+      12: 'grid-cols-4 md:grid-cols-8 lg:grid-cols-12'
+    }
+  }
+);
+
+export interface Props extends LayoutComponentProps, VariantProps<typeof gridVariants> {
   columns?: 'auto' | '1' | '2' | '3' | '4' | '5' | '6' | '12';
-  gap?: '0' | '2' | '4' | '6' | '8';
-  align?: 'start' | 'center' | 'end' | 'stretch';
-  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
-  class?: string;
-  [key: string]: any; // Alpine.js pass-through
 }
 
 const { 
   columns = 'auto',
-  gap = '4',
-  align = 'stretch',
-  justify = 'start',
+  gap,
+  padding,
+  align,
+  justify,
   class: className = '',
   ...rest
 } = Astro.props;
 
 const classes = cn(
-  // Base grid
-  'grid',
-  
-  // Column variants
-  columns === 'auto' && 'grid-cols-[repeat(auto-fit,minmax(280px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]',
-  columns === '1' && 'grid-cols-1',
-  columns === '2' && 'grid-cols-1 md:grid-cols-2',
-  columns === '3' && 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-  columns === '4' && 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
-  columns === '5' && 'grid-cols-1 md:grid-cols-3 lg:grid-cols-5',
-  columns === '6' && 'grid-cols-2 md:grid-cols-4 lg:grid-cols-6',
-  columns === '12' && 'grid-cols-4 md:grid-cols-8 lg:grid-cols-12',
-  
-  // Gap variants
-  gap === '0' && 'gap-0',
-  gap === '2' && 'gap-2',
-  gap === '4' && 'gap-4',
-  gap === '6' && 'gap-6',
-  gap === '8' && 'gap-8',
-  
-  // Alignment
-  `items-${align}`,
-  `justify-${justify}`,
-  
+  gridVariants({ columns, gap, padding, align, justify }),
   className
 );
 ---

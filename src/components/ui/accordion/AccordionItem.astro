@@ -1,15 +1,30 @@
 ---
 import { cn } from '@/lib/utils';
+import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
 
-export interface Props {
+const accordionItemVariants = createUIComponent(
+  'duration-200 ease-out bg-background border border-border rounded-md cursor-pointer group mb-2',
+  {
+    variant: {
+      default: 'bg-background border-border',
+      elevated: 'bg-background border-border shadow-elevated',
+      flat: 'bg-background border-border shadow-flat'
+    }
+  }
+);
+
+export interface Props extends UIComponentProps, VariantProps<typeof accordionItemVariants> {
   value?: string;
-  className?: string;
-  [key: string]: any;
+  variant?: 'default' | 'elevated' | 'flat';
 }
 
 const {
   value,
-  className,
+  size,
+  padding = 'none',
+  elevation,
+  variant = 'default',
+  class: className,
   ...alpineProps
 } = Astro.props;
 ---
@@ -18,7 +33,7 @@ const {
   x-data="{ id: $id('accordion') }"
   {...alpineProps}
   :class={`"${cn(
-    'duration-200 ease-out bg-white border border-neutral-200/60 rounded-md cursor-pointer group mb-2',
+    accordionItemVariants({ size, padding, elevation, variant }),
     className
   )}"`}
   x-cloak

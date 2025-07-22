@@ -1,30 +1,41 @@
 ---
 import { cn } from '@/lib/utils';
+import { createLayoutComponent, type LayoutComponentProps, type VariantProps } from '@/lib/component-variants';
 
-export interface Props {
-  padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
-  class?: string;
-  [key: string]: any; // Alpine.js pass-through
+const sectionVariants = createLayoutComponent(
+  '',
+  {
+    tag: {
+      section: '',
+      div: '',
+      article: '',
+      aside: ''
+    }
+  }
+);
+
+export interface Props extends LayoutComponentProps, VariantProps<typeof sectionVariants> {
+  tag?: 'section' | 'div' | 'article' | 'aside';
 }
 
 const {
-  padding = 'md',
+  tag = 'section',
+  gap,
+  padding = 'lg',
+  justify,
+  align,
   class: className = '',
   ...rest
 } = Astro.props;
 
 const classes = cn(
-  // Responsive padding variants
-  padding === 'none' && '',
-  padding === 'sm' && 'py-4 px-3 md:py-6 md:px-4 lg:py-8 lg:px-6',
-  padding === 'md' && 'py-6 px-4 md:py-8 md:px-6 lg:py-12 lg:px-8',
-  padding === 'lg' && 'py-8 px-6 md:py-12 md:px-8 lg:py-16 lg:px-12',
-  padding === 'xl' && 'py-12 px-8 md:py-16 md:px-12 lg:py-24 lg:px-16',
-  
+  sectionVariants({ tag, gap, padding, justify, align }),
   className
 );
+
+const Tag = tag;
 ---
 
-<section class={classes} {...rest}>
+<Tag class={classes} {...rest}>
   <slot />
-</section>
+</Tag>

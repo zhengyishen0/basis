@@ -1,58 +1,67 @@
 ---
 import { cn } from '@/lib/utils';
+import { createLayoutComponent, type LayoutComponentProps, type VariantProps } from '@/lib/component-variants';
 
-export interface Props {
-  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly' | 'grid';
-  align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
-  gap?: '1' | '2' | '3' | '4' | '6' | '8';
+const rowVariants = createLayoutComponent(
+  'flex flex-row',
+  {
+    wrap: {
+      true: 'flex-wrap',
+      false: ''
+    },
+    interactive: {
+      true: 'cursor-pointer hover:bg-gray-50 transition-colors',
+      false: ''
+    },
+    bordered: {
+      true: 'border-b border-gray-200', 
+      false: ''
+    },
+    sticky: {
+      true: 'sticky top-0 z-40',
+      false: ''
+    },
+    grid: {
+      true: 'grid grid-cols-[auto_1fr_auto] [&>:nth-child(2)]:justify-self-center',
+      false: ''
+    }
+  }
+);
+
+export interface Props extends LayoutComponentProps, VariantProps<typeof rowVariants> {
   wrap?: boolean;
-  
-  // Visual styling
-  padding?: '2' | '3' | '4' | '6' | '8';
   interactive?: boolean;
   bordered?: boolean;
   sticky?: boolean;
-  
-  class?: string;
-  [key: string]: any; // Alpine.js pass-through
+  grid?: boolean;
 }
 
 const {
   justify = 'start',
-  align = 'center',
-  gap = '4',
+  align = 'center', 
+  gap = 'md',
+  padding = 'none',
   wrap = false,
-  padding = '0',
   interactive = false,
   bordered = false,
   sticky = false,
+  grid = justify === 'grid',
   class: className = '',
   ...rest
 } = Astro.props;
 
-const useGrid = justify === 'grid';
-const useFlexbox = justify !== 'grid';
-
 const classes = cn(
-  // Layout method
-  useGrid && 'grid grid-cols-[auto_1fr_auto] items-center',
-  useGrid && '[&>:nth-child(2)]:justify-self-center',
-  useFlexbox && 'flex flex-row',
-  
-  // Flexbox properties
-  useFlexbox && `items-${align}`,
-  useFlexbox && `justify-${justify}`,
-  useFlexbox && wrap && 'flex-wrap',
-  
-  // Spacing
-  `gap-${gap}`,
-  padding !== '0' && `p-${padding}`,
-  
-  // Visual states
-  interactive && 'cursor-pointer hover:bg-gray-50 transition-colors',
-  bordered && 'border-b border-gray-200',
-  sticky && 'sticky top-0 z-40',
-  
+  rowVariants({ 
+    justify: grid ? 'start' : justify, 
+    align, 
+    gap, 
+    padding, 
+    wrap, 
+    interactive, 
+    bordered, 
+    sticky, 
+    grid 
+  }),
   className
 );
 ---
