@@ -1,53 +1,35 @@
 ---
 import { cn } from '@/lib/utils';
 import {
-    createLayoutComponent,
-    type LayoutComponentProps,
-    type VariantProps,
+    createContentComponent,
+    type ContentComponentProps,
+    universalVariants
 } from '@/lib/component-variants';
 
-const listVariants = createLayoutComponent(
-    'flex flex-col overflow-y-auto flex-1 min-h-0',
-    {
-        maxHeight: {
-            none: '',
-            32: 'max-h-32',
-            48: 'max-h-48',
-            64: 'max-h-64',
-            96: 'max-h-96',
-            screen: 'max-h-screen',
-        },
-        divided: {
-            true: 'divide-y divide-gray-200',
-            false: '',
-        },
+const listVariants = createContentComponent('flex flex-col items-stretch max-h-screen', {
+    overflow: {
+        scroll: universalVariants.overflow.scrollY, // Vertical scroll for lists
+        extend: universalVariants.overflow.extend,  // Content spills out
     }
-);
+});
 
-export interface Props
-    extends LayoutComponentProps,
-        VariantProps<typeof listVariants> {
-    maxHeight?: 'none' | '32' | '48' | '64' | '96' | 'screen';
-    divided?: boolean;
+export interface Props extends ContentComponentProps {
+    overflow?: 'scroll' | 'extend';
 }
 
 const {
     gap = 'xs',
-    padding = 'none',
-    maxHeight = 'none',
-    divided = false,
-    justify,
-    align,
+    overflow = 'scroll',
     class: className = '',
-    ...rest
+    ...alpineProps
 } = Astro.props;
 
 const classes = cn(
-    listVariants({ gap, padding, maxHeight, divided, justify, align }),
+    listVariants({ gap, overflow }),
     className
 );
 ---
 
-<div class={classes} {...rest}>
+<div class={classes} {...alpineProps}>
     <slot />
 </div>

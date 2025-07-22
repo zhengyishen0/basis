@@ -1,8 +1,8 @@
 ---
 import { cn } from '@/lib/utils';
-import { createLayoutComponent, type LayoutComponentProps, type VariantProps } from '@/lib/component-variants';
+import { createContentComponent, type ContentComponentProps, type VariantProps, universalVariants } from '@/lib/component-variants';
 
-const gridVariants = createLayoutComponent(
+const gridVariants = createContentComponent(
   'grid',
   {
     columns: {
@@ -14,36 +14,33 @@ const gridVariants = createLayoutComponent(
       5: 'grid-cols-1 md:grid-cols-3 lg:grid-cols-5',
       6: 'grid-cols-2 md:grid-cols-4 lg:grid-cols-6',
       12: 'grid-cols-4 md:grid-cols-8 lg:grid-cols-12'
+    },
+    overflow: {
+      scroll: universalVariants.overflow.scroll, // Both directions for grid
+      extend: universalVariants.overflow.extend, // Content spills out
     }
   }
 );
 
-export interface Props extends LayoutComponentProps, VariantProps<typeof gridVariants> {
+export interface Props extends ContentComponentProps, VariantProps<typeof gridVariants> {
   columns?: 'auto' | '1' | '2' | '3' | '4' | '5' | '6' | '12';
+  overflow?: 'scroll' | 'extend';
 }
 
 const { 
   columns = 'auto',
   gap,
-  padding,
-  align,
-  justify,
+  overflow = 'scroll',
   class: className = '',
-  ...rest
+  ...alpineProps
 } = Astro.props;
 
 const classes = cn(
-  gridVariants({ columns, gap, padding, align, justify }),
+  gridVariants({ columns, gap, overflow }),
   className
 );
 ---
 
-<div class={classes} {...rest}>
-  {rest['x-for'] ? (
-    <template x-for={rest['x-for']} :key={rest['x-key']}>
-      <slot />
-    </template>
-  ) : (
-    <slot />
-  )}
+<div class={classes} {...alpineProps}>
+  <slot />
 </div>

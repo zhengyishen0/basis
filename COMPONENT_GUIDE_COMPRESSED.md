@@ -44,11 +44,38 @@
 
 ## **Universal Design System**
 
+### **Layout System Principles:**
+
+**Content-Driven Components (List, Grid, Inline):**
+- Only have `gap` property for spacing between items
+- Size determined by internal elements
+- Have sensible default constraints (easily overridable with Tailwind)
+- Handle dynamic/data-driven content
+- Logical overflow behaviors:
+  - **List**: `scroll` (vertical scroll), `extend` (spill out) + default `max-h-screen`
+  - **Grid**: `scroll` (both directions), `extend` (spill out)  
+  - **Inline**: `scroll` (horizontal scroll), `extend` (spill out), `wrap` (wrap to new rows) + default `max-w-full`
+
+**Layout-Driven Components (Column, Row):**
+- Only have `justify` and `align` properties  
+- No gap or padding
+- Take up available space from parent container
+- Handle static layout positioning
+- Logical overflow behaviors:
+  - **Row**: `shrink` (default flex), `wrap` (wrap to rows)
+  - **Column**: `shrink` (default flex), `extend` (content extends beyond)
+
+
+**UI Components (Card, Button, Badge, etc.):**
+- Have `padding` and `margin` properties (default to none/0)
+- Default to fixed size
+- Overflow options: `hidden` (default), `extend`, `horizontal`, `vertical`
+
 ### **Spacing Principles:**
 
-- Gap for layout components (Row, Column, Grid)
-- Padding for UI components (Button, Card, Input)
-- Margin left for developer utility classes
+- Gap for content-driven components only
+- Padding/margin for UI components only
+- Layout-driven components have no spacing properties
 
 ### **Theme Principles:**
 
@@ -118,7 +145,13 @@ const componentVariants = cva("base-classes", {
 
 ### **Factory Functions:**
 
-**Layout Components:**
+**Content-Driven Components:**
+```astro
+import { createContentComponent } from '@/lib/component-variants'
+const variants = createContentComponent('base-classes', { custom: {...} })
+```
+
+**Layout-Driven Components:**
 ```astro
 import { createLayoutComponent } from '@/lib/component-variants'
 const variants = createLayoutComponent('base-classes', { custom: {...} })
@@ -132,8 +165,16 @@ const variants = createUIComponent('base-classes', { variant: {...} })
 
 ### **Universal Props:**
 
-**Layout:** `gap`, `padding`, `justify`, `align`  
-**UI:** `size`, `padding`, `elevation`
+**Content-Driven:** `gap` + component-specific overflow options
+- **List**: `gap`, `overflow` (scroll/extend) + default `max-h-screen`
+- **Grid**: `gap`, `overflow` (scroll/extend) 
+- **Inline**: `gap`, `overflow` (scroll/extend/wrap) + default `max-w-full`
+
+**Layout-Driven:** `justify`, `align` + component-specific overflow options
+- **Row**: `justify`, `align`, `overflow` (shrink/wrap)
+- **Column**: `justify`, `align`, `overflow` (shrink/extend)
+
+**UI:** `size`, `padding`, `margin`, `elevation`, `overflow` (hidden/extend/horizontal/vertical)
 
 ### **Factory Benefits:**
 
@@ -142,18 +183,69 @@ const variants = createUIComponent('base-classes', { variant: {...} })
 - Type safety with VariantProps
 - Reduced boilerplate vs manual CVA
 
-### **Implementation:**
+### **Implementation Examples:**
 
+**Content Component:**
 ```astro
-export interface Props extends LayoutComponentProps, VariantProps<typeof variants> {
+// List example
+const listVariants = createContentComponent('flex flex-col', {
+    overflow: {
+        scroll: universalVariants.overflow.scrollY, // Vertical scroll
+        extend: universalVariants.overflow.extend,  // Content spills out
+    }
+});
+
+export interface Props extends ContentComponentProps {
+    overflow?: 'scroll' | 'extend';
+}
+const { gap, overflow, class: className, ...alpineProps } = Astro.props
+<div class={cn(listVariants({ gap, overflow }), className)} {...alpineProps}>
+```
+
+**Layout Component:**
+```astro
+// Row example  
+const rowVariants = createLayoutComponent('flex flex-row', {
+    justify: {
+        ...universalVariants.justify,
+        grid: 'grid grid-cols-[1fr_auto_1fr] [&>:nth-child(1)]:justify-self-start [&>:nth-child(2)]:justify-self-center [&>:nth-child(3)]:justify-self-end',
+    },
+    overflow: {
+        shrink: universalVariants.overflow.shrink,  // Default flex shrink
+        wrap: universalVariants.overflow.wrap,      // Wrap to new rows
+        scroll: universalVariants.overflow.scrollX, // Horizontal scroll
+    }
+});
+
+export interface Props extends LayoutComponentProps {
+    justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly' | 'grid';
+    overflow?: 'shrink' | 'wrap' | 'scroll';
+}
+const { justify, align, overflow, class: className, ...alpineProps } = Astro.props
+<div class={cn(rowVariants({ justify, align, overflow }), className)} {...alpineProps}>
+```
+
+**UI Component:**
+```astro
+export interface Props extends UIComponentProps, VariantProps<typeof variants> {
   customProp?: string
 }
-const { gap, padding, justify, align, customProp, class: className, ...rest } = Astro.props
-<div class={cn(variants({ gap, padding, justify, align, customProp }), className)} {...rest}>
+const { size, padding, margin, elevation, overflow, customProp, class: className, ...alpineProps } = Astro.props
+<div class={cn(variants({ size, padding, margin, elevation, overflow, customProp }), className)} {...alpineProps}>
 ```
 
 ## **Component Status**
 
-**✅ Compliant:** Row, Column, List, Grid, Page, Section, Button, Badge, Accordion  
-**⚠️ Needs Migration:** Card, Alert, TextInput, Modal  
-**❌ Critical:** Components using hardcoded colors vs theme tokens
+**✅ New Layout System Compliant:** 
+- Content-Driven: List (max-h-screen), Grid, Inline (max-w-full)
+- Layout-Driven: Row (shrink/wrap), Column (shrink/extend)
+- UI Components: Card, CardHeader, CardContent, CardFooter, Button, Badge, Alert, Navbar (moved to display)
+
+**⚠️ Needs Migration:** TextInput, Modal, Table, Command, and remaining UI components
+**❌ Critical:** Marketing components using inline margins instead of layout wrappers
+
+**Key Improvements Made:**
+- Clear role separation: Dynamic content vs Static layout
+- Default constraints prevent common overflow issues  
+- Navbar moved to display (UI component with padding/elevation)
+- Tailwind override strategy for customization

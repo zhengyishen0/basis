@@ -1,0 +1,246 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Page from '@/components/ui/layout/Page.astro';
+import Section from '@/components/ui/layout/Section.astro';
+import Column from '@/components/ui/layout/Column.astro';
+import Row from '@/components/ui/layout/Row.astro';
+import Grid from '@/components/ui/layout/Grid.astro';
+import List from '@/components/ui/layout/List.astro';
+import Inline from '@/components/ui/layout/Inline.astro';
+import Navbar from '@/components/ui/display/Navbar.astro';
+import Card from '@/components/ui/display/Card.astro';
+import CardHeader from '@/components/ui/display/CardHeader.astro';
+import CardContent from '@/components/ui/display/CardContent.astro';
+import CardFooter from '@/components/ui/display/CardFooter.astro';
+import Button from '@/components/ui/forms/Button.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+import Alert from '@/components/ui/feedback/Alert.astro';
+import { ChevronRight, Star, Users, Activity } from 'lucide-astro';
+---
+
+<Layout title="Layout System Test">
+  <Page maxWidth="container">
+    <Column gap="xl" class="py-8">
+      
+      <!-- Alert for testing -->
+      <Alert variant="soft-blue" title="New Layout System">
+        This page demonstrates the new layout system with content-driven, layout-driven, and UI components.
+      </Alert>
+
+      <!-- Content-Driven Components Test -->
+      <Section>
+        <Column gap="md">
+          <h1 class="text-3xl font-bold">Content-Driven Components</h1>
+          <p class="text-gray-600">These components only have gap property and manage content spacing</p>
+          
+          <!-- Inline Component Test -->
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Inline Component (with wrap)</h2>
+            <Inline gap="sm" overflow="wrap">
+              <Badge>Tag 1</Badge>
+              <Badge variant="secondary">Tag 2</Badge>
+              <Badge variant="success">Tag 3</Badge>
+              <Badge variant="warning">Tag 4</Badge>
+              <Badge variant="info">Tag 5</Badge>
+              <Badge variant="destructive">Tag 6</Badge>
+              <Badge>Tag 7</Badge>
+              <Badge variant="secondary">Tag 8</Badge>
+            </Inline>
+          </div>
+
+          <!-- Grid Component Test -->
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Grid Component (3 columns)</h2>
+            <Grid columns="3" gap="md">
+              <Card padding="md">
+                <CardHeader>
+                  <Star class="w-8 h-8 mx-auto text-yellow-500" />
+                </CardHeader>
+                <CardContent>
+                  <h3 class="font-semibold text-center">Feature 1</h3>
+                  <p class="text-sm text-gray-600 text-center">Content-driven grid with gap</p>
+                </CardContent>
+              </Card>
+              <Card padding="md">
+                <CardHeader>
+                  <Users class="w-8 h-8 mx-auto text-blue-500" />
+                </CardHeader>
+                <CardContent>
+                  <h3 class="font-semibold text-center">Feature 2</h3>
+                  <p class="text-sm text-gray-600 text-center">Auto-responsive columns</p>
+                </CardContent>
+              </Card>
+              <Card padding="md">
+                <CardHeader>
+                  <Activity class="w-8 h-8 mx-auto text-green-500" />
+                </CardHeader>
+                <CardContent>
+                  <h3 class="font-semibold text-center">Feature 3</h3>
+                  <p class="text-sm text-gray-600 text-center">Overflow scrolls by default</p>
+                </CardContent>
+              </Card>
+            </Grid>
+          </div>
+
+          <!-- List Component Test -->
+          <div>
+            <h2 class="text-xl font-semibold mb-4">List Component (default max-h-screen, can override)</h2>
+            <List gap="xs" overflow="scroll" class="max-h-32 border border-gray-200 p-4">
+              <div class="py-2 border-b border-gray-100">List item 1 - Long content shows vertical scrolling</div>
+              <div class="py-2 border-b border-gray-100">List item 2 - Default max-h-screen, overridden to max-h-32</div>
+              <div class="py-2 border-b border-gray-100">List item 3</div>
+              <div class="py-2 border-b border-gray-100">List item 4</div>
+              <div class="py-2 border-b border-gray-100">List item 5</div>
+              <div class="py-2 border-b border-gray-100">List item 6</div>
+              <div class="py-2 border-b border-gray-100">List item 7</div>
+              <div class="py-2">List item 8</div>
+            </List>
+          </div>
+        </Column>
+      </Section>
+
+      <!-- Layout-Driven Components Test -->
+      <Section>
+        <Column gap="md">
+          <h1 class="text-3xl font-bold">Layout-Driven Components</h1>
+          <p class="text-gray-600">These components only have justify/align properties for positioning</p>
+          
+          <!-- Navbar Component Test (Now a UI Component) -->
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Navbar Component (moved to display - has padding/elevation)</h2>
+            <Column gap="sm">
+              <div>
+                <h3 class="font-medium mb-2">App Header with elevation</h3>
+                <Navbar padding="lg" elevation="elevated" class="bg-white rounded">
+                  <template slot="left">
+                    <Button variant="ghost" size="sm">Menu</Button>
+                  </template>
+                  
+                  <h3 class="font-semibold">My Application</h3>
+                  
+                  <template slot="right">
+                    <Button size="sm">Sign In</Button>
+                  </template>
+                </Navbar>
+              </div>
+              
+              <div>
+                <h3 class="font-medium mb-2">Card Header with border</h3>
+                <Navbar padding="md" class="border border-gray-200 rounded bg-gray-50">
+                  <template slot="left">
+                    <Button variant="ghost" size="sm">←</Button>
+                  </template>
+                  
+                  Settings
+                  
+                  <template slot="right">
+                    <Button variant="ghost" size="sm">×</Button>
+                  </template>
+                </Navbar>
+              </div>
+              
+              <div>
+                <h3 class="font-medium mb-2">Floating navbar</h3>
+                <Navbar padding="xl" elevation="floating" class="bg-white rounded-lg">
+                  <h2 class="text-lg font-semibold">Centered Title</h2>
+                </Navbar>
+              </div>
+            </Column>
+          </div>
+
+          <!-- Row Component Tests -->
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Row Component (static layout only)</h2>
+            <Column gap="sm">
+              <div>
+                <h3 class="font-medium mb-2">Row with justify="between"</h3>
+                <Row justify="between" align="center" class="w-full p-4 bg-gray-100 rounded">
+                  <Button size="sm">Left</Button>
+                  <Button size="sm">Right</Button>
+                </Row>
+              </div>
+              <div>
+                <h3 class="font-medium mb-2">Row with overflow="wrap" (when content doesn't fit)</h3>
+                <Row justify="start" align="center" overflow="wrap" class="w-64 p-4 bg-gray-100 rounded">
+                  <Button size="sm">Button 1</Button>
+                  <Button size="sm">Long Button 2</Button>
+                  <Button size="sm">Button 3</Button>
+                  <Button size="sm">Button 4</Button>
+                </Row>
+              </div>
+            </Column>
+          </div>
+
+          <!-- Column Component Test -->
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Column Component (static layout, can extend or shrink)</h2>
+            <div class="flex gap-4">
+              <Column align="stretch" class="flex-1 p-4 bg-gray-100 rounded">
+                <Button>Full Width</Button>
+                <Button variant="outline">Stretched</Button>
+              </Column>
+              <Column align="center" overflow="extend" class="flex-1 p-4 bg-gray-100 rounded">
+                <Button>Centered</Button>
+                <Button variant="outline">Items</Button>
+                <p class="text-xs text-gray-500">overflow="extend"</p>
+              </Column>
+            </div>
+          </div>
+        </Column>
+      </Section>
+
+      <!-- UI Components Test -->
+      <Section>
+        <Column gap="md">
+          <h1 class="text-3xl font-bold">UI Components</h1>
+          <p class="text-gray-600">These components have padding/margin (default none) and overflow options</p>
+          
+          <!-- Card with different paddings -->
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Cards with Different Paddings</h2>
+            <Grid columns="3" gap="md">
+              <Card padding="none">
+                <CardContent padding="sm">
+                  <p class="text-sm">Card with no padding, content with sm padding</p>
+                </CardContent>
+              </Card>
+              <Card padding="md">
+                <CardContent padding="none">
+                  <p class="text-sm">Card with md padding, content with no padding</p>
+                </CardContent>
+              </Card>
+              <Card padding="lg">
+                <CardContent padding="xs">
+                  <p class="text-sm">Card with lg padding, content with xs padding</p>
+                </CardContent>
+              </Card>
+            </Grid>
+          </div>
+
+          <!-- Buttons with margins -->
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Buttons (margin defaults to none)</h2>
+            <Row justify="start" align="center" class="gap-2">
+              <Button>Default Button</Button>
+              <Button variant="secondary" margin="sm">With Margin</Button>
+              <Button variant="outline" elevation="elevated">Elevated</Button>
+              <Button variant="destructive" size="sm">Small</Button>
+            </Row>
+          </div>
+
+          <!-- Badge variations -->
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Badges with Different Sizes</h2>
+            <Inline gap="sm">
+              <Badge sizeOverride="sm">Small</Badge>
+              <Badge>Default</Badge>
+              <Badge sizeOverride="lg">Large</Badge>
+              <Badge variant="success" padding="md">Custom Padding</Badge>
+            </Inline>
+          </div>
+        </Column>
+      </Section>
+
+    </Column>
+  </Page>
+</Layout>

@@ -7,6 +7,7 @@ import {
     CardHeader,
     CardContent,
     CardFooter,
+    Navbar,
 } from '../components/ui/display';
 import {
     Column,
@@ -16,6 +17,7 @@ import {
     Row,
     Spacer,
     Conditional,
+    Inline,
 } from '../components/ui/layout';
 import { Empty, Error, Loading } from '../components/ui/feedback';
 import Text from '../components/ui/display/Text.astro';
@@ -45,20 +47,22 @@ const pageData = `{
 <Layout title={title}>
     <Page maxWidth="full" x-data={pageData} x-init="init()">
         <!-- Navigation Bar -->
-        <Row justify="grid" sticky padding="md" class="bg-white border-b">
-            <Button href="../" variant="default" size="sm">
-                Back to Home
-            </Button>
+        <Navbar class="bg-white border-b">
+            <Button slot="left" href="../" size="sm"> Back to Home </Button>
             <Text variant="section-title"> Supabase Todo App </Text>
             <Spacer />
-        </Row>
+        </Navbar>
 
         <!-- Main Content -->
         <Conditional condition="auth.isAuthenticated" class="mt-8">
             <!-- Not authenticated state -->
-            <Card slot="false">
-                <CardContent>
+            <Card slot="false" class="mx-auto">
+                <CardHeader>
                     <Text variant="body"> Click to start using the app </Text>
+                </CardHeader>
+                <CardContent
+                    class="flex flex-col items-center justify-center h-full text-center"
+                >
                     <Button
                         @click="signInAnonymously()"
                         :disabled="auth.loading || todo.loading"
@@ -70,39 +74,39 @@ const pageData = `{
             </Card>
 
             <!-- Authenticated state - Todo App -->
-            <Row slot="true" justify="center" align="start" gap="lg">
+            <Row slot="true" justify="center" align="start" class="gap-8">
                 <!-- Left Column: My Todos -->
-                <Card>
+                <Card class="w-5xl h-96">
                     <CardHeader>
                         <Text variant="card-title"> My Todos </Text>
                     </CardHeader>
                     <CardContent>
                         <!-- Filter Buttons and Auth Info -->
-                        <Row justify="between" gap="md" wrap>
+                        <Row gap="md" wrap>
                             <!-- Status Filter Buttons (Left) -->
-                            <Row gap="xs">
+                            <Inline gap="xs">
                                 <Button
                                     @click="todo.setUserFilter('all')"
                                     :variant="todo.userFilter === 'all' ? 'default' : 'outline'"
-                                    size="sm"
+                                    size="xs"
                                 >
                                     All
                                 </Button>
                                 <Button
                                     @click="todo.setUserFilter('active')"
                                     :variant="todo.userFilter === 'active' ? 'default' : 'outline'"
-                                    size="sm"
+                                    size="xs"
                                 >
                                     Active
                                 </Button>
                                 <Button
                                     @click="todo.setUserFilter('completed')"
                                     :variant="todo.userFilter === 'completed' ? 'default' : 'outline'"
-                                    size="sm"
+                                    size="xs"
                                 >
                                     Completed
                                 </Button>
-                            </Row>
+                            </Inline>
 
                             <!-- Auth Info (Right) -->
                             <Row gap="md">
@@ -218,7 +222,7 @@ const pageData = `{
                 </Card>
 
                 <!-- Right Column: All Todos -->
-                <Card>
+                <Card class="w-5xl h-96">
                     <CardHeader>
                         <Text variant="card-title"> Realtime Todos </Text>
                     </CardHeader>
@@ -226,29 +230,29 @@ const pageData = `{
                         <!-- Filter Buttons and User Count -->
                         <Row justify="between" wrap>
                             <!-- Status Filter Buttons (Left) -->
-                            <Row gap="xs">
+                            <Inline gap="xs">
                                 <Button
                                     @click="todo.setAllFilter('all')"
                                     :variant="todo.allFilter === 'all' ? 'default' : 'outline'"
-                                    size="sm"
+                                    size="xs"
                                 >
                                     All
                                 </Button>
                                 <Button
                                     @click="todo.setAllFilter('active')"
                                     :variant="todo.allFilter === 'active' ? 'default' : 'outline'"
-                                    size="sm"
+                                    size="xs"
                                 >
                                     Active
                                 </Button>
                                 <Button
                                     @click="todo.setAllFilter('completed')"
                                     :variant="todo.allFilter === 'completed' ? 'default' : 'outline'"
-                                    size="sm"
+                                    size="xs"
                                 >
                                     Completed
                                 </Button>
-                            </Row>
+                            </Inline>
 
                             <!-- User Count (Right) -->
                             <div>
@@ -300,7 +304,7 @@ const pageData = `{
                                     />
                                     <Badge
                                         x-show="item.user_id === auth.currentUser?.id"
-                                        size="sm"
+                                        size="xs"
                                         color="primary">You</Badge
                                     >
                                 </Row>

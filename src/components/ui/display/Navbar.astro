@@ -1,0 +1,43 @@
+---
+import { cn } from '@/lib/utils';
+import { createUIComponent, type UIComponentProps } from '@/lib/component-variants';
+
+const navbarVariants = createUIComponent(
+  'grid grid-cols-[1fr_auto_1fr] items-center'
+);
+
+export interface Props extends UIComponentProps {
+  as?: 'nav' | 'header' | 'div';
+}
+
+const { 
+  padding = 'md',
+  margin = 'none',
+  elevation = 'none',
+  overflow,
+  size,
+  as: Tag = 'nav',
+  class: className,
+  ...alpineProps 
+} = Astro.props;
+---
+
+<Tag 
+  class={cn(
+    navbarVariants({ padding, margin, elevation, overflow, size }),
+    className
+  )} 
+  {...alpineProps}
+>
+  <div class="justify-self-start">
+    <slot name="left" />
+  </div>
+  
+  <div class="justify-self-center">
+    <slot />
+  </div>
+  
+  <div class="justify-self-end">
+    <slot name="right" />
+  </div>
+</Tag>

@@ -1,0 +1,25 @@
+---
+import { createContentComponent, type ContentComponentProps, universalVariants } from '@/lib/component-variants';
+import { cn } from '@/lib/utils';
+
+const inline = createContentComponent('flex flex-row items-center justify-start max-w-full', {
+    overflow: {
+        scroll: universalVariants.overflow.scrollX, // Horizontal scroll for inline
+        extend: universalVariants.overflow.extend,  // Content spills out
+        wrap: universalVariants.overflow.wrap,      // Wrap to new rows
+    }
+});
+
+export interface Props extends ContentComponentProps {
+    overflow?: 'scroll' | 'extend' | 'wrap';
+}
+
+const { gap, overflow = 'wrap', class: className, ...alpineProps } = Astro.props;
+---
+
+<div
+  class={cn(inline({ gap, overflow }), className)}
+  {...alpineProps}
+>
+  <slot />
+</div>

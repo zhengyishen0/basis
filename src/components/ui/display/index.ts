@@ -6,6 +6,9 @@ export { default as Table } from './Table.astro';
 export { default as VideoPlayer } from './VideoPlayer.astro';
 export { default as Text } from './Text.astro';
 
+// Navigation components
+export { default as Navbar } from './Navbar.astro';
+
 // Card components
 export { default as Card } from './Card.astro';
 export { default as CardContent } from './CardContent.astro';
