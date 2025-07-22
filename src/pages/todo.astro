@@ -45,7 +45,7 @@ const pageData = `{
 <Layout title={title}>
     <Page maxWidth="full" x-data={pageData} x-init="init()">
         <!-- Navigation Bar -->
-        <Row justify="grid" sticky p="md" class="bg-white border-b">
+        <Row justify="grid" sticky padding="md" class="bg-white border-b">
             <Button href="../" variant="default" size="sm">
                 Back to Home
             </Button>
@@ -54,9 +54,9 @@ const pageData = `{
         </Row>
 
         <!-- Main Content -->
-        <Conditional condition="auth.isAuthenticated">
+        <Conditional condition="auth.isAuthenticated" class="mt-8">
             <!-- Not authenticated state -->
-            <Card slot="false" variant="default">
+            <Card slot="false">
                 <CardContent>
                     <Text variant="body"> Click to start using the app </Text>
                     <Button
@@ -70,9 +70,9 @@ const pageData = `{
             </Card>
 
             <!-- Authenticated state - Todo App -->
-            <Row slot="true" justify="center" align="start" gap="4">
+            <Row slot="true" justify="center" align="start" gap="lg">
                 <!-- Left Column: My Todos -->
-                <Card variant="default" class="w-96 h-96">
+                <Card>
                     <CardHeader>
                         <Text variant="card-title"> My Todos </Text>
                     </CardHeader>
@@ -218,7 +218,7 @@ const pageData = `{
                 </Card>
 
                 <!-- Right Column: All Todos -->
-                <Card variant="default" class="w-96 h-96">
+                <Card>
                     <CardHeader>
                         <Text variant="card-title"> Realtime Todos </Text>
                     </CardHeader>

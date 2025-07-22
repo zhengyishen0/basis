@@ -5,6 +5,10 @@ import { createLayoutComponent, type LayoutComponentProps, type VariantProps } f
 const gridItemVariants = createLayoutComponent(
   'flex flex-col w-full',
   {
+    variant: {
+      default: '',
+      card: 'rounded-lg border border-gray-200 bg-white shadow-md'
+    },
     interactive: {
       true: 'hover:bg-gray-50 cursor-pointer transition-colors',
       false: ''
@@ -21,12 +25,14 @@ const gridItemVariants = createLayoutComponent(
 );
 
 export interface Props extends LayoutComponentProps, VariantProps<typeof gridItemVariants> {
+  variant?: 'default' | 'card';
   interactive?: boolean;
   bordered?: boolean;
   elevated?: boolean;
 }
 
 const {
+  variant = 'default',
   gap = 'md',
   padding = 'md',
   justify = 'start',
@@ -42,7 +48,7 @@ const {
 const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
 
 const classes = cn(
-  gridItemVariants({ gap, padding, justify, align, interactive, bordered, elevated }),
+  gridItemVariants({ variant, gap, padding, justify, align, interactive, bordered, elevated }),
   className
 );
 ---
