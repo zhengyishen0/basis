@@ -11,6 +11,7 @@ import {
 import {
     Column,
     List,
+    ListItem,
     Page,
     Row,
     Spacer,
@@ -131,35 +132,30 @@ const pageData = `{
                         <!-- Scrollable Container for List -->
                         <List maxHeight="48">
                             <!-- User Todo List -->
-                            <List
+                            <ListItem
                                 x-for="item in todo.filteredUserTodos"
                                 x-key="item.id"
+                                interactive
+                                bordered
+                                gap="sm"
                             >
-                                <Row
-                                    interactive
-                                    bordered
-                                    p="sm"
-                                    align="center"
-                                    gap="sm"
+                                <Checkbox
+                                    :checked="item.is_complete"
+                                    @change="todo.toggleTodo(item.id, $event.target.checked)"
+                                />
+                                <Text
+                                    class="flex-1 min-w-0"
+                                    :state="item.is_complete ? 'completed' : 'active'"
+                                    x-text="item.task"
+                                />
+                                <Button
+                                    @click="todo.deleteTodo(item.id)"
+                                    size="sm"
+                                    variant="destructive"
                                 >
-                                    <Checkbox
-                                        :checked="item.is_complete"
-                                        @change="todo.toggleTodo(item.id, $event.target.checked)"
-                                    />
-                                    <Text
-                                        class="flex-1 min-w-0"
-                                        :state="item.is_complete ? 'completed' : 'active'"
-                                        x-text="item.task"
-                                    />
-                                    <Button
-                                        @click="todo.deleteTodo(item.id)"
-                                        size="sm"
-                                        variant="destructive"
-                                    >
-                                        Delete
-                                    </Button>
-                                </Row>
-                            </List>
+                                    Delete
+                                </Button>
+                            </ListItem>
 
                             <!-- Empty State -->
                             <Empty
@@ -274,33 +270,33 @@ const pageData = `{
                         <!-- Scrollable Container for List -->
                         <List maxHeight="48">
                             <!-- All Todos List -->
-                            <List
+                            <ListItem
                                 x-for="item in todo.filteredAllTodos"
                                 x-key="item.id"
+                                bordered
+                                gap="sm"
                             >
-                                <Row bordered p="sm" align="center" gap="sm">
-                                    <Checkbox
-                                        :checked="item.is_complete"
-                                        style="pointer-events: none;"
-                                    />
+                                <Checkbox
+                                    :checked="item.is_complete"
+                                    style="pointer-events: none;"
+                                />
+                                <Text
+                                    class="flex-1 min-w-0"
+                                    :state="item.is_complete ? 'completed' : 'active'"
+                                    x-text="item.task"
+                                />
+                                <Row gap="2">
                                     <Text
-                                        class="flex-1 min-w-0"
-                                        :state="item.is_complete ? 'completed' : 'active'"
-                                        x-text="item.task"
+                                        as="small"
+                                        x-text="item.user_id.slice(0, 8) + '...'"
                                     />
-                                    <Row gap="2">
-                                        <Text
-                                            as="small"
-                                            x-text="item.user_id.slice(0, 8) + '...'"
-                                        />
-                                        <Badge
-                                            x-show="item.user_id === auth.currentUser?.id"
-                                            size="sm"
-                                            color="primary">You</Badge
-                                        >
-                                    </Row>
+                                    <Badge
+                                        x-show="item.user_id === auth.currentUser?.id"
+                                        size="sm"
+                                        color="primary">You</Badge
+                                    >
                                 </Row>
-                            </List>
+                            </ListItem>
 
                             <!-- Empty State -->
                             <Empty

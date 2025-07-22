@@ -27,16 +27,37 @@ const {
   class: className,
   ...alpineProps
 } = Astro.props;
+
+// Extract x-for and x-key from alpineProps so they don't get passed to the div
+const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
 ---
 
-<div 
-  x-data="{ id: $id('accordion') }"
-  {...alpineProps}
-  :class={`"${cn(
-    accordionItemVariants({ size, padding, elevation, variant }),
-    className
-  )}"`}
-  x-cloak
->
-  <slot />
-</div>
+{
+  xFor ? (
+    <template x-for={xFor} x-key={xKey}>
+      <div 
+        x-data="{ id: $id('accordion') }"
+        {...restProps}
+        :class={`"${cn(
+          accordionItemVariants({ size, padding, elevation, variant }),
+          className
+        )}"`}
+        x-cloak
+      >
+        <slot />
+      </div>
+    </template>
+  ) : (
+    <div 
+      x-data="{ id: $id('accordion') }"
+      {...restProps}
+      :class={`"${cn(
+        accordionItemVariants({ size, padding, elevation, variant }),
+        className
+      )}"`}
+      x-cloak
+    >
+      <slot />
+    </div>
+  )
+}

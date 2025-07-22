@@ -1,54 +1,53 @@
 ---
 import { cn } from '@/lib/utils';
-import { createLayoutComponent, type LayoutComponentProps, type VariantProps } from '@/lib/component-variants';
+import {
+    createLayoutComponent,
+    type LayoutComponentProps,
+    type VariantProps,
+} from '@/lib/component-variants';
 
 const listVariants = createLayoutComponent(
-  'flex flex-col overflow-y-auto flex-1 min-h-0',
-  {
-    maxHeight: {
-      none: '',
-      32: 'max-h-32',
-      48: 'max-h-48', 
-      64: 'max-h-64',
-      96: 'max-h-96',
-      screen: 'max-h-screen'
-    },
-    divided: {
-      true: 'divide-y divide-gray-200',
-      false: ''
+    'flex flex-col overflow-y-auto flex-1 min-h-0',
+    {
+        maxHeight: {
+            none: '',
+            32: 'max-h-32',
+            48: 'max-h-48',
+            64: 'max-h-64',
+            96: 'max-h-96',
+            screen: 'max-h-screen',
+        },
+        divided: {
+            true: 'divide-y divide-gray-200',
+            false: '',
+        },
     }
-  }
 );
 
-export interface Props extends LayoutComponentProps, VariantProps<typeof listVariants> {
-  maxHeight?: 'none' | '32' | '48' | '64' | '96' | 'screen';
-  divided?: boolean;
+export interface Props
+    extends LayoutComponentProps,
+        VariantProps<typeof listVariants> {
+    maxHeight?: 'none' | '32' | '48' | '64' | '96' | 'screen';
+    divided?: boolean;
 }
 
 const {
-  gap = 'xs',
-  padding = 'none',
-  maxHeight = 'none',
-  divided = false,
-  justify,
-  align,
-  class: className = '',
-  ...rest
+    gap = 'xs',
+    padding = 'none',
+    maxHeight = 'none',
+    divided = false,
+    justify,
+    align,
+    class: className = '',
+    ...rest
 } = Astro.props;
 
 const classes = cn(
-  listVariants({ gap, padding, maxHeight, divided, justify, align }),
-  className
+    listVariants({ gap, padding, maxHeight, divided, justify, align }),
+    className
 );
 ---
 
-
 <div class={classes} {...rest}>
-  {rest['x-for'] ? (
-    <template x-for={rest['x-for']} :key={rest['x-key']}>
-      <slot />
-    </template>
-  ) : (
     <slot />
-  )}
 </div>

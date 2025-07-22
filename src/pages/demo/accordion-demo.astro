@@ -34,13 +34,14 @@ const faqData = [
             </h1>
 
             <div x-data={`{items: ${JSON.stringify(faqData)}}`}>
-                <Accordion x-for="item in items" x-key="item.id">
-                    <AccordionItem>
-                        <AccordionTrigger
-                            iconType="chevron"
-                            text="item.question"
-                        />
-                        <AccordionContent text="item.answer" />
+                <Accordion>
+                    <AccordionItem x-for="item in items" x-key="item.id">
+                        <AccordionTrigger iconType="chevron">
+                            <span x-text="item.question"></span>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                            <span x-text="item.answer"></span>
+                        </AccordionContent>
                     </AccordionItem>
                 </Accordion>
             </div>
