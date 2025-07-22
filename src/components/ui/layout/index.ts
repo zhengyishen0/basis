@@ -1,5 +1,6 @@
 // Layout - Layout and structure components
 export { default as Grid } from './Grid.astro';
+export { default as GridItem } from './GridItem.astro';
 export { default as Row } from './Row.astro';
 export { default as Column } from './Column.astro';
 export { default as List } from './List.astro';

@@ -49,7 +49,7 @@ const pageData = `{
             <Button href="../" variant="default" size="sm">
                 Back to Home
             </Button>
-            <Text as="h5"> Supabase Todo App </Text>
+            <Text variant="section-title"> Supabase Todo App </Text>
             <Spacer />
         </Row>
 
@@ -58,7 +58,7 @@ const pageData = `{
             <!-- Not authenticated state -->
             <Card slot="false" variant="default">
                 <CardContent>
-                    <Text as="p"> Click to start using the app </Text>
+                    <Text variant="body"> Click to start using the app </Text>
                     <Button
                         @click="signInAnonymously()"
                         :disabled="auth.loading || todo.loading"
@@ -74,13 +74,13 @@ const pageData = `{
                 <!-- Left Column: My Todos -->
                 <Card variant="default" class="w-96 h-96">
                     <CardHeader>
-                        <Text as="h2"> My Todos </Text>
+                        <Text variant="card-title"> My Todos </Text>
                     </CardHeader>
                     <CardContent>
                         <!-- Filter Buttons and Auth Info -->
-                        <Row justify="between" wrap>
+                        <Row justify="between" gap="md" wrap>
                             <!-- Status Filter Buttons (Left) -->
-                            <Row gap="2">
+                            <Row gap="xs">
                                 <Button
                                     @click="todo.setUserFilter('all')"
                                     :variant="todo.userFilter === 'all' ? 'default' : 'outline'"
@@ -105,8 +105,8 @@ const pageData = `{
                             </Row>
 
                             <!-- Auth Info (Right) -->
-                            <Row gap="6">
-                                <Text
+                            <Row gap="md">
+                                <Text variant="body-small"
                                     >Signed in as: <strong
                                         x-text="auth.userDisplayId"
                                     ></strong></Text
@@ -161,16 +161,18 @@ const pageData = `{
                             <Empty
                                 x-show="todo.filteredUserTodos.length === 0 && !todo.loading"
                             >
-                                <Text as="p" x-show="todo.userFilter === 'all'"
+                                <Text
+                                    variant="body"
+                                    x-show="todo.userFilter === 'all'"
                                     >No todos yet. Add one below!</Text
                                 >
                                 <Text
-                                    as="p"
+                                    variant="body"
                                     x-show="todo.userFilter === 'active'"
                                     >No active todos.</Text
                                 >
                                 <Text
-                                    as="p"
+                                    variant="body"
                                     x-show="todo.userFilter === 'completed'"
                                     >No completed todos.</Text
                                 >
@@ -181,16 +183,22 @@ const pageData = `{
                     <CardFooter>
                         <!-- Stats -->
                         <div x-show="todo.userTodos.length > 0">
-                            <Text as="span" x-text="todo.userActiveCount" />
+                            <Text
+                                variant="body-small"
+                                x-text="todo.userActiveCount"
+                            />
                             active,
-                            <Text as="span" x-text="todo.userCompletedCount" /> completed
+                            <Text
+                                variant="body-small"
+                                x-text="todo.userCompletedCount"
+                            /> completed
                         </div>
 
                         <!-- Add Todo Form -->
                         <form
                             @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''"
                         >
-                            <Row gap="md">
+                            <Row gap="xs">
                                 <TextInput
                                     x-ref="todoInput"
                                     type="text"
@@ -212,13 +220,13 @@ const pageData = `{
                 <!-- Right Column: All Todos -->
                 <Card variant="default" class="w-96 h-96">
                     <CardHeader>
-                        <Text as="h2"> Realtime Todos </Text>
+                        <Text variant="card-title"> Realtime Todos </Text>
                     </CardHeader>
                     <CardContent>
                         <!-- Filter Buttons and User Count -->
                         <Row justify="between" wrap>
                             <!-- Status Filter Buttons (Left) -->
-                            <Row gap="2">
+                            <Row gap="xs">
                                 <Button
                                     @click="todo.setAllFilter('all')"
                                     :variant="todo.allFilter === 'all' ? 'default' : 'outline'"
@@ -244,12 +252,12 @@ const pageData = `{
 
                             <!-- User Count (Right) -->
                             <div>
-                                <Text
+                                <Text variant="body-small"
                                     ><Text
-                                        as="span"
+                                        variant="body-small"
                                         x-text="todo.uniqueUserCount"
                                     /> contributor<Text
-                                        as="span"
+                                        variant="body-small"
                                         x-show="todo.uniqueUserCount !== 1"
                                         >s</Text
                                     > online</Text
@@ -285,9 +293,9 @@ const pageData = `{
                                     :state="item.is_complete ? 'completed' : 'active'"
                                     x-text="item.task"
                                 />
-                                <Row gap="2">
+                                <Row>
                                     <Text
-                                        as="small"
+                                        variant="caption"
                                         x-text="item.user_id.slice(0, 8) + '...'"
                                     />
                                     <Badge
@@ -302,16 +310,18 @@ const pageData = `{
                             <Empty
                                 x-show="todo.filteredAllTodos.length === 0 && !todo.loading"
                             >
-                                <Text as="p" x-show="todo.allFilter === 'all'"
+                                <Text
+                                    variant="body"
+                                    x-show="todo.allFilter === 'all'"
                                     >No todos in database.</Text
                                 >
                                 <Text
-                                    as="p"
+                                    variant="body"
                                     x-show="todo.allFilter === 'active'"
                                     >No active todos.</Text
                                 >
                                 <Text
-                                    as="p"
+                                    variant="body"
                                     x-show="todo.allFilter === 'completed'"
                                     >No completed todos.</Text
                                 >
@@ -322,8 +332,14 @@ const pageData = `{
                     <CardFooter>
                         <!-- Stats -->
                         <div x-show="todo.allTodos.length > 0">
-                            <Text as="span" x-text="todo.allActiveCount" /> active,
-                            <Text as="span" x-text="todo.allCompletedCount" /> completed
+                            <Text
+                                variant="body-small"
+                                x-text="todo.allActiveCount"
+                            /> active,
+                            <Text
+                                variant="body-small"
+                                x-text="todo.allCompletedCount"
+                            /> completed
                         </div>
                     </CardFooter>
                 </Card>

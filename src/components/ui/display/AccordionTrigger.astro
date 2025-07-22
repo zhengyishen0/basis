@@ -2,13 +2,14 @@
 import { cn } from '@/lib/utils';
 import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
 import { ChevronDown, Plus, Minus } from 'lucide-astro';
+import Text from './Text.astro';
 
 const accordionTriggerVariants = createUIComponent(
-  'flex items-center justify-between w-full font-semibold text-left select-none text-foreground',
+  'flex items-center justify-between w-full text-left',
   {
     variant: {
-      default: 'hover:text-foreground/80',
-      subtle: 'text-muted-foreground hover:text-foreground'
+      default: 'hover:opacity-80',
+      subtle: 'opacity-70 hover:opacity-100'
     }
   }
 );
@@ -40,13 +41,13 @@ const {
   )}"`}
   type="button"
 >
-  <span class="flex-1">
+  <Text variant="accordion-trigger" class="flex-1">
     {text ? (
       <span x-text={text}></span>
     ) : (
       <slot />
     )}
-  </span>
+  </Text>
   
   <!-- Icon Area -->
   <div class="relative flex items-center justify-center w-6 h-6 duration-300 ease-out ml-4">

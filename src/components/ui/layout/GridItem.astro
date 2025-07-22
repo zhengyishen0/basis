@@ -2,32 +2,38 @@
 import { cn } from '@/lib/utils';
 import { createLayoutComponent, type LayoutComponentProps, type VariantProps } from '@/lib/component-variants';
 
-const listItemVariants = createLayoutComponent(
-  'flex items-center w-full min-h-[2.5rem]',
+const gridItemVariants = createLayoutComponent(
+  'flex flex-col w-full',
   {
     interactive: {
-      true: 'hover:bg-gray-50 cursor-pointer',
+      true: 'hover:bg-gray-50 cursor-pointer transition-colors',
       false: ''
     },
     bordered: {
-      true: 'border-b border-gray-200 last:border-b-0',
+      true: 'border border-gray-200 rounded-lg',
+      false: ''
+    },
+    elevated: {
+      true: 'shadow-sm hover:shadow-md transition-shadow',
       false: ''
     }
   }
 );
 
-export interface Props extends LayoutComponentProps, VariantProps<typeof listItemVariants> {
+export interface Props extends LayoutComponentProps, VariantProps<typeof gridItemVariants> {
   interactive?: boolean;
   bordered?: boolean;
+  elevated?: boolean;
 }
 
 const {
-  gap = 'sm',
-  padding = 'sm',
+  gap = 'md',
+  padding = 'md',
   justify = 'start',
-  align = 'center',
+  align = 'start',
   interactive = false,
   bordered = false,
+  elevated = false,
   class: className = '',
   ...alpineProps
 } = Astro.props;
@@ -36,7 +42,7 @@ const {
 const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
 
 const classes = cn(
-  listItemVariants({ gap, padding, justify, align, interactive, bordered }),
+  gridItemVariants({ gap, padding, justify, align, interactive, bordered, elevated }),
   className
 );
 ---

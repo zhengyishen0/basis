@@ -5,7 +5,8 @@ import { getEntry } from 'astro:content';
 // UI Components for better styling
 import { Badge } from '../components/ui/feedback';
 import { Button } from '../components/ui/forms';
-import { Card, Avatar, AvatarImage } from '../components/ui/display';
+import { Card, Avatar, AvatarImage, Text } from '../components/ui/display';
+import { Grid, GridItem } from '../components/ui/layout';
 
 // Import GitHub icon
 import githubIconUrl from '../assets/github-icon-white.svg?url';
@@ -33,18 +34,16 @@ const pageData = JSON.stringify(homeContent?.data || []);
         <div
             class="text-center py-16 px-4 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden min-h-[60vh] flex flex-col justify-center items-center gap-4"
         >
-            <h1 class="text-5xl md:text-7xl font-black mb-4 text-gray-900 leading-tight relative z-10 drop-shadow-sm tracking-tight">
+            <Text variant="hero-title" class="mb-4 relative z-10 drop-shadow-sm tracking-tight">
                 <span class="relative group">
                     Basis
                     <span class="absolute bottom-[-8px] left-[-5%] w-[110%] h-[5px] bg-black rounded-full origin-left animate-underline-grow group-hover:animate-underline-grow-hover"></span>
                 </span>
-            </h1>
-            <p
-                class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto relative z-10 leading-relaxed"
-            >
+            </Text>
+            <Text variant="hero-description" class="mb-6 max-w-2xl mx-auto relative z-10">
                 Build on Fundamentals - A methodology for modern web development
                 using basic tools and clear boundaries
-            </p>
+            </Text>
             <div class="flex justify-center gap-2 flex-wrap mb-6">
                 <Badge size="lg" color="black">Astro</Badge>
                 <Badge size="lg" color="black">Alpine</Badge>
@@ -57,46 +56,33 @@ const pageData = JSON.stringify(homeContent?.data || []);
 
         <!-- Features Section -->
         <div class="max-w-7xl mx-auto py-16 px-4 bg-white flex flex-col gap-6">
-            <h2
-                class="text-3xl font-semibold text-center mb-8 text-gray-900 tracking-tight"
-            >
+            <Text variant="section-title" class="text-center mb-8 tracking-tight">
                 What Makes <span class="relative font-extrabold">
                     <span class="relative group">
                         Basis
                         <span class="absolute bottom-[-2px] left-[-8%] w-[116%] h-[3px] bg-black rounded-full origin-left animate-underline-grow-delayed group-hover:animate-underline-grow-hover"></span>
                     </span>
                 </span> Different
-            </h2>
-            <div
-                class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto"
-            >
-                <template x-for="feature in features" x-key="feature.name">
-                    <Card
-                        variant="shadow"
-                        class="transform hover:scale-105 transition-transform duration-200"
-                    >
-                        <div class="p-6">
-                            <Badge
-                                variant="solid"
-                                color="black"
-                                size="lg"
-                                class="mb-4 inline-block"
-                                x-text="feature.name"
-                            />
-                            <h3
-                                class="text-xl font-bold mb-2 text-gray-900 leading-tight"
-                                x-text="feature.title"
-                            >
-                            </h3>
-                            <p
-                                class="text-gray-600 text-base leading-relaxed"
-                                x-text="feature.description"
-                            >
-                            </p>
-                        </div>
-                    </Card>
-                </template>
-            </div>
+            </Text>
+            <Grid columns="3" class="max-w-6xl mx-auto">
+                <GridItem 
+                    x-for="feature in features" 
+                    x-key="feature.name"
+                    interactive
+                    elevated
+                    class="transform hover:scale-105 transition-transform duration-200"
+                >
+                    <Badge
+                        variant="solid"
+                        color="black"
+                        size="lg"
+                        class="mb-4 inline-block"
+                        x-text="feature.name"
+                    />
+                    <Text variant="feature-title" class="mb-2" x-text="feature.title" />
+                    <Text variant="feature-description" x-text="feature.description" />
+                </GridItem>
+            </Grid>
         </div>
     </main>
 

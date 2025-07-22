@@ -7,86 +7,87 @@ import {
     CardFooter,
 } from '@/components/ui/display';
 import Image from '@/components/ui/display/Image.astro';
+import Text from '@/components/ui/display/Text.astro';
 import Button from '@/components/ui/forms/Button.astro';
 ---
 
 <Layout title="Card Demo">
     <main class="container mx-auto p-8 max-w-6xl">
-        <h1 class="text-3xl font-bold mb-8">Card Component Demo</h1>
+        <Text variant="page-title" class="mb-8">Card Component Demo</Text>
 
         <!-- Universal Variants Demo -->
         <section class="mb-12">
-            <h2 class="text-2xl font-semibold mb-6">Universal Variants</h2>
+            <Text variant="section-title" class="mb-6">Universal Variants</Text>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <Card variant="default">
                     <CardHeader>
-                        <h3 class="text-lg font-semibold">Default Card</h3>
-                        <p class="text-sm text-muted-foreground">
+                        <Text variant="card-title">Default Card</Text>
+                        <Text variant="card-description">
                             Basic card with border
-                        </p>
+                        </Text>
                     </CardHeader>
                     <CardContent>
-                        <p>This is the default card variant.</p>
+                        <Text variant="card-content">This is the default card variant.</Text>
                     </CardContent>
                 </Card>
 
                 <Card variant="outline">
                     <CardHeader>
-                        <h3 class="text-lg font-semibold">Outline Card</h3>
-                        <p class="text-sm text-muted-foreground">
+                        <Text variant="card-title">Outline Card</Text>
+                        <Text variant="card-description">
                             Enhanced 2px border
-                        </p>
+                        </Text>
                     </CardHeader>
                     <CardContent>
-                        <p>This card has a thicker border.</p>
+                        <Text variant="card-content">This card has a thicker border.</Text>
                     </CardContent>
                 </Card>
 
                 <Card variant="shadow">
                     <CardHeader>
-                        <h3 class="text-lg font-semibold">Shadow Card</h3>
-                        <p class="text-sm text-muted-foreground">
+                        <Text variant="card-title">Shadow Card</Text>
+                        <Text variant="card-description">
                             Card with medium shadow
-                        </p>
+                        </Text>
                     </CardHeader>
                     <CardContent>
-                        <p>This card has a subtle shadow effect.</p>
+                        <Text variant="card-content">This card has a subtle shadow effect.</Text>
                     </CardContent>
                 </Card>
 
                 <Card variant="elevated">
                     <CardHeader>
-                        <h3 class="text-lg font-semibold">Elevated Card</h3>
-                        <p class="text-sm text-muted-foreground">
+                        <Text variant="card-title">Elevated Card</Text>
+                        <Text variant="card-description">
                             Card with large shadow
-                        </p>
+                        </Text>
                     </CardHeader>
                     <CardContent>
-                        <p>This card appears more elevated.</p>
+                        <Text variant="card-content">This card appears more elevated.</Text>
                     </CardContent>
                 </Card>
 
                 <Card variant="ghost">
                     <CardHeader>
-                        <h3 class="text-lg font-semibold">Ghost Card</h3>
-                        <p class="text-sm text-muted-foreground">
+                        <Text variant="card-title">Ghost Card</Text>
+                        <Text variant="card-description">
                             Transparent card
-                        </p>
+                        </Text>
                     </CardHeader>
                     <CardContent>
-                        <p>This card is transparent.</p>
+                        <Text variant="card-content">This card is transparent.</Text>
                     </CardContent>
                 </Card>
 
                 <Card variant="muted">
                     <CardHeader>
-                        <h3 class="text-lg font-semibold">Muted Card</h3>
-                        <p class="text-sm text-muted-foreground">
+                        <Text variant="card-title">Muted Card</Text>
+                        <Text variant="card-description">
                             Card with muted background
-                        </p>
+                        </Text>
                     </CardHeader>
                     <CardContent>
-                        <p>This card has a muted background.</p>
+                        <Text variant="card-content">This card has a muted background.</Text>
                     </CardContent>
                 </Card>
             </div>
@@ -94,11 +95,11 @@ import Button from '@/components/ui/forms/Button.astro';
 
         <!-- Pine UI Style Cards -->
         <section class="mb-12">
-            <h2 class="text-2xl font-semibold mb-6">Pine UI Style Cards</h2>
-            <p class="text-sm text-muted-foreground mb-6">
+            <Text variant="section-title" class="mb-6">Pine UI Style Cards</Text>
+            <Text variant="body-small" class="mb-6">
                 Cards with images using our new CardImage component and layout
                 options
-            </p>
+            </Text>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Profile Card with Overlapping Avatar -->

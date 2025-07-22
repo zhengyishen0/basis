@@ -6,6 +6,7 @@ import {
     AccordionTrigger,
     AccordionContent,
 } from '@/components/ui/display';
+import Text from '@/components/ui/display/Text.astro';
 
 const faqData = [
     {
@@ -29,9 +30,9 @@ const faqData = [
 <Layout title="Composable Accordion Demo">
     <div class="min-h-screen bg-gray-50 py-12">
         <div class="max-w-2xl mx-auto px-6">
-            <h1 class="text-3xl font-bold text-gray-900 mb-8">
+            <Text variant="page-title" class="mb-8">
                 Accordion Demo
-            </h1>
+            </Text>
 
             <div x-data={`{items: ${JSON.stringify(faqData)}}`}>
                 <Accordion>

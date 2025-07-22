@@ -1,13 +1,14 @@
 ---
 import { cn } from '@/lib/utils';
 import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
+import Text from './Text.astro';
 
 const accordionContentVariants = createUIComponent(
-  'pt-0 text-muted-foreground',
+  'pt-0',
   {
     variant: {
-      default: 'text-muted-foreground',
-      emphasized: 'text-foreground'
+      default: '',
+      emphasized: ''
     }
   }
 );
@@ -37,10 +38,12 @@ const {
   <div 
     :class={`"${cn(accordionContentVariants({ size, padding, elevation, variant }), className)}"`}
   >
-    {text ? (
-      <span x-text={text}></span>
-    ) : (
-      <slot />
-    )}
+    <Text variant={variant === 'emphasized' ? 'body' : 'accordion-content'}>
+      {text ? (
+        <span x-text={text}></span>
+      ) : (
+        <slot />
+      )}
+    </Text>
   </div>
 </div>
