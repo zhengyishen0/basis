@@ -2,30 +2,39 @@
 import { cn } from '@/lib/utils';
 import {
     createContentComponent,
-    type ContentComponentProps,
     universalVariants
 } from '@/lib/component-variants';
 
 const listVariants = createContentComponent('flex flex-col items-stretch max-h-screen', {
     overflow: {
-        scroll: universalVariants.overflow.scrollY, // Vertical scroll for lists
-        extend: universalVariants.overflow.extend,  // Content spills out
+        auto: universalVariants.overflow.auto,     // Scroll when needed
+        fixed: universalVariants.overflow.fixed,   // Content has fixed boundaries
     }
 });
 
-export interface Props extends ContentComponentProps {
-    overflow?: 'scroll' | 'extend';
+export interface Props {
+    gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+    overflow?: 'auto' | 'fixed';
+    class?: string;
+    [key: string]: any; // Alpine.js pass-through
 }
 
 const {
     gap = 'xs',
-    overflow = 'scroll',
+    overflow = 'auto',
     class: className = '',
     ...alpineProps
 } = Astro.props;
 
+const overflowClasses = {
+    auto: 'overflow-auto',
+    fixed: 'overflow-hidden'
+};
+
 const classes = cn(
-    listVariants({ gap, overflow }),
+    'flex flex-col items-stretch max-h-screen',
+    listVariants({ gap }),
+    overflowClasses[overflow],
     className
 );
 ---

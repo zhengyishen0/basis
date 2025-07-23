@@ -8,24 +8,34 @@ import {
 
 const columnVariants = createLayoutComponent('flex flex-col h-full', {
     overflow: {
-        shrink: universalVariants.overflow.shrink, // Default flex shrink
-        extend: universalVariants.overflow.extend, // Content extends beyond container
+        auto: universalVariants.overflow.auto,     // Content scrolls when needed
+        fixed: universalVariants.overflow.fixed,   // Content has fixed boundaries
     },
 });
 
 export interface Props extends LayoutComponentProps {
-    overflow?: 'shrink' | 'extend';
+    overflow?: 'auto' | 'fixed';
 }
 
 const {
     align = 'center',
     justify = 'start',
-    overflow = 'shrink',
+    overflow = 'fixed',
     class: className = '',
     ...alpineProps
 } = Astro.props;
 
-const classes = cn(columnVariants({ align, justify, overflow }), className);
+const overflowClasses = {
+    auto: 'overflow-auto',
+    fixed: 'overflow-hidden'
+};
+
+const classes = cn(
+    'flex flex-col h-full',
+    columnVariants({ align, justify }),
+    overflowClasses[overflow],
+    className
+);
 ---
 
 <div class={classes} {...alpineProps}>

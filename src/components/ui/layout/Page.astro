@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 export interface Props {
   maxWidth?: 'full' | 'narrow' | 'container' | 'wide';
-  overflow?: 'auto' | 'hidden';
+  overflow?: 'auto' | 'fixed';
   class?: string;
   [key: string]: any; // Alpine.js pass-through
 }
@@ -24,7 +24,7 @@ const maxWidthClasses = {
 
 const overflowClasses = {
   auto: 'overflow-auto',     // Default: natural scrolling
-  hidden: 'overflow-hidden'  // No scroll (full-screen apps)
+  fixed: 'overflow-hidden'   // Fixed boundaries (full-screen apps)
 };
 
 const classes = cn(

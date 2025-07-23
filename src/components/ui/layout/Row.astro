@@ -2,38 +2,43 @@
 import { cn } from '@/lib/utils';
 import {
     createLayoutComponent,
-    type LayoutComponentProps,
-    type VariantProps,
     universalVariants
 } from '@/lib/component-variants';
 
 const rowVariants = createLayoutComponent('flex flex-row w-fit', {
     overflow: {
-        shrink: universalVariants.overflow.shrink,  // Default flex shrink
-        wrap: universalVariants.overflow.wrap,      // Wrap to new rows
+        auto: universalVariants.overflow.auto,     // Content scrolls when needed
+        fixed: universalVariants.overflow.fixed,   // Content has fixed boundaries
+        wrap: universalVariants.overflow.wrap,     // Wrap to new rows
     }
 });
 
-export interface Props
-    extends LayoutComponentProps,
-        VariantProps<typeof rowVariants> {
-    overflow?: 'shrink' | 'wrap';
+export interface Props {
+    justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
+    align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
+    overflow?: 'auto' | 'fixed' | 'wrap';
+    class?: string;
+    [key: string]: any; // Alpine.js pass-through
 }
 
 const {
     justify = 'start',
     align = 'center',
-    overflow = 'shrink',
+    overflow = 'fixed',
     class: className = '',
     ...alpineProps
 } = Astro.props;
 
+const overflowClasses = {
+    auto: 'overflow-auto',
+    fixed: 'overflow-hidden',
+    wrap: 'flex-wrap'
+};
+
 const classes = cn(
-    rowVariants({
-        justify,
-        align,
-        overflow,
-    }),
+    'flex flex-row w-fit',
+    rowVariants({ justify, align }),
+    overflowClasses[overflow],
     className
 );
 ---

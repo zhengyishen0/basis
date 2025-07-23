@@ -85,7 +85,7 @@ export const universalVariants = {
   overflow: {
     // Universal options for all components
     auto: "overflow-auto",      // Content scrolls when needed
-    hidden: "overflow-hidden",  // Content gets clipped
+    fixed: "overflow-hidden",   // Content has fixed boundaries
     // Special case for flex wrapping (Row, Inline only)
     wrap: "flex-wrap"
   }
@@ -138,7 +138,7 @@ export const createUIComponent = (baseClasses: string, customVariants = {}) =>
       elevation: universalVariants.elevation,
       overflow: {
         auto: universalVariants.overflow.auto,
-        hidden: universalVariants.overflow.hidden
+        fixed: universalVariants.overflow.fixed
       },
       ...customVariants
     },
@@ -161,10 +161,10 @@ export type UniversalJustify = 'start' | 'center' | 'end' | 'between' | 'around'
 export type RowJustify = UniversalJustify | 'grid';
 export type UniversalAlign = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
 // Simplified overflow types
-export type ContentOverflow = 'auto' | 'hidden';
-export type FlexOverflow = 'auto' | 'hidden' | 'wrap';  // Row, Inline get wrap option
-export type LayoutOverflow = 'auto' | 'hidden';
-export type UIOverflow = 'auto' | 'hidden';
+export type ContentOverflow = 'auto' | 'fixed';
+export type FlexOverflow = 'auto' | 'fixed' | 'wrap';  // Row, Inline get wrap option
+export type LayoutOverflow = 'auto' | 'fixed';
+export type UIOverflow = 'auto' | 'fixed';
 
 /**
  * Standard interface for content-driven components (List, Grid, Inline)
