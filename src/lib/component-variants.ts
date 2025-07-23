@@ -80,12 +80,21 @@ export const universalVariants = {
     stretch: "items-stretch",
     baseline: "items-baseline"
   },
+
+  // Direction system for cards and other directional components
+  direction: {
+    row: "flex-row",
+    column: "flex-col",
+    "row-reverse": "flex-row-reverse",
+    "column-reverse": "flex-col-reverse"
+  },
   
   // Overflow options - simplified and consistent
   overflow: {
     // Universal options for all components
     auto: "overflow-auto",      // Content scrolls when needed
     fixed: "overflow-hidden",   // Content has fixed boundaries
+    expand: "",                 // Container expands with content (no overflow constraints)
     // Special case for flex wrapping (Row, Inline only)
     wrap: "flex-wrap"
   }
@@ -138,7 +147,8 @@ export const createUIComponent = (baseClasses: string, customVariants = {}) =>
       elevation: universalVariants.elevation,
       overflow: {
         auto: universalVariants.overflow.auto,
-        fixed: universalVariants.overflow.fixed
+        fixed: universalVariants.overflow.fixed,
+        expand: universalVariants.overflow.expand
       },
       ...customVariants
     },
@@ -147,7 +157,7 @@ export const createUIComponent = (baseClasses: string, customVariants = {}) =>
       padding: "none",
       margin: "none",
       elevation: "none",
-      overflow: "hidden"
+      overflow: "fixed"
     }
   });
 
@@ -160,11 +170,12 @@ export type UniversalElevation = 'none' | 'flat' | 'elevated' | 'floating' | 'li
 export type UniversalJustify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
 export type RowJustify = UniversalJustify | 'grid';
 export type UniversalAlign = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
+export type UniversalDirection = 'row' | 'column' | 'row-reverse' | 'column-reverse';
 // Simplified overflow types
-export type ContentOverflow = 'auto' | 'fixed';
-export type FlexOverflow = 'auto' | 'fixed' | 'wrap';  // Row, Inline get wrap option
-export type LayoutOverflow = 'auto' | 'fixed';
-export type UIOverflow = 'auto' | 'fixed';
+export type ContentOverflow = 'auto' | 'fixed' | 'expand';
+export type FlexOverflow = 'auto' | 'fixed' | 'expand' | 'wrap';  // Row, Inline get wrap option
+export type LayoutOverflow = 'auto' | 'fixed' | 'expand';
+export type UIOverflow = 'auto' | 'fixed' | 'expand';
 
 /**
  * Standard interface for content-driven components (List, Grid, Inline)

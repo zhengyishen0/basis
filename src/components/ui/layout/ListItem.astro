@@ -1,9 +1,9 @@
 ---
 import { cn } from '@/lib/utils';
-import { createLayoutComponent, type LayoutComponentProps, type VariantProps } from '@/lib/component-variants';
+import { createLayoutComponent, type LayoutComponentProps, type VariantProps, universalVariants } from '@/lib/component-variants';
 
 const listItemVariants = createLayoutComponent(
-  'flex items-center w-full min-h-[2.5rem] p-2',
+  'flex items-center w-full min-h-[2.5rem]',
   {
     interactive: {
       true: 'hover:bg-gray-50 cursor-pointer',
@@ -12,10 +12,6 @@ const listItemVariants = createLayoutComponent(
     bordered: {
       true: 'border-b border-gray-200 last:border-b-0',
       false: ''
-    },
-    overflow: {
-      shrink: 'flex-shrink',
-      extend: 'flex-shrink-0'
     }
   }
 );
@@ -23,15 +19,16 @@ const listItemVariants = createLayoutComponent(
 export interface Props extends LayoutComponentProps, VariantProps<typeof listItemVariants> {
   interactive?: boolean;
   bordered?: boolean;
-  overflow?: 'shrink' | 'extend';
+  padding?: import('@/lib/component-variants').UniversalSpacing;
 }
 
 const {
   justify = 'start',
   align = 'center',
-  overflow = 'shrink',
+  overflow = 'expand',
   interactive = false,
   bordered = false,
+  padding = 'sm',
   class: className = '',
   ...alpineProps
 } = Astro.props;
@@ -40,7 +37,9 @@ const {
 const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
 
 const classes = cn(
-  listItemVariants({ justify, align, overflow, interactive, bordered }),
+  listItemVariants({ justify, align, interactive, bordered }),
+  universalVariants.padding[padding],
+  universalVariants.overflow[overflow],
   className
 );
 ---

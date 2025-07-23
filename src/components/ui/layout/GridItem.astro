@@ -1,9 +1,9 @@
 ---
 import { cn } from '@/lib/utils';
-import { createLayoutComponent, type LayoutComponentProps, type VariantProps } from '@/lib/component-variants';
+import { createLayoutComponent, type LayoutComponentProps, type VariantProps, universalVariants } from '@/lib/component-variants';
 
 const gridItemVariants = createLayoutComponent(
-  'flex flex-col w-full p-4',
+  'flex flex-col w-full',
   {
     variant: {
       default: '',
@@ -20,10 +20,6 @@ const gridItemVariants = createLayoutComponent(
     elevated: {
       true: 'shadow-sm hover:shadow-md transition-shadow',
       false: ''
-    },
-    overflow: {
-      shrink: 'flex-shrink',
-      extend: 'flex-shrink-0'
     }
   }
 );
@@ -33,17 +29,18 @@ export interface Props extends LayoutComponentProps, VariantProps<typeof gridIte
   interactive?: boolean;
   bordered?: boolean;
   elevated?: boolean;
-  overflow?: 'shrink' | 'extend';
+  padding?: import('@/lib/component-variants').UniversalSpacing;
 }
 
 const {
   variant = 'default',
   justify = 'start',
   align = 'start',
-  overflow = 'shrink',
+  overflow = 'expand',
   interactive = false,
   bordered = false,
   elevated = false,
+  padding = 'md',
   class: className = '',
   ...alpineProps
 } = Astro.props;
@@ -52,7 +49,9 @@ const {
 const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
 
 const classes = cn(
-  gridItemVariants({ variant, justify, align, overflow, interactive, bordered, elevated }),
+  gridItemVariants({ variant, justify, align, interactive, bordered, elevated }),
+  universalVariants.padding[padding],
+  universalVariants.overflow[overflow],
   className
 );
 ---

@@ -36,11 +36,11 @@ export { default as Conditional } from './Conditional.astro';
  * 
  * | Component | Type        | Gap | Justify | Align | Overflow Options           |
  * |-----------|-------------|-----|---------|-------|----------------------------|
- * | **List**  | Content     | ✅  | ❌ Fixed| ❌ Fixed| `scroll`, `extend`        |
- * | **Grid**  | Content     | ✅  | ❌ Fixed| ❌ Fixed| `scroll`, `extend`        |
- * | **Inline**| Content     | ✅  | ❌ Fixed| ❌ Fixed| `scroll`, `extend`, `wrap`|
- * | **Row**   | Layout      | ❌  | ✅ Full | ✅ Full | `shrink`, `wrap`          |
- * | **Column**| Layout      | ❌  | ✅ Full | ✅ Full | `shrink`, `extend`        |
+ * | **List**  | Content     | ✅  | ❌ Fixed| ❌ Fixed| `auto`, `fixed`, `expand` |
+ * | **Grid**  | Content     | ✅  | ❌ Fixed| ❌ Fixed| `auto`, `fixed`, `expand` |
+ * | **Inline**| Content     | ✅  | ❌ Fixed| ❌ Fixed| `auto`, `fixed`, `expand`, `wrap`|
+ * | **Row**   | Layout      | ❌  | ✅ Full | ✅ Full | `auto`, `fixed`, `expand`, `wrap`|
+ * | **Column**| Layout      | ❌  | ✅ Full | ✅ Full | `auto`, `fixed`, `expand` |
  */
 
 /**
@@ -59,7 +59,7 @@ export { default as Conditional } from './Conditional.astro';
  * - **Default Gap**: `xs` (4px)
  * - **Justify**: CSS default (items stack naturally)
  * - **Align**: `stretch` (items take full width)  
- * - **Overflow**: `scroll` (vertical scroll), `extend` (spill out)
+ * - **Overflow**: `auto` (scroll when needed), `fixed` (clip content), `expand` (container grows)
  * - **Use Cases**: Navigation lists, item lists, menu items
  * 
  * @example
@@ -78,7 +78,7 @@ export { default as Conditional } from './Conditional.astro';
  * - **Default Gap**: `md` (16px)
  * - **Justify**: CSS Grid default
  * - **Align**: CSS Grid default
- * - **Overflow**: `scroll` (both directions), `extend` (spill out)
+ * - **Overflow**: `auto` (scroll when needed), `fixed` (clip content), `expand` (container grows)
  * - **Columns**: `auto`, `1-12` (responsive breakpoints)
  * - **Use Cases**: Card grids, image galleries, feature lists
  * 
@@ -98,7 +98,7 @@ export { default as Conditional } from './Conditional.astro';
  * - **Default Gap**: `md` (16px)  
  * - **Justify**: `start` (pack to left)
  * - **Align**: `center` (center vertically)
- * - **Overflow**: `scroll` (horizontal), `extend`, `wrap` (new rows)
+ * - **Overflow**: `auto` (horizontal scroll), `fixed` (clip content), `expand` (container grows), `wrap` (new rows)
  * - **Use Cases**: Tag lists, button groups, breadcrumbs
  * 
  * @example
@@ -123,7 +123,7 @@ export { default as Conditional } from './Conditional.astro';
  * - **Purpose**: Horizontal static layout positioning
  * - **Justify Options**: `start`, `center`, `end`, `between`, `around`, `evenly`
  * - **Align Options**: `start`, `center`, `end`, `stretch`, `baseline`  
- * - **Overflow**: `shrink` (default flex), `wrap` (new rows)
+ * - **Overflow**: `auto` (scroll when needed), `fixed` (clip content), `expand` (container grows), `wrap` (flex wrap)
  * - **Use Cases**: Button groups, form controls, static headers
  * 
  * @example
@@ -141,7 +141,7 @@ export { default as Conditional } from './Conditional.astro';
  * - **Purpose**: Vertical static layout positioning  
  * - **Justify Options**: `start`, `center`, `end`, `between`, `around`, `evenly`
  * - **Align Options**: `start`, `center`, `end`, `stretch`, `baseline`
- * - **Overflow**: `shrink` (default flex), `extend` (content extends beyond)
+ * - **Overflow**: `auto` (scroll when needed), `fixed` (clip content), `expand` (container grows)
  * - **Use Cases**: Form layouts, card content, static sections
  * 
  * @example
@@ -153,6 +153,49 @@ export { default as Conditional } from './Conditional.astro';
  * ```
  */
 
+
+/**
+ * ═══════════════════════════════════════════════════════════════════════════════════
+ * OVERFLOW BEHAVIOR SYSTEM
+ * ═══════════════════════════════════════════════════════════════════════════════════
+ */
+
+/**
+ * ## Universal Overflow Options
+ * 
+ * All components support consistent overflow behavior with 4 main options:
+ * 
+ * ### `auto` - Smart Scrolling
+ * - **CSS**: `overflow-auto`
+ * - **Behavior**: Container keeps its size, content scrolls when it exceeds boundaries
+ * - **Use When**: You want a fixed container size with scrollable content
+ * - **Example**: Chat messages in a fixed-height container
+ * 
+ * ### `fixed` - Clipped Content  
+ * - **CSS**: `overflow-hidden`
+ * - **Behavior**: Container keeps its size, content gets clipped/cut off at boundaries
+ * - **Use When**: You want strict size control and don't mind content being hidden
+ * - **Example**: Card previews where text should truncate
+ * 
+ * ### `expand` - Container Grows
+ * - **CSS**: `""` (no overflow constraints)
+ * - **Behavior**: Container grows/expands to fit all content naturally
+ * - **Use When**: You want the container to adapt to content size
+ * - **Example**: Dynamic lists, flexible cards, growing text areas
+ * 
+ * ### `wrap` - Flex Wrapping (Row/Inline only)
+ * - **CSS**: `flex-wrap`
+ * - **Behavior**: Content wraps to new lines when it exceeds container width
+ * - **Use When**: You want items to flow to multiple rows/lines
+ * - **Example**: Tag lists, button toolbars, navigation breadcrumbs
+ * 
+ * ## Default Overflow by Component Type
+ * 
+ * - **Content Components** (List, Grid, Inline): Default `auto` 
+ * - **Layout Components** (Row, Column): Default `expand`
+ * - **UI Components** (Card, Button, etc.): Default `fixed`
+ * - **Dynamic Items** (ListItem, GridItem): Default `expand`
+ */
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════════

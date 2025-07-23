@@ -86,19 +86,19 @@ export type { Props as TableProps } from './display/Table.astro';
 export type { Props as VideoPlayerProps } from './display/VideoPlayer.astro';
 export type { Props as TextProps } from './display/Text.astro';
 // Card types
-export type { Props as CardProps } from './display/Card.astro';
-export type { Props as CardContentProps } from './display/CardContent.astro';
-export type { Props as CardFooterProps } from './display/CardFooter.astro';
-export type { Props as CardHeaderProps } from './display/CardHeader.astro';
+export type { Props as CardProps } from './display/card/Card.astro';
+export type { Props as CardContentProps } from './display/card/CardContent.astro';
+export type { Props as CardFooterProps } from './display/card/CardFooter.astro';
+export type { Props as CardHeaderProps } from './display/card/CardHeader.astro';
 // Accordion types
-export type { Props as AccordionProps } from './display/Accordion.astro';
-export type { Props as AccordionContentProps } from './display/AccordionContent.astro';
-export type { Props as AccordionItemProps } from './display/AccordionItem.astro';
-export type { Props as AccordionTriggerProps } from './display/AccordionTrigger.astro';
+export type { Props as AccordionProps } from './display/accordion/Accordion.astro';
+export type { Props as AccordionContentProps } from './display/accordion/AccordionContent.astro';
+export type { Props as AccordionItemProps } from './display/accordion/AccordionItem.astro';
+export type { Props as AccordionTriggerProps } from './display/accordion/AccordionTrigger.astro';
 // Avatar types
-export type { Props as AvatarProps } from './display/Avatar.astro';
-export type { Props as AvatarFallbackProps } from './display/AvatarFallback.astro';
-export type { Props as AvatarImageProps } from './display/AvatarImage.astro';
+export type { Props as AvatarProps } from './display/avatar/Avatar.astro';
+export type { Props as AvatarFallbackProps } from './display/avatar/AvatarFallback.astro';
+export type { Props as AvatarImageProps } from './display/avatar/AvatarImage.astro';
 
 // Interactive types
 export type { Props as CopyToClipboardProps } from './interactive/CopyToClipboard.astro';

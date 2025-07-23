@@ -69,25 +69,40 @@
 - Size determined by internal elements
 - Have sensible default constraints (easily overridable with Tailwind)
 - Handle dynamic/data-driven content
-- Logical overflow behaviors:
-  - **List**: `scroll` (vertical scroll), `extend` (spill out) + default `max-h-screen`
-  - **Grid**: `scroll` (both directions), `extend` (spill out)  
-  - **Inline**: `scroll` (horizontal scroll), `extend` (spill out), `wrap` (wrap to new rows) + default `max-w-full`
+- Universal overflow behaviors:
+  - **List**: `auto` (vertical scroll), `fixed` (clip), `expand` (grow) + default `max-h-screen`
+  - **Grid**: `auto` (both scroll), `fixed` (clip), `expand` (grow)  
+  - **Inline**: `auto` (horizontal scroll), `fixed` (clip), `expand` (grow), `wrap` (wrap to rows) + default `max-w-full`
 
 **Layout-Driven Components (Column, Row):**
 - Only have `justify` and `align` properties  
 - No gap or padding
 - Take up available space from parent container
 - Handle static layout positioning
-- Logical overflow behaviors:
-  - **Row**: `shrink` (default flex), `wrap` (wrap to rows)
-  - **Column**: `shrink` (default flex), `extend` (content extends beyond)
+- Universal overflow behaviors:
+  - **Row**: `auto` (scroll), `fixed` (clip), `expand` (grow), `wrap` (flex wrap)
+  - **Column**: `auto` (scroll), `fixed` (clip), `expand` (grow)
 
 
 **UI Components (Card, Button, Badge, etc.):**
 - Have `padding` and `margin` properties (default to none/0)
 - Default to fixed size
-- Overflow options: `hidden` (default), `extend`, `horizontal`, `vertical`
+- Universal overflow options: `auto` (scroll), `fixed` (clip, default), `expand` (grow)
+
+### **Universal Overflow System:**
+
+**Four consistent overflow options across all components:**
+
+- **`auto`**: Smart scrolling - container keeps size, content scrolls when needed (`overflow-auto`)
+- **`fixed`**: Clipped content - container keeps size, content gets cut off (`overflow-hidden`)  
+- **`expand`**: Container grows - container expands to fit all content naturally (no constraints)
+- **`wrap`**: Flex wrapping - content wraps to new lines (Row/Inline only, `flex-wrap`)
+
+**Default overflow by component type:**
+- Content Components (List, Grid, Inline): `auto`
+- Layout Components (Row, Column): `expand`  
+- UI Components (Card, Button): `fixed`
+- Dynamic Items (ListItem, GridItem): `expand`
 
 ### **Spacing Principles:**
 

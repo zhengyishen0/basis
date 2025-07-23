@@ -1,9 +1,10 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
+import { universalVariants, type UniversalSpacing, type UniversalDirection, type UIOverflow, type UniversalJustify, type UniversalAlign } from '@/lib/component-variants';
 
 const cardVariants = cva(
-    'rounded-lg border text-card-foreground shadow-sm [&_.card-header]:relative [&_.card-content]:relative [&_.card-footer]:relative [&_.card-header>*:first-child]:relative [&_.card-header>*:first-child]:z-10 [&_.card-content>*:first-child]:relative [&_.card-content>*:first-child]:z-10 [&_.card-footer>*:first-child]:relative [&_.card-footer>*:first-child]:z-10',
+    'rounded-lg border text-card-foreground shadow-sm flex [&_.card-header]:relative [&_.card-content]:relative [&_.card-footer]:relative [&_.card-header>*:first-child]:relative [&_.card-header>*:first-child]:z-10 [&_.card-content>*:first-child]:relative [&_.card-content>*:first-child]:z-10 [&_.card-footer>*:first-child]:relative [&_.card-footer>*:first-child]:z-10',
     {
         variants: {
             variant: {
@@ -14,40 +15,58 @@ const cardVariants = cva(
                 ghost: 'border-transparent bg-transparent shadow-none',
                 muted: 'border-border bg-muted',
             },
-            imagePosition: {
-                none: 'flex flex-col',
-                top: 'flex flex-col',
-                left: 'flex flex-row',
-                right: 'flex flex-row-reverse',
-                bottom: 'flex flex-col-reverse',
+            size: {
+                fixed: 'w-80 h-96',
+                'fixed-sm': 'w-64 h-72',
+                'fixed-lg': 'w-96 h-120',
+                extend: 'w-fit h-fit',
+                horizontal: 'w-full h-fit',
+                vertical: 'w-fit h-full',
+                full: 'w-full h-full',
             },
         },
         defaultVariants: {
             variant: 'default',
-            imagePosition: 'none',
+            size: 'fixed',
         },
     }
 );
 
 export interface Props extends VariantProps<typeof cardVariants> {
     className?: string;
+    padding?: UniversalSpacing;
+    overflow?: UIOverflow;
+    direction?: UniversalDirection;
+    justify?: UniversalJustify;
+    align?: UniversalAlign;
     // Alpine.js pass-through
     [key: string]: any;
 }
 
-const { variant, imagePosition, className, ...alpineProps } = Astro.props;
+const { 
+    variant, 
+    size, 
+    padding = 'none', 
+    overflow = 'fixed', 
+    direction = 'column', 
+    justify = 'start', 
+    align = 'stretch', 
+    className, 
+    ...alpineProps 
+} = Astro.props;
 ---
 
 <div
     class={cn(
-        cardVariants({ variant, imagePosition }),
-        'overflow-hidden',
+        cardVariants({ variant, size }),
+        universalVariants.padding[padding],
+        universalVariants.overflow[overflow],
+        universalVariants.direction[direction],
+        universalVariants.justify[justify],
+        universalVariants.align[align],
         className
     )}
     {...alpineProps}
 >
-    <slot name="image" />
-    <div class="flex flex-col flex-1">
-        <slot />
-    </div>
+    <slot />
 </div>

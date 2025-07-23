@@ -1,17 +1,33 @@
 ---
 import { cn } from '@/lib/utils';
+import { universalVariants, type UniversalSpacing, type UniversalJustify, type UniversalAlign } from '@/lib/component-variants';
 
 export interface Props {
     className?: string;
+    padding?: UniversalSpacing;
+    justify?: UniversalJustify;
+    align?: UniversalAlign;
     // Alpine.js pass-through
     [key: string]: any;
 }
 
-const { className, ...alpineProps } = Astro.props;
+const { 
+    padding = 'lg', 
+    justify = 'start', 
+    align = 'stretch', 
+    className, 
+    ...alpineProps 
+} = Astro.props;
 ---
 
 <div
-    class={cn('px-6 py-2 flex-1 card-content min-h-0', className)}
+    class={cn(
+        'flex-1 w-full h-full card-content min-h-0 flex flex-col',
+        universalVariants.padding[padding],
+        universalVariants.justify[justify],
+        universalVariants.align[align],
+        className
+    )}
     {...alpineProps}
 >
     <slot />
