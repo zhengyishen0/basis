@@ -10,13 +10,13 @@ export interface Props {
 const {
   condition,
   class: className = '',
-  ...rest
+  ...alpineProps
 } = Astro.props;
 
 const classes = cn(className);
 ---
 
-<div class={classes} {...rest}>
+<div class={classes} {...alpineProps}>
   <!-- True case slot -->
   <div x-show={condition}>
     <slot name="true" />

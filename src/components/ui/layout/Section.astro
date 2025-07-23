@@ -1,45 +1,23 @@
 ---
 import { cn } from '@/lib/utils';
-import { createLayoutComponent, type LayoutComponentProps, type VariantProps } from '@/lib/component-variants';
 
-const sectionVariants = createLayoutComponent(
-  'p-8',
-  {
-    tag: {
-      section: '',
-      div: '',
-      article: '',
-      aside: ''
-    },
-    overflow: {
-      shrink: 'flex-shrink',
-      extend: 'flex-shrink-0'
-    }
-  }
-);
-
-export interface Props extends LayoutComponentProps, VariantProps<typeof sectionVariants> {
+export interface Props {
   tag?: 'section' | 'div' | 'article' | 'aside';
-  overflow?: 'shrink' | 'extend';
+  class?: string;
+  [key: string]: any; // Alpine.js pass-through
 }
 
 const {
   tag = 'section',
-  justify,
-  align,
-  overflow = 'shrink',
   class: className = '',
-  ...rest
+  ...alpineProps
 } = Astro.props;
 
-const classes = cn(
-  sectionVariants({ tag, justify, align, overflow }),
-  className
-);
+const classes = cn('p-8', className);
 
 const Tag = tag;
 ---
 
-<Tag class={classes} {...rest}>
+<Tag class={classes} {...alpineProps}>
   <slot />
 </Tag>

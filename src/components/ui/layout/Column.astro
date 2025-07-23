@@ -1,12 +1,16 @@
 ---
 import { cn } from '@/lib/utils';
-import { createLayoutComponent, type LayoutComponentProps, universalVariants } from '@/lib/component-variants';
+import {
+    createLayoutComponent,
+    type LayoutComponentProps,
+    universalVariants,
+} from '@/lib/component-variants';
 
 const columnVariants = createLayoutComponent('flex flex-col h-full', {
     overflow: {
-        shrink: universalVariants.overflow.shrink,   // Default flex shrink
-        extend: universalVariants.overflow.extend,   // Content extends beyond container
-    }
+        shrink: universalVariants.overflow.shrink, // Default flex shrink
+        extend: universalVariants.overflow.extend, // Content extends beyond container
+    },
 });
 
 export interface Props extends LayoutComponentProps {
@@ -14,19 +18,16 @@ export interface Props extends LayoutComponentProps {
 }
 
 const {
-  align = 'stretch',
-  justify = 'start',
-  overflow = 'shrink',
-  class: className = '',
-  ...alpineProps
+    align = 'center',
+    justify = 'start',
+    overflow = 'shrink',
+    class: className = '',
+    ...alpineProps
 } = Astro.props;
 
-const classes = cn(
-  columnVariants({ align, justify, overflow }),
-  className
-);
+const classes = cn(columnVariants({ align, justify, overflow }), className);
 ---
 
 <div class={classes} {...alpineProps}>
-  <slot />
+    <slot />
 </div>

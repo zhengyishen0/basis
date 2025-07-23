@@ -1,4 +1,7 @@
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
+
+// Re-export VariantProps for component use
+export { type VariantProps } from 'class-variance-authority';
 
 /**
  * Universal variant building blocks
@@ -78,20 +81,13 @@ export const universalVariants = {
     baseline: "items-baseline"
   },
   
-  // Overflow options
+  // Overflow options - simplified and consistent
   overflow: {
-    // For content-driven components
-    scroll: "overflow-auto",
-    scrollX: "overflow-x-auto",
-    scrollY: "overflow-y-auto", 
-    extend: "overflow-visible",
-    wrap: "flex-wrap",
-    // For layout-driven components
-    shrink: "",
-    // For UI components
-    hidden: "overflow-hidden",
-    horizontal: "overflow-x-auto overflow-y-hidden",
-    vertical: "overflow-y-auto overflow-x-hidden"
+    // Universal options for all components
+    auto: "overflow-auto",      // Content scrolls when needed
+    hidden: "overflow-hidden",  // Content gets clipped
+    // Special case for flex wrapping (Row, Inline only)
+    wrap: "flex-wrap"
   }
 } as const;
 
@@ -141,10 +137,8 @@ export const createUIComponent = (baseClasses: string, customVariants = {}) =>
       margin: universalVariants.margin,
       elevation: universalVariants.elevation,
       overflow: {
-        hidden: universalVariants.overflow.hidden,
-        extend: universalVariants.overflow.extend,
-        horizontal: universalVariants.overflow.horizontal,
-        vertical: universalVariants.overflow.vertical
+        auto: universalVariants.overflow.auto,
+        hidden: universalVariants.overflow.hidden
       },
       ...customVariants
     },
@@ -166,13 +160,11 @@ export type UniversalElevation = 'none' | 'flat' | 'elevated' | 'floating' | 'li
 export type UniversalJustify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
 export type RowJustify = UniversalJustify | 'grid';
 export type UniversalAlign = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
-// Component-specific overflow types
-export type ListOverflow = 'scroll' | 'extend';
-export type GridOverflow = 'scroll' | 'extend'; 
-export type InlineOverflow = 'scroll' | 'extend' | 'wrap';
-export type RowOverflow = 'shrink' | 'wrap' | 'scroll';
-export type ColumnOverflow = 'shrink' | 'scroll';
-export type UIOverflow = 'hidden' | 'extend' | 'horizontal' | 'vertical';
+// Simplified overflow types
+export type ContentOverflow = 'auto' | 'hidden';
+export type FlexOverflow = 'auto' | 'hidden' | 'wrap';  // Row, Inline get wrap option
+export type LayoutOverflow = 'auto' | 'hidden';
+export type UIOverflow = 'auto' | 'hidden';
 
 /**
  * Standard interface for content-driven components (List, Grid, Inline)

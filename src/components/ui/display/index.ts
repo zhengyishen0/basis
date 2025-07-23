@@ -10,18 +10,10 @@ export { default as Text } from './Text.astro';
 export { default as Navbar } from './Navbar.astro';
 
 // Card components
-export { default as Card } from './Card.astro';
-export { default as CardContent } from './CardContent.astro';
-export { default as CardFooter } from './CardFooter.astro';
-export { default as CardHeader } from './CardHeader.astro';
+export { Card, CardContent, CardFooter, CardHeader } from './card';
 
 // Accordion components
-export { default as Accordion } from './Accordion.astro';
-export { default as AccordionContent } from './AccordionContent.astro';
-export { default as AccordionItem } from './AccordionItem.astro';
-export { default as AccordionTrigger } from './AccordionTrigger.astro';
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './accordion';
 
 // Avatar components
-export { default as Avatar } from './Avatar.astro';
-export { default as AvatarFallback } from './AvatarFallback.astro';
-export { default as AvatarImage } from './AvatarImage.astro';
+export { Avatar, AvatarFallback, AvatarImage } from './avatar';
