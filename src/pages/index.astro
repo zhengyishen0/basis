@@ -3,10 +3,13 @@ import Layout from '../layouts/Layout.astro';
 import { getEntry } from 'astro:content';
 
 // UI Components for better styling
-import { Badge } from '../components/ui/feedback';
-import { Button } from '../components/ui/forms';
-import { Avatar, AvatarImage, Text } from '../components/ui/display';
-import { Grid, GridItem } from '../components/ui/layout';
+import Badge from '../components/ui/feedback/Badge.astro';
+import Button from '../components/ui/forms/Button.astro';
+import Avatar from '../components/ui/display/Avatar.astro';
+import AvatarImage from '../components/ui/display/AvatarImage.astro';
+import Text from '../components/ui/display/Text.astro';
+import Grid from '../components/ui/layout/Grid.astro';
+import GridItem from '../components/ui/layout/GridItem.astro';
 
 // Import GitHub icon
 import githubIconUrl from '../assets/github-icon-white.svg?url';

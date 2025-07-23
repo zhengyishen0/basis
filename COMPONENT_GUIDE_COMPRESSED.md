@@ -34,8 +34,26 @@
 
 ### **Styling Principles:**
 
-- CVA + tailwind-merge for conflict resolution
-- cn() utility for all dynamic classes
+**CN vs CVA Guidelines:**
+
+**Use CVA When:**
+- UI components with 2+ independent variants (Button, Badge, Card)
+- Complex variant combinations need TypeScript safety
+- Component used extensively across codebase
+- Structured variant system provides clarity
+
+**Use cn() with conditionals When:**
+- Simple utility components (Divider, Spacer)
+- Dynamic values that can't be predefined (`my-${spacing}`)
+- One-off styling logic is more readable
+- Conditional classes are straightforward
+
+**Standard Patterns:**
+- **Complex UI**: `class={cn(variants({ variant, size }), className)}`
+- **Simple Utility**: `class={cn('base', condition && 'extra', `dynamic-${value}`, className)}`
+
+**Never:** Manual string concatenation without cn() conflict resolution
+**Always:** Provide className prop for user overrides
 
 ### **Icon Principles:**
 

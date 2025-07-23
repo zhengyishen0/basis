@@ -1,46 +1,87 @@
 ---
 import { cn } from '@/lib/utils';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-export interface Props {
-    variant?:
-        | 'hero-title'
-        | 'hero-subtitle'
-        | 'hero-description'
-        | 'card-title'
-        | 'card-subtitle'
-        | 'card-description'
-        | 'card-content'
-        | 'accordion-trigger'
-        | 'accordion-content'
-        | 'page-title'
-        | 'page-subtitle'
-        | 'section-title'
-        | 'section-subtitle'
-        | 'feature-title'
-        | 'feature-description'
-        | 'testimonial-quote'
-        | 'testimonial-author'
-        | 'stats-number'
-        | 'stats-label'
-        | 'body'
-        | 'body-large'
-        | 'body-small'
-        | 'caption'
-        | 'label'
-        | 'overline'
-        | 'button'
-        | 'link'
-        | 'muted'
-        | 'error'
-        | 'success'
-        | 'warning'
-        | 'info';
-    state?: 'active' | 'completed' | 'pending' | 'disabled';
+const textVariants = cva(
+  'leading-none m-0',
+  {
+    variants: {
+      variant: {
+        // Hero variants
+        'hero-title': 'text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight',
+        'hero-subtitle': 'text-xl md:text-2xl font-semibold text-gray-700 leading-relaxed',
+        'hero-description': 'text-lg md:text-xl text-gray-600 leading-relaxed',
+        
+        // Card variants
+        'card-title': 'text-xl font-semibold text-gray-900',
+        'card-subtitle': 'text-lg font-medium text-gray-700',
+        'card-description': 'text-base text-gray-600 leading-relaxed',
+        'card-content': 'text-sm text-gray-700 leading-normal',
+        
+        // Accordion variants
+        'accordion-trigger': 'text-base font-semibold text-gray-900 select-none',
+        'accordion-content': 'text-sm text-gray-600 leading-relaxed',
+        
+        // Page variants
+        'page-title': 'text-3xl font-bold text-gray-900',
+        'page-subtitle': 'text-xl font-medium text-gray-700',
+        
+        // Section variants
+        'section-title': 'text-2xl font-semibold text-gray-900',
+        'section-subtitle': 'text-lg font-medium text-gray-700',
+        
+        // Feature variants
+        'feature-title': 'text-xl font-semibold text-gray-900',
+        'feature-description': 'text-base text-gray-600 leading-relaxed',
+        
+        // Testimonial variants
+        'testimonial-quote': 'text-lg italic text-gray-700 leading-relaxed',
+        'testimonial-author': 'text-sm font-medium text-gray-900',
+        
+        // Stats variants
+        'stats-number': 'text-3xl md:text-4xl font-bold text-gray-900',
+        'stats-label': 'text-sm font-medium text-gray-600 uppercase tracking-wide',
+        
+        // Body variants
+        'body': 'text-base text-gray-900',
+        'body-large': 'text-lg text-gray-900',
+        'body-small': 'text-sm text-gray-700',
+        
+        // Utility variants
+        'caption': 'text-xs text-gray-500 uppercase tracking-wide',
+        'label': 'text-sm font-medium text-gray-700',
+        'overline': 'text-xs font-medium text-gray-500 uppercase tracking-widest',
+        
+        // Interactive variants
+        'button': 'text-sm font-medium',
+        'link': 'text-sm text-blue-600 hover:text-blue-700 underline',
+        
+        // Status variants
+        'muted': 'text-sm text-gray-500',
+        'error': 'text-sm text-red-600 font-medium',
+        'success': 'text-sm text-green-600 font-medium',
+        'warning': 'text-sm text-yellow-600 font-medium',
+        'info': 'text-sm text-blue-600 font-medium'
+      },
+      state: {
+        active: 'text-gray-900 font-medium',
+        completed: 'text-gray-500 line-through',
+        pending: 'text-gray-500 italic',
+        disabled: 'text-gray-400 opacity-60'
+      }
+    },
+    defaultVariants: {
+      variant: 'body'
+    }
+  }
+);
+
+export interface Props extends VariantProps<typeof textVariants> {
     class?: string;
     [key: string]: any; // Alpine.js pass-through
 }
 
-const { variant = 'body', state, class: className = '', ...rest } = Astro.props;
+const { variant, state, class: className, ...rest } = Astro.props;
 
 // Determine element based on variant if not explicitly set
 const getElementFromVariant = (variant: string) => {
@@ -90,83 +131,7 @@ const getElementFromVariant = (variant: string) => {
 
 const Element = getElementFromVariant(variant);
 
-const classes = cn(
-    // Base text styling
-    'leading-none m-0',
-
-    // Hero variants
-    variant === 'hero-title' &&
-        'text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight',
-    variant === 'hero-subtitle' &&
-        'text-xl md:text-2xl font-semibold text-gray-700 leading-relaxed',
-    variant === 'hero-description' &&
-        'text-lg md:text-xl text-gray-600 leading-relaxed',
-
-    // Card variants
-    variant === 'card-title' && 'text-xl font-semibold text-gray-900',
-    variant === 'card-subtitle' && 'text-lg font-medium text-gray-700',
-    variant === 'card-description' && 'text-base text-gray-600 leading-relaxed',
-    variant === 'card-content' && 'text-sm text-gray-700 leading-normal',
-
-    // Accordion variants
-    variant === 'accordion-trigger' &&
-        'text-base font-semibold text-gray-900 select-none',
-    variant === 'accordion-content' && 'text-sm text-gray-600 leading-relaxed',
-
-    // Page variants
-    variant === 'page-title' && 'text-3xl font-bold text-gray-900',
-    variant === 'page-subtitle' && 'text-xl font-medium text-gray-700',
-
-    // Section variants
-    variant === 'section-title' && 'text-2xl font-semibold text-gray-900',
-    variant === 'section-subtitle' && 'text-lg font-medium text-gray-700',
-
-    // Feature variants
-    variant === 'feature-title' && 'text-xl font-semibold text-gray-900',
-    variant === 'feature-description' &&
-        'text-base text-gray-600 leading-relaxed',
-
-    // Testimonial variants
-    variant === 'testimonial-quote' &&
-        'text-lg italic text-gray-700 leading-relaxed',
-    variant === 'testimonial-author' && 'text-sm font-medium text-gray-900',
-
-    // Stats variants
-    variant === 'stats-number' &&
-        'text-3xl md:text-4xl font-bold text-gray-900',
-    variant === 'stats-label' &&
-        'text-sm font-medium text-gray-600 uppercase tracking-wide',
-
-    // Body variants
-    variant === 'body' && 'text-base text-gray-900',
-    variant === 'body-large' && 'text-lg text-gray-900',
-    variant === 'body-small' && 'text-sm text-gray-700',
-
-    // Utility variants
-    variant === 'caption' && 'text-xs text-gray-500 uppercase tracking-wide',
-    variant === 'label' && 'text-sm font-medium text-gray-700',
-    variant === 'overline' &&
-        'text-xs font-medium text-gray-500 uppercase tracking-widest',
-
-    // Interactive variants
-    variant === 'button' && 'text-sm font-medium',
-    variant === 'link' && 'text-sm text-blue-600 hover:text-blue-700 underline',
-
-    // Status variants
-    variant === 'muted' && 'text-sm text-gray-500',
-    variant === 'error' && 'text-sm text-red-600 font-medium',
-    variant === 'success' && 'text-sm text-green-600 font-medium',
-    variant === 'warning' && 'text-sm text-yellow-600 font-medium',
-    variant === 'info' && 'text-sm text-blue-600 font-medium',
-
-    // State variants (override variant colors when present)
-    state === 'active' && 'text-gray-900 font-medium',
-    state === 'completed' && 'text-gray-500 line-through',
-    state === 'pending' && 'text-gray-500 italic',
-    state === 'disabled' && 'text-gray-400 opacity-60',
-
-    className
-);
+const classes = cn(textVariants({ variant, state }), className);
 ---
 
 <Element class={classes} {...rest}>
