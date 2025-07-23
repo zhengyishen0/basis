@@ -1,49 +1,43 @@
 ---
 import { cn } from '@/lib/utils';
-import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
-import Text from './Text.astro';
+import {
+    createUIComponent,
+    type UIComponentProps,
+    type VariantProps,
+} from '@/lib/component-variants';
+import Text from '@/components/ui/display/Text.astro';
 
-const accordionContentVariants = createUIComponent(
-  'pt-0',
-  {
+const accordionContentVariants = createUIComponent('pt-0', {
     variant: {
-      default: '',
-      emphasized: ''
-    }
-  }
-);
+        default: '',
+        emphasized: '',
+    },
+});
 
-export interface Props extends UIComponentProps, VariantProps<typeof accordionContentVariants> {
-  text?: string;
-  variant?: 'default' | 'emphasized';
+export interface Props
+    extends UIComponentProps,
+        VariantProps<typeof accordionContentVariants> {
+    text?: string;
+    variant?: 'default' | 'emphasized';
 }
 
 const {
-  size,
-  padding = 'lg',
-  elevation,
-  variant = 'default',
-  text,
-  class: className,
-  ...alpineProps
+    size,
+    padding = 'lg',
+    elevation,
+    variant = 'default',
+    text,
+    class: className,
+    ...alpineProps
 } = Astro.props;
 ---
 
-<div 
-  x-show="activeAccordion==id" 
-  x-collapse 
-  x-cloak
-  {...alpineProps}
->
-  <div 
-    :class={`"${cn(accordionContentVariants({ size, padding, elevation, variant }), className)}"`}
-  >
-    <Text variant={variant === 'emphasized' ? 'body' : 'accordion-content'}>
-      {text ? (
-        <span x-text={text}></span>
-      ) : (
-        <slot />
-      )}
-    </Text>
-  </div>
+<div x-show="activeAccordion==id" x-collapse x-cloak {...alpineProps}>
+    <div
+        :class={`"${cn(accordionContentVariants({ size, padding, elevation, variant }), className)}"`}
+    >
+        <Text variant={variant === 'emphasized' ? 'body' : 'accordion-content'}>
+            {text ? <span x-text={text} /> : <slot />}
+        </Text>
+    </div>
 </div>
