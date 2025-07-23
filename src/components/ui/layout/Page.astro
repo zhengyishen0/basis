@@ -10,26 +10,30 @@ const pageVariants = createLayoutComponent(
       narrow: 'max-w-2xl mx-auto',
       container: 'max-w-7xl mx-auto', 
       wide: 'max-w-screen-xl mx-auto'
+    },
+    overflow: {
+      shrink: 'flex-shrink',
+      extend: 'flex-shrink-0'
     }
   }
 );
 
 export interface Props extends LayoutComponentProps, VariantProps<typeof pageVariants> {
   maxWidth?: 'full' | 'narrow' | 'container' | 'wide';
+  overflow?: 'shrink' | 'extend';
 }
 
 const { 
   maxWidth = 'container',
-  gap,
-  padding,
   justify,
   align,
+  overflow = 'shrink',
   class: className = '',
   ...rest
 } = Astro.props;
 
 const classes = cn(
-  pageVariants({ maxWidth, gap, padding, justify, align }),
+  pageVariants({ maxWidth, justify, align, overflow }),
   className
 );
 ---

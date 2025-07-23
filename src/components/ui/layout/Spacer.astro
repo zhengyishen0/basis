@@ -2,24 +2,16 @@
 import { cn } from '@/lib/utils';
 
 export interface Props {
-    variant?: 'flex' | 'grid' | 'auto';
     class?: string;
     [key: string]: any; // Alpine.js pass-through
 }
 
 const { 
-    variant = 'auto',
     class: className = '', 
     ...rest 
 } = Astro.props;
 
-const classes = cn(
-    // Auto-detect parent layout context and adapt
-    variant === 'flex' && 'flex-1 min-w-0',
-    variant === 'grid' && 'min-w-0',
-    variant === 'auto' && 'flex-1 min-w-0 [grid-area:auto] [justify-self:stretch]',
-    className
-);
+const classes = cn('flex-1 min-w-0', className);
 ---
 
 <div class={classes} {...rest}></div>

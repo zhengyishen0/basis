@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import { createLayoutComponent, type LayoutComponentProps, type VariantProps } from '@/lib/component-variants';
 
 const listItemVariants = createLayoutComponent(
-  'flex items-center w-full min-h-[2.5rem]',
+  'flex items-center w-full min-h-[2.5rem] p-2',
   {
     interactive: {
       true: 'hover:bg-gray-50 cursor-pointer',
@@ -12,6 +12,10 @@ const listItemVariants = createLayoutComponent(
     bordered: {
       true: 'border-b border-gray-200 last:border-b-0',
       false: ''
+    },
+    overflow: {
+      shrink: 'flex-shrink',
+      extend: 'flex-shrink-0'
     }
   }
 );
@@ -19,13 +23,13 @@ const listItemVariants = createLayoutComponent(
 export interface Props extends LayoutComponentProps, VariantProps<typeof listItemVariants> {
   interactive?: boolean;
   bordered?: boolean;
+  overflow?: 'shrink' | 'extend';
 }
 
 const {
-  gap = 'sm',
-  padding = 'sm',
   justify = 'start',
   align = 'center',
+  overflow = 'shrink',
   interactive = false,
   bordered = false,
   class: className = '',
@@ -36,7 +40,7 @@ const {
 const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
 
 const classes = cn(
-  listItemVariants({ gap, padding, justify, align, interactive, bordered }),
+  listItemVariants({ justify, align, overflow, interactive, bordered }),
   className
 );
 ---

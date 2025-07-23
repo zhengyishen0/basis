@@ -3,33 +3,37 @@ import { cn } from '@/lib/utils';
 import { createLayoutComponent, type LayoutComponentProps, type VariantProps } from '@/lib/component-variants';
 
 const sectionVariants = createLayoutComponent(
-  '',
+  'p-8',
   {
     tag: {
       section: '',
       div: '',
       article: '',
       aside: ''
+    },
+    overflow: {
+      shrink: 'flex-shrink',
+      extend: 'flex-shrink-0'
     }
   }
 );
 
 export interface Props extends LayoutComponentProps, VariantProps<typeof sectionVariants> {
   tag?: 'section' | 'div' | 'article' | 'aside';
+  overflow?: 'shrink' | 'extend';
 }
 
 const {
   tag = 'section',
-  gap,
-  padding = 'lg',
   justify,
   align,
+  overflow = 'shrink',
   class: className = '',
   ...rest
 } = Astro.props;
 
 const classes = cn(
-  sectionVariants({ tag, gap, padding, justify, align }),
+  sectionVariants({ tag, justify, align, overflow }),
   className
 );
 
