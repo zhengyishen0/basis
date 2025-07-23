@@ -1,0 +1,352 @@
+---
+// Universal Card System Test Page
+import Card from '@/components/ui/display/card/Card.astro';
+import CardHeader from '@/components/ui/display/card/CardHeader.astro';
+import CardContent from '@/components/ui/display/card/CardContent.astro';
+import ListItem from '@/components/ui/layout/ListItem.astro';
+import GridItem from '@/components/ui/layout/GridItem.astro';
+---
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Universal Card System Test</title>
+</head>
+<body class="min-h-screen bg-gray-50 p-8">
+    <div class="max-w-7xl mx-auto space-y-12">
+        <header>
+            <h1 class="text-4xl font-bold mb-4">Universal Card System</h1>
+            <p class="text-lg text-gray-600">Testing all variants: surface, shape, elevation, interactive effects</p>
+        </header>
+
+        <!-- Surface Variants -->
+        <section>
+            <h2 class="text-2xl font-semibold mb-6">Surface Variants</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <Card variant="default" padding="lg" size="extend">
+                    <CardHeader padding="sm">
+                        <h3 class="font-semibold">Default</h3>
+                    </CardHeader>
+                    <CardContent padding="sm">
+                        <p class="text-sm text-gray-600">Solid background with subtle border</p>
+                    </CardContent>
+                </Card>
+
+                <Card variant="muted" padding="lg" size="extend">
+                    <CardHeader padding="sm">
+                        <h3 class="font-semibold">Muted</h3>
+                    </CardHeader>
+                    <CardContent padding="sm">
+                        <p class="text-sm text-gray-600">Muted background</p>
+                    </CardContent>
+                </Card>
+
+                <Card variant="outline" padding="lg" size="extend">
+                    <CardHeader padding="sm">
+                        <h3 class="font-semibold">Outline</h3>
+                    </CardHeader>
+                    <CardContent padding="sm">
+                        <p class="text-sm text-gray-600">Border only, transparent background</p>
+                    </CardContent>
+                </Card>
+
+                <Card variant="ghost" padding="lg" size="extend">
+                    <CardHeader padding="sm">
+                        <h3 class="font-semibold">Ghost</h3>
+                    </CardHeader>
+                    <CardContent padding="sm">
+                        <p class="text-sm text-gray-600">No border, no background</p>
+                    </CardContent>
+                </Card>
+
+                <Card variant="gradient" padding="lg" size="extend">
+                    <CardHeader padding="sm">
+                        <h3 class="font-semibold">Gradient</h3>
+                    </CardHeader>
+                    <CardContent padding="sm">
+                        <p class="text-sm text-gray-600">Gradient background</p>
+                    </CardContent>
+                </Card>
+            </div>
+        </section>
+
+        <!-- Shape Variants -->
+        <section>
+            <h2 class="text-2xl font-semibold mb-6">Shape Variants</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card variant="default" shape="rectangle" padding="lg" size="extend">
+                    <CardContent padding="md" justify="center" align="center">
+                        <h3 class="font-semibold mb-2">Rectangle</h3>
+                        <p class="text-sm text-gray-600 text-center">Sharp corners</p>
+                    </CardContent>
+                </Card>
+
+                <Card variant="default" shape="rounded" padding="lg" size="extend">
+                    <CardContent padding="md" justify="center" align="center">
+                        <h3 class="font-semibold mb-2">Rounded</h3>
+                        <p class="text-sm text-gray-600 text-center">Standard rounded corners</p>
+                    </CardContent>
+                </Card>
+
+                <Card variant="default" shape="pill" padding="lg" size="extend">
+                    <CardContent padding="md" justify="center" align="center">
+                        <h3 class="font-semibold mb-2">Pill</h3>
+                        <p class="text-sm text-gray-600 text-center">Fully rounded ends</p>
+                    </CardContent>
+                </Card>
+            </div>
+        </section>
+
+        <!-- Elevation Variants -->
+        <section>
+            <h2 class="text-2xl font-semibold mb-6">Elevation Variants</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <Card variant="default" elevation="flat" padding="lg" size="extend">
+                    <CardContent padding="md" justify="center" align="center">
+                        <h3 class="font-semibold mb-2">Flat</h3>
+                        <p class="text-sm text-gray-600 text-center">No shadow</p>
+                    </CardContent>
+                </Card>
+
+                <Card variant="default" elevation="shadow" padding="lg" size="extend">
+                    <CardContent padding="md" justify="center" align="center">
+                        <h3 class="font-semibold mb-2">Shadow</h3>
+                        <p class="text-sm text-gray-600 text-center">Subtle shadow</p>
+                    </CardContent>
+                </Card>
+
+                <Card variant="default" elevation="elevated" padding="lg" size="extend">
+                    <CardContent padding="md" justify="center" align="center">
+                        <h3 class="font-semibold mb-2">Elevated</h3>
+                        <p class="text-sm text-gray-600 text-center">Medium shadow</p>
+                    </CardContent>
+                </Card>
+
+                <Card variant="default" elevation="floating" padding="lg" size="extend">
+                    <CardContent padding="md" justify="center" align="center">
+                        <h3 class="font-semibold mb-2">Floating</h3>
+                        <p class="text-sm text-gray-600 text-center">Strong shadow</p>
+                    </CardContent>
+                </Card>
+            </div>
+        </section>
+
+        <!-- Interactive Effects -->
+        <section>
+            <h2 class="text-2xl font-semibold mb-6">Interactive Effects</h2>
+            
+            <!-- Hover Effects -->
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4">Hover Effects</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <Card variant="default" interactive="hover" effect="lift" padding="md" size="extend">
+                        <CardContent padding="sm" justify="center" align="center">
+                            <p class="font-medium">Lift</p>
+                            <p class="text-xs text-gray-600">Hover to lift</p>
+                        </CardContent>
+                    </Card>
+
+                    <Card variant="default" interactive="hover" effect="scale" padding="md" size="extend">
+                        <CardContent padding="sm" justify="center" align="center">
+                            <p class="font-medium">Scale</p>
+                            <p class="text-xs text-gray-600">Hover to scale</p>
+                        </CardContent>
+                    </Card>
+
+                    <Card variant="default" interactive="hover" effect="glow" padding="md" size="extend">
+                        <CardContent padding="sm" justify="center" align="center">
+                            <p class="font-medium">Glow</p>
+                            <p class="text-xs text-gray-600">Hover to glow</p>
+                        </CardContent>
+                    </Card>
+
+                    <Card variant="default" interactive="hover" effect="subtle" padding="md" size="extend">
+                        <CardContent padding="sm" justify="center" align="center">
+                            <p class="font-medium">Subtle</p>
+                            <p class="text-xs text-gray-600">Hover subtly</p>
+                        </CardContent>
+                    </Card>
+
+                    <Card variant="default" interactive="hover" effect="bounce" padding="md" size="extend">
+                        <CardContent padding="sm" justify="center" align="center">
+                            <p class="font-medium">Bounce</p>
+                            <p class="text-xs text-gray-600">Hover to bounce</p>
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+
+            <!-- Click Effects -->
+            <div>
+                <h3 class="text-lg font-medium mb-4">Click Effects (Click to toggle)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <Card variant="default" interactive="click" effect="lift" padding="md" size="extend">
+                        <CardContent padding="sm" justify="center" align="center">
+                            <p class="font-medium">Lift</p>
+                            <p class="text-xs text-gray-600">Click to toggle</p>
+                        </CardContent>
+                    </Card>
+
+                    <Card variant="default" interactive="click" effect="scale" padding="md" size="extend">
+                        <CardContent padding="sm" justify="center" align="center">
+                            <p class="font-medium">Scale</p>
+                            <p class="text-xs text-gray-600">Click to toggle</p>
+                        </CardContent>
+                    </Card>
+
+                    <Card variant="default" interactive="click" effect="glow" padding="md" size="extend">
+                        <CardContent padding="sm" justify="center" align="center">
+                            <p class="font-medium">Glow</p>
+                            <p class="text-xs text-gray-600">Click to toggle</p>
+                        </CardContent>
+                    </Card>
+
+                    <Card variant="default" interactive="click" effect="subtle" padding="md" size="extend">
+                        <CardContent padding="sm" justify="center" align="center">
+                            <p class="font-medium">Subtle</p>
+                            <p class="text-xs text-gray-600">Click to toggle</p>
+                        </CardContent>
+                    </Card>
+
+                    <Card variant="default" interactive="click" effect="bounce" padding="md" size="extend">
+                        <CardContent padding="sm" justify="center" align="center">
+                            <p class="font-medium">Bounce</p>
+                            <p class="text-xs text-gray-600">Click to toggle</p>
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+        </section>
+
+        <!-- GridItem and ListItem Integration -->
+        <section>
+            <h2 class="text-2xl font-semibold mb-6">GridItem & ListItem with Universal Card</h2>
+            
+            <!-- GridItem Examples -->
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4">GridItem Examples</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <GridItem variant="default" shape="rounded" elevation="shadow" padding="md">
+                        <h4 class="font-medium mb-2">Rounded GridItem</h4>
+                        <p class="text-sm text-gray-600">With shadow elevation</p>
+                    </GridItem>
+
+                    <GridItem variant="outline" shape="pill" elevation="flat" padding="lg">
+                        <h4 class="font-medium mb-2">Pill Shape</h4>
+                        <p class="text-sm text-gray-600">Outline with pill shape</p>
+                    </GridItem>
+
+                    <GridItem variant="gradient" shape="pill" elevation="floating" padding="md">
+                        <div class="flex flex-col items-center justify-center h-full">
+                            <h4 class="font-medium mb-2">Gradient</h4>
+                            <p class="text-xs text-gray-600 text-center">Gradient with pill shape</p>
+                        </div>
+                    </GridItem>
+                </div>
+            </div>
+
+            <!-- ListItem Examples -->
+            <div>
+                <h3 class="text-lg font-medium mb-4">ListItem Examples</h3>
+                <div class="bg-white rounded-lg border p-4 space-y-2">
+                    <ListItem variant="ghost" padding="sm">
+                        <div class="w-8 h-8 bg-blue-500 rounded-full mr-3"></div>
+                        <div>
+                            <p class="font-medium">Ghost ListItem</p>
+                            <p class="text-sm text-gray-600">Minimal styling</p>
+                        </div>
+                    </ListItem>
+
+                    <ListItem variant="outline" shape="rounded" padding="md">
+                        <div class="w-8 h-8 bg-green-500 rounded-full mr-3"></div>
+                        <div class="flex-1">
+                            <p class="font-medium">Outline ListItem</p>
+                            <p class="text-sm text-gray-600">With border outline</p>
+                        </div>
+                        <div class="w-6 h-6 bg-gray-300 rounded"></div>
+                    </ListItem>
+
+                    <ListItem variant="muted" shape="pill" elevation="shadow" padding="lg">
+                        <div class="w-8 h-8 bg-purple-500 rounded-full mr-3"></div>
+                        <div>
+                            <p class="font-medium">Pill Shape ListItem</p>
+                            <p class="text-sm text-gray-600">Muted background with shadow</p>
+                        </div>
+                    </ListItem>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complex Combinations -->
+        <section>
+            <h2 class="text-2xl font-semibold mb-6">Complex Combinations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card 
+                    variant="gradient" 
+                    shape="rounded" 
+                    elevation="floating" 
+                    interactive="active" 
+                    effect="scale" 
+                    size="extend"
+                    padding="none"
+                >
+                    <CardHeader variant="ghost" padding="lg">
+                        <h3 class="text-xl font-bold">Premium Card</h3>
+                        <p class="text-sm opacity-80">Gradient + floating + scale</p>
+                    </CardHeader>
+                    <CardContent padding="lg">
+                        <p class="mb-4">This card combines multiple variants:</p>
+                        <ul class="space-y-2 text-sm">
+                            <li>• Gradient surface</li>
+                            <li>• Floating elevation</li>
+                            <li>• Scale interaction</li>
+                            <li>• Active click feedback</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
+                <Card 
+                    variant="outline" 
+                    shape="pill" 
+                    elevation="elevated" 
+                    interactive="active" 
+                    effect="lift" 
+                    size="extend"
+                    padding="lg"
+                >
+                    <CardContent justify="center" align="center">
+                        <h3 class="text-xl font-bold mb-4">Pill Button Card</h3>
+                        <p class="text-center mb-4">Perfect for call-to-action cards</p>
+                        <div class="px-6 py-2 bg-blue-600 text-white rounded-full text-sm font-medium">
+                            Click Me
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        console.log('Universal Card System Test loaded');
+        
+        // Add click handlers for click effect demonstration
+        document.querySelectorAll('[data-card-interactive="click"]').forEach(card => {
+            card.addEventListener('click', () => {
+                console.log('Card clicked:', card);
+                
+                // Toggle active class to show/hide the effect
+                card.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
+
+<style>
+    body {
+        font-family: system-ui, sans-serif;
+    }
+</style>

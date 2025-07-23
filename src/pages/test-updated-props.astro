@@ -70,7 +70,7 @@ import GridItem from '@/components/ui/layout/GridItem.astro';
             <div class="mb-8">
                 <h3 class="text-lg font-medium mb-4">List Items with Different Props</h3>
                 <div class="bg-white rounded-lg border p-4">
-                    <ListItem padding="sm" justify="start" align="center" overflow="auto" bordered={true}>
+                    <ListItem variant="outline" padding="sm" justify="start" align="center" overflow="auto">
                         <div class="w-8 h-8 bg-blue-500 rounded-full mr-3"></div>
                         <div>
                             <p class="font-medium">Small padding, auto overflow</p>
@@ -78,7 +78,7 @@ import GridItem from '@/components/ui/layout/GridItem.astro';
                         </div>
                     </ListItem>
                     
-                    <ListItem padding="lg" justify="between" align="center" overflow="expand" bordered={true}>
+                    <ListItem variant="outline" padding="lg" justify="between" align="center" overflow="expand">
                         <div>
                             <p class="font-medium">Large padding, expand overflow</p>
                             <p class="text-sm text-gray-600">This item has large padding and expand overflow</p>
@@ -86,8 +86,8 @@ import GridItem from '@/components/ui/layout/GridItem.astro';
                         <div class="w-6 h-6 bg-green-500 rounded"></div>
                     </ListItem>
                     
-                    <ListItem padding="md" justify="center" align="center" overflow="auto" interactive={true}>
-                        <p class="font-medium">Centered interactive item</p>
+                    <ListItem variant="default" padding="md" justify="center" align="center" overflow="auto">
+                        <p class="font-medium">Centered item</p>
                     </ListItem>
                 </div>
             </div>
@@ -97,32 +97,30 @@ import GridItem from '@/components/ui/layout/GridItem.astro';
                 <h3 class="text-lg font-medium mb-4">Grid Items with Different Props</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <GridItem 
-                        variant="default" 
+                        variant="outline" 
                         padding="sm" 
                         justify="start" 
                         align="start" 
                         overflow="auto"
-                        bordered={true}
                     >
                         <h4 class="font-medium mb-2">Small Padding</h4>
                         <p class="text-sm text-gray-600">Auto overflow, start alignment</p>
                     </GridItem>
                     
                     <GridItem 
-                        variant="card" 
+                        variant="default" 
+                        elevation="elevated"
                         padding="lg" 
                         justify="center" 
                         align="center" 
                         overflow="expand"
-                        interactive={true}
-                        elevated={true}
                     >
-                        <h4 class="font-medium mb-2">Card Variant</h4>
+                        <h4 class="font-medium mb-2">Elevated Variant</h4>
                         <p class="text-sm text-gray-600">Large padding, centered, expand overflow</p>
                     </GridItem>
                     
                     <GridItem 
-                        variant="default" 
+                        variant="muted" 
                         padding="md" 
                         justify="end" 
                         align="stretch" 

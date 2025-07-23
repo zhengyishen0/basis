@@ -4,16 +4,43 @@ import { cn } from '@/lib/utils';
 import { universalVariants, type UniversalSpacing, type UniversalDirection, type UIOverflow, type UniversalJustify, type UniversalAlign } from '@/lib/component-variants';
 
 const cardVariants = cva(
-    'rounded-lg border text-card-foreground shadow-sm flex [&_.card-header]:relative [&_.card-content]:relative [&_.card-footer]:relative [&_.card-header>*:first-child]:relative [&_.card-header>*:first-child]:z-10 [&_.card-content>*:first-child]:relative [&_.card-content>*:first-child]:z-10 [&_.card-footer>*:first-child]:relative [&_.card-footer>*:first-child]:z-10',
+    'text-card-foreground flex transition-all duration-200 [&_.card-header]:relative [&_.card-content]:relative [&_.card-footer]:relative [&_.card-header>*:first-child]:relative [&_.card-header>*:first-child]:z-10 [&_.card-content>*:first-child]:relative [&_.card-content>*:first-child]:z-10 [&_.card-footer>*:first-child]:relative [&_.card-footer>*:first-child]:z-10',
     {
         variants: {
+            // Surface variants
             variant: {
-                default: 'border-border bg-background',
-                outline: 'border-2 border-border bg-background',
-                shadow: 'border-border bg-background shadow-md',
-                elevated: 'border-border bg-background shadow-lg',
-                ghost: 'border-transparent bg-transparent shadow-none',
-                muted: 'border-border bg-muted',
+                default: 'border border-border bg-background',
+                muted: 'border border-border bg-muted',
+                outline: 'border-2 border-border bg-transparent',
+                ghost: '',
+                gradient: 'border border-border bg-gradient-to-br from-background to-muted',
+            },
+            // Shape variants
+            shape: {
+                rectangle: 'rounded-none',
+                rounded: 'rounded-lg',
+                pill: 'rounded-full',
+            },
+            // Elevation variants
+            elevation: {
+                flat: 'shadow-none',
+                shadow: 'shadow-sm',
+                elevated: 'shadow-md',
+                floating: 'shadow-lg',
+            },
+            // Interactive states
+            interactive: {
+                static: '',
+                hover: 'cursor-default',
+                click: 'cursor-pointer',
+            },
+            // Effect presets
+            effect: {
+                lift: '',
+                scale: '',
+                glow: '',
+                subtle: '',
+                bounce: '',
             },
             size: {
                 fixed: 'w-80 h-96',
@@ -25,8 +52,69 @@ const cardVariants = cva(
                 full: 'w-full h-full',
             },
         },
+        compoundVariants: [
+            // Hover effects - lift
+            {
+                interactive: 'hover',
+                effect: 'lift',
+                class: 'hover:-translate-y-0.5 hover:shadow-md',
+            },
+            {
+                interactive: 'click',
+                effect: 'lift',
+                class: '[&.active]:translate-y-0 [&.active]:scale-[0.98] [&.active]:shadow-sm',
+            },
+            // Scale effects
+            {
+                interactive: 'hover',
+                effect: 'scale',
+                class: 'hover:scale-[1.02] hover:shadow-md',
+            },
+            {
+                interactive: 'click',
+                effect: 'scale',
+                class: '[&.active]:scale-[0.98] [&.active]:shadow-sm',
+            },
+            // Glow effects
+            {
+                interactive: 'hover',
+                effect: 'glow',
+                class: 'hover:shadow-lg hover:bg-opacity-80',
+            },
+            {
+                interactive: 'click',
+                effect: 'glow',
+                class: '[&.active]:shadow-lg [&.active]:bg-opacity-60',
+            },
+            // Subtle effects
+            {
+                interactive: 'hover',
+                effect: 'subtle',
+                class: 'hover:bg-opacity-80',
+            },
+            {
+                interactive: 'click',
+                effect: 'subtle',
+                class: '[&.active]:bg-opacity-60',
+            },
+            // Bounce effects
+            {
+                interactive: 'hover',
+                effect: 'bounce',
+                class: 'hover:-translate-y-0.5 hover:scale-[1.01]',
+            },
+            {
+                interactive: 'click',
+                effect: 'bounce',
+                class: '[&.active]:translate-y-0.5 [&.active]:scale-[0.99]',
+            },
+        ],
         defaultVariants: {
             variant: 'default',
+            shape: 'rounded',
+            elevation: 'shadow',
+            interactive: 'static',
+            effect: 'lift',
             size: 'fixed',
         },
     }
@@ -44,8 +132,12 @@ export interface Props extends VariantProps<typeof cardVariants> {
 }
 
 const { 
-    variant, 
-    size, 
+    variant = 'default',
+    shape = 'rounded',
+    elevation = 'shadow',
+    interactive = 'static',
+    effect = 'lift',
+    size = 'fixed',
     padding = 'none', 
     overflow = 'fixed', 
     direction = 'column', 
@@ -58,7 +150,7 @@ const {
 
 <div
     class={cn(
-        cardVariants({ variant, size }),
+        cardVariants({ variant, shape, elevation, interactive, effect, size }),
         universalVariants.padding[padding],
         universalVariants.overflow[overflow],
         universalVariants.direction[direction],
@@ -66,6 +158,7 @@ const {
         universalVariants.align[align],
         className
     )}
+    data-card-interactive={interactive}
     {...alpineProps}
 >
     <slot />
