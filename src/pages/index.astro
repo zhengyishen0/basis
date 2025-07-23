@@ -6,6 +6,7 @@ import { getEntry } from 'astro:content';
 import Badge from '../components/ui/feedback/Badge.astro';
 import Button from '../components/ui/forms/Button.astro';
 import { Avatar, AvatarImage } from '../components/ui/display/avatar';
+import { Card, CardContent } from '../components/ui/display/card';
 import Text from '../components/ui/display/Text.astro';
 import Grid from '../components/ui/layout/Grid.astro';
 import GridItem from '../components/ui/layout/GridItem.astro';
@@ -81,24 +82,31 @@ const pageData = JSON.stringify(homeContent?.data || []);
             </Text>
             <Grid columns="3" class="max-w-6xl mx-auto">
                 <GridItem
-                    variant="card"
                     x-for="feature in features"
                     x-key="feature.name"
-                    padding="xl"
-                    gap="sm"
-                    class="transform hover:scale-105 transition-transform duration-200"
                 >
-                    <Badge
+                    <Card
                         variant="default"
-                        size="lg"
-                        class="mb-2 inline-block"
-                        x-text="feature.name"
-                    />
-                    <Text variant="feature-title" x-text="feature.title" />
-                    <Text
-                        variant="feature-description"
-                        x-text="feature.description"
-                    />
+                        elevation="shadow"
+                        interactive="hover"
+                        effect="lift"
+                        padding="xl"
+                        size="extend"
+                    >
+                        <CardContent direction="column" align="start" gap="sm">
+                            <Badge
+                                variant="default"
+                                size="lg"
+                                class="mb-2 inline-block"
+                                x-text="feature.name"
+                            />
+                            <Text variant="feature-title" x-text="feature.title" />
+                            <Text
+                                variant="feature-description"
+                                x-text="feature.description"
+                            />
+                        </CardContent>
+                    </Card>
                 </GridItem>
             </Grid>
         </div>

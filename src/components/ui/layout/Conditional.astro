@@ -2,28 +2,24 @@
 import { cn } from '@/lib/utils';
 
 export interface Props {
-  condition: string; // Alpine.js expression to evaluate
-  class?: string;
-  [key: string]: any; // Alpine.js pass-through
+    condition: string; // Alpine.js expression to evaluate
+    class?: string;
+    [key: string]: any; // Alpine.js pass-through
 }
 
-const {
-  condition,
-  class: className = '',
-  ...alpineProps
-} = Astro.props;
+const { condition, class: className = '', ...alpineProps } = Astro.props;
 
-const classes = cn(className);
+const classes = cn('w-full flex justify-center', className);
 ---
 
 <div class={classes} {...alpineProps}>
-  <!-- True case slot -->
-  <div x-show={condition}>
-    <slot name="true" />
-  </div>
-  
-  <!-- False case slot -->
-  <div x-show={`!(${condition})`}>
-    <slot name="false" />
-  </div>
+    <!-- True case slot -->
+    <div x-show={condition}>
+        <slot name="true" />
+    </div>
+
+    <!-- False case slot -->
+    <div x-show={`!(${condition})`}>
+        <slot name="false" />
+    </div>
 </div>

@@ -127,6 +127,9 @@ export interface Props extends VariantProps<typeof cardVariants> {
     direction?: UniversalDirection;
     justify?: UniversalJustify;
     align?: UniversalAlign;
+    // Custom sizing props
+    width?: string;
+    height?: string;
     // Alpine.js pass-through
     [key: string]: any;
 }
@@ -143,6 +146,8 @@ const {
     direction = 'column', 
     justify = 'start', 
     align = 'stretch', 
+    width,
+    height,
     className, 
     ...alpineProps 
 } = Astro.props;
@@ -150,7 +155,7 @@ const {
 
 <div
     class={cn(
-        cardVariants({ variant, shape, elevation, interactive, effect, size }),
+        cardVariants({ variant, shape, elevation, interactive, effect, size: width || height ? undefined : size }),
         universalVariants.padding[padding],
         universalVariants.overflow[overflow],
         universalVariants.direction[direction],
@@ -158,6 +163,7 @@ const {
         universalVariants.align[align],
         className
     )}
+    style={`${width ? `width: ${width};` : ''}${height ? `height: ${height};` : ''}`}
     data-card-interactive={interactive}
     {...alpineProps}
 >

@@ -2,7 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import Badge from '../components/ui/feedback/Badge.astro';
 import Button from '../components/ui/forms/Button.astro';
-import { Card, CardHeader, CardContent, CardFooter } from '../components/ui/display/card';
+import {
+    Card,
+    CardHeader,
+    CardContent,
+    CardFooter,
+} from '../components/ui/display/card';
 import Navbar from '../components/ui/display/Navbar.astro';
 import Column from '../components/ui/layout/Column.astro';
 import List from '../components/ui/layout/List.astro';
@@ -49,9 +54,11 @@ const pageData = `{
         <!-- Main Content -->
         <Conditional condition="auth.isAuthenticated" class="mt-8">
             <!-- Not authenticated state -->
-            <Card slot="false" class="mx-auto">
+            <Card slot="false" width="28rem" height="20rem">
                 <CardHeader>
-                    <Text variant="body"> Click to start using the app </Text>
+                    <Text variant="body">
+                        Click to start using the app
+                    </Text>
                 </CardHeader>
                 <CardContent
                     class="flex flex-col items-center justify-center h-full text-center"
@@ -69,7 +76,7 @@ const pageData = `{
             <!-- Authenticated state - Todo App -->
             <Row slot="true" justify="center" align="start" class="gap-8">
                 <!-- Left Column: My Todos -->
-                <Card class="w-5xl h-96">
+                <Card width="30rem" height="32rem" class="flex-shrink-0">
                     <CardHeader>
                         <Text variant="card-title"> My Todos </Text>
                     </CardHeader>
@@ -77,7 +84,7 @@ const pageData = `{
                         <!-- Filter Buttons and Auth Info -->
                         <Row gap="md" wrap>
                             <!-- Status Filter Buttons (Left) -->
-                            <Inline gap="xs">
+                            <Row justify="start" align="center">
                                 <Button
                                     @click="todo.setUserFilter('all')"
                                     :variant="todo.userFilter === 'all' ? 'default' : 'outline'"
@@ -99,7 +106,7 @@ const pageData = `{
                                 >
                                     Completed
                                 </Button>
-                            </Inline>
+                            </Row>
 
                             <!-- Auth Info (Right) -->
                             <Row gap="md">
@@ -132,9 +139,8 @@ const pageData = `{
                             <ListItem
                                 x-for="item in todo.filteredUserTodos"
                                 x-key="item.id"
-                                interactive
-                                bordered
-                                gap="sm"
+                                padding="sm"
+                                class="border-b border-gray-200 last:border-b-0 hover:bg-gray-50"
                             >
                                 <Checkbox
                                     :checked="item.is_complete"
@@ -215,7 +221,7 @@ const pageData = `{
                 </Card>
 
                 <!-- Right Column: All Todos -->
-                <Card class="w-5xl h-96">
+                <Card width="30rem" height="32rem" class="flex-shrink-0">
                     <CardHeader>
                         <Text variant="card-title"> Realtime Todos </Text>
                     </CardHeader>
@@ -223,7 +229,7 @@ const pageData = `{
                         <!-- Filter Buttons and User Count -->
                         <Row justify="between" wrap>
                             <!-- Status Filter Buttons (Left) -->
-                            <Inline gap="xs">
+                            <Row justify="start" align="center">
                                 <Button
                                     @click="todo.setAllFilter('all')"
                                     :variant="todo.allFilter === 'all' ? 'default' : 'outline'"
@@ -245,7 +251,7 @@ const pageData = `{
                                 >
                                     Completed
                                 </Button>
-                            </Inline>
+                            </Row>
 
                             <!-- User Count (Right) -->
                             <div>
@@ -278,8 +284,8 @@ const pageData = `{
                             <ListItem
                                 x-for="item in todo.filteredAllTodos"
                                 x-key="item.id"
-                                bordered
-                                gap="sm"
+                                padding="sm"
+                                class="border-b border-gray-200 last:border-b-0"
                             >
                                 <Checkbox
                                     :checked="item.is_complete"

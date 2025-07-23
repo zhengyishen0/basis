@@ -227,56 +227,61 @@ import GridItem from '@/components/ui/layout/GridItem.astro';
             
             <!-- GridItem Examples -->
             <div class="mb-8">
-                <h3 class="text-lg font-medium mb-4">GridItem Examples</h3>
+                <h3 class="text-lg font-medium mb-4">GridItem Examples (Simple Layout Containers)</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <GridItem variant="default" shape="rounded" elevation="shadow" padding="md">
-                        <h4 class="font-medium mb-2">Rounded GridItem</h4>
-                        <p class="text-sm text-gray-600">With shadow elevation</p>
+                    <GridItem padding="md" class="bg-white border rounded-lg">
+                        <h4 class="font-medium mb-2">Basic GridItem</h4>
+                        <p class="text-sm text-gray-600">Simple div with padding and layout props</p>
                     </GridItem>
 
-                    <GridItem variant="outline" shape="pill" elevation="flat" padding="lg">
-                        <h4 class="font-medium mb-2">Pill Shape</h4>
-                        <p class="text-sm text-gray-600">Outline with pill shape</p>
+                    <GridItem padding="lg" justify="center" align="center" class="bg-gray-50 border rounded-lg min-h-24">
+                        <h4 class="font-medium mb-2">Centered Content</h4>
+                        <p class="text-xs text-gray-600 text-center">Centered alignment</p>
                     </GridItem>
 
-                    <GridItem variant="gradient" shape="pill" elevation="floating" padding="md">
-                        <div class="flex flex-col items-center justify-center h-full">
-                            <h4 class="font-medium mb-2">Gradient</h4>
-                            <p class="text-xs text-gray-600 text-center">Gradient with pill shape</p>
+                    <GridItem padding="sm" justify="end" align="stretch" class="bg-blue-50 border rounded-lg">
+                        <div class="flex flex-col h-full">
+                            <h4 class="font-medium mb-2">End Justified</h4>
+                            <p class="text-xs text-gray-600 mt-auto">Layout-focused, not styled</p>
                         </div>
                     </GridItem>
                 </div>
+                <p class="text-sm text-gray-500 mt-4">
+                    <strong>Note:</strong> GridItems are simple layout containers. For styled cards, use the Card component directly.
+                </p>
             </div>
 
             <!-- ListItem Examples -->
             <div>
-                <h3 class="text-lg font-medium mb-4">ListItem Examples</h3>
+                <h3 class="text-lg font-medium mb-4">ListItem Examples (Simple Layout Containers)</h3>
                 <div class="bg-white rounded-lg border p-4 space-y-2">
-                    <ListItem variant="ghost" padding="sm">
+                    <ListItem padding="sm">
                         <div class="w-8 h-8 bg-blue-500 rounded-full mr-3"></div>
                         <div>
-                            <p class="font-medium">Ghost ListItem</p>
-                            <p class="text-sm text-gray-600">Minimal styling</p>
+                            <p class="font-medium">Basic ListItem</p>
+                            <p class="text-sm text-gray-600">Simple div with minimal styling</p>
                         </div>
                     </ListItem>
 
-                    <ListItem variant="outline" shape="rounded" padding="md">
+                    <ListItem padding="md" justify="between" align="center" class="border-b border-gray-200 last:border-b-0">
                         <div class="w-8 h-8 bg-green-500 rounded-full mr-3"></div>
                         <div class="flex-1">
-                            <p class="font-medium">Outline ListItem</p>
-                            <p class="text-sm text-gray-600">With border outline</p>
+                            <p class="font-medium">Layout-focused ListItem</p>
+                            <p class="text-sm text-gray-600">Just layout props, custom styling via class</p>
                         </div>
                         <div class="w-6 h-6 bg-gray-300 rounded"></div>
                     </ListItem>
 
-                    <ListItem variant="muted" shape="pill" elevation="shadow" padding="lg">
-                        <div class="w-8 h-8 bg-purple-500 rounded-full mr-3"></div>
+                    <ListItem padding="lg" justify="center">
                         <div>
-                            <p class="font-medium">Pill Shape ListItem</p>
-                            <p class="text-sm text-gray-600">Muted background with shadow</p>
+                            <p class="font-medium text-center">Centered ListItem</p>
+                            <p class="text-sm text-gray-600 text-center">Clean and minimal</p>
                         </div>
                     </ListItem>
                 </div>
+                <p class="text-sm text-gray-500 mt-4">
+                    <strong>Note:</strong> ListItems are simple layout containers. For styled cards, use the Card component directly.
+                </p>
             </div>
         </section>
 

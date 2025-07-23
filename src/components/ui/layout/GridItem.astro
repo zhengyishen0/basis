@@ -1,45 +1,15 @@
 ---
 import { cn } from '@/lib/utils';
-import { createLayoutComponent, type LayoutComponentProps, type VariantProps, universalVariants } from '@/lib/component-variants';
+import { type LayoutComponentProps, universalVariants } from '@/lib/component-variants';
 
-const gridItemVariants = createLayoutComponent(
-  'flex flex-col w-full',
-  {
-    variant: {
-      default: '',
-      card: 'rounded-lg border border-gray-200 bg-white shadow-md'
-    },
-    interactive: {
-      true: 'hover:bg-gray-50 cursor-pointer transition-colors',
-      false: ''
-    },
-    bordered: {
-      true: 'border border-gray-200 rounded-lg',
-      false: ''
-    },
-    elevated: {
-      true: 'shadow-sm hover:shadow-md transition-shadow',
-      false: ''
-    }
-  }
-);
-
-export interface Props extends LayoutComponentProps, VariantProps<typeof gridItemVariants> {
-  variant?: 'default' | 'card';
-  interactive?: boolean;
-  bordered?: boolean;
-  elevated?: boolean;
+export interface Props extends LayoutComponentProps {
   padding?: import('@/lib/component-variants').UniversalSpacing;
 }
 
 const {
-  variant = 'default',
   justify = 'start',
   align = 'start',
   overflow = 'expand',
-  interactive = false,
-  bordered = false,
-  elevated = false,
   padding = 'md',
   class: className = '',
   ...alpineProps
@@ -49,7 +19,9 @@ const {
 const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
 
 const classes = cn(
-  gridItemVariants({ variant, justify, align, interactive, bordered, elevated }),
+  'flex flex-col w-full',
+  universalVariants.justify[justify],
+  universalVariants.align[align],
   universalVariants.padding[padding],
   universalVariants.overflow[overflow],
   className

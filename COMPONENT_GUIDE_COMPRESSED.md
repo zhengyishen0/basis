@@ -88,6 +88,7 @@
 - Have `padding` and `margin` properties (default to none/0)
 - Default to fixed size
 - Universal overflow options: `auto` (scroll), `fixed` (clip, default), `expand` (grow)
+- Rich feature set: variants, shapes, elevation, interactive effects
 
 ### **Universal Overflow System:**
 
@@ -102,7 +103,7 @@
 - Content Components (List, Grid, Inline): `auto`
 - Layout Components (Row, Column): `expand`  
 - UI Components (Card, Button): `fixed`
-- Dynamic Items (ListItem, GridItem): `expand`
+- Dynamic Items (ListItem, GridItem): Simple divs with minimal styling
 
 ### **Spacing Principles:**
 
@@ -113,9 +114,92 @@
 ### **Theme Principles:**
 
 - Universal color tokens in tailwind.config.js
-- CVA variants: default, secondary, destructive, outline
+- CVA variants: default, secondary, destructive, success, warning, info, outline, ghost
 - All components auto-use same color palette
 - VariantProps for TypeScript support
+
+## **Universal Card System**
+
+### **Card Component - Rich Content Container:**
+
+The Card component is the premium UI component for styled content containers:
+
+**Surface Variants:**
+- `default` - Standard background with border
+- `muted` - Muted background color
+- `outline` - Border only, transparent background
+- `ghost` - Completely invisible (no styling)
+- `gradient` - Gradient background from background to muted
+
+**Shape Variants:**
+- `rectangle` - Sharp corners (`rounded-none`)
+- `rounded` - Standard rounded corners (`rounded-lg`)
+- `pill` - Fully rounded ends (`rounded-full`)
+
+**Elevation Variants:**
+- `flat` - No shadow (`shadow-none`)
+- `shadow` - Subtle shadow (`shadow-sm`)
+- `elevated` - Medium shadow (`shadow-md`)
+- `floating` - Strong shadow (`shadow-lg`)
+
+**Interactive States:**
+- `static` - No interaction (default)
+- `hover` - Visual feedback on mouse hover only
+- `click` - Click toggle effects only (no hover)
+
+**Effect Presets (for interactive cards):**
+- `lift` - Moves up/down with shadow changes
+- `scale` - Scales larger/smaller
+- `glow` - Changes shadow intensity + background opacity
+- `subtle` - Minimal background opacity changes
+- `bounce` - Moves up on hover, down when clicked/active
+
+**Usage Examples:**
+```astro
+<!-- Basic content card -->
+<Card variant="default" padding="lg">
+  <CardContent>Basic card content</CardContent>
+</Card>
+
+<!-- Interactive hover card -->
+<Card variant="secondary" interactive="hover" effect="lift" elevation="shadow">
+  <CardContent>Hover for lift effect</CardContent>
+</Card>
+
+<!-- Clickable toggle card -->
+<Card variant="success" interactive="click" effect="scale" shape="pill">
+  <CardContent>Click to toggle scale effect</CardContent>
+</Card>
+```
+
+### **GridItem & ListItem - Simple Layout Containers:**
+
+GridItem and ListItem are now **simple div containers** focused purely on layout:
+
+**GridItem:**
+- **Purpose**: Column-oriented layout container for grid content
+- **Props**: `padding`, `justify`, `align`, `overflow` (layout essentials only)
+- **Base**: `flex flex-col w-full` 
+- **Styling**: Add via `class` prop as needed
+
+**ListItem:**
+- **Purpose**: Row-oriented layout container for list content  
+- **Props**: `padding`, `justify`, `align`, `overflow` (layout essentials only)
+- **Base**: `flex flex-row w-full min-h-[2.5rem]`
+- **Styling**: Add via `class` prop as needed
+
+**When to Use What:**
+```astro
+<!-- Simple layout container -->
+<GridItem padding="md" class="border rounded-lg">
+  <h3>Simple Content</h3>
+</GridItem>
+
+<!-- Rich styled card -->
+<Card variant="default" elevation="shadow" interactive="hover" effect="lift">
+  <CardContent>Rich interactive content</CardContent>
+</Card>
+```
 
 ## **Component Development Template**
 
@@ -269,16 +353,28 @@ const { size, padding, margin, elevation, overflow, customProp, class: className
 
 ## **Component Status**
 
-**✅ New Layout System Compliant:** 
-- Content-Driven: List (max-h-screen), Grid, Inline (max-w-full)
-- Layout-Driven: Row (shrink/wrap), Column (shrink/extend)
-- UI Components: Card, CardHeader, CardContent, CardFooter, Button, Badge, Alert, Navbar (moved to display)
+**✅ Universal System Compliant:** 
+- **Content-Driven**: List (max-h-screen), Grid, Inline (max-w-full)
+- **Layout-Driven**: Row, Column, GridItem (simple div), ListItem (simple div)
+- **UI Components**: Card (universal variant system), CardHeader, CardContent, CardFooter, Button, Badge, Alert, Navbar
+
+**✅ Card System Complete:**
+- Universal variant system matching Button/Badge
+- Interactive states: static, hover, click
+- Rich effect presets: lift, scale, glow, subtle, bounce
+- Shape & elevation variants
+- Inherits from universal variant system in `component-variants.ts`
+
+**✅ Layout Items Simplified:**
+- GridItem & ListItem converted to simple div containers
+- Layout-focused props only: padding, justify, align, overflow
+- Custom styling via class prop
+- Clear separation from rich Card component
 
 **⚠️ Needs Migration:** TextInput, Modal, Table, Command, and remaining UI components
-**❌ Critical:** Marketing components using inline margins instead of layout wrappers
 
-**Key Improvements Made:**
-- Clear role separation: Dynamic content vs Static layout
-- Default constraints prevent common overflow issues  
-- Navbar moved to display (UI component with padding/elevation)
-- Tailwind override strategy for customization
+**Key Architecture Decisions:**
+- **Card**: Rich styled content containers with full feature set
+- **GridItem/ListItem**: Simple layout divs, add styling via class
+- **Universal variants**: Shared system across Button, Badge, Card
+- **Performance focused**: Minimal overhead for basic layout containers

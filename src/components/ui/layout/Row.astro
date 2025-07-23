@@ -5,7 +5,7 @@ import {
     universalVariants
 } from '@/lib/component-variants';
 
-const rowVariants = createLayoutComponent('flex flex-row w-fit', {
+const rowVariants = createLayoutComponent('flex flex-row w-full', {
     overflow: {
         auto: universalVariants.overflow.auto,     // Content scrolls when needed
         fixed: universalVariants.overflow.fixed,   // Content has fixed boundaries
@@ -36,7 +36,7 @@ const overflowClasses = {
 };
 
 const classes = cn(
-    'flex flex-row w-fit',
+    'flex flex-row w-full',
     rowVariants({ justify, align }),
     overflowClasses[overflow],
     className
