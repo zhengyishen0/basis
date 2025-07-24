@@ -2,23 +2,23 @@
 import { cn } from '@/lib/utils';
 
 export interface Props {
-  tag?: 'section' | 'div' | 'article' | 'aside';
-  align?: 'left' | 'center' | 'right';
-  class?: string;
-  [key: string]: any; // Alpine.js pass-through
+    tag?: 'section' | 'div' | 'article' | 'aside';
+    align?: 'left' | 'center' | 'right';
+    class?: string;
+    [key: string]: any; // Alpine.js pass-through
 }
 
 const {
-  tag = 'section',
-  align = 'center',
-  class: className = '',
-  ...alpineProps
+    tag = 'section',
+    align = 'center',
+    class: className = '',
+    ...alpineProps
 } = Astro.props;
 
 const alignClasses = {
-  left: 'text-left',
-  center: 'text-center',
-  right: 'text-right'
+    left: 'items-start',
+    center: 'items-center',
+    right: 'items-end',
 };
 
 const classes = cn('p-8', alignClasses[align], className);
@@ -27,5 +27,5 @@ const Tag = tag;
 ---
 
 <Tag class={classes} {...alpineProps}>
-  <slot />
+    <slot />
 </Tag>

@@ -1,18 +1,20 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '@/layouts/Layout.astro';
 import { getEntry } from 'astro:content';
 
 // UI Components for better styling
-import Badge from '../components/ui/feedback/Badge.astro';
-import Button from '../components/ui/forms/Button.astro';
-import { Avatar, AvatarImage } from '../components/ui/display/avatar';
-import { Card, CardContent } from '../components/ui/display/card';
-import Text from '../components/ui/display/Text.astro';
-import Grid from '../components/ui/layout/Grid.astro';
-import GridItem from '../components/ui/layout/GridItem.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+import Button from '@/components/ui/forms/Button.astro';
+import { Avatar, AvatarImage } from '@/components/ui/display/avatar';
+import { Card, CardContent } from '@/components/ui/display/card';
+import Text from '@/components/ui/display/Text.astro';
+import Grid from '@/components/ui/layout/Grid.astro';
+import GridItem from '@/components/ui/layout/GridItem.astro';
+import Section from '@/components/ui/layout/Section.astro';
+import Page from '@/components/ui/layout/Page.astro';
 
 // Import GitHub icon
-import githubIconUrl from '../assets/github-icon-white.svg?url';
+import githubIconUrl from '@/assets/github-icon-white.svg?url';
 
 // Import essential styles
 const homeContent = await getEntry('pages', 'home');
@@ -20,9 +22,9 @@ const pageData = JSON.stringify(homeContent?.data || []);
 ---
 
 <Layout>
-    <main class="min-h-screen" x-data={pageData}>
+    <Page class="min-h-screen" x-data={pageData}>
         <!-- GitHub Avatar in upper right -->
-        <div class="absolute top-4 right-4 z-20">
+        <Section class="absolute top-4 right-4 z-20">
             <Avatar
                 size="default"
                 href="https://github.com/zhengyishen0/basis"
@@ -31,10 +33,10 @@ const pageData = JSON.stringify(homeContent?.data || []);
             >
                 <AvatarImage src={githubIconUrl} alt="GitHub" class="p-2" />
             </Avatar>
-        </div>
+        </Section>
 
         <!-- Hero Section -->
-        <div
+        <Section
             class="text-center py-16 px-4 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden min-h-[60vh] flex flex-col justify-center items-center gap-4"
         >
             <Text
@@ -63,10 +65,10 @@ const pageData = JSON.stringify(homeContent?.data || []);
             <div class="flex justify-center gap-4">
                 <Button href="./todo" size="lg"> Demo </Button>
             </div>
-        </div>
+        </Section>
 
         <!-- Features Section -->
-        <div class="max-w-7xl mx-auto py-16 px-4 bg-white flex flex-col gap-6">
+        <Section class="mx-auto py-16 px-4 bg-white flex flex-col gap-6">
             <Text
                 variant="section-title"
                 class="text-center mb-8 tracking-tight"
@@ -80,18 +82,17 @@ const pageData = JSON.stringify(homeContent?.data || []);
                     </span>
                 </span> Different
             </Text>
-            <Grid columns="3" class="max-w-6xl mx-auto">
-                <GridItem
-                    x-for="feature in features"
-                    x-key="feature.name"
-                >
+            <Grid columns="3" gap="sm">
+                <GridItem x-for="feature in features" x-key="feature.name">
                     <Card
                         variant="default"
                         elevation="shadow"
                         interactive="hover"
                         effect="lift"
-                        padding="xl"
-                        size="extend"
+                        padding="md"
+                        size="fixed"
+                        height="16rem"
+                        width="24rem"
                     >
                         <CardContent direction="column" align="start" gap="sm">
                             <Badge
@@ -100,7 +101,11 @@ const pageData = JSON.stringify(homeContent?.data || []);
                                 class="mb-2 inline-block"
                                 x-text="feature.name"
                             />
-                            <Text variant="feature-title" x-text="feature.title" />
+                            <Text
+                                variant="feature-title"
+                                x-text="feature.title"
+                                class="my-2"
+                            />
                             <Text
                                 variant="feature-description"
                                 x-text="feature.description"
@@ -109,6 +114,6 @@ const pageData = JSON.stringify(homeContent?.data || []);
                     </Card>
                 </GridItem>
             </Grid>
-        </div>
-    </main>
+        </Section>
+    </Page>
 </Layout>
