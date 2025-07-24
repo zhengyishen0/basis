@@ -1,321 +1,285 @@
 ---
-export interface Props {
-  id?: string;
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+
+const videoPlayerVariants = cva(
+  'relative bg-black overflow-hidden max-w-2xl',
+  {
+    variants: {
+      shape: {
+        rectangle: 'rounded-none',
+        rounded: 'rounded-lg'
+      },
+      aspectRatio: {
+        '16/9': 'aspect-video',
+        '4/3': 'aspect-[4/3]',
+        '21/9': 'aspect-[21/9]'
+      }
+    },
+    defaultVariants: {
+      shape: 'rounded',
+      aspectRatio: '16/9'
+    }
+  }
+);
+
+export interface Props extends VariantProps<typeof videoPlayerVariants> {
+  // Video source options
   src?: string;
-  sources?: Array<{ src: string; type: string; label?: string; }>;
   poster?: string;
-  width?: string | number;
-  height?: string | number;
+  
+  // YouTube support
+  youtubeId?: string;
+  
+  // Playback options
   autoplay?: boolean;
   loop?: boolean;
   muted?: boolean;
-  controls?: boolean;
+  
+  // Design options
+  shape?: 'rectangle' | 'rounded';
+  aspectRatio?: '16/9' | '4/3' | '21/9';
   class?: string;
-  containerClass?: string;
-  showControls?: boolean;
-  showFullscreen?: boolean;
-  showVolumeControl?: boolean;
-  showProgress?: boolean;
-  showTime?: boolean;
-  showPlaybackSpeed?: boolean;
 }
 
 const { 
-  id = `video-player-${Math.random().toString(36).substr(2, 9)}`,
   src,
-  sources = [],
   poster,
-  width = "100%",
-  height = "auto",
+  youtubeId,
   autoplay = false,
   loop = false,
   muted = false,
-  controls = false,
-  class: className = "",
-  containerClass = "",
-  showControls = true,
-  showFullscreen = true,
-  showVolumeControl = true,
-  showProgress = true,
-  showTime = true,
-  showPlaybackSpeed = true
+  shape = 'rounded',
+  aspectRatio = '16/9',
+  class: className,
+  ...alpineProps
 } = Astro.props;
-
-// Build video sources array
-const videoSources = src ? [{ src, type: 'video/mp4' }, ...sources] : sources;
 ---
 
-<!-- 
-Pine UI VideoPlayer Component
+<!-- VideoPlayer Component based on your beloved test video -->
 
-Usage:
-<VideoPlayer 
-  src="/path/to/video.mp4"
-  poster="/path/to/poster.jpg"
-  width="800"
-  height="450"
-  showControls={true}
-  showFullscreen={true}
-/>
-
-Or with multiple sources:
-<VideoPlayer 
-  sources={[
-    { src: "/video.mp4", type: "video/mp4", label: "HD" },
-    { src: "/video.webm", type: "video/webm", label: "HD" }
-  ]}
-  poster="/poster.jpg"
-/>
-
-Features:
-- Custom video controls
-- Play/pause functionality
-- Volume control with mute
-- Progress bar with seeking
-- Fullscreen support
-- Time display (current/duration)
-- Playback speed control
-- Keyboard shortcuts (Space, M, F, Arrow keys)
-- Alpine.js powered
-- Responsive design
-- Accessible with ARIA attributes
-
-Props:
-- id: string - Unique identifier for the video player
-- src: string - Single video source URL
-- sources: Array - Multiple video sources with type and label
-- poster: string - Poster image URL
-- width: string | number - Video width
-- height: string | number - Video height
-- autoplay: boolean - Auto-play video (default: false)
-- loop: boolean - Loop video (default: false)
-- muted: boolean - Mute video by default (default: false)
-- controls: boolean - Show native browser controls (default: false)
-- class: string - Additional CSS classes for the video element
-- containerClass: string - Additional CSS classes for the container
-- showControls: boolean - Show custom controls (default: true)
-- showFullscreen: boolean - Show fullscreen button (default: true)
-- showVolumeControl: boolean - Show volume control (default: true)
-- showProgress: boolean - Show progress bar (default: true)
-- showTime: boolean - Show time display (default: true)
-- showPlaybackSpeed: boolean - Show playback speed control (default: true)
-
-Keyboard Shortcuts:
-- Space: Play/Pause
-- M: Toggle Mute
-- F: Toggle Fullscreen
-- Left Arrow: Seek backward 10 seconds
-- Right Arrow: Seek forward 10 seconds
-- Up Arrow: Increase volume
-- Down Arrow: Decrease volume
--->
-
-<div 
-  x-data="{
-    playing: false,
-    muted: {{ muted }},
-    volume: 1,
-    currentTime: 0,
-    duration: 0,
-    buffered: 0,
-    fullscreen: false,
-    showVolumeSlider: false,
-    playbackRate: 1,
-    showSpeedMenu: false,
-    loading: true,
-    
-    init() {
-      this.video = this.$refs.video;
-      this.muted = this.video.muted;
-      this.volume = this.video.volume;
-      
-      // Event listeners
-      this.video.addEventListener('loadedmetadata', () => {
-        this.duration = this.video.duration;
-        this.loading = false;
-      });
-      
-      this.video.addEventListener('timeupdate', () => {
-        this.currentTime = this.video.currentTime;
-        if (this.video.buffered.length > 0) {
-          this.buffered = this.video.buffered.end(this.video.buffered.length - 1);
-        }
-      });
-      
-      this.video.addEventListener('play', () => this.playing = true);
-      this.video.addEventListener('pause', () => this.playing = false);
-      this.video.addEventListener('volumechange', () => {
-        this.volume = this.video.volume;
-        this.muted = this.video.muted;
-      });
-      
-      this.video.addEventListener('ratechange', () => {
-        this.playbackRate = this.video.playbackRate;
-      });
-      
-      // Fullscreen events
-      document.addEventListener('fullscreenchange', () => {
-        this.fullscreen = !!document.fullscreenElement;
-      });
-      
-      // Keyboard shortcuts
-      this.$el.addEventListener('keydown', (e) => {
-        if (e.target.tagName === 'INPUT') return;
-        
-        switch(e.code) {
-          case 'Space':
-            e.preventDefault();
-            this.togglePlay();
-            break;
-          case 'KeyM':
-            e.preventDefault();
-            this.toggleMute();
-            break;
-          case 'KeyF':
-            e.preventDefault();
-            this.toggleFullscreen();
-            break;
-          case 'ArrowLeft':
-            e.preventDefault();
-            this.seek(this.currentTime - 10);
-            break;
-          case 'ArrowRight':
-            e.preventDefault();
-            this.seek(this.currentTime + 10);
-            break;
-          case 'ArrowUp':
-            e.preventDefault();
-            this.setVolume(Math.min(1, this.volume + 0.1));
-            break;
-          case 'ArrowDown':
-            e.preventDefault();
-            this.setVolume(Math.max(0, this.volume - 0.1));
-            break;
-        }
-      });
-    },
-    
-    togglePlay() {
-      if (this.playing) {
-        this.video.pause();
-      } else {
-        this.video.play();
-      }
-    },
-    
-    toggleMute() {
-      this.video.muted = !this.video.muted;
-    },
-    
-    setVolume(value) {
-      this.video.volume = value;
-      this.video.muted = value === 0;
-    },
-    
-    seek(time) {
-      this.video.currentTime = Math.max(0, Math.min(this.duration, time));
-    },
-    
-    seekToPercentage(percentage) {
-      this.seek(this.duration * percentage / 100);
-    },
-    
-    setPlaybackRate(rate) {
-      this.video.playbackRate = rate;
-      this.showSpeedMenu = false;
-    },
-    
-    toggleFullscreen() {
-      if (this.fullscreen) {
-        document.exitFullscreen();
-      } else {
-        this.$el.requestFullscreen();
-      }
-    },
-    
-    formatTime(seconds) {
-      const mins = Math.floor(seconds / 60);
-      const secs = Math.floor(seconds % 60);
-      return `${mins}:${secs.toString().padStart(2, '0')}`;
-    },
-    
-    getProgressPercentage() {
-      return this.duration ? (this.currentTime / this.duration) * 100 : 0;
-    },
-    
-    getBufferedPercentage() {
-      return this.duration ? (this.buffered / this.duration) * 100 : 0;
-    }
-  }"
-  class={`relative bg-black rounded-lg overflow-hidden group ${containerClass}`}
-  style={`width: ${typeof width === 'number' ? width + 'px' : width}; ${height !== 'auto' ? `height: ${typeof height === 'number' ? height + 'px' : height}` : ''}`}
-  tabindex="0"
->
-  <!-- Video Element -->
-  <video
-    x-ref="video"
-    class={`w-full h-full object-contain ${className}`}
-    poster={poster}
-    autoplay={autoplay}
-    loop={loop}
-    muted={muted}
-    controls={controls}
-    playsinline
-  >
-    {videoSources.map(source => (
-      <source src={source.src} type={source.type} />
-    ))}
-    Your browser does not support the video tag.
-  </video>
-  
-  <!-- Loading Spinner -->
-  <div 
-    x-show="loading" 
-    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50"
-  >
-    <div class="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+{youtubeId ? (
+  <!-- YouTube Video -->
+  <div class={cn(videoPlayerVariants({ shape, aspectRatio }), className)}>
+    <iframe 
+      src={`https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&controls=1&modestbranding=1&rel=0${autoplay ? '&autoplay=1' : ''}`}
+      title="YouTube video player"
+      style="border: none;"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      class="w-full h-full"
+    ></iframe>
   </div>
-  
-  <!-- Custom Controls -->
-  {showControls && (
-    <div 
-      class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent p-4 transition-opacity duration-300"
-      :class="{ 'opacity-0 group-hover:opacity-100': !showVolumeSlider && !showSpeedMenu }"
-    >
-      <!-- Progress Bar -->
-      {showProgress && (
-        <div class="mb-4">
-          <div 
-            class="relative h-1 bg-white/30 rounded-full cursor-pointer"
-            @click="seekToPercentage(($event.offsetX / $el.offsetWidth) * 100)"
-          >
-            <!-- Buffered Progress -->
-            <div 
-              class="absolute inset-y-0 left-0 bg-white/50 rounded-full"
-              :style="`width: ${getBufferedPercentage()}%`"
-            ></div>
-            <!-- Current Progress -->
-            <div 
-              class="absolute inset-y-0 left-0 bg-white rounded-full"
-              :style="`width: ${getProgressPercentage()}%`"
-            ></div>
-            <!-- Scrubber -->
-            <div 
-              class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-              :style="`left: calc(${getProgressPercentage()}% - 6px)`"
-            ></div>
-          </div>
-        </div>
-      )}
+) : (
+  <!-- Local Video Player -->
+  <div 
+    x-data="{
+      playing: false,
+      muted: false,
+      volume: 1,
+      currentTime: 0,
+      duration: 0,
+      buffered: 0,
+      loading: true,
+      showControls: false,
       
-      <!-- Control Bar -->
-      <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-4">
-          <!-- Play/Pause Button -->
+      init() {
+        this.video = this.$refs.video;
+        
+        this.video.addEventListener('loadedmetadata', () => {
+          this.duration = this.video.duration;
+          this.loading = false;
+        });
+        
+        this.video.addEventListener('timeupdate', () => {
+          this.currentTime = this.video.currentTime;
+          if (this.video.buffered.length > 0) {
+            this.buffered = this.video.buffered.end(this.video.buffered.length - 1);
+          }
+        });
+        
+        this.video.addEventListener('play', () => {
+          this.playing = true;
+        });
+        
+        this.video.addEventListener('pause', () => {
+          this.playing = false;
+        });
+      },
+      
+      togglePlay() {
+        if (this.playing) {
+          this.video.pause();
+        } else {
+          this.video.play();
+        }
+      },
+      
+      toggleMute() {
+        this.muted = !this.muted;
+        this.video.muted = this.muted;
+      },
+      
+      setVolume(newVolume) {
+        this.volume = newVolume;
+        this.video.volume = newVolume;
+        this.muted = newVolume === 0;
+        this.video.muted = this.muted;
+      },
+      
+      formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return mins + ':' + secs.toString().padStart(2, '0');
+      },
+      
+      seekToPercentage(percentage) {
+        this.seek(this.duration * percentage / 100);
+      },
+      
+      seek(time) {
+        this.video.currentTime = Math.max(0, Math.min(this.duration, time));
+      },
+      
+      getProgressPercentage() {
+        return this.duration ? (this.currentTime / this.duration) * 100 : 0;
+      },
+      
+      getBufferedPercentage() {
+        return this.duration ? (this.buffered / this.duration) * 100 : 0;
+      }
+    }"
+    class={cn(videoPlayerVariants({ shape, aspectRatio }), className)}
+    @mouseenter="showControls = true"
+    @mouseleave="showControls = false"
+    {...alpineProps}
+  >
+    <!-- Video -->
+    <video
+      x-ref="video"
+      class="w-full h-full object-contain cursor-pointer"
+      poster={poster}
+      autoplay={autoplay}
+      loop={loop}
+      muted={muted}
+      @click="togglePlay()"
+    >
+      {src && <source src={src} type="video/mp4" />}
+      Your browser does not support the video tag.
+    </video>
+    
+    <!-- Loading -->
+    <div x-show="loading" class="absolute inset-0 flex items-center justify-center bg-black/50">
+      <div class="text-white">Loading...</div>
+    </div>
+    
+    <!-- Center Play Button -->
+    <div x-show="!playing && !loading" class="absolute inset-0 flex items-center justify-center">
+      <button 
+        @click="togglePlay()"
+        class="bg-black/50 hover:bg-black/70 text-white rounded-full p-4 transition-all duration-200 hover:scale-110"
+      >
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Controls -->
+    <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+      <!-- Progress Bar -->
+      <div 
+        class="mb-2 px-2 transition-opacity duration-200" 
+        :class="showControls ? 'opacity-100' : 'opacity-0'"
+        x-data="{ 
+          hovered: false, 
+          dragging: false,
+          dragProgress: 0,
+          
+          handleMouseDown(e) {
+            this.dragging = true;
+            const boundMouseMove = this.handleMouseMove.bind(this);
+            const boundMouseUp = this.handleMouseUp.bind(this);
+            document.addEventListener('mousemove', boundMouseMove);
+            document.addEventListener('mouseup', boundMouseUp);
+            this.boundMouseMove = boundMouseMove;
+            this.boundMouseUp = boundMouseUp;
+            e.preventDefault();
+            // Calculate initial position
+            this.updateProgressFromMouse(e);
+          },
+          
+          handleMouseMove(e) {
+            if (!this.dragging) return;
+            this.updateProgressFromMouse(e);
+          },
+          
+          updateProgressFromMouse(e) {
+            const rect = this.$refs.progressTrack.getBoundingClientRect();
+            const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+            
+            // Update drag progress immediately for UI
+            this.dragProgress = pos * 100;
+            
+            // Update video position directly (Pine's approach)
+            if (this.duration > 0) {
+              const newTime = pos * this.duration;
+              this.video.currentTime = newTime;
+              // Also update our currentTime immediately for timestamp display
+              this.currentTime = newTime; 
+            }
+          },
+          
+          handleMouseUp() {
+            this.dragging = false;
+            document.removeEventListener('mousemove', this.boundMouseMove);
+            document.removeEventListener('mouseup', this.boundMouseUp);
+          },
+          
+          getCurrentProgress() {
+            return this.dragging ? this.dragProgress : this.getProgressPercentage();
+          }
+        }" 
+        @mouseenter="hovered = true" 
+        @mouseleave="hovered = false"
+      >
+        <div 
+          x-ref="progressTrack"
+          class="relative cursor-pointer h-1"
+          @click="updateProgressFromMouse($event)"
+        >
+          <!-- Background Track -->
+          <div class="absolute inset-0 bg-white/30 rounded-full"></div>
+          
+          <!-- Buffered Progress -->
+          <div 
+            class="absolute inset-y-0 left-0 bg-white/50 rounded-full"
+            :style="`width: ${getBufferedPercentage()}%`"
+          ></div>
+          
+          <!-- Current Progress -->
+          <div 
+            class="absolute inset-y-0 left-0 bg-white rounded-full"
+            :style="`width: ${getCurrentProgress()}%`"
+          ></div>
+          
+          <!-- Circle Handle -->
+          <div 
+            class="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-lg cursor-grab"
+            :class="[(hovered || dragging) ? 'opacity-100 scale-100' : 'opacity-0 scale-75', dragging ? 'cursor-grabbing' : 'cursor-grab', dragging ? '' : 'transition-all duration-200']"
+            :style="`left: calc(${getCurrentProgress()}% - 8px)`"
+            @mousedown="handleMouseDown($event)"
+          ></div>
+        </div>
+      </div>
+      
+      <!-- Controls -->
+      <div class="flex items-center justify-between transition-opacity duration-200" :class="showControls ? 'opacity-100' : 'opacity-0'">
+        <div class="flex items-center space-x-4 pl-2">
+          <!-- Play/Pause -->
           <button 
             @click="togglePlay()"
-            class="text-white hover:text-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-white rounded"
-            aria-label="Play/Pause"
+            class="text-white hover:text-gray-300 p-2 rounded"
           >
             <svg x-show="!playing" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z"/>
@@ -325,149 +289,113 @@ Keyboard Shortcuts:
             </svg>
           </button>
           
-          <!-- Volume Control -->
-          {showVolumeControl && (
-            <div class="flex items-center space-x-2" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false; showVolumeSlider = false">
-              <button 
-                @click="toggleMute()"
-                @mouseenter="showVolumeSlider = true"
-                class="text-white hover:text-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-white rounded"
-                aria-label="Toggle Mute"
-              >
-                <svg x-show="!muted && volume > 0.5" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                </svg>
-                <svg x-show="!muted && volume <= 0.5 && volume > 0" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z"/>
-                </svg>
-                <svg x-show="muted || volume === 0" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-                </svg>
-              </button>
-              
-              <!-- Volume Slider -->
-              <div 
-                x-show="showVolumeSlider || hover"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95"
-                x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95"
-                class="flex items-center"
-                @mouseenter="showVolumeSlider = true"
-              >
-                <input 
-                  type="range" 
-                  min="0" 
-                  max="1" 
-                  step="0.1"
-                  :value="volume"
-                  @input="setVolume($event.target.value)"
-                  class="w-20 h-1 bg-white/30 rounded-lg appearance-none slider"
-                />
-              </div>
-            </div>
-          )}
-          
           <!-- Time Display -->
-          {showTime && (
-            <div class="text-white text-sm font-mono">
-              <span x-text="formatTime(currentTime)">0:00</span>
-              <span class="text-gray-400"> / </span>
-              <span x-text="formatTime(duration)">0:00</span>
-            </div>
-          )}
+          <div class="text-white text-sm font-mono">
+            <span x-text="formatTime(currentTime)">0:00</span>
+            <span class="text-white/60"> / </span>
+            <span x-text="formatTime(duration)">0:00</span>
+          </div>
         </div>
         
-        <div class="flex items-center space-x-4">
-          <!-- Playback Speed -->
-          {showPlaybackSpeed && (
-            <div class="relative" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false; showSpeedMenu = false">
-              <button 
-                @click="showSpeedMenu = !showSpeedMenu"
-                @mouseenter="showSpeedMenu = true"
-                class="text-white hover:text-gray-300 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-white rounded px-2 py-1"
-              >
-                <span x-text="`${playbackRate}x`">1x</span>
-              </button>
-              
-              <!-- Speed Menu -->
-              <div 
-                x-show="showSpeedMenu || hover"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95 translate-y-2"
-                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-                x-transition:leave-end="opacity-0 scale-95 translate-y-2"
-                class="absolute bottom-full right-0 mb-2 bg-black/90 rounded-lg py-2 min-w-[80px]"
-                @mouseenter="showSpeedMenu = true"
-              >
-                {[0.25, 0.5, 0.75, 1, 1.25, 1.5, 2].map(speed => (
-                  <button 
-                    @click={`setPlaybackRate(${speed})`}
-                    class="block w-full text-left px-3 py-1 text-white text-sm hover:bg-white/20 transition-colors"
-                    :class={`{ 'bg-white/20': playbackRate === ${speed} }`}
-                  >
-                    {speed}x
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+        <!-- Volume Control -->
+        <div class="flex items-center pr-4" x-data="{ volumeHovered: false }" @mouseenter="volumeHovered = true" @mouseleave="volumeHovered = false">
+          <!-- Volume Icon -->
+          <button 
+            @click="toggleMute()"
+            class="text-white hover:text-gray-300 p-2 rounded"
+          >
+            <svg x-show="!muted && volume > 0.5" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+            <svg x-show="!muted && volume <= 0.5 && volume > 0" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z"/>
+            </svg>
+            <svg x-show="muted || volume === 0" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+            </svg>
+          </button>
           
-          <!-- Fullscreen Button -->
-          {showFullscreen && (
-            <button 
-              @click="toggleFullscreen()"
-              class="text-white hover:text-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-white rounded"
-              aria-label="Toggle Fullscreen"
+          <!-- Volume Slider -->
+          <div 
+            class="w-20 transition-opacity duration-200"
+            :class="volumeHovered ? 'opacity-100' : 'opacity-70'"
+            x-data="{
+              volumeDragging: false,
+              
+              handleVolumeMouseDown(e) {
+                this.volumeDragging = true;
+                const boundVolumeMouseMove = this.handleVolumeMouseMove.bind(this);
+                const boundVolumeMouseUp = this.handleVolumeMouseUp.bind(this);
+                document.addEventListener('mousemove', boundVolumeMouseMove);
+                document.addEventListener('mouseup', boundVolumeMouseUp);
+                this.boundVolumeMouseMove = boundVolumeMouseMove;
+                this.boundVolumeMouseUp = boundVolumeMouseUp;
+                e.preventDefault();
+                // Update initial position
+                this.updateVolumeFromMouse(e);
+              },
+              
+              handleVolumeMouseMove(e) {
+                if (!this.volumeDragging) return;
+                this.updateVolumeFromMouse(e);
+              },
+              
+              updateVolumeFromMouse(e) {
+                const rect = this.$refs.volumeTrack.getBoundingClientRect();
+                const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                this.setVolume(pos);
+              },
+              
+              handleVolumeMouseUp() {
+                this.volumeDragging = false;
+                document.removeEventListener('mousemove', this.boundVolumeMouseMove);
+                document.removeEventListener('mouseup', this.boundVolumeMouseUp);
+              }
+            }"
+          >
+            <div 
+              x-ref="volumeTrack"
+              class="relative h-1 bg-white/30 rounded-full cursor-pointer"
+              @click="updateVolumeFromMouse($event)"
             >
-              <svg x-show="!fullscreen" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
-              </svg>
-              <svg x-show="fullscreen" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
-              </svg>
-            </button>
-          )}
+              <!-- Volume Progress -->
+              <div 
+                class="absolute inset-y-0 left-0 bg-white rounded-full"
+                :style="`width: ${volume * 100}%`"
+              ></div>
+              
+              <!-- Volume Handle -->
+              <div 
+                class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg cursor-grab"
+                :class="volumeDragging ? 'cursor-grabbing' : 'cursor-grab'"
+                :style="`left: calc(${volume * 100}% - 6px)`"
+                @mousedown="handleVolumeMouseDown($event)"
+              ></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  )}
-  
-  <!-- Click to Play Overlay -->
-  <div 
-    x-show="!playing && !loading"
-    @click="togglePlay()"
-    class="absolute inset-0 flex items-center justify-center cursor-pointer bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"
-  >
-    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-      <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M8 5v14l11-7z"/>
-      </svg>
-    </div>
   </div>
-</div>
+)}
 
-<style>
-  /* Custom slider styles */
-  .slider::-webkit-slider-thumb {
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    background: white;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-  
-  .slider::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    background: white;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-  }
-</style>
+<!-- 
+Usage Examples:
+
+Local Video:
+<VideoPlayer 
+  src="/video.mp4"
+  poster="/poster.jpg"
+  shape="rounded"
+  aspectRatio="16/9"
+  autoplay={true}
+/>
+
+YouTube Video:
+<VideoPlayer 
+  youtubeId="dQw4w9WgXcQ"
+  shape="rectangle"
+  aspectRatio="21/9"
+  autoplay={true}
+/>
+-->

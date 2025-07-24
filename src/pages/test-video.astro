@@ -1,0 +1,163 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { VideoPlayer } from '@/components/ui/display';
+---
+
+<Layout title="Video Test">
+  <main class="min-h-screen bg-background p-8">
+    <div class="max-w-4xl mx-auto space-y-8">
+      <h1 class="text-3xl font-bold">Video Player Test</h1>
+      
+      <!-- Simple test video -->
+      <div 
+        x-data="{
+          playing: false,
+          muted: false,
+          volume: 1,
+          currentTime: 0,
+          duration: 0,
+          loading: true,
+          
+          init() {
+            console.log('Alpine initialized');
+            this.video = this.$refs.video;
+            
+            this.video.addEventListener('loadedmetadata', () => {
+              console.log('Video loaded, duration:', this.video.duration);
+              this.duration = this.video.duration;
+              this.loading = false;
+            });
+            
+            this.video.addEventListener('timeupdate', () => {
+              this.currentTime = this.video.currentTime;
+            });
+            
+            this.video.addEventListener('play', () => {
+              console.log('Video playing');
+              this.playing = true;
+            });
+            
+            this.video.addEventListener('pause', () => {
+              console.log('Video paused');
+              this.playing = false;
+            });
+          },
+          
+          togglePlay() {
+            console.log('Toggle play called, currently playing:', this.playing);
+            if (this.playing) {
+              this.video.pause();
+            } else {
+              this.video.play();
+            }
+          },
+          
+          formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return mins + ':' + secs.toString().padStart(2, '0');
+          }
+        }"
+        class="relative bg-black rounded-lg overflow-hidden aspect-video max-w-2xl"
+      >
+        <!-- Video -->
+        <video
+          x-ref="video"
+          class="w-full h-full object-contain cursor-pointer"
+          poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
+          @click="togglePlay()"
+        >
+          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+        </video>
+        
+        <!-- Loading -->
+        <div x-show="loading" class="absolute inset-0 flex items-center justify-center bg-black/50">
+          <div class="text-white">Loading...</div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+          <!-- Time Display -->
+          <div class="mb-2">
+            <span class="text-white text-sm font-mono" x-text="formatTime(currentTime)">0:00</span>
+            <span class="text-white/60"> / </span>
+            <span class="text-white text-sm font-mono" x-text="formatTime(duration)">0:00</span>
+          </div>
+          
+          <!-- Controls -->
+          <div class="flex items-center space-x-4">
+            <!-- Play/Pause -->
+            <button 
+              @click="togglePlay()"
+              class="text-white hover:text-gray-300 p-2 rounded"
+            >
+              <svg x-show="!playing" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <svg x-show="playing" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+              </svg>
+            </button>
+            
+            <!-- Debug Info -->
+            <div class="text-white text-xs">
+              <div>Playing: <span x-text="playing">false</span></div>
+              <div>Time: <span x-text="Math.floor(currentTime)">0</span>s</div>
+              <div>Duration: <span x-text="Math.floor(duration)">0</span>s</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-sm text-muted-foreground">
+        <p><strong>✅ Your Beloved Test Video (Above)</strong></p>
+        <p>This is a simplified test to debug the video player issues.</p>
+        <p>Check browser console for debug messages.</p>
+        <p>Click anywhere on the video to play/pause.</p>
+      </div>
+      
+      <hr class="border-muted-foreground/20">
+      
+      <!-- VideoPlayer Component Test -->
+      <div class="space-y-4">
+        <h2 class="text-2xl font-bold">VideoPlayer Component Test</h2>
+        
+        <div class="max-w-2xl">
+          <VideoPlayer 
+            src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
+            shape="rounded"
+            aspectRatio="16/9"
+          />
+        </div>
+        
+        <div class="text-sm text-muted-foreground">
+          <p><strong>🧪 VideoPlayer Component (Above)</strong></p>
+          <p>Using the actual VideoPlayer component with your beloved test video design.</p>
+          <p>Should look and work exactly the same as your test video above.</p>
+        </div>
+      </div>
+      
+      <hr class="border-muted-foreground/20">
+      
+      <!-- YouTube Test -->
+      <div class="space-y-4">
+        <h2 class="text-2xl font-bold">YouTube VideoPlayer Test</h2>
+        
+        <div class="max-w-2xl">
+          <VideoPlayer 
+            youtubeId="dQw4w9WgXcQ"
+            shape="rounded"
+            aspectRatio="16/9"
+          />
+        </div>
+        
+        <div class="text-sm text-muted-foreground">
+          <p><strong>📺 YouTube VideoPlayer Component (Above)</strong></p>
+          <p>Using the VideoPlayer component with YouTube support.</p>
+          <p>Should show a YouTube iframe with the same styling.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

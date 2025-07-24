@@ -1,0 +1,209 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import VideoPlayer from '@/components/ui/display/VideoPlayer.astro';
+---
+
+<Layout title="VideoPlayer Component Demo">
+  <main class="min-h-screen bg-background p-8">
+    <div class="max-w-4xl mx-auto space-y-12">
+      <header class="text-center space-y-4">
+        <h1 class="text-4xl font-bold text-foreground">VideoPlayer Component Demo</h1>
+        <p class="text-xl text-muted-foreground">Clean, minimal video player with Alpine.js</p>
+      </header>
+
+      <!-- Local Video File -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-semibold text-foreground">Local Video File</h2>
+        <div class="max-w-3xl">
+          <VideoPlayer 
+            src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
+            shape="rounded"
+            aspectRatio="16/9"
+          />
+        </div>
+        <p class="text-sm text-muted-foreground">Click anywhere on the video to play/pause. Clean design with just play button and timestamp.</p>
+      </section>
+
+      <!-- YouTube Video -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-semibold text-foreground">YouTube Video</h2>
+        <div class="max-w-3xl">
+          <VideoPlayer 
+            youtubeId="dQw4w9WgXcQ"
+            shape="rounded"
+            aspectRatio="16/9"
+          />
+        </div>
+        <p class="text-sm text-muted-foreground">YouTube iframe with native controls for comparison.</p>
+      </section>
+
+      <!-- Features -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-semibold text-foreground">Features</h2>
+        <div class="bg-card border border-border rounded-lg p-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-3">
+              <h3 class="font-semibold text-card-foreground">Video Controls</h3>
+              <ul class="space-y-2 text-sm text-muted-foreground">
+                <li>• Click video to play/pause</li>
+                <li>• Clean faded gradient overlay</li>
+                <li>• Play/pause button with SVG icons</li>
+                <li>• Time display (current/total duration)</li>
+                <li>• Loading spinner while video loads</li>
+                <li>• Responsive design</li>
+              </ul>
+            </div>
+            <div class="space-y-3">
+              <h3 class="font-semibold text-card-foreground">Keyboard Shortcuts</h3>
+              <ul class="space-y-2 text-sm text-muted-foreground">
+                <li>• <kbd class="px-2 py-1 bg-muted rounded text-xs font-mono">Space</kbd> Play/Pause</li>
+                <li>• <kbd class="px-2 py-1 bg-muted rounded text-xs font-mono">M</kbd> Toggle Mute</li>
+                <li>• <kbd class="px-2 py-1 bg-muted rounded text-xs font-mono">F</kbd> Fullscreen</li>
+                <li>• <kbd class="px-2 py-1 bg-muted rounded text-xs font-mono">←/→</kbd> Seek ±10s</li>
+                <li>• <kbd class="px-2 py-1 bg-muted rounded text-xs font-mono">↑/↓</kbd> Volume ±10%</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Design System -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-semibold text-foreground">Design System Integration</h2>
+        <div class="bg-card border border-border rounded-lg p-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="space-y-3">
+              <h3 class="font-semibold text-card-foreground">Shape Variants</h3>
+              <ul class="space-y-1 text-sm text-muted-foreground">
+                <li>• <code class="text-xs bg-muted px-1 rounded">rectangle</code> Sharp corners</li>
+                <li>• <code class="text-xs bg-muted px-1 rounded">rounded</code> Rounded corners (default)</li>
+              </ul>
+            </div>
+            <div class="space-y-3">
+              <h3 class="font-semibold text-card-foreground">Aspect Ratios</h3>
+              <ul class="space-y-1 text-sm text-muted-foreground">
+                <li>• <code class="text-xs bg-muted px-1 rounded">16/9</code> Standard video (default)</li>
+                <li>• <code class="text-xs bg-muted px-1 rounded">4/3</code> Classic TV format</li>
+                <li>• <code class="text-xs bg-muted px-1 rounded">21/9</code> Cinematic ultra-wide</li>
+              </ul>
+            </div>
+            <div class="space-y-3">
+              <h3 class="font-semibold text-card-foreground">Universal Props</h3>
+              <ul class="space-y-1 text-sm text-muted-foreground">
+                <li>• <code class="text-xs bg-muted px-1 rounded">padding</code> Internal spacing</li>
+                <li>• <code class="text-xs bg-muted px-1 rounded">margin</code> External spacing</li>
+                <li>• <code class="text-xs bg-muted px-1 rounded">elevation</code> Shadow depth</li>
+                <li>• <code class="text-xs bg-muted px-1 rounded">size</code> Text/icon sizing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Shape Examples -->
+      <section class="space-y-6">
+        <h2 class="text-2xl font-semibold text-foreground">Shape & Aspect Ratio Examples</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Rectangle Shape -->
+          <div class="space-y-4">
+            <h3 class="text-lg font-medium text-foreground">Rectangle Shape</h3>
+            <VideoPlayer 
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+              poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg"
+              shape="rectangle"
+              aspectRatio="16/9"
+            />
+          </div>
+
+          <!-- 4:3 Aspect Ratio -->
+          <div class="space-y-4">
+            <h3 class="text-lg font-medium text-foreground">4:3 Aspect Ratio</h3>
+            <VideoPlayer 
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+              poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg"
+              shape="rounded"
+              aspectRatio="4/3"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Usage Examples -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-semibold text-foreground">Usage Examples</h2>
+        <div class="bg-card border border-border rounded-lg p-6">
+          <pre class="text-sm text-card-foreground overflow-x-auto"><code>{`<!-- Basic Video Player -->
+<VideoPlayer 
+  src="/video.mp4"
+  poster="/poster.jpg"
+  shape="rounded"
+  aspectRatio="16/9"
+/>
+
+<!-- Rectangle Shape with 4:3 Ratio -->
+<VideoPlayer 
+  src="/video.mp4"
+  poster="/poster.jpg" 
+  shape="rectangle"
+  aspectRatio="4/3"
+/>
+
+<!-- Multiple Sources -->
+<VideoPlayer 
+  sources={[
+    { src: "/video.mp4", type: "video/mp4" },
+    { src: "/video.webm", type: "video/webm" }
+  ]}
+  poster="/poster.jpg"
+  shape="rounded"
+  aspectRatio="21/9"
+  autoplay={true}
+  muted={true}
+  x-init="console.log('Player ready')"
+/>`}</code></pre>
+        </div>
+      </section>
+
+      <!-- Component Props -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-semibold text-foreground">Component Props</h2>
+        <div class="bg-card border border-border rounded-lg p-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-3">
+              <h3 class="font-semibold text-card-foreground">Video Options</h3>
+              <ul class="space-y-1 text-xs text-muted-foreground font-mono">
+                <li><code>src</code> - Video file URL</li>
+                <li><code>sources</code> - Multiple video sources array</li>
+                <li><code>poster</code> - Poster image URL</li>
+                <li><code>autoplay</code> - Auto-start playback</li>
+                <li><code>loop</code> - Loop video playback</li>
+                <li><code>muted</code> - Start muted</li>
+              </ul>
+            </div>
+            <div class="space-y-3">
+              <h3 class="font-semibold text-card-foreground">Design Props</h3>
+              <ul class="space-y-1 text-xs text-muted-foreground font-mono">
+                <li><code>shape</code> - 'rectangle' | 'rounded'</li>
+                <li><code>aspectRatio</code> - '16/9' | '4/3' | '21/9'</li>
+                <li><code>padding</code> - Universal spacing</li>
+                <li><code>margin</code> - External spacing</li>
+                <li><code>elevation</code> - Shadow depth</li>
+                <li><code>autoplay</code> - Auto-start playback</li>
+                <li><code>youtubeId</code> - YouTube video ID</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // Initialize Alpine.js for demo functionality
+  document.addEventListener('alpine:init', () => {
+    console.log('VideoPlayer demo initialized');
+  });
+</script>
