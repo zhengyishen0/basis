@@ -3,17 +3,25 @@ import { cn } from '@/lib/utils';
 
 export interface Props {
   tag?: 'section' | 'div' | 'article' | 'aside';
+  align?: 'left' | 'center' | 'right';
   class?: string;
   [key: string]: any; // Alpine.js pass-through
 }
 
 const {
   tag = 'section',
+  align = 'center',
   class: className = '',
   ...alpineProps
 } = Astro.props;
 
-const classes = cn('p-8', className);
+const alignClasses = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right'
+};
+
+const classes = cn('p-8', alignClasses[align], className);
 
 const Tag = tag;
 ---

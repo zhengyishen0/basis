@@ -1,65 +1,66 @@
 ---
 import { cn } from '@/lib/utils';
-import { createContentComponent, type ContentComponentProps, universalVariants } from '@/lib/component-variants';
+import {
+    createContentComponent,
+    type ContentComponentProps,
+    universalVariants,
+} from '@/lib/component-variants';
 
-const gridVariants = createContentComponent(
-  'grid',
-  {
+const gridVariants = createContentComponent('grid mx-auto', {
     columns: {
-      auto: 'grid-cols-[repeat(auto-fit,minmax(280px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]',
-      1: 'grid-cols-1',
-      2: 'grid-cols-1 md:grid-cols-2', 
-      3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-      4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
-      5: 'grid-cols-1 md:grid-cols-3 lg:grid-cols-5',
-      6: 'grid-cols-2 md:grid-cols-4 lg:grid-cols-6',
-      12: 'grid-cols-4 md:grid-cols-8 lg:grid-cols-12'
+        auto: 'grid-cols-[repeat(auto-fit,minmax(280px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]',
+        1: 'grid-cols-1',
+        2: 'grid-cols-1 md:grid-cols-2',
+        3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+        4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
+        5: 'grid-cols-1 md:grid-cols-3 lg:grid-cols-5',
+        6: 'grid-cols-2 md:grid-cols-4 lg:grid-cols-6',
+        12: 'grid-cols-4 md:grid-cols-8 lg:grid-cols-12',
     },
     overflow: {
-      auto: universalVariants.overflow.auto,     // Scroll when needed
-      fixed: universalVariants.overflow.fixed,   // Content has fixed boundaries
-    }
-  }
-);
+        auto: universalVariants.overflow.auto, // Scroll when needed
+        fixed: universalVariants.overflow.fixed, // Content has fixed boundaries
+    },
+});
 
 export interface Props extends ContentComponentProps {
-  columns?: 'auto' | '1' | '2' | '3' | '4' | '5' | '6' | '12';
-  overflow?: 'auto' | 'fixed';
+    columns?: 'auto' | '1' | '2' | '3' | '4' | '5' | '6' | '12';
+    overflow?: 'auto' | 'fixed';
 }
 
-const { 
-  columns = 'auto',
-  gap,
-  overflow = 'auto',
-  class: className = '',
-  ...alpineProps
+const {
+    columns = 'auto',
+    gap,
+    overflow = 'auto',
+    class: className = '',
+    ...alpineProps
 } = Astro.props;
 
 const columnClasses = {
-  auto: 'grid-cols-[repeat(auto-fit,minmax(280px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]',
-  1: 'grid-cols-1',
-  2: 'grid-cols-1 md:grid-cols-2', 
-  3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-  4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
-  5: 'grid-cols-1 md:grid-cols-3 lg:grid-cols-5',
-  6: 'grid-cols-2 md:grid-cols-4 lg:grid-cols-6',
-  12: 'grid-cols-4 md:grid-cols-8 lg:grid-cols-12'
+    auto: 'grid-cols-[repeat(auto-fit,minmax(280px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]',
+    1: 'grid-cols-1',
+    2: 'grid-cols-1 md:grid-cols-2',
+    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+    4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
+    5: 'grid-cols-1 md:grid-cols-3 lg:grid-cols-5',
+    6: 'grid-cols-2 md:grid-cols-4 lg:grid-cols-6',
+    12: 'grid-cols-4 md:grid-cols-8 lg:grid-cols-12',
 };
 
 const overflowClasses = {
-  auto: 'overflow-auto',
-  fixed: 'overflow-hidden'
+    auto: 'overflow-auto',
+    fixed: 'overflow-hidden',
 };
 
 const classes = cn(
-  'grid',
-  gridVariants({ gap }),
-  columnClasses[columns],
-  overflowClasses[overflow],
-  className
+    'grid',
+    gridVariants({ gap }),
+    columnClasses[columns],
+    overflowClasses[overflow],
+    className
 );
 ---
 
 <div class={classes} {...alpineProps}>
-  <slot />
+    <slot />
 </div>

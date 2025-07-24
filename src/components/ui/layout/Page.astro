@@ -2,39 +2,39 @@
 import { cn } from '@/lib/utils';
 
 export interface Props {
-  maxWidth?: 'full' | 'narrow' | 'container' | 'wide';
-  overflow?: 'auto' | 'fixed';
-  class?: string;
-  [key: string]: any; // Alpine.js pass-through
+    maxWidth?: 'full' | 'narrow' | 'container' | 'wide';
+    overflow?: 'auto' | 'fixed';
+    class?: string;
+    [key: string]: any; // Alpine.js pass-through
 }
 
-const { 
-  maxWidth = 'container',
-  overflow = 'auto',
-  class: className = '',
-  ...alpineProps
+const {
+    maxWidth = 'full',
+    overflow = 'auto',
+    class: className = '',
+    ...alpineProps
 } = Astro.props;
 
 const maxWidthClasses = {
-  full: 'w-full',
-  narrow: 'max-w-2xl mx-auto',
-  container: 'max-w-7xl mx-auto', 
-  wide: 'max-w-screen-xl mx-auto'
+    full: 'w-full',
+    narrow: 'max-w-2xl mx-auto',
+    container: 'max-w-7xl mx-auto',
+    wide: 'max-w-screen-xl mx-auto',
 };
 
 const overflowClasses = {
-  auto: 'overflow-auto',     // Default: natural scrolling
-  fixed: 'overflow-hidden'   // Fixed boundaries (full-screen apps)
+    auto: 'overflow-auto', // Default: natural scrolling
+    fixed: 'overflow-hidden', // Fixed boundaries (full-screen apps)
 };
 
 const classes = cn(
-  'min-h-screen',
-  maxWidthClasses[maxWidth],
-  overflowClasses[overflow],
-  className
+    'min-h-screen',
+    maxWidthClasses[maxWidth],
+    overflowClasses[overflow],
+    className
 );
 ---
 
-<div class={classes} {...alpineProps}>
-  <slot />
-</div>
+<main class={classes} {...alpineProps}>
+    <slot />
+</main>

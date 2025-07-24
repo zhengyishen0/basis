@@ -1,26 +1,24 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Badge from '../components/ui/feedback/Badge.astro';
-import Button from '../components/ui/forms/Button.astro';
+import Layout from '@/layouts/Layout.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+import Button from '@/components/ui/forms/Button.astro';
 import {
     Card,
     CardHeader,
     CardContent,
     CardFooter,
-} from '../components/ui/display/card';
-import Navbar from '../components/ui/display/Navbar.astro';
-import Column from '../components/ui/layout/Column.astro';
-import List from '../components/ui/layout/List.astro';
-import ListItem from '../components/ui/layout/ListItem.astro';
-import Page from '../components/ui/layout/Page.astro';
-import Row from '../components/ui/layout/Row.astro';
-import Spacer from '../components/ui/layout/Spacer.astro';
-import Conditional from '../components/ui/layout/Conditional.astro';
-import Inline from '../components/ui/layout/Inline.astro';
-import { Empty, Error, Loading } from '../components/ui/feedback';
-import Text from '../components/ui/display/Text.astro';
-import Checkbox from '../components/ui/forms/Checkbox.astro';
-import TextInput from '../components/ui/forms/TextInput.astro';
+} from '@/components/ui/display/card';
+import Navbar from '@/components/ui/display/Navbar.astro';
+import List from '@/components/ui/layout/List.astro';
+import ListItem from '@/components/ui/layout/ListItem.astro';
+import Page from '@/components/ui/layout/Page.astro';
+import Row from '@/components/ui/layout/Row.astro';
+import Spacer from '@/components/ui/layout/Spacer.astro';
+import Conditional from '@/components/ui/layout/Conditional.astro';
+import { Empty, Error, Loading } from '@/components/ui/feedback';
+import Text from '@/components/ui/display/Text.astro';
+import Checkbox from '@/components/ui/forms/Checkbox.astro';
+import TextInput from '@/components/ui/forms/TextInput.astro';
 
 const title = 'Todo App with Supabase';
 
@@ -56,9 +54,7 @@ const pageData = `{
             <!-- Not authenticated state -->
             <Card slot="false" width="28rem" height="20rem">
                 <CardHeader>
-                    <Text variant="body">
-                        Click to start using the app
-                    </Text>
+                    <Text variant="body"> Click to start using the app </Text>
                 </CardHeader>
                 <CardContent
                     class="flex flex-col items-center justify-center h-full text-center"
@@ -76,13 +72,11 @@ const pageData = `{
             <!-- Authenticated state - Todo App -->
             <Row slot="true" justify="center" align="start" class="gap-8">
                 <!-- Left Column: My Todos -->
-                <Card width="30rem" height="32rem" class="flex-shrink-0">
+                <Card width="30rem" height="32rem">
                     <CardHeader>
                         <Text variant="card-title"> My Todos </Text>
-                    </CardHeader>
-                    <CardContent>
                         <!-- Filter Buttons and Auth Info -->
-                        <Row gap="md" wrap>
+                        <Row gap="md" size="full">
                             <!-- Status Filter Buttons (Left) -->
                             <Row justify="start" align="center">
                                 <Button
@@ -109,7 +103,7 @@ const pageData = `{
                             </Row>
 
                             <!-- Auth Info (Right) -->
-                            <Row gap="md">
+                            <Row>
                                 <Text variant="body-small"
                                     >Signed in as: <strong
                                         x-text="auth.userDisplayId"
@@ -117,12 +111,13 @@ const pageData = `{
                                 >
                                 <Button
                                     @click="signOut()"
-                                    size="sm"
+                                    size="xs"
                                     variant="default">Sign Out</Button
                                 >
                             </Row>
                         </Row>
-
+                    </CardHeader>
+                    <CardContent>
                         <!-- Error Message -->
                         <Error x-show="todo.error" x-text="todo.error" />
 
@@ -182,7 +177,6 @@ const pageData = `{
                             </Empty>
                         </List>
                     </CardContent>
-
                     <CardFooter>
                         <!-- Stats -->
                         <div x-show="todo.userTodos.length > 0">
@@ -200,8 +194,9 @@ const pageData = `{
                         <!-- Add Todo Form -->
                         <form
                             @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''"
+                            class="w-full"
                         >
-                            <Row gap="xs">
+                            <Row gap="xs" size="full">
                                 <TextInput
                                     x-ref="todoInput"
                                     type="text"
@@ -221,13 +216,11 @@ const pageData = `{
                 </Card>
 
                 <!-- Right Column: All Todos -->
-                <Card width="30rem" height="32rem" class="flex-shrink-0">
+                <Card width="30rem" height="32rem">
                     <CardHeader>
                         <Text variant="card-title"> Realtime Todos </Text>
-                    </CardHeader>
-                    <CardContent>
                         <!-- Filter Buttons and User Count -->
-                        <Row justify="between" wrap>
+                        <Row justify="between" size="full">
                             <!-- Status Filter Buttons (Left) -->
                             <Row justify="start" align="center">
                                 <Button
@@ -254,20 +247,18 @@ const pageData = `{
                             </Row>
 
                             <!-- User Count (Right) -->
-                            <div>
-                                <Text variant="body-small"
-                                    ><Text
-                                        variant="body-small"
-                                        x-text="todo.uniqueUserCount"
-                                    /> contributor<Text
-                                        variant="body-small"
-                                        x-show="todo.uniqueUserCount !== 1"
-                                        >s</Text
-                                    > online</Text
-                                >
-                            </div>
+                            <Text variant="body-small"
+                                ><Text
+                                    variant="body-small"
+                                    x-text="todo.uniqueUserCount"
+                                /> contributor<Text
+                                    variant="body-small"
+                                    x-show="todo.uniqueUserCount !== 1">s</Text
+                                > online</Text
+                            >
                         </Row>
-
+                    </CardHeader>
+                    <CardContent>
                         <!-- Error Message -->
                         <Error x-show="todo.error" x-text="todo.error" />
 
@@ -285,6 +276,7 @@ const pageData = `{
                                 x-for="item in todo.filteredAllTodos"
                                 x-key="item.id"
                                 padding="sm"
+                                justify="between"
                                 class="border-b border-gray-200 last:border-b-0"
                             >
                                 <Checkbox
@@ -292,46 +284,45 @@ const pageData = `{
                                     style="pointer-events: none;"
                                 />
                                 <Text
-                                    class="flex-1 min-w-0"
+                                    class="min-w-0 w-full"
                                     :state="item.is_complete ? 'completed' : 'active'"
                                     x-text="item.task"
                                 />
                                 <Row>
-                                    <Text
-                                        variant="caption"
-                                        x-text="item.user_id.slice(0, 8) + '...'"
-                                    />
                                     <Badge
                                         x-show="item.user_id === auth.currentUser?.id"
                                         size="xs"
                                         color="primary">You</Badge
                                     >
+                                    <Text
+                                        variant="caption"
+                                        x-text="item.user_id.slice(0, 8) + '...'"
+                                    />
                                 </Row>
-                            </ListItem>
 
-                            <!-- Empty State -->
-                            <Empty
-                                x-show="todo.filteredAllTodos.length === 0 && !todo.loading"
-                            >
-                                <Text
-                                    variant="body"
-                                    x-show="todo.allFilter === 'all'"
-                                    >No todos in database.</Text
+                                <!-- Empty State -->
+                                <Empty
+                                    x-show="todo.filteredAllTodos.length === 0 && !todo.loading"
                                 >
-                                <Text
-                                    variant="body"
-                                    x-show="todo.allFilter === 'active'"
-                                    >No active todos.</Text
-                                >
-                                <Text
-                                    variant="body"
-                                    x-show="todo.allFilter === 'completed'"
-                                    >No completed todos.</Text
-                                >
-                            </Empty>
+                                    <Text
+                                        variant="body"
+                                        x-show="todo.allFilter === 'all'"
+                                        >No todos in database.</Text
+                                    >
+                                    <Text
+                                        variant="body"
+                                        x-show="todo.allFilter === 'active'"
+                                        >No active todos.</Text
+                                    >
+                                    <Text
+                                        variant="body"
+                                        x-show="todo.allFilter === 'completed'"
+                                        >No completed todos.</Text
+                                    >
+                                </Empty>
+                            </ListItem>
                         </List>
                     </CardContent>
-
                     <CardFooter>
                         <!-- Stats -->
                         <div x-show="todo.allTodos.length > 0">

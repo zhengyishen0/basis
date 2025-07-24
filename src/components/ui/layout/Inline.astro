@@ -1,8 +1,8 @@
 ---
-import { createContentComponent, universalVariants } from '@/lib/component-variants';
+import { createContentComponent, universalVariants, type UniversalSpacing, type UniversalAlign } from '@/lib/component-variants';
 import { cn } from '@/lib/utils';
 
-const inline = createContentComponent('flex flex-row items-center justify-start max-w-full', {
+const inline = createContentComponent('flex flex-row justify-start max-w-full', {
     overflow: {
         auto: universalVariants.overflow.auto,     // Scroll when needed
         fixed: universalVariants.overflow.fixed,   // Content has fixed boundaries
@@ -11,13 +11,14 @@ const inline = createContentComponent('flex flex-row items-center justify-start 
 });
 
 export interface Props {
-    gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+    gap?: UniversalSpacing;
     overflow?: 'auto' | 'fixed' | 'wrap';
+    align?: UniversalAlign;
     class?: string;
     [key: string]: any; // Alpine.js pass-through
 }
 
-const { gap = 'md', overflow = 'wrap', class: className, ...alpineProps } = Astro.props;
+const { gap = 'md', overflow = 'wrap', align = 'center', class: className, ...alpineProps } = Astro.props;
 
 const overflowClasses = {
     auto: 'overflow-auto',
@@ -28,9 +29,10 @@ const overflowClasses = {
 
 <div
   class={cn(
-    'flex flex-row items-center justify-start max-w-full',
+    'flex flex-row justify-start max-w-full',
     inline({ gap }),
     overflowClasses[overflow],
+    universalVariants.align[align],
     className
   )}
   {...alpineProps}

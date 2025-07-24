@@ -4,9 +4,11 @@ import {
     createLayoutComponent,
     type LayoutComponentProps,
     universalVariants,
+    type UniversalSpacing,
+    type UniversalLayoutSize
 } from '@/lib/component-variants';
 
-const columnVariants = createLayoutComponent('flex flex-col h-full', {
+const columnVariants = createLayoutComponent('flex flex-col', {
     overflow: {
         auto: universalVariants.overflow.auto,     // Content scrolls when needed
         fixed: universalVariants.overflow.fixed,   // Content has fixed boundaries
@@ -15,12 +17,16 @@ const columnVariants = createLayoutComponent('flex flex-col h-full', {
 
 export interface Props extends LayoutComponentProps {
     overflow?: 'auto' | 'fixed';
+    gap?: UniversalSpacing;
+    size?: UniversalLayoutSize;
 }
 
 const {
     align = 'center',
     justify = 'start',
     overflow = 'fixed',
+    gap = 'md',
+    size = 'height',
     class: className = '',
     ...alpineProps
 } = Astro.props;
@@ -31,9 +37,12 @@ const overflowClasses = {
 };
 
 const classes = cn(
-    'flex flex-col h-full',
+    'flex flex-col',
+    size === 'fit' ? 'h-auto' : '',
     columnVariants({ align, justify }),
     overflowClasses[overflow],
+    universalVariants.gap[gap],
+    universalVariants.layoutSize[size],
     className
 );
 ---

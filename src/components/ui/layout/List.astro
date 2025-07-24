@@ -2,7 +2,9 @@
 import { cn } from '@/lib/utils';
 import {
     createContentComponent,
-    universalVariants
+    universalVariants,
+    type UniversalSpacing,
+    type UniversalAlign
 } from '@/lib/component-variants';
 
 const listVariants = createContentComponent('flex flex-col items-stretch max-h-screen', {
@@ -13,8 +15,9 @@ const listVariants = createContentComponent('flex flex-col items-stretch max-h-s
 });
 
 export interface Props {
-    gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+    gap?: UniversalSpacing;
     overflow?: 'auto' | 'fixed';
+    align?: UniversalAlign;
     class?: string;
     [key: string]: any; // Alpine.js pass-through
 }
@@ -22,6 +25,7 @@ export interface Props {
 const {
     gap = 'xs',
     overflow = 'auto',
+    align = 'stretch',
     class: className = '',
     ...alpineProps
 } = Astro.props;
@@ -32,9 +36,10 @@ const overflowClasses = {
 };
 
 const classes = cn(
-    'flex flex-col items-stretch max-h-screen',
+    'flex flex-col max-h-screen',
     listVariants({ gap }),
     overflowClasses[overflow],
+    universalVariants.align[align],
     className
 );
 ---

@@ -1,6 +1,6 @@
 ---
 export interface Props {
-  id: string;
+  id?: string;
   name?: string;
   checked?: boolean;
   disabled?: boolean;
@@ -9,10 +9,12 @@ export interface Props {
   variant?: 'default' | 'custom';
   class?: string;
   labelClass?: string;
+  // Alpine.js pass-through
+  [key: string]: any;
 }
 
 const { 
-  id,
+  id = `checkbox-${Math.random().toString(36).substr(2, 9)}`,
   name = id,
   checked = false,
   disabled = false,
@@ -20,7 +22,8 @@ const {
   description,
   variant = 'default',
   class: className = "",
-  labelClass = ""
+  labelClass = "",
+  ...alpineProps
 } = Astro.props;
 ---
 
@@ -57,6 +60,7 @@ Features:
         checked={checked}
         disabled={disabled}
         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-neutral-900 focus:ring-neutral-900 focus:ring-2 disabled:opacity-50"
+        {...alpineProps}
       />
     </div>
     {(label || description) && (
@@ -86,6 +90,7 @@ Features:
         checked={checked}
         disabled={disabled}
         class="hidden peer"
+        {...alpineProps}
       />
       <label for={id} class={`flex items-center space-x-3 cursor-pointer ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}>
         <span class="flex items-center justify-center w-5 h-5 border-2 border-gray-300 rounded peer-checked:border-neutral-900 peer-checked:bg-neutral-900 transition-colors duration-200">
