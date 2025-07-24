@@ -185,12 +185,13 @@ const {
       </button>
     </div>
     
-    <!-- Controls -->
-    <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+    <!-- Controls with Gradient Background -->
+    <div 
+      class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2 transition-opacity duration-200" 
+      :class="showControls ? 'opacity-100' : 'opacity-0'"
+    >
       <!-- Progress Bar -->
-      <div 
-        class="mb-2 px-2 transition-opacity duration-200" 
-        :class="showControls ? 'opacity-100' : 'opacity-0'"
+      <div class="mb-2 px-2"
         x-data="{ 
           hovered: false, 
           dragging: false,
@@ -274,7 +275,7 @@ const {
       </div>
       
       <!-- Controls -->
-      <div class="flex items-center justify-between transition-opacity duration-200" :class="showControls ? 'opacity-100' : 'opacity-0'">
+      <div class="flex items-center justify-between">
         <div class="flex items-center space-x-4 pl-2">
           <!-- Play/Pause -->
           <button 
