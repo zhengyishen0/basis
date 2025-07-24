@@ -89,6 +89,13 @@ export const universalVariants = {
     "column-reverse": "flex-col-reverse"
   },
 
+  // Shape system (UI components)
+  shape: {
+    rectangle: "rounded-none",
+    rounded: "rounded-lg", 
+    pill: "rounded-full"
+  },
+
   // Layout sizing for Row and Column components
   layoutSize: {
     fit: "",              // Size to content (default behavior)
@@ -179,6 +186,7 @@ export type UniversalJustify = 'start' | 'center' | 'end' | 'between' | 'around'
 export type RowJustify = UniversalJustify | 'grid';
 export type UniversalAlign = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
 export type UniversalDirection = 'row' | 'column' | 'row-reverse' | 'column-reverse';
+export type UniversalShape = 'rectangle' | 'rounded' | 'pill';
 export type UniversalLayoutSize = 'fit' | 'full' | 'width' | 'height';
 // Simplified overflow types
 export type ContentOverflow = 'auto' | 'fixed' | 'expand';

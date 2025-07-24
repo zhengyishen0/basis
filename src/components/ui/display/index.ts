@@ -1,7 +1,6 @@
 // Display - Content display and data visualization
 export { default as Image } from './Image.astro';
 export { default as ImageGallery } from './ImageGallery.astro';
-export { default as Quotes } from './Quotes.astro';
 export { default as Table } from './Table.astro';
 export { default as VideoPlayer } from './VideoPlayer.astro';
 export { default as Text } from './Text.astro';

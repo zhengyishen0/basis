@@ -48,6 +48,7 @@ export { default as FeatureSideBySide } from "./FeatureSideBySide.astro";
 // Testimonial Components
 export { default as TestimonialSideBySide } from "./TestimonialSideBySide.astro";
 export { default as TestimonialGrid } from "./TestimonialGrid.astro";
+export { default as Quotes } from "./Quotes.astro";
 
 // Pricing Components
 export { default as PricingCards } from "./PricingCards.astro";
@@ -116,6 +117,7 @@ export type {
   Props as TestimonialGridProps,
   Testimonial as GridTestimonial,
 } from "./TestimonialGrid.astro";
+export type { Props as QuotesProps } from "./Quotes.astro";
 export type {
   Props as PricingCardsProps,
   PricingPlan,

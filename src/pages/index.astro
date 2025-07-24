@@ -8,6 +8,7 @@ import Button from '@/components/ui/forms/Button.astro';
 import { Avatar, AvatarImage } from '@/components/ui/display/avatar';
 import { Card, CardContent } from '@/components/ui/display/card';
 import Text from '@/components/ui/display/Text.astro';
+import Row from '@/components/ui/layout/Row.astro';
 import Grid from '@/components/ui/layout/Grid.astro';
 import GridItem from '@/components/ui/layout/GridItem.astro';
 import Section from '@/components/ui/layout/Section.astro';
@@ -57,14 +58,14 @@ const pageData = JSON.stringify(homeContent?.data || []);
                 Build on Fundamentals - A methodology for modern web development
                 using basic tools and clear boundaries
             </Text>
-            <div class="flex justify-center gap-2 flex-wrap mb-6">
+            <Row class="flex justify-center gap-2 flex-wrap mb-6">
                 <Badge size="lg">Astro</Badge>
                 <Badge size="lg">Alpine</Badge>
                 <Badge size="lg">Supabase</Badge>
-            </div>
-            <div class="flex justify-center gap-4">
+            </Row>
+            <Row class="flex justify-center gap-4">
                 <Button href="./todo" size="lg"> Demo </Button>
-            </div>
+            </Row>
         </Section>
 
         <!-- Features Section -->

@@ -1,13 +1,29 @@
 ---
-export interface Props {
+import { cn } from '@/lib/utils';
+import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
+
+const quotesVariants = createUIComponent(
+  '',
+  {
+    variant: {
+      default: 'text-left',
+      centered: 'text-center',
+      minimal: 'text-left border-l-4 border-neutral-200 pl-6'
+    },
+    quoteSize: {
+      sm: '[&_.quote-text]:text-base [&_.author-text]:text-sm',
+      md: '[&_.quote-text]:text-lg [&_.author-text]:text-base',
+      lg: '[&_.quote-text]:text-xl [&_.author-text]:text-lg'
+    }
+  }
+);
+
+export interface Props extends UIComponentProps, VariantProps<typeof quotesVariants> {
   quote: string;
   author: string;
   role?: string;
   company?: string;
   avatar?: string;
-  variant?: 'default' | 'centered' | 'minimal';
-  size?: 'sm' | 'md' | 'lg';
-  class?: string;
 }
 
 const { 
@@ -17,27 +33,15 @@ const {
   company,
   avatar,
   variant = 'default',
-  size = 'md',
-  class: className = ""
+  quoteSize = 'md',
+  padding = 'none',
+  margin = 'none',
+  elevation = 'none',
+  overflow = 'fixed',
+  size,
+  class: className,
+  ...alpineProps
 } = Astro.props;
-
-const containerClasses = {
-  default: 'text-left',
-  centered: 'text-center',
-  minimal: 'text-left border-l-4 border-neutral-200 pl-6'
-};
-
-const quoteClasses = {
-  sm: 'text-base',
-  md: 'text-lg', 
-  lg: 'text-xl'
-};
-
-const authorClasses = {
-  sm: 'text-sm',
-  md: 'text-base',
-  lg: 'text-lg'
-};
 ---
 
 <!-- 
@@ -65,14 +69,20 @@ Props:
 - class: Additional CSS classes
 -->
 
-<blockquote class={`${containerClasses[variant]} ${className}`}>
+<blockquote 
+  class={cn(
+    quotesVariants({ variant, quoteSize, padding, margin, elevation, overflow, size }),
+    className
+  )}
+  {...alpineProps}
+>
   {variant !== 'minimal' && (
     <svg class={`${variant === 'centered' ? 'mx-auto' : ''} mb-4 w-8 h-8 text-neutral-400`} fill="currentColor" viewBox="0 0 20 20">
       <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
     </svg>
   )}
   
-  <p class={`text-neutral-700 font-medium italic ${quoteClasses[size]} ${variant === 'minimal' ? 'mb-2' : 'mb-6'}`}>
+  <p class={`quote-text text-neutral-700 font-medium italic ${variant === 'minimal' ? 'mb-2' : 'mb-6'}`}>
     "{quote}"
   </p>
   
@@ -87,7 +97,7 @@ Props:
     )}
     
     <div class={variant === 'centered' ? 'text-center' : ''}>
-      <cite class={`not-italic font-semibold text-neutral-900 ${authorClasses[size]}`}>
+      <cite class="author-text not-italic font-semibold text-neutral-900">
         {author}
       </cite>
       {(role || company) && (
