@@ -1,6 +1,8 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
+import Slider from '@/components/ui/forms/Slider.astro';
+import { Play, Pause, Volume2, Volume1, VolumeX } from 'lucide-astro';
 
 const videoPlayerVariants = cva(
   'relative bg-black overflow-hidden max-w-2xl',
@@ -179,9 +181,7 @@ const {
         @click="togglePlay()"
         class="bg-black/50 hover:bg-black/70 text-white rounded-full p-4 transition-all duration-200 hover:scale-110"
       >
-        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M8 5v14l11-7z"/>
-        </svg>
+        <Play class="w-8 h-8" fill="currentColor" />
       </button>
     </div>
     
@@ -191,87 +191,20 @@ const {
       :class="showControls ? 'opacity-100' : 'opacity-0'"
     >
       <!-- Progress Bar -->
-      <div class="mb-2 px-2"
-        x-data="{ 
-          hovered: false, 
-          dragging: false,
-          dragProgress: 0,
-          
-          handleMouseDown(e) {
-            this.dragging = true;
-            const boundMouseMove = this.handleMouseMove.bind(this);
-            const boundMouseUp = this.handleMouseUp.bind(this);
-            document.addEventListener('mousemove', boundMouseMove);
-            document.addEventListener('mouseup', boundMouseUp);
-            this.boundMouseMove = boundMouseMove;
-            this.boundMouseUp = boundMouseUp;
-            e.preventDefault();
-            // Calculate initial position
-            this.updateProgressFromMouse(e);
-          },
-          
-          handleMouseMove(e) {
-            if (!this.dragging) return;
-            this.updateProgressFromMouse(e);
-          },
-          
-          updateProgressFromMouse(e) {
-            const rect = this.$refs.progressTrack.getBoundingClientRect();
-            const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-            
-            // Update drag progress immediately for UI
-            this.dragProgress = pos * 100;
-            
-            // Update video position directly (Pine's approach)
-            if (this.duration > 0) {
-              const newTime = pos * this.duration;
-              this.video.currentTime = newTime;
-              // Also update our currentTime immediately for timestamp display
-              this.currentTime = newTime; 
-            }
-          },
-          
-          handleMouseUp() {
-            this.dragging = false;
-            document.removeEventListener('mousemove', this.boundMouseMove);
-            document.removeEventListener('mouseup', this.boundMouseUp);
-          },
-          
-          getCurrentProgress() {
-            return this.dragging ? this.dragProgress : this.getProgressPercentage();
-          }
-        }" 
-        @mouseenter="hovered = true" 
-        @mouseleave="hovered = false"
-      >
-        <div 
-          x-ref="progressTrack"
-          class="relative cursor-pointer h-1"
-          @click="updateProgressFromMouse($event)"
-        >
-          <!-- Background Track -->
-          <div class="absolute inset-0 bg-white/30 rounded-full"></div>
-          
-          <!-- Buffered Progress -->
-          <div 
-            class="absolute inset-y-0 left-0 bg-white/50 rounded-full"
-            :style="`width: ${getBufferedPercentage()}%`"
-          ></div>
-          
-          <!-- Current Progress -->
-          <div 
-            class="absolute inset-y-0 left-0 bg-white rounded-full"
-            :style="`width: ${getCurrentProgress()}%`"
-          ></div>
-          
-          <!-- Circle Handle -->
-          <div 
-            class="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-lg cursor-grab"
-            :class="[(hovered || dragging) ? 'opacity-100 scale-100' : 'opacity-0 scale-75', dragging ? 'cursor-grabbing' : 'cursor-grab', dragging ? '' : 'transition-all duration-200']"
-            :style="`left: calc(${getCurrentProgress()}% - 8px)`"
-            @mousedown="handleMouseDown($event)"
-          ></div>
-        </div>
+      <div class="mb-2 px-2">
+        <Slider
+          x-bind:value="currentTime"
+          x-bind:buffered="buffered"
+          x-bind:max="duration"
+          trackColor="bg-white/30"
+          bufferColor="bg-white/50"
+          progressColor="bg-white"
+          thumb="solid"
+          size="sm"
+          class="[&>*]:hover:scale-100 [&>*]:group-hover:scale-100"
+          @slider-drag="seek($event.detail.value)"
+          @slider-change="seek($event.detail.value)"
+        />
       </div>
       
       <!-- Controls -->
@@ -280,14 +213,10 @@ const {
           <!-- Play/Pause -->
           <button 
             @click="togglePlay()"
-            class="text-white hover:text-gray-300 p-2 rounded"
+            class="text-white p-2 rounded"
           >
-            <svg x-show="!playing" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-            <svg x-show="playing" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-            </svg>
+            <Play x-show="!playing" class="w-6 h-6" fill="currentColor" />
+            <Pause x-show="playing" class="w-6 h-6" fill="currentColor" />
           </button>
           
           <!-- Time Display -->
@@ -303,76 +232,30 @@ const {
           <!-- Volume Icon -->
           <button 
             @click="toggleMute()"
-            class="text-white hover:text-gray-300 p-2 rounded"
+            class="text-white p-2 rounded"
           >
-            <svg x-show="!muted && volume > 0.5" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-            </svg>
-            <svg x-show="!muted && volume <= 0.5 && volume > 0" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z"/>
-            </svg>
-            <svg x-show="muted || volume === 0" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-            </svg>
+            <Volume2 x-show="!muted && volume > 0.5" class="w-5 h-5" />
+            <Volume1 x-show="!muted && volume <= 0.5 && volume > 0" class="w-5 h-5" />
+            <VolumeX x-show="muted || volume === 0" class="w-5 h-5" />
           </button>
           
           <!-- Volume Slider -->
           <div 
             class="w-20 transition-opacity duration-200"
             :class="volumeHovered ? 'opacity-100' : 'opacity-70'"
-            x-data="{
-              volumeDragging: false,
-              
-              handleVolumeMouseDown(e) {
-                this.volumeDragging = true;
-                const boundVolumeMouseMove = this.handleVolumeMouseMove.bind(this);
-                const boundVolumeMouseUp = this.handleVolumeMouseUp.bind(this);
-                document.addEventListener('mousemove', boundVolumeMouseMove);
-                document.addEventListener('mouseup', boundVolumeMouseUp);
-                this.boundVolumeMouseMove = boundVolumeMouseMove;
-                this.boundVolumeMouseUp = boundVolumeMouseUp;
-                e.preventDefault();
-                // Update initial position
-                this.updateVolumeFromMouse(e);
-              },
-              
-              handleVolumeMouseMove(e) {
-                if (!this.volumeDragging) return;
-                this.updateVolumeFromMouse(e);
-              },
-              
-              updateVolumeFromMouse(e) {
-                const rect = this.$refs.volumeTrack.getBoundingClientRect();
-                const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-                this.setVolume(pos);
-              },
-              
-              handleVolumeMouseUp() {
-                this.volumeDragging = false;
-                document.removeEventListener('mousemove', this.boundVolumeMouseMove);
-                document.removeEventListener('mouseup', this.boundVolumeMouseUp);
-              }
-            }"
           >
-            <div 
-              x-ref="volumeTrack"
-              class="relative h-1 bg-white/30 rounded-full cursor-pointer"
-              @click="updateVolumeFromMouse($event)"
-            >
-              <!-- Volume Progress -->
-              <div 
-                class="absolute inset-y-0 left-0 bg-white rounded-full"
-                :style="`width: ${volume * 100}%`"
-              ></div>
-              
-              <!-- Volume Handle -->
-              <div 
-                class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg cursor-grab"
-                :class="volumeDragging ? 'cursor-grabbing' : 'cursor-grab'"
-                :style="`left: calc(${volume * 100}% - 6px)`"
-                @mousedown="handleVolumeMouseDown($event)"
-              ></div>
-            </div>
+            <Slider
+              value={100}
+              x-bind:value="volume * 100"
+              max={100}
+              trackColor="bg-white/30"
+              progressColor="bg-white"
+              thumb="solid"
+              size="sm"
+              class="[&>*]:hover:scale-100 [&>*]:group-hover:scale-100"
+              @slider-drag="setVolume($event.detail.value / 100)"
+              @slider-change="setVolume($event.detail.value / 100)"
+            />
           </div>
         </div>
       </div>
