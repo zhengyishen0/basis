@@ -1,0 +1,177 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Card, CardContent, CardHeader } from '@/components/ui/display/card';
+
+// Get all demo files dynamically
+const demoFiles = await Astro.glob('./*.astro');
+
+// Filter out this index file and create demo data
+const demos = demoFiles
+  .filter(demo => !demo.file.includes('index.astro'))
+  .map(demo => {
+    const filename = demo.file.split('/').pop().replace('.astro', '');
+    const title = filename
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    
+    // Create demo descriptions based on component names
+    const descriptions = {
+      'accordion-demo': 'Collapsible content sections with smooth animations and keyboard navigation',
+      'avatar-demo': 'User profile images with fallbacks, different sizes, and status indicators',
+      'badge-demo': 'Small status indicators and labels with color variants and sizes',
+      'button-demo': 'Interactive buttons with variants, sizes, states, and loading indicators',
+      'card-demo': 'Flexible content containers with headers, footers, and different layouts',
+      'image-demo': 'Responsive images with aspect ratios, lazy loading, and gallery features',
+      'layout-test': 'Layout components testing grid systems, spacing, and responsive behavior',
+      'video-player': 'Professional video player with custom controls, progress bar, and volume'
+    };
+    
+    return {
+      filename,
+      title,
+      description: descriptions[filename] || 'Interactive component demonstration',
+      url: `/demo/${filename}`
+    };
+  })
+  .sort((a, b) => a.title.localeCompare(b.title));
+
+// Component categories for better organization
+const categories = {
+  'Interactive': ['Button Demo', 'Video Player'],
+  'Content': ['Card Demo', 'Image Demo', 'Accordion Demo'],
+  'Data Display': ['Avatar Demo', 'Badge Demo'],
+  'Layout': ['Layout Test']
+};
+---
+
+<Layout title="Component Demos - Interactive Showcase">
+  <main class="min-h-screen bg-background">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-b from-primary/5 to-background py-16">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <!-- Back to Home Button -->
+        <div class="mb-8">
+          <a 
+            href="/"
+            class="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Back to Home
+          </a>
+        </div>
+        
+        <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-6">
+          Component Demos
+        </h1>
+        <p class="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+          Interactive showcase of our universal design system components. 
+          Each demo highlights different variants, props, and use cases.
+        </p>
+        <div class="flex items-center justify-center gap-4 text-sm text-muted-foreground">
+          <div class="flex items-center gap-1">
+            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+            <span>{demos.length} Components</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+            <span>Universal Design System</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
+            <span>Alpine.js Integration</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo Grid -->
+    <section class="py-16">
+      <div class="max-w-6xl mx-auto px-6">
+        <!-- All Demos Grid -->
+        <div class="mb-12">
+          <h2 class="text-2xl font-semibold text-foreground mb-8">All Components</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {demos.map(demo => (
+              <Card class="group hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+                <CardHeader>
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-card-foreground group-hover:text-primary transition-colors">
+                      {demo.title}
+                    </h3>
+                    <svg class="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                    </svg>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p class="text-muted-foreground text-sm mb-4 line-clamp-2">
+                    {demo.description}
+                  </p>
+                  <a 
+                    href={demo.url}
+                    class="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                  >
+                    View Demo
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                  </a>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="border-t border-border pt-12">
+          <h2 class="text-2xl font-semibold text-foreground mb-8">Quick Access</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {demos.slice(0, 8).map(demo => (
+              <a 
+                href={demo.url}
+                class="p-4 rounded-lg border border-border hover:border-primary/50 hover:bg-accent/50 transition-all duration-200 text-center group"
+              >
+                <div class="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                  {demo.title}
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Development Info -->
+        <div class="mt-16 p-6 bg-muted/50 rounded-lg border border-border">
+          <h3 class="text-lg font-semibold text-foreground mb-3">
+            🛠 Development Notes
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-muted-foreground">
+            <div>
+              <strong class="text-foreground">Tech Stack:</strong><br>
+              Astro + Alpine.js + Tailwind CSS
+            </div>
+            <div>
+              <strong class="text-foreground">Design System:</strong><br>
+              CVA variants with universal props
+            </div>
+            <div>
+              <strong class="text-foreground">Components:</strong><br>
+              Fully responsive and accessible
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
