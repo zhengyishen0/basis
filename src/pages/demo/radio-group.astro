@@ -1,147 +1,343 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import RadioGroup from '@/components/ui/forms/RadioGroup.astro';
+import RadioGroupXFor from '@/components/ui/forms/RadioGroupXFor.astro';
 ---
 
 <Layout title="Radio Group Component Demo">
-  <main class="min-h-screen bg-background py-8">
-    <div class="max-w-4xl mx-auto px-6 space-y-12">
-      
-      <!-- Header -->
-      <div class="text-center space-y-4">
-        <div class="mb-8">
-          <a 
-            href="/demo"
-            class="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-            </svg>
-            Back to Demos
-          </a>
-        </div>
-        <h1 class="text-4xl font-bold text-foreground">Radio Group Component</h1>
-        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Single-select option groups with primary theme, smooth animations, and Alpine.js integration
-        </p>
-      </div>
-      
-      <div class="space-y-8">
-        <!-- Basic Usage -->
-        <div class="bg-card border border-border rounded-lg p-6">
-          <h3 class="text-lg font-semibold text-card-foreground mb-4">Basic Usage</h3>
-          <div class="space-y-6">
-            <RadioGroup 
-              name="basic-plan"
-              options={[
-                { value: "free", title: "Free Plan", description: "Perfect for personal projects" },
-                { value: "pro", title: "Pro Plan", description: "Best for small teams" },
-                { value: "enterprise", title: "Enterprise Plan", description: "For large organizations" }
-              ]}
-              selectedValue="pro"
-            />
-          </div>
-        </div>
-        
-        <!-- Without Descriptions -->
-        <div class="bg-card border border-border rounded-lg p-6">
-          <h3 class="text-lg font-semibold text-card-foreground mb-4">Without Descriptions</h3>
-          <div class="space-y-6">
-            <RadioGroup 
-              name="size"
-              options={[
-                { value: "small", title: "Small" },
-                { value: "medium", title: "Medium" },
-                { value: "large", title: "Large" }
-              ]}
-              selectedValue="medium"
-            />
-          </div>
-        </div>
-        
-        <!-- Disabled States -->
-        <div class="bg-card border border-border rounded-lg p-6">
-          <h3 class="text-lg font-semibold text-card-foreground mb-4">Disabled States</h3>
-          <div class="space-y-6">
-            <RadioGroup 
-              name="disabled-options"
-              options={[
-                { value: "available", title: "Available Option", description: "This option is available" },
-                { value: "disabled", title: "Disabled Option", description: "This option is disabled", disabled: true },
-                { value: "selected", title: "Selected Option", description: "This option is selected" }
-              ]}
-              selectedValue="selected"
-            />
-            
-            <div class="mt-8">
-              <h4 class="font-medium text-card-foreground mb-3">Entire Group Disabled</h4>
-              <RadioGroup 
-                name="all-disabled"
-                options={[
-                  { value: "option1", title: "Option 1", description: "All options are disabled" },
-                  { value: "option2", title: "Option 2", description: "Cannot select any option" },
-                  { value: "option3", title: "Option 3", description: "Group-level disabled state" }
-                ]}
-                disabled={true}
-                selectedValue="option2"
-              />
+    <main class="min-h-screen bg-background py-8">
+        <div class="max-w-4xl mx-auto px-6 space-y-12">
+            <!-- Header -->
+            <div class="text-center space-y-4">
+                <div class="mb-8">
+                    <a
+                        href="/demo"
+                        class="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                    >
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        Back to Demos
+                    </a>
+                </div>
+                <h1 class="text-4xl font-bold text-foreground">
+                    Radio Group Component
+                </h1>
+                <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+                    Single-select option groups with primary theme, smooth
+                    animations, and Alpine.js integration
+                </p>
             </div>
-          </div>
-        </div>
-        
-        <!-- Interactive Demo -->
-        <div class="bg-card border border-border rounded-lg p-6">
-          <h3 class="text-lg font-semibold text-card-foreground mb-4">Interactive Demo</h3>
-          <div 
-            x-data="{
+
+            <div class="space-y-8">
+                <!-- Basic Usage -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        Basic Usage
+                    </h3>
+                    <div class="space-y-6">
+                        <RadioGroup
+                            name="basic-plan"
+                            options={[
+                                {
+                                    value: 'free',
+                                    title: 'Free Plan',
+                                    description:
+                                        'Perfect for personal projects',
+                                },
+                                {
+                                    value: 'pro',
+                                    title: 'Pro Plan',
+                                    description: 'Best for small teams',
+                                },
+                                {
+                                    value: 'enterprise',
+                                    title: 'Enterprise Plan',
+                                    description: 'For large organizations',
+                                },
+                            ]}
+                            selectedValue="pro"
+                        />
+                    </div>
+                </div>
+
+                <!-- Without Descriptions -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        Without Descriptions
+                    </h3>
+                    <div class="space-y-6">
+                        <RadioGroup
+                            name="size"
+                            options={[
+                                { value: 'small', title: 'Small' },
+                                { value: 'medium', title: 'Medium' },
+                                { value: 'large', title: 'Large' },
+                            ]}
+                            selectedValue="medium"
+                        />
+                    </div>
+                </div>
+
+                <!-- Disabled States -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        Disabled States
+                    </h3>
+                    <div class="space-y-6">
+                        <RadioGroup
+                            name="disabled-options"
+                            options={[
+                                {
+                                    value: 'available',
+                                    title: 'Available Option',
+                                    description: 'This option is available',
+                                },
+                                {
+                                    value: 'disabled',
+                                    title: 'Disabled Option',
+                                    description: 'This option is disabled',
+                                    disabled: true,
+                                },
+                                {
+                                    value: 'selected',
+                                    title: 'Selected Option',
+                                    description: 'This option is selected',
+                                },
+                            ]}
+                            selectedValue="selected"
+                        />
+
+                        <div class="mt-8">
+                            <h4 class="font-medium text-card-foreground mb-3">
+                                Entire Group Disabled
+                            </h4>
+                            <RadioGroup
+                                name="all-disabled"
+                                options={[
+                                    {
+                                        value: 'option1',
+                                        title: 'Option 1',
+                                        description: 'All options are disabled',
+                                    },
+                                    {
+                                        value: 'option2',
+                                        title: 'Option 2',
+                                        description: 'Cannot select any option',
+                                    },
+                                    {
+                                        value: 'option3',
+                                        title: 'Option 3',
+                                        description:
+                                            'Group-level disabled state',
+                                    },
+                                ]}
+                                disabled={true}
+                                selectedValue="option2"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Demo -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        Interactive Demo
+                    </h3>
+                    <div
+                        x-data="{
               selectedTheme: 'light',
               selectedLanguage: 'en'
             }"
-            class="space-y-6"
-          >
-            <div>
-              <h4 class="font-medium text-card-foreground mb-3">Theme Preference</h4>
-              <RadioGroup 
-                name="theme"
-                options={[
-                  { value: "light", title: "Light Theme", description: "Clean and bright interface" },
-                  { value: "dark", title: "Dark Theme", description: "Easy on the eyes" },
-                  { value: "auto", title: "System Theme", description: "Follow system preference" }
-                ]}
-                x-model="selectedTheme"
-              />
-            </div>
-            
-            <div>
-              <h4 class="font-medium text-card-foreground mb-3">Language</h4>
-              <RadioGroup 
-                name="language"
-                options={[
-                  { value: "en", title: "English" },
-                  { value: "es", title: "Español" },
-                  { value: "fr", title: "Français" },
-                  { value: "de", title: "Deutsch" }
-                ]}
-                x-model="selectedLanguage"
-              />
-            </div>
-            
-            <!-- State Display -->
-            <div class="mt-6 p-4 bg-muted rounded-lg">
-              <h4 class="font-medium text-muted-foreground mb-2">Current State:</h4>
-              <div class="text-sm font-mono space-y-1">
-                <div>theme: <span x-text="selectedTheme" class="text-primary"></span></div>
-                <div>language: <span x-text="selectedLanguage" class="text-primary"></span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Animation Showcase -->
-        <div class="bg-card border border-border rounded-lg p-6">
-          <h3 class="text-lg font-semibold text-card-foreground mb-4">Animation Showcase</h3>
-          <div 
-            x-data="{ 
+                        class="space-y-6"
+                    >
+                        <div>
+                            <h4 class="font-medium text-card-foreground mb-3">
+                                Theme Preference
+                            </h4>
+                            <RadioGroup
+                                name="theme"
+                                options={[
+                                    {
+                                        value: 'light',
+                                        title: 'Light Theme',
+                                        description:
+                                            'Clean and bright interface',
+                                    },
+                                    {
+                                        value: 'dark',
+                                        title: 'Dark Theme',
+                                        description: 'Easy on the eyes',
+                                    },
+                                    {
+                                        value: 'auto',
+                                        title: 'System Theme',
+                                        description: 'Follow system preference',
+                                    },
+                                ]}
+                                x-model="selectedTheme"
+                            />
+                        </div>
+
+                        <div>
+                            <h4 class="font-medium text-card-foreground mb-3">
+                                Language
+                            </h4>
+                            <RadioGroup
+                                name="language"
+                                options={[
+                                    { value: 'en', title: 'English' },
+                                    { value: 'es', title: 'Español' },
+                                    { value: 'fr', title: 'Français' },
+                                    { value: 'de', title: 'Deutsch' },
+                                ]}
+                                x-model="selectedLanguage"
+                            />
+                        </div>
+
+                        <!-- State Display -->
+                        <div class="mt-6 p-4 bg-muted rounded-lg">
+                            <h4 class="font-medium text-muted-foreground mb-2">
+                                Current State:
+                            </h4>
+                            <div class="text-sm font-mono space-y-1">
+                                <div>
+                                    theme: <span
+                                        x-text="selectedTheme"
+                                        class="text-primary"></span>
+                                </div>
+                                <div>
+                                    language: <span
+                                        x-text="selectedLanguage"
+                                        class="text-primary"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- x-for vs Astro Comparison -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        x-for vs Astro Comparison
+                    </h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Astro server-side approach -->
+                        <div>
+                            <h4 class="font-medium text-card-foreground mb-3">
+                                Astro Approach (Server-side)
+                            </h4>
+                            <p class="text-sm text-muted-foreground mb-4">
+                                Options passed as props, rendered server-side
+                                with .map()
+                            </p>
+                            <RadioGroup
+                                name="astro-approach"
+                                options={[
+                                    {
+                                        value: 'ssr',
+                                        title: 'Server-side Rendered',
+                                        description:
+                                            'Pre-built HTML at compile time',
+                                    },
+                                    {
+                                        value: 'fast',
+                                        title: 'Fast Initial Load',
+                                        description:
+                                            'No client-side rendering needed',
+                                    },
+                                    {
+                                        value: 'seo',
+                                        title: 'SEO Friendly',
+                                        description:
+                                            'Content visible to crawlers',
+                                    },
+                                ]}
+                                selectedValue="ssr"
+                            />
+                        </div>
+
+                        <!-- Alpine.js x-for approach -->
+                        <div>
+                            <h4 class="font-medium text-card-foreground mb-3">
+                                x-for Approach (Client-side)
+                            </h4>
+                            <p class="text-sm text-muted-foreground mb-4">
+                                Options in Alpine.js data, rendered client-side
+                                with x-for
+                            </p>
+                            <div x-data={`{ 
+                                selectedValue: 'dynamic',
+                                name: 'xfor-approach',
+                                disabled: false,
+                                options: [
+                                    { value: 'dynamic', title: 'Dynamic Rendering', description: 'Built by JavaScript at runtime' },
+                                    { value: 'reactive', title: 'Fully Reactive', description: 'All data in Alpine.js state' },
+                                    { value: 'spa', title: 'SPA-like', description: 'Client-side template rendering' }
+                                ]
+                            }`}>
+                                <RadioGroupXFor />
+                                <div class="mt-3 p-2 bg-muted rounded text-sm">
+                                    Selected: <span x-text="selectedValue" class="font-mono text-primary"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comparison explanation -->
+                    <div class="mt-6 p-4 bg-muted rounded-lg">
+                        <h5 class="font-medium text-muted-foreground mb-2">
+                            Key Differences:
+                        </h5>
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm"
+                        >
+                            <div>
+                                <strong>Astro (Left):</strong>
+                                <ul
+                                    class="list-disc list-inside space-y-1 text-muted-foreground mt-1"
+                                >
+                                    <li>Server-side rendering at build time</li>
+                                    <li>Faster initial page load</li>
+                                    <li>Better SEO and accessibility</li>
+                                    <li>Smaller JavaScript bundle</li>
+                                    <li>
+                                        Static HTML with selective hydration
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <strong>x-for (Right):</strong>
+                                <ul
+                                    class="list-disc list-inside space-y-1 text-muted-foreground mt-1"
+                                >
+                                    <li>Client-side rendering at runtime</li>
+                                    <li>More dynamic and flexible</li>
+                                    <li>Everything in Alpine.js state</li>
+                                    <li>Larger JavaScript footprint</li>
+                                    <li>Pure SPA approach</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Animation Showcase -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        Animation Showcase
+                    </h3>
+                    <div
+                        x-data="{ 
               demoValue: 'option1',
               cycleOptions() {
                 const options = ['option1', 'option2', 'option3'];
@@ -149,75 +345,138 @@ import RadioGroup from '@/components/ui/forms/RadioGroup.astro';
                 this.demoValue = options[(current + 1) % options.length];
               }
             }"
-            class="space-y-4"
-          >
-            <button 
-              @click="cycleOptions()"
-              class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-            >
-              Cycle Selection (watch animations)
-            </button>
-            
-            <RadioGroup 
-              name="animation-demo"
-              options={[
-                { value: "option1", title: "Animation Demo 1", description: "Watch the smooth transitions" },
-                { value: "option2", title: "Animation Demo 2", description: "Scale and fade effects" },
-                { value: "option3", title: "Animation Demo 3", description: "Hardware accelerated" }
-              ]}
-              x-model="demoValue"
-            />
-          </div>
+                        class="space-y-4"
+                    >
+                        <button
+                            @click="cycleOptions()"
+                            class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                        >
+                            Cycle Selection (watch animations)
+                        </button>
+
+                        <RadioGroup
+                            name="animation-demo"
+                            options={[
+                                {
+                                    value: 'option1',
+                                    title: 'Animation Demo 1',
+                                    description: 'Watch the smooth transitions',
+                                },
+                                {
+                                    value: 'option2',
+                                    title: 'Animation Demo 2',
+                                    description: 'Scale and fade effects',
+                                },
+                                {
+                                    value: 'option3',
+                                    title: 'Animation Demo 3',
+                                    description: 'Hardware accelerated',
+                                },
+                            ]}
+                            x-model="demoValue"
+                        />
+                    </div>
+                </div>
+
+                <!-- Real-world Examples -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        Real-world Examples
+                    </h3>
+                    <div class="space-y-8">
+                        <!-- Payment Method -->
+                        <div>
+                            <h4 class="font-medium text-card-foreground mb-3">
+                                Payment Method
+                            </h4>
+                            <RadioGroup
+                                name="payment"
+                                options={[
+                                    {
+                                        value: 'card',
+                                        title: 'Credit Card',
+                                        description:
+                                            'Visa, Mastercard, American Express',
+                                    },
+                                    {
+                                        value: 'paypal',
+                                        title: 'PayPal',
+                                        description:
+                                            'Pay with your PayPal account',
+                                    },
+                                    {
+                                        value: 'bank',
+                                        title: 'Bank Transfer',
+                                        description: 'Direct bank transfer',
+                                    },
+                                ]}
+                                selectedValue="card"
+                            />
+                        </div>
+
+                        <!-- Shipping Options -->
+                        <div>
+                            <h4 class="font-medium text-card-foreground mb-3">
+                                Shipping Options
+                            </h4>
+                            <RadioGroup
+                                name="shipping"
+                                options={[
+                                    {
+                                        value: 'standard',
+                                        title: 'Standard Shipping',
+                                        description: '5-7 business days • Free',
+                                    },
+                                    {
+                                        value: 'express',
+                                        title: 'Express Shipping',
+                                        description:
+                                            '2-3 business days • $9.99',
+                                    },
+                                    {
+                                        value: 'overnight',
+                                        title: 'Overnight Shipping',
+                                        description:
+                                            'Next business day • $24.99',
+                                    },
+                                ]}
+                                selectedValue="standard"
+                            />
+                        </div>
+
+                        <!-- Subscription Plan -->
+                        <div>
+                            <h4 class="font-medium text-card-foreground mb-3">
+                                Subscription Plan
+                            </h4>
+                            <RadioGroup
+                                name="subscription"
+                                options={[
+                                    {
+                                        value: 'monthly',
+                                        title: 'Monthly',
+                                        description:
+                                            '$29/month • Cancel anytime',
+                                    },
+                                    {
+                                        value: 'yearly',
+                                        title: 'Yearly',
+                                        description: '$290/year • Save 17%',
+                                    },
+                                    {
+                                        value: 'lifetime',
+                                        title: 'Lifetime',
+                                        description:
+                                            '$999 one-time • Best value',
+                                        disabled: true,
+                                    },
+                                ]}
+                                selectedValue="yearly"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <!-- Real-world Examples -->
-        <div class="bg-card border border-border rounded-lg p-6">
-          <h3 class="text-lg font-semibold text-card-foreground mb-4">Real-world Examples</h3>
-          <div class="space-y-8">
-            <!-- Payment Method -->
-            <div>
-              <h4 class="font-medium text-card-foreground mb-3">Payment Method</h4>
-              <RadioGroup 
-                name="payment"
-                options={[
-                  { value: "card", title: "Credit Card", description: "Visa, Mastercard, American Express" },
-                  { value: "paypal", title: "PayPal", description: "Pay with your PayPal account" },
-                  { value: "bank", title: "Bank Transfer", description: "Direct bank transfer" }
-                ]}
-                selectedValue="card"
-              />
-            </div>
-            
-            <!-- Shipping Options -->
-            <div>
-              <h4 class="font-medium text-card-foreground mb-3">Shipping Options</h4>
-              <RadioGroup 
-                name="shipping"
-                options={[
-                  { value: "standard", title: "Standard Shipping", description: "5-7 business days • Free" },
-                  { value: "express", title: "Express Shipping", description: "2-3 business days • $9.99" },
-                  { value: "overnight", title: "Overnight Shipping", description: "Next business day • $24.99" }
-                ]}
-                selectedValue="standard"
-              />
-            </div>
-            
-            <!-- Subscription Plan -->
-            <div>
-              <h4 class="font-medium text-card-foreground mb-3">Subscription Plan</h4>
-              <RadioGroup 
-                name="subscription"
-                options={[
-                  { value: "monthly", title: "Monthly", description: "$29/month • Cancel anytime" },
-                  { value: "yearly", title: "Yearly", description: "$290/year • Save 17%" },
-                  { value: "lifetime", title: "Lifetime", description: "$999 one-time • Best value", disabled: true }
-                ]}
-                selectedValue="yearly"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
+    </main>
 </Layout>

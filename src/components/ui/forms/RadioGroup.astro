@@ -68,7 +68,8 @@ Features:
       for={`${name}-${option.value}`}
       class={cn(
         'radio-option group cursor-pointer',
-        'flex items-start gap-3 p-4',
+        'flex gap-3 p-4',
+        option.description ? 'items-start' : 'items-center',
         'border border-border rounded-lg',
         'transition-all duration-300 ease-out transform-gpu',
         'hover:border-primary/50 hover:bg-primary/5',
@@ -77,7 +78,10 @@ Features:
       )}
     >
       <!-- Custom radio button -->
-      <div class="radio-input-wrapper mt-0.5 relative">
+      <div class={cn(
+        'radio-input-wrapper relative',
+        option.description ? 'mt-0.5' : ''
+      )}>
         <input 
           id={`${name}-${option.value}`}
           name={name}
@@ -92,7 +96,7 @@ Features:
           class={cn(
             'relative flex items-center justify-center shrink-0 transform-gpu',
             'rounded-full bg-background transition-all duration-300 ease-out',
-            universalVariants.size.md.replace('text-base', 'h-5 w-5'),
+            'h-5 w-5',
             universalVariants.borderWidth.thin,
             'border-primary',
             'peer-checked:border-primary peer-checked:scale-105',
@@ -103,7 +107,7 @@ Features:
         >
           <!-- Radio dot indicator -->
           <div
-            class="h-2 w-2 bg-primary rounded-full transition-all duration-300 ease-out transform-gpu"
+            class="h-3 w-3 bg-primary rounded-full transition-all duration-300 ease-out transform-gpu"
             :class={`selectedValue === '${option.value}' ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`}
           ></div>
         </div>
