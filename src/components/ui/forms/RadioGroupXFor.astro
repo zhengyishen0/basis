@@ -10,17 +10,15 @@ export interface Props {
         description?: string;
         disabled?: boolean;
     }>;
-    selectedOption?: string;
     disabled?: boolean;
     class?: string;
-    // Alpine.js pass-through
+    // Alpine.js pass-through (including selectedOption via x-model)
     [key: string]: any;
 }
 
 const {
     name,
     options,
-    selectedOption = '',
     disabled = false,
     class: className = '',
     ...alpineProps
@@ -57,7 +55,7 @@ Features:
 -->
 <div
     x-data={`{ 
-        selectedOption: '${selectedOption}',
+        selectedOption: '',
         options: ${JSON.stringify(options)},
         name: '${name}',
         disabled: ${disabled}
