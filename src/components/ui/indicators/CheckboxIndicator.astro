@@ -1,9 +1,10 @@
 ---
 import { cn } from '@/lib/utils';
 import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
+import { Check } from 'lucide-astro';
 
 const checkboxIndicatorVariants = createUIComponent(
-    'relative flex items-center justify-center shrink-0 transform-gpu rounded bg-background transition-all duration-300 ease-out h-5 w-5 border border-primary',
+    'relative flex items-center justify-center shrink-0 transform-gpu rounded bg-background transition-all duration-300 ease-out h-5 w-5 border border-primary shadow-sm',
     {
         size: {
             sm: 'h-4 w-4 rounded-sm',
@@ -41,6 +42,14 @@ const {
     ...alpineProps
 } = Astro.props;
 
+// Extract Alpine expressions from alpineProps if they exist
+const { 
+    ':checked': checkedExpr, 
+    ':indeterminate': indeterminateExpr, 
+    ':disabled': disabledExpr, 
+    ...restAlpineProps 
+} = alpineProps;
+
 const checkSizes = {
     sm: 'h-2 w-2',
     md: 'h-3 w-3', 
@@ -69,7 +78,7 @@ Features:
 
 <div
     class="checkbox-input-wrapper relative"
-    {...alpineProps}
+    {...restAlpineProps}
 >
     <div
         class={cn(
@@ -77,38 +86,24 @@ Features:
             className
         )}
         :class={`[
-            checked || indeterminate ? 'bg-primary border-primary scale-105' : 'bg-background border-primary',
-            disabled ? 'opacity-50 cursor-not-allowed' : 'group-hover:border-primary/80'
+            (${checkedExpr || checked}) || (${indeterminateExpr || indeterminate}) ? 'bg-primary border-primary scale-105' : 'bg-background border-primary',
+            ${disabledExpr || disabled} ? 'opacity-50 cursor-not-allowed' : 'group-hover:border-primary/80'
         ]`}
     >
         <!-- Checkmark icon -->
         <div
             class="text-primary-foreground transition-all duration-300 ease-out transform-gpu"
-            :class={`checked ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`}
-            x-show="!indeterminate"
+            :class={`${checkedExpr || checked} ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`}
+            x-show={`!(${indeterminateExpr || indeterminate})`}
         >
-            <!-- SVG Checkmark -->
-            <svg 
-                class={cn('stroke-current', checkSizes[size])} 
-                viewBox="0 0 16 16" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path 
-                    d="M13.5 4.5L6 12L2.5 8.5" 
-                    stroke="currentColor" 
-                    stroke-width="2" 
-                    stroke-linecap="round" 
-                    stroke-linejoin="round"
-                />
-            </svg>
+            <Check class={cn('stroke-current', checkSizes[size])} />
         </div>
         
         <!-- Indeterminate indicator -->
         <div
             class="text-primary-foreground transition-all duration-300 ease-out transform-gpu"
-            :class={`indeterminate ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`}
-            x-show="indeterminate"
+            :class={`${indeterminateExpr || indeterminate} ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`}
+            x-show={`${indeterminateExpr || indeterminate}`}
         >
             <!-- Horizontal line for indeterminate -->
             <div class={cn('bg-current rounded-full h-0.5', size === 'sm' ? 'w-2' : size === 'lg' ? 'w-4' : 'w-3')}></div>

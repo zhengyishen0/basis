@@ -1,95 +1,90 @@
 ---
 import { cn } from '@/lib/utils';
-import { Check } from 'lucide-astro';
+import CheckboxIndicator from '../indicators/CheckboxIndicator.astro';
 
 export interface Props {
-  id?: string;
-  name?: string;
-  checked?: boolean;
-  disabled?: boolean;
-  label?: string;
-  class?: string;
-  // Alpine.js pass-through
-  [key: string]: any;
+    id?: string;
+    name?: string;
+    checked?: boolean;
+    indeterminate?: boolean;
+    disabled?: boolean;
+    label?: string;
+    size?: 'sm' | 'md' | 'lg';
+    class?: string;
+    // Alpine.js pass-through
+    [key: string]: any;
 }
 
-const { 
-  id = `checkbox-${Math.random().toString(36).substring(2, 11)}`,
-  name = id,
-  checked = false,
-  disabled = false,
-  label,
-  class: className = "",
-  ...alpineProps
+const {
+    id = `checkbox-${Math.random().toString(36).substring(2, 11)}`,
+    name = id,
+    checked = false,
+    indeterminate = false,
+    disabled = false,
+    label,
+    size = 'md',
+    class: className = '',
+    ...alpineProps
 } = Astro.props;
 ---
 
-<label 
-  class={cn(
-    'relative inline-flex items-center gap-3 cursor-pointer group disabled:cursor-not-allowed text-base',
-    className
-  )}
-  for={id}
->
-  <!-- Native input for accessibility and form handling -->
-  <input
-    type="checkbox"
-    id={id}
-    name={name}
-    checked={checked}
-    disabled={disabled}
-    class="sr-only peer"
-    {...alpineProps}
-  />
-  
-  <!-- Custom visual checkbox with smooth animations -->
-  <div 
+<label
     class={cn(
-      'relative h-5 w-5 rounded-sm border transition-all duration-300 ease-out',
-      'flex items-center justify-center shrink-0 shadow-sm',
-      'border-primary bg-background',
-      'peer-checked:bg-primary peer-checked:border-primary peer-checked:scale-105',
-      'peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2',
-      'peer-disabled:opacity-50 peer-disabled:cursor-not-allowed',
-      'group-hover:border-primary/80',
-      'transform-gpu' // Hardware acceleration for smooth animations
+        'relative inline-flex items-center gap-3 cursor-pointer group disabled:cursor-not-allowed text-base',
+        className
     )}
-  >
-    <!-- Lucide Check icon with smooth scale and fade animation -->
-    <Check
-      class={cn(
-        'h-4 w-4 text-white transition-all duration-300 ease-out',
-        'opacity-100 scale-100',
-        'transform-gpu' // Hardware acceleration
-      )}
+    for={id}
+    x-data={`{ isChecked: ${checked}, isIndeterminate: ${indeterminate}, isDisabled: ${disabled} }`}
+>
+    <!-- Native input for accessibility and form handling -->
+    <input
+        type="checkbox"
+        id={id}
+        name={name}
+        :checked="isChecked"
+        :disabled="isDisabled"
+        class="sr-only peer"
+        x-model="isChecked"
+        {...alpineProps}
     />
-  </div>
-  
-  <!-- Label with disabled state -->
-  {label && (
-    <span class={cn(
-      'font-medium leading-none select-none',
-      'peer-disabled:opacity-50',
-      'transition-colors duration-200'
-    )}>
-      {label}
-    </span>
-  )}
+
+    <!-- Checkbox visual indicator -->
+    <CheckboxIndicator
+        :checked="isChecked"
+        :indeterminate="isIndeterminate"
+        :disabled="isDisabled"
+        size={size}
+    />
+
+    <!-- Label with disabled state -->
+    {
+        label && (
+            <span
+                class={cn(
+                    'font-medium leading-none select-none',
+                    'peer-disabled:opacity-50',
+                    'transition-colors duration-200'
+                )}
+            >
+                {label}
+            </span>
+        )
+    }
 </label>
 
 <!-- 
 Usage Examples:
 
-Basic usage with label
-Disabled state support
-Alpine.js integration with x-model
+<Checkbox label="Accept terms" />
+<Checkbox checked={true} disabled={true} />
+<Checkbox indeterminate={true} size="lg" />
+<Checkbox x-model="isChecked" />
 
 Features:
-- Primary color theme only
-- Single default size (5x5)
-- Thin primary border
-- Visible Lucide checkmark when checked
-- Smooth scale and fade animations
+- Multiple sizes (sm, md, lg)
+- Checked/unchecked/indeterminate states
+- Uses CheckboxIndicator component
+- Smooth animations and transitions
 - Disabled state support
 - Full Alpine.js integration
 - Hardware accelerated animations
