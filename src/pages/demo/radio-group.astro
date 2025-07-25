@@ -1,6 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import RadioGroup from '@/components/ui/forms/RadioGroup.astro';
+import RadioGroupXFor from '@/components/ui/forms/RadioGroupXFor.astro';
 ---
 
 <Layout title="Radio Group Component Demo">
@@ -44,7 +44,7 @@ import RadioGroup from '@/components/ui/forms/RadioGroup.astro';
                         Basic Usage
                     </h3>
                     <div class="space-y-6">
-                        <RadioGroup
+                        <RadioGroupXFor
                             name="basic-plan"
                             options={[
                                 {
@@ -64,7 +64,7 @@ import RadioGroup from '@/components/ui/forms/RadioGroup.astro';
                                     description: 'For large organizations',
                                 },
                             ]}
-                            selectedValue="pro"
+                            selectedOption="pro"
                         />
                     </div>
                 </div>
@@ -75,14 +75,14 @@ import RadioGroup from '@/components/ui/forms/RadioGroup.astro';
                         Without Descriptions
                     </h3>
                     <div class="space-y-6">
-                        <RadioGroup
+                        <RadioGroupXFor
                             name="size"
                             options={[
                                 { value: 'small', title: 'Small' },
                                 { value: 'medium', title: 'Medium' },
                                 { value: 'large', title: 'Large' },
                             ]}
-                            selectedValue="medium"
+                            selectedOption="medium"
                         />
                     </div>
                 </div>
@@ -93,7 +93,7 @@ import RadioGroup from '@/components/ui/forms/RadioGroup.astro';
                         Disabled States
                     </h3>
                     <div class="space-y-6">
-                        <RadioGroup
+                        <RadioGroupXFor
                             name="disabled-options"
                             options={[
                                 {
@@ -113,14 +113,14 @@ import RadioGroup from '@/components/ui/forms/RadioGroup.astro';
                                     description: 'This option is selected',
                                 },
                             ]}
-                            selectedValue="selected"
+                            selectedOption="selected"
                         />
 
                         <div class="mt-8">
                             <h4 class="font-medium text-card-foreground mb-3">
                                 Entire Group Disabled
                             </h4>
-                            <RadioGroup
+                            <RadioGroupXFor
                                 name="all-disabled"
                                 options={[
                                     {
@@ -141,7 +141,7 @@ import RadioGroup from '@/components/ui/forms/RadioGroup.astro';
                                     },
                                 ]}
                                 disabled={true}
-                                selectedValue="option2"
+                                selectedOption="option2"
                             />
                         </div>
                     </div>
@@ -163,7 +163,7 @@ import RadioGroup from '@/components/ui/forms/RadioGroup.astro';
                             <h4 class="font-medium text-card-foreground mb-3">
                                 Theme Preference
                             </h4>
-                            <RadioGroup
+                            <RadioGroupXFor
                                 name="theme"
                                 options={[
                                     {
@@ -191,7 +191,7 @@ import RadioGroup from '@/components/ui/forms/RadioGroup.astro';
                             <h4 class="font-medium text-card-foreground mb-3">
                                 Language
                             </h4>
-                            <RadioGroup
+                            <RadioGroupXFor
                                 name="language"
                                 options={[
                                     { value: 'en', title: 'English' },
@@ -224,47 +224,47 @@ import RadioGroup from '@/components/ui/forms/RadioGroup.astro';
                     </div>
                 </div>
 
-                <!-- Server-side Rendering Benefits -->
+                <!-- Client-side XFor Benefits -->
                 <div class="bg-card border border-border rounded-lg p-6">
                     <h3 class="text-lg font-semibold text-card-foreground mb-4">
-                        Server-side Rendering Benefits
+                        Client-side XFor Benefits
                     </h3>
                     <div class="space-y-4">
                         <p class="text-muted-foreground">
-                            This RadioGroup component uses Astro's server-side rendering approach for optimal performance:
+                            This RadioGroupXFor component uses Alpine.js x-for templates for dynamic client-side rendering:
                         </p>
                         
-                        <RadioGroup
+                        <RadioGroupXFor
                             name="ssr-benefits"
                             options={[
                                 {
                                     value: 'performance',
                                     title: 'Better Performance',
-                                    description: 'Pre-built HTML at compile time, faster initial load',
+                                    description: 'Client-side rendering with x-for templates',
                                 },
                                 {
                                     value: 'seo',
-                                    title: 'SEO Friendly',
-                                    description: 'Content visible to crawlers and screen readers',
+                                    title: 'Dynamic Flexibility',
+                                    description: 'Runtime data processing and manipulation',
                                 },
                                 {
                                     value: 'bundle',
-                                    title: 'Smaller Bundle',
-                                    description: 'No client-side template rendering needed',
+                                    title: 'Alpine.js Integration',
+                                    description: 'Uses x-for for template rendering',
                                 },
                             ]}
-                            selectedValue="performance"
+                            selectedOption="performance"
                         />
 
                         <div class="p-4 bg-muted rounded-lg">
                             <h5 class="font-medium text-muted-foreground mb-2">
-                                Technical Advantages:
+                                XFor Approach Benefits:
                             </h5>
                             <ul class="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                                <li>Options rendered at build time with Astro's .map()</li>
-                                <li>Minimal JavaScript footprint with selective hydration</li>
-                                <li>Better accessibility with native form elements</li>
-                                <li>Faster Time to Interactive (TTI)</li>
+                                <li>Options rendered client-side with Alpine.js x-for</li>
+                                <li>Dynamic template processing at runtime</li>
+                                <li>Flexible data manipulation and updates</li>
+                                <li>Interactive state management with Alpine.js</li>
                             </ul>
                         </div>
                     </div>
@@ -293,7 +293,7 @@ import RadioGroup from '@/components/ui/forms/RadioGroup.astro';
                             Cycle Selection (watch animations)
                         </button>
 
-                        <RadioGroup
+                        <RadioGroupXFor
                             name="animation-demo"
                             options={[
                                 {

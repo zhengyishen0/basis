@@ -1,0 +1,67 @@
+---
+import { cn } from '@/lib/utils';
+import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
+
+const radioGroupLabelVariants = createUIComponent(
+    'radio-title font-medium text-foreground leading-none transition-colors duration-200',
+    {
+        variant: {
+            default: '',
+            emphasized: 'font-semibold',
+            subtle: 'font-normal text-muted-foreground',
+        },
+        size: {
+            sm: 'text-sm',
+            md: 'text-base',
+            lg: 'text-lg',
+        }
+    }
+);
+
+export interface Props extends UIComponentProps, VariantProps<typeof radioGroupLabelVariants> {
+    text?: string;
+    variant?: 'default' | 'emphasized' | 'subtle';
+    size?: 'sm' | 'md' | 'lg';
+}
+
+const {
+    text,
+    variant = 'default',
+    size = 'md',
+    padding,
+    elevation,
+    class: className,
+    ...alpineProps
+} = Astro.props;
+---
+
+<!-- 
+RadioGroupLabel Component
+
+Usage:
+<RadioGroupLabel>Basic Plan</RadioGroupLabel>
+<RadioGroupLabel text="Basic Plan" />
+<RadioGroupLabel variant="emphasized">Pro Plan</RadioGroupLabel>
+
+Features:
+- Static or dynamic text content
+- Multiple visual variants
+- Responsive to parent disabled state
+- Works with x-for loops
+-->
+
+<div
+    slot="title"
+    {...alpineProps}
+    class={cn(
+        radioGroupLabelVariants({ variant, size, padding, elevation }),
+        className
+    )}
+    :class="(disabled) ? 'opacity-50' : ''"
+>
+    {text ? (
+        <span x-text={text}></span>
+    ) : (
+        <slot />
+    )}
+</div>

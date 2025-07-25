@@ -1,0 +1,308 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+    RadioGroup,
+    RadioGroupItem,
+    RadioGroupLabel,
+    RadioGroupDescription,
+} from '@/components/ui/forms/radiogroup';
+
+const planOptions = [
+    {
+        id: 'plan-1',
+        value: 'free',
+        title: 'Free Plan',
+        description: 'Perfect for personal projects and learning',
+        features: ['Up to 3 projects', 'Basic support', '1GB storage']
+    },
+    {
+        id: 'plan-2', 
+        value: 'pro',
+        title: 'Pro Plan',
+        description: 'Best for small teams and growing businesses',
+        features: ['Unlimited projects', 'Priority support', '100GB storage']
+    },
+    {
+        id: 'plan-3',
+        value: 'enterprise',
+        title: 'Enterprise Plan', 
+        description: 'For large organizations with advanced needs',
+        features: ['Custom integrations', '24/7 phone support', 'Unlimited storage']
+    }
+];
+
+const themeOptions = [
+    { value: 'light', title: 'Light Theme', description: 'Clean and bright interface' },
+    { value: 'dark', title: 'Dark Theme', description: 'Easy on the eyes' },
+    { value: 'auto', title: 'System Theme', description: 'Follow system preference' },
+];
+---
+
+<Layout title="Composable RadioGroup Demo">
+    <main class="min-h-screen bg-background py-8">
+        <div class="max-w-4xl mx-auto px-6 space-y-12">
+            <!-- Header -->
+            <div class="text-center space-y-4">
+                <div class="mb-8">
+                    <a
+                        href="/demo"
+                        class="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                    >
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        Back to Demos
+                    </a>
+                </div>
+                <h1 class="text-4xl font-bold text-foreground">
+                    Composable RadioGroup
+                </h1>
+                <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+                    Break down radio groups into flexible, reusable components like accordion
+                </p>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Basic Composable Usage -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        Basic Composable Usage
+                    </h3>
+                    <RadioGroup name="basic-plan" selectedOption="pro">
+                        <RadioGroupItem value="free">
+                            <RadioGroupLabel>Free Plan</RadioGroupLabel>
+                            <RadioGroupDescription>Perfect for personal projects</RadioGroupDescription>
+                        </RadioGroupItem>
+                        <RadioGroupItem value="pro">
+                            <RadioGroupLabel>Pro Plan</RadioGroupLabel>
+                            <RadioGroupDescription>Best for small teams</RadioGroupDescription>
+                        </RadioGroupItem>
+                        <RadioGroupItem value="enterprise">
+                            <RadioGroupLabel>Enterprise Plan</RadioGroupLabel>
+                            <RadioGroupDescription>For large organizations</RadioGroupDescription>
+                        </RadioGroupItem>
+                    </RadioGroup>
+                </div>
+
+                <!-- Dynamic with x-for -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        Dynamic with x-for (Like Accordion)
+                    </h3>
+                    <div x-data={`{ plans: ${JSON.stringify(planOptions)} }`}>
+                        <RadioGroup name="dynamic-plan" selectedOption="pro">
+                            <RadioGroupItem x-for="plan in plans" x-key="plan.id" :value="plan.value">
+                                <RadioGroupLabel x-text="plan.title"></RadioGroupLabel>
+                                <RadioGroupDescription x-text="plan.description"></RadioGroupDescription>
+                            </RadioGroupItem>
+                        </RadioGroup>
+                    </div>
+                </div>
+
+                <!-- Without Descriptions -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        Simple Labels Only
+                    </h3>
+                    <RadioGroup name="size" selectedOption="medium" orientation="horizontal">
+                        <RadioGroupItem value="small">
+                            <RadioGroupLabel>Small</RadioGroupLabel>
+                        </RadioGroupItem>
+                        <RadioGroupItem value="medium">
+                            <RadioGroupLabel>Medium</RadioGroupLabel>
+                        </RadioGroupItem>
+                        <RadioGroupItem value="large">
+                            <RadioGroupLabel>Large</RadioGroupLabel>
+                        </RadioGroupItem>
+                    </RadioGroup>
+                </div>
+
+                <!-- Disabled States -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        Disabled States
+                    </h3>
+                    <div class="space-y-6">
+                        <RadioGroup name="disabled-options" selectedOption="available">
+                            <RadioGroupItem value="available">
+                                <RadioGroupLabel>Available Option</RadioGroupLabel>
+                                <RadioGroupDescription>This option is available</RadioGroupDescription>
+                            </RadioGroupItem>
+                            <RadioGroupItem value="disabled" disabled>
+                                <RadioGroupLabel>Disabled Option</RadioGroupLabel>
+                                <RadioGroupDescription>This option is disabled</RadioGroupDescription>
+                            </RadioGroupItem>
+                            <RadioGroupItem value="selected">
+                                <RadioGroupLabel>Another Option</RadioGroupLabel>
+                                <RadioGroupDescription>Another selectable option</RadioGroupDescription>
+                            </RadioGroupItem>
+                        </RadioGroup>
+
+                        <div class="mt-8">
+                            <h4 class="font-medium text-card-foreground mb-3">
+                                Entire Group Disabled
+                            </h4>
+                            <RadioGroup name="all-disabled" disabled selectedOption="option2">
+                                <RadioGroupItem value="option1">
+                                    <RadioGroupLabel>Option 1</RadioGroupLabel>
+                                    <RadioGroupDescription>All options are disabled</RadioGroupDescription>
+                                </RadioGroupItem>
+                                <RadioGroupItem value="option2">
+                                    <RadioGroupLabel>Option 2</RadioGroupLabel>
+                                    <RadioGroupDescription>Cannot select any option</RadioGroupDescription>
+                                </RadioGroupItem>
+                                <RadioGroupItem value="option3">
+                                    <RadioGroupLabel>Option 3</RadioGroupLabel>
+                                    <RadioGroupDescription>Group-level disabled state</RadioGroupDescription>
+                                </RadioGroupItem>
+                            </RadioGroup>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Demo -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        Interactive Demo with State
+                    </h3>
+                    <div
+                        x-data="{
+                            selectedTheme: 'light',
+                            selectedNotification: 'email',
+                            themes: [
+                                { value: 'light', title: 'Light Theme', description: 'Clean and bright interface' },
+                                { value: 'dark', title: 'Dark Theme', description: 'Easy on the eyes' },
+                                { value: 'auto', title: 'System Theme', description: 'Follow system preference' }
+                            ]
+                        }"
+                        class="space-y-6"
+                    >
+                        <div>
+                            <h4 class="font-medium text-card-foreground mb-3">
+                                Theme Preference
+                            </h4>
+                            <RadioGroup name="theme" x-model="selectedTheme">
+                                <RadioGroupItem x-for="theme in themes" x-key="theme.value" :value="theme.value">
+                                    <RadioGroupLabel x-text="theme.title"></RadioGroupLabel>
+                                    <RadioGroupDescription x-text="theme.description"></RadioGroupDescription>
+                                </RadioGroupItem>
+                            </RadioGroup>
+                        </div>
+
+                        <div>
+                            <h4 class="font-medium text-card-foreground mb-3">
+                                Notification Method
+                            </h4>
+                            <RadioGroup name="notifications" x-model="selectedNotification" orientation="horizontal">
+                                <RadioGroupItem value="email">
+                                    <RadioGroupLabel>Email</RadioGroupLabel>
+                                </RadioGroupItem>
+                                <RadioGroupItem value="sms">
+                                    <RadioGroupLabel>SMS</RadioGroupLabel>
+                                </RadioGroupItem>
+                                <RadioGroupItem value="push">
+                                    <RadioGroupLabel>Push</RadioGroupLabel>
+                                </RadioGroupItem>
+                                <RadioGroupItem value="none">
+                                    <RadioGroupLabel>None</RadioGroupLabel>  
+                                </RadioGroupItem>
+                            </RadioGroup>
+                        </div>
+
+                        <!-- State Display -->
+                        <div class="mt-6 p-4 bg-muted rounded-lg">
+                            <h4 class="font-medium text-muted-foreground mb-2">
+                                Current State:
+                            </h4>
+                            <div class="text-sm font-mono space-y-1">
+                                <div>
+                                    theme: <span x-text="selectedTheme" class="text-primary"></span>
+                                </div>
+                                <div>
+                                    notifications: <span x-text="selectedNotification" class="text-primary"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Variant Showcase -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        Label & Description Variants
+                    </h3>
+                    <div class="space-y-6">
+                        <RadioGroup name="variants" selectedOption="emphasized">
+                            <RadioGroupItem value="default">
+                                <RadioGroupLabel variant="default">Default Style</RadioGroupLabel>
+                                <RadioGroupDescription variant="default">Standard appearance</RadioGroupDescription>
+                            </RadioGroupItem>
+                            <RadioGroupItem value="emphasized">
+                                <RadioGroupLabel variant="emphasized">Emphasized Style</RadioGroupLabel>
+                                <RadioGroupDescription variant="emphasized">More prominent text</RadioGroupDescription>
+                            </RadioGroupItem>
+                            <RadioGroupItem value="subtle">
+                                <RadioGroupLabel variant="subtle">Subtle Style</RadioGroupLabel>
+                                <RadioGroupDescription variant="subtle">Muted appearance</RadioGroupDescription>
+                            </RadioGroupItem>
+                        </RadioGroup>
+                    </div>
+                </div>
+
+                <!-- Composable Benefits -->
+                <div class="bg-card border border-border rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-card-foreground mb-4">
+                        Composable Architecture Benefits
+                    </h3>
+                    <div class="space-y-4">
+                        <p class="text-muted-foreground">
+                            This composable approach provides maximum flexibility while maintaining consistency:
+                        </p>
+                        
+                        <RadioGroup name="benefits" selectedOption="flexibility">
+                            <RadioGroupItem value="flexibility">
+                                <RadioGroupLabel>Enhanced Flexibility</RadioGroupLabel>
+                                <RadioGroupDescription>Mix and match components as needed, custom layouts</RadioGroupDescription>
+                            </RadioGroupItem>
+                            <RadioGroupItem value="reusability">
+                                <RadioGroupLabel>Better Reusability</RadioGroupLabel>
+                                <RadioGroupDescription>Each component can be used independently</RadioGroupDescription>
+                            </RadioGroupItem>
+                            <RadioGroupItem value="maintainability">
+                                <RadioGroupLabel>Easier Maintenance</RadioGroupLabel>
+                                <RadioGroupDescription>Changes isolated to specific components</RadioGroupDescription>
+                            </RadioGroupItem>
+                            <RadioGroupItem value="consistency">
+                                <RadioGroupLabel>Design Consistency</RadioGroupLabel>
+                                <RadioGroupDescription>Shared styling system across all components</RadioGroupDescription>
+                            </RadioGroupItem>
+                        </RadioGroup>
+
+                        <div class="p-4 bg-muted rounded-lg">
+                            <h5 class="font-medium text-muted-foreground mb-2">
+                                Architecture Advantages:
+                            </h5>
+                            <ul class="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+                                <li>Composable like accordion - same pattern consistency</li>
+                                <li>Works seamlessly with Alpine.js x-for loops</li>
+                                <li>Shared state management through Alpine context</li>
+                                <li>Individual component customization without breaking others</li>
+                                <li>Follows shadcn/ui composable patterns</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</Layout>

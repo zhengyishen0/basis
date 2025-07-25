@@ -20,11 +20,11 @@ const popupVariants = cva(
                 minimal: 'bg-white border-gray-200 shadow-sm',
             },
             placement: {
-                top: 'bottom-full left-1/2 transform -translate-x-1/2 mb-2',
-                bottom: 'top-full left-1/2 transform -translate-x-1/2 mt-2',
+                top: 'bottom-full transform -translate-y-0 mb-2',
+                bottom: 'top-full transform translate-y-0 mt-2',
                 left: 'right-full top-1/2 transform -translate-y-1/2 mr-2',
                 right: 'left-full top-1/2 transform -translate-y-1/2 ml-2',
-                auto: 'top-full left-1/2 transform -translate-x-1/2 mt-2',
+                auto: 'top-full transform -translate-y-0 mt-2',
             },
         },
         defaultVariants: {
@@ -88,18 +88,19 @@ Usage Examples:
 </Popup>
 
 3. Dropdown:
-<Popup trigger="click" dismiss="selection" items={menuItems}>
+<Popup trigger="click" dismiss="selection">
   <Button slot="trigger">Actions</Button>
+  <div class="py-1">
+    <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent">Edit</button>
+    <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent">Delete</button>
+  </div>
 </Popup>
 
 Features:
 - Smart positioning with viewport edge detection
 - Multiple trigger types (click, hover, focus, manual)
 - Auto-dismiss, manual dismiss, or selection dismiss
-- Optional arrow pointer
-- Configurable offset and delay
-- Text shortcut for tooltips
-- Items array shortcut for dropdowns
+- Flexible slot-based content
 - Full Alpine.js integration
 -->
 <div
@@ -147,7 +148,6 @@ Features:
         role="dialog"
         :aria-labelledby="'${popupId}-title'"
     >
-        
         <!-- Content -->
         <div class="relative">
             <!-- Slot content -->

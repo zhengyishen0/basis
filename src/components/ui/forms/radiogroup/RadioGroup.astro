@@ -1,0 +1,97 @@
+---
+import { cn } from '@/lib/utils';
+import {
+    createLayoutComponent,
+    type LayoutComponentProps,
+    type VariantProps,
+} from '@/lib/component-variants';
+
+const radioGroupVariants = createLayoutComponent('radio-group', {
+    orientation: {
+        vertical: 'space-y-3',
+        horizontal: 'flex flex-wrap gap-4',
+    },
+    maxWidth: {
+        sm: 'max-w-sm',
+        md: 'max-w-md',
+        lg: 'max-w-lg',
+        xl: 'max-w-xl',
+        full: 'max-w-full',
+    },
+    centered: {
+        true: 'mx-auto',
+        false: '',
+    },
+});
+
+export interface Props
+    extends LayoutComponentProps,
+        VariantProps<typeof radioGroupVariants> {
+    name: string;
+    selectedOption?: string;
+    disabled?: boolean;
+    orientation?: 'vertical' | 'horizontal';
+    maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+    centered?: boolean;
+}
+
+const {
+    name,
+    selectedOption = '',
+    disabled = false,
+    orientation = 'vertical',
+    gap,
+    padding,
+    maxWidth = 'full',
+    centered = false,
+    class: className,
+    ...alpineProps
+} = Astro.props;
+
+const defaultXData = `{
+    selectedOption: '${selectedOption}',
+    name: '${name}',
+    disabled: ${disabled},
+    setSelectedOption(value) {
+        if (!this.disabled) {
+            this.selectedOption = value;
+            console.log('Selected option changed:', value);
+        }
+    }
+}`;
+---
+
+<!-- 
+RadioGroup Root Component - Composable approach
+
+Usage:
+<RadioGroup name="plan" selectedOption="basic">
+    <RadioGroupItem value="basic">
+        <RadioGroupLabel>Basic Plan</RadioGroupLabel>
+        <RadioGroupDescription>Perfect for small teams</RadioGroupDescription>
+    </RadioGroupItem>
+    <RadioGroupItem value="pro">
+        <RadioGroupLabel>Pro Plan</RadioGroupLabel>
+        <RadioGroupDescription>Best for growing businesses</RadioGroupDescription>
+    </RadioGroupItem>
+</RadioGroup>
+
+Features:
+- Composable architecture like accordion
+- Alpine.js state management
+- Flexible layouts (vertical/horizontal)
+- Shared context for child components
+-->
+
+<div
+    x-data={defaultXData}
+    x-modelable="selectedOption"
+    role="radiogroup"
+    {...alpineProps}
+    class={cn(
+        radioGroupVariants({ orientation, gap, padding, maxWidth, centered }),
+        className
+    )}
+>
+    <slot />
+</div>

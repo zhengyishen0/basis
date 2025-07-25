@@ -1,0 +1,68 @@
+---
+import { cn } from '@/lib/utils';
+import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
+
+const radioGroupDescriptionVariants = createUIComponent(
+    'radio-description text-sm text-muted-foreground mt-1 transition-colors duration-200',
+    {
+        variant: {
+            default: '',
+            emphasized: 'text-foreground/80',
+            subtle: 'text-muted-foreground/70',
+        },
+        size: {
+            xs: 'text-xs',
+            sm: 'text-sm',
+            md: 'text-base',
+        }
+    }
+);
+
+export interface Props extends UIComponentProps, VariantProps<typeof radioGroupDescriptionVariants> {
+    text?: string;
+    variant?: 'default' | 'emphasized' | 'subtle';
+    size?: 'xs' | 'sm' | 'md';
+}
+
+const {
+    text,
+    variant = 'default',
+    size = 'sm',
+    padding,
+    elevation,
+    class: className,
+    ...alpineProps
+} = Astro.props;
+---
+
+<!-- 
+RadioGroupDescription Component
+
+Usage:
+<RadioGroupDescription>Perfect for small teams</RadioGroupDescription>
+<RadioGroupDescription text="Perfect for small teams" />
+<RadioGroupDescription variant="emphasized">Best for growing businesses</RadioGroupDescription>
+
+Features:
+- Static or dynamic text content
+- Multiple visual variants
+- Responsive to parent disabled state
+- Works with x-for loops
+- Optional conditional rendering
+-->
+
+<p
+    slot="description"
+    {...alpineProps}
+    class={cn(
+        radioGroupDescriptionVariants({ variant, size, padding, elevation }),
+        className
+    )}
+    :class="(disabled || $parent.disabled) ? 'opacity-50' : ''"
+>
+    {text ? (
+        <span x-text={text}></span>
+    ) : (
+        <slot />
+    )}
+</p>

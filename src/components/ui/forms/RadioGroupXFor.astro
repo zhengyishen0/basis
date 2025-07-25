@@ -1,0 +1,127 @@
+---
+import { cn } from '@/lib/utils';
+import { universalVariants } from '@/lib/component-variants';
+
+export interface Props {
+    name: string;
+    options: Array<{
+        value: string;
+        title: string;
+        description?: string;
+        disabled?: boolean;
+    }>;
+    selectedOption?: string;
+    disabled?: boolean;
+    class?: string;
+    // Alpine.js pass-through
+    [key: string]: any;
+}
+
+const {
+    name,
+    options,
+    selectedOption = '',
+    disabled = false,
+    class: className = '',
+    ...alpineProps
+} = Astro.props;
+---
+
+<!-- 
+Radio Group Component - Using x-for approach like Pine UI
+
+Usage:
+<RadioGroupXFor 
+  name="plan"
+  options={[
+    { 
+      value: "basic", 
+      title: "Basic Plan", 
+      description: "Perfect for small teams" 
+    },
+    { 
+      value: "pro", 
+      title: "Pro Plan", 
+      description: "Best for growing businesses",
+      disabled: true
+    }
+  ]}
+  selectedValue="basic"
+/>
+
+Features:
+- Uses Alpine.js x-for for dynamic rendering
+- Client-side template rendering
+- Runtime data processing
+- Comparison with server-side approach
+-->
+<div
+    x-data={`{ 
+        selectedOption: '${selectedOption}',
+        options: ${JSON.stringify(options)},
+        name: '${name}',
+        disabled: ${disabled}
+    }`}
+    x-modelable="selectedOption"
+    class={cn('radio-group space-y-3', className)}
+    {...alpineProps}
+>
+    <template x-for="(option, index) in options" :key="index">
+        <label
+            @click="!disabled && !option.disabled && (selectedOption = option.value)"
+            class="radio-option group flex gap-3 p-4 border border-border rounded-lg transition-all duration-300 ease-out transform-gpu hover:border-primary/50 hover:bg-primary/5 has-[:checked]:border-primary has-[:checked]:bg-primary/10"
+            :class="[
+        option.description ? 'items-start' : 'items-center',
+        (disabled || option.disabled) ? 'cursor-not-allowed opacity-50 hover:border-border hover:bg-transparent' : 'cursor-pointer'
+      ]"
+        >
+            <!-- Custom radio button -->
+            <div
+                class="radio-input-wrapper relative"
+                :class="option.description ? 'mt-0.5' : ''"
+            >
+                <input
+                    type="radio"
+                    :name="name"
+                    :value="option.value"
+                    class="sr-only peer"
+                    :disabled="disabled || option.disabled"
+                    x-model="selectedOption"
+                    @change="console.log('Radio changed:', option.value, selectedValue)"
+                />
+                <div
+                    class="relative flex items-center justify-center shrink-0 transform-gpu rounded-full bg-background transition-all duration-300 ease-out h-5 w-5 border group-hover:border-primary/80"
+                    :class="[
+            'border-primary',
+            selectedOption === option.value ? 'border-primary scale-105' : 'border-primary',
+            (disabled || option.disabled) ? 'opacity-50 cursor-not-allowed' : ''
+          ]"
+                >
+                    <!-- Radio dot indicator -->
+                    <div
+                        class="h-3 w-3 bg-primary rounded-full transition-all duration-300 ease-out transform-gpu"
+                        :class="selectedOption === option.value ? 'opacity-100 scale-100' : 'opacity-0 scale-0'"
+                    >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option content -->
+            <div class="radio-content flex-1 min-w-0">
+                <div
+                    class="radio-title font-medium text-foreground leading-none transition-colors duration-200"
+                    :class="(disabled || option.disabled) ? 'opacity-50' : ''"
+                    x-text="option.title"
+                >
+                </div>
+                <p
+                    x-show="option.description"
+                    class="radio-description text-sm text-muted-foreground mt-1 transition-colors duration-200"
+                    :class="(disabled || option.disabled) ? 'opacity-50' : ''"
+                    x-text="option.description"
+                >
+                </p>
+            </div>
+        </label>
+    </template>
+</div>
