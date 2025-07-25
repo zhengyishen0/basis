@@ -7,12 +7,6 @@ import Text from '@/components/ui/display/Text.astro';
 import Column from '@/components/ui/layout/Column.astro';
 import Section from '@/components/ui/layout/Section.astro';
 
-const dropdownItems = [
-  { label: 'Edit Profile', onClick: () => console.log('Edit clicked') },
-  { label: 'Settings', onClick: () => console.log('Settings clicked') },
-  { separator: true },
-  { label: 'Sign Out', onClick: () => console.log('Sign Out clicked') }
-];
 ---
 
 <Layout title="Overlay Components Demo">
@@ -343,46 +337,50 @@ const dropdownItems = [
           </div>
           
           <div class="flex justify-center items-center gap-8 flex-wrap py-16">
-            <Popup placement="top" dismiss="auto" text="This button saves your changes to the document">
+            <Popup placement="top" dismiss="auto">
               <Button variant="default" size="lg">
                 <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12"></path>
                 </svg>
                 Save Document
               </Button>
+              <div class="px-3 py-2 text-sm">This button saves your changes to the document</div>
             </Popup>
             
-            <Popup placement="right" dismiss="auto" text="Click to copy the shareable link to your clipboard">
+            <Popup placement="right" dismiss="auto">
               <Button variant="outline" size="lg">
                 <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
                 </svg>
                 Copy Share Link
               </Button>
+              <div class="px-3 py-2 text-sm">Click to copy the shareable link to your clipboard</div>
             </Popup>
             
-            <Popup placement="bottom" dismiss="auto" text="This action permanently removes the item and cannot be undone">
+            <Popup placement="bottom" dismiss="auto">
               <Button variant="destructive" size="lg">
                 <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                 </svg>
                 Delete Item
               </Button>
+              <div class="px-3 py-2 text-sm">This action permanently removes the item and cannot be undone</div>
             </Popup>
             
-            <Popup placement="left" dismiss="auto" text="Download the file to your local device">
+            <Popup placement="left" dismiss="auto">
               <Button variant="secondary" size="lg">
                 <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
                 Download File
               </Button>
+              <div class="px-3 py-2 text-sm">Download the file to your local device</div>
             </Popup>
           </div>
           
           <div class="text-center text-sm text-muted-foreground max-w-2xl mx-auto">
             <strong>Features:</strong> Hover-triggered display, automatic positioning (top, right, bottom, left), 
-            auto-dismiss on mouse leave, and arrow pointers for clear visual connection to triggers.
+            auto-dismiss on mouse leave, and clean visual connection to triggers.
           </div>
         </Column>
       </Section>
@@ -512,7 +510,7 @@ const dropdownItems = [
           </div>
           
           <div class="flex justify-center items-center gap-8 flex-wrap py-20">
-            <Popup trigger="click" dismiss="selection" items={dropdownItems}>
+            <Popup trigger="click" dismiss="selection">
               <Button slot="trigger" variant="outline" size="lg">
                 <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
@@ -522,24 +520,15 @@ const dropdownItems = [
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </Button>
+              <div class="py-1">
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">Edit Profile</button>
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">Settings</button>
+                <div class="h-px bg-border mx-1 my-1"></div>
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">Sign Out</button>
+              </div>
             </Popup>
             
-            <Popup 
-              trigger="click" 
-              dismiss="selection" 
-              items={[
-                { label: 'New Document', onClick: () => console.log('New Document') },
-                { label: 'New Folder', onClick: () => console.log('New Folder') },
-                { label: 'New Presentation', onClick: () => console.log('New Presentation') },
-                { separator: true },
-                { label: 'Import from Drive', onClick: () => console.log('Import') },
-                { label: 'Export to PDF', onClick: () => console.log('Export PDF') },
-                { label: 'Export to Word', onClick: () => console.log('Export Word') },
-                { separator: true },
-                { label: 'Archive Project', onClick: () => console.log('Archive'), disabled: false },
-                { label: 'Delete Project', onClick: () => console.log('Delete'), disabled: true }
-              ]}
-            >
+            <Popup trigger="click" dismiss="selection">
               <Button slot="trigger" variant="secondary" size="lg">
                 <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
@@ -549,22 +538,21 @@ const dropdownItems = [
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </Button>
+              <div class="py-1">
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">New Document</button>
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">New Folder</button>
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">New Presentation</button>
+                <div class="h-px bg-border mx-1 my-1"></div>
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">Import from Drive</button>
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">Export to PDF</button>
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">Export to Word</button>
+                <div class="h-px bg-border mx-1 my-1"></div>
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">Archive Project</button>
+                <button @click="close()" disabled class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:pointer-events-none">Delete Project</button>
+              </div>
             </Popup>
             
-            <Popup 
-              trigger="click" 
-              dismiss="selection" 
-              items={[
-                { label: 'Sort by Name', onClick: () => console.log('Sort Name') },
-                { label: 'Sort by Date', onClick: () => console.log('Sort Date') },
-                { label: 'Sort by Size', onClick: () => console.log('Sort Size') },
-                { separator: true },
-                { label: 'Grid View', onClick: () => console.log('Grid View') },
-                { label: 'List View', onClick: () => console.log('List View') },
-                { separator: true },
-                { label: 'Show Hidden Files', onClick: () => console.log('Show Hidden') }
-              ]}
-            >
+            <Popup trigger="click" dismiss="selection">
               <Button slot="trigger" variant="default" size="lg">
                 <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -574,12 +562,22 @@ const dropdownItems = [
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </Button>
+              <div class="py-1">
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">Sort by Name</button>
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">Sort by Date</button>
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">Sort by Size</button>
+                <div class="h-px bg-border mx-1 my-1"></div>
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">Grid View</button>
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">List View</button>
+                <div class="h-px bg-border mx-1 my-1"></div>
+                <button @click="close()" class="w-full px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground">Show Hidden Files</button>
+              </div>
             </Popup>
           </div>
           
           <div class="text-center text-sm text-muted-foreground max-w-2xl mx-auto">
-            <strong>Features:</strong> Items array configuration, automatic selection dismissal, 
-            separator support, disabled state handling, and consistent keyboard navigation.
+            <strong>Features:</strong> Manual dropdown content with buttons, automatic selection dismissal, 
+            separator support, disabled state handling, and consistent hover states.
           </div>
         </Column>
       </Section>
