@@ -275,17 +275,17 @@ import RadioGroupXFor from '@/components/ui/forms/RadioGroupXFor.astro';
                                 Options in Alpine.js data, rendered client-side
                                 with x-for
                             </p>
-                            <div x-data={`{ 
-                                selectedValue: 'dynamic',
-                                name: 'xfor-approach',
-                                disabled: false,
-                                options: [
-                                    { value: 'dynamic', title: 'Dynamic Rendering', description: 'Built by JavaScript at runtime' },
-                                    { value: 'reactive', title: 'Fully Reactive', description: 'All data in Alpine.js state' },
-                                    { value: 'spa', title: 'SPA-like', description: 'Client-side template rendering' }
-                                ]
-                            }`}>
-                                <RadioGroupXFor />
+                            <div x-data="{ selectedValue: 'dynamic' }">
+                                <RadioGroupXFor 
+                                    name="xfor-approach"
+                                    options={[
+                                        { value: 'dynamic', title: 'Dynamic Rendering', description: 'Built by JavaScript at runtime' },
+                                        { value: 'reactive', title: 'Fully Reactive', description: 'All data in Alpine.js state' },
+                                        { value: 'spa', title: 'SPA-like', description: 'Client-side template rendering' }
+                                    ]}
+                                    disabled={false}
+                                    x-model="selectedValue"
+                                />
                                 <div class="mt-3 p-2 bg-muted rounded text-sm">
                                     Selected: <span x-text="selectedValue" class="font-mono text-primary"></span>
                                 </div>

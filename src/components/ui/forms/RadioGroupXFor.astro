@@ -3,12 +3,25 @@ import { cn } from '@/lib/utils';
 import { universalVariants } from '@/lib/component-variants';
 
 export interface Props {
+    name: string;
+    options: Array<{
+        value: string;
+        title: string;
+        description?: string;
+        disabled?: boolean;
+    }>;
+    selectedOption?: string;
+    disabled?: boolean;
     class?: string;
-    // Alpine.js pass-through (including name, options, selectedValue, disabled)
+    // Alpine.js pass-through
     [key: string]: any;
 }
 
 const {
+    name,
+    options,
+    selectedOption = '',
+    disabled = false,
     class: className = '',
     ...alpineProps
 } = Astro.props;
@@ -43,12 +56,19 @@ Features:
 - Comparison with server-side approach
 -->
 <div
+    x-data={`{ 
+        selectedOption: '${selectedOption}',
+        options: ${JSON.stringify(options)},
+        name: '${name}',
+        disabled: ${disabled}
+    }`}
+    x-modelable="selectedOption"
     class={cn('radio-group space-y-3', className)}
     {...alpineProps}
 >
     <template x-for="(option, index) in options" :key="index">
         <label
-            @click="!disabled && !option.disabled && (selectedValue = option.value)"
+            @click="!disabled && !option.disabled && (selectedOption = option.value)"
             class="radio-option group flex gap-3 p-4 border border-border rounded-lg transition-all duration-300 ease-out transform-gpu hover:border-primary/50 hover:bg-primary/5 has-[:checked]:border-primary has-[:checked]:bg-primary/10"
             :class="[
         option.description ? 'items-start' : 'items-center',
@@ -66,21 +86,21 @@ Features:
                     :value="option.value"
                     class="sr-only peer"
                     :disabled="disabled || option.disabled"
-                    x-model="selectedValue"
+                    x-model="selectedOption"
                     @change="console.log('Radio changed:', option.value, selectedValue)"
                 />
                 <div
                     class="relative flex items-center justify-center shrink-0 transform-gpu rounded-full bg-background transition-all duration-300 ease-out h-5 w-5 border group-hover:border-primary/80"
                     :class="[
             'border-primary',
-            selectedValue === option.value ? 'border-primary scale-105' : 'border-primary',
+            selectedOption === option.value ? 'border-primary scale-105' : 'border-primary',
             (disabled || option.disabled) ? 'opacity-50 cursor-not-allowed' : ''
           ]"
                 >
                     <!-- Radio dot indicator -->
                     <div
                         class="h-2.5 w-2.5 bg-primary rounded-full transition-all duration-300 ease-out transform-gpu"
-                        :class="selectedValue === option.value ? 'opacity-100 scale-100' : 'opacity-0 scale-0'"
+                        :class="selectedOption === option.value ? 'opacity-100 scale-100' : 'opacity-0 scale-0'"
                     >
                     </div>
                 </div>
