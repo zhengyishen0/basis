@@ -51,17 +51,13 @@ Features:
 -->
 
 <div
-    slot="title"
     {...alpineProps}
     class={cn(
         radioGroupLabelVariants({ variant, size, padding, elevation }),
         className
     )}
-    :class="(disabled) ? 'opacity-50' : ''"
+    :class="(itemDisabled || disabled) ? 'opacity-50' : ''"
 >
-    {text ? (
-        <span x-text={text}></span>
-    ) : (
-        <slot />
-    )}
+    <slot />
+    {text && <span x-text={text}></span>}
 </div>

@@ -52,17 +52,13 @@ Features:
 -->
 
 <p
-    slot="description"
     {...alpineProps}
     class={cn(
         radioGroupDescriptionVariants({ variant, size, padding, elevation }),
         className
     )}
-    :class="(disabled || $parent.disabled) ? 'opacity-50' : ''"
+    :class="(itemDisabled || disabled) ? 'opacity-50' : ''"
 >
-    {text ? (
-        <span x-text={text}></span>
-    ) : (
-        <slot />
-    )}
+    <slot />
+    {text && <span x-text={text}></span>}
 </p>

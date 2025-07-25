@@ -22,9 +22,9 @@ import {
                     x-data="{ 
                     debugValue: 'option2',
                     options: [
-                        { value: 'option1', title: 'Option 1', description: 'First option' },
-                        { value: 'option2', title: 'Option 2', description: 'Second option' },
-                        { value: 'option3', title: 'Option 3', description: 'Third option' }
+                        { value: 'option1', label: 'Option 1', description: 'First option', disabled: false },
+                        { value: 'option2', label: 'Option 2', description: 'Second option', disabled: true },
+                        { value: 'option3', label: 'Option 3', description: 'Third option', disabled: false }
                     ]
                 }"
                 >
@@ -38,7 +38,7 @@ import {
                             x-key="option.value"
                             value="dummy"
                         >
-                            <RadioGroupLabel x-text="option.title" />
+                            <RadioGroupLabel x-text="option.label" />
                             <RadioGroupDescription
                                 x-text="option.description"
                             />
@@ -67,7 +67,7 @@ import {
                         <RadioGroupItem value="B">
                             <RadioGroupLabel>Option B</RadioGroupLabel>
                         </RadioGroupItem>
-                        <RadioGroupItem value="C">
+                        <RadioGroupItem value="C" disabled={true}>
                             <RadioGroupLabel>Option C</RadioGroupLabel>
                         </RadioGroupItem>
                     </RadioGroup>
