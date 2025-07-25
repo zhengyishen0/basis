@@ -1,25 +1,34 @@
 ---
+import { cn } from '@/lib/utils';
+import { universalVariants } from '@/lib/component-variants';
+
 export interface Props {
   name: string;
   options: Array<{
     value: string;
     title: string;
     description?: string;
+    disabled?: boolean;
   }>;
   selectedValue?: string;
+  disabled?: boolean;
   class?: string;
+  // Alpine.js pass-through
+  [key: string]: any;
 }
 
 const { 
   name,
   options,
   selectedValue = '',
-  class: className = ""
+  disabled = false,
+  class: className = "",
+  ...alpineProps
 } = Astro.props;
 ---
 
 <!-- 
-Pine UI Radio Group Component
+Radio Group Component - Modernized with primary theme and smooth animations
 
 Usage:
 <RadioGroup 
@@ -33,50 +42,94 @@ Usage:
     { 
       value: "pro", 
       title: "Pro Plan", 
-      description: "Best for growing businesses" 
+      description: "Best for growing businesses",
+      disabled: true
     }
   ]}
   selectedValue="basic"
 />
 
 Features:
+- Primary color theme only
+- Smooth animations matching checkbox
+- Disabled state support
 - Alpine.js powered selection
-- Optional descriptions
+- Optional descriptions per option
 - Accessible radio group
-- Dynamic rendering
 -->
 
 <div 
-  x-data={`{
-    radioGroupSelectedValue: '${selectedValue}',
-    radioGroupOptions: ${JSON.stringify(options)}
-  }`}
-  class={`space-y-4 ${className}`}
+  x-data={`{ selectedValue: '${selectedValue}' }`}
+  class={cn('radio-group space-y-3', className)}
+  {...alpineProps}
 >
-  <template x-for="(option, index) in radioGroupOptions" :key="option.value">
-    <div class="flex items-start">
-      <div class="flex items-center h-5">
+  {options.map(option => (
+    <label 
+      for={`${name}-${option.value}`}
+      class={cn(
+        'radio-option group cursor-pointer',
+        'flex items-start gap-3 p-4',
+        'border border-border rounded-lg',
+        'transition-all duration-300 ease-out transform-gpu',
+        'hover:border-primary/50 hover:bg-primary/5',
+        'has-[:checked]:border-primary has-[:checked]:bg-primary/10',
+        'has-[:disabled]:opacity-50 has-[:disabled]:cursor-not-allowed has-[:disabled]:hover:border-border has-[:disabled]:hover:bg-transparent'
+      )}
+    >
+      <!-- Custom radio button -->
+      <div class="radio-input-wrapper mt-0.5 relative">
         <input 
-          :id="name + '-' + option.value"
-          :name="name"
+          id={`${name}-${option.value}`}
+          name={name}
           type="radio" 
-          :value="option.value"
-          x-model="radioGroupSelectedValue"
-          class="w-4 h-4 border-gray-300 text-neutral-900 focus:ring-neutral-900 focus:ring-2"
+          value={option.value}
+          checked={selectedValue === option.value}
+          disabled={disabled || option.disabled}
+          class="sr-only peer"
+          x-model="selectedValue"
         />
+        <div 
+          class={cn(
+            'relative flex items-center justify-center shrink-0 transform-gpu',
+            'rounded-full bg-background transition-all duration-300 ease-out',
+            universalVariants.size.md.replace('text-base', 'h-5 w-5'),
+            universalVariants.borderWidth.thin,
+            'border-primary',
+            'peer-checked:border-primary peer-checked:scale-105',
+            'peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2',
+            'peer-disabled:opacity-50 peer-disabled:cursor-not-allowed',
+            'group-hover:border-primary/80'
+          )}
+        >
+          <!-- Radio dot indicator -->
+          <div
+            class="h-2 w-2 bg-primary rounded-full transition-all duration-300 ease-out transform-gpu"
+            :class={`selectedValue === '${option.value}' ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`}
+          ></div>
+        </div>
       </div>
-      <div class="ml-3 text-sm">
-        <label 
-          :for="name + '-' + option.value" 
-          class="font-medium text-gray-900 cursor-pointer"
-          x-text="option.title"
-        ></label>
-        <p 
-          x-show="option.description" 
-          x-text="option.description"
-          class="text-gray-500"
-        ></p>
+      
+      <!-- Option content -->
+      <div class="radio-content flex-1 min-w-0">
+        <div 
+          class={cn(
+            'radio-title font-medium text-foreground leading-none',
+            'group-has-[:disabled]:opacity-50 transition-colors duration-200'
+          )}
+        >
+          {option.title}
+        </div>
+        {option.description && (
+          <p 
+            class={cn(
+              'radio-description text-sm text-muted-foreground mt-1',
+              'group-has-[:disabled]:opacity-50 transition-colors duration-200'
+            )}
+          >
+            {option.description}
+          </p>
+        )}
       </div>
-    </div>
-  </template>
+    </label>
+  ))}
 </div>

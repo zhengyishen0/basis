@@ -17,6 +17,14 @@ export const universalVariants = {
     xl: "text-xl"
   },
   
+  // Border width system
+  borderWidth: {
+    none: "border-0",
+    thin: "border",      // 1px
+    thick: "border-2",   // 2px
+    heavy: "border-4"    // 4px
+  },
+  
   // Spacing system for gaps (content-driven components only: list, grid, inline)
   gap: {
     none: "gap-0",
@@ -112,6 +120,46 @@ export const universalVariants = {
     expand: "",                 // Container expands with content (no overflow constraints)
     // Special case for flex wrapping (Row, Inline only)
     wrap: "flex-wrap"
+  },
+
+  // Overlay-specific variants
+  overlay: {
+    // Positioning variants
+    positioning: {
+      center: "inset-0 items-center justify-center",
+      left: "inset-y-0 left-0 items-center",
+      right: "inset-y-0 right-0 items-center",
+      top: "inset-x-0 top-0 justify-center",
+      bottom: "inset-x-0 bottom-0 justify-center",
+      fullscreen: "inset-0",
+      positioned: "absolute"
+    },
+    
+    // Backdrop variants
+    backdrop: {
+      dark: "bg-black/50",
+      blur: "bg-black/20 backdrop-blur-sm",
+      none: "bg-transparent"
+    },
+    
+    // Theme variants
+    theme: {
+      default: "bg-background border-border text-foreground",
+      dark: "bg-gray-900 border-gray-700 text-white",
+      minimal: "bg-white border-gray-200 text-gray-900 shadow-sm"
+    },
+    
+    // Size variants for overlays
+    sizes: {
+      sm: "max-w-sm",
+      md: "max-w-md", 
+      lg: "max-w-lg",
+      xl: "max-w-xl",
+      "2xl": "max-w-2xl",
+      "3xl": "max-w-3xl",
+      full: "max-w-full",
+      auto: "w-auto"
+    }
   }
 } as const;
 
@@ -224,6 +272,39 @@ export interface UIComponentProps {
   margin?: UniversalSpacing;
   elevation?: UniversalElevation;
   overflow?: UIOverflow;
+  class?: string;
+  [key: string]: any; // Alpine.js pass-through
+}
+
+/**
+ * Factory function for overlay components (Dialog, Popup)
+ * Overlay components have positioning, backdrop, and theme variants
+ */
+export const createOverlayComponent = (baseClasses: string, customVariants = {}) =>
+  cva(baseClasses, {
+    variants: {
+      variant: universalVariants.overlay.positioning,
+      backdrop: universalVariants.overlay.backdrop,
+      theme: universalVariants.overlay.theme,
+      size: universalVariants.overlay.sizes,
+      ...customVariants
+    },
+    defaultVariants: {
+      variant: "center",
+      backdrop: "dark", 
+      theme: "default",
+      size: "md"
+    }
+  });
+
+/**
+ * Standard interface for overlay components
+ */
+export interface OverlayComponentProps {
+  variant?: 'center' | 'left' | 'right' | 'top' | 'bottom' | 'fullscreen' | 'positioned';
+  backdrop?: 'dark' | 'blur' | 'none';
+  theme?: 'default' | 'dark' | 'minimal';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full' | 'auto';
   class?: string;
   [key: string]: any; // Alpine.js pass-through
 }
