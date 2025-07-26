@@ -1,0 +1,136 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+    trigger?: 'click' | 'rightclick' | 'hover' | 'manual';
+    closeOnClick?: boolean;
+    className?: string;
+    [key: string]: any;
+}
+
+const {
+    trigger = 'rightclick',
+    closeOnClick = true,
+    className,
+    ...alpineProps
+} = Astro.props;
+
+const contextMenuId = `context-menu-${Math.random().toString(36).substring(2, 11)}`;
+---
+
+<div
+    x-data=`{
+        open: false,
+        trigger: '${trigger}',
+        contextMenuId: '${contextMenuId}',
+        activeIndex: 0,
+        menuItems: [],
+        closeOnClick: ${closeOnClick},
+        
+        init() {
+            this.$nextTick(() => {
+                this.updateMenuItems();
+            });
+        },
+        
+        toggle(event) { 
+            this.open = !this.open;
+            if (this.open) {
+                this.activeIndex = 0;
+                this.$nextTick(() => {
+                    this.positionMenu(event);
+                    this.$refs.contextMenuContent?.focus();
+                });
+            }
+        },
+        
+        openContextMenu(event) {
+            this.open = true;
+            this.activeIndex = 0;
+            this.$nextTick(() => {
+                this.positionMenu(event);
+                this.$refs.contextMenuContent?.focus();
+            });
+        },
+        
+        positionMenu(event) {
+            const menuEl = this.$refs.contextMenuContent;
+            if (!menuEl) return;
+            
+            const menuWidth = 200;
+            const menuHeight = 300;
+            const padding = 8;
+            
+            let x = event?.clientX || 0;
+            let y = event?.clientY || 0;
+            
+            // Check right edge
+            if (x + menuWidth > window.innerWidth - padding) {
+                x = window.innerWidth - menuWidth - padding;
+            }
+            
+            // Check bottom edge
+            if (y + menuHeight > window.innerHeight - padding) {
+                y = window.innerHeight - menuHeight - padding;
+            }
+            
+            // Check left edge
+            if (x < padding) {
+                x = padding;
+            }
+            
+            // Check top edge
+            if (y < padding) {
+                y = padding;
+            }
+            
+            menuEl.style.left = x + 'px';
+            menuEl.style.top = y + 'px';
+        },
+        
+        close() { 
+            this.open = false;
+            this.activeIndex = 0;
+        },
+        
+        updateMenuItems() {
+            this.menuItems = Array.from(this.$el.querySelectorAll('[data-context-menu-item]')).filter(item => !item.disabled);
+        },
+        
+        navigateNext() {
+            if (this.menuItems.length === 0) return;
+            this.activeIndex = (this.activeIndex + 1) % this.menuItems.length;
+        },
+        
+        navigatePrevious() {
+            if (this.menuItems.length === 0) return;
+            this.activeIndex = this.activeIndex === 0 ? this.menuItems.length - 1 : this.activeIndex - 1;
+        },
+        
+        selectActiveItem() {
+            if (this.menuItems[this.activeIndex]) {
+                this.menuItems[this.activeIndex].click();
+            }
+        },
+        
+        handleItemClick(event) {
+            if (this.closeOnClick) {
+                this.close();
+            }
+            
+            this.$dispatch('context-menu-item-click', {
+                target: event.target,
+                text: event.target.textContent?.trim()
+            });
+        }
+    }`
+    @click.outside="open && close()"
+    @keydown.escape.window="open && close()"
+    @keydown.arrow-down.prevent="open && navigateNext()"
+    @keydown.arrow-up.prevent="open && navigatePrevious()"
+    @keydown.enter.prevent="open && selectActiveItem()"
+    class={cn('relative inline-block', className)}
+    {...alpineProps}
+>
+    <slot />
+</div>

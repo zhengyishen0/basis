@@ -1,0 +1,91 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+    className?: string;
+    [key: string]: any;
+}
+
+const {
+    className,
+    ...alpineProps
+} = Astro.props;
+
+const submenuId = `submenu-${Math.random().toString(36).substring(2, 11)}`;
+---
+
+<div
+    x-data=`{
+        submenuOpen: false,
+        submenuId: '${submenuId}',
+        submenuPosition: { x: 0, y: 0 },
+        
+        openSubmenu() {
+            this.submenuOpen = true;
+            this.$nextTick(() => {
+                this.positionSubmenu();
+            });
+        },
+        
+        closeSubmenu() {
+            this.submenuOpen = false;
+        },
+        
+        positionSubmenu() {
+            const triggerEl = this.$refs.submenuTrigger;
+            if (!triggerEl) return;
+            
+            const rect = triggerEl.getBoundingClientRect();
+            const submenuWidth = 180;
+            const submenuHeight = 200;
+            const padding = 8;
+            
+            let x = rect.right;
+            let y = rect.top;
+            
+            // Check right edge - show submenu on left if needed
+            if (x + submenuWidth > window.innerWidth - padding) {
+                x = rect.left - submenuWidth;
+            }
+            
+            // Check bottom edge
+            if (y + submenuHeight > window.innerHeight - padding) {
+                y = window.innerHeight - submenuHeight - padding;
+            }
+            
+            // Check top edge
+            if (y < padding) {
+                y = padding;
+            }
+            
+            this.submenuPosition = { x, y };
+        }
+    }`
+    @mouseenter="openSubmenu()"
+    @mouseleave="setTimeout(() => { if (!$refs.submenuContent?.matches(':hover')) closeSubmenu(); }, 100)"
+    class={cn('relative', className)}
+    {...alpineProps}
+>
+    <slot />
+    
+    <!-- Submenu Content -->
+    <template x-teleport="body">
+        <div 
+            x-show="submenuOpen"
+            x-ref="submenuContent"
+            x-transition:enter="transition ease-out duration-100"
+            x-transition:enter-start="transform opacity-0 scale-95"
+            x-transition:enter-end="transform opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-75"
+            x-transition:leave-start="transform opacity-100 scale-100"
+            x-transition:leave-end="transform opacity-0 scale-95"
+            :style="`position: fixed; left: ${submenuPosition.x}px; top: ${submenuPosition.y}px; z-index: 51;`"
+            class="min-w-44 rounded-md border bg-popover text-popover-foreground shadow-md py-1"
+            role="menu"
+            @mouseenter="clearTimeout()"
+            @mouseleave="closeSubmenu()"
+        >
+            <slot name="submenu" />
+        </div>
+    </template>
+</div>

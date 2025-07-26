@@ -1,0 +1,61 @@
+---
+import { createOverlayComponent, type OverlayComponentProps, type VariantProps } from '@/lib/component-variants';
+import { cn } from '@/lib/utils';
+
+const contentVariants = createOverlayComponent(
+    'fixed z-50 min-w-48 rounded-md border bg-popover text-popover-foreground shadow-md focus:outline-none',
+    {
+        placement: {
+            auto: '', // Smart positioning based on cursor/trigger
+            top: 'bottom-full mb-2',
+            bottom: 'top-full mt-2',
+            left: 'right-full mr-2',
+            right: 'left-full ml-2'
+        }
+    }
+);
+
+export interface Props extends OverlayComponentProps, VariantProps<typeof contentVariants> {
+    placement?: 'auto' | 'top' | 'bottom' | 'left' | 'right';
+}
+
+const {
+    variant = 'positioned',
+    backdrop = 'none',
+    theme = 'default',
+    size = 'auto',
+    placement = 'auto',
+    class: className,
+    ...alpineProps
+} = Astro.props;
+---
+
+<template x-teleport="body">
+    <div 
+        x-show="open"
+        x-ref="contextMenuContent"
+        x-transition:enter="transition ease-out duration-100"
+        x-transition:enter-start="transform opacity-0 scale-95"
+        x-transition:enter-end="transform opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-75"
+        x-transition:leave-start="transform opacity-100 scale-100"
+        x-transition:leave-end="transform opacity-0 scale-95"
+        x-init="
+            $nextTick(() => {
+                updateMenuItems();
+            })
+        "
+        :id="contextMenuId"
+        class={cn(
+            contentVariants({ variant, backdrop, theme, size, placement: placement === 'auto' ? undefined : placement }),
+            'py-1',
+            className
+        )}
+        role="menu"
+        tabindex="-1"
+        @click="handleItemClick($event)"
+        {...alpineProps}
+    >
+        <slot />
+    </div>
+</template>
