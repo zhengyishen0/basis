@@ -1,0 +1,291 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Popup, PopupTrigger, PopupContent } from '@/components/ui/overlay/popup';
+import { Button } from '@/components/ui/forms';
+---
+
+<Layout title="Popup Demo">
+    <main class="container mx-auto p-8 space-y-12">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold mb-4">Popup Component Demo</h1>
+            <p class="text-muted-foreground mb-8">
+                Composable popup components with different triggers, placements, and variants
+            </p>
+        </div>
+
+        <!-- Basic Examples -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Basic Popups</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Hover Trigger -->
+                <div class="text-center">
+                    <h3 class="text-lg font-medium mb-4">Hover Trigger</h3>
+                    <Popup trigger="hover">
+                        <PopupTrigger variant="button">
+                            Hover me
+                        </PopupTrigger>
+                        <PopupContent placement="top" size="sm">
+                            <p>This popup appears on hover!</p>
+                        </PopupContent>
+                    </Popup>
+                </div>
+
+                <!-- Click Trigger -->
+                <div class="text-center">
+                    <h3 class="text-lg font-medium mb-4">Click Trigger</h3>
+                    <Popup trigger="click">
+                        <PopupTrigger variant="button">
+                            Click me
+                        </PopupTrigger>
+                        <PopupContent placement="bottom" size="md">
+                            <div class="space-y-2">
+                                <p class="font-medium">Click Popup</p>
+                                <p class="text-sm text-muted-foreground">
+                                    Click outside or press ESC to close
+                                </p>
+                            </div>
+                        </PopupContent>
+                    </Popup>
+                </div>
+
+                <!-- Focus Trigger -->
+                <div class="text-center">
+                    <h3 class="text-lg font-medium mb-4">Focus Trigger</h3>
+                    <Popup trigger="focus">
+                        <PopupTrigger>
+                            <input type="text" placeholder="Focus me" class="px-3 py-2 border rounded-md" />
+                        </PopupTrigger>
+                        <PopupContent placement="right" size="sm">
+                            <p>Focus popup for form help!</p>
+                        </PopupContent>
+                    </Popup>
+                </div>
+
+                <!-- Ghost Trigger -->
+                <div class="text-center">
+                    <h3 class="text-lg font-medium mb-4">Ghost Trigger</h3>
+                    <Popup trigger="hover">
+                        <PopupTrigger variant="ghost">
+                            Ghost style
+                        </PopupTrigger>
+                        <PopupContent placement="left" size="sm">
+                            <p>Subtle ghost trigger</p>
+                        </PopupContent>
+                    </Popup>
+                </div>
+            </div>
+        </section>
+
+        <!-- Placement Variants -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Placement Options</h2>
+            
+            <div class="flex items-center justify-center">
+                <div class="relative grid grid-cols-3 gap-8 items-center">
+                    <!-- Top -->
+                    <div class="col-start-2 text-center">
+                        <Popup trigger="click">
+                            <PopupTrigger variant="outline">Top</PopupTrigger>
+                            <PopupContent placement="top">
+                                <p>Popup above</p>
+                            </PopupContent>
+                        </Popup>
+                    </div>
+
+                    <!-- Left -->
+                    <div class="text-center">
+                        <Popup trigger="click">
+                            <PopupTrigger variant="outline">Left</PopupTrigger>
+                            <PopupContent placement="left">
+                                <p>Popup to the left</p>
+                            </PopupContent>
+                        </Popup>
+                    </div>
+
+                    <!-- Center (no popup, just placeholder) -->
+                    <div class="text-center text-muted-foreground">
+                        <div class="w-16 h-16 border-2 border-dashed border-muted rounded-lg flex items-center justify-center">
+                            <span class="text-xs">Center</span>
+                        </div>
+                    </div>
+
+                    <!-- Right -->
+                    <div class="text-center">
+                        <Popup trigger="click">
+                            <PopupTrigger variant="outline">Right</PopupTrigger>
+                            <PopupContent placement="right">
+                                <p>Popup to the right</p>
+                            </PopupContent>
+                        </Popup>
+                    </div>
+
+                    <!-- Bottom -->
+                    <div class="col-start-2 text-center">
+                        <Popup trigger="click">
+                            <PopupTrigger variant="outline">Bottom</PopupTrigger>
+                            <PopupContent placement="bottom">
+                                <p>Popup below</p>
+                            </PopupContent>
+                        </Popup>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Size Variants -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Size Variants</h2>
+            
+            <div class="flex flex-wrap gap-4 justify-center">
+                <Popup trigger="click">
+                    <PopupTrigger variant="button">Small</PopupTrigger>
+                    <PopupContent size="sm">
+                        <p>Small popup content with limited width</p>
+                    </PopupContent>
+                </Popup>
+
+                <Popup trigger="click">
+                    <PopupTrigger variant="button">Medium</PopupTrigger>
+                    <PopupContent size="md">
+                        <div class="space-y-2">
+                            <p class="font-medium">Medium Popup</p>
+                            <p class="text-sm">This popup has medium width and can contain more content comfortably.</p>
+                        </div>
+                    </PopupContent>
+                </Popup>
+
+                <Popup trigger="click">
+                    <PopupTrigger variant="button">Large</PopupTrigger>
+                    <PopupContent size="lg">
+                        <div class="space-y-3">
+                            <h3 class="font-semibold">Large Popup</h3>
+                            <p class="text-sm">
+                                This is a large popup that can accommodate more detailed content,
+                                multiple paragraphs, and complex layouts.
+                            </p>
+                            <div class="pt-2 border-t">
+                                <p class="text-xs text-muted-foreground">Perfect for detailed information</p>
+                            </div>
+                        </div>
+                    </PopupContent>
+                </Popup>
+            </div>
+        </section>
+
+        <!-- Theme Variants -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Theme Variants</h2>
+            
+            <div class="flex flex-wrap gap-4 justify-center">
+                <Popup trigger="hover">
+                    <PopupTrigger variant="button">Default</PopupTrigger>
+                    <PopupContent theme="default">
+                        <p>Default theme popup</p>
+                    </PopupContent>
+                </Popup>
+
+                <Popup trigger="hover">
+                    <PopupTrigger variant="button">Dark</PopupTrigger>
+                    <PopupContent theme="dark">
+                        <p>Dark theme popup</p>
+                    </PopupContent>
+                </Popup>
+
+                <Popup trigger="hover">
+                    <PopupTrigger variant="button">Minimal</PopupTrigger>
+                    <PopupContent theme="minimal">
+                        <p>Minimal theme popup</p>
+                    </PopupContent>
+                </Popup>
+            </div>
+        </section>
+
+        <!-- Advanced Examples -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Advanced Examples</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Menu-style Popup -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Menu Popup</h3>
+                    <Popup trigger="click">
+                        <PopupTrigger variant="outline">
+                            Actions ▼
+                        </PopupTrigger>
+                        <PopupContent placement="bottom" size="sm" className="p-1">
+                            <div class="space-y-1">
+                                <button class="w-full px-3 py-2 text-sm text-left hover:bg-accent rounded-sm" @click="close()">
+                                    Edit
+                                </button>
+                                <button class="w-full px-3 py-2 text-sm text-left hover:bg-accent rounded-sm" @click="close()">
+                                    Duplicate
+                                </button>
+                                <hr class="my-1" />
+                                <button class="w-full px-3 py-2 text-sm text-left hover:bg-accent text-red-600 rounded-sm" @click="close()">
+                                    Delete
+                                </button>
+                            </div>
+                        </PopupContent>
+                    </Popup>
+                </div>
+
+                <!-- Form Help Popup -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Form Help</h3>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium">Password</label>
+                        <div class="flex gap-2">
+                            <input type="password" class="flex-1 px-3 py-2 border rounded-md" />
+                            <Popup trigger="hover">
+                                <PopupTrigger variant="ghost" className="p-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </PopupTrigger>
+                                <PopupContent placement="left" size="md">
+                                    <div class="space-y-2">
+                                        <p class="font-medium text-sm">Password Requirements:</p>
+                                        <ul class="text-xs space-y-1">
+                                            <li>• At least 8 characters</li>
+                                            <li>• One uppercase letter</li>
+                                            <li>• One number</li>
+                                            <li>• One special character</li>
+                                        </ul>
+                                    </div>
+                                </PopupContent>
+                            </Popup>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Example -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Dynamic Content</h2>
+            
+            <div x-data="{ 
+                items: [
+                    { id: 1, name: 'Apple', description: 'Fresh red apple' },
+                    { id: 2, name: 'Banana', description: 'Yellow ripe banana' },
+                    { id: 3, name: 'Orange', description: 'Juicy orange fruit' }
+                ]
+            }">
+                <div class="flex flex-wrap gap-4">
+                    <template x-for="item in items" :key="item.id">
+                        <Popup trigger="hover">
+                            <PopupTrigger variant="outline" x-text="item.name"></PopupTrigger>
+                            <PopupContent size="sm">
+                                <div>
+                                    <p class="font-medium text-sm" x-text="item.name"></p>
+                                    <p class="text-xs text-muted-foreground" x-text="item.description"></p>
+                                </div>
+                            </PopupContent>
+                        </Popup>
+                    </template>
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>

@@ -1,0 +1,34 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+    closeable?: boolean;
+    lockScroll?: boolean;
+    className?: string;
+    [key: string]: any;
+}
+
+const {
+    closeable = true,
+    lockScroll = true,
+    className,
+    ...alpineProps
+} = Astro.props;
+
+const dialogId = `dialog-${Math.random().toString(36).substring(2, 11)}`;
+---
+
+<div 
+    x-data=`{ 
+        open: false,
+        dialogId: '${dialogId}',
+        closeable: ${closeable},
+        toggle() { this.open = !this.open },
+        close() { this.open = false }
+    }`
+    @keydown.escape.window="open && closeable && close()"
+    class={cn('relative', className)}
+    {...alpineProps}
+>
+    <slot />
+</div>

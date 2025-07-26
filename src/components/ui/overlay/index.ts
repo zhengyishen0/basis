@@ -7,4 +7,8 @@ export { default as HoverCard } from './HoverCard.astro';
 export { default as Modal } from './Modal.astro';
 export { default as Popover } from './Popover.astro';
 export { default as SlideOver } from './SlideOver.astro';
-export { default as Tooltip } from './Tooltip.astro';
+
+// Composable overlays
+export * from './dialog';
+export * from './popup';
+export * from './tooltip';

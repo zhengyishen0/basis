@@ -1,0 +1,516 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter } from '@/components/ui/overlay/dialog';
+import { Button } from '@/components/ui/forms';
+---
+
+<Layout title="Dialog Demo">
+    <main class="container mx-auto p-8 space-y-12">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold mb-4">Dialog Component Demo</h1>
+            <p class="text-muted-foreground mb-8">
+                Composable modal dialogs with different variants, sizes, and layouts
+            </p>
+        </div>
+
+        <!-- Basic Examples -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Basic Dialogs</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Simple Dialog -->
+                <div class="text-center">
+                    <h3 class="text-lg font-medium mb-4">Simple Dialog</h3>
+                    <Dialog>
+                        <DialogTrigger variant="button">
+                            Open Dialog
+                        </DialogTrigger>
+                        <DialogContent variant="center" size="md">
+                            <DialogHeader>
+                                <h2 class="text-lg font-semibold">Simple Dialog</h2>
+                                <p class="text-sm text-muted-foreground">This is a basic dialog example.</p>
+                            </DialogHeader>
+                            <div class="p-6">
+                                <p>This is the main content of the dialog. You can put any content here.</p>
+                            </div>
+                            <DialogFooter>
+                                <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">
+                                    Cancel
+                                </button>
+                                <button @click="close()" class="px-4 py-2 text-sm bg-primary text-white rounded-md hover:bg-primary/90">
+                                    Confirm
+                                </button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                </div>
+
+                <!-- Settings Dialog -->
+                <div class="text-center">
+                    <h3 class="text-lg font-medium mb-4">Settings Dialog</h3>
+                    <Dialog>
+                        <DialogTrigger variant="outline">
+                            Settings
+                        </DialogTrigger>
+                        <DialogContent variant="center" size="lg">
+                            <DialogHeader>
+                                <h2 class="text-lg font-semibold">Settings</h2>
+                                <p class="text-sm text-muted-foreground">Manage your application preferences</p>
+                            </DialogHeader>
+                            <div class="p-6 space-y-4">
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-medium">Theme</label>
+                                    <select class="w-full px-3 py-2 border rounded-md">
+                                        <option>Light</option>
+                                        <option>Dark</option>
+                                        <option>System</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-medium">Language</label>
+                                    <select class="w-full px-3 py-2 border rounded-md">
+                                        <option>English</option>
+                                        <option>Spanish</option>
+                                        <option>French</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <input type="checkbox" id="notifications" />
+                                    <label for="notifications" class="text-sm">Enable notifications</label>
+                                </div>
+                            </div>
+                            <DialogFooter justify="between">
+                                <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">
+                                    Cancel
+                                </button>
+                                <button @click="close()" class="px-4 py-2 text-sm bg-primary text-white rounded-md hover:bg-primary/90">
+                                    Save Changes
+                                </button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                </div>
+
+                <!-- Confirmation Dialog -->
+                <div class="text-center">
+                    <h3 class="text-lg font-medium mb-4">Confirmation</h3>
+                    <Dialog>
+                        <DialogTrigger variant="button" className="bg-red-600 hover:bg-red-700 text-white">
+                            Delete Item
+                        </DialogTrigger>
+                        <DialogContent variant="center" size="sm">
+                            <DialogHeader closeable={false}>
+                                <h2 class="text-lg font-semibold text-red-600">Confirm Deletion</h2>
+                            </DialogHeader>
+                            <div class="p-6">
+                                <p class="text-sm">
+                                    Are you sure you want to delete this item? This action cannot be undone.
+                                </p>
+                            </div>
+                            <DialogFooter gap="md">
+                                <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">
+                                    Cancel
+                                </button>
+                                <button @click="close()" class="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700">
+                                    Delete
+                                </button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                </div>
+            </div>
+        </section>
+
+        <!-- Size Variants -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Size Variants</h2>
+            
+            <div class="flex flex-wrap gap-4 justify-center">
+                <Dialog>
+                    <DialogTrigger variant="outline">Small</DialogTrigger>
+                    <DialogContent variant="center" size="sm">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">Small Dialog</h2>
+                        </DialogHeader>
+                        <div class="p-4">
+                            <p class="text-sm">Compact dialog for simple interactions.</p>
+                        </div>
+                        <DialogFooter>
+                            <button @click="close()" class="px-3 py-1 text-sm border rounded hover:bg-accent">Close</button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                <Dialog>
+                    <DialogTrigger variant="outline">Medium</DialogTrigger>
+                    <DialogContent variant="center" size="md">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">Medium Dialog</h2>
+                        </DialogHeader>
+                        <div class="p-6">
+                            <p>Standard size dialog for most use cases. Provides good balance between content space and screen usage.</p>
+                        </div>
+                        <DialogFooter>
+                            <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">Close</button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                <Dialog>
+                    <DialogTrigger variant="outline">Large</DialogTrigger>
+                    <DialogContent variant="center" size="lg">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">Large Dialog</h2>
+                        </DialogHeader>
+                        <div class="p-6">
+                            <p class="mb-4">Large dialog for complex content and forms. Ideal when you need more space for detailed information or multiple form sections.</p>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <h4 class="font-medium mb-2">Column 1</h4>
+                                    <p class="text-sm text-muted-foreground">Content for the first column goes here.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium mb-2">Column 2</h4>
+                                    <p class="text-sm text-muted-foreground">Content for the second column goes here.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <DialogFooter justify="center">
+                            <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">Close</button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                <Dialog>
+                    <DialogTrigger variant="outline">Extra Large</DialogTrigger>
+                    <DialogContent variant="center" size="xl">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">Extra Large Dialog</h2>
+                        </DialogHeader>
+                        <div class="p-6">
+                            <p class="mb-6">Extra large dialog for extensive content, data tables, or complex interfaces.</p>
+                            <div class="bg-muted rounded-lg p-4 mb-4">
+                                <h4 class="font-medium mb-2">Example Content Area</h4>
+                                <p class="text-sm mb-4">This could contain a data table, complex form, or other detailed content that requires more screen real estate.</p>
+                                <div class="grid grid-cols-3 gap-4 text-center">
+                                    <div class="bg-background p-3 rounded">Item 1</div>
+                                    <div class="bg-background p-3 rounded">Item 2</div>
+                                    <div class="bg-background p-3 rounded">Item 3</div>
+                                </div>
+                            </div>
+                        </div>
+                        <DialogFooter>
+                            <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">Close</button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+            </div>
+        </section>
+
+        <!-- Position Variants -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Position Variants</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <!-- Center (default) -->
+                <Dialog>
+                    <DialogTrigger variant="outline">Center</DialogTrigger>
+                    <DialogContent variant="center" size="md">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">Center Dialog</h2>
+                        </DialogHeader>
+                        <div class="p-6">
+                            <p>Traditional centered modal dialog.</p>
+                        </div>
+                        <DialogFooter>
+                            <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">Close</button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                <!-- Left Sheet -->
+                <Dialog>
+                    <DialogTrigger variant="outline">Left Sheet</DialogTrigger>
+                    <DialogContent variant="left" size="md">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">Left Sheet</h2>
+                        </DialogHeader>
+                        <div class="p-6 flex-1">
+                            <p class="mb-4">Side sheet from the left edge.</p>
+                            <div class="space-y-2">
+                                <p class="text-sm text-muted-foreground">Perfect for:</p>
+                                <ul class="text-sm space-y-1 ml-4">
+                                    <li>• Navigation menus</li>
+                                    <li>• Filter panels</li>
+                                    <li>• Settings panels</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <DialogFooter>
+                            <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">Close</button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                <!-- Right Sheet -->
+                <Dialog>
+                    <DialogTrigger variant="outline">Right Sheet</DialogTrigger>
+                    <DialogContent variant="right" size="md">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">Right Sheet</h2>
+                        </DialogHeader>
+                        <div class="p-6 flex-1">
+                            <p class="mb-4">Side sheet from the right edge.</p>
+                            <div class="space-y-2">
+                                <p class="text-sm text-muted-foreground">Great for:</p>
+                                <ul class="text-sm space-y-1 ml-4">
+                                    <li>• Detail panels</li>
+                                    <li>• Shopping carts</li>
+                                    <li>• Property panels</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <DialogFooter>
+                            <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">Close</button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                <!-- Top Sheet -->
+                <Dialog>
+                    <DialogTrigger variant="outline">Top Sheet</DialogTrigger>
+                    <DialogContent variant="top" size="full">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">Top Sheet</h2>
+                        </DialogHeader>
+                        <div class="p-6">
+                            <p>Sheet that slides down from the top. Good for notifications or quick actions.</p>
+                        </div>
+                        <DialogFooter>
+                            <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">Close</button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                <!-- Bottom Sheet -->
+                <Dialog>
+                    <DialogTrigger variant="outline">Bottom Sheet</DialogTrigger>
+                    <DialogContent variant="bottom" size="full">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">Bottom Sheet</h2>
+                        </DialogHeader>
+                        <div class="p-6">
+                            <p class="mb-4">Sheet that slides up from the bottom. Popular on mobile interfaces.</p>
+                            <div class="flex gap-4">
+                                <button class="flex-1 py-2 px-4 bg-accent rounded-md text-sm">Action 1</button>
+                                <button class="flex-1 py-2 px-4 bg-accent rounded-md text-sm">Action 2</button>
+                            </div>
+                        </div>
+                        <DialogFooter>
+                            <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">Close</button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                <!-- Fullscreen -->
+                <Dialog>
+                    <DialogTrigger variant="outline">Fullscreen</DialogTrigger>
+                    <DialogContent variant="fullscreen">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">Fullscreen Dialog</h2>
+                        </DialogHeader>
+                        <div class="flex-1 p-6">
+                            <div class="max-w-4xl mx-auto">
+                                <p class="text-lg mb-6">Fullscreen dialog takes the entire viewport.</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <div class="bg-muted p-6 rounded-lg">
+                                        <h3 class="font-semibold mb-2">Section 1</h3>
+                                        <p class="text-sm text-muted-foreground">Content for the first section goes here.</p>
+                                    </div>
+                                    <div class="bg-muted p-6 rounded-lg">
+                                        <h3 class="font-semibold mb-2">Section 2</h3>
+                                        <p class="text-sm text-muted-foreground">Content for the second section goes here.</p>
+                                    </div>
+                                    <div class="bg-muted p-6 rounded-lg">
+                                        <h3 class="font-semibold mb-2">Section 3</h3>
+                                        <p class="text-sm text-muted-foreground">Content for the third section goes here.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <DialogFooter justify="center">
+                            <button @click="close()" class="px-6 py-2 text-sm border rounded-md hover:bg-accent">Close Fullscreen</button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+            </div>
+        </section>
+
+        <!-- Footer Variants -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Footer Layouts</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Dialog>
+                    <DialogTrigger variant="outline">Start</DialogTrigger>
+                    <DialogContent variant="center" size="md">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">Start Footer</h2>
+                        </DialogHeader>
+                        <div class="p-6">
+                            <p>Footer aligned to start (left).</p>
+                        </div>
+                        <DialogFooter justify="start">
+                            <button @click="close()" class="px-4 py-2 text-sm bg-primary text-white rounded-md hover:bg-primary/90">Primary</button>
+                            <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">Secondary</button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                <Dialog>
+                    <DialogTrigger variant="outline">End</DialogTrigger>
+                    <DialogContent variant="center" size="md">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">End Footer</h2>
+                        </DialogHeader>
+                        <div class="p-6">
+                            <p>Footer aligned to end (right).</p>
+                        </div>
+                        <DialogFooter justify="end">
+                            <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">Cancel</button>
+                            <button @click="close()" class="px-4 py-2 text-sm bg-primary text-white rounded-md hover:bg-primary/90">Confirm</button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                <Dialog>
+                    <DialogTrigger variant="outline">Center</DialogTrigger>
+                    <DialogContent variant="center" size="md">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">Center Footer</h2>
+                        </DialogHeader>
+                        <div class="p-6">
+                            <p>Footer aligned to center.</p>
+                        </div>
+                        <DialogFooter justify="center">
+                            <button @click="close()" class="px-4 py-2 text-sm bg-primary text-white rounded-md hover:bg-primary/90">Got it</button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                <Dialog>
+                    <DialogTrigger variant="outline">Between</DialogTrigger>
+                    <DialogContent variant="center" size="md">
+                        <DialogHeader>
+                            <h2 class="text-lg font-semibold">Between Footer</h2>
+                        </DialogHeader>
+                        <div class="p-6">
+                            <p>Footer with space between buttons.</p>
+                        </div>
+                        <DialogFooter justify="between">
+                            <button @click="close()" class="px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md">Delete</button>
+                            <div class="flex gap-2">
+                                <button @click="close()" class="px-4 py-2 text-sm border rounded-md hover:bg-accent">Cancel</button>
+                                <button @click="close()" class="px-4 py-2 text-sm bg-primary text-white rounded-md hover:bg-primary/90">Save</button>
+                            </div>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+            </div>
+        </section>
+
+        <!-- Complex Example -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Complex Example</h2>
+            
+            <div class="text-center">
+                <Dialog>
+                    <DialogTrigger variant="button" className="bg-gradient-to-r from-purple-600 to-blue-600 text-white">
+                        Create New Project
+                    </DialogTrigger>
+                    <DialogContent variant="center" size="lg">
+                        <DialogHeader padding="xl">
+                            <h2 class="text-xl font-semibold">Create New Project</h2>
+                            <p class="text-sm text-muted-foreground">Set up your new project with the options below</p>
+                        </DialogHeader>
+                        <div class="p-6 space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-4">
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-medium">Project Name</label>
+                                        <input type="text" placeholder="My Awesome Project" class="w-full px-3 py-2 border rounded-md" />
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-medium">Template</label>
+                                        <select class="w-full px-3 py-2 border rounded-md">
+                                            <option>React App</option>
+                                            <option>Vue App</option>
+                                            <option>Next.js</option>
+                                            <option>Astro</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-medium">Repository</label>
+                                        <input type="text" placeholder="github.com/user/project" class="w-full px-3 py-2 border rounded-md" />
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-medium">Framework</label>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-2">
+                                                <input type="radio" name="framework" value="react" />
+                                                <span class="text-sm">React</span>
+                                            </label>
+                                            <label class="flex items-center gap-2">
+                                                <input type="radio" name="framework" value="vue" />
+                                                <span class="text-sm">Vue</span>
+                                            </label>
+                                            <label class="flex items-center gap-2">
+                                                <input type="radio" name="framework" value="svelte" />
+                                                <span class="text-sm">Svelte</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium">Description</label>
+                                <textarea placeholder="Describe your project..." rows="3" class="w-full px-3 py-2 border rounded-md resize-none"></textarea>
+                            </div>
+                            
+                            <div class="flex items-center gap-4">
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" />
+                                    <span class="text-sm">Initialize with README</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" />
+                                    <span class="text-sm">Add .gitignore</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" />
+                                    <span class="text-sm">Add license</span>
+                                </label>
+                            </div>
+                        </div>
+                        <DialogFooter justify="between" gap="lg" padding="xl">
+                            <button @click="close()" class="px-4 py-2 text-sm text-muted-foreground hover:text-foreground">
+                                Save as Draft
+                            </button>
+                            <div class="flex gap-3">
+                                <button @click="close()" class="px-6 py-2 text-sm border rounded-md hover:bg-accent">
+                                    Cancel
+                                </button>
+                                <button @click="close()" class="px-6 py-2 text-sm bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-md hover:from-purple-700 hover:to-blue-700">
+                                    Create Project
+                                </button>
+                            </div>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+            </div>
+        </section>
+    </main>
+</Layout>

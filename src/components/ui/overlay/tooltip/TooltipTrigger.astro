@@ -1,0 +1,20 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+    className?: string;
+    [key: string]: any;
+}
+
+const { className, ...alpineProps } = Astro.props;
+---
+
+<div
+    @focus="show()"
+    @blur="hide()"
+    :aria-describedby="tooltipId"
+    class={cn('inline-block', className)}
+    {...alpineProps}
+>
+    <slot />
+</div>
