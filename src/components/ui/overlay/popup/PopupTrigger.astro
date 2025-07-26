@@ -26,7 +26,8 @@ const { variant = 'default', className, ...alpineProps } = Astro.props;
 ---
 
 <div
-    @click="toggle()"
+    @click="trigger === 'click' && toggle()"
+    @contextmenu.prevent="trigger === 'rightclick' && toggle()"
     @focus="trigger === 'focus' && (open = true)"
     @blur="trigger === 'focus' && (open = false)"
     :aria-expanded="open"
