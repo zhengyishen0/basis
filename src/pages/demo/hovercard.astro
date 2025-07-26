@@ -1,0 +1,265 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import HoverCard from '@/components/ui/overlay/hovercard/HoverCard.astro';
+import HoverCardContent from '@/components/ui/overlay/hovercard/HoverCardContent.astro';
+import HoverCardTrigger from '@/components/ui/overlay/hovercard/HoverCardTrigger.astro';
+---
+
+<Layout title="Hovercard Demo">
+    <main class="container mx-auto p-8 space-y-12">
+        <div class="space-y-4">
+            <h1 class="text-3xl font-bold">Hovercard Component Demo</h1>
+            <p class="text-gray-600">
+                Interactive examples of hovercard functionality.
+            </p>
+        </div>
+
+        <!-- Basic Example -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Basic Hovercard</h2>
+            <div class="p-6 border rounded-lg bg-white">
+                <p class="mb-4">
+                    Hover over the link below to see the hovercard:
+                </p>
+                <HoverCard>
+                    <HoverCardTrigger>
+                        <span
+                            class="text-blue-600 underline hover:text-blue-800"
+                            >@username</span
+                        >
+                    </HoverCardTrigger>
+                    <HoverCardContent>
+                        <div class="space-y-2">
+                            <h3 class="font-semibold">John Doe</h3>
+                            <p class="text-sm text-gray-600">
+                                Software Engineer at Company
+                            </p>
+                            <div class="flex gap-2">
+                                <span
+                                    class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs"
+                                    >React</span
+                                >
+                                <span
+                                    class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs"
+                                    >TypeScript</span
+                                >
+                            </div>
+                        </div>
+                    </HoverCardContent>
+                </HoverCard>
+            </div>
+        </section>
+
+        <!-- Placement Options -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Placement Options</h2>
+            <div class="p-6 border rounded-lg bg-white">
+                <div class="grid grid-cols-2 gap-8 max-w-md mx-auto">
+                    <!-- Top -->
+                    <HoverCard>
+                        <HoverCardTrigger>
+                            <button
+                                class="px-3 py-2 border rounded hover:bg-gray-50"
+                                >Top</button
+                            >
+                        </HoverCardTrigger>
+                        <HoverCardContent placement="top" size="sm">
+                            <p>This hovercard appears on top</p>
+                        </HoverCardContent>
+                    </HoverCard>
+
+                    <!-- Bottom -->
+                    <HoverCard>
+                        <HoverCardTrigger>
+                            <button
+                                class="px-3 py-2 border rounded hover:bg-gray-50"
+                                >Bottom</button
+                            >
+                        </HoverCardTrigger>
+                        <HoverCardContent placement="bottom" size="sm">
+                            <p>This hovercard appears on bottom</p>
+                        </HoverCardContent>
+                    </HoverCard>
+
+                    <!-- Left -->
+                    <HoverCard>
+                        <HoverCardTrigger>
+                            <button
+                                class="px-3 py-2 border rounded hover:bg-gray-50"
+                                >Left</button
+                            >
+                        </HoverCardTrigger>
+                        <HoverCardContent placement="left" size="sm">
+                            <p>This hovercard appears on left</p>
+                        </HoverCardContent>
+                    </HoverCard>
+
+                    <!-- Right -->
+                    <HoverCard>
+                        <HoverCardTrigger>
+                            <button
+                                class="px-3 py-2 border rounded hover:bg-gray-50"
+                                >Right</button
+                            >
+                        </HoverCardTrigger>
+                        <HoverCardContent placement="right" size="sm">
+                            <p>This hovercard appears on right</p>
+                        </HoverCardContent>
+                    </HoverCard>
+                </div>
+            </div>
+        </section>
+
+        <!-- Size Variants -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Size Variants</h2>
+            <div class="p-6 border rounded-lg bg-white">
+                <div class="flex gap-8 justify-center">
+                    <!-- Small -->
+                    <HoverCard>
+                        <HoverCardTrigger>
+                            <button
+                                class="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                >Small</button
+                            >
+                        </HoverCardTrigger>
+                        <HoverCardContent size="sm">
+                            <h3 class="font-semibold mb-2">Small Content</h3>
+                            <p class="text-sm">
+                                This is a small hovercard with minimal content.
+                            </p>
+                        </HoverCardContent>
+                    </HoverCard>
+
+                    <!-- Medium -->
+                    <HoverCard>
+                        <HoverCardTrigger>
+                            <button
+                                class="px-3 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                                >Medium</button
+                            >
+                        </HoverCardTrigger>
+                        <HoverCardContent size="md">
+                            <h3 class="font-semibold mb-2">Medium Content</h3>
+                            <p class="text-sm mb-2">
+                                This is a medium-sized hovercard with more
+                                detailed content.
+                            </p>
+                            <div class="flex gap-2">
+                                <span
+                                    class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs"
+                                    >Tag 1</span
+                                >
+                                <span
+                                    class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs"
+                                    >Tag 2</span
+                                >
+                            </div>
+                        </HoverCardContent>
+                    </HoverCard>
+
+                    <!-- Large -->
+                    <HoverCard>
+                        <HoverCardTrigger>
+                            <button
+                                class="px-3 py-2 bg-purple-500 text-white rounded hover:bg-purple-600"
+                                >Large</button
+                            >
+                        </HoverCardTrigger>
+                        <HoverCardContent size="lg">
+                            <h3 class="font-semibold mb-3">Large Content</h3>
+                            <p class="text-sm mb-3">
+                                This is a large hovercard that can contain much
+                                more detailed information and complex layouts.
+                            </p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span class="text-sm font-medium"
+                                        >Followers:</span
+                                    >
+                                    <span class="text-sm">1,234</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-sm font-medium"
+                                        >Following:</span
+                                    >
+                                    <span class="text-sm">567</span>
+                                </div>
+                            </div>
+                        </HoverCardContent>
+                    </HoverCard>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Example -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Profile Example</h2>
+            <div class="p-6 border rounded-lg bg-white">
+                <p class="mb-4">
+                    A more complex example with profile information:
+                </p>
+                <HoverCard openDelay={100} closeDelay={500}>
+                    <HoverCardTrigger>
+                        <div
+                            class="flex items-center gap-2 p-2 rounded hover:bg-gray-50 cursor-pointer w-fit"
+                        >
+                            <div
+                                class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-semibold"
+                            >
+                                JD
+                            </div>
+                            <span class="font-medium">Jane Developer</span>
+                        </div>
+                    </HoverCardTrigger>
+                    <HoverCardContent size="lg" placement="bottom-start">
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold"
+                                >
+                                    JD
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold">
+                                        Jane Developer
+                                    </h3>
+                                    <p class="text-sm text-gray-600">
+                                        @jane_dev
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="text-sm">
+                                Full-stack developer passionate about creating
+                                beautiful user experiences with modern web
+                                technologies.
+                            </p>
+                            <div class="flex gap-2 flex-wrap">
+                                <span
+                                    class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs"
+                                    >React</span
+                                >
+                                <span
+                                    class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs"
+                                    >TypeScript</span
+                                >
+                                <span
+                                    class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs"
+                                    >Node.js</span
+                                >
+                                <span
+                                    class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs"
+                                    >Astro</span
+                                >
+                            </div>
+                            <div class="flex gap-4 text-sm">
+                                <span><strong>2.5K</strong> followers</span>
+                                <span><strong>847</strong> following</span>
+                            </div>
+                        </div>
+                    </HoverCardContent>
+                </HoverCard>
+            </div>
+        </section>
+    </main>
+</Layout>
