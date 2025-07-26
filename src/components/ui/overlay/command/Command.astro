@@ -1,0 +1,164 @@
+---
+import { cn } from '@/lib/utils';
+import { cva, type VariantProps } from 'class-variance-authority';
+import Empty from '@/components/ui/feedback/Empty.astro';
+
+const commandVariants = cva(
+  'flex w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
+  {
+    variants: {
+      variant: {
+        default: 'border border-border shadow-md',
+        ghost: 'border-0 shadow-none',
+        dialog: 'border-0 shadow-lg'
+      },
+      size: {
+        sm: 'h-60',
+        md: 'h-80', 
+        lg: 'h-96',
+        full: 'h-full'
+      }
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'md'
+    }
+  }
+);
+
+export interface Props extends VariantProps<typeof commandVariants> {
+  items?: Record<string, Array<{
+    title: string;
+    value: string;
+    icon?: string; // Icon name (e.g., 'calendar') or SVG string
+    shortcut?: string;
+    show?: boolean;
+    disabled?: boolean;
+  }>>;
+  placeholder?: string;
+  emptyText?: string;
+  onSelect?: string;
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  items = {},
+  placeholder = 'Type a command or search...',
+  emptyText = 'No results found.',
+  onSelect = 'console.log(item)',
+  variant,
+  size,
+  class: className,
+  ...alpineProps
+} = Astro.props;
+
+const commandData = `{
+  commandItems: ${JSON.stringify(items)},
+  commandSearch: '',
+  commandActiveIndex: 0,
+  commandItemSelected: null,
+  
+  init() {
+    this.$watch('commandItemSelected', (item) => {
+      if (item) {
+        ${onSelect}
+      }
+    });
+    
+    // Reset active index when filtered items change
+    this.$watch('filteredItems', () => {
+      this.commandActiveIndex = 0;
+    });
+  },
+  
+  get filteredItems() {
+    if (!this.commandSearch.trim()) {
+      return Object.entries(this.commandItems).reduce((acc, [category, items]) => {
+        const defaultItems = items.filter(item => item.show);
+        if (defaultItems.length > 0) {
+          acc[category] = defaultItems;
+        }
+        return acc;
+      }, {});
+    }
+    
+    const search = this.commandSearch.toLowerCase();
+    return Object.entries(this.commandItems).reduce((acc, [category, items]) => {
+      const filtered = items.filter(item => 
+        item.title.toLowerCase().includes(search) ||
+        item.value.toLowerCase().includes(search)
+      );
+      if (filtered.length > 0) {
+        acc[category] = filtered;
+      }
+      return acc;
+    }, {});
+  },
+  
+  get flattenedItems() {
+    return Object.values(this.filteredItems).flat().filter(item => !item.disabled);
+  },
+  
+  get hasResults() {
+    return this.flattenedItems.length > 0;
+  },
+  
+  commandItemActiveNext() {
+    const items = this.flattenedItems;
+    if (items.length === 0) return;
+    this.commandActiveIndex = (this.commandActiveIndex + 1) % items.length;
+  },
+  
+  commandItemActivePrevious() {
+    const items = this.flattenedItems;
+    if (items.length === 0) return;
+    this.commandActiveIndex = this.commandActiveIndex === 0 ? items.length - 1 : this.commandActiveIndex - 1;
+  },
+  
+  selectActiveItem() {
+    const items = this.flattenedItems;
+    if (items[this.commandActiveIndex]) {
+      this.commandItemSelected = items[this.commandActiveIndex];
+    }
+  },
+  
+  selectItem(item) {
+    this.commandItemSelected = item;
+  }
+}`;
+---
+
+<div 
+  x-data={commandData}
+  class={cn(commandVariants({ variant, size }), "justify-between")}
+  role="combobox"
+  aria-expanded="true"
+  {...alpineProps}
+>
+  <!-- Input at top -->
+  <slot name="input" />
+  
+  <!-- Command List Container - Takes all available space between input and footer -->
+  <div 
+    class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden" 
+    role="listbox"
+  >
+    <!-- Show empty state when no results -->
+    <template x-if="!hasResults">
+      <Empty size="sm">
+        {emptyText}
+      </Empty>
+    </template>
+    
+    <!-- Show filtered categories and items -->
+    <template x-if="hasResults">
+      <div>
+        <slot />
+      </div>
+    </template>
+  </div>
+  
+  <!-- Footer at bottom -->
+  <slot name="footer" />
+</div>

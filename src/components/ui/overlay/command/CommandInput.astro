@@ -1,0 +1,43 @@
+---
+import { cn } from '@/lib/utils';
+import { Search } from 'lucide-astro';
+
+export interface Props {
+  placeholder?: string;
+  class?: string;
+  showIcon?: boolean;
+  [key: string]: any;
+}
+
+const {
+  placeholder = 'Type a command or search...',
+  showIcon = true,
+  class: className,
+  ...alpineProps
+} = Astro.props;
+
+const classes = cn(
+  'flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-0 border-0',
+  showIcon ? 'pl-8 pr-4' : 'px-3',
+  className
+);
+---
+
+<div class="flex items-center border-b px-3" cmdk-input-wrapper="">
+  {showIcon && (
+    <Search class="mr-2 h-4 w-4 shrink-0 opacity-50" />
+  )}
+  <input
+    x-model="commandSearch"
+    x-on:keydown.arrow-down.prevent="commandItemActiveNext()"
+    x-on:keydown.arrow-up.prevent="commandItemActivePrevious()"
+    x-on:keydown.enter.prevent="selectActiveItem()"
+    x-on:keydown.escape="commandSearch = ''; commandActiveIndex = 0"
+    class={classes}
+    placeholder={placeholder}
+    role="combobox"
+    aria-expanded="true"
+    aria-autocomplete="list"
+    {...alpineProps}
+  />
+</div>

@@ -1,10 +1,10 @@
 // Overlay - Overlays and modals
-export { default as Command } from './Command.astro';
 export { default as ContextMenu } from './ContextMenu.astro';
 export { default as Dropdown } from './Dropdown.astro';
-export { default as HoverCard } from './HoverCard.astro';
 
 // Composable overlays
+export * from './command';
 export * from './dialog';
+export * from './hovercard';
 export * from './popup';
 export * from './tooltip';
