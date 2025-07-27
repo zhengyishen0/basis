@@ -1,0 +1,79 @@
+---
+import { createOverlayComponent, type OverlayComponentProps, type VariantProps } from '@/lib/component-variants';
+import { cn } from '@/lib/utils';
+
+const contentVariants = createOverlayComponent(
+    'fixed z-50 min-w-48 rounded-md border bg-popover text-popover-foreground shadow-md focus:outline-none',
+    {
+        placement: {
+            auto: '',
+            bottom: 'mt-2',
+            top: 'mb-2'
+        }
+    }
+);
+
+export interface Props extends OverlayComponentProps, VariantProps<typeof contentVariants> {
+    placement?: 'auto' | 'bottom' | 'top';
+}
+
+const {
+    variant = 'positioned',
+    backdrop = 'none',
+    theme = 'default',
+    size = 'auto',
+    placement = 'bottom',
+    class: className,
+    ...alpineProps
+} = Astro.props;
+---
+
+<template x-teleport="body">
+    <div 
+        x-show="open"
+        x-ref="menuBarContent"
+        x-transition:enter="transition ease-out duration-100"
+        x-transition:enter-start="transform opacity-0 scale-95"
+        x-transition:enter-end="transform opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-75"
+        x-transition:leave-start="transform opacity-100 scale-100"
+        x-transition:leave-end="transform opacity-0 scale-95"
+        x-init="
+            $nextTick(() => {
+                const menuItems = Array.from($el.querySelectorAll('[data-menu-item]')).filter(item => !item.disabled);
+                $el.menuItems = menuItems;
+                if (menuItems.length > 0) {
+                    $el.activeIndex = 0;
+                }
+            })
+        "
+        :id="menuBarId + '-content'"
+        class={cn(
+            contentVariants({ variant, backdrop, theme, size, placement: placement === 'auto' ? undefined : placement }),
+            'py-1',
+            className
+        )}
+        role="menu"
+        tabindex="-1"
+        @click="handleItemClick($event)"
+        @keydown.escape.prevent="close()"
+        @keydown.arrow-down.prevent="
+            if ($el.menuItems && $el.menuItems.length > 0) {
+                $el.activeIndex = ($el.activeIndex + 1) % $el.menuItems.length;
+            }
+        "
+        @keydown.arrow-up.prevent="
+            if ($el.menuItems && $el.menuItems.length > 0) {
+                $el.activeIndex = $el.activeIndex === 0 ? $el.menuItems.length - 1 : $el.activeIndex - 1;
+            }
+        "
+        @keydown.enter.prevent="
+            if ($el.menuItems && $el.menuItems[$el.activeIndex]) {
+                $el.menuItems[$el.activeIndex].click();
+            }
+        "
+        {...alpineProps}
+    >
+        <slot />
+    </div>
+</template>

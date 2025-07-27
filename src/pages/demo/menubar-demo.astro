@@ -1,0 +1,250 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+    MenuBar,
+    MenuBarTrigger,
+    MenuBarContent,
+    MenuBarItem,
+    MenuBarGroup,
+    MenuBarSubMenu,
+    MenuBarSubTrigger,
+    MenuBarShortcut,
+    MenuBarConditional,
+} from '@/components/ui/overlay/menubar';
+import { Divider } from '@/components/ui/layout';
+---
+
+<Layout title="Menu Bar Demo">
+    <main class="container mx-auto p-8 space-y-12">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold mb-4">Menu Bar Component Demo</h1>
+            <p class="text-muted-foreground mb-8">
+                Horizontal menu bar with dropdowns, keyboard navigation, and submenus
+            </p>
+        </div>
+
+        <!-- Dynamic Menu Bar Example -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Dynamic Menu Bar with x-for</h2>
+
+            <div 
+                x-data="{
+                    menuBarData: [
+                        {
+                            name: 'File',
+                            groups: [
+                                {
+                                    items: [
+                                        { text: 'New File', shortcut: 'Ctrl+N' },
+                                        { text: 'Open File', shortcut: 'Ctrl+O' },
+                                        { text: 'Save File', shortcut: 'Ctrl+S' }
+                                    ]
+                                },
+                                {
+                                    items: [
+                                        { 
+                                            text: 'Recent Files', 
+                                            submenu: [
+                                                { text: 'project.astro' },
+                                                { text: 'config.ts' },
+                                                { text: 'README.md' }
+                                            ]
+                                        },
+                                        { 
+                                            text: 'Export', 
+                                            submenu: [
+                                                { text: 'PDF' },
+                                                { text: 'HTML' },
+                                                { text: 'Markdown' }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    items: [
+                                        { text: 'Exit', shortcut: 'Alt+F4', variant: 'destructive' }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name: 'Edit',
+                            groups: [
+                                {
+                                    items: [
+                                        { text: 'Undo', shortcut: 'Ctrl+Z' },
+                                        { text: 'Redo', shortcut: 'Ctrl+Y' }
+                                    ]
+                                },
+                                {
+                                    items: [
+                                        { text: 'Cut', shortcut: 'Ctrl+X' },
+                                        { text: 'Copy', shortcut: 'Ctrl+C' },
+                                        { text: 'Paste', shortcut: 'Ctrl+V' }
+                                    ]
+                                },
+                                {
+                                    items: [
+                                        { text: 'Find', shortcut: 'Ctrl+F' },
+                                        { text: 'Replace', shortcut: 'Ctrl+H' }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name: 'View',
+                            groups: [
+                                {
+                                    items: [
+                                        { text: 'Zoom In', shortcut: 'Ctrl++' },
+                                        { text: 'Zoom Out', shortcut: 'Ctrl+-' },
+                                        { text: 'Reset Zoom', shortcut: 'Ctrl+0' }
+                                    ]
+                                },
+                                {
+                                    items: [
+                                        { text: 'Toggle Sidebar', shortcut: 'Ctrl+B' },
+                                        { text: 'Toggle Terminal', shortcut: 'Ctrl+`' }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name: 'Help',
+                            groups: [
+                                {
+                                    items: [
+                                        { text: 'Documentation', shortcut: 'F1' },
+                                        { text: 'Keyboard Shortcuts', shortcut: 'Ctrl+/' }
+                                    ]
+                                },
+                                {
+                                    items: [
+                                        { text: 'About' }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }"
+                class="border rounded-lg p-4"
+            >
+                <div class="flex items-center space-x-1 bg-background border-b pb-2">
+                    <template x-for="menu in menuBarData" x-key="menu.name">
+                        <MenuBar>
+                            <MenuBarTrigger>
+                                <span x-text="menu.name"></span>
+                            </MenuBarTrigger>
+                            <MenuBarContent>
+                                <template x-for="(group, groupIndex) in menu.groups" x-key="groupIndex">
+                                    <div>
+                                        <MenuBarGroup>
+                                            <MenuBarConditional
+                                                x-for="item in group.items"
+                                                x-key="item.text"
+                                                condition="!item.submenu"
+                                            >
+                                                <!-- True slot: Regular menu items -->
+                                                <MenuBarItem 
+                                                    slot="true"
+                                                    :variant="item.variant || 'default'"
+                                                >
+                                                    <span x-text="item.text" class="flex-1"></span>
+                                                    <MenuBarShortcut x-text="item.shortcut" />
+                                                </MenuBarItem>
+
+                                                <!-- False slot: Submenu items -->
+                                                <MenuBarSubMenu slot="false">
+                                                    <MenuBarSubTrigger>
+                                                        <span x-text="item.text"></span>
+                                                    </MenuBarSubTrigger>
+                                                    <MenuBarItem
+                                                        slot="submenu"
+                                                        x-for="subitem in item.submenu"
+                                                        x-key="subitem.text"
+                                                    >
+                                                        <span x-text="subitem.text" class="flex-1"></span>
+                                                    </MenuBarItem>
+                                                </MenuBarSubMenu>
+                                            </MenuBarConditional>
+                                        </MenuBarGroup>
+                                        
+                                        <!-- Add divider between groups except for the last one -->
+                                        <div x-show="groupIndex < menu.groups.length - 1">
+                                            <Divider />
+                                        </div>
+                                    </div>
+                                </template>
+                            </MenuBarContent>
+                        </MenuBar>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+        <!-- Simple Static Example -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Simple Static Example</h2>
+
+            <div class="border rounded-lg p-4">
+                <div class="flex items-center space-x-1 bg-background border-b pb-2">
+                    <MenuBar>
+                        <MenuBarTrigger>
+                            File
+                        </MenuBarTrigger>
+                        <MenuBarContent>
+                            <MenuBarGroup>
+                                <MenuBarItem>
+                                    <span class="flex-1">New File</span>
+                                    <MenuBarShortcut>Ctrl+N</MenuBarShortcut>
+                                </MenuBarItem>
+                                <MenuBarItem>
+                                    <span class="flex-1">Open File</span>
+                                    <MenuBarShortcut>Ctrl+O</MenuBarShortcut>
+                                </MenuBarItem>
+                                <MenuBarItem>
+                                    <span class="flex-1">Save</span>
+                                    <MenuBarShortcut>Ctrl+S</MenuBarShortcut>
+                                </MenuBarItem>
+                            </MenuBarGroup>
+                        </MenuBarContent>
+                    </MenuBar>
+
+                    <MenuBar>
+                        <MenuBarTrigger>
+                            Edit
+                        </MenuBarTrigger>
+                        <MenuBarContent>
+                            <MenuBarGroup>
+                                <MenuBarItem>
+                                    <span class="flex-1">Cut</span>
+                                    <MenuBarShortcut>Ctrl+X</MenuBarShortcut>
+                                </MenuBarItem>
+                                <MenuBarItem>
+                                    <span class="flex-1">Copy</span>
+                                    <MenuBarShortcut>Ctrl+C</MenuBarShortcut>
+                                </MenuBarItem>
+                                <MenuBarItem>
+                                    <span class="flex-1">Paste</span>
+                                    <MenuBarShortcut>Ctrl+V</MenuBarShortcut>
+                                </MenuBarItem>
+                            </MenuBarGroup>
+                        </MenuBarContent>
+                    </MenuBar>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage Instructions -->
+        <section class="space-y-4">
+            <h2 class="text-2xl font-semibold">Usage Instructions</h2>
+            <div class="bg-muted rounded-lg p-4 space-y-2 text-sm">
+                <p><strong>Mouse:</strong> Click menu items to open dropdowns</p>
+                <p><strong>Keyboard:</strong> Use Up/Down arrows within dropdowns</p>
+                <p><strong>Escape:</strong> Close active menu</p>
+                <p><strong>Enter:</strong> Activate highlighted menu item</p>
+                <p><strong>Dynamic Data:</strong> The first example shows how to use x-for with complex nested data structures</p>
+            </div>
+        </section>
+    </main>
+</Layout>

@@ -1,0 +1,46 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+    heading?: string;
+    className?: string;
+    [key: string]: any;
+}
+
+const {
+    heading,
+    className,
+    ...alpineProps
+} = Astro.props;
+
+// Extract x-for and x-key from alpineProps so they don't get passed to the div
+const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
+---
+
+{
+  xFor ? (
+    <template x-for={xFor} x-key={xKey}>
+        <div
+            class={cn('py-1', className)}
+            role="group"
+            {...restProps}
+        >
+            <slot />
+        </div>
+    </template>
+  ) : (
+    <div
+        class={cn('py-1', className)}
+        role="group"
+        {...restProps}
+    >
+        {heading && (
+            <div class="px-3 py-1.5 text-xs font-semibold text-muted-foreground">
+                {heading}
+            </div>
+        )}
+        
+        <slot />
+    </div>
+  )
+}
