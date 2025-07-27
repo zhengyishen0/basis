@@ -19,7 +19,8 @@ import { Divider } from '@/components/ui/layout';
         <div class="text-center">
             <h1 class="text-3xl font-bold mb-4">Menu Bar Component Demo</h1>
             <p class="text-muted-foreground mb-8">
-                Horizontal menu bar with dropdowns, keyboard navigation, and submenus
+                Horizontal menu bar with dropdowns, keyboard navigation, and
+                submenus
             </p>
         </div>
 
@@ -27,7 +28,7 @@ import { Divider } from '@/components/ui/layout';
         <section class="space-y-6">
             <h2 class="text-2xl font-semibold">Dynamic Menu Bar with x-for</h2>
 
-            <div 
+            <div
                 x-data="{
                     menuBarData: [
                         {
@@ -129,52 +130,55 @@ import { Divider } from '@/components/ui/layout';
                 }"
                 class="border rounded-lg p-4"
             >
-                <div class="flex items-center space-x-1 bg-background border-b pb-2">
+                <div
+                    class="flex items-center space-x-1 bg-background border-b pb-2"
+                >
                     <template x-for="menu in menuBarData" x-key="menu.name">
                         <MenuBar>
                             <MenuBarTrigger>
                                 <span x-text="menu.name"></span>
                             </MenuBarTrigger>
                             <MenuBarContent>
-                                <template x-for="(group, groupIndex) in menu.groups" x-key="groupIndex">
-                                    <div>
-                                        <MenuBarGroup>
-                                            <MenuBarConditional
-                                                x-for="item in group.items"
-                                                x-key="item.text"
-                                                condition="!item.submenu"
-                                            >
-                                                <!-- True slot: Regular menu items -->
-                                                <MenuBarItem 
-                                                    slot="true"
-                                                    :variant="item.variant || 'default'"
-                                                >
-                                                    <span x-text="item.text" class="flex-1"></span>
-                                                    <MenuBarShortcut x-text="item.shortcut" />
-                                                </MenuBarItem>
+                                <MenuBarGroup
+                                    x-for="(group, groupIndex) in menu.groups"
+                                    x-key="groupIndex"
+                                    divider
+                                >
+                                    <MenuBarConditional
+                                        x-for="item in group.items"
+                                        x-key="item.text"
+                                        condition="!item.submenu"
+                                    >
+                                        <!-- True slot: Regular menu items -->
+                                        <MenuBarItem
+                                            slot="true"
+                                            :variant="item.variant || 'default'"
+                                        >
+                                            <span
+                                                x-text="item.text"
+                                                class="flex-1"></span>
+                                            <MenuBarShortcut
+                                                x-text="item.shortcut"
+                                            />
+                                        </MenuBarItem>
 
-                                                <!-- False slot: Submenu items -->
-                                                <MenuBarSubMenu slot="false">
-                                                    <MenuBarSubTrigger>
-                                                        <span x-text="item.text"></span>
-                                                    </MenuBarSubTrigger>
-                                                    <MenuBarItem
-                                                        slot="submenu"
-                                                        x-for="subitem in item.submenu"
-                                                        x-key="subitem.text"
-                                                    >
-                                                        <span x-text="subitem.text" class="flex-1"></span>
-                                                    </MenuBarItem>
-                                                </MenuBarSubMenu>
-                                            </MenuBarConditional>
-                                        </MenuBarGroup>
-                                        
-                                        <!-- Add divider between groups except for the last one -->
-                                        <div x-show="groupIndex < menu.groups.length - 1">
-                                            <Divider />
-                                        </div>
-                                    </div>
-                                </template>
+                                        <!-- False slot: Submenu items -->
+                                        <MenuBarSubMenu slot="false">
+                                            <MenuBarSubTrigger>
+                                                <span x-text="item.text"></span>
+                                            </MenuBarSubTrigger>
+                                            <MenuBarItem
+                                                slot="submenu"
+                                                x-for="subitem in item.submenu"
+                                                x-key="subitem.text"
+                                            >
+                                                <span
+                                                    x-text="subitem.text"
+                                                    class="flex-1"></span>
+                                            </MenuBarItem>
+                                        </MenuBarSubMenu>
+                                    </MenuBarConditional>
+                                </MenuBarGroup>
                             </MenuBarContent>
                         </MenuBar>
                     </template>
@@ -187,13 +191,13 @@ import { Divider } from '@/components/ui/layout';
             <h2 class="text-2xl font-semibold">Simple Static Example</h2>
 
             <div class="border rounded-lg p-4">
-                <div class="flex items-center space-x-1 bg-background border-b pb-2">
+                <div
+                    class="flex items-center space-x-1 bg-background border-b pb-2"
+                >
                     <MenuBar>
-                        <MenuBarTrigger>
-                            File
-                        </MenuBarTrigger>
+                        <MenuBarTrigger> File </MenuBarTrigger>
                         <MenuBarContent>
-                            <MenuBarGroup>
+                            <MenuBarGroup divider>
                                 <MenuBarItem>
                                     <span class="flex-1">New File</span>
                                     <MenuBarShortcut>Ctrl+N</MenuBarShortcut>
@@ -207,14 +211,32 @@ import { Divider } from '@/components/ui/layout';
                                     <MenuBarShortcut>Ctrl+S</MenuBarShortcut>
                                 </MenuBarItem>
                             </MenuBarGroup>
+                            <MenuBarGroup>
+                                <MenuBarItem>
+                                    <span class="flex-1">Close</span>
+                                    <MenuBarShortcut>Ctrl+W</MenuBarShortcut>
+                                </MenuBarItem>
+                                <MenuBarItem variant="destructive">
+                                    <span class="flex-1">Exit</span>
+                                    <MenuBarShortcut>Alt+F4</MenuBarShortcut>
+                                </MenuBarItem>
+                            </MenuBarGroup>
                         </MenuBarContent>
                     </MenuBar>
 
                     <MenuBar>
-                        <MenuBarTrigger>
-                            Edit
-                        </MenuBarTrigger>
+                        <MenuBarTrigger> Edit </MenuBarTrigger>
                         <MenuBarContent>
+                            <MenuBarGroup divider>
+                                <MenuBarItem>
+                                    <span class="flex-1">Undo</span>
+                                    <MenuBarShortcut>Ctrl+Z</MenuBarShortcut>
+                                </MenuBarItem>
+                                <MenuBarItem>
+                                    <span class="flex-1">Redo</span>
+                                    <MenuBarShortcut>Ctrl+Y</MenuBarShortcut>
+                                </MenuBarItem>
+                            </MenuBarGroup>
                             <MenuBarGroup>
                                 <MenuBarItem>
                                     <span class="flex-1">Cut</span>
@@ -239,11 +261,18 @@ import { Divider } from '@/components/ui/layout';
         <section class="space-y-4">
             <h2 class="text-2xl font-semibold">Usage Instructions</h2>
             <div class="bg-muted rounded-lg p-4 space-y-2 text-sm">
-                <p><strong>Mouse:</strong> Click menu items to open dropdowns</p>
-                <p><strong>Keyboard:</strong> Use Up/Down arrows within dropdowns</p>
+                <p>
+                    <strong>Mouse:</strong> Click menu items to open dropdowns
+                </p>
+                <p>
+                    <strong>Keyboard:</strong> Use Up/Down arrows within dropdowns
+                </p>
                 <p><strong>Escape:</strong> Close active menu</p>
                 <p><strong>Enter:</strong> Activate highlighted menu item</p>
-                <p><strong>Dynamic Data:</strong> The first example shows how to use x-for with complex nested data structures</p>
+                <p>
+                    <strong>Dynamic Data:</strong> The first example shows how to
+                    use x-for with complex nested data structures
+                </p>
             </div>
         </section>
     </main>

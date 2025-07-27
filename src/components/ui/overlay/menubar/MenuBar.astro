@@ -42,16 +42,17 @@ const menuBarId = `menu-bar-${Math.random().toString(36).substring(2, 11)}`;
             const menuEl = this.$refs.menuBarContent;
             if (!menuEl) return;
             
-            const triggerEl = this.$el.querySelector('[aria-expanded]');
+            const triggerEl = event.target.closest('[aria-expanded]') || this.$el.querySelector('[aria-expanded]');
             if (!triggerEl) return;
             
             const triggerRect = triggerEl.getBoundingClientRect();
-            const menuWidth = 200;
-            const menuHeight = 300;
+            const menuRect = menuEl.getBoundingClientRect();
+            const menuWidth = menuRect.width || 200;
+            const menuHeight = menuRect.height || 300;
             const padding = 8;
             
             let x = triggerRect.left;
-            let y = triggerRect.bottom + 2;
+            let y = triggerRect.bottom + 4;
             
             // Check right edge
             if (x + menuWidth > window.innerWidth - padding) {
@@ -60,7 +61,7 @@ const menuBarId = `menu-bar-${Math.random().toString(36).substring(2, 11)}`;
             
             // Check bottom edge
             if (y + menuHeight > window.innerHeight - padding) {
-                y = triggerRect.top - menuHeight - 2;
+                y = triggerRect.top - menuHeight - 4;
             }
             
             // Check left edge
@@ -70,7 +71,7 @@ const menuBarId = `menu-bar-${Math.random().toString(36).substring(2, 11)}`;
             
             // Check top edge
             if (y < padding) {
-                y = triggerRect.bottom + 2;
+                y = triggerRect.bottom + 4;
             }
             
             menuEl.style.left = x + 'px';

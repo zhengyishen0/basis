@@ -1,14 +1,17 @@
 ---
 import { cn } from '@/lib/utils';
+import { Divider } from '@/components/ui/layout';
 
 export interface Props {
     heading?: string;
+    divider?: boolean;
     className?: string;
     [key: string]: any;
 }
 
 const {
     heading,
+    divider = false,
     className,
     ...alpineProps
 } = Astro.props;
@@ -20,27 +23,33 @@ const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
 {
   xFor ? (
     <template x-for={xFor} x-key={xKey}>
+        <div>
+            <div
+                class={cn('py-1', className)}
+                role="group"
+                {...restProps}
+            >
+                <slot />
+            </div>
+            {divider === true && <Divider />}
+        </div>
+    </template>
+  ) : (
+    <div>
         <div
             class={cn('py-1', className)}
             role="group"
             {...restProps}
         >
+            {heading && (
+                <div class="px-3 py-1.5 text-xs font-semibold text-muted-foreground">
+                    {heading}
+                </div>
+            )}
+            
             <slot />
         </div>
-    </template>
-  ) : (
-    <div
-        class={cn('py-1', className)}
-        role="group"
-        {...restProps}
-    >
-        {heading && (
-            <div class="px-3 py-1.5 text-xs font-semibold text-muted-foreground">
-                {heading}
-            </div>
-        )}
-        
-        <slot />
+        {divider === true && <Divider />}
     </div>
   )
 }
