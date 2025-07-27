@@ -46,32 +46,24 @@ const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
     <template x-for={xFor} x-key={xKey}>
         <div
             data-context-menu-item
-            @mouseenter="!item.disabled && (activeIndex = Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el))"
+            @mouseenter="(activeIndex = Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el))"
             :data-active="activeIndex === Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el)"
-            :aria-disabled="item.disabled"
             class={cn(
                 itemVariants({ variant, disabled: false }),
                 'data-[active=true]:bg-accent data-[active=true]:text-accent-foreground',
                 className
             )}
-            :class="item.disabled ? 'pointer-events-none opacity-50' : ''"
             role="menuitem"
             tabindex="-1"
             {...restProps}
         >
-            <div class="flex-1">
-                <slot />
-            </div>
-            
-            <template x-if="item.shortcut || shortcut">
-                <div class="ml-auto pl-4 text-xs text-muted-foreground" x-text="item.shortcut || shortcut"></div>
-            </template>
+            <slot />
         </div>
     </template>
   ) : (
     <div
         data-context-menu-item
-        @mouseenter="!disabled && (activeIndex = Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el))"
+        @mouseenter="(activeIndex = Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el))"
         :data-active="activeIndex === Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el)"
         :aria-disabled="disabled"
         class={cn(
@@ -83,15 +75,7 @@ const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
         tabindex="-1"
         {...restProps}
     >
-        <div class="flex-1">
-            <slot />
-        </div>
-        
-        {shortcut && (
-            <div class="ml-auto pl-4 text-xs text-muted-foreground">
-                {shortcut}
-            </div>
-        )}
+        <slot />
     </div>
   )
 }

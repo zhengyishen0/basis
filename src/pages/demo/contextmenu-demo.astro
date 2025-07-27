@@ -8,6 +8,7 @@ import {
     ContextMenuGroup,
     ContextMenuSubmenu,
     ContextMenuSubTrigger,
+    ContextMenuShortcut,
 } from '@/components/ui/overlay/contextmenu';
 import { Divider } from '@/components/ui/layout';
 ---
@@ -61,12 +62,6 @@ import { Divider } from '@/components/ui/layout';
                                 }
                             ]
                         },
-                        {
-                            heading: 'Danger Zone',
-                            items: [
-                                { text: 'Delete', variant: 'destructive' }
-                            ]
-                        }
                     ]
                 }"
                 class="text-center"
@@ -82,42 +77,42 @@ import { Divider } from '@/components/ui/layout';
                         </div>
                     </ContextMenuTrigger>
                     <ContextMenuContent>
-                        <template x-for="group in menuGroups" x-key="group.heading">
-                            <div>
-                                <!-- Regular items -->
-                                <template x-if="group.items">
-                                    <div>
-                                        <ContextMenuGroup x-for="group in [group]" x-key="group.heading" />
-                                        <template x-for="item in group.items" x-key="item.text">
-                                            <div>
-                                                <!-- Regular menu item -->
-                                                <template x-if="!item.submenu">
-                                                    <ContextMenuItem x-for="item in [item]" x-key="item.text">
-                                                        <span x-text="item.text"></span>
-                                                    </ContextMenuItem>
-                                                </template>
-                                                
-                                                <!-- Submenu item -->
-                                                <template x-if="item.submenu">
-                                                    <ContextMenuSubmenu>
-                                                        <ContextMenuSubTrigger>
-                                                            <span x-text="item.text"></span>
-                                                        </ContextMenuSubTrigger>
-                                                        <div slot="submenu">
-                                                            <ContextMenuItem x-for="subitem in item.submenu" x-key="subitem.text">
-                                                                <span x-text="subitem.text"></span>
-                                                            </ContextMenuItem>
-                                                        </div>
-                                                    </ContextMenuSubmenu>
-                                                </template>
-                                            </div>
-                                        </template>
-                                    </div>
+                        <ContextMenuGroup
+                            x-for="group in menuGroups"
+                            x-key="group.heading"
+                        >
+                            <ContextMenuItem
+                                x-for="item in group.items"
+                                x-key="item.text"
+                            >
+                                <template x-if="!item.submenu">
+                                    <span x-text="item.text" class="flex-1"
+                                    ></span>
+                                    <ContextMenuShortcut
+                                        x-show="item.shortcut"
+                                        x-text="item.shortcut"
+                                    />
                                 </template>
-                                
-                                <Divider x-show="group !== menuGroups[menuGroups.length - 1]" />
-                            </div>
-                        </template>
+
+                                <template x-if="item.submenu">
+                                    <ContextMenuSubmenu>
+                                        <ContextMenuSubTrigger>
+                                            <span x-text="item.text"></span>
+                                        </ContextMenuSubTrigger>
+
+                                        <ContextMenuItem
+                                            x-for="subitem in item.submenu"
+                                            x-key="subitem.text"
+                                            slot="submenu"
+                                        >
+                                            <span
+                                                x-text="subitem.text"
+                                                class="flex-1"></span>
+                                        </ContextMenuItem>
+                                    </ContextMenuSubmenu>
+                                </template>
+                            </ContextMenuItem>
+                        </ContextMenuGroup>
                     </ContextMenuContent>
                 </ContextMenu>
             </div>
