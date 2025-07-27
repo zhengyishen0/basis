@@ -12,6 +12,9 @@ const {
 } = Astro.props;
 
 const submenuId = `submenu-${Math.random().toString(36).substring(2, 11)}`;
+
+// Extract submenu items if passed as props
+const { submenuItems, ...restAlpineProps } = alpineProps;
 ---
 
 <div
@@ -19,6 +22,7 @@ const submenuId = `submenu-${Math.random().toString(36).substring(2, 11)}`;
         submenuOpen: false,
         submenuId: '${submenuId}',
         submenuPosition: { x: 0, y: 0 },
+        submenuItems: ${submenuItems ? JSON.stringify(submenuItems) : '[]'},
         
         openSubmenu() {
             this.submenuOpen = true;
@@ -32,25 +36,29 @@ const submenuId = `submenu-${Math.random().toString(36).substring(2, 11)}`;
         },
         
         positionSubmenu() {
-            const triggerEl = this.$refs.submenuTrigger;
-            if (!triggerEl) return;
+            const triggerEl = this.$el.querySelector('[x-ref="submenuTrigger"]');
+            if (!triggerEl) {
+                console.log('No trigger element found for submenu');
+                return;
+            }
             
             const rect = triggerEl.getBoundingClientRect();
-            const submenuWidth = 180;
-            const submenuHeight = 200;
+            const submenuWidth = 200; // Increased for better fit
+            const submenuHeight = 150; // More realistic height
             const padding = 8;
+            const offset = 2; // Small offset from trigger
             
-            let x = rect.right;
+            let x = rect.right + offset;
             let y = rect.top;
             
             // Check right edge - show submenu on left if needed
             if (x + submenuWidth > window.innerWidth - padding) {
-                x = rect.left - submenuWidth;
+                x = rect.left - submenuWidth - offset;
             }
             
             // Check bottom edge
             if (y + submenuHeight > window.innerHeight - padding) {
-                y = window.innerHeight - submenuHeight - padding;
+                y = Math.max(padding, window.innerHeight - submenuHeight - padding);
             }
             
             // Check top edge
@@ -58,13 +66,18 @@ const submenuId = `submenu-${Math.random().toString(36).substring(2, 11)}`;
                 y = padding;
             }
             
+            // Ensure submenu doesn't go off left edge when positioned on left
+            if (x < padding) {
+                x = padding;
+            }
+            
             this.submenuPosition = { x, y };
         }
     }`
     @mouseenter="openSubmenu()"
-    @mouseleave="setTimeout(() => { if (!$refs.submenuContent?.matches(':hover')) closeSubmenu(); }, 100)"
+    @mouseleave="setTimeout(() => { if (!$refs.submenuContent?.matches(':hover') && !$el.matches(':hover')) closeSubmenu(); }, 150)"
     class={cn('relative', className)}
-    {...alpineProps}
+    {...restAlpineProps}
 >
     <slot />
     
@@ -80,7 +93,7 @@ const submenuId = `submenu-${Math.random().toString(36).substring(2, 11)}`;
             x-transition:leave-start="transform opacity-100 scale-100"
             x-transition:leave-end="transform opacity-0 scale-95"
             :style="`position: fixed; left: ${submenuPosition.x}px; top: ${submenuPosition.y}px; z-index: 51;`"
-            class="min-w-44 rounded-md border bg-popover text-popover-foreground shadow-md py-1"
+            class="min-w-48 rounded-md border bg-popover text-popover-foreground shadow-md py-1"
             role="menu"
             @mouseenter="clearTimeout()"
             @mouseleave="closeSubmenu()"

@@ -31,6 +31,11 @@ const contextMenuId = `context-menu-${Math.random().toString(36).substring(2, 11
             this.$nextTick(() => {
                 this.updateMenuItems();
             });
+            
+            // Listen for submenu events
+            this.$el.addEventListener('open-submenu', () => {
+                // Handle submenu opening if needed
+            });
         },
         
         toggle(event) { 

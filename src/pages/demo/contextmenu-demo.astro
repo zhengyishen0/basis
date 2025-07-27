@@ -23,6 +23,90 @@ import { Divider } from '@/components/ui/layout';
             </p>
         </div>
 
+        <!-- Basic Context Menu Example -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Basic Context Menu</h2>
+
+            <div class="text-center">
+                <ContextMenu trigger="rightclick">
+                    <ContextMenuTrigger>
+                        <div
+                            class="w-64 h-40 bg-gradient-to-br from-cyan-50 to-blue-100 border rounded-lg flex items-center justify-center mx-auto"
+                        >
+                            <span class="text-center">
+                                Right-click for basic menu
+                            </span>
+                        </div>
+                    </ContextMenuTrigger>
+                    <ContextMenuContent>
+                        <ContextMenuGroup>
+                            <div
+                                class="px-3 py-1.5 text-xs font-semibold text-muted-foreground"
+                            >
+                                File Actions
+                            </div>
+                            <ContextMenuItem>
+                                <span class="flex-1">New File</span>
+                                <ContextMenuShortcut>Ctrl+N</ContextMenuShortcut
+                                >
+                            </ContextMenuItem>
+                            <ContextMenuItem>
+                                <span class="flex-1">Open File</span>
+                                <ContextMenuShortcut>Ctrl+O</ContextMenuShortcut
+                                >
+                            </ContextMenuItem>
+                            <ContextMenuItem>
+                                <span class="flex-1">Save File</span>
+                                <ContextMenuShortcut>Ctrl+S</ContextMenuShortcut
+                                >
+                            </ContextMenuItem>
+                        </ContextMenuGroup>
+
+                        <Divider />
+
+                        <ContextMenuGroup>
+                            <div
+                                class="px-3 py-1.5 text-xs font-semibold text-muted-foreground"
+                            >
+                                Edit Actions
+                            </div>
+                            <ContextMenuItem>
+                                <span class="flex-1">Cut</span>
+                                <ContextMenuShortcut>Ctrl+X</ContextMenuShortcut
+                                >
+                            </ContextMenuItem>
+                            <ContextMenuItem>
+                                <span class="flex-1">Copy</span>
+                                <ContextMenuShortcut>Ctrl+C</ContextMenuShortcut
+                                >
+                            </ContextMenuItem>
+                            <ContextMenuItem>
+                                <span class="flex-1">Paste</span>
+                                <ContextMenuShortcut>Ctrl+V</ContextMenuShortcut
+                                >
+                            </ContextMenuItem>
+
+                            <ContextMenuSubmenu>
+                                <ContextMenuSubTrigger>
+                                    <span class="flex-1">Share</span>
+                                </ContextMenuSubTrigger>
+
+                                <ContextMenuItem slot="submenu">
+                                    <span class="flex-1">Email</span>
+                                </ContextMenuItem>
+                                <ContextMenuItem slot="submenu">
+                                    <span class="flex-1">Copy Link</span>
+                                </ContextMenuItem>
+                                <ContextMenuItem slot="submenu">
+                                    <span class="flex-1">Social Media</span>
+                                </ContextMenuItem>
+                            </ContextMenuSubmenu>
+                        </ContextMenuGroup>
+                    </ContextMenuContent>
+                </ContextMenu>
+            </div>
+        </section>
+
         <!-- Dynamic x-for Example -->
         <section class="space-y-6">
             <h2 class="text-2xl font-semibold">Dynamic x-for Support</h2>
@@ -81,37 +165,46 @@ import { Divider } from '@/components/ui/layout';
                             x-for="group in menuGroups"
                             x-key="group.heading"
                         >
+                            <div
+                                x-text="group.heading"
+                                class="px-3 py-1.5 text-xs font-semibold text-muted-foreground"
+                            >
+                            </div>
+
+                            <!-- Main menu items with x-for inside ContextMenuItem -->
                             <ContextMenuItem
-                                x-for="item in group.items"
+                                x-for="item in group.items.filter(i => !i.submenu)"
                                 x-key="item.text"
                             >
-                                <template x-if="!item.submenu">
-                                    <span x-text="item.text" class="flex-1"
-                                    ></span>
-                                    <ContextMenuShortcut
-                                        x-show="item.shortcut"
-                                        x-text="item.shortcut"
-                                    />
-                                </template>
-
-                                <template x-if="item.submenu">
-                                    <ContextMenuSubmenu>
-                                        <ContextMenuSubTrigger>
-                                            <span x-text="item.text"></span>
-                                        </ContextMenuSubTrigger>
-
-                                        <ContextMenuItem
-                                            x-for="subitem in item.submenu"
-                                            x-key="subitem.text"
-                                            slot="submenu"
-                                        >
-                                            <span
-                                                x-text="subitem.text"
-                                                class="flex-1"></span>
-                                        </ContextMenuItem>
-                                    </ContextMenuSubmenu>
-                                </template>
+                                <span x-text="item.text" class="flex-1"></span>
+                                <span
+                                    x-show="item.shortcut"
+                                    x-text="item.shortcut || ''"
+                                    class="ml-auto text-xs tracking-widest text-muted-foreground"
+                                ></span>
                             </ContextMenuItem>
+
+                            <!-- Submenu items with x-for inside ContextMenuItem -->
+                            <template
+                                x-for="item in group.items.filter(i => i.submenu)"
+                                x-key="item.text"
+                            >
+                                <ContextMenuSubmenu>
+                                    <ContextMenuSubTrigger>
+                                        <span x-text="item.text"></span>
+                                    </ContextMenuSubTrigger>
+
+                                    <ContextMenuItem
+                                        slot="submenu"
+                                        x-for="subitem in item.submenu"
+                                        x-key="subitem.text"
+                                    >
+                                        <span
+                                            x-text="subitem.text"
+                                            class="flex-1"></span>
+                                    </ContextMenuItem>
+                                </ContextMenuSubmenu>
+                            </template>
                         </ContextMenuGroup>
                     </ContextMenuContent>
                 </ContextMenu>

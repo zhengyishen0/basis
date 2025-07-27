@@ -46,8 +46,8 @@ const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
     <template x-for={xFor} x-key={xKey}>
         <div
             data-context-menu-item
-            @mouseenter="(activeIndex = Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el))"
-            :data-active="activeIndex === Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el)"
+            @mouseenter="$el.closest('[x-data]') && ($el.closest('[x-data]').activeIndex = Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el))"
+            :data-active="(typeof activeIndex !== 'undefined' ? activeIndex : -1) === Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el)"
             class={cn(
                 itemVariants({ variant, disabled: false }),
                 'data-[active=true]:bg-accent data-[active=true]:text-accent-foreground',
@@ -63,9 +63,9 @@ const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
   ) : (
     <div
         data-context-menu-item
-        @mouseenter="(activeIndex = Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el))"
-        :data-active="activeIndex === Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el)"
-        :aria-disabled="disabled"
+        @mouseenter="$el.closest('[x-data]') && ($el.closest('[x-data]').activeIndex = Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el))"
+        :data-active="(typeof activeIndex !== 'undefined' ? activeIndex : -1) === Array.from($el.closest('[role=menu]').querySelectorAll('[data-context-menu-item]')).indexOf($el)"
+        :aria-disabled="false"
         class={cn(
             itemVariants({ variant, disabled }),
             'data-[active=true]:bg-accent data-[active=true]:text-accent-foreground',

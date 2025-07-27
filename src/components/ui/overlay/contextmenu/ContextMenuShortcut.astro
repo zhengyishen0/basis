@@ -18,6 +18,10 @@ const classes = cn(
 const { 'x-text': xText, 'x-if': xIf, ...restProps } = alpineProps;
 ---
 
-<template x-if="(typeof item !== 'undefined' && item?.shortcut) || (typeof shortcut !== 'undefined' && shortcut)">
-  <span class={classes} x-text="(typeof item !== 'undefined' && item?.shortcut) || (typeof shortcut !== 'undefined' && shortcut) || ''" {...restProps}></span>
-</template>
+{shortcut ? (
+  <span class={classes} {...restProps}>{shortcut}</span>
+) : xText ? (
+  <span class={classes} x-text={xText} {...restProps}></span>
+) : (
+  <span class={classes} style="display: none;" {...restProps}></span>
+)}
