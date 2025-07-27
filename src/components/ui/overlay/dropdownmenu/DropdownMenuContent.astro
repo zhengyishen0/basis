@@ -41,33 +41,30 @@ const {
 ---
 
 <!-- Dropdown Menu Content -->
-<template x-teleport="body">
-    <div 
-        x-show="dropdownOpen"
-        x-ref="dropdownMenu"
-        x-transition:enter="transition ease-out duration-100"
-        x-transition:enter-start="transform opacity-0 scale-95"
-        x-transition:enter-end="transform opacity-100 scale-100"
-        x-transition:leave="transition ease-in duration-75"
-        x-transition:leave-start="transform opacity-100 scale-100"
-        x-transition:leave-end="transform opacity-0 scale-95"
-        :style="`position: fixed; left: ${dropdownPosition.x}px; top: ${dropdownPosition.y}px; z-index: 9999;`"
-        class={cn(contentVariants({ size, theme }), className)}
-        role="menu"
-        tabindex="-1"
-        @click="handleMenuItemClick($event)"
-        {...alpineProps}
-    >
-        <!-- Optional Label -->
-        {label && (
-            <div class="px-3 py-1.5 text-xs font-semibold text-muted-foreground border-b border-border mb-1">
-                {label}
-            </div>
-        )}
-        
-        <!-- Menu Content -->
-        <div>
-            <slot />
+<div 
+    x-show="open"
+    x-ref="dropdownMenu"
+    x-transition:enter="transition ease-out duration-100"
+    x-transition:enter-start="transform opacity-0 scale-95"
+    x-transition:enter-end="transform opacity-100 scale-100"
+    x-transition:leave="transition ease-in duration-75"
+    x-transition:leave-start="transform opacity-100 scale-100"
+    x-transition:leave-end="transform opacity-0 scale-95"
+    class={cn(contentVariants({ size, theme }), 'absolute top-full left-0 mt-1', className)}
+    role="menu"
+    tabindex="-1"
+    @click="handleMenuItemClick($event)"
+    {...alpineProps}
+>
+    <!-- Optional Label -->
+    {label && (
+        <div class="px-3 py-1.5 text-xs font-semibold text-muted-foreground border-b border-border mb-1">
+            {label}
         </div>
+    )}
+    
+    <!-- Menu Content -->
+    <div>
+        <slot />
     </div>
-</template>
+</div>

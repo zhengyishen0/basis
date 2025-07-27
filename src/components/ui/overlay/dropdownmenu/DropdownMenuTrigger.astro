@@ -50,12 +50,12 @@ const {
 
 <div
     x-ref="dropdownTrigger"
-    @click="trigger === 'click' && !disabled && openDropdown($event)"
-    @mouseenter="trigger === 'hover' && !disabled && openDropdown($event)"
-    @mouseleave="trigger === 'hover' && !disabled && closeDropdown()"
-    @focus="trigger === 'focus' && !disabled && openDropdown($event)"
-    @blur="trigger === 'focus' && !disabled && closeDropdown()"
-    :aria-expanded="dropdownOpen"
+    @click="trigger === 'click' && !disabled && toggle()"
+    @mouseenter="trigger === 'hover' && !disabled && (open = true)"
+    @mouseleave="trigger === 'hover' && !disabled && (open = false)"
+    @focus="trigger === 'focus' && !disabled && (open = true)"
+    @blur="trigger === 'focus' && !disabled && (open = false)"
+    :aria-expanded="open"
     :aria-haspopup="true"
     class={cn(
         triggerVariants({ variant, size }),

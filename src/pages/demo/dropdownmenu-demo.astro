@@ -18,7 +18,9 @@ import { ChevronDown } from 'lucide-astro';
 <Layout title="Dropdown Menu Demo">
     <main class="container mx-auto p-8 space-y-12">
         <div class="text-center">
-            <h1 class="text-3xl font-bold mb-4">Dropdown Menu Component Demo</h1>
+            <h1 class="text-3xl font-bold mb-4">
+                Dropdown Menu Component Demo
+            </h1>
             <p class="text-muted-foreground mb-8">
                 Composable dropdown menu components with keyboard navigation,
                 submenus, and smart positioning
@@ -89,9 +91,11 @@ import { ChevronDown } from 'lucide-astro';
                             >
                                 <!-- True slot: Regular menu items -->
                                 <DropdownMenuItem slot="true">
-                                    <span x-text="item.text" class="flex-1"></span>
+                                    <span x-text="item.text" class="flex-1"
+                                    ></span>
                                     <DropdownMenuShortcut
                                         x-text="item.shortcut"
+                                        x-show="item.shortcut"
                                     />
                                 </DropdownMenuItem>
 
@@ -100,6 +104,7 @@ import { ChevronDown } from 'lucide-astro';
                                     <DropdownMenuSubTrigger>
                                         <span x-text="item.text"></span>
                                     </DropdownMenuSubTrigger>
+
                                     <DropdownMenuItem
                                         slot="submenu"
                                         x-for="subitem in item.submenu"
@@ -130,15 +135,21 @@ import { ChevronDown } from 'lucide-astro';
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
                                 <span class="flex-1">New File</span>
-                                <DropdownMenuShortcut>Ctrl+N</DropdownMenuShortcut>
+                                <DropdownMenuShortcut
+                                    >Ctrl+N</DropdownMenuShortcut
+                                >
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <span class="flex-1">Open File</span>
-                                <DropdownMenuShortcut>Ctrl+O</DropdownMenuShortcut>
+                                <DropdownMenuShortcut
+                                    >Ctrl+O</DropdownMenuShortcut
+                                >
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <span class="flex-1">Save File</span>
-                                <DropdownMenuShortcut>Ctrl+S</DropdownMenuShortcut>
+                                <DropdownMenuShortcut
+                                    >Ctrl+S</DropdownMenuShortcut
+                                >
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
 
@@ -147,15 +158,21 @@ import { ChevronDown } from 'lucide-astro';
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
                                 <span class="flex-1">Cut</span>
-                                <DropdownMenuShortcut>Ctrl+X</DropdownMenuShortcut>
+                                <DropdownMenuShortcut
+                                    >Ctrl+X</DropdownMenuShortcut
+                                >
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <span class="flex-1">Copy</span>
-                                <DropdownMenuShortcut>Ctrl+C</DropdownMenuShortcut>
+                                <DropdownMenuShortcut
+                                    >Ctrl+C</DropdownMenuShortcut
+                                >
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <span class="flex-1">Paste</span>
-                                <DropdownMenuShortcut>Ctrl+V</DropdownMenuShortcut>
+                                <DropdownMenuShortcut
+                                    >Ctrl+V</DropdownMenuShortcut
+                                >
                             </DropdownMenuItem>
 
                             <DropdownMenuSubMenu>
@@ -203,88 +220,6 @@ import { ChevronDown } from 'lucide-astro';
                     <DropdownMenuContent size="sm">
                         <DropdownMenuItem>Option 1</DropdownMenuItem>
                         <DropdownMenuItem>Option 2</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </div>
-        </section>
-
-        <!-- Variant Examples -->
-        <section class="space-y-6">
-            <h2 class="text-2xl font-semibold">Trigger Variants</h2>
-
-            <div class="flex gap-4 flex-wrap">
-                <DropdownMenu>
-                    <DropdownMenuTrigger variant="default">Default</DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem>Item 1</DropdownMenuItem>
-                        <DropdownMenuItem>Item 2</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-
-                <DropdownMenu>
-                    <DropdownMenuTrigger variant="secondary">Secondary</DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem>Item 1</DropdownMenuItem>
-                        <DropdownMenuItem>Item 2</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-
-                <DropdownMenu>
-                    <DropdownMenuTrigger variant="outline">Outline</DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem>Item 1</DropdownMenuItem>
-                        <DropdownMenuItem>Item 2</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-
-                <DropdownMenu>
-                    <DropdownMenuTrigger variant="ghost">Ghost</DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem>Item 1</DropdownMenuItem>
-                        <DropdownMenuItem>Item 2</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-
-                <DropdownMenu>
-                    <DropdownMenuTrigger variant="destructive">Destructive</DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem>Item 1</DropdownMenuItem>
-                        <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </div>
-        </section>
-
-        <!-- Size Examples -->
-        <section class="space-y-6">
-            <h2 class="text-2xl font-semibold">Size Variants</h2>
-
-            <div class="flex gap-4 flex-wrap items-center">
-                <DropdownMenu>
-                    <DropdownMenuTrigger size="xs" variant="outline">XS</DropdownMenuTrigger>
-                    <DropdownMenuContent size="sm">
-                        <DropdownMenuItem>Small menu</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-
-                <DropdownMenu>
-                    <DropdownMenuTrigger size="sm" variant="outline">Small</DropdownMenuTrigger>
-                    <DropdownMenuContent size="sm">
-                        <DropdownMenuItem>Small menu</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-
-                <DropdownMenu>
-                    <DropdownMenuTrigger size="default" variant="outline">Default</DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem>Default menu</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-
-                <DropdownMenu>
-                    <DropdownMenuTrigger size="lg" variant="outline">Large</DropdownMenuTrigger>
-                    <DropdownMenuContent size="lg">
-                        <DropdownMenuItem>Large menu</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>

@@ -20,150 +20,56 @@ const {
 const dropdownId = `dropdown-${Math.random().toString(36).substring(2, 11)}`;
 ---
 
-<div 
-  x-data=`{
-    dropdownOpen: false,
-    dropdownPosition: { x: 0, y: 0 },
-    submenuOpen: '',
-    submenuPosition: { x: 0, y: 0 },
-    activeIndex: -1,
-    trigger: '${trigger}',
-    disabled: ${disabled},
-    
-    openDropdown(event) {
-      if (event?.preventDefault && trigger === 'click') {
-        event.preventDefault();
-      }
-      
-      this.dropdownPosition = this.calculateDropdownPosition(event);
-      this.dropdownOpen = true;
-      this.submenuOpen = '';
-      this.activeIndex = -1;
-      
-      this.$nextTick(() => {
-        this.$refs.dropdownMenu?.focus();
-      });
-    },
-    
-    closeDropdown() {
-      this.dropdownOpen = false;
-      this.submenuOpen = '';
-      this.activeIndex = -1;
-    },
-    
-    calculateDropdownPosition(event) {
-      const triggerEl = this.$refs.dropdownTrigger;
-      if (!triggerEl) return { x: 0, y: 0 };
-      
-      const rect = triggerEl.getBoundingClientRect();
-      const menuWidth = 200; // Approximate menu width
-      const menuHeight = 300; // Approximate menu height
-      const padding = 8; // Screen edge padding
-      
-      let x = rect.left;
-      let y = rect.bottom + 4; // 4px offset below trigger
-      
-      // Check right edge
-      if (x + menuWidth > window.innerWidth - padding) {
-        x = window.innerWidth - menuWidth - padding;
-      }
-      
-      // Check bottom edge - show above if needed
-      if (y + menuHeight > window.innerHeight - padding) {
-        y = rect.top - menuHeight - 4; // Show above trigger
-      }
-      
-      // Check left edge
-      if (x < padding) {
-        x = padding;
-      }
-      
-      // Check top edge
-      if (y < padding) {
-        y = padding;
-      }
-      
-      return { x, y };
-    },
-    
-    handleSubmenuHover(submenuId, event) {
-      if (submenuId) {
-        this.submenuOpen = submenuId;
-        this.submenuPosition = this.calculateSubmenuPosition(event.currentTarget);
-      } else {
-        this.submenuOpen = '';
-      }
-    },
-    
-    calculateSubmenuPosition(triggerElement) {
-      const rect = triggerElement.getBoundingClientRect();
-      const submenuWidth = 180;
-      const submenuHeight = 200;
-      const padding = 8;
-      
-      let x = rect.right;
-      let y = rect.top;
-      
-      // Check right edge - show submenu on left if needed
-      if (x + submenuWidth > window.innerWidth - padding) {
-        x = rect.left - submenuWidth;
-      }
-      
-      // Check bottom edge
-      if (y + submenuHeight > window.innerHeight - padding) {
-        y = window.innerHeight - submenuHeight - padding;
-      }
-      
-      // Check top edge
-      if (y < padding) {
-        y = padding;
-      }
-      
-      return { x, y };
-    },
-    
-    handleMenuItemClick(event) {
-      if (${closeOnClick}) {
-        this.closeDropdown();
-      }
-      
-      // Dispatch custom event
-      this.$dispatch('dropdown-menu-item-click', {
-        target: event.target,
-        text: event.target.textContent?.trim()
-      });
-    },
-    
-    // Keyboard navigation
-    handleKeydown(event) {
-      const items = this.$refs.dropdownMenu?.querySelectorAll('[data-dropdown-menu-item]');
-      if (!items || items.length === 0) return;
-      
-      switch (event.key) {
-        case 'ArrowDown':
-          event.preventDefault();
-          this.activeIndex = (this.activeIndex + 1) % items.length;
-          break;
-        case 'ArrowUp':
-          event.preventDefault();
-          this.activeIndex = this.activeIndex <= 0 ? items.length - 1 : this.activeIndex - 1;
-          break;
-        case 'Enter':
-          event.preventDefault();
-          if (this.activeIndex >= 0 && items[this.activeIndex]) {
-            items[this.activeIndex].click();
-          }
-          break;
-        case 'Escape':
-          event.preventDefault();
-          this.closeDropdown();
-          break;
-      }
-    }
-  }`
-  @click.outside="dropdownOpen && closeDropdown()"
-  @keydown.escape.window="dropdownOpen && closeDropdown()"
-  @keydown="dropdownOpen && handleKeydown($event)"
+<div
+    x-data={`{
+        open: false,
+        trigger: '${trigger}',
+        disabled: ${disabled},
+        submenuOpen: '',
+        activeIndex: -1,
+        toggle() { this.open = !this.open },
+        close() { this.open = false },
+        
+        handleMenuItemClick(event) {
+            if (${closeOnClick}) {
+                this.close();
+            }
+            
+            this.$dispatch('dropdown-menu-item-click', {
+                target: event.target,
+                text: event.target.textContent?.trim()
+            });
+        },
+        
+        handleKeydown(event) {
+            const items = this.$refs.dropdownMenu?.querySelectorAll('[data-dropdown-menu-item]');
+            if (!items || items.length === 0) return;
+            
+            switch (event.key) {
+                case 'ArrowDown':
+                    event.preventDefault();
+                    this.activeIndex = (this.activeIndex + 1) % items.length;
+                    break;
+                case 'ArrowUp':
+                    event.preventDefault();
+                    this.activeIndex = this.activeIndex <= 0 ? items.length - 1 : this.activeIndex - 1;
+                    break;
+                case 'Enter':
+                    event.preventDefault();
+                    if (this.activeIndex >= 0 && items[this.activeIndex]) {
+                        items[this.activeIndex].click();
+                    }
+                    break;
+                case 'Escape':
+                    event.preventDefault();
+                    this.close();
+                    break;
+            }
+        }
+    }`}
+  @click.outside="open && close()"
+  @keydown.escape.window="open && close()"
+  @keydown="open && handleKeydown($event)"
   class={cn('relative inline-block', className)}
   data-trigger={trigger}
   {...alpineProps}
