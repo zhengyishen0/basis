@@ -80,14 +80,14 @@ const commandItems = {
                         x-key="item.value"
                     >
                         <!-- Icon -->
-                        <div class="mr-2 h-4 w-4 shrink-0" x-html="item.icon">
+                        <div slot="icon" class="mr-2 h-4 w-4 shrink-0" x-html="item.icon">
                         </div>
 
                         <!-- Title -->
                         <span x-text="item.title"></span>
 
                         <!-- Keyboard shortcut -->
-                        <CommandShortcut x-text="item.shortcut" />
+                        <CommandShortcut slot="shortcut" x-text="item.shortcut" />
                     </CommandItem>
                 </CommandGroup>
                 <CommandFooter slot="footer" />
@@ -99,4 +99,15 @@ const commandItems = {
             <p>Use arrow keys to navigate, Enter to select, Escape to clear</p>
         </div>
     </div>
+
+    <!-- Simple Alpine.js setup for demo only -->
+    <script>
+        // Check if Alpine is already loaded, if not, load it from CDN
+        if (typeof window.Alpine === 'undefined') {
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js';
+            script.defer = true;
+            document.head.appendChild(script);
+        }
+    </script>
 </Layout>

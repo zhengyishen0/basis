@@ -1,0 +1,184 @@
+---
+import { cn } from '@/lib/utils';
+import { cva, type VariantProps } from 'class-variance-authority';
+import Empty from '@/components/ui/feedback/Empty.astro';
+
+const containerVariants = cva(
+  'flex w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
+  {
+    variants: {
+      variant: {
+        default: 'border border-border shadow-md',
+        ghost: 'border-0 shadow-none',
+        dialog: 'border-0 shadow-lg'
+      },
+      size: {
+        sm: 'h-60',
+        md: 'h-80', 
+        lg: 'h-96',
+        full: 'h-full'
+      }
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'md'
+    }
+  }
+);
+
+export interface Props extends VariantProps<typeof containerVariants> {
+  items?: Record<string, Array<{
+    title: string;
+    value: string;
+    icon?: string;
+    shortcut?: string;
+    show?: boolean;
+    disabled?: boolean;
+  }>>;
+  searchEnabled?: boolean;
+  keyboardNav?: boolean;
+  searchModel?: string;
+  activeModel?: string;
+  itemsModel?: string;
+  emptyText?: string;
+  onSelect?: string;
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  items = {},
+  searchEnabled = true,
+  keyboardNav = true,
+  searchModel = 'menuSearch',
+  activeModel = 'activeIndex',
+  itemsModel = 'menuItems',
+  emptyText = 'No results found.',
+  onSelect = 'console.log(item)',
+  variant,
+  size,
+  class: className,
+  ...alpineProps
+} = Astro.props;
+
+const containerData = `{
+  ${itemsModel}: ${JSON.stringify(items)},
+  ${searchModel}: '',
+  ${activeModel}: 0,
+  itemSelected: null,
+  
+  init() {
+    this.$watch('itemSelected', (item) => {
+      if (item) {
+        ${onSelect}
+      }
+    });
+    
+    // Reset active index when filtered items change
+    this.$watch('filteredItems', () => {
+      this.${activeModel} = 0;
+    });
+  },
+  
+  get filteredItems() {
+    ${searchEnabled ? `
+    if (!this.${searchModel}.trim()) {
+      return Object.entries(this.${itemsModel}).reduce((acc, [category, items]) => {
+        const defaultItems = items.filter(item => item.show !== false);
+        if (defaultItems.length > 0) {
+          acc[category] = defaultItems;
+        }
+        return acc;
+      }, {});
+    }
+    
+    const search = this.${searchModel}.toLowerCase();
+    return Object.entries(this.${itemsModel}).reduce((acc, [category, items]) => {
+      const filtered = items.filter(item => 
+        item.title.toLowerCase().includes(search) ||
+        item.value.toLowerCase().includes(search)
+      );
+      if (filtered.length > 0) {
+        acc[category] = filtered;
+      }
+      return acc;
+    }, {});
+    ` : `
+    return Object.entries(this.${itemsModel}).reduce((acc, [category, items]) => {
+      const defaultItems = items.filter(item => item.show !== false);
+      if (defaultItems.length > 0) {
+        acc[category] = defaultItems;
+      }
+      return acc;
+    }, {});
+    `}
+  },
+  
+  get flattenedItems() {
+    return Object.values(this.filteredItems).flat().filter(item => !item.disabled);
+  },
+  
+  get hasResults() {
+    return this.flattenedItems.length > 0;
+  },
+  
+  ${keyboardNav ? `
+  itemActiveNext() {
+    const items = this.flattenedItems;
+    if (items.length === 0) return;
+    this.${activeModel} = (this.${activeModel} + 1) % items.length;
+  },
+  
+  itemActivePrevious() {
+    const items = this.flattenedItems;
+    if (items.length === 0) return;
+    this.${activeModel} = this.${activeModel} === 0 ? items.length - 1 : this.${activeModel} - 1;
+  },
+  
+  selectActiveItem() {
+    const items = this.flattenedItems;
+    if (items[this.${activeModel}]) {
+      this.itemSelected = items[this.${activeModel}];
+    }
+  },
+  ` : ''}
+  
+  selectItem(item) {
+    this.itemSelected = item;
+  }
+}`;
+---
+
+<div 
+  x-data={containerData}
+  class={cn(containerVariants({ variant, size }), "justify-between", className)}
+  role="combobox"
+  aria-expanded="true"
+  {...alpineProps}
+>
+  <!-- Input at top -->
+  <slot name="input" />
+  
+  <!-- Menu List Container - Takes all available space between input and footer -->
+  <div 
+    class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden" 
+    role="listbox"
+  >
+    <!-- Show empty state when no results -->
+    <template x-if="!hasResults">
+      <Empty size="sm">
+        {emptyText}
+      </Empty>
+    </template>
+    
+    <!-- Show filtered categories and items -->
+    <template x-if="hasResults">
+      <div>
+        <slot />
+      </div>
+    </template>
+  </div>
+  
+  <!-- Footer at bottom -->
+  <slot name="footer" />
+</div>

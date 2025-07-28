@@ -1,6 +1,6 @@
 ---
+import MenuGroup from '../menu/MenuGroup.astro';
 import { cn } from '@/lib/utils';
-import Divider from '@/components/ui/layout/Divider.astro';
 
 export interface Props {
     heading?: string;
@@ -11,12 +11,6 @@ export interface Props {
 
 const { heading, showDivider = false, class: className, ...alpineProps } = Astro.props;
 
-const groupClasses = cn('overflow-hidden p-1 text-foreground', className);
-
-const headingClasses = cn(
-    'px-2 py-1.5 text-xs font-medium text-muted-foreground'
-);
-
 // Extract x-for and x-key from alpineProps so they don't get passed to the div
 const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
 ---
@@ -24,43 +18,21 @@ const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
 {
   xFor ? (
     <template x-for={xFor} x-key={xKey}>
-        <div class={groupClasses} role="group" {...restProps}>
-            <!-- Show category heading if provided -->
-            <template x-if="categoryName && categoryName.trim()">
-                <div class={headingClasses}>
-                    <span x-text="categoryName.charAt(0).toUpperCase() + categoryName.slice(1)"></span>
-                </div>
-            </template>
-            
-            <!-- Show items in this category -->
+        <MenuGroup 
+            x-text="categoryName && categoryName.trim() ? categoryName.charAt(0).toUpperCase() + categoryName.slice(1) : ''"
+            className={cn('overflow-hidden p-1 text-foreground', className)}
+            {...restProps}
+        >
             <slot />
-            
-            <!-- Show divider after group (except for last group) -->
-            <template x-if={`${showDivider} && Object.keys(filteredItems).indexOf(categoryName) < Object.keys(filteredItems).length - 1`}>
-                <div class="flex justify-center py-1">
-                    <Divider />
-                </div>
-            </template>
-        </div>
+        </MenuGroup>
     </template>
   ) : (
-    <div class={groupClasses} role="group" {...restProps}>
-        <!-- Show heading if provided -->
-        {heading && (
-            <div class={headingClasses}>
-                <span>{heading}</span>
-            </div>
-        )}
-        
-        <!-- Show items in this group -->
+    <MenuGroup 
+        x-text={heading}
+        className={cn('overflow-hidden p-1 text-foreground', className)}
+        {...restProps}
+    >
         <slot />
-        
-        <!-- Show divider if enabled -->
-        {showDivider && (
-            <div class="flex justify-center py-2">
-                <Divider />
-            </div>
-        )}
-    </div>
+    </MenuGroup>
   )
 }

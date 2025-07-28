@@ -35,8 +35,10 @@ const { 'x-for': xFor, 'x-key': xKey, 'x-text': xText, ...restProps } = alpinePr
             tabindex="-1"
             {...restProps}
         >
+            <slot name="icon" />
             {xText && <span x-text={xText}></span>}
             <slot />
+            <slot name="shortcut" />
         </div>
     </template>
   ) : (
@@ -54,8 +56,10 @@ const { 'x-for': xFor, 'x-key': xKey, 'x-text': xText, ...restProps } = alpinePr
         tabindex="-1"
         {...restProps}
     >
+        <slot name="icon" />
         {xText && <span x-text={xText}></span>}
         <slot />
+        <slot name="shortcut" />
     </div>
   )
 }
