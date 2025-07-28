@@ -6,7 +6,7 @@ import {
     CommandGroup,
     CommandItem,
     CommandShortcut,
-    CommandFooter
+    CommandFooter,
 } from '@/components/ui/overlay';
 const commandItems = {
     suggestions: [
@@ -63,8 +63,7 @@ const commandItems = {
         <div class="max-w-md mx-auto">
             <Command
                 items={commandItems}
-                onSelect="console.log('Selected:', item); alert('Selected: ' + item.title)"
-                class="w-full"
+                onSelect="alert('Selected: ' + item.title)"
             >
                 <CommandInput
                     slot="input"
@@ -80,14 +79,21 @@ const commandItems = {
                         x-key="item.value"
                     >
                         <!-- Icon -->
-                        <div slot="icon" class="mr-2 h-4 w-4 shrink-0" x-html="item.icon">
+                        <div
+                            slot="icon"
+                            class="mr-2 h-4 w-4 shrink-0"
+                            x-html="item.icon"
+                        >
                         </div>
 
                         <!-- Title -->
                         <span x-text="item.title"></span>
 
                         <!-- Keyboard shortcut -->
-                        <CommandShortcut slot="shortcut" x-text="item.shortcut" />
+                        <CommandShortcut
+                            slot="shortcut"
+                            x-text="item.shortcut"
+                        />
                     </CommandItem>
                 </CommandGroup>
                 <CommandFooter slot="footer" />

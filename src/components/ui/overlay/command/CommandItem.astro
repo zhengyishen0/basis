@@ -1,16 +1,29 @@
 ---
-import CommandContent from './CommandContent.astro';
+import MenuItem from '../menu/MenuItem.astro';
 
 export interface Props {
-    class?: string;
-    [key: string]: any;
+  shortcut?: string;
+  className?: string;
+  [key: string]: any;
 }
 
-const { class: className, ...alpineProps } = Astro.props;
+const {
+  shortcut,
+  className,
+  ...alpineProps
+} = Astro.props;
 ---
 
-<CommandContent class={className} {...alpineProps}>
-    <slot name="icon" slot="icon" />
-    <slot />
-    <slot name="shortcut" slot="shortcut" />
-</CommandContent>
+<MenuItem
+  variant="command"
+  activeModel="commandActiveIndex"
+  role="option"
+  onSelect="!item.disabled && selectItem(item)"
+  shortcut={shortcut}
+  className={className}
+  {...alpineProps}
+>
+  <slot name="icon" slot="icon" />
+  <slot />
+  <slot name="shortcut" slot="shortcut" />
+</MenuItem>

@@ -64,10 +64,21 @@ const {
 const containerData = `{
   ${itemsModel}: ${JSON.stringify(items)},
   ${searchModel}: '',
-  ${activeModel}: 0,
+  ${activeModel}: -1,  // Will be set correctly by init()
   itemSelected: null,
   
   init() {
+    // Set initial activeModel to first selectable item
+    this.$nextTick(() => {
+      const selectableItems = this.selectableItems;
+      if (selectableItems.length > 0) {
+        const firstSelectableItem = selectableItems[0];
+        this.${activeModel} = this.flattenedItems.findIndex(item => item === firstSelectableItem);
+      } else {
+        this.${activeModel} = 0;
+      }
+    });
+    
     this.$watch('itemSelected', (item) => {
       if (item) {
         ${onSelect}
@@ -76,7 +87,16 @@ const containerData = `{
     
     // Reset active index when filtered items change
     this.$watch('filteredItems', () => {
-      this.${activeModel} = 0;
+      this.$nextTick(() => {
+        const selectableItems = this.selectableItems;
+        if (selectableItems.length > 0) {
+          // Set activeModel to the DOM index of the first selectable item
+          const firstSelectableItem = selectableItems[0];
+          this.${activeModel} = this.flattenedItems.findIndex(item => item === firstSelectableItem);
+        } else {
+          this.${activeModel} = -1;
+        }
+      });
     });
   },
   
@@ -115,7 +135,11 @@ const containerData = `{
   },
   
   get flattenedItems() {
-    return Object.values(this.filteredItems).flat().filter(item => !item.disabled);
+    return Object.values(this.filteredItems).flat();
+  },
+  
+  get selectableItems() {
+    return this.flattenedItems.filter(item => !item.disabled);
   },
   
   get hasResults() {
@@ -124,21 +148,74 @@ const containerData = `{
   
   ${keyboardNav ? `
   itemActiveNext() {
-    const items = this.flattenedItems;
-    if (items.length === 0) return;
-    this.${activeModel} = (this.${activeModel} + 1) % items.length;
+    const selectableItems = this.selectableItems;
+    const flattenedItems = this.flattenedItems;
+    if (selectableItems.length === 0) return;
+    
+    // Find current selectable index
+    const currentItem = flattenedItems[this.${activeModel}];
+    let currentSelectableIndex = selectableItems.findIndex(item => item === currentItem);
+    
+    // If current item not found in selectable items, start from first
+    if (currentSelectableIndex === -1) {
+      currentSelectableIndex = -1;
+    }
+    
+    // Move to next selectable item
+    const nextSelectableIndex = (currentSelectableIndex + 1) % selectableItems.length;
+    const nextItem = selectableItems[nextSelectableIndex];
+    
+    // Update activeModel to the DOM index of the next selectable item
+    this.${activeModel} = flattenedItems.findIndex(item => item === nextItem);
   },
   
   itemActivePrevious() {
-    const items = this.flattenedItems;
-    if (items.length === 0) return;
-    this.${activeModel} = this.${activeModel} === 0 ? items.length - 1 : this.${activeModel} - 1;
+    const selectableItems = this.selectableItems;
+    const flattenedItems = this.flattenedItems;
+    if (selectableItems.length === 0) return;
+    
+    // Find current selectable index
+    const currentItem = flattenedItems[this.${activeModel}];
+    let currentSelectableIndex = selectableItems.findIndex(item => item === currentItem);
+    
+    // If current item not found in selectable items, start from last
+    if (currentSelectableIndex === -1) {
+      currentSelectableIndex = selectableItems.length;
+    }
+    
+    // Move to previous selectable item
+    const prevSelectableIndex = currentSelectableIndex <= 0 ? selectableItems.length - 1 : currentSelectableIndex - 1;
+    const prevItem = selectableItems[prevSelectableIndex];
+    
+    // Update activeModel to the DOM index of the previous selectable item
+    this.${activeModel} = flattenedItems.findIndex(item => item === prevItem);
   },
   
   selectActiveItem() {
     const items = this.flattenedItems;
-    if (items[this.${activeModel}]) {
-      this.itemSelected = items[this.${activeModel}];
+    const selectableItems = this.selectableItems;
+    const activeIndex = this.${activeModel};
+    
+    // If activeIndex is invalid or out of bounds, use first selectable item
+    if (activeIndex < 0 || activeIndex >= items.length || !items[activeIndex]) {
+      if (selectableItems.length > 0) {
+        const firstSelectableItem = selectableItems[0];
+        this.itemSelected = firstSelectableItem;
+        // Update activeModel to the correct index for next time
+        this.${activeModel} = items.findIndex(item => item === firstSelectableItem);
+      }
+      return;
+    }
+    
+    const activeItem = items[activeIndex];
+    if (activeItem && !activeItem.disabled) {
+      this.itemSelected = activeItem;
+    } else {
+      // Fallback to first selectable item
+      if (selectableItems.length > 0) {
+        const firstSelectableItem = selectableItems[0];
+        this.itemSelected = firstSelectableItem;
+      }
     }
   },
   ` : ''}
