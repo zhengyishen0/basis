@@ -19,6 +19,10 @@ const textVariants = cva('leading-none m-0', {
             'card-description': 'text-base text-gray-600 leading-relaxed',
             'card-content': 'text-sm text-gray-700 leading-normal',
 
+            // Alert variants
+            'alert-title': 'text-base font-medium leading-none tracking-tight',
+            'alert-description': 'text-sm leading-relaxed',
+
             // Accordion variants
             'accordion-trigger':
                 'text-base font-semibold text-gray-900 select-none',
@@ -101,11 +105,14 @@ const getElementFromVariant = (variant: string) => {
         case 'page-subtitle':
         case 'section-subtitle':
             return 'h3';
+        case 'alert-title':
+            return 'h5';
         case 'hero-description':
         case 'card-description':
         case 'card-content':
         case 'accordion-content':
         case 'feature-description':
+        case 'alert-description':
         case 'body':
         case 'body-large':
             return 'p';
@@ -132,7 +139,7 @@ const getElementFromVariant = (variant: string) => {
     }
 };
 
-const Element = getElementFromVariant(variant);
+const Element = getElementFromVariant(variant || 'body');
 
 const classes = cn(textVariants({ variant, state }), className);
 ---

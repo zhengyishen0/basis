@@ -1,0 +1,124 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Alert from '@/components/ui/feedback/Alert.astro';
+import Text from '@/components/ui/display/Text.astro';
+import { CheckCircle, Info, AlertTriangle, AlertCircle } from 'lucide-astro';
+---
+
+<Layout title="Alert Component Demo">
+  <main class="max-w-4xl mx-auto p-8 space-y-8">
+    <div class="space-y-4">
+      <Text variant="page-title">Alert Component Demo</Text>
+      <Text variant="page-subtitle">Testing the refactored Alert component with universal system</Text>
+    </div>
+
+    <!-- Default Variant -->
+    <section class="space-y-4">
+      <Text variant="section-title">Default Variant (Primary Background)</Text>
+      
+      <Alert variant="default" title="Success!" description="Your changes have been saved successfully." icon={CheckCircle} />
+      
+      <Alert variant="default" title="System Update" icon={Info}>
+        <Text variant="alert-description">A new version is available for download.</Text>
+      </Alert>
+      
+      <Alert variant="default" icon={Info}>
+        <Text variant="alert-title">Manual Title</Text>
+        <Text variant="alert-description">Using Text components for full control over styling.</Text>
+      </Alert>
+      
+      <Alert variant="default" dismissible={true}>
+        This is a dismissible alert without an icon.
+      </Alert>
+    </section>
+
+    <!-- Outline Variant -->
+    <section class="space-y-4">
+      <Text variant="section-title">Outline Variant (Background with Primary Text)</Text>
+      
+      <Alert variant="outline" title="Information" description="This is important information you should know about." icon={Info} />
+      
+      <Alert variant="outline" icon={AlertCircle}>
+        <Text variant="alert-title">Attention Required</Text>
+        <Text variant="alert-description">Please review the following details before proceeding.</Text>
+      </Alert>
+      
+      <Alert variant="outline" dismissible={true}>
+        This is a dismissible outline alert.
+      </Alert>
+    </section>
+
+    <!-- Destructive Variant -->
+    <section class="space-y-4">
+      <Text variant="section-title">Destructive Variant (Background with Danger Text)</Text>
+      
+      <Alert variant="destructive" title="Error Occurred" description="Something went wrong with your request. Please try again." icon={AlertTriangle} />
+      
+      <Alert variant="destructive" icon={AlertTriangle}>
+        <Text variant="alert-title">Critical Error</Text>
+        <Text variant="alert-description">The system encountered a critical error and needs to restart.</Text>
+      </Alert>
+      
+      <Alert variant="destructive" dismissible={true}>
+        This is a dismissible destructive alert.
+      </Alert>
+    </section>
+
+    <!-- Universal Props Testing -->
+    <section class="space-y-4">
+      <Text variant="section-title">Universal Props Testing</Text>
+      
+      <Alert variant="default" padding="lg" elevation="elevated" icon={CheckCircle}>
+        Large padding with elevated shadow.
+      </Alert>
+      
+      <Alert variant="outline" padding="sm" elevation="floating" icon={Info}>
+        Small padding with floating shadow.
+      </Alert>
+      
+      <Alert variant="destructive" padding="xl" elevation="lifted" icon={AlertTriangle}>
+        Extra large padding with lifted shadow.
+      </Alert>
+    </section>
+
+    <!-- Text Variants Demo -->
+    <section class="space-y-4">
+      <Text variant="section-title">Alert Text Variants</Text>
+      
+      <Alert variant="outline" icon={Info}>
+        <Text variant="alert-title">Alert Title Variant</Text>
+        <Text variant="alert-description">Alert description variant with proper styling and line height for longer content that might wrap to multiple lines.</Text>
+      </Alert>
+      
+      <div class="bg-muted p-4 rounded-lg">
+        <Text variant="body-small" class="mb-2">Standalone Text variants:</Text>
+        <div class="space-y-2">
+          <Text variant="alert-title">Standalone Alert Title</Text>
+          <Text variant="alert-description">Standalone alert description text that can be used independently.</Text>
+        </div>
+      </div>
+    </section>
+
+    <!-- Alpine.js Integration -->
+    <section class="space-y-4">
+      <Text variant="section-title">Alpine.js Integration</Text>
+      
+      <Alert 
+        variant="default" 
+        icon={Info}
+        x-data="{ count: 0 }"
+        x-init="console.log('Alert initialized')"
+      >
+        <Text variant="alert-title">Interactive Alert</Text>
+        <div class="mt-2">
+          <button 
+            @click="count++"
+            class="px-3 py-1 bg-white/20 rounded text-sm hover:bg-white/30 transition-colors"
+          >
+            Clicked: <span x-text="count"></span> times
+          </button>
+        </div>
+      </Alert>
+    </section>
+  </main>
+</Layout>
