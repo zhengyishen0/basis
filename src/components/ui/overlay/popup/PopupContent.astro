@@ -6,11 +6,6 @@ const contentVariants = cva(
     'absolute z-popover rounded-md border bg-popover text-popover-foreground shadow-md outline-none',
     {
         variants: {
-            size: {
-                sm: 'max-w-xs p-3',
-                md: 'max-w-sm p-4',
-                lg: 'max-w-md p-6',
-            },
             theme: {
                 default: 'bg-popover border-border',
                 dark: 'bg-gray-900 border-gray-700 text-white',
@@ -24,7 +19,6 @@ const contentVariants = cva(
             },
         },
         defaultVariants: {
-            size: 'md',
             theme: 'default',
             placement: 'bottom',
         },
@@ -33,14 +27,15 @@ const contentVariants = cva(
 
 export interface Props extends VariantProps<typeof contentVariants> {
     className?: string;
+    role?: string;
     [key: string]: any;
 }
 
 const {
-    size = 'md',
     theme = 'default',
     placement = 'bottom',
     className,
+    role = 'dialog',
     ...alpineProps
 } = Astro.props;
 ---
@@ -55,12 +50,12 @@ const {
     x-transition:leave-end="opacity-0 scale-95"
     :id="popupId"
     class={cn(
-        contentVariants({ size, theme, placement }),
+        contentVariants({ theme, placement }),
         'popup-content',
         className
     )}
     style="display: none;"
-    role="dialog"
+    role={role}
     {...alpineProps}
 >
     <slot />

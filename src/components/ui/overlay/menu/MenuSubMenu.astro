@@ -6,10 +6,7 @@ export interface Props {
     [key: string]: any;
 }
 
-const {
-    className,
-    ...alpineProps
-} = Astro.props;
+const { className, ...alpineProps } = Astro.props;
 
 const submenuId = `submenu-${Math.random().toString(36).substring(2, 11)}`;
 
@@ -37,13 +34,16 @@ const { submenuItems, ...restAlpineProps } = alpineProps;
         
         positionSubmenu() {
             const triggerEl = this.$el.querySelector('[x-ref="submenuTrigger"]');
-            if (!triggerEl) return;
+            if (!triggerEl) {
+                console.log('No trigger element found for submenu');
+                return;
+            }
             
             const rect = triggerEl.getBoundingClientRect();
-            const submenuWidth = 200;
-            const submenuHeight = 150;
+            const submenuWidth = 200; // Increased for better fit
+            const submenuHeight = 150; // More realistic height
             const padding = 8;
-            const offset = 2;
+            const offset = 8; // Increased offset from trigger
             
             let x = rect.right + offset;
             let y = rect.top;
@@ -77,10 +77,10 @@ const { submenuItems, ...restAlpineProps } = alpineProps;
     {...restAlpineProps}
 >
     <slot />
-    
+
     <!-- Submenu Content -->
     <template x-teleport="body">
-        <div 
+        <div
             x-show="submenuOpen"
             x-ref="submenuContent"
             x-transition:enter="transition ease-out duration-100"
@@ -89,8 +89,8 @@ const { submenuItems, ...restAlpineProps } = alpineProps;
             x-transition:leave="transition ease-in duration-75"
             x-transition:leave-start="transform opacity-100 scale-100"
             x-transition:leave-end="transform opacity-0 scale-95"
-            :style="`position: fixed; left: ${submenuPosition.x}px; top: ${submenuPosition.y}px; z-index: 51;`"
-            class="min-w-48 rounded-md border bg-popover text-popover-foreground shadow-md py-1"
+            :style="`position: fixed; left: ${submenuPosition.x}px; top: ${submenuPosition.y}px; z-index: 60;`"
+            class="rounded-md border bg-popover text-popover-foreground shadow-md py-1"
             role="menu"
             @mouseenter="clearTimeout()"
             @mouseleave="closeSubmenu()"

@@ -1,9 +1,10 @@
+// Re-exports from base components - using Popup directly
 export { default as MenuBar } from './MenuBar.astro';
-export { default as MenuBarTrigger } from './MenuBarTrigger.astro';
-export { default as MenuBarContent } from './MenuBarContent.astro';
-export { default as MenuBarItem } from './MenuBarItem.astro';
-export { default as MenuBarGroup } from './MenuBarGroup.astro';
-export { default as MenuBarSubMenu } from './MenuBarSubMenu.astro';
-export { default as MenuBarSubTrigger } from './MenuBarSubTrigger.astro';
-export { default as MenuBarShortcut } from './MenuBarShortcut.astro';
-export { default as MenuBarConditional } from './MenuBarConditional.astro';
+export { default as MenuBarTrigger } from '../popup/PopupTrigger.astro';
+export { default as MenuBarContent } from '../popup/PopupContent.astro';
+export { default as MenuBarItem } from '../menu/MenuItem.astro';
+export { default as MenuBarGroup } from '../menu/MenuGroup.astro';
+export { default as MenuBarShortcut } from '../menu/MenuShortcut.astro';
+export { default as MenuBarSubTrigger } from '../menu/MenuSubTrigger.astro';
+export { default as MenuBarSubMenu } from '../menu/MenuSubMenu.astro';
+export { default as MenuBarConditional } from '../menu/MenuConditional.astro';

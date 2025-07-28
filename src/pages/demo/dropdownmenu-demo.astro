@@ -74,46 +74,40 @@ import { ChevronDown } from 'lucide-astro';
                     <DropdownMenuTrigger variant="outline">
                         Dynamic Menu <ChevronDown class="w-4 h-4" />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent label="File Manager">
+                    <DropdownMenuContent label="File Manager" role="menu">
                         <DropdownMenuGroup
                             x-for="group in menuGroups"
                             x-key="group.heading"
+                            x-text="group.heading"
                         >
-                            <div
-                                x-text="group.heading"
-                                class="px-3 py-1.5 text-xs font-semibold text-muted-foreground"
-                            >
-                            </div>
                             <DropdownMenuConditional
                                 x-for="item in group.items"
                                 x-key="item.text"
                                 condition="!item.submenu"
                             >
-                                <!-- True slot: Regular menu items -->
-                                <DropdownMenuItem slot="true">
-                                    <span x-text="item.text" class="flex-1"
-                                    ></span>
+                                <!-- True slot: Regular menu items (using x-text attribute) -->
+                                <DropdownMenuItem
+                                    slot="true"
+                                    x-text="item.text"
+                                >
                                     <DropdownMenuShortcut
                                         x-text="item.shortcut"
                                         x-show="item.shortcut"
                                     />
                                 </DropdownMenuItem>
 
-                                <!-- False slot: Submenu items -->
+                                <!-- False slot: Submenu items (using x-text attribute) -->
                                 <DropdownMenuSubMenu slot="false">
-                                    <DropdownMenuSubTrigger>
-                                        <span x-text="item.text"></span>
-                                    </DropdownMenuSubTrigger>
+                                    <DropdownMenuSubTrigger
+                                        x-text="item.text"
+                                    />
 
                                     <DropdownMenuItem
                                         slot="submenu"
                                         x-for="subitem in item.submenu"
                                         x-key="subitem.text"
-                                    >
-                                        <span
-                                            x-text="subitem.text"
-                                            class="flex-1"></span>
-                                    </DropdownMenuItem>
+                                        x-text="subitem.text"
+                                    />
                                 </DropdownMenuSubMenu>
                             </DropdownMenuConditional>
                         </DropdownMenuGroup>
@@ -131,14 +125,15 @@ import { ChevronDown } from 'lucide-astro';
                     <DropdownMenuTrigger variant="default">
                         Actions <ChevronDown class="w-4 h-4" />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent label="File Actions">
+                    <DropdownMenuContent label="File Actions" role="menu">
                         <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <span class="flex-1">New File</span>
+                            <!-- Using x-text for simple text -->
+                            <DropdownMenuItem x-text="'New File'">
                                 <DropdownMenuShortcut
                                     >Ctrl+N</DropdownMenuShortcut
                                 >
                             </DropdownMenuItem>
+                            <!-- Using slot for complex content -->
                             <DropdownMenuItem>
                                 <span class="flex-1">Open File</span>
                                 <DropdownMenuShortcut
@@ -205,7 +200,7 @@ import { ChevronDown } from 'lucide-astro';
                     <DropdownMenuTrigger variant="outline">
                         Hover Menu
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent>
+                    <DropdownMenuContent role="menu">
                         <DropdownMenuItem>Profile</DropdownMenuItem>
                         <DropdownMenuItem>Settings</DropdownMenuItem>
                         <Divider />
@@ -217,7 +212,7 @@ import { ChevronDown } from 'lucide-astro';
                     <DropdownMenuTrigger variant="ghost" size="sm">
                         Small Menu
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent size="sm">
+                    <DropdownMenuContent size="sm" role="menu">
                         <DropdownMenuItem>Option 1</DropdownMenuItem>
                         <DropdownMenuItem>Option 2</DropdownMenuItem>
                     </DropdownMenuContent>

@@ -1,8 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import HoverCard from '@/components/ui/overlay/hovercard/HoverCard.astro';
-import HoverCardContent from '@/components/ui/overlay/hovercard/HoverCardContent.astro';
-import HoverCardTrigger from '@/components/ui/overlay/hovercard/HoverCardTrigger.astro';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/overlay/hovercard';
 ---
 
 <Layout title="Hovercard Demo">
@@ -199,7 +197,7 @@ import HoverCardTrigger from '@/components/ui/overlay/hovercard/HoverCardTrigger
                 <p class="mb-4">
                     A more complex example with profile information:
                 </p>
-                <HoverCard openDelay={100} closeDelay={500}>
+                <HoverCard delay={100}>
                     <HoverCardTrigger>
                         <div
                             class="flex items-center gap-2 p-2 rounded hover:bg-gray-50 cursor-pointer w-fit"

@@ -138,7 +138,7 @@ import { Divider } from '@/components/ui/layout';
                             <MenuBarTrigger>
                                 <span x-text="menu.name"></span>
                             </MenuBarTrigger>
-                            <MenuBarContent>
+                            <MenuBarContent role="menu">
                                 <MenuBarGroup
                                     x-for="(group, groupIndex) in menu.groups"
                                     x-key="groupIndex"
@@ -152,11 +152,9 @@ import { Divider } from '@/components/ui/layout';
                                         <!-- True slot: Regular menu items -->
                                         <MenuBarItem
                                             slot="true"
+                                            x-text="item.text"
                                             :variant="item.variant || 'default'"
                                         >
-                                            <span
-                                                x-text="item.text"
-                                                class="flex-1"></span>
                                             <MenuBarShortcut
                                                 x-text="item.shortcut"
                                             />
@@ -164,18 +162,13 @@ import { Divider } from '@/components/ui/layout';
 
                                         <!-- False slot: Submenu items -->
                                         <MenuBarSubMenu slot="false">
-                                            <MenuBarSubTrigger>
-                                                <span x-text="item.text"></span>
-                                            </MenuBarSubTrigger>
+                                            <MenuBarSubTrigger x-text="item.text" />
                                             <MenuBarItem
                                                 slot="submenu"
                                                 x-for="subitem in item.submenu"
                                                 x-key="subitem.text"
-                                            >
-                                                <span
-                                                    x-text="subitem.text"
-                                                    class="flex-1"></span>
-                                            </MenuBarItem>
+                                                x-text="subitem.text"
+                                            />
                                         </MenuBarSubMenu>
                                     </MenuBarConditional>
                                 </MenuBarGroup>
@@ -196,18 +189,18 @@ import { Divider } from '@/components/ui/layout';
                 >
                     <MenuBar>
                         <MenuBarTrigger> File </MenuBarTrigger>
-                        <MenuBarContent>
+                        <MenuBarContent role="menu">
                             <MenuBarGroup divider>
-                                <MenuBarItem>
-                                    <span class="flex-1">New File</span>
+                                <!-- Using x-text for simple text -->
+                                <MenuBarItem x-text="'New File'">
                                     <MenuBarShortcut>Ctrl+N</MenuBarShortcut>
                                 </MenuBarItem>
+                                <!-- Using slot for complex content -->
                                 <MenuBarItem>
                                     <span class="flex-1">Open File</span>
                                     <MenuBarShortcut>Ctrl+O</MenuBarShortcut>
                                 </MenuBarItem>
-                                <MenuBarItem>
-                                    <span class="flex-1">Save</span>
+                                <MenuBarItem x-text="'Save'">
                                     <MenuBarShortcut>Ctrl+S</MenuBarShortcut>
                                 </MenuBarItem>
                             </MenuBarGroup>
@@ -226,7 +219,7 @@ import { Divider } from '@/components/ui/layout';
 
                     <MenuBar>
                         <MenuBarTrigger> Edit </MenuBarTrigger>
-                        <MenuBarContent>
+                        <MenuBarContent role="menu">
                             <MenuBarGroup divider>
                                 <MenuBarItem>
                                     <span class="flex-1">Undo</span>

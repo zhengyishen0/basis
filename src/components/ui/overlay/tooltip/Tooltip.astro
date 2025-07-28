@@ -1,5 +1,5 @@
 ---
-import { cn } from '@/lib/utils';
+import Popup from '../popup/Popup.astro';
 
 export interface Props {
     delay?: number;
@@ -8,27 +8,8 @@ export interface Props {
 }
 
 const { delay = 500, className, ...alpineProps } = Astro.props;
-const tooltipId = `tooltip-${Math.random().toString(36).substring(2, 11)}`;
 ---
 
-<div 
-    x-data=`{
-        visible: false,
-        tooltipId: '${tooltipId}',
-        timeout: null,
-        show() {
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => this.visible = true, ${delay});
-        },
-        hide() {
-            clearTimeout(this.timeout);
-            this.visible = false;
-        }
-    }`
-    @mouseenter="show()"
-    @mouseleave="hide()"
-    class={cn('relative inline-block', className)}
-    {...alpineProps}
->
+<Popup trigger="hover" delay={delay} className={className} {...alpineProps}>
     <slot />
-</div>
+</Popup>

@@ -1,5 +1,5 @@
 ---
-import { cn } from '@/lib/utils';
+import Popup from '../popup/Popup.astro';
 
 export interface Props {
     className?: string;
@@ -10,115 +10,8 @@ const {
     className,
     ...alpineProps
 } = Astro.props;
-
-const menuBarId = `menu-bar-${Math.random().toString(36).substring(2, 11)}`;
 ---
 
-<div
-    x-data=`{
-        open: false,
-        menuBarId: '${menuBarId}',
-        activeIndex: 0,
-        menuItems: [],
-        
-        init() {
-            this.$nextTick(() => {
-                this.updateMenuItems();
-            });
-        },
-        
-        toggle(event) { 
-            this.open = !this.open;
-            if (this.open) {
-                this.activeIndex = 0;
-                this.$nextTick(() => {
-                    this.positionMenu(event);
-                    this.$refs.menuBarContent?.focus();
-                });
-            }
-        },
-        
-        positionMenu(event) {
-            const menuEl = this.$refs.menuBarContent;
-            if (!menuEl) return;
-            
-            const triggerEl = event.target.closest('[aria-expanded]') || this.$el.querySelector('[aria-expanded]');
-            if (!triggerEl) return;
-            
-            const triggerRect = triggerEl.getBoundingClientRect();
-            const menuRect = menuEl.getBoundingClientRect();
-            const menuWidth = menuRect.width || 200;
-            const menuHeight = menuRect.height || 300;
-            const padding = 8;
-            
-            let x = triggerRect.left;
-            let y = triggerRect.bottom + 4;
-            
-            // Check right edge
-            if (x + menuWidth > window.innerWidth - padding) {
-                x = window.innerWidth - menuWidth - padding;
-            }
-            
-            // Check bottom edge
-            if (y + menuHeight > window.innerHeight - padding) {
-                y = triggerRect.top - menuHeight - 4;
-            }
-            
-            // Check left edge
-            if (x < padding) {
-                x = padding;
-            }
-            
-            // Check top edge
-            if (y < padding) {
-                y = triggerRect.bottom + 4;
-            }
-            
-            menuEl.style.left = x + 'px';
-            menuEl.style.top = y + 'px';
-        },
-        
-        close() { 
-            this.open = false;
-            this.activeIndex = 0;
-        },
-        
-        updateMenuItems() {
-            this.menuItems = Array.from(this.$el.querySelectorAll('[data-menu-item]')).filter(item => !item.disabled);
-        },
-        
-        navigateNext() {
-            if (this.menuItems.length === 0) return;
-            this.activeIndex = (this.activeIndex + 1) % this.menuItems.length;
-        },
-        
-        navigatePrevious() {
-            if (this.menuItems.length === 0) return;
-            this.activeIndex = this.activeIndex === 0 ? this.menuItems.length - 1 : this.activeIndex - 1;
-        },
-        
-        selectActiveItem() {
-            if (this.menuItems[this.activeIndex]) {
-                this.menuItems[this.activeIndex].click();
-            }
-        },
-        
-        handleItemClick(event) {
-            this.close();
-            
-            this.$dispatch('menu-item-click', {
-                target: event.target,
-                text: event.target.textContent?.trim()
-            });
-        }
-    }`
-    @click.outside="open && close()"
-    @keydown.escape.window="open && close()"
-    @keydown.arrow-down.prevent="open && navigateNext()"
-    @keydown.arrow-up.prevent="open && navigatePrevious()"
-    @keydown.enter.prevent="open && selectActiveItem()"
-    class={cn('relative inline-block', className)}
-    {...alpineProps}
->
+<Popup trigger="click" className={className} {...alpineProps}>
     <slot />
-</div>
+</Popup>

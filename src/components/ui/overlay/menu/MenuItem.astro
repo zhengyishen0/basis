@@ -1,0 +1,61 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+    shortcut?: string;
+    className?: string;
+    disabled?: boolean;
+    [key: string]: any;
+}
+
+const {
+    shortcut,
+    disabled = false,
+    className,
+    ...alpineProps
+} = Astro.props;
+
+// Extract x-for, x-key, and x-text from alpineProps
+const { 'x-for': xFor, 'x-key': xKey, 'x-text': xText, ...restProps } = alpineProps;
+---
+
+{
+  xFor ? (
+    <template x-for={xFor} x-key={xKey}>
+        <div
+            data-menu-item
+            @mouseenter="$el.closest('[x-data]') && ($el.closest('[x-data]').activeIndex = Array.from($el.closest('[role=menu]')?.querySelectorAll('[data-menu-item]') || []).indexOf($el))"
+            :data-active="(typeof activeIndex !== 'undefined' ? activeIndex : -1) === Array.from($el.closest('[role=menu]')?.querySelectorAll('[data-menu-item]') || []).indexOf($el)"
+            class={cn(
+                'relative flex cursor-default select-none items-center rounded-sm px-3 py-2 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground data-[active=true]:bg-accent data-[active=true]:text-accent-foreground min-w-48 text-left',
+                disabled && 'pointer-events-none opacity-50',
+                className
+            )}
+            role="menuitem"
+            tabindex="-1"
+            {...restProps}
+        >
+            {xText && <span x-text={xText}></span>}
+            <slot />
+        </div>
+    </template>
+  ) : (
+    <div
+        data-menu-item
+        @mouseenter="$el.closest('[x-data]') && ($el.closest('[x-data]').activeIndex = Array.from($el.closest('[role=menu]')?.querySelectorAll('[data-menu-item]') || []).indexOf($el))"
+        :data-active="(typeof activeIndex !== 'undefined' ? activeIndex : -1) === Array.from($el.closest('[role=menu]')?.querySelectorAll('[data-menu-item]') || []).indexOf($el)"
+        :aria-disabled="false"
+        class={cn(
+            'relative flex cursor-default select-none items-center rounded-sm px-3 py-2 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground data-[active=true]:bg-accent data-[active=true]:text-accent-foreground min-w-48 text-left',
+            disabled && 'pointer-events-none opacity-50',
+            className
+        )}
+        role="menuitem"
+        tabindex="-1"
+        {...restProps}
+    >
+        {xText && <span x-text={xText}></span>}
+        <slot />
+    </div>
+  )
+}

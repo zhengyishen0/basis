@@ -1,41 +1,15 @@
 ---
-import { cn } from '@/lib/utils';
+import Popup from '../popup/Popup.astro';
 
 export interface Props {
-    openDelay?: number;
-    closeDelay?: number;
+    delay?: number;
     className?: string;
     [key: string]: any;
 }
 
-const { openDelay = 200, closeDelay = 300, className, ...alpineProps } = Astro.props;
-const hovercardId = `hovercard-${Math.random().toString(36).substring(2, 11)}`;
+const { delay = 200, className, ...alpineProps } = Astro.props;
 ---
 
-<div 
-    x-data=`{
-        visible: false,
-        hovercardId: '${hovercardId}',
-        openTimeout: null,
-        closeTimeout: null,
-        show() {
-            clearTimeout(this.closeTimeout);
-            if (!this.visible) {
-                this.openTimeout = setTimeout(() => this.visible = true, ${openDelay});
-            }
-        },
-        hide() {
-            clearTimeout(this.openTimeout);
-            this.closeTimeout = setTimeout(() => this.visible = false, ${closeDelay});
-        },
-        keepOpen() {
-            clearTimeout(this.closeTimeout);
-        }
-    }`
-    @mouseenter="show()"
-    @mouseleave="hide()"
-    class={cn('relative inline-block', className)}
-    {...alpineProps}
->
+<Popup trigger="hover" delay={delay} className={className} {...alpineProps}>
     <slot />
-</div>
+</Popup>

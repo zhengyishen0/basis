@@ -1,78 +1,19 @@
 ---
-import { cn } from '@/lib/utils';
+import Popup from '../popup/Popup.astro';
 
 export interface Props {
     trigger?: 'click' | 'hover' | 'focus' | 'manual';
-    closeOnClick?: boolean;
-    disabled?: boolean;
     className?: string;
     [key: string]: any;
 }
 
 const {
     trigger = 'click',
-    closeOnClick = true,
-    disabled = false,
     className,
     ...alpineProps
 } = Astro.props;
-
-const dropdownId = `dropdown-${Math.random().toString(36).substring(2, 11)}`;
 ---
 
-<div
-    x-data={`{
-        open: false,
-        trigger: '${trigger}',
-        disabled: ${disabled},
-        submenuOpen: '',
-        activeIndex: -1,
-        toggle() { this.open = !this.open },
-        close() { this.open = false },
-        
-        handleMenuItemClick(event) {
-            if (${closeOnClick}) {
-                this.close();
-            }
-            
-            this.$dispatch('dropdown-menu-item-click', {
-                target: event.target,
-                text: event.target.textContent?.trim()
-            });
-        },
-        
-        handleKeydown(event) {
-            const items = this.$refs.dropdownMenu?.querySelectorAll('[data-dropdown-menu-item]');
-            if (!items || items.length === 0) return;
-            
-            switch (event.key) {
-                case 'ArrowDown':
-                    event.preventDefault();
-                    this.activeIndex = (this.activeIndex + 1) % items.length;
-                    break;
-                case 'ArrowUp':
-                    event.preventDefault();
-                    this.activeIndex = this.activeIndex <= 0 ? items.length - 1 : this.activeIndex - 1;
-                    break;
-                case 'Enter':
-                    event.preventDefault();
-                    if (this.activeIndex >= 0 && items[this.activeIndex]) {
-                        items[this.activeIndex].click();
-                    }
-                    break;
-                case 'Escape':
-                    event.preventDefault();
-                    this.close();
-                    break;
-            }
-        }
-    }`}
-  @click.outside="open && close()"
-  @keydown.escape.window="open && close()"
-  @keydown="open && handleKeydown($event)"
-  class={cn('relative inline-block', className)}
-  data-trigger={trigger}
-  {...alpineProps}
->
-  <slot />
-</div>
+<Popup trigger={trigger} className={className} {...alpineProps}>
+    <slot />
+</Popup>
