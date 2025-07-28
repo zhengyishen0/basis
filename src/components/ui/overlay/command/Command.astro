@@ -1,4 +1,6 @@
 ---
+import Dialog from '../dialog/Dialog.astro';
+import DialogContent from '../dialog/DialogContent.astro';
 import MenuContainer from '../menu/MenuContainer.astro';
 import { cva, type VariantProps } from 'class-variance-authority';
 
@@ -37,6 +39,8 @@ export interface Props extends VariantProps<typeof commandVariants> {
   placeholder?: string;
   emptyText?: string;
   onSelect?: string;
+  trigger?: 'click' | 'hover' | 'focus' | 'rightclick' | 'manual';
+  keyboardShortcut?: string;
   class?: string;
   [key: string]: any;
 }
@@ -46,28 +50,74 @@ const {
   placeholder = 'Type a command or search...',
   emptyText = 'No results found.',
   onSelect = 'console.log(item)',
+  trigger = 'manual',
+  keyboardShortcut = 'cmd+k',
   variant,
   size,
   class: className,
   ...alpineProps
 } = Astro.props;
+
+// Parse keyboard shortcut
+const shortcutKey = keyboardShortcut.includes('cmd+') ? keyboardShortcut.split('cmd+')[1] : keyboardShortcut;
+const withMeta = keyboardShortcut.includes('cmd+') || keyboardShortcut.includes('ctrl+');
 ---
 
-<MenuContainer
-  items={items}
-  searchEnabled={true}
-  keyboardNav={true}
-  searchModel="commandSearch"
-  activeModel="commandActiveIndex"
-  itemsModel="commandItems"
-  emptyText={emptyText}
-  onSelect={onSelect}
-  variant={variant}
-  size={size}
+<Dialog 
+  x-data={`{
+    ...this,
+    init() {
+      // Add keyboard shortcut listener
+      this.$nextTick(() => {
+        const handleKeydown = (e) => {
+          if (${withMeta ? '(e.metaKey || e.ctrlKey)' : 'true'} && e.key.toLowerCase() === '${shortcutKey.toLowerCase()}') {
+            e.preventDefault();
+            this.toggle();
+            if (this.open) {
+              // Focus the search input when opened
+              this.$nextTick(() => {
+                const input = document.querySelector('[role="dialog"] input');
+                if (input) input.focus();
+              });
+            }
+          }
+        };
+        
+        document.addEventListener('keydown', handleKeydown);
+        this.$cleanup = () => document.removeEventListener('keydown', handleKeydown);
+      });
+    },
+    destroy() {
+      if (this.$cleanup) this.$cleanup();
+    }
+  }`}
   class={className}
   {...alpineProps}
 >
-  <slot name="input" slot="input" />
-  <slot />
-  <slot name="footer" slot="footer" />
-</MenuContainer>
+  <!-- Trigger slot for button/trigger element -->
+  <slot name="trigger" />
+  
+  <!-- Command dialog content -->
+  <DialogContent 
+    variant="center"
+    size="md"
+    class="w-96 max-w-sm p-0"
+  >
+    <MenuContainer
+      items={items}
+      searchEnabled={true}
+      keyboardNav={true}
+      searchModel="commandSearch"
+      activeModel="commandActiveIndex"
+      itemsModel="commandItems"
+      emptyText={emptyText}
+      onSelect={`${onSelect}; close()`}
+      variant={variant}
+      size={size}
+    >
+      <slot name="input" slot="input" />
+      <slot />
+      <slot name="footer" slot="footer" />
+    </MenuContainer>
+  </DialogContent>
+</Dialog>

@@ -7,6 +7,7 @@ import {
     CommandItem,
     CommandShortcut,
     CommandFooter,
+    CommandTrigger,
 } from '@/components/ui/overlay';
 const commandItems = {
     suggestions: [
@@ -60,11 +61,17 @@ const commandItems = {
     <div class="container mx-auto p-8">
         <h1 class="text-3xl font-bold mb-8">Command Component Demo</h1>
 
-        <div class="max-w-md mx-auto">
+        <div class="max-w-md mx-auto space-y-4">
+            <!-- Button Trigger Example -->
             <Command
                 items={commandItems}
                 onSelect="alert('Selected: ' + item.title)"
+                keyboardShortcut="cmd+k"
             >
+                <CommandTrigger slot="trigger" variant="button">
+                    Open Command Palette (⌘K)
+                </CommandTrigger>
+
                 <CommandInput
                     slot="input"
                     placeholder="Type a command or search..."
@@ -103,17 +110,7 @@ const commandItems = {
         <div class="mt-8 text-center text-sm text-muted-foreground">
             <p>Try typing "calendar", "profile", or "settings"</p>
             <p>Use arrow keys to navigate, Enter to select, Escape to clear</p>
+            <p>Click button or press ⌘K to open</p>
         </div>
     </div>
-
-    <!-- Simple Alpine.js setup for demo only -->
-    <script>
-        // Check if Alpine is already loaded, if not, load it from CDN
-        if (typeof window.Alpine === 'undefined') {
-            const script = document.createElement('script');
-            script.src = 'https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js';
-            script.defer = true;
-            document.head.appendChild(script);
-        }
-    </script>
 </Layout>
