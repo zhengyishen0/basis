@@ -79,6 +79,17 @@ const containerData = `{
       }
     });
     
+    // Reset search when dialog opens/closes
+    const dialog = this.$el.closest('[x-data]');
+    if (dialog && dialog !== this.$el) {
+      this.$watch(() => dialog.open, (isOpen) => {
+        if (!isOpen) {
+          this.${searchModel} = '';
+          this.${activeModel} = 0;
+        }
+      });
+    }
+    
     this.$watch('itemSelected', (item) => {
       if (item) {
         ${onSelect}

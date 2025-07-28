@@ -58,39 +58,12 @@ const {
   ...alpineProps
 } = Astro.props;
 
-// Parse keyboard shortcut
-const shortcutKey = keyboardShortcut.includes('cmd+') ? keyboardShortcut.split('cmd+')[1] : keyboardShortcut;
-const withMeta = keyboardShortcut.includes('cmd+') || keyboardShortcut.includes('ctrl+');
 ---
 
 <Dialog 
-  x-data={`{
-    ...this,
-    init() {
-      // Add keyboard shortcut listener
-      this.$nextTick(() => {
-        const handleKeydown = (e) => {
-          if (${withMeta ? '(e.metaKey || e.ctrlKey)' : 'true'} && e.key.toLowerCase() === '${shortcutKey.toLowerCase()}') {
-            e.preventDefault();
-            this.toggle();
-            if (this.open) {
-              // Focus the search input when opened
-              this.$nextTick(() => {
-                const input = document.querySelector('[role="dialog"] input');
-                if (input) input.focus();
-              });
-            }
-          }
-        };
-        
-        document.addEventListener('keydown', handleKeydown);
-        this.$cleanup = () => document.removeEventListener('keydown', handleKeydown);
-      });
-    },
-    destroy() {
-      if (this.$cleanup) this.$cleanup();
-    }
-  }`}
+  keyboardShortcut={keyboardShortcut}
+  autoFocus={true}
+  focusSelector="input"
   class={className}
   {...alpineProps}
 >
@@ -100,8 +73,8 @@ const withMeta = keyboardShortcut.includes('cmd+') || keyboardShortcut.includes(
   <!-- Command dialog content -->
   <DialogContent 
     variant="center"
-    size="md"
-    class="w-96 max-w-sm p-0"
+    size="lg"
+    class="p-0"
   >
     <MenuContainer
       items={items}
