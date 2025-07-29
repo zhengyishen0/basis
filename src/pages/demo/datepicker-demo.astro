@@ -1,0 +1,315 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import DatePicker from '@/components/ui/forms/DatePicker.astro';
+import Calendar from '@/components/ui/display/Calendar.astro';
+---
+
+<Layout title="DatePicker Demo">
+    <div class="container mx-auto p-8 max-w-4xl">
+        <h1 class="text-3xl font-bold mb-8">DatePicker Component Demo</h1>
+
+        <!-- Basic DatePicker -->
+        <section
+            class="min-h-screen p-8 border border-gray-200 rounded-lg mb-8"
+        >
+            <h2 class="text-2xl font-semibold mb-8">Basic DatePicker</h2>
+
+            <div class="space-y-8">
+                <div>
+                    <label class="block text-sm font-medium mb-2"
+                        >Single Date Selection</label
+                    >
+                    <DatePicker
+                        name="single_date"
+                        placeholder="Select a date"
+                        mode="single"
+                        size="sm"
+                    />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2"
+                        >Date Range Selection</label
+                    >
+                    <DatePicker
+                        name="date_range"
+                        placeholder="Select start date → end date"
+                        mode="range"
+                    />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2"
+                        >Two Month Range Picker</label
+                    >
+                    <DatePicker
+                        name="two_month_range"
+                        placeholder="Select date range (2 months)"
+                        mode="range"
+                        numberOfMonths={2}
+                        calendarSize="md"
+                    />
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2"
+                            >US Format (m/d/Y)</label
+                        >
+                        <DatePicker
+                            name="us_date"
+                            placeholder="MM/DD/YYYY"
+                            format="m/d/Y"
+                        />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2"
+                            >Long Format (j F Y)</label
+                        >
+                        <DatePicker
+                            name="long_date"
+                            placeholder="Day Month Year"
+                            format="j F Y"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calendar Variants -->
+        <section
+            class="min-h-screen p-8 border border-gray-200 rounded-lg mb-8"
+        >
+            <h2 class="text-2xl font-semibold mb-8">Calendar Variants</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <label class="block text-sm font-medium mb-4"
+                        >Small Calendar</label
+                    >
+                    <DatePicker
+                        name="small_date"
+                        placeholder="Small calendar"
+                        calendarSize="sm"
+                        size="sm"
+                    />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-4"
+                        >Medium Calendar</label
+                    >
+                    <DatePicker
+                        name="medium_date"
+                        placeholder="Medium calendar"
+                        calendarSize="md"
+                        size="md"
+                    />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-4"
+                        >Large Calendar</label
+                    >
+                    <DatePicker
+                        name="large_date"
+                        placeholder="Large calendar"
+                        calendarSize="lg"
+                        size="lg"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <!-- Standalone Calendar -->
+        <section
+            class="min-h-screen p-8 border border-gray-200 rounded-lg mb-8"
+        >
+            <h2 class="text-2xl font-semibold mb-8">Standalone Calendar</h2>
+
+            <div class="space-y-12">
+                <div class="text-center">
+                    <h3 class="text-lg font-medium mb-4">Default Calendar</h3>
+                    <div class="inline-block">
+                        <Calendar mode="single" variant="default" size="md" />
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <h3 class="text-lg font-medium mb-4">Outline Calendar</h3>
+                    <div class="inline-block">
+                        <Calendar mode="single" variant="outline" size="md" />
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <h3 class="text-lg font-medium mb-4">Minimal Calendar</h3>
+                    <div class="inline-block">
+                        <Calendar mode="single" variant="minimal" size="md" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Features -->
+        <section
+            class="min-h-screen p-8 border border-gray-200 rounded-lg mb-8"
+        >
+            <h2 class="text-2xl font-semibold mb-8">Advanced Features</h2>
+
+            <div class="space-y-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2"
+                            >Future Dates Only (Min Date)</label
+                        >
+                        <DatePicker
+                            name="future_date"
+                            placeholder="Select future date"
+                            minDate={new Date()}
+                        />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2"
+                            >Past 30 Days Only (Max Date)</label
+                        >
+                        <DatePicker
+                            name="past_date"
+                            placeholder="Select past date"
+                            maxDate={new Date()}
+                            minDate={new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)}
+                        />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2"
+                            >This Year Only (Min + Max)</label
+                        >
+                        <DatePicker
+                            name="year_constrained"
+                            placeholder="Select date this year"
+                            minDate={new Date(new Date().getFullYear(), 0, 1)}
+                            maxDate={new Date(new Date().getFullYear(), 11, 31)}
+                        />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2"
+                            >Dropdown Navigation</label
+                        >
+                        <DatePicker
+                            name="dropdown_date"
+                            placeholder="With dropdowns"
+                            captionLayout="dropdown"
+                        />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="text-center">
+                        <h3 class="text-lg font-medium mb-4">
+                            Compact Calendar
+                        </h3>
+                        <div class="inline-block">
+                            <Calendar
+                                mode="single"
+                                variant="default"
+                                size="sm"
+                                density="compact"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <h3 class="text-lg font-medium mb-4">
+                            No Outside Days
+                        </h3>
+                        <div class="inline-block">
+                            <Calendar
+                                mode="single"
+                                variant="default"
+                                showOutsideDays={false}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Demo -->
+        <section
+            class="min-h-screen p-8 border border-gray-200 rounded-lg mb-8"
+        >
+            <h2 class="text-2xl font-semibold mb-8">Interactive Demo</h2>
+
+            <div class="max-w-md mx-auto text-center">
+                <div
+                    x-data="{
+            selectedDate: null,
+            formattedDate: '',
+            
+            handleDateSelect(date) {
+              this.selectedDate = date;
+              if (date) {
+                const d = new Date(date);
+                this.formattedDate = d.toLocaleDateString();
+              } else {
+                this.formattedDate = '';
+              }
+            }
+          }"
+                >
+                    <div class="mb-8">
+                        <label class="block text-sm font-medium mb-2"
+                            >Pick a Date</label
+                        >
+                        <DatePicker
+                            name="interactive_date"
+                            placeholder="Interactive picker"
+                            onSelect="handleDateSelect"
+                        />
+                    </div>
+
+                    <div class="p-6 bg-gray-50 rounded-lg">
+                        <h3 class="font-medium mb-2">Selected Date:</h3>
+                        <p
+                            x-text="formattedDate || 'No date selected'"
+                            class="text-gray-600"
+                        >
+                        </p>
+                        <p
+                            x-text="selectedDate ? 'Raw value: ' + selectedDate : ''"
+                            class="text-xs text-gray-500 mt-1"
+                        >
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<script>
+    // Global handlers for demo functionality
+    window.handleDateSelect = function (date) {
+        console.log('Date selected:', date);
+        // Show a visual feedback
+        if (date) {
+            const formattedDate = new Date(date).toLocaleDateString();
+            console.log('Formatted date:', formattedDate);
+        }
+    };
+
+    window.handleDateChange = function (date, formatted) {
+        console.log('Date changed:', date, 'Formatted:', formatted);
+    };
+    
+    // Make sure Alpine.js is loaded and working
+    document.addEventListener('alpine:init', () => {
+        console.log('Alpine.js initialized');
+    });
+</script>
