@@ -1,0 +1,226 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+} from '@/components/ui/navigation/breadcrumbs';
+import { ChevronRight, Home, ArrowRight } from 'lucide-astro';
+
+const dynamicBreadcrumbs = [
+    { label: 'Home', href: '/', icon: 'home' },
+    { label: 'Products', href: '/products' },
+    { label: 'Electronics', href: '/products/electronics' },
+    { label: 'Laptops', current: true },
+];
+
+const longBreadcrumbs = [
+    { label: 'Home', href: '/' },
+    { label: 'Categories', href: '/categories' },
+    { label: 'Electronics', href: '/categories/electronics' },
+    { label: 'Computers', href: '/categories/electronics/computers' },
+    { label: 'Laptops', href: '/categories/electronics/computers/laptops' },
+    { label: 'Gaming Laptops', current: true },
+];
+---
+
+<Layout title="Breadcrumb Demo">
+    <main class="container mx-auto p-8 space-y-12">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold mb-4">Breadcrumb Component Demo</h1>
+            <p class="text-muted-foreground mb-8">
+                Composable breadcrumb components with Alpine.js x-for support
+            </p>
+        </div>
+
+        <!-- Basic Static Breadcrumbs -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Basic Static Breadcrumbs</h2>
+
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-lg font-medium mb-2">
+                        With chevron separators
+                    </h3>
+                    <Breadcrumb>
+                        <BreadcrumbItem href="/" separator="chevron">
+                            <Home class="w-4 h-4" />
+                            Home
+                        </BreadcrumbItem>
+                        <BreadcrumbItem href="/products" separator="chevron"
+                            >Products</BreadcrumbItem
+                        >
+                        <BreadcrumbItem>Laptops</BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-medium mb-2">
+                        With dot separators
+                    </h3>
+                    <Breadcrumb>
+                        <BreadcrumbItem href="/" separator="dot"
+                            >Home</BreadcrumbItem
+                        >
+                        <BreadcrumbItem href="/products" separator="dot"
+                            >Products</BreadcrumbItem
+                        >
+                        <BreadcrumbItem>Current Page</BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-medium mb-2">
+                        With custom separators via slots
+                    </h3>
+                    <Breadcrumb>
+                        <BreadcrumbItem href="/">
+                            Home
+                            <ArrowRight slot="separator" class="w-4 h-4" />
+                        </BreadcrumbItem>
+                        <BreadcrumbItem href="/products">
+                            Products
+                            <span slot="separator">→</span>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem>Current Page</BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Breadcrumbs with x-for -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">
+                Dynamic Breadcrumbs with x-for
+            </h2>
+
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-lg font-medium mb-2">
+                        Simple dynamic breadcrumbs
+                    </h3>
+                    <Breadcrumb
+                        x-data={`{ items: ${JSON.stringify(dynamicBreadcrumbs)} }`}
+                    >
+                        <BreadcrumbItem
+                            x-for="(item, index) in items"
+                            x-key="index"
+                            href="item.href"
+                            separator="chevron"
+                            x-text="item.label"
+                        />
+                    </Breadcrumb>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-medium mb-2">With mixed content</h3>
+                    <Breadcrumb
+                        x-data={`{ items: ${JSON.stringify(dynamicBreadcrumbs)} }`}
+                    >
+                        <BreadcrumbItem
+                            x-for="(item, index) in items"
+                            x-key="index"
+                            href="item.href"
+                            separator="chevron"
+                        >
+                            <template x-if="item.icon === 'home'">
+                                <Home class="w-4 h-4" />
+                            </template>
+                            <span x-text="item.label"></span>
+                        </BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+            </div>
+        </section>
+
+        <!-- Different Variants -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Different Variants</h2>
+
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-lg font-medium mb-2">Default variant</h3>
+                    <Breadcrumb variant="default">
+                        <BreadcrumbItem href="/" separator="chevron"
+                            >Home</BreadcrumbItem
+                        >
+                        <BreadcrumbItem href="/products" separator="chevron"
+                            >Products</BreadcrumbItem
+                        >
+                        <BreadcrumbItem>Current</BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-medium mb-2">Minimal variant</h3>
+                    <Breadcrumb variant="minimal">
+                        <BreadcrumbItem href="/" separator="chevron"
+                            >Home</BreadcrumbItem
+                        >
+                        <BreadcrumbItem href="/products" separator="chevron"
+                            >Products</BreadcrumbItem
+                        >
+                        <BreadcrumbItem>Current</BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-medium mb-2">Compact variant</h3>
+                    <Breadcrumb variant="compact">
+                        <BreadcrumbItem href="/" separator="chevron"
+                            >Home</BreadcrumbItem
+                        >
+                        <BreadcrumbItem href="/products" separator="chevron"
+                            >Products</BreadcrumbItem
+                        >
+                        <BreadcrumbItem>Current</BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testing Alpine.js Integration -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Alpine.js Integration Test</h2>
+
+            <div
+                x-data="{ 
+          currentPath: ['Home', 'Products', 'Electronics', 'Laptops'],
+          addLevel() {
+            this.currentPath.push('Gaming');
+          },
+          removeLevel() {
+            if (this.currentPath.length > 1) {
+              this.currentPath.pop();
+            }
+          }
+        }"
+                class="space-y-4"
+            >
+                <div class="flex gap-2">
+                    <button
+                        @click="addLevel()"
+                        class="px-3 py-1 bg-blue-500 text-white rounded text-sm"
+                    >
+                        Add Level
+                    </button>
+                    <button
+                        @click="removeLevel()"
+                        class="px-3 py-1 bg-red-500 text-white rounded text-sm"
+                    >
+                        Remove Level
+                    </button>
+                </div>
+
+                <Breadcrumb>
+                    <BreadcrumbItem
+                        x-for="(item, index) in currentPath"
+                        x-key="index"
+                        href="#"
+                        separator="chevron"
+                        x-text="item"
+                    />
+                </Breadcrumb>
+            </div>
+        </section>
+    </main>
+</Layout>

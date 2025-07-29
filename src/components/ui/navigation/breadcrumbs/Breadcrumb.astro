@@ -1,0 +1,43 @@
+---
+import { cn } from '@/lib/utils';
+import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
+
+const breadcrumbVariants = createUIComponent(
+  'w-full',
+  {
+    variant: {
+      default: '',
+      minimal: 'text-sm',
+      compact: 'text-xs'
+    }
+  }
+);
+
+export interface Props extends UIComponentProps, VariantProps<typeof breadcrumbVariants> {
+  variant?: 'default' | 'minimal' | 'compact';
+  'aria-label'?: string;
+  [key: string]: any;
+}
+
+const {
+  variant = 'default',
+  size,
+  padding,
+  margin,
+  elevation,
+  overflow,
+  'aria-label': ariaLabel = 'breadcrumb',
+  class: className,
+  ...alpineProps
+} = Astro.props;
+---
+
+<nav 
+  aria-label={ariaLabel}
+  class={cn(breadcrumbVariants({ variant, size, padding, margin, elevation, overflow }), className)}
+  {...alpineProps}
+>
+  <ol class="flex items-center space-x-1 text-sm text-muted-foreground">
+    <slot />
+  </ol>
+</nav>
