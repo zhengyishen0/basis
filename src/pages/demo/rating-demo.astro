@@ -1,0 +1,202 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Rating from '@/components/ui/forms/Rating.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+import { RotateCcw } from 'lucide-astro';
+---
+
+<Layout>
+    <main class="py-8 space-y-8">
+        <section class="text-center">
+            <h1 class="text-4xl font-bold mb-4">Rating Component Demo</h1>
+            <p class="text-muted-foreground">
+                Universal Design System Compliant Rating Component
+            </p>
+        </section>
+
+        <!-- Basic Examples -->
+        <section>
+            <h2 class="text-2xl font-semibold mb-6">Basic Examples</h2>
+            <div class="space-y-6">
+                <!-- Default Rating with x-model -->
+                <div>
+                    <h3 class="text-lg font-medium mb-2">
+                        Default Rating (with x-model)
+                    </h3>
+                    <div x-data="{ currentRating: 3 }">
+                        <Rating x-model="currentRating">
+                            <Badge variant="outline" size="sm" class="gap-1">
+                                <RotateCcw class="w-3 h-3" />
+                                Reset
+                            </Badge>
+                        </Rating>
+                        <p
+                            class="text-sm text-muted-foreground mt-2"
+                            x-text="`Current rating: ${currentRating}/5`"
+                        >
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Different Sizes -->
+                <div>
+                    <h3 class="text-lg font-medium mb-2">
+                        Sizes (stars and gap scale together)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div x-data="{ rating: 3 }">
+                            <p class="text-sm text-muted-foreground mb-2">SM</p>
+                            <Rating size="sm" x-model="rating">
+                                <Badge variant="outline" size="sm" class="gap-1">
+                                    <RotateCcw class="w-2.5 h-2.5" />
+                                    Reset
+                                </Badge>
+                            </Rating>
+                            <p
+                                class="text-xs text-muted-foreground mt-1"
+                                x-text="`${rating}/5`"
+                            >
+                            </p>
+                        </div>
+                        <div x-data="{ rating: 3 }">
+                            <p class="text-sm text-muted-foreground mb-2">MD</p>
+                            <Rating size="md" x-model="rating">
+                                <Badge variant="outline" size="default" class="gap-1">
+                                    <RotateCcw class="w-3 h-3" />
+                                    Reset
+                                </Badge>
+                            </Rating>
+                            <p
+                                class="text-sm text-muted-foreground mt-2"
+                                x-text="`${rating}/5`"
+                            >
+                            </p>
+                        </div>
+                        <div x-data="{ rating: 3 }">
+                            <p class="text-sm text-muted-foreground mb-2">LG</p>
+                            <Rating size="lg" x-model="rating">
+                                <Badge variant="outline" size="default" class="gap-1">
+                                    <RotateCcw class="w-3 h-3" />
+                                    Reset
+                                </Badge>
+                            </Rating>
+                            <p
+                                class="text-sm text-muted-foreground mt-2"
+                                x-text="`${rating}/5`"
+                            >
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Different States -->
+                <div>
+                    <h3 class="text-lg font-medium mb-2">States</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <p class="text-sm text-muted-foreground mb-2">
+                                Interactive
+                            </p>
+                            <Rating initialValue={3} />
+                        </div>
+                        <div>
+                            <p class="text-sm text-muted-foreground mb-2">
+                                Disabled
+                            </p>
+                            <Rating initialValue={3} disabled={true} />
+                        </div>
+                        <div>
+                            <p class="text-sm text-muted-foreground mb-2">
+                                Read Only
+                            </p>
+                            <Rating initialValue={3} readonly={true} />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- x-model Demo - Two-way Binding -->
+                <div>
+                    <h3 class="text-lg font-medium mb-2">
+                        x-model Demo - Two-way Binding
+                    </h3>
+                    <div x-data="{ sharedRating: 4 }" class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <Rating size="md" x-model="sharedRating">
+                                <Badge variant="secondary" size="sm" class="gap-1">
+                                    <RotateCcw class="w-3 h-3" />
+                                    Clear
+                                </Badge>
+                            </Rating>
+                            <div class="flex items-center gap-2">
+                                <button
+                                    @click="sharedRating = Math.max(0, sharedRating - 1)"
+                                    class="px-2 py-1 bg-secondary text-secondary-foreground rounded text-sm"
+                                    >-</button
+                                >
+                                <span
+                                    class="text-lg font-mono"
+                                    x-text="sharedRating"></span>
+                                <button
+                                    @click="sharedRating = Math.min(5, sharedRating + 1)"
+                                    class="px-2 py-1 bg-secondary text-secondary-foreground rounded text-sm"
+                                    >+</button
+                                >
+                            </div>
+                        </div>
+                        <p class="text-sm text-muted-foreground">
+                            The rating syncs with the +/- buttons above via
+                            x-model. Reset slot can contain any element!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Integration Example -->
+        <section>
+            <h2 class="text-2xl font-semibold mb-6">Form Integration</h2>
+            <form
+                x-data="{
+            rating: 0,
+            handleSubmit(e) {
+              e.preventDefault();
+              const formData = new FormData(e.target);
+              alert('Rating submitted: ' + formData.get('product-rating'));
+            }
+          }"
+                @submit="handleSubmit"
+                class="space-y-4"
+            >
+                <div>
+                    <label class="block text-sm font-medium mb-2"
+                        >Rate this product:</label
+                    >
+                    <Rating name="product-rating" size="lg" x-model="rating">
+                        <Badge variant="outline" size="default" class="gap-1">
+                            <RotateCcw class="w-3 h-3" />
+                            Clear Rating
+                        </Badge>
+                    </Rating>
+                    <p
+                        class="text-sm text-muted-foreground mt-2"
+                        x-text="rating > 0 ? `You rated: ${rating}/5 stars` : 'No rating yet'"
+                    >
+                    </p>
+                </div>
+                <button
+                    type="submit"
+                    class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                >
+                    Submit Rating
+                </button>
+            </form>
+        </section>
+    </main>
+</Layout>
+
+<script>
+    // Test Alpine.js initialization
+    document.addEventListener('alpine:init', () => {
+        console.log('Rating demo page Alpine.js initialized');
+    });
+</script>

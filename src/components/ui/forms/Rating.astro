@@ -1,12 +1,25 @@
 ---
-export interface Props {
+import { Star } from 'lucide-astro';
+import { cn } from '@/lib/utils';
+import { createUIComponent, type UIComponentProps } from '@/lib/component-variants';
+
+const ratingVariants = createUIComponent(
+  'flex flex-col items-center gap-2 text-muted-foreground [&_.rating-star[data-filled="true"]]:text-warning [&_.rating-star:hover]:text-warning/80',
+  {
+    size: {
+      sm: '[&_.stars-container]:gap-1 [&_.rating-star]:w-4 [&_.rating-star]:h-4',
+      md: '[&_.stars-container]:gap-1.5 [&_.rating-star]:w-5 [&_.rating-star]:h-5',
+      lg: '[&_.stars-container]:gap-2 [&_.rating-star]:w-6 [&_.rating-star]:h-6'
+    }
+  }
+);
+
+export interface Props extends UIComponentProps {
   maxStars?: number;
   initialValue?: number;
   disabled?: boolean;
   readonly?: boolean;
-  size?: 'sm' | 'md' | 'lg';
   name?: string;
-  class?: string;
 }
 
 const { 
@@ -14,39 +27,16 @@ const {
   initialValue = 0,
   disabled = false,
   readonly = false,
-  size = 'md',
   name,
-  class: className = ""
+  size = 'md',
+  padding = 'none',
+  margin = 'none',
+  elevation = 'none',
+  overflow = 'fixed',
+  class: className,
+  ...alpineProps
 } = Astro.props;
-
-const sizeClasses = {
-  'sm': 'w-4 h-4',
-  'md': 'w-6 h-6',
-  'lg': 'w-8 h-8'
-};
 ---
-
-<!-- 
-Pine UI Rating Component
-
-Usage:
-<Rating 
-  maxStars={5}
-  initialValue={3}
-  disabled={false}
-  readonly={false}
-  size="md"
-  name="rating"
-/>
-
-Features:
-- Configurable star count
-- Hover effects
-- Click to rate
-- Reset functionality
-- Disabled/readonly states
-- Alpine.js powered
--->
 
 <div 
   x-data={`{
@@ -74,6 +64,10 @@ Features:
         this.$refs.hiddenInput.value = star;
         this.$refs.hiddenInput.dispatchEvent(new Event('change'));
       }
+      this.$el.dispatchEvent(new CustomEvent('rating-changed', { 
+        detail: star,
+        bubbles: true 
+      }));
     },
     
     reset() {
@@ -84,12 +78,17 @@ Features:
         this.$refs.hiddenInput.value = 0;
         this.$refs.hiddenInput.dispatchEvent(new Event('change'));
       }
+      this.$el.dispatchEvent(new CustomEvent('rating-changed', { 
+        detail: 0,
+        bubbles: true 
+      }));
     }
   }`}
   x-init="stars = value"
-  class={`flex items-center space-x-1 ${className}`}
+  x-modelable="value"
+  {...alpineProps}
+  class={cn(ratingVariants({ size, padding, margin, elevation, overflow }), className)}
 >
-  <!-- Hidden input for form submission -->
   {name && (
     <input 
       x-ref="hiddenInput"
@@ -99,46 +98,33 @@ Features:
     />
   )}
   
-  <!-- Stars -->
-  <template x-for="star in maxStars" :key="star">
+  <div class="stars-container flex items-center">
+    <template x-for="star in maxStars" :key="star">
     <button 
       @click="rate(star)"
       @mouseenter="hoverStar(star)"
       @mouseleave="mouseLeftStar()"
       :disabled="disabled"
+      :data-filled="(stars >= star) || (value >= star && stars === 0)"
       :class="{
         'cursor-pointer': !disabled && !readonly,
         'cursor-not-allowed opacity-50': disabled,
         'cursor-default': readonly
       }"
-      class={`focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded transition-colors duration-200 ${disabled ? '' : 'hover:scale-110 transform'}`}
+      class="rating-star focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm transition-all duration-200 hover:scale-110 disabled:hover:scale-100"
       type="button"
+      :aria-label="`Rate ${star} out of ${maxStars} stars`"
     >
-      <svg 
-        :class="{
-          'text-yellow-400': (stars >= star) || (value >= star && stars === 0),
-          'text-gray-300': (stars < star) && (value < star || stars > 0)
-        }"
-        class={`${sizeClasses[size]} transition-colors duration-200`}
-        fill="currentColor" 
-        viewBox="0 0 20 20"
-      >
-        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-      </svg>
+      <Star class="transition-colors duration-200" fill="currentColor" />
     </button>
-  </template>
+    </template>
+  </div>
   
-  <!-- Reset button -->
-  {!readonly && !disabled && (
-    <button 
-      @click="reset()"
-      class="ml-2 text-sm text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-2 py-1"
-      type="button"
-    >
-      Reset
-    </button>
-  )}
-  
-  <!-- Current rating display -->
-  <span class="ml-2 text-sm text-gray-600" x-text="`${value}/${maxStars}`"></span>
+  <div 
+    @click="reset()" 
+    class="flex items-center cursor-pointer"
+    :class="{ 'opacity-50 cursor-not-allowed': disabled || readonly }"
+  >
+    <slot />
+  </div>
 </div>
