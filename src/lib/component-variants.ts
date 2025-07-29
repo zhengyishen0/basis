@@ -308,3 +308,62 @@ export interface OverlayComponentProps {
   class?: string;
   [key: string]: any; // Alpine.js pass-through
 }
+
+/**
+ * Table-specific variants for data table components
+ */
+export const tableVariants = {
+  // Table styling variants
+  variant: {
+    default: "bg-background text-foreground",
+    striped: "bg-background text-foreground [&_tbody_tr:nth-child(odd)]:bg-muted/50",
+    bordered: "border border-border",
+    minimal: "bg-transparent"
+  },
+  
+  // Table density/spacing
+  density: {
+    compact: "[&_th]:px-2 [&_th]:py-1 [&_td]:px-2 [&_td]:py-1 text-sm",
+    normal: "[&_th]:px-4 [&_th]:py-2 [&_td]:px-4 [&_td]:py-2",
+    comfortable: "[&_th]:px-6 [&_th]:py-3 [&_td]:px-6 [&_td]:py-3"
+  },
+  
+  // Interactive states
+  interactive: {
+    none: "",
+    hover: "[&_tbody_tr:hover]:bg-muted/50 cursor-pointer",
+    clickable: "[&_tbody_tr]:cursor-pointer [&_tbody_tr:hover]:bg-muted/50 [&_tbody_tr:active]:bg-muted"
+  }
+} as const;
+
+/**
+ * Factory function for table components
+ */
+export const createTableComponent = (baseClasses: string, customVariants = {}) =>
+  cva(baseClasses, {
+    variants: {
+      variant: tableVariants.variant,
+      density: tableVariants.density,
+      interactive: tableVariants.interactive,
+      size: universalVariants.size,
+      ...customVariants
+    },
+    defaultVariants: {
+      variant: "default",
+      density: "normal",
+      interactive: "none",
+      size: "md"
+    }
+  });
+
+/**
+ * Standard interface for table components
+ */
+export interface TableComponentProps {
+  variant?: 'default' | 'striped' | 'bordered' | 'minimal';
+  density?: 'compact' | 'normal' | 'comfortable';
+  interactive?: 'none' | 'hover' | 'clickable';
+  size?: UniversalSize;
+  class?: string;
+  [key: string]: any; // Alpine.js pass-through
+}

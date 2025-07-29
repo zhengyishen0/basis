@@ -1,0 +1,39 @@
+---
+import { createTableComponent, type TableComponentProps } from '@/lib/component-variants';
+import { cn } from '@/lib/utils';
+
+export interface Props extends TableComponentProps {
+  responsive?: boolean;
+}
+
+const { 
+  variant = "default",
+  density = "normal", 
+  interactive = "none",
+  size = "md",
+  responsive = true,
+  class: className,
+  ...alpineProps 
+} = Astro.props;
+
+const tableVariants = createTableComponent("min-w-full table-auto border-collapse");
+
+const tableClasses = cn(
+  tableVariants({ variant, density, interactive, size }),
+  className
+);
+
+const wrapperClasses = cn(
+  "relative w-full",
+  responsive && "overflow-x-auto"
+);
+---
+
+<div class={wrapperClasses}>
+  <table 
+    class={tableClasses}
+    {...alpineProps}
+  >
+    <slot />
+  </table>
+</div>
