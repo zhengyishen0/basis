@@ -1,0 +1,124 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+    DatePicker,
+    DatePickerTrigger,
+    DatePickerContent,
+    DatePickerCalendar,
+    Button,
+} from '@/components/ui/forms';
+import { Calendar } from 'lucide-astro';
+---
+
+<Layout title="New DatePicker Demo">
+    <div class="container mx-auto p-8 max-w-4xl">
+        <h1 class="text-3xl font-bold mb-8">New Composable DatePicker Demo</h1>
+
+        <!-- Basic DatePicker -->
+        <section class="p-8 border border-gray-200 rounded-lg mb-8">
+            <h2 class="text-2xl font-semibold mb-6">Basic Usage</h2>
+
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2"
+                        >Single Date Selection</label
+                    >
+                    <DatePicker format="Y-m-d" name="basic_date">
+                        <DatePickerTrigger>
+                            <Button variant="outline">
+                                <Calendar className="mr-2 h-4 w-4" />
+                                <span x-text="formattedDate || 'Select date'"
+                                ></span>
+                            </Button>
+                        </DatePickerTrigger>
+                        <DatePickerContent>
+                            <DatePickerCalendar />
+                        </DatePickerContent>
+                    </DatePicker>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2"
+                        >US Format (m/d/Y)</label
+                    >
+                    <DatePicker format="m/d/Y" name="us_date">
+                        <DatePickerTrigger>
+                            <Button variant="outline">
+                                <Calendar className="mr-2 h-4 w-4" />
+                                <span x-text="formattedDate || 'MM/DD/YYYY'"
+                                ></span>
+                            </Button>
+                        </DatePickerTrigger>
+                        <DatePickerContent>
+                            <DatePickerCalendar />
+                        </DatePickerContent>
+                    </DatePicker>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2"
+                        >Friendly Format (M j, Y)</label
+                    >
+                    <DatePicker format="M j, Y" name="friendly_date">
+                        <DatePickerTrigger>
+                            <Button variant="outline">
+                                <Calendar className="mr-2 h-4 w-4" />
+                                <span x-text="formattedDate || 'Jan 1, 2024'"
+                                ></span>
+                            </Button>
+                        </DatePickerTrigger>
+                        <DatePickerContent>
+                            <DatePickerCalendar />
+                        </DatePickerContent>
+                    </DatePicker>
+                </div>
+            </div>
+        </section>
+
+        <!-- Range Selection -->
+        <section class="p-8 border border-gray-200 rounded-lg mb-8">
+            <h2 class="text-2xl font-semibold mb-6">Range Selection</h2>
+
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2"
+                        >Single Month Range</label
+                    >
+                    <DatePicker format="M j, Y" name="range_single" mode="range" numberOfMonths={1}>
+                        <DatePickerTrigger>
+                            <Button variant="outline" className="w-64">
+                                <Calendar className="mr-2 h-4 w-4" />
+                                <span
+                                    x-text="formattedDate || 'Select date range'"
+                                ></span>
+                            </Button>
+                        </DatePickerTrigger>
+                        <DatePickerContent>
+                            <DatePickerCalendar />
+                        </DatePickerContent>
+                    </DatePicker>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2"
+                        >Two Month Range</label
+                    >
+                    <DatePicker format="M j, Y" name="range_double" mode="range" numberOfMonths={2}>
+                        <DatePickerTrigger>
+                            <Button variant="outline" className="w-80">
+                                <Calendar className="mr-2 h-4 w-4" />
+                                <span
+                                    x-text="formattedDate || 'Select date range (2 months)'"
+                                ></span>
+                            </Button>
+                        </DatePickerTrigger>
+                        <DatePickerContent>
+                            <DatePickerCalendar />
+                        </DatePickerContent>
+                    </DatePicker>
+                </div>
+            </div>
+        </section>
+    </div>
+</Layout>
+

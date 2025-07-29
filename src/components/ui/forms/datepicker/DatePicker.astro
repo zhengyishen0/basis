@@ -1,0 +1,157 @@
+---
+import Popup from '@/components/ui/overlay/popup/Popup.astro';
+
+export interface Props {
+  // Date formatting for display
+  format?: string;
+  
+  // Form integration
+  name?: string;
+  
+  // Calendar configuration (passed to child components via Alpine scope)
+  mode?: 'single' | 'range' | 'multiple';
+  numberOfMonths?: number;
+  
+  // Popup behavior
+  placement?: 'top' | 'bottom' | 'left' | 'right';
+  
+  // Styling
+  className?: string;
+  
+  // Alpine.js pass-through
+  [key: string]: any;
+}
+
+const {
+  format = 'Y-m-d',
+  name,
+  mode = 'single',
+  numberOfMonths = 1,
+  placement = 'bottom',
+  className,
+  ...alpineProps
+} = Astro.props;
+
+// Generate unique IDs
+const datePickerId = `datepicker-${Math.random().toString(36).substring(2, 11)}`;
+---
+
+<!-- 
+Modern DatePicker Component - Integrated with Button, Popup & Calendar
+
+Usage:
+<DatePicker 
+  name="birthdate" 
+  placeholder="Select your birthdate"
+  format="Y-m-d"
+  mode="single"
+/>
+
+<DatePicker 
+  name="date_range" 
+  placeholder="Select date range"
+  mode="range"
+  calendarSize="lg"
+  captionLayout="dropdown"
+/>
+
+Features:
+- Composable design using Button + Popup + Calendar
+- Multiple selection modes: single, range, multiple
+- CVA variant system integration
+- Customizable calendar appearance
+- Date validation and constraints
+- Keyboard navigation and accessibility
+- Alpine.js powered state management
+-->
+<div
+    x-data={`{
+    selectedDate: null,
+    formattedDate: '',
+    format: '${format}',
+    mode: '${mode}',
+    numberOfMonths: ${numberOfMonths},
+    
+    init() {
+      this.updateFormattedDate();
+      
+      // Watch for selectedDate changes from Calendar
+      this.$watch('selectedDate', () => {
+        this.updateFormattedDate();
+      });
+    },
+    
+    updateFormattedDate() {
+      if (!this.selectedDate) {
+        this.formattedDate = '';
+        return;
+      }
+      
+      // Handle range mode
+      if (this.selectedDate && typeof this.selectedDate === 'object' && this.selectedDate.from) {
+        const fromDate = new Date(this.selectedDate.from);
+        const toDate = this.selectedDate.to ? new Date(this.selectedDate.to) : null;
+        
+        if (isNaN(fromDate.getTime())) {
+          this.formattedDate = '';
+          return;
+        }
+        
+        const fromFormatted = this.formatSingleDate(fromDate);
+        if (toDate && !isNaN(toDate.getTime())) {
+          const toFormatted = this.formatSingleDate(toDate);
+          this.formattedDate = fromFormatted + ' - ' + toFormatted;
+        } else {
+          this.formattedDate = fromFormatted + ' - ...';
+        }
+        return;
+      }
+      
+      // Handle single date or array
+      const date = Array.isArray(this.selectedDate) ? this.selectedDate[0] : this.selectedDate;
+      if (!date) {
+        this.formattedDate = '';
+        return;
+      }
+      
+      const dateObj = new Date(date);
+      if (isNaN(dateObj.getTime())) {
+        this.formattedDate = '';
+        return;
+      }
+      
+      this.formattedDate = this.formatSingleDate(dateObj);
+    },
+    
+    formatSingleDate(date) {
+      // Format the date based on format prop
+      if (this.format === 'M j, Y') {
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+      } else if (this.format === 'm/d/Y') {
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return month + '/' + day + '/' + date.getFullYear();
+      } else if (this.format === 'j F Y') {
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear();
+      } else {
+        // Default: Y-m-d
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return year + '-' + month + '-' + day;
+      }
+    }
+  }`}
+    x-init="init()"
+    class={cn(datePickerVariants({ variant, size }), className)}
+    {...alpineProps}
+>
+    <!-- Hidden input for form submission -->
+    <input type="hidden" name={name} x-model="formattedDate" />
+
+    <Popup trigger="click">
+        <slot />
+    </Popup>
+</div>

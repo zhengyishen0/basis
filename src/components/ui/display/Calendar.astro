@@ -454,8 +454,8 @@ const adjustedDayNames = [
         </div>
     </template>
 
-    <!-- Multi-Month Layout -->
-    <div class="calendar-body" :class="numberOfMonths > 1 ? 'grid gap-6 grid-flow-col auto-cols-fr' : ''">
+    <!-- Calendar Body -->
+    <div class="calendar-body">
         <!-- Single Month View -->
         <template x-if="numberOfMonths === 1">
             <div class="single-month">
@@ -534,7 +534,8 @@ const adjustedDayNames = [
 
         <!-- Multi-Month View -->
         <template x-if="numberOfMonths > 1">
-            <template x-for="(monthData, monthIndex) in months" :key="`month-${monthIndex}`">
+            <div class="grid gap-6 grid-flow-col auto-cols-fr">
+                <template x-for="(monthData, monthIndex) in months" :key="`month-${monthIndex}`">
                 <div class="month-container">
                     <!-- Month Header with Navigation for Each Month -->
                     <div class="month-header flex items-center justify-between mb-3">
@@ -636,7 +637,8 @@ const adjustedDayNames = [
                         </template>
                     </div>
                 </div>
-            </template>
+                </template>
+            </div>
         </template>
     </div>
 </div>
