@@ -1,0 +1,48 @@
+---
+import MenuItem from '../../overlay/menu/MenuItem.astro';
+
+export interface Props {
+    value?: string;
+    label?: string;
+    disabled?: boolean;
+    className?: string;
+    [key: string]: any;
+}
+
+const {
+    value,
+    label,
+    disabled = false,
+    className,
+    ...alpineProps
+} = Astro.props;
+
+// For static usage (value/label props provided)
+const isStatic = value !== undefined;
+const displayLabel = label || value;
+
+// For dynamic usage (x-for with Alpine expressions)
+const isDynamic = alpineProps['x-for'];
+---
+
+{isStatic ? (
+    <MenuItem
+        onSelect={`selectedValue = '${value}'; selectedLabel = '${displayLabel}'; close()`}
+        :class={`selectedValue === '${value}' ? 'bg-accent text-accent-foreground' : ''`}
+        disabled={disabled}
+        className={className}
+        {...alpineProps}
+    >
+        <slot>{displayLabel}</slot>
+    </MenuItem>
+) : (
+    <MenuItem
+        onSelect="selectedValue = item.value; selectedLabel = item.label; close()"
+        :class="selectedValue === item.value ? 'bg-accent text-accent-foreground' : ''"
+        disabled={disabled}
+        className={className}
+        {...alpineProps}
+    >
+        <slot />
+    </MenuItem>
+)}

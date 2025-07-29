@@ -1,0 +1,161 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+    Select,
+    SelectTrigger,
+    SelectContent,
+    SelectItem,
+    SelectGroup,
+} from '@/components/ui/forms/select';
+import MenuItem from '@/components/ui/overlay/menu/MenuItem.astro';
+import { ChevronDown } from 'lucide-astro';
+---
+
+<Layout title="Select Demo">
+    <main class="container mx-auto p-8 space-y-12">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold mb-4">
+                Select Component Demo
+            </h1>
+            <p class="text-muted-foreground mb-8">
+                Select components for form inputs with keyboard navigation
+                and smart positioning
+            </p>
+        </div>
+
+        <!-- Basic Select Example -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Basic Select</h2>
+
+            <div class="flex gap-4 flex-wrap">
+                <div
+                    x-data="{
+                        selectedValue: 'apple',
+                        selectedLabel: 'Apple'
+                    }"
+                >
+                    <Select>
+                        <SelectTrigger variant="outline" class="w-48">
+                            <span x-text="selectedLabel" class="flex-1 text-left"></span>
+                            <ChevronDown class="w-4 h-4" />
+                        </SelectTrigger>
+                        <SelectContent role="listbox">
+                            <SelectGroup>
+                                <SelectItem value="apple" label="Apple" />
+                                <SelectItem value="banana" label="Banana" />
+                                <SelectItem value="orange" label="Orange" />
+                                <SelectItem value="grape" label="Grape" />
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    
+                    <p class="mt-2 text-sm text-muted-foreground">
+                        Selected: <span x-text="selectedValue" class="font-medium"></span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grouped Select Example -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Grouped Select</h2>
+
+            <div
+                x-data="{
+                    selectedValue: 'chrome',
+                    selectedLabel: 'Chrome'
+                }"
+            >
+                <Select trigger="click">
+                    <SelectTrigger variant="outline" class="w-56">
+                        <span x-text="selectedLabel" class="flex-1 text-left"></span>
+                        <ChevronDown class="w-4 h-4" />
+                    </SelectTrigger>
+                    <SelectContent role="listbox">
+                        <SelectGroup x-text="'Desktop Browsers'">
+                            <SelectItem value="chrome" label="Chrome" />
+                            <SelectItem value="firefox" label="Firefox" />
+                            <SelectItem value="safari" label="Safari" />
+                        </SelectGroup>
+                        
+                        <SelectGroup x-text="'Mobile Browsers'">
+                            <SelectItem value="chrome-mobile" label="Chrome Mobile" />
+                            <SelectItem value="safari-mobile" label="Safari Mobile" />
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
+                
+                <p class="mt-2 text-sm text-muted-foreground">
+                    Selected: <span x-text="selectedValue" class="font-medium"></span>
+                </p>
+            </div>
+        </section>
+
+        <!-- Dynamic Select Example -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Dynamic Select with x-for</h2>
+
+            <div
+                x-data="{
+                    selectedValue: 'js',
+                    selectedLabel: 'JavaScript',
+                    languageGroups: [
+                        {
+                            heading: 'Frontend',
+                            languages: [
+                                { value: 'js', label: 'JavaScript' },
+                                { value: 'ts', label: 'TypeScript' },
+                                { value: 'html', label: 'HTML' },
+                                { value: 'css', label: 'CSS' }
+                            ]
+                        },
+                        {
+                            heading: 'Backend',
+                            languages: [
+                                { value: 'py', label: 'Python' },
+                                { value: 'java', label: 'Java' },
+                                { value: 'csharp', label: 'C#' },
+                                { value: 'node', label: 'Node.js' }
+                            ]
+                        },
+                        {
+                            heading: 'Systems',
+                            languages: [
+                                { value: 'rust', label: 'Rust' },
+                                { value: 'go', label: 'Go' },
+                                { value: 'cpp', label: 'C++' },
+                                { value: 'c', label: 'C' }
+                            ]
+                        }
+                    ]
+                }"
+                class="max-w-sm"
+            >
+                <label class="block text-sm font-medium mb-2">Programming Language</label>
+                <Select>
+                    <SelectTrigger variant="outline" class="w-full">
+                        <span x-text="selectedLabel" class="flex-1 text-left"></span>
+                        <ChevronDown class="w-4 h-4" />
+                    </SelectTrigger>
+                    <SelectContent role="listbox">
+                        <SelectGroup
+                            x-for="group in languageGroups"
+                            x-key="group.heading"
+                            x-text="group.heading"
+                        >
+                            <SelectItem 
+                                x-for="item in group.languages"
+                                x-key="item.value"
+                                x-text="item.label"
+                            />
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
+                
+                <p class="mt-2 text-sm text-muted-foreground">
+                    Selected: <span x-text="selectedValue" class="font-medium"></span>
+                </p>
+            </div>
+        </section>
+    </main>
+</Layout>
