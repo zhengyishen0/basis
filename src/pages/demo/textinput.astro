@@ -1,0 +1,83 @@
+---
+import TextInput from '@/components/ui/forms/TextInput.astro';
+import Page from '@/components/ui/layout/Page.astro';
+import Section from '@/components/ui/layout/Section.astro';
+import Column from '@/components/ui/layout/Column.astro';
+---
+
+<Page>
+  <Section class="max-w-4xl mx-auto p-8">
+    <h1 class="text-3xl font-bold mb-8">TextInput Component Demo</h1>
+    
+    <Column gap="xl">
+      <!-- Input Types Demo -->
+      <section>
+        <h2 class="text-xl font-semibold mb-4">Input Types with HTML5 Validation</h2>
+        <Column gap="md">
+          <div>
+            <label class="block text-sm font-medium mb-2">Email (with validation)</label>
+            <TextInput type="email" placeholder="example@domain.com" required />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Password</label>
+            <TextInput type="password" placeholder="Enter password" minLength={8} />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Phone Number (Auto-formatted)</label>
+            <TextInput type="tel" placeholder="(555) 123-4567" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">URL</label>
+            <TextInput type="url" placeholder="https://example.com" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Search</label>
+            <TextInput type="search" placeholder="Search..." />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Number (min 0, max 100)</label>
+            <TextInput type="number" placeholder="Enter number" minLength={0} maxLength={100} />
+          </div>
+        </Column>
+      </section>
+
+      <!-- States Demo -->
+      <section>
+        <h2 class="text-xl font-semibold mb-4">States</h2>
+        <Column gap="md">
+          <div>
+            <label class="block text-sm font-medium mb-2">Normal</label>
+            <TextInput placeholder="Normal state" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Disabled</label>
+            <TextInput placeholder="Disabled state" disabled />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Required</label>
+            <TextInput placeholder="Required field" required />
+          </div>
+        </Column>
+      </section>
+
+      <!-- Alpine.js Integration Demo -->
+      <section x-data="{ value: '', email: '' }">
+        <h2 class="text-xl font-semibold mb-4">Alpine.js Integration</h2>
+        <Column gap="md">
+          <div>
+            <label class="block text-sm font-medium mb-2">Text Input with x-model</label>
+            <TextInput placeholder="Type something..." x-model="value" />
+            <p class="text-sm text-muted-foreground mt-1" x-text="`You typed: ${value}`"></p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Email with validation feedback</label>
+            <TextInput type="email" placeholder="Enter email" x-model="email" required />
+            <p class="text-sm text-muted-foreground mt-1" x-show="email" x-text="`Email: ${email}`"></p>
+          </div>
+        </Column>
+      </section>
+    </Column>
+  </Section>
+
+  <script src="//unpkg.com/alpinejs" defer is:inline></script>
+</Page>
