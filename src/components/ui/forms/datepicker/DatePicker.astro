@@ -1,19 +1,10 @@
 ---
-import Popup from '@/components/ui/overlay/popup/Popup.astro';
-
 export interface Props {
   // Date formatting for display
   format?: string;
   
   // Form integration
   name?: string;
-  
-  // Calendar configuration (passed to child components via Alpine scope)
-  mode?: 'single' | 'range' | 'multiple';
-  numberOfMonths?: number;
-  
-  // Popup behavior
-  placement?: 'top' | 'bottom' | 'left' | 'right';
   
   // Styling
   className?: string;
@@ -25,59 +16,50 @@ export interface Props {
 const {
   format = 'Y-m-d',
   name,
-  mode = 'single',
-  numberOfMonths = 1,
-  placement = 'bottom',
   className,
   ...alpineProps
 } = Astro.props;
-
-// Generate unique IDs
-const datePickerId = `datepicker-${Math.random().toString(36).substring(2, 11)}`;
 ---
 
 <!-- 
-Modern DatePicker Component - Integrated with Button, Popup & Calendar
+DatePicker Component - Clean named slots implementation
 
 Usage:
-<DatePicker 
-  name="birthdate" 
-  placeholder="Select your birthdate"
-  format="Y-m-d"
-  mode="single"
-/>
-
-<DatePicker 
-  name="date_range" 
-  placeholder="Select date range"
-  mode="range"
-  calendarSize="lg"
-  captionLayout="dropdown"
-/>
+<DatePicker format="Y-m-d" name="birthdate">
+  <Button slot="trigger">
+    <Calendar className="mr-2 h-4 w-4" />
+    <span x-text="formattedDate || 'Select date'"></span>
+  </Button>
+  <Calendar slot="content" mode="single" numberOfMonths={1} />
+</DatePicker>
 
 Features:
-- Composable design using Button + Popup + Calendar
-- Multiple selection modes: single, range, multiple
-- CVA variant system integration
-- Customizable calendar appearance
-- Date validation and constraints
-- Keyboard navigation and accessibility
-- Alpine.js powered state management
+- Named slots for clean composition
+- Direct Calendar prop passing (no intermediate components)
+- Automatic popup behavior with outside click detection
+- Form integration with hidden input
+- Flexible date formatting
 -->
 <div
-    x-data={`{
+  x-data={`{
+    open: false,
     selectedDate: null,
     formattedDate: '',
     format: '${format}',
-    mode: '${mode}',
-    numberOfMonths: ${numberOfMonths},
     
     init() {
-      this.updateFormattedDate();
+      // Close on click outside
+      document.addEventListener('click', (e) => {
+        if (!this.$el.contains(e.target)) {
+          this.open = false;
+        }
+      });
       
-      // Watch for selectedDate changes from Calendar
-      this.$watch('selectedDate', () => {
+      // Listen for date selection from Calendar
+      this.$el.addEventListener('date-selected', (e) => {
+        this.selectedDate = e.detail.date;
         this.updateFormattedDate();
+        this.open = false; // Close on selection
       });
     },
     
@@ -92,13 +74,8 @@ Features:
         const fromDate = new Date(this.selectedDate.from);
         const toDate = this.selectedDate.to ? new Date(this.selectedDate.to) : null;
         
-        if (isNaN(fromDate.getTime())) {
-          this.formattedDate = '';
-          return;
-        }
-        
         const fromFormatted = this.formatSingleDate(fromDate);
-        if (toDate && !isNaN(toDate.getTime())) {
+        if (toDate) {
           const toFormatted = this.formatSingleDate(toDate);
           this.formattedDate = fromFormatted + ' - ' + toFormatted;
         } else {
@@ -107,24 +84,12 @@ Features:
         return;
       }
       
-      // Handle single date or array
-      const date = Array.isArray(this.selectedDate) ? this.selectedDate[0] : this.selectedDate;
-      if (!date) {
-        this.formattedDate = '';
-        return;
-      }
-      
-      const dateObj = new Date(date);
-      if (isNaN(dateObj.getTime())) {
-        this.formattedDate = '';
-        return;
-      }
-      
-      this.formattedDate = this.formatSingleDate(dateObj);
+      // Handle single date
+      const date = new Date(this.selectedDate);
+      this.formattedDate = this.formatSingleDate(date);
     },
     
     formatSingleDate(date) {
-      // Format the date based on format prop
       if (this.format === 'M j, Y') {
         const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         return monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
@@ -132,9 +97,6 @@ Features:
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         return month + '/' + day + '/' + date.getFullYear();
-      } else if (this.format === 'j F Y') {
-        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        return date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear();
       } else {
         // Default: Y-m-d
         const year = date.getFullYear();
@@ -144,14 +106,34 @@ Features:
       }
     }
   }`}
-    x-init="init()"
-    class={cn(datePickerVariants({ variant, size }), className)}
-    {...alpineProps}
+  x-init="init()"
+  class={`relative inline-block ${className || ''}`}
+  {...alpineProps}
 >
-    <!-- Hidden input for form submission -->
-    <input type="hidden" name={name} x-model="formattedDate" />
-
-    <Popup trigger="click">
-        <slot />
-    </Popup>
+  <!-- Hidden input for form submission -->
+  {name && <input type="hidden" name={name} x-model="formattedDate" />}
+  
+  <!-- Trigger -->
+  <div @click="open = !open">
+    <slot name="trigger">
+      <button type="button" class="px-3 py-2 border border-gray-300 rounded-md">
+        <span x-text="formattedDate || 'Select date'"></span>
+      </button>
+    </slot>
+  </div>
+  
+  <!-- Popup Content -->
+  <div
+    x-show="open"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 scale-95"
+    x-transition:enter-end="opacity-100 scale-100"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 scale-100"
+    x-transition:leave-end="opacity-0 scale-95"
+    class="absolute z-50 mt-2"
+    style="display: none;"
+  >
+    <slot name="content" />
+  </div>
 </div>

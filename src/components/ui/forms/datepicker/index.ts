@@ -1,5 +1,3 @@
-// Re-exports from base components - using Popup directly (DropdownMenu pattern)
+// DatePicker with named slots - clean and simple
 export { default as DatePicker } from './DatePicker.astro';
-export { default as DatePickerTrigger } from '../../overlay/popup/PopupTrigger.astro';
-export { default as DatePickerContent } from '../../overlay/popup/PopupContent.astro';
-export { default as DatePickerCalendar } from './DatePickerCalendar.astro';
+export { default as DatePickerCalendar } from '../../display/Calendar.astro';
