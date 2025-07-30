@@ -3,6 +3,8 @@ import Layout from '@/layouts/Layout.astro';
 import {
     Breadcrumb,
     BreadcrumbItem,
+    SmartBreadcrumb,
+    BreadcrumbEllipsis,
 } from '@/components/ui/navigation/breadcrumbs';
 import { ChevronRight, Home, ArrowRight } from 'lucide-astro';
 
@@ -20,6 +22,27 @@ const longBreadcrumbs = [
     { label: 'Computers', href: '/categories/electronics/computers' },
     { label: 'Laptops', href: '/categories/electronics/computers/laptops' },
     { label: 'Gaming Laptops', current: true },
+];
+
+const veryLongBreadcrumbs = [
+    { label: 'Home', href: '/' },
+    { label: 'Corporate', href: '/corporate' },
+    { label: 'Departments', href: '/corporate/departments' },
+    { label: 'Engineering', href: '/corporate/departments/engineering' },
+    { label: 'Software', href: '/corporate/departments/engineering/software' },
+    {
+        label: 'Frontend',
+        href: '/corporate/departments/engineering/software/frontend',
+    },
+    {
+        label: 'React Team',
+        href: '/corporate/departments/engineering/software/frontend/react',
+    },
+    {
+        label: 'Components',
+        href: '/corporate/departments/engineering/software/frontend/react/components',
+    },
+    { label: 'Breadcrumb Component', current: true },
 ];
 ---
 
@@ -174,6 +197,53 @@ const longBreadcrumbs = [
                         >
                         <BreadcrumbItem>Current</BreadcrumbItem>
                     </Breadcrumb>
+                </div>
+            </div>
+        </section>
+
+        <!-- Smart Breadcrumb with Ellipsis -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">
+                Smart Breadcrumb with Ellipsis
+            </h2>
+
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-lg font-medium mb-2">
+                        Normal breadcrumb (4 items - no ellipsis)
+                    </h3>
+                    <SmartBreadcrumb
+                        x-data={`{ items: ${JSON.stringify(dynamicBreadcrumbs)} }`}
+                    />
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-medium mb-2">
+                        Long breadcrumb (6 items - shows ellipsis)
+                    </h3>
+                    <SmartBreadcrumb
+                        x-data={`{ items: ${JSON.stringify(longBreadcrumbs)} }`}
+                    />
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-medium mb-2">
+                        Very long breadcrumb (9 items - shows ellipsis with
+                        dropdown)
+                    </h3>
+                    <SmartBreadcrumb
+                        x-data={`{ items: ${JSON.stringify(veryLongBreadcrumbs)} }`}
+                    />
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-medium mb-2">
+                        Custom maxItems (3 items max)
+                    </h3>
+                    <SmartBreadcrumb
+                        maxItems={3}
+                        x-data={`{ items: ${JSON.stringify(dynamicBreadcrumbs)} }`}
+                    />
                 </div>
             </div>
         </section>

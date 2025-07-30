@@ -37,7 +37,7 @@ const separatorComponents = {
         <template x-if="item.href && !item.current">
           <a
             :href={dynamicHref || 'item.href'}
-            class="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-1.5"
+            class="flex items-center gap-1.5 no-underline"
           >
             {icon && (
               <svg class="w-4 h-4" x-show={`item.icon === '${icon}'`}>
@@ -68,7 +68,7 @@ const separatorComponents = {
       <!-- Separator (outside li, auto-hide for last item) -->
       <span 
         class="mx-2 text-muted-foreground flex items-center"
-        x-show={dynamicSeparator ? dynamicSeparator : `'${separator}' && index < items.length - 1`}
+        x-show={dynamicSeparator ? dynamicSeparator : `'${separator}' && (typeof items !== 'undefined' ? index < items.length - 1 : true)`}
       >
         <slot name="separator">
           <ChevronRight class="w-4 h-4" />
@@ -83,7 +83,7 @@ const separatorComponents = {
       {href ? (
         <a
           href={href}
-          class="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-1.5"
+          class="flex items-center gap-1.5 no-underline"
         >
           {icon && (
             <svg class="w-4 h-4">
