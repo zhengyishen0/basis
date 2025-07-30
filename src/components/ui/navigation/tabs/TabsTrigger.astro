@@ -1,0 +1,67 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+import {
+    createUIComponent,
+    type UIComponentProps,
+} from '@/lib/component-variants';
+
+const tabsTriggerVariants = createUIComponent(
+    'relative z-20 inline-flex items-center justify-center h-8 text-sm font-medium cursor-pointer whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+    {
+        variant: {
+            pills: 'rounded-md px-3 py-2 text-gray-600 hover:text-gray-800',
+            underline:
+                'rounded-md border-b-2 border-transparent px-4 py-2 text-gray-600 hover:text-gray-800',
+        },
+    }
+);
+
+export interface Props
+    extends UIComponentProps,
+        VariantProps<typeof tabsTriggerVariants> {
+    value: string;
+    disabled?: boolean;
+    variant?: 'pills' | 'underline';
+    [key: string]: any;
+}
+
+const {
+    value,
+    disabled = false,
+    variant = 'pills',
+    size,
+    padding,
+    margin,
+    elevation,
+    overflow,
+    class: className,
+    ...alpineProps
+} = Astro.props;
+---
+
+<button
+    @click={`selectedTab = '${value}'`}
+    :data-state="selectedTab === '${value}' ? 'active' : 'inactive'"
+    :aria-selected="selectedTab === '${value}'"
+    :tabindex="selectedTab === '${value}' ? 0 : -1"
+    class={cn(
+        tabsTriggerVariants({
+            variant,
+            size,
+            padding,
+            margin,
+            elevation,
+            overflow,
+        }),
+        className
+    )}
+    :class={`selectedTab === '${value}' && '${variant === 'pills' ? 'bg-white text-gray-900 shadow-sm' : 'border-primary text-primary-foreground bg-primary'}'`}
+    role="tab"
+    type="button"
+    disabled={disabled}
+    data-value={value}
+    {...alpineProps}
+>
+    <slot />
+</button>

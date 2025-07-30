@@ -1,0 +1,59 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+import {
+    createUIComponent,
+    type UIComponentProps,
+} from '@/lib/component-variants';
+
+const tabsVariants = createUIComponent('w-full flex gap-2', {
+    orientation: {
+        horizontal: 'flex-col',
+        vertical: 'flex-row',
+    },
+});
+
+export interface Props
+    extends UIComponentProps,
+        VariantProps<typeof tabsVariants> {
+    defaultValue?: string;
+    orientation?: 'horizontal' | 'vertical';
+    [key: string]: any;
+}
+
+const {
+    defaultValue,
+    orientation = 'horizontal',
+    size,
+    padding,
+    margin,
+    elevation,
+    overflow,
+    class: className,
+    ...alpineProps
+} = Astro.props;
+
+const tabsId = `tabs-${Math.random().toString(36).substring(2, 11)}`;
+---
+
+<div
+    x-data={`{
+    selectedTab: '${defaultValue}',
+    orientation: '${orientation}'
+  }`}
+    class={cn(
+        tabsVariants({
+            orientation,
+            size,
+            padding,
+            margin,
+            elevation,
+            overflow,
+        }),
+        className
+    )}
+    data-orientation={orientation}
+    {...alpineProps}
+>
+    <slot />
+</div>

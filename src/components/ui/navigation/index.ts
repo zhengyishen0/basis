@@ -1,6 +1,5 @@
 // Navigation - Navigation and wayfinding
-export { default as Breadcrumbs } from './Breadcrumbs.astro';
-export { Breadcrumb, BreadcrumbItem } from './breadcrumbs';
-export { default as NavigationMenu } from './NavigationMenu.astro';
 export { default as Pagination } from './Pagination.astro';
-export { default as Tabs } from './Tabs.astro';
+
+export * from './tabs';
+export * from './breadcrumbs';

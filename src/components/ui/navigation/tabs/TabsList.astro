@@ -1,0 +1,61 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+import {
+    createLayoutComponent,
+    type LayoutComponentProps,
+} from '@/lib/component-variants';
+
+const tabsListVariants = cva(
+    'relative inline-grid items-center select-none w-fit gap-1 p-1',
+    {
+        variants: {
+            variant: {
+                'pills-horizontal':
+                    'h-10 bg-gray-100 rounded-lg grid-flow-col auto-cols-max',
+                'pills-vertical':
+                    'w-fit bg-gray-100 rounded-lg grid-flow-row auto-rows-max',
+                'underline-horizontal':
+                    'h-10 bg-transparent p-0 grid-flow-col auto-cols-max border-b border-border',
+                'underline-vertical':
+                    'w-fit bg-transparent p-0 grid-flow-row auto-rows-max border-r border-border pr-1',
+            },
+        },
+        defaultVariants: {
+            variant: 'pills-horizontal',
+        },
+    }
+);
+
+export interface Props extends VariantProps<typeof tabsListVariants> {
+    variant?: 'pills' | 'underline';
+    orientation?: 'horizontal' | 'vertical';
+    [key: string]: any;
+}
+
+const {
+    variant = 'pills',
+    orientation = 'horizontal',
+    class: className,
+    ...alpineProps
+} = Astro.props;
+
+const combinedVariant = `${variant}-${orientation}` as
+    | 'pills-horizontal'
+    | 'pills-vertical'
+    | 'underline-horizontal'
+    | 'underline-vertical';
+---
+
+<div
+    class={cn(
+        tabsListVariants({ variant: combinedVariant }),
+        'tabs-list',
+        className
+    )}
+    role="tablist"
+    :data-orientation="orientation"
+    {...alpineProps}
+>
+    <slot />
+</div>
