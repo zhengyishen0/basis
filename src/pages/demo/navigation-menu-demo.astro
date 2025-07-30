@@ -1,0 +1,456 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+    NavigationMenu,
+    NavigationMenuList,
+    NavigationMenuItem,
+    NavigationMenuTrigger,
+    NavigationMenuContent,
+    NavigationMenuLink,
+    NavigationMenuFeature,
+    NavigationMenuFeatured,
+} from '@/components/ui/overlay/navigationmenu';
+
+// Sample navigation data for dynamic rendering
+const navigationItems = [
+    {
+        id: 'getting-started',
+        label: 'Getting Started',
+        type: 'feature',
+        featured: {
+            title: 'Basis Stack',
+            description:
+                'Modern fullstack development with Astro, Alpine.js, and Supabase',
+            href: '/',
+        },
+        links: [
+            {
+                id: 'installation',
+                title: 'Installation',
+                url: '/docs/installation',
+                description: 'Get started with Basis Stack in minutes',
+            },
+            {
+                id: 'components',
+                title: 'Components',
+                url: '/docs/components',
+                description: 'Reusable UI components built with Alpine.js',
+            },
+        ],
+        layout: {
+            minWidth: '500px',
+        },
+    },
+    {
+        id: 'components',
+        label: 'Components',
+        type: 'grid',
+        gridColumns: 2,
+        links: [
+            {
+                id: 'alert-dialog',
+                title: 'Alert Dialog',
+                url: '/components/alert-dialog',
+                description: 'Modal dialog for important user confirmations',
+            },
+            {
+                id: 'hover-card',
+                title: 'Hover Card',
+                url: '/components/hover-card',
+                description: 'Contextual information on hover',
+            },
+            {
+                id: 'progress',
+                title: 'Progress',
+                url: '/components/progress',
+                description: 'Visual progress indicators',
+            },
+            {
+                id: 'scroll-area',
+                title: 'Scroll Area',
+                url: '/components/scroll-area',
+                description: 'Custom scrollbars for better UX',
+            },
+        ],
+    },
+    {
+        id: 'resources',
+        label: 'Resources',
+        type: 'list',
+        links: [
+            {
+                id: 'blog',
+                title: 'Blog',
+                url: '/blog',
+                description: 'Latest updates and tutorials',
+            },
+            {
+                id: 'community',
+                title: 'Community',
+                url: '/community',
+                description: 'Join our developer community',
+            },
+            {
+                id: 'changelog',
+                title: 'Changelog',
+                url: '/changelog',
+                description: 'Track feature updates and improvements',
+            },
+            {
+                id: 'roadmap',
+                title: 'Roadmap',
+                url: '/roadmap',
+                description: 'Upcoming features and plans',
+            },
+        ],
+    },
+    {
+        id: 'documentation',
+        label: 'Documentation',
+        type: 'link',
+        href: '/docs',
+    },
+    {
+        id: 'about',
+        label: 'About',
+        type: 'link',
+        href: '/about',
+    },
+];
+---
+
+<Layout title="Navigation Menu Demo">
+    <main class="min-h-screen bg-background p-8">
+        <div class="max-w-6xl mx-auto space-y-12">
+            <header class="text-center space-y-4">
+                <h1 class="text-4xl font-bold">Navigation Menu Demo</h1>
+                <p class="text-lg text-muted-foreground">
+                    Interactive navigation menus with Alpine.js state management
+                </p>
+            </header>
+
+            <!-- Static Navigation Menu -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-semibold">Static Navigation Menu</h2>
+                <div class="bg-card p-6 rounded-lg border">
+                    <NavigationMenu className="mx-auto">
+                        <NavigationMenuList>
+                            <NavigationMenuItem value="getting-started">
+                                <NavigationMenuTrigger
+                                    >Getting Started</NavigationMenuTrigger
+                                >
+                                <NavigationMenuContent
+                                    className="bg-popover border rounded-md shadow-lg min-w-[400px] p-4"
+                                >
+                                    <div
+                                        class="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]"
+                                    >
+                                        <div class="row-span-3">
+                                            <NavigationMenuLink
+                                                href="/"
+                                                className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                                            >
+                                                <div
+                                                    class="mb-2 mt-4 text-lg font-medium"
+                                                >
+                                                    Basis Stack
+                                                </div>
+                                                <p
+                                                    class="text-sm leading-tight text-muted-foreground"
+                                                >
+                                                    Modern fullstack development
+                                                    with Astro, Alpine.js, and
+                                                    Supabase
+                                                </p>
+                                            </NavigationMenuLink>
+                                        </div>
+                                        <NavigationMenuLink
+                                            href="/docs/installation"
+                                            className="block space-y-1"
+                                        >
+                                            <div
+                                                class="text-sm font-medium leading-none"
+                                            >
+                                                Installation
+                                            </div>
+                                            <p
+                                                class="line-clamp-2 text-sm leading-snug text-muted-foreground"
+                                            >
+                                                Get started with Basis Stack in
+                                                minutes
+                                            </p>
+                                        </NavigationMenuLink>
+                                        <NavigationMenuLink
+                                            href="/docs/components"
+                                            className="block space-y-1"
+                                        >
+                                            <div
+                                                class="text-sm font-medium leading-none"
+                                            >
+                                                Components
+                                            </div>
+                                            <p
+                                                class="line-clamp-2 text-sm leading-snug text-muted-foreground"
+                                            >
+                                                Reusable UI components built
+                                                with Alpine.js
+                                            </p>
+                                        </NavigationMenuLink>
+                                    </div>
+                                </NavigationMenuContent>
+                            </NavigationMenuItem>
+
+                            <NavigationMenuItem value="components">
+                                <NavigationMenuTrigger
+                                    >Components</NavigationMenuTrigger
+                                >
+                                <NavigationMenuContent
+                                    className="bg-popover border rounded-md shadow-lg min-w-[600px] p-4"
+                                >
+                                    <div
+                                        class="grid w-[600px] gap-3 p-4 md:grid-cols-2"
+                                    >
+                                        <NavigationMenuLink
+                                            href="/components/alert-dialog"
+                                            className="block space-y-1"
+                                        >
+                                            <div
+                                                class="text-sm font-medium leading-none"
+                                            >
+                                                Alert Dialog
+                                            </div>
+                                            <p
+                                                class="line-clamp-2 text-sm leading-snug text-muted-foreground"
+                                            >
+                                                Modal dialog for important user
+                                                confirmations
+                                            </p>
+                                        </NavigationMenuLink>
+                                        <NavigationMenuLink
+                                            href="/components/hover-card"
+                                            className="block space-y-1"
+                                        >
+                                            <div
+                                                class="text-sm font-medium leading-none"
+                                            >
+                                                Hover Card
+                                            </div>
+                                            <p
+                                                class="line-clamp-2 text-sm leading-snug text-muted-foreground"
+                                            >
+                                                Contextual information on hover
+                                            </p>
+                                        </NavigationMenuLink>
+                                        <NavigationMenuLink
+                                            href="/components/progress"
+                                            className="block space-y-1"
+                                        >
+                                            <div
+                                                class="text-sm font-medium leading-none"
+                                            >
+                                                Progress
+                                            </div>
+                                            <p
+                                                class="line-clamp-2 text-sm leading-snug text-muted-foreground"
+                                            >
+                                                Visual progress indicators
+                                            </p>
+                                        </NavigationMenuLink>
+                                        <NavigationMenuLink
+                                            href="/components/scroll-area"
+                                            className="block space-y-1"
+                                        >
+                                            <div
+                                                class="text-sm font-medium leading-none"
+                                            >
+                                                Scroll Area
+                                            </div>
+                                            <p
+                                                class="line-clamp-2 text-sm leading-snug text-muted-foreground"
+                                            >
+                                                Custom scrollbars for better UX
+                                            </p>
+                                        </NavigationMenuLink>
+                                    </div>
+                                </NavigationMenuContent>
+                            </NavigationMenuItem>
+
+                            <NavigationMenuItem value="documentation">
+                                <NavigationMenuLink
+                                    href="/docs"
+                                    className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                >
+                                    Documentation
+                                </NavigationMenuLink>
+                            </NavigationMenuItem>
+                        </NavigationMenuList>
+                    </NavigationMenu>
+                </div>
+            </section>
+
+            <!-- Data-Driven Navigation Menu -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-semibold">
+                    Data-Driven Navigation Menu
+                </h2>
+                <div class="bg-card p-6 rounded-lg border">
+                    <div
+                        x-data=`{ navigationItems: ${JSON.stringify(navigationItems)} }`
+                    >
+                        <NavigationMenu className="mx-auto">
+                            <NavigationMenuList>
+                                <!-- All menu items rendered dynamically based on type -->
+                                <NavigationMenuItem>
+                                    <!-- Link type -->
+                                    <NavigationMenuLink slot="link" />
+
+                                    <!-- Trigger for menu types -->
+                                    <NavigationMenuTrigger slot="trigger">
+                                        <span x-text="item.label"></span>
+                                    </NavigationMenuTrigger>
+
+                                    <!-- Content with dynamic layout -->
+                                    <NavigationMenuContent slot="content">
+                                        <!-- Feature card for feature type -->
+                                        <div x-show="item.type === 'feature'">
+                                            <NavigationMenuFeatured />
+                                        </div>
+
+                                        <!-- Links section -->
+                                        <div
+                                            x-show="item.type === 'feature'"
+                                            class="space-y-1"
+                                        >
+                                            <template
+                                                x-for="link in item.links"
+                                                x-key="link.id"
+                                            >
+                                                <NavigationMenuLink />
+                                            </template>
+                                        </div>
+
+                                        <!-- Links for list/grid types -->
+                                        <div x-show="item.type !== 'feature'">
+                                            <template
+                                                x-for="link in item.links"
+                                                x-key="link.id"
+                                            >
+                                                <NavigationMenuLink />
+                                            </template>
+                                        </div>
+                                    </NavigationMenuContent>
+                                </NavigationMenuItem>
+                            </NavigationMenuList>
+                        </NavigationMenu>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Usage Instructions -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-semibold">Usage</h2>
+                <div class="bg-card p-6 rounded-lg border space-y-4">
+                    <div class="space-y-2">
+                        <h3 class="text-lg font-medium">Features</h3>
+                        <ul
+                            class="space-y-1 text-sm text-muted-foreground list-disc list-inside"
+                        >
+                            <li>
+                                Data-driven navigation with type-based rendering
+                            </li>
+                            <li>
+                                Support for link, list, and grid layout types
+                            </li>
+                            <li>Dynamic content rendering with x-for</li>
+                            <li>Hover and keyboard navigation support</li>
+                            <li>Customizable hover delays and positioning</li>
+                            <li>
+                                Accessible ARIA attributes and focus management
+                            </li>
+                            <li>Composable API following shadcn patterns</li>
+                            <li>
+                                Unified data structure for all navigation items
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-lg font-medium">
+                            Flexible Layout System
+                        </h3>
+                        <ul
+                            class="space-y-1 text-sm text-muted-foreground list-disc list-inside"
+                        >
+                            <li>
+                                <code
+                                    class="px-1 py-0.5 text-xs bg-muted rounded"
+                                    >layout="list"</code
+                                > Single column grid (Resources)
+                            </li>
+                            <li>
+                                <code
+                                    class="px-1 py-0.5 text-xs bg-muted rounded"
+                                    >layout="grid"</code
+                                > Multi-column grid (Components)
+                            </li>
+                            <li>
+                                <code
+                                    class="px-1 py-0.5 text-xs bg-muted rounded"
+                                    >layout="row"</code
+                                > Horizontal layout for mixed content (Getting Started)
+                            </li>
+                            <li>
+                                <code
+                                    class="px-1 py-0.5 text-xs bg-muted rounded"
+                                    >NavigationMenuFeatured</code
+                                > Standalone hero card component
+                            </li>
+                            <li>
+                                <code
+                                    class="px-1 py-0.5 text-xs bg-muted rounded"
+                                    >NavigationMenuLink</code
+                                > Consistent link styling with x-for support
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-lg font-medium">Keyboard Navigation</h3>
+                        <ul
+                            class="space-y-1 text-sm text-muted-foreground list-disc list-inside"
+                        >
+                            <li>
+                                <kbd
+                                    class="px-1 py-0.5 text-xs bg-muted rounded"
+                                    >←/→</kbd
+                                > Navigate between menu items
+                            </li>
+                            <li>
+                                <kbd
+                                    class="px-1 py-0.5 text-xs bg-muted rounded"
+                                    >↓</kbd
+                                > Open menu content and focus first link
+                            </li>
+                            <li>
+                                <kbd
+                                    class="px-1 py-0.5 text-xs bg-muted rounded"
+                                    >↑/↓</kbd
+                                > Navigate within menu content
+                            </li>
+                            <li>
+                                <kbd
+                                    class="px-1 py-0.5 text-xs bg-muted rounded"
+                                    >Esc</kbd
+                                > Close all menus
+                            </li>
+                            <li>
+                                <kbd
+                                    class="px-1 py-0.5 text-xs bg-muted rounded"
+                                    >Enter/Space</kbd
+                                > Activate focused element
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</Layout>

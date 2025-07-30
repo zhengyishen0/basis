@@ -1,0 +1,59 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+  value?: string;
+  className?: string;
+  [key: string]: any;
+}
+
+const {
+  value,
+  className,
+  ...alpineProps
+} = Astro.props;
+
+// Generate unique ID if not provided
+const menuId = value || `nav-item-${Math.random().toString(36).substring(2, 11)}`;
+
+// Extract x-for, x-key from alpineProps for dynamic rendering
+const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
+---
+
+<template x-for="item in navigationItems" x-key="item.id">
+  <div
+    x-data=`{
+      menuId: item.id || '${menuId}',
+      get isOpen() {
+        return activeMenu === this.menuId;
+      },
+      get hasContent() {
+        return item.type !== 'link' && item.links && item.links.length > 0;
+      }
+    }`
+    @mouseenter="!keyboardActive && hasContent && openMenu(menuId)"
+    @mouseleave="!keyboardActive && hasContent && scheduleClose(menuId)"
+    @focusin="cancelClose(); hasContent && openMenu(menuId)"
+    class={cn('relative', className)}
+    data-navigation-menu-item
+    {...alpineProps}
+  >
+    <!-- Link type -->
+    <template x-if="item.type === 'link'">
+      <div>
+        <slot name="link" />
+      </div>
+    </template>
+    
+    <!-- Menu types (list, grid, feature) -->
+    <template x-if="item.type !== 'link'">
+      <div>
+        <!-- Trigger for all menu types -->
+        <slot name="trigger" />
+        
+        <!-- Content for all menu types -->
+        <slot name="content" />
+      </div>
+    </template>
+  </div>
+</template>

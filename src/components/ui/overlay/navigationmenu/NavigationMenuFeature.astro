@@ -1,0 +1,101 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+  className?: string;
+  [key: string]: any;
+}
+
+const {
+  className,
+  ...alpineProps
+} = Astro.props;
+---
+
+<div
+  x-show="isOpen"
+  x-transition:enter="transition ease-out duration-200"
+  x-transition:enter-start="opacity-0 scale-95"
+  x-transition:enter-end="opacity-100 scale-100"
+  x-transition:leave="transition ease-in duration-150"
+  x-transition:leave-start="opacity-100 scale-100"
+  x-transition:leave-end="opacity-0 scale-95"
+  @mouseenter="cancelClose()"
+  @mouseleave="scheduleClose(menuId)"
+  @keydown.arrow-up.prevent="$event.target.previousElementSibling?.focus()"
+  @keydown.arrow-down.prevent="$event.target.nextElementSibling?.focus()"
+  @keydown.escape.prevent="closeAllMenus(); $el.closest('[data-navigation-menu-item]').querySelector('[data-navigation-menu-trigger]')?.focus()"
+  :data-navigation-menu-content="menuId"
+  class={cn(
+    'absolute left-0 top-full w-full z-50 bg-popover border rounded-md shadow-lg p-2 mt-1',
+    className
+  )}
+  :style="`min-width: ${item.layout?.minWidth || '500px'}`"
+  {...alpineProps}
+>
+  <!-- Dynamic content when used with item data -->
+  <template x-if="typeof item !== 'undefined' && item.featured">
+    <div class="grid gap-3 p-2 lg:grid-cols-[.75fr_1fr]" :class="`md:w-[${item.layout?.minWidth?.replace('px', '') || '500'}px] lg:w-[${parseInt(item.layout?.minWidth?.replace('px', '') || '500') + 100}px]`">
+      <!-- Featured Section -->
+      <div class="row-span-3">
+        <a
+          :href="item.featured.href"
+          @click="closeAllMenus()"
+          @keydown.enter.prevent="window.location.href = item.featured.href; closeAllMenus()"
+          class="flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none focus:shadow-md transition-all hover:scale-[1.02]"
+          :style="item.featured.image ? `background-image: url(${item.featured.image})` : ''"
+          :class="{
+            'bg-gradient-to-b from-muted/50 to-muted': !item.featured.image,
+            'bg-cover bg-center bg-no-repeat relative': item.featured.image
+          }"
+          data-navigation-menu-link
+          tabindex="0"
+        >
+          <!-- Overlay for image backgrounds -->
+          <div 
+            x-show="item.featured.image" 
+            class="absolute inset-0 bg-black/20 rounded-md"
+          ></div>
+          
+          <!-- Content -->
+          <div class="relative z-10">
+            <div class="mb-2 mt-4 text-lg font-medium" :class="item.featured.image && 'text-white'" x-text="item.featured.title"></div>
+            <p class="text-sm leading-tight" :class="item.featured.image ? 'text-white/90' : 'text-muted-foreground'" x-text="item.featured.description"></p>
+          </div>
+        </a>
+      </div>
+      
+      <!-- Links Grid - Using NavigationMenuLink for consistency -->
+      <div class="space-y-1">
+        <template x-for="link in item.links" x-key="link.id">
+          <a
+            :href="link.url"
+            @click="closeAllMenus()"
+            @keydown.enter.prevent="window.location.href = link.url; closeAllMenus()"
+            class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+            data-navigation-menu-link
+            tabindex="0"
+          >
+            <div class="text-sm font-medium leading-none" x-text="link.title"></div>
+            <p class="line-clamp-2 text-sm leading-snug text-muted-foreground" x-text="link.description"></p>
+          </a>
+        </template>
+      </div>
+    </div>
+  </template>
+  
+  <!-- Static content when used with slots -->
+  <template x-if="typeof item === 'undefined' || !item.featured">
+    <div class="grid gap-3 p-2 lg:grid-cols-[.75fr_1fr]">
+      <!-- Featured Section Slot -->
+      <div class="row-span-3">
+        <slot name="featured" />
+      </div>
+      
+      <!-- Links Section Slot -->
+      <div class="space-y-1">
+        <slot name="links" />
+      </div>
+    </div>
+  </template>
+</div>

@@ -1,0 +1,68 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+  layout?: 'list' | 'grid' | 'row';
+  gridColumns?: number;
+  className?: string;
+  [key: string]: any;
+}
+
+const {
+  layout = 'grid',
+  gridColumns = 2,
+  className,
+  ...alpineProps
+} = Astro.props;
+---
+
+<div
+  x-show="isOpen"
+  x-transition:enter="transition ease-out duration-200"
+  x-transition:enter-start="opacity-0 scale-95"
+  x-transition:enter-end="opacity-100 scale-100"
+  x-transition:leave="transition ease-in duration-150"
+  x-transition:leave-start="opacity-100 scale-100"
+  x-transition:leave-end="opacity-0 scale-95"
+  @mouseenter="cancelClose()"
+  @mouseleave="scheduleClose(menuId)"
+  @keydown.arrow-up.prevent="$event.target.previousElementSibling?.focus()"
+  @keydown.arrow-down.prevent="$event.target.nextElementSibling?.focus()"
+  @keydown.escape.prevent="closeAllMenus(); $el.closest('[data-navigation-menu-item]').querySelector('[data-navigation-menu-trigger]')?.focus()"
+  :data-navigation-menu-content="menuId"
+  class={cn(
+    'absolute left-0 top-full w-full z-50 bg-popover border rounded-md shadow-lg min-w-[400px] p-2 mt-1',
+    className
+  )}
+  {...alpineProps}
+>
+  <!-- Dynamic layout based on item type -->
+  <template x-if="typeof item !== 'undefined'">
+    <div 
+      class="gap-3 p-2"
+      :class="{
+        'grid grid-cols-1': item.type === 'list',
+        'grid md:grid-cols-2': item.type === 'grid' && !item.gridColumns,
+        'grid': item.type === 'grid' && item.gridColumns,
+        'flex flex-row space-x-4': item.type === 'feature'
+      }"
+      :style="item.type === 'grid' && item.gridColumns ? `grid-template-columns: repeat(${item.gridColumns}, minmax(0, 1fr))` : ''"
+    >
+      <slot />
+    </div>
+  </template>
+  
+  <!-- Static layout when used without item -->
+  <template x-if="typeof item === 'undefined'">
+    <div 
+      class={cn(
+        'gap-3 p-2',
+        layout === 'list' && 'grid grid-cols-1',
+        layout === 'grid' && `grid md:grid-cols-${gridColumns}`,
+        layout === 'row' && 'flex flex-row space-x-4'
+      )}
+    >
+      <slot />
+    </div>
+  </template>
+</div>

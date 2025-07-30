@@ -1,0 +1,99 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+  href?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  className?: string;
+  [key: string]: any;
+}
+
+const {
+  href,
+  title,
+  description,
+  image,
+  className,
+  ...alpineProps
+} = Astro.props;
+---
+
+<!-- Dynamic featured card when used with item data -->
+<template x-if="typeof item !== 'undefined' && item.featured">
+  <a
+    :href="item.featured.href"
+    @click="closeAllMenus()"
+    @keydown.enter.prevent="window.location.href = item.featured.href; closeAllMenus()"
+    class={cn(
+      'flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none focus:shadow-md transition-all hover:scale-[1.02]',
+      className
+    )}
+    :style="item.featured.image ? `background-image: url(${item.featured.image})` : ''"
+    :class="{
+      'bg-gradient-to-b from-muted/50 to-muted': !item.featured.image,
+      'bg-cover bg-center bg-no-repeat relative': item.featured.image
+    }"
+    data-navigation-menu-link
+    tabindex="0"
+    {...alpineProps}
+  >
+    <!-- Overlay for image backgrounds -->
+    <div 
+      x-show="item.featured.image" 
+      class="absolute inset-0 bg-black/20 rounded-md"
+    ></div>
+    
+    <!-- Content -->
+    <div class="relative z-10">
+      <div class="mb-2 mt-4 text-lg font-medium" :class="item.featured.image && 'text-white'" x-text="item.featured.title"></div>
+      <p class="text-sm leading-tight" :class="item.featured.image ? 'text-white/90' : 'text-muted-foreground'" x-text="item.featured.description"></p>
+    </div>
+  </a>
+</template>
+
+<!-- Static featured card when used with props -->
+<template x-if="typeof item === 'undefined'">
+  <a
+    href={href}
+    @click="closeAllMenus()"
+    @keydown.enter.prevent={href ? `window.location.href = '${href}'; closeAllMenus()` : ''}
+    class={cn(
+      'flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none focus:shadow-md transition-all hover:scale-[1.02]',
+      !image && 'bg-gradient-to-b from-muted/50 to-muted',
+      image && 'bg-cover bg-center bg-no-repeat relative',
+      className
+    )}
+    style={image ? `background-image: url(${image})` : ''}
+    data-navigation-menu-link
+    tabindex="0"
+    {...alpineProps}
+  >
+    <!-- Overlay for image backgrounds -->
+    {image && (
+      <div class="absolute inset-0 bg-black/20 rounded-md"></div>
+    )}
+    
+    <!-- Content -->
+    <div class="relative z-10">
+      {title && (
+        <div class={cn(
+          'mb-2 mt-4 text-lg font-medium',
+          image && 'text-white'
+        )}>
+          {title}
+        </div>
+      )}
+      {description && (
+        <p class={cn(
+          'text-sm leading-tight',
+          image ? 'text-white/90' : 'text-muted-foreground'
+        )}>
+          {description}
+        </p>
+      )}
+      <slot />
+    </div>
+  </a>
+</template>
