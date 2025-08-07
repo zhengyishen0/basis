@@ -1,0 +1,40 @@
+---
+import { cn } from '@/lib/utils';
+
+export interface Props {
+  icon: any; // Lucide icon component
+  className?: string;
+  // Alpine.js pass-through
+  [key: string]: any;
+}
+
+const { 
+  icon: IconComponent,
+  className,
+  ...alpineProps
+} = Astro.props;
+---
+
+<!-- 
+BannerIcon Component (shadcn composable style)
+
+Usage:
+<BannerIcon icon={CircleAlert} />
+<BannerIcon icon={CheckCircle} class="text-green-600" />
+
+Features:
+- Lucide icon integration
+- Consistent sizing and positioning
+- Alpine.js pass-through
+- Customizable styling
+-->
+
+<div 
+  class={cn(
+    "flex-shrink-0 w-5 h-5 mt-[2px]",
+    className
+  )}
+  {...alpineProps}
+>
+  <IconComponent class="w-5 h-5" />
+</div>

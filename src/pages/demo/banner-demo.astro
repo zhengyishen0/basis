@@ -1,0 +1,222 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+    Banner,
+    BannerIcon,
+    BannerTitle,
+    BannerDescription,
+    BannerAction,
+    BannerClose,
+} from '@/components/ui/feedback';
+import Button from '@/components/ui/forms/Button.astro';
+import {
+    CircleAlert,
+    CheckCircle,
+    AlertTriangle,
+    Info,
+    Star,
+    X,
+} from 'lucide-astro';
+---
+
+<Layout title="Banner Demo">
+    <!-- Fixed Positioned Banners using event dispatch -->
+    <Banner variant="info" position="top" padding="md" bannerId="top-banner">
+        <BannerIcon icon={Info} />
+        <div class="flex-1 min-w-0">
+            <BannerTitle>Top positioned banner</BannerTitle>
+            <BannerDescription>This banner is fixed to the top of the viewport using event dispatch!</BannerDescription>
+        </div>
+        <BannerClose />
+    </Banner>
+
+    <Banner variant="success" position="bottom" padding="md" bannerId="bottom-banner">
+        <BannerIcon icon={CheckCircle} />
+        <div class="flex-1 min-w-0">
+            <BannerTitle>Bottom positioned banner</BannerTitle>
+            <BannerDescription>This banner is fixed to the bottom of the viewport using event dispatch!</BannerDescription>
+        </div>
+        <BannerClose />
+    </Banner>
+        <main class="container mx-auto p-8 space-y-8">
+            <h1 class="text-3xl font-bold mb-8">Banner Component Demo</h1>
+
+            <!-- Sticky Banner using event dispatch -->
+            <Banner variant="warning" position="sticky-top" padding="md" bannerId="sticky-banner" class="mb-4">
+                <BannerIcon icon={AlertTriangle} />
+                <div class="flex-1 min-w-0">
+                    <BannerTitle>Sticky top banner</BannerTitle>
+                    <BannerDescription>This banner sticks to the top when scrolling using event dispatch!</BannerDescription>
+                </div>
+                <BannerClose />
+            </Banner>
+
+            <!-- Basic Banner Examples -->
+            <section class="space-y-6">
+                <h2 class="text-2xl font-semibold">Basic Banners</h2>
+
+                <!-- Default Banner -->
+                <Banner variant="default" padding="md">
+                    <BannerIcon icon={Info} />
+                    <div class="flex-1 min-w-0">
+                        <BannerTitle>Welcome to our platform</BannerTitle>
+                        <BannerDescription>
+                            Get started by exploring our new features and
+                            improved user experience.
+                        </BannerDescription>
+                    </div>
+                    <BannerAction>
+                        <Button variant="secondary" size="sm"
+                            >Get Started</Button
+                        >
+                    </BannerAction>
+                    <BannerClose />
+                </Banner>
+
+                <!-- Success Banner -->
+                <Banner variant="success" padding="md">
+                    <BannerIcon icon={CheckCircle} />
+                    <div class="flex-1 min-w-0">
+                        <BannerTitle>Account verified successfully</BannerTitle>
+                        <BannerDescription>
+                            Your account has been verified. You can now access
+                            all premium features.
+                        </BannerDescription>
+                    </div>
+                    <BannerClose />
+                </Banner>
+
+                <!-- Warning Banner -->
+                <Banner variant="warning" padding="md">
+                    <BannerIcon icon={AlertTriangle} />
+                    <div class="flex-1 min-w-0">
+                        <BannerTitle>Maintenance scheduled</BannerTitle>
+                        <BannerDescription>
+                            Our system will undergo maintenance on Sunday from
+                            2:00 AM to 4:00 AM EST.
+                        </BannerDescription>
+                    </div>
+                    <BannerAction>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            class="text-current border-current hover:bg-current hover:text-background"
+                        >
+                            Learn More
+                        </Button>
+                    </BannerAction>
+                    <BannerClose />
+                </Banner>
+
+                <!-- Destructive Banner -->
+                <Banner variant="destructive" padding="md">
+                    <BannerIcon icon={CircleAlert} />
+                    <div class="flex-1 min-w-0">
+                        <BannerTitle>Action required</BannerTitle>
+                        <BannerDescription>
+                            Your subscription expires in 3 days. Renew now to
+                            avoid service interruption.
+                        </BannerDescription>
+                    </div>
+                    <BannerAction>
+                        <Button variant="secondary" size="sm">Renew Now</Button>
+                    </BannerAction>
+                    <BannerClose />
+                </Banner>
+
+                <!-- Outline Banner -->
+                <Banner variant="outline" padding="md">
+                    <BannerIcon icon={Star} />
+                    <div class="flex-1 min-w-0">
+                        <BannerTitle>New feature available</BannerTitle>
+                        <BannerDescription>
+                            Try our enhanced search functionality with
+                            AI-powered suggestions.
+                        </BannerDescription>
+                    </div>
+                    <BannerAction>
+                        <Button variant="default" size="sm">Try Now</Button>
+                    </BannerAction>
+                    <BannerClose />
+                </Banner>
+            </section>
+
+            <!-- Position Examples -->
+            <section class="space-y-6">
+                <h2 class="text-2xl font-semibold">Position Examples</h2>
+
+                <div class="space-y-4" x-data>
+                    <Button @click="$dispatch('show-banner', { bannerId: 'top-banner' })" variant="outline">
+                        Show Top Banner
+                    </Button>
+
+                    <Button @click="$dispatch('show-banner', { bannerId: 'bottom-banner' })" variant="outline">
+                        Show Bottom Banner
+                    </Button>
+
+                    <Button @click="$dispatch('show-banner', { bannerId: 'sticky-banner' })" variant="outline">
+                        Show Sticky Top Banner
+                    </Button>
+                </div>
+            </section>
+
+            <!-- Interactive Banners (with visibility delay) -->
+            <section class="space-y-6">
+                <h2 class="text-2xl font-semibold">Delayed Visibility</h2>
+
+                <Banner
+                    variant="default"
+                    visible={false}
+                    visibleAfter={1000}
+                    padding="md"
+                >
+                    <BannerIcon icon={Info} />
+                    <div class="flex-1 min-w-0">
+                        <BannerTitle>Delayed banner</BannerTitle>
+                        <BannerDescription>
+                            This banner appears after a 1-second delay.
+                        </BannerDescription>
+                    </div>
+                    <BannerClose />
+                </Banner>
+            </section>
+
+            <!-- Add some extra content to test sticky banner -->
+            <section class="space-y-6">
+                <h2 class="text-2xl font-semibold">
+                    Extra Content for Scrolling
+                </h2>
+                <div class="space-y-4">
+                    <p>
+                        This section adds extra content so you can test the
+                        sticky banner behavior.
+                    </p>
+                    <p>
+                        When you click "Show Sticky Top Banner", it will appear
+                        at the top and stick when you scroll.
+                    </p>
+                    <div
+                        class="h-96 bg-muted rounded-lg flex items-center justify-center"
+                    >
+                        <p class="text-muted-foreground">
+                            Tall content block for testing scroll behavior
+                        </p>
+                    </div>
+                    <div
+                        class="h-96 bg-muted rounded-lg flex items-center justify-center"
+                    >
+                        <p class="text-muted-foreground">
+                            Another tall content block
+                        </p>
+                    </div>
+                    <div
+                        class="h-96 bg-muted rounded-lg flex items-center justify-center"
+                    >
+                        <p class="text-muted-foreground">
+                            Final tall content block
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+</Layout>
