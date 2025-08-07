@@ -5,9 +5,7 @@ export { default as NavigationMenuItem } from './NavigationMenuItem.astro';
 export { default as NavigationMenuTrigger } from './NavigationMenuTrigger.astro';
 export { default as NavigationMenuContent } from './NavigationMenuContent.astro';
 export { default as NavigationMenuLink } from './NavigationMenuLink.astro';
-export { default as NavigationMenuFeature } from './NavigationMenuFeature.astro';
 export { default as NavigationMenuFeatured } from './NavigationMenuFeatured.astro';
 
 // Type exports
 export type { NavigationMenuItemData } from './NavigationMenu.astro';
-export type { NavigationMenuContentData } from './NavigationMenuContent.astro';
