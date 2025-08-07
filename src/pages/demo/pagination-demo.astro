@@ -23,7 +23,9 @@ import {
         <!-- Basic Composable Pagination -->
         <section class="space-y-4">
             <div>
-                <h2 class="text-xl font-semibold mb-2">Basic Composable Pagination</h2>
+                <h2 class="text-xl font-semibold mb-2">
+                    Basic Composable Pagination
+                </h2>
                 <p class="text-sm text-muted-foreground mb-4">
                     Simple composable usage with default info display
                 </p>
@@ -36,26 +38,27 @@ import {
                     pageSize={10}
                 >
                     <span slot="info" class="text-sm text-muted-foreground">
-                        Showing <span class="font-medium" x-text="startItem"></span> to 
-                        <span class="font-medium" x-text="endItem"></span> of 
+                        Showing <span class="font-medium" x-text="startItem"
+                        ></span> to
+                        <span class="font-medium" x-text="endItem"></span> of
                         <span class="font-medium" x-text="totalItems"></span> results
                     </span>
 
                     <PaginationPrevious />
-                    
-                    <PaginationItem x-for="page in visiblePages" x-key="page.number">
+
+                    <PaginationItem
+                        x-for="page in visiblePages"
+                        x-key="page.number"
+                    >
                         <PaginationLink
                             slot="link"
                             x-bind:is-active="page.current"
                             x-on:click="goToPage(page.number)"
                             x-text="page.number"
                         />
-                        <PaginationEllipsis
-                            slot="ellipsis"
-                            x-text="page.number"
-                        />
+                        <PaginationEllipsis slot="ellipsis" />
                     </PaginationItem>
-                    
+
                     <PaginationNext />
                 </Pagination>
             </div>
@@ -91,17 +94,17 @@ import {
                     <PaginationPrevious />
 
                     <!-- Dynamic page numbers with x-for -->
-                    <PaginationItem x-for="page in visiblePages" x-key="page.number">
+                    <PaginationItem
+                        x-for="page in visiblePages"
+                        x-key="page.number"
+                    >
                         <PaginationLink
                             slot="link"
                             x-bind:is-active="page.current"
                             x-on:click="goToPage(page.number)"
                             x-text="page.number"
                         />
-                        <PaginationEllipsis
-                            slot="ellipsis"
-                            x-text="page.number"
-                        />
+                        <PaginationEllipsis slot="ellipsis" />
                     </PaginationItem>
 
                     <PaginationNext />
@@ -128,20 +131,20 @@ import {
                     showInfo={false}
                 >
                     <PaginationPrevious />
-                    
-                    <PaginationItem x-for="page in visiblePages" x-key="page.number">
+
+                    <PaginationItem
+                        x-for="page in visiblePages"
+                        x-key="page.number"
+                    >
                         <PaginationLink
                             slot="link"
                             x-bind:is-active="page.current"
                             x-on:click="goToPage(page.number)"
                             x-text="page.number"
                         />
-                        <PaginationEllipsis
-                            slot="ellipsis"
-                            x-text="page.number"
-                        />
+                        <PaginationEllipsis slot="ellipsis" />
                     </PaginationItem>
-                    
+
                     <PaginationNext />
                 </Pagination>
             </div>
@@ -180,24 +183,26 @@ import {
                     @page-change="currentDemo = $event.detail.page"
                 >
                     <div slot="info" class="text-sm text-green-600 font-medium">
-                        Interactive: <span x-text="startItem"></span>-<span x-text="endItem"></span> of <span x-text="totalItems"></span>
+                        Interactive: <span x-text="startItem"></span>-<span
+                            x-text="endItem"></span> of <span
+                            x-text="totalItems"></span>
                     </div>
 
                     <PaginationPrevious />
-                    
-                    <PaginationItem x-for="page in visiblePages" x-key="page.number">
+
+                    <PaginationItem
+                        x-for="page in visiblePages"
+                        x-key="page.number"
+                    >
                         <PaginationLink
                             slot="link"
                             x-bind:is-active="page.current"
                             x-on:click="goToPage(page.number)"
                             x-text="page.number"
                         />
-                        <PaginationEllipsis
-                            slot="ellipsis"
-                            x-text="page.number"
-                        />
+                        <PaginationEllipsis slot="ellipsis" />
                     </PaginationItem>
-                    
+
                     <PaginationNext />
                 </Pagination>
             </div>

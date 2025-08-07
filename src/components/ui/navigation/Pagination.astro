@@ -7,6 +7,7 @@ export interface Props {
     totalItems?: number;
     pageSize?: number;
     maxVisible?: number;
+    maxElements?: number;
     showInfo?: boolean;
     showFirstLast?: boolean;
     class?: string;
@@ -19,6 +20,7 @@ const {
     totalItems = 0,
     pageSize = 10,
     maxVisible = 5,
+    maxElements = 7,
     showInfo = true,
     showFirstLast = true,
     class: className,
@@ -32,35 +34,56 @@ const alpineStore = `{
   totalItems: ${totalItems},
   pageSize: ${pageSize},
   maxVisible: ${maxVisible},
+  maxElements: ${maxElements},
   showInfo: ${showInfo},
   showFirstLast: ${showFirstLast},
   
   get visiblePages() {
+    if (this.totalPages <= this.maxElements) {
+      // Show all pages if total pages <= maxElements
+      const pages = [];
+      for (let i = 1; i <= this.totalPages; i++) {
+        pages.push({ number: i, current: i === this.currentPage, isEllipsis: false });
+      }
+      return pages;
+    }
+
     const pages = [];
-    const start = Math.max(1, this.currentPage - Math.floor(this.maxVisible / 2));
-    const end = Math.min(this.totalPages, start + this.maxVisible - 1);
+    const current = this.currentPage;
+    const total = this.totalPages;
+    const maxElem = this.maxElements;
     
-    // Add first page + ellipsis if needed
-    if (this.showFirstLast && start > 1) {
-      pages.push({ number: 1, current: false, isEllipsis: false });
-      if (start > 2) {
-        pages.push({ number: '...', current: false, isEllipsis: true });
+    // Calculate thresholds based on maxElements
+    const sidePages = Math.floor((maxElem - 3) / 2); // Pages on each side in middle pattern
+    const endThreshold = Math.floor(maxElem / 2); // When to switch from end to middle pattern
+    const startThreshold = total - endThreshold + 1; // When to switch from middle to start pattern
+
+    // Always show first page
+    pages.push({ number: 1, current: current === 1, isEllipsis: false });
+
+    if (current <= endThreshold) {
+      // Pattern: 1 2 3 4 5 ... 9 (end overflow)
+      for (let i = 2; i <= maxElem - 2; i++) {
+        pages.push({ number: i, current: i === current, isEllipsis: false });
       }
-    }
-    
-    // Add visible page range
-    for (let i = start; i <= end; i++) {
-      pages.push({ number: i, current: i === this.currentPage, isEllipsis: false });
-    }
-    
-    // Add ellipsis + last page if needed
-    if (this.showFirstLast && end < this.totalPages) {
-      if (end < this.totalPages - 1) {
-        pages.push({ number: '...', current: false, isEllipsis: true });
+      pages.push({ number: '...', current: false, isEllipsis: true });
+      pages.push({ number: total, current: current === total, isEllipsis: false });
+    } else if (current >= startThreshold) {
+      // Pattern: 1 ... 5 6 7 8 9 (start overflow)
+      pages.push({ number: '...', current: false, isEllipsis: true });
+      for (let i = total - (maxElem - 3); i <= total; i++) {
+        pages.push({ number: i, current: i === current, isEllipsis: false });
       }
-      pages.push({ number: this.totalPages, current: false, isEllipsis: false });
+    } else {
+      // Pattern: 1 ... 3 4 5 ... 9 (middle overflow)
+      pages.push({ number: '...', current: false, isEllipsis: true });
+      for (let i = current - sidePages; i <= current + sidePages; i++) {
+        pages.push({ number: i, current: i === current, isEllipsis: false });
+      }
+      pages.push({ number: '...', current: false, isEllipsis: true });
+      pages.push({ number: total, current: current === total, isEllipsis: false });
     }
-    
+
     return pages;
   },
   
