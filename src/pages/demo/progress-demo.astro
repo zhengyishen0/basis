@@ -1,0 +1,131 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Progress from '@/components/ui/feedback/Progress.astro';
+---
+
+<Layout title="Progress Demo">
+  <div class="container mx-auto p-8 space-y-12">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold mb-2">Progress Component Demo</h1>
+      <p class="text-muted-foreground">Universal UI System with CVA variants</p>
+    </div>
+
+    <!-- Basic Usage -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-semibold">Basic Progress Bars</h2>
+      
+      <!-- Different progress values -->
+      <div class="space-y-4">
+        <h3 class="text-lg font-medium text-muted-foreground">Different Values</h3>
+        <Progress value={25} showLabel={true} />
+        <Progress value={50} showLabel={true} />
+        <Progress value={75} showLabel={true} />
+        <Progress value={100} showLabel={true} />
+      </div>
+
+      <!-- Without labels -->
+      <div class="space-y-4">
+        <h3 class="text-lg font-medium text-muted-foreground">Without Labels</h3>
+        <Progress value={30} />
+        <Progress value={65} />
+        <Progress value={90} />
+      </div>
+    </section>
+
+    <!-- Animated & Striped -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-semibold">Animated & Striped</h2>
+      
+      <div class="space-y-4">
+        <h3 class="text-lg font-medium text-muted-foreground">Striped Progress</h3>
+        <Progress value={80} striped={true} showLabel={true} />
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="text-lg font-medium text-muted-foreground">Animated Striped</h3>
+        <Progress value={80} striped={true} animated={true} showLabel={true} />
+      </div>
+    </section>
+
+    <!-- Auto Increment -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-semibold">Auto Increment Demo</h2>
+      
+      <div class="space-y-4">
+        <h3 class="text-lg font-medium text-muted-foreground">Auto Increment (Fast)</h3>
+        <Progress 
+          autoIncrement={true} 
+          incrementInterval={50}
+          showLabel={true}
+        />
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="text-lg font-medium text-muted-foreground">Auto Increment with Stripes</h3>
+        <Progress 
+          autoIncrement={true} 
+          incrementInterval={100}
+          striped={true}
+          animated={true}
+          showLabel={true}
+        />
+      </div>
+    </section>
+
+    <!-- Custom Styling -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-semibold">Custom Styling</h2>
+      
+      <div class="space-y-4">
+        <h3 class="text-lg font-medium text-muted-foreground">With Padding & Elevation</h3>
+        <Progress 
+          value={65} 
+          padding="md" 
+          elevation="elevated"
+          showLabel={true}
+          class="bg-muted/50"
+        />
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="text-lg font-medium text-muted-foreground">With Margin</h3>
+        <Progress 
+          value={85} 
+          margin="lg"
+          showLabel={true}
+          class="bg-accent"
+        />
+      </div>
+    </section>
+
+    <!-- Interactive Demo -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-semibold">Interactive Demo</h2>
+      
+      <div 
+        x-data="{ 
+          currentValue: 40,
+          updateProgress() {
+            this.currentValue = Math.floor(Math.random() * 100);
+          }
+        }"
+        class="space-y-4"
+      >
+        <div class="space-y-4">
+          <h3 class="text-lg font-medium text-muted-foreground">Dynamic Progress</h3>
+          <Progress 
+            x-bind:value="currentValue"
+            showLabel={true}
+          />
+        </div>
+        
+        <button 
+          @click="updateProgress()"
+          class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+        >
+          Update Progress
+        </button>
+      </div>
+    </section>
+  </div>
+</Layout>
