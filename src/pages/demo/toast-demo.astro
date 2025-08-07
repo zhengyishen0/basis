@@ -5,186 +5,292 @@ import { Button } from '@/components/ui/forms';
 ---
 
 <Layout title="Toast Demo">
-  <main class="container mx-auto py-8 px-4" x-data>
-    <div class="max-w-6xl mx-auto space-y-8">
-      
-      <!-- Header -->
-      <div class="text-center space-y-4">
-        <h1 class="text-4xl font-bold">Toast Component Demo</h1>
-        <p class="text-xl text-muted-foreground">Global store + composable components</p>
-      </div>
+    <main class="container mx-auto py-8 px-4" x-data>
+        <div class="max-w-6xl mx-auto space-y-8">
+            <!-- Header -->
+            <div class="text-center space-y-4">
+                <h1 class="text-4xl font-bold">Toast Component Demo</h1>
+                <p class="text-xl text-muted-foreground">
+                    Global store + composable components
+                </p>
+            </div>
 
-      <!-- Toast Container (Global) -->
-      <Toast />
+            <!-- Toast Container (Global) -->
+            <Toast />
 
-      <!-- Global API Examples -->
-      <section class="space-y-4">
-        <div class="space-y-2">
-          <h2 class="text-2xl font-semibold">Global Toast API</h2>
-          <p class="text-muted-foreground">Simple function calls for quick notifications</p>
+            <!-- Global API Examples -->
+            <section class="space-y-4">
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-semibold">Global Toast API</h2>
+                    <p class="text-muted-foreground">
+                        Simple function calls for quick notifications
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-4">
+                    <!-- Debug: Raw HTML button -->
+                    <button
+                        @click="console.log('Raw button clicked'); toast('Raw button test')"
+                        class="px-4 py-2 bg-blue-500 text-white rounded"
+                    >
+                        DEBUG: Raw Button
+                    </button>
+
+                    <Button
+                        @click="console.log('Component button clicked'); toast('Simple message')"
+                        >Basic Toast</Button
+                    >
+                    <Button
+                        @click="toast('Success!', { type: 'success', description: 'Your action was completed.' })"
+                        variant="secondary"
+                    >
+                        Success
+                    </Button>
+                    <Button
+                        @click="toast('Error occurred', { type: 'danger', description: 'Something went wrong.' })"
+                        variant="destructive"
+                    >
+                        Error
+                    </Button>
+                    <Button
+                        @click="toast('Warning!', { type: 'warning', description: 'Please review input.' })"
+                        variant="outline"
+                    >
+                        Warning
+                    </Button>
+                    <Button
+                        @click="toast('Info', { type: 'info', description: 'Useful information.' })"
+                        variant="ghost"
+                    >
+                        Info
+                    </Button>
+                </div>
+            </section>
+
+            <!-- Toast Examples -->
+            <section class="space-y-6">
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-semibold">Toast Examples</h2>
+                    <p class="text-muted-foreground">
+                        Different toast types and configurations
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">Basic Toasts</h3>
+                        <div class="flex flex-col gap-2">
+                            <Button
+                                @click="toast('Simple notification')"
+                                variant="outline"
+                                size="sm"
+                            >
+                                Basic Toast
+                            </Button>
+                            <Button
+                                @click="toast('With description', { description: 'This toast has additional details.' })"
+                                variant="outline"
+                                size="sm"
+                            >
+                                With Description
+                            </Button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">Toast Examples</h3>
+                        <div class="flex flex-col gap-2">
+                            <Button
+                                @click="toast('Payment Successful', { type: 'success', description: 'Your payment has been processed.' })"
+                                variant="outline"
+                                size="sm"
+                            >
+                                Success Toast
+                            </Button>
+                            <Button
+                                @click="toast('Connection Failed', { type: 'danger', description: 'Unable to connect to server.' })"
+                                variant="outline"
+                                size="sm"
+                            >
+                                Error Toast
+                            </Button>
+                            <Button
+                                @click="toast('Confirm Action', { type: 'warning', description: 'This action cannot be undone.' })"
+                                variant="outline"
+                                size="sm"
+                            >
+                                Warning Toast
+                            </Button>
+                            <Button
+                                @click="toast('System Update', { type: 'info', description: 'A new update is available.' })"
+                                variant="outline"
+                                size="sm"
+                            >
+                                Info Toast
+                            </Button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">
+                            Duration Control
+                        </h3>
+                        <div class="flex flex-col gap-2">
+                            <Button
+                                @click="toast('Quick toast', { duration: 2000 })"
+                                variant="outline"
+                                size="sm"
+                            >
+                                2s Duration
+                            </Button>
+                            <Button
+                                @click="toast('Persistent toast', {type: 'info', description: 'This toast will not auto-dismiss.', duration: 0 })"
+                                variant="outline"
+                                size="sm"
+                            >
+                                No Auto-dismiss
+                            </Button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">
+                            Custom Position
+                        </h3>
+                        <div class="flex flex-col gap-2">
+                            <Button
+                                @click="toast('Top center toast', { position: 'top-center' })"
+                                variant="outline"
+                                size="sm"
+                            >
+                                Top Center
+                            </Button>
+                            <Button
+                                @click="toast('Bottom left toast', { position: 'bottom-left' })"
+                                variant="outline"
+                                size="sm"
+                            >
+                                Bottom Left
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Position & Stacking -->
+            <section class="space-y-6">
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-semibold">
+                        Positioning & Stacking
+                    </h2>
+                    <p class="text-muted-foreground">
+                        Test different positions and multiple toasts
+                    </p>
+                </div>
+                <div class="space-y-6">
+                    <!-- Positions -->
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">Positions</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                            <Button
+                                @click="toast('Top Left', { position: 'top-left' })"
+                                variant="outline"
+                                size="sm">Top Left</Button
+                            >
+                            <Button
+                                @click="toast('Top Center', { position: 'top-center' })"
+                                variant="outline"
+                                size="sm">Top Center</Button
+                            >
+                            <Button
+                                @click="toast('Top Right', { position: 'top-right' })"
+                                variant="outline"
+                                size="sm">Top Right</Button
+                            >
+                            <Button
+                                @click="toast('Bottom Left', { position: 'bottom-left' })"
+                                variant="outline"
+                                size="sm">Bottom Left</Button
+                            >
+                            <Button
+                                @click="toast('Bottom Center', { position: 'bottom-center' })"
+                                variant="outline"
+                                size="sm">Bottom Center</Button
+                            >
+                            <Button
+                                @click="toast('Bottom Right', { position: 'bottom-right' })"
+                                variant="outline"
+                                size="sm">Bottom Right</Button
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Stacking -->
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">Stacking</h3>
+                        <div class="flex gap-2">
+                            <Button
+                                @click="toast('First toast'); setTimeout(() => toast('Second toast'), 300); setTimeout(() => toast('Third toast'), 600);"
+                                variant="default"
+                                size="sm"
+                            >
+                                Stack 3 Toasts
+                            </Button>
+                            <Button
+                                @click="Alpine.store('toasts').clear()"
+                                variant="destructive"
+                                size="sm"
+                            >
+                                Clear All
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- API Reference -->
+            <section class="space-y-6">
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-semibold">API Reference</h2>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">
+                            Global Functions
+                        </h3>
+                        <div
+                            class="bg-muted rounded-lg p-4 font-mono text-sm space-y-1"
+                        >
+                            <div>toast(message, options?)</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">Options</h3>
+                        <div
+                            class="bg-muted rounded-lg p-4 font-mono text-sm space-y-1"
+                        >
+                            <div>description: string</div>
+                            <div>
+                                duration: number (ms, 0 = no auto-dismiss)
+                            </div>
+                            <div>
+                                position: 'top-left' | 'top-center' |
+                                'top-right' | etc
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">Alpine Store</h3>
+                        <div
+                            class="bg-muted rounded-lg p-4 font-mono text-sm space-y-1"
+                        >
+                            <div>$store.toasts.add(message, options)</div>
+                            <div>$store.toasts.dismiss(id)</div>
+                            <div>$store.toasts.clear()</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-        <div class="flex flex-wrap gap-4">
-          <!-- Debug: Raw HTML button -->
-          <button 
-            @click="console.log('Raw button clicked'); toast('Raw button test')" 
-            class="px-4 py-2 bg-blue-500 text-white rounded"
-          >
-            DEBUG: Raw Button
-          </button>
-          
-          <Button @click="console.log('Component button clicked'); toast('Simple message')">Basic Toast</Button>
-          <Button @click="toast('Success!', { description: 'Your action was completed.' })" variant="secondary">
-            Success
-          </Button>
-          <Button @click="toast('Error occurred', { description: 'Something went wrong.' })" variant="destructive">
-            Error
-          </Button>
-          <Button @click="toast('Warning!', { description: 'Please review input.' })" variant="outline">
-            Warning
-          </Button>
-          <Button @click="toast('Info', { description: 'Useful information.' })" variant="ghost">
-            Info
-          </Button>
-        </div>
-      </section>
-
-      <!-- Toast Examples -->
-      <section class="space-y-6">
-        <div class="space-y-2">
-          <h2 class="text-2xl font-semibold">Toast Examples</h2>
-          <p class="text-muted-foreground">Different toast types and configurations</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          <div>
-            <h3 class="text-lg font-medium mb-2">Basic Toasts</h3>
-            <div class="flex flex-col gap-2">
-              <Button @click="toast('Simple notification')" variant="outline" size="sm">
-                Basic Toast
-              </Button>
-              <Button @click="toast('With description', { description: 'This toast has additional details.' })" variant="outline" size="sm">
-                With Description
-              </Button>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="text-lg font-medium mb-2">Toast Examples</h3>
-            <div class="flex flex-col gap-2">
-              <Button @click="toast('Payment Successful', { description: 'Your payment has been processed.' })" variant="outline" size="sm">
-                Success Toast
-              </Button>
-              <Button @click="toast('Connection Failed', { description: 'Unable to connect to server.' })" variant="outline" size="sm">
-                Error Toast
-              </Button>
-              <Button @click="toast('Confirm Action', { description: 'This action cannot be undone.' })" variant="outline" size="sm">
-                Warning Toast
-              </Button>
-              <Button @click="toast('System Update', { description: 'A new update is available.' })" variant="outline" size="sm">
-                Info Toast
-              </Button>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="text-lg font-medium mb-2">Duration Control</h3>
-            <div class="flex flex-col gap-2">
-              <Button @click="toast('Quick toast', { duration: 2000 })" variant="outline" size="sm">
-                2s Duration
-              </Button>
-              <Button @click="toast('Persistent toast', { duration: 0 })" variant="outline" size="sm">
-                No Auto-dismiss
-              </Button>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="text-lg font-medium mb-2">Custom Position</h3>
-            <div class="flex flex-col gap-2">
-              <Button @click="toast('Top center toast', { position: 'top-center' })" variant="outline" size="sm">
-                Top Center
-              </Button>
-              <Button @click="toast('Bottom left toast', { position: 'bottom-left' })" variant="outline" size="sm">
-                Bottom Left
-              </Button>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Position & Stacking -->
-      <section class="space-y-6">
-        <div class="space-y-2">
-          <h2 class="text-2xl font-semibold">Positioning & Stacking</h2>
-          <p class="text-muted-foreground">Test different positions and multiple toasts</p>
-        </div>
-        <div class="space-y-6">
-          
-          <!-- Positions -->
-          <div>
-            <h3 class="text-lg font-medium mb-2">Positions</h3>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
-              <Button @click="toast('Top Left', { position: 'top-left' })" variant="outline" size="sm">Top Left</Button>
-              <Button @click="toast('Top Center', { position: 'top-center' })" variant="outline" size="sm">Top Center</Button>
-              <Button @click="toast('Top Right', { position: 'top-right' })" variant="outline" size="sm">Top Right</Button>
-              <Button @click="toast('Bottom Left', { position: 'bottom-left' })" variant="outline" size="sm">Bottom Left</Button>
-              <Button @click="toast('Bottom Center', { position: 'bottom-center' })" variant="outline" size="sm">Bottom Center</Button>
-              <Button @click="toast('Bottom Right', { position: 'bottom-right' })" variant="outline" size="sm">Bottom Right</Button>
-            </div>
-          </div>
-
-          <!-- Stacking -->
-          <div>
-            <h3 class="text-lg font-medium mb-2">Stacking</h3>
-            <div class="flex gap-2">
-              <Button @click="toast('First toast'); setTimeout(() => toast('Second toast'), 300); setTimeout(() => toast('Third toast'), 600);" variant="default" size="sm">
-                Stack 3 Toasts
-              </Button>
-              <Button @click="Alpine.store('toasts').clear()" variant="destructive" size="sm">
-                Clear All
-              </Button>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- API Reference -->
-      <section class="space-y-6">
-        <div class="space-y-2">
-          <h2 class="text-2xl font-semibold">API Reference</h2>
-        </div>
-        <div class="space-y-6">
-          
-          <div>
-            <h3 class="text-lg font-medium mb-2">Global Functions</h3>
-            <div class="bg-muted rounded-lg p-4 font-mono text-sm space-y-1">
-              <div>toast(message, options?)</div>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="text-lg font-medium mb-2">Options</h3>
-            <div class="bg-muted rounded-lg p-4 font-mono text-sm space-y-1">
-              <div>description: string</div>
-              <div>duration: number (ms, 0 = no auto-dismiss)</div>
-              <div>position: 'top-left' | 'top-center' | 'top-right' | etc</div>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="text-lg font-medium mb-2">Alpine Store</h3>
-            <div class="bg-muted rounded-lg p-4 font-mono text-sm space-y-1">
-              <div>$store.toasts.add(message, options)</div>
-              <div>$store.toasts.dismiss(id)</div>
-              <div>$store.toasts.clear()</div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-    </div>
-  </main>
+    </main>
 </Layout>
