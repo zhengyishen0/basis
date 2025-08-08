@@ -1,32 +1,38 @@
 ---
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from "@/lib/utils";
-import { createUIComponent, type VariantProps, type UIComponentProps } from '@/lib/component-variants';
+import { sizes, shapes, elevationOptions } from '@/lib/component-variants';
 
-const avatarVariants = createUIComponent(
-  "relative flex shrink-0 overflow-hidden rounded-full",
+const avatarVariants = cva(
+  "relative flex shrink-0 overflow-hidden items-center justify-center bg-primary text-primary-foreground",
   {
-    // Custom size variants (override universal size for avatar dimensions)
-    size: {
-      xs: "h-6 w-6",
-      sm: "h-8 w-8",
-      md: "h-10 w-10", 
-      lg: "h-12 w-12",
-      xl: "h-16 w-16"
+    variants: {
+      size: {
+        xs: `${sizes.xs} w-6`,
+        sm: `${sizes.sm} w-8`,
+        md: `${sizes.md} w-10`,
+        lg: `${sizes.lg} w-12`,
+        xl: `${sizes.xl} w-14`
+      },
+      shape: shapes,
+      elevation: elevationOptions
     }
   }
 );
 
-export interface Props extends UIComponentProps, VariantProps<typeof avatarVariants> {
+export interface Props extends VariantProps<typeof avatarVariants> {
   href?: string;
+  className?: string;
+  [key: string]: any;
 }
 
-const { size = 'md', padding, margin, elevation, class: className, href, ...alpineProps } = Astro.props;
+const { size = 'md', shape = 'rounded', elevation = 'none', className, href, ...alpineProps } = Astro.props;
 
 const Tag = href ? 'a' : 'div';
 ---
 
 <Tag 
-  class={cn(avatarVariants({ size, padding, margin, elevation }), className)}
+  class={cn(avatarVariants({ size, shape, elevation }), className)}
   {...(href ? { href } : {})}
   {...alpineProps}
 >
