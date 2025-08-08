@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Core theme colors */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  
+  /* Primary colors */
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  
+  /* Secondary colors */
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  
+  /* State colors */
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  
+  --success: oklch(0.542 0.203 157.467);
+  --success-foreground: oklch(0.985 0 0);
+  
+  --warning: oklch(0.795 0.172 84.429);
+  --warning-foreground: oklch(0.145 0 0);
+  
+  --info: oklch(0.611 0.187 229.395);
+  --info-foreground: oklch(0.985 0 0);
+  
+  /* UI element colors */
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  
+  /* Form and border colors */
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  
+  /* Container colors */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  
+  /* Border radius */
+  --radius: 0.625rem;
+}
+
+.dark {
+  /* Core theme colors */
+  --background: oklch(0.205 0 0);
+  --foreground: oklch(0.985 0 0);
+  
+  /* Primary colors */
+  --primary: oklch(0.488 0.243 264.376);
+  --primary-foreground: oklch(0.985 0 0);
+  
+  /* Secondary colors */
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  
+  /* State colors */
+  --destructive: oklch(0.704 0.191 22.18);
+  --destructive-foreground: oklch(0.985 0 0);
+  
+  --success: oklch(0.642 0.203 157.467);
+  --success-foreground: oklch(0.985 0 0);
+  
+  --warning: oklch(0.795 0.172 84.429);
+  --warning-foreground: oklch(0.145 0 0);
+  
+  --info: oklch(0.711 0.187 229.395);
+  --info-foreground: oklch(0.985 0 0);
+  
+  /* UI element colors */
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.663 0 0);
+  
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  
+  /* Form and border colors with transparency */
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.439 0 0);
+  
+  /* Container colors */
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+}

@@ -1,91 +1,93 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-  theme: {
-    extend: {
-      keyframes: {
-        'underline-grow': {
-          '0%': {
-            transform: 'scaleX(0)',
-            opacity: '0',
-          },
-          '100%': {
-            transform: 'scaleX(1)',
-            opacity: '1',
-          }
-        }
-      },
-      animation: {
-        'underline-grow': 'underline-grow 0.8s ease-out forwards',
-        'underline-grow-delayed': 'underline-grow 0.8s ease-out 0.3s forwards',
-        'underline-grow-hover': 'underline-grow 0.3s ease-out forwards',
-      },
-      colors: {
-        border: "hsl(214.3, 31.8%, 91.4%)",
-        input: "hsl(214.3, 31.8%, 91.4%)",
-        ring: "hsl(222.2, 84%, 4.9%)",
-        background: "hsl(0, 0%, 100%)",
-        foreground: "hsl(222.2, 84%, 4.9%)",
-        primary: {
-          DEFAULT: "hsl(222.2, 47.4%, 11.2%)",
-          foreground: "hsl(210, 40%, 98%)",
+    content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+    theme: {
+        extend: {
+            keyframes: {
+                'underline-grow': {
+                    '0%': {
+                        transform: 'scaleX(0)',
+                        opacity: '0',
+                    },
+                    '100%': {
+                        transform: 'scaleX(1)',
+                        opacity: '1',
+                    },
+                },
+            },
+            colors: {
+                border: 'var(--border)',
+                input: 'var(--input)',
+                ring: 'var(--ring)',
+                background: 'var(--background)',
+                foreground: 'var(--foreground)',
+                primary: {
+                    DEFAULT: 'var(--primary)',
+                    foreground: 'var(--primary-foreground)',
+                },
+                secondary: {
+                    DEFAULT: 'var(--secondary)',
+                    foreground: 'var(--secondary-foreground)',
+                },
+                destructive: {
+                    DEFAULT: 'var(--destructive)',
+                    foreground: 'var(--destructive-foreground)',
+                },
+                success: {
+                    DEFAULT: 'var(--success)',
+                    foreground: 'var(--success-foreground)',
+                },
+                warning: {
+                    DEFAULT: 'var(--warning)',
+                    foreground: 'var(--warning-foreground)',
+                },
+                info: {
+                    DEFAULT: 'var(--info)',
+                    foreground: 'var(--info-foreground)',
+                },
+                muted: {
+                    DEFAULT: 'var(--muted)',
+                    foreground: 'var(--muted-foreground)',
+                },
+                accent: {
+                    DEFAULT: 'var(--accent)',
+                    foreground: 'var(--accent-foreground)',
+                },
+                popover: {
+                    DEFAULT: 'var(--popover)',
+                    foreground: 'var(--popover-foreground)',
+                },
+                card: {
+                    DEFAULT: 'var(--card)',
+                    foreground: 'var(--card-foreground)',
+                },
+            },
+            boxShadow: {
+                none: 'none',
+                flat: '0 0 0 1px rgba(0, 0, 0, 0.05)',
+                elevated:
+                    '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                floating:
+                    '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                lifted: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                high: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            },
+            zIndex: {
+                tooltip: '10',
+                dropdown: '20',
+                sticky: '30',
+                overlay: '40',
+                modal: '50',
+                popover: '60',
+                maximum: '9999',
+            },
+            animation: {
+                'underline-grow': 'underline-grow 0.8s ease-out forwards',
+                'underline-grow-delayed':
+                    'underline-grow 0.8s ease-out 0.3s forwards',
+                'underline-grow-hover': 'underline-grow 0.3s ease-out forwards',
+            },
         },
-        secondary: {
-          DEFAULT: "hsl(210, 40%, 96%)",
-          foreground: "hsl(222.2, 84%, 4.9%)",
-        },
-        destructive: {
-          DEFAULT: "hsl(0, 84.2%, 60.2%)",
-          foreground: "hsl(210, 40%, 98%)",
-        },
-        success: {
-          DEFAULT: "hsl(142, 76%, 36%)",
-          foreground: "hsl(210, 40%, 98%)",
-        },
-        warning: {
-          DEFAULT: "hsl(38, 92%, 50%)",
-          foreground: "hsl(222.2, 84%, 4.9%)",
-        },
-        info: {
-          DEFAULT: "hsl(199, 89%, 48%)",
-          foreground: "hsl(210, 40%, 98%)",
-        },
-        muted: {
-          DEFAULT: "hsl(210, 40%, 96%)",
-          foreground: "hsl(215.4, 16.3%, 46.9%)",
-        },
-        accent: {
-          DEFAULT: "hsl(210, 40%, 96%)",
-          foreground: "hsl(222.2, 84%, 4.9%)",
-        },
-        popover: {
-          DEFAULT: "hsl(0, 0%, 100%)",
-          foreground: "hsl(222.2, 84%, 4.9%)",
-        },
-        card: {
-          DEFAULT: "hsl(0, 0%, 100%)",
-          foreground: "hsl(222.2, 84%, 4.9%)",
-        },
-      },
-      boxShadow: {
-        'none': 'none',
-        'flat': '0 0 0 1px rgba(0, 0, 0, 0.05)',
-        'elevated': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-        'floating': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        'lifted': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-        'high': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-      },
-      zIndex: {
-        'tooltip': '10',
-        'dropdown': '20', 
-        'sticky': '30',
-        'overlay': '40',
-        'modal': '50',
-        'popover': '60',
-        'maximum': '9999',
-      },
     },
-  },
-  plugins: [],
-}
-
+    plugins: [],
+};
