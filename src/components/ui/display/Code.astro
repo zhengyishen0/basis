@@ -1,0 +1,71 @@
+---
+import Card from '@/components/ui/display/card/Card.astro';
+import CopyToClipboard from '@/components/ui/interactive/CopyToClipboard.astro';
+import { cn } from '@/lib/utils';
+import { codeToHtml } from 'shiki';
+
+export interface Props {
+    code: string;
+    language?: string;
+    title?: string;
+    showCopy?: boolean;
+    showLineNumbers?: boolean;
+    theme?: 'github-light' | 'github-dark' | 'vitesse-light' | 'vitesse-dark';
+    class?: string;
+    [key: string]: any;
+}
+
+const {
+    code,
+    language = 'astro',
+    title,
+    showCopy = true,
+    showLineNumbers = true,
+    theme = 'github-dark',
+    class: className,
+    ...alpineProps
+} = Astro.props;
+
+// Generate syntax highlighted HTML using Shiki with line numbers
+const highlightedCode = await codeToHtml(code, {
+    lang: language,
+    theme: theme,
+});
+---
+
+<div class={cn('w-full', className)} {...alpineProps}>
+    {
+        title && (
+            <div class="flex items-center justify-between mb-2">
+                <h4 class="text-sm font-medium text-foreground">{title}</h4>
+                <span class="text-xs text-muted-foreground uppercase tracking-wide">
+                    {language}
+                </span>
+            </div>
+        )
+    }
+
+    <div class="relative bg-black border border-gray-800 rounded-md">
+        {
+            showCopy && (
+                <div class="absolute top-3 right-3 z-20">
+                    <CopyToClipboard
+                        text={code}
+                        variant="icon"
+                        class="bg-gray-800/90 hover:bg-gray-700 border-gray-600 text-gray-300 hover:text-white transition-colors"
+                    />
+                </div>
+            )
+        }
+
+        <div
+            class={cn(
+                'overflow-auto text-sm max-h-[400px]',
+                showCopy && 'pr-12',
+                '[&_pre]:!bg-black [&_pre]:!p-4 [&_pre]:!m-0',
+                showLineNumbers && 'line-numbers'
+            )}
+            set:html={highlightedCode}
+        />
+    </div>
+</div>

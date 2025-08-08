@@ -35,6 +35,7 @@ const {
 
 <div
   x-show={`selectedTab === '${value}'`}
+  x-cloak
   class={cn(
     tabsContentVariants({ variant, size, padding, margin, elevation, overflow }),
     className

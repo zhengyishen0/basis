@@ -1,0 +1,208 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Button from '@/components/ui/forms/Button.astro';
+import Card from '@/components/ui/display/card/Card.astro';
+import CardContent from '@/components/ui/display/card/CardContent.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+import Alert from '@/components/ui/feedback/Alert.astro';
+import Section from '@/components/ui/layout/Section.astro';
+import Column from '@/components/ui/layout/Column.astro';
+---
+
+<Layout title="Documentation Components Demo">
+    <main class="min-h-screen bg-background">
+        <Section padding="xl" class="max-w-6xl mx-auto">
+            <Column gap="xl">
+                <!-- Header -->
+                <div class="text-center space-y-4">
+                    <h1 class="text-4xl font-bold text-foreground">
+                        Documentation Components Demo
+                    </h1>
+                    <p class="text-xl text-muted-foreground">
+                        Showcasing the new documentation components built with
+                        your existing UI library
+                    </p>
+                </div>
+
+                <!-- Tabs + CodeHighlight + Preview Demo -->
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-semibold text-foreground">
+                        Button Variants
+                    </h2>
+                    <p class="text-muted-foreground">
+                        Different button styles and states using Tabs +
+                        PreviewContainer + CodeHighlight
+                    </p>
+
+                    <Tabs defaultValue="preview" class="w-full">
+                        <TabsList class="grid w-full grid-cols-2">
+                            <TabsTrigger value="preview">Preview</TabsTrigger>
+                            <TabsTrigger value="code">Code</TabsTrigger>
+                        </TabsList>
+
+                        <TabsContent value="preview">
+                            <Card
+                                variant="outline"
+                                padding="lg"
+                                class="min-h-[200px] flex items-center justify-center"
+                            >
+                                <div
+                                    class="flex flex-wrap items-center justify-center gap-4"
+                                >
+                                    <Button variant="default">Default</Button>
+                                    <Button variant="secondary"
+                                        >Secondary</Button
+                                    >
+                                    <Button variant="destructive"
+                                        >Destructive</Button
+                                    >
+                                    <Button variant="outline">Outline</Button>
+                                    <Button variant="ghost">Ghost</Button>
+                                </div>
+                            </Card>
+                        </TabsContent>
+
+                        <TabsContent value="code">
+                            <Code
+                                code={`<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+
+<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button><Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+
+<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button><Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+
+<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>`}
+                                language="astro"
+                            />
+                        </TabsContent>
+                    </Tabs>
+
+                    <h2 class="text-2xl font-semibold text-foreground">
+                        Button Sizes
+                    </h2>
+                    <Tabs defaultValue="preview" class="w-full">
+                        <TabsList class="grid w-full grid-cols-2">
+                            <TabsTrigger value="preview">Preview</TabsTrigger>
+                            <TabsTrigger value="code">Code</TabsTrigger>
+                        </TabsList>
+
+                        <TabsContent value="preview">
+                            <Card
+                                variant="outline"
+                                padding="lg"
+                                class="min-h-[200px] flex items-center justify-center"
+                            >
+                                <div
+                                    class="flex flex-wrap items-center justify-center gap-4"
+                                >
+                                    <Button size="xs">Extra Small</Button>
+                                    <Button size="sm">Small</Button>
+                                    <Button size="default">Default</Button>
+                                    <Button size="lg">Large</Button>
+                                </div>
+                            </Card>
+                        </TabsContent>
+
+                        <TabsContent value="code">
+                            <Code
+                                code={`<Button size="xs">Extra Small</Button>
+<Button size="sm">Small</Button>
+<Button size="default">Default</Button>
+<Button size="lg">Large</Button>`}
+                                language="astro"
+                            />
+                        </TabsContent>
+                    </Tabs>
+                </div>
+
+                <!-- CodeHighlight Demo -->
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-semibold text-foreground">
+                        CodeHighlight Component
+                    </h2>
+                    <p class="text-muted-foreground">
+                        Standalone code blocks with syntax highlighting
+                    </p>
+
+                    <Code
+                        title="Basic Button Usage"
+                        language="astro"
+                        code={`---
+import Button from '@/components/ui/forms/Button.astro';
+---
+
+<Button variant="default" size="lg">
+  Click me!
+</Button>`}
+                        showLineNumbers={true}
+                    />
+
+                    <Code
+                        title="Alpine.js Integration"
+                        language="javascript"
+                        code={`// Button with Alpine.js click handler
+<Button 
+  variant="primary" 
+  @click="handleClick()"
+  x-text="buttonText"
+/>`}
+                    />
+                </div>
+            </Column>
+        </Section>
+    </main>
+</Layout>
