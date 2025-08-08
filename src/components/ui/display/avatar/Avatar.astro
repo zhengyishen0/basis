@@ -1,37 +1,32 @@
 ---
-import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { createUIComponent, type VariantProps, type UIComponentProps } from '@/lib/component-variants';
 
-const avatarVariants = cva(
+const avatarVariants = createUIComponent(
   "relative flex shrink-0 overflow-hidden rounded-full",
   {
-    variants: {
-      size: {
-        sm: "h-8 w-8",
-        default: "h-10 w-10", 
-        lg: "h-12 w-12",
-        xl: "h-16 w-16"
-      }
-    },
-    defaultVariants: {
-      size: "default"
+    // Custom size variants (override universal size for avatar dimensions)
+    size: {
+      xs: "h-6 w-6",
+      sm: "h-8 w-8",
+      md: "h-10 w-10", 
+      lg: "h-12 w-12",
+      xl: "h-16 w-16"
     }
   }
 );
 
-export interface Props extends VariantProps<typeof avatarVariants> {
-  class?: string;
+export interface Props extends UIComponentProps, VariantProps<typeof avatarVariants> {
   href?: string;
-  [key: string]: any; // Alpine.js pass-through
 }
 
-const { size, class: className, href, ...alpineProps } = Astro.props;
+const { size = 'md', padding, margin, elevation, class: className, href, ...alpineProps } = Astro.props;
 
 const Tag = href ? 'a' : 'div';
 ---
 
 <Tag 
-  class={cn(avatarVariants({ size }), className)}
+  class={cn(avatarVariants({ size, padding, margin, elevation }), className)}
   {...(href ? { href } : {})}
   {...alpineProps}
 >

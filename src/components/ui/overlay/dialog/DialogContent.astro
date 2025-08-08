@@ -1,43 +1,39 @@
 ---
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
+import { createOverlayComponent, type VariantProps, type OverlayComponentProps } from '@/lib/component-variants';
 
-const contentVariants = cva(
+const contentVariants = createOverlayComponent(
     'relative bg-background text-foreground shadow-lg outline-none transition-all',
     {
-        variants: {
-            variant: {
-                center: 'rounded-lg border mx-4 my-8',
-                left: 'h-full max-w-sm border-r',
-                right: 'h-full max-w-sm border-l',
-                top: 'w-full max-h-[80vh] rounded-b-lg border-b border-x mx-4',
-                bottom: 'w-full max-h-[80vh] rounded-t-lg border-t',
-                fullscreen: 'w-full h-full'
-            },
-            size: {
-                sm: 'max-w-sm',
-                md: 'max-w-md',
-                lg: 'max-w-lg',
-                xl: 'max-w-xl',
-                full: 'max-w-full'
-            },
+        // Custom variant mapping to overlay positioning
+        variant: {
+            center: 'rounded-lg border mx-4 my-8',
+            left: 'h-full max-w-sm border-r',
+            right: 'h-full max-w-sm border-l',
+            top: 'w-full max-h-[80vh] rounded-b-lg border-b border-x mx-4',
+            bottom: 'w-full max-h-[80vh] rounded-t-lg border-t',
+            fullscreen: 'w-full h-full',
+            positioned: 'absolute'
         },
-        compoundVariants: [
-            {
-                variant: 'fullscreen',
-                class: 'max-w-none max-h-none'
-            }
-        ],
-        defaultVariants: { variant: 'center', size: 'md' },
+        // Override size to match dialog needs
+        size: {
+            sm: 'max-w-sm',
+            md: 'max-w-md',
+            lg: 'max-w-lg',
+            xl: 'max-w-xl',
+            '2xl': 'max-w-2xl',
+            '3xl': 'max-w-3xl',
+            full: 'max-w-full',
+            auto: 'w-auto'
+        }
     }
 );
 
-export interface Props extends VariantProps<typeof contentVariants> {
+export interface Props extends OverlayComponentProps, VariantProps<typeof contentVariants> {
     className?: string;
-    [key: string]: any;
 }
 
-const { variant = 'center', size = 'md', className, ...alpineProps } = Astro.props;
+const { variant = 'center', size = 'md', backdrop = 'dark', theme = 'default', className, ...alpineProps } = Astro.props;
 ---
 
 <template x-teleport="body">
@@ -76,7 +72,7 @@ const { variant = 'center', size = 'md', className, ...alpineProps } = Astro.pro
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-95"
             :id="dialogId"
-            class={cn(contentVariants({ variant, size }), className)}
+            class={cn(contentVariants({ variant, size, backdrop, theme }), className)}
             role="dialog"
             aria-modal="true"
             {...alpineProps}

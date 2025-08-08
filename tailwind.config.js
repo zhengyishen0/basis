@@ -3,18 +3,6 @@ export default {
     content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
     theme: {
         extend: {
-            keyframes: {
-                'underline-grow': {
-                    '0%': {
-                        transform: 'scaleX(0)',
-                        opacity: '0',
-                    },
-                    '100%': {
-                        transform: 'scaleX(1)',
-                        opacity: '1',
-                    },
-                },
-            },
             colors: {
                 border: 'var(--border)',
                 input: 'var(--input)',
@@ -64,13 +52,11 @@ export default {
             },
             boxShadow: {
                 none: 'none',
-                flat: '0 0 0 1px rgba(0, 0, 0, 0.05)',
-                elevated:
-                    '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-                floating:
-                    '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-                lifted: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                high: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                flat: '0 0 0 1px rgb(0 0 0 / 0.05)',
+                elevated: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px 0 rgb(0 0 0 / 0.06)',
+                floating: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.06)',
+                lifted: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05)',
+                high: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04)',
             },
             zIndex: {
                 tooltip: '10',
@@ -80,12 +66,6 @@ export default {
                 modal: '50',
                 popover: '60',
                 maximum: '9999',
-            },
-            animation: {
-                'underline-grow': 'underline-grow 0.8s ease-out forwards',
-                'underline-grow-delayed':
-                    'underline-grow 0.8s ease-out 0.3s forwards',
-                'underline-grow-hover': 'underline-grow 0.3s ease-out forwards',
             },
         },
     },

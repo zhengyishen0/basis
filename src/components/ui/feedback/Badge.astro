@@ -1,51 +1,41 @@
 ---
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
+import { createUIComponent, type VariantProps, type UIComponentProps } from '@/lib/component-variants';
 
-const badgeVariants = cva(
+const badgeVariants = createUIComponent(
     'inline-flex items-center justify-center rounded-full border h-5 min-w-5 px-1.5 text-xs font-semibold font-mono tabular-nums transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
     {
-        variants: {
-            variant: {
-                default:
-                    'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
-                secondary:
-                    'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
-                destructive:
-                    'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
-                success:
-                    'border-transparent bg-success text-success-foreground hover:bg-success/80',
-                warning:
-                    'border-transparent bg-warning text-warning-foreground hover:bg-warning/80',
-                info:
-                    'border-transparent bg-info text-info-foreground hover:bg-info/80',
-                outline: 'text-foreground',
-            },
-            size: {
-                sm: 'h-4 min-w-4 px-1 text-xs',
-                default: 'h-5 min-w-5 px-1.5 text-xs',
-                lg: 'h-6 min-w-6 px-2 text-sm'
-            },
-            elevation: {
-                none: 'shadow-none',
-                flat: 'shadow-flat',
-                elevated: 'shadow-elevated'
-            }
+        variant: {
+            default:
+                'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
+            secondary:
+                'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+            destructive:
+                'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
+            success:
+                'border-transparent bg-success text-success-foreground hover:bg-success/80',
+            warning:
+                'border-transparent bg-warning text-warning-foreground hover:bg-warning/80',
+            info:
+                'border-transparent bg-info text-info-foreground hover:bg-info/80',
+            outline: 'text-foreground',
         },
-        defaultVariants: {
-            variant: 'default',
-            size: 'default',
-            elevation: 'none'
-        },
+        // Custom size variants (override universal size)
+        size: {
+            xs: 'h-4 min-w-4 px-1 text-xs',
+            sm: 'h-4 min-w-4 px-1 text-xs',  
+            md: 'h-5 min-w-5 px-1.5 text-xs',
+            lg: 'h-6 min-w-6 px-2 text-sm',
+            xl: 'h-7 min-w-7 px-2.5 text-sm'
+        }
     }
 );
 
-export interface Props extends VariantProps<typeof badgeVariants> {
-    class?: string;
-    [key: string]: any;
+export interface Props extends UIComponentProps, VariantProps<typeof badgeVariants> {
+    variant?: 'default' | 'secondary' | 'destructive' | 'success' | 'warning' | 'info' | 'outline';
 }
 
-const { variant, size, elevation, class: className, ...alpineProps } = Astro.props;
+const { variant = 'default', size = 'md', padding, margin, elevation, class: className, ...alpineProps } = Astro.props;
 ---
 
 <!-- 
@@ -60,6 +50,6 @@ Usage:
 Variants: default, secondary, destructive, outline
 Supports Alpine.js props: x-data, @click, :class, etc.
 -->
-<span class={cn(badgeVariants({ variant, size, elevation }), className)} {...alpineProps}>
+<span class={cn(badgeVariants({ variant, size, padding, margin, elevation }), className)} {...alpineProps}>
     <slot />
 </span>
