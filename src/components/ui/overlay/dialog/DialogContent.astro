@@ -14,24 +14,12 @@ const contentVariants = cva(
                 top: 'w-full max-h-[80vh] rounded-b-lg border-b border-x mx-4',
                 bottom: 'w-full max-h-[80vh] rounded-t-lg border-t',
                 fullscreen: 'w-full h-full',
-                positioned: 'absolute'
+                positioned: 'absolute',
             },
-            // Override size to match dialog needs
-            size: {
-                sm: 'max-w-sm',
-                md: 'max-w-md',
-                lg: 'max-w-lg',
-                xl: 'max-w-xl',
-                '2xl': 'max-w-2xl',
-                '3xl': 'max-w-3xl',
-                full: 'max-w-full',
-                auto: 'w-auto'
-            }
         },
         defaultVariants: {
             variant: 'center',
-            size: 'md'
-        }
+        },
     }
 );
 
@@ -42,11 +30,17 @@ export interface Props extends VariantProps<typeof contentVariants> {
     [key: string]: any;
 }
 
-const { variant = 'center', size = 'md', backdrop = 'dark', theme = 'default', className, ...alpineProps } = Astro.props;
+const {
+    variant = 'center',
+    backdrop = 'dark',
+    theme = 'default',
+    className,
+    ...alpineProps
+} = Astro.props;
 ---
 
 <template x-teleport="body">
-    <div 
+    <div
         x-show="open"
         class={cn(
             'fixed inset-0 z-modal flex focus:outline-none',
@@ -60,7 +54,7 @@ const { variant = 'center', size = 'md', backdrop = 'dark', theme = 'default', c
         style="display: none;"
     >
         <!-- Backdrop -->
-        <div 
+        <div
             @click="closeable && close()"
             x-transition:enter="ease-out duration-300"
             x-transition:enter-start="opacity-0"
@@ -69,10 +63,11 @@ const { variant = 'center', size = 'md', backdrop = 'dark', theme = 'default', c
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
             class="absolute inset-0 bg-black/50"
-        ></div>
-        
+        >
+        </div>
+
         <!-- Content -->
-        <div 
+        <div
             x-show="open"
             x-transition:enter="ease-out duration-300"
             x-transition:enter-start="opacity-0 scale-95"
@@ -81,7 +76,10 @@ const { variant = 'center', size = 'md', backdrop = 'dark', theme = 'default', c
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-95"
             :id="dialogId"
-            class={cn(contentVariants({ variant, size }), className)}
+            class={cn(
+                contentVariants({ variant }),
+                className
+            )}
             role="dialog"
             aria-modal="true"
             {...alpineProps}

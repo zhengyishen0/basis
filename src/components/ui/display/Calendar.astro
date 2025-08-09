@@ -477,8 +477,12 @@ const adjustedDayNames = [
                                 @click="selectDate(blank.date)"
                                 @keydown="handleKeydown($event, blank.date)"
                                 type="button"
-                                class="calendar-day flex items-center justify-center rounded-md text-muted-foreground/50 hover:bg-accent/50 transition-colors"
-                                :class="{ 'opacity-50 cursor-not-allowed': isDisabled(blank.date) }"
+                                class="calendar-day flex items-center justify-center rounded-md text-muted-foreground hover:bg-accent/50 transition-colors"
+                                :class="{
+                                    'bg-primary text-primary-foreground hover:bg-primary/90': isSelected(blank.date),
+                                    'bg-muted text-foreground': isInRange(blank.date),
+                                    'opacity-50 cursor-not-allowed': isDisabled(blank.date)
+                                }"
                                 :disabled="isDisabled(blank.date)"
                                 :tabindex="isDisabled(blank.date) ? -1 : 0"
                             >
@@ -496,9 +500,7 @@ const adjustedDayNames = [
                             class="calendar-day flex items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
                             :class="{
                                 'bg-primary text-primary-foreground hover:bg-primary/90': isSelected(day.date),
-                                'bg-primary/20 text-primary': isInRange(day.date),
-                                'bg-primary text-primary-foreground rounded-l-md rounded-r-none': isRangeStart(day.date) && mode === 'range',
-                                'bg-primary text-primary-foreground rounded-r-md rounded-l-none': isRangeEnd(day.date) && mode === 'range',
+                                'bg-muted text-foreground': isInRange(day.date),
                                 'bg-accent text-accent-foreground': isToday(day.date) && !isSelected(day.date),
                                 'opacity-50 cursor-not-allowed': day.isDisabled,
                                 'font-semibold': isToday(day.date)
@@ -519,8 +521,12 @@ const adjustedDayNames = [
                                 @click="selectDate(nextDay.date)"
                                 @keydown="handleKeydown($event, nextDay.date)"
                                 type="button"
-                                class="calendar-day flex items-center justify-center rounded-md text-muted-foreground/50 hover:bg-accent/50 transition-colors"
-                                :class="{ 'opacity-50 cursor-not-allowed': isDisabled(nextDay.date) }"
+                                class="calendar-day flex items-center justify-center rounded-md text-muted-foreground hover:bg-accent/50 transition-colors"
+                                :class="{
+                                    'bg-primary text-primary-foreground hover:bg-primary/90': isSelected(nextDay.date),
+                                    'bg-muted text-foreground': isInRange(nextDay.date),
+                                    'opacity-50 cursor-not-allowed': isDisabled(nextDay.date)
+                                }"
                                 :disabled="isDisabled(nextDay.date)"
                                 :tabindex="isDisabled(nextDay.date) ? -1 : 0"
                             >
@@ -589,8 +595,12 @@ const adjustedDayNames = [
                                 <button
                                     @click="selectDate(blank.date)"
                                     type="button"
-                                    class="calendar-day flex items-center justify-center rounded-md text-muted-foreground/50 hover:bg-accent/50 transition-colors"
-                                    :class="{ 'opacity-50 cursor-not-allowed': isDisabled(blank.date) }"
+                                    class="calendar-day flex items-center justify-center rounded-md text-muted-foreground hover:bg-accent/50 transition-colors"
+                                    :class="{
+                                        'bg-primary text-primary-foreground hover:bg-primary/90': isSelected(blank.date),
+                                        'bg-muted text-foreground': isInRange(blank.date),
+                                        'opacity-50 cursor-not-allowed': isDisabled(blank.date)
+                                    }"
                                     :disabled="isDisabled(blank.date)"
                                 >
                                     <span x-text="blank.day"></span>
@@ -606,9 +616,7 @@ const adjustedDayNames = [
                                 class="calendar-day flex items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
                                 :class="{
                                     'bg-primary text-primary-foreground hover:bg-primary/90': isSelected(day.date),
-                                    'bg-primary/20 text-primary': isInRange(day.date),
-                                    'bg-primary text-primary-foreground rounded-l-md rounded-r-none': isRangeStart(day.date) && mode === 'range',
-                                    'bg-primary text-primary-foreground rounded-r-md rounded-l-none': isRangeEnd(day.date) && mode === 'range',
+                                    'bg-muted text-foreground': isInRange(day.date),
                                     'bg-accent text-accent-foreground': isToday(day.date) && !isSelected(day.date),
                                     'opacity-50 cursor-not-allowed': day.isDisabled,
                                     'font-semibold': isToday(day.date)
@@ -627,8 +635,12 @@ const adjustedDayNames = [
                                 <button
                                     @click="selectDate(nextDay.date)"
                                     type="button"
-                                    class="calendar-day flex items-center justify-center rounded-md text-muted-foreground/50 hover:bg-accent/50 transition-colors"
-                                    :class="{ 'opacity-50 cursor-not-allowed': isDisabled(nextDay.date) }"
+                                    class="calendar-day flex items-center justify-center rounded-md text-muted-foreground hover:bg-accent/50 transition-colors"
+                                    :class="{
+                                        'bg-primary text-primary-foreground hover:bg-primary/90': isSelected(nextDay.date),
+                                        'bg-muted text-foreground': isInRange(nextDay.date),
+                                        'opacity-50 cursor-not-allowed': isDisabled(nextDay.date)
+                                    }"
                                     :disabled="isDisabled(nextDay.date)"
                                 >
                                     <span x-text="nextDay.day"></span>

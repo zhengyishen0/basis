@@ -1,11 +1,11 @@
 ---
+import Layout from '@/layouts/Layout.astro';
 import TextInput from '@/components/ui/forms/TextInput.astro';
-import Page from '@/components/ui/layout/Page.astro';
 import Section from '@/components/ui/layout/Section.astro';
 import Column from '@/components/ui/layout/Column.astro';
 ---
 
-<Page>
+<Layout title="TextInput Demo">
   <Section class="max-w-4xl mx-auto p-8">
     <h1 class="text-3xl font-bold mb-8">TextInput Component Demo</h1>
     
@@ -78,6 +78,4 @@ import Column from '@/components/ui/layout/Column.astro';
       </section>
     </Column>
   </Section>
-
-  <script src="//unpkg.com/alpinejs" defer is:inline></script>
-</Page>
+</Layout>
