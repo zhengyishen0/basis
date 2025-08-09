@@ -26,7 +26,7 @@ export const semanticVariants = {
 // ===== UNIFIED SIZING SYSTEM =====
 // Standard sizes with height, padding, and text - used by buttons, badges, inputs, etc.
 export const sizes = {
-    xs: 'h-5 px-xs text-xs font-light',
+    xs: 'h-5 px-sm text-xs font-light',
     sm: 'h-7 px-sm text-sm font-normal',
     md: 'h-9 px-md text-base font-medium',
     lg: 'h-11 px-lg text-lg font-semibold',

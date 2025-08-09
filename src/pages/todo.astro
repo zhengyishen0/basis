@@ -76,9 +76,9 @@ const pageData = `{
                     <CardHeader>
                         <Text variant="card-title"> My Todos </Text>
                         <!-- Filter Buttons and Auth Info -->
-                        <Row gap="md" size="full">
+                        <Row class="justify-between w-full">
                             <!-- Status Filter Buttons (Left) -->
-                            <Row justify="start" align="center">
+                            <Row class="justify-start items-center gap-1">
                                 <Button
                                     @click="todo.setUserFilter('all')"
                                     :variant="todo.userFilter === 'all' ? 'default' : 'outline'"
@@ -220,9 +220,9 @@ const pageData = `{
                     <CardHeader>
                         <Text variant="card-title"> Realtime Todos </Text>
                         <!-- Filter Buttons and User Count -->
-                        <Row justify="between" size="full">
+                        <Row class="justify-between w-full">
                             <!-- Status Filter Buttons (Left) -->
-                            <Row justify="start" align="center">
+                            <Row class="gap-1">
                                 <Button
                                     @click="todo.setAllFilter('all')"
                                     :variant="todo.allFilter === 'all' ? 'default' : 'outline'"

@@ -3,42 +3,36 @@ import { cn } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { overflowVariants } from '@/lib/component-variants';
 
-const navbarVariants = cva('grid grid-cols-[1fr_auto_1fr] items-center', {
-  variants: {
-    overflow: overflowVariants
-  }
+const navbarVariants = cva('grid grid-cols-[1fr_auto_1fr] items-center p-md', {
+    variants: {
+        overflow: overflowVariants,
+    },
 });
 
 export interface Props extends VariantProps<typeof navbarVariants> {
-  as?: 'nav' | 'header' | 'div';
-  class?: string;
-  [key: string]: any; // Alpine.js pass-through
+    as?: 'nav' | 'header' | 'div';
+    class?: string;
+    [key: string]: any; // Alpine.js pass-through
 }
 
-const { 
-  overflow = 'fixed',
-  as: Tag = 'nav',
-  class: className,
-  ...alpineProps 
+const {
+    overflow = 'fixed',
+    as: Tag = 'nav',
+    class: className,
+    ...alpineProps
 } = Astro.props;
 ---
 
-<Tag 
-  class={cn(
-    navbarVariants({ overflow }),
-    className
-  )} 
-  {...alpineProps}
->
-  <div class="justify-self-start">
-    <slot name="left" />
-  </div>
-  
-  <div class="justify-self-center">
-    <slot />
-  </div>
-  
-  <div class="justify-self-end">
-    <slot name="right" />
-  </div>
+<Tag class={cn(navbarVariants({ overflow }), className)} {...alpineProps}>
+    <div class="justify-self-start">
+        <slot name="left" />
+    </div>
+
+    <div class="justify-self-center">
+        <slot />
+    </div>
+
+    <div class="justify-self-end">
+        <slot name="right" />
+    </div>
 </Tag>
