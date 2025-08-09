@@ -83,27 +83,27 @@ import { ChevronDown } from 'lucide-astro';
                             x-text="group.heading"
                         >
                             <DropdownMenuConditional
+                                condition="!item.submenu"
                                 x-for="item in group.items"
                                 x-key="item.text"
-                                condition="!item.submenu"
                             >
-                                <!-- True slot: Regular menu items (using x-text attribute) -->
-                                <DropdownMenuItems
+                                <!-- True slot: Regular menu items -->
+                                <DropdownMenuItem
                                     slot="true"
                                     x-text="item.text"
+                                    :disabled="item.disabled"
                                 >
                                     <DropdownMenuShortcut
                                         x-text="item.shortcut"
                                         x-show="item.shortcut"
                                     />
-                                </DropdownMenuItems>
+                                </DropdownMenuItem>
 
-                                <!-- False slot: Submenu items (using x-text attribute) -->
+                                <!-- False slot: Submenu items -->
                                 <DropdownMenuSubMenu slot="false">
                                     <DropdownMenuSubTrigger
                                         x-text="item.text"
                                     />
-
                                     <DropdownMenuItems
                                         slot="submenu"
                                         x-for="subitem in item.submenu"

@@ -5,7 +5,9 @@ import {
     ContextMenuTrigger,
     ContextMenuContent,
     ContextMenuItem,
+    ContextMenuItems,
     ContextMenuGroup,
+    ContextMenuGroups,
     ContextMenuSubMenu,
     ContextMenuSubTrigger,
     ContextMenuShortcut,
@@ -78,7 +80,7 @@ import { Divider } from '@/components/ui/layout';
                         </div>
                     </ContextMenuTrigger>
                     <ContextMenuContent role="menu">
-                        <ContextMenuGroup
+                        <ContextMenuGroups
                             x-for="group in menuGroups"
                             x-key="group.heading"
                             x-text="group.heading"
@@ -98,7 +100,7 @@ import { Divider } from '@/components/ui/layout';
                                 <!-- False slot: Submenu items -->
                                 <ContextMenuSubMenu slot="false">
                                     <ContextMenuSubTrigger x-text="item.text" />
-                                    <ContextMenuItem
+                                    <ContextMenuItems
                                         slot="submenu"
                                         x-for="subitem in item.submenu"
                                         x-key="subitem.text"
@@ -106,7 +108,7 @@ import { Divider } from '@/components/ui/layout';
                                     />
                                 </ContextMenuSubMenu>
                             </ContextMenuConditional>
-                        </ContextMenuGroup>
+                        </ContextMenuGroups>
                     </ContextMenuContent>
                 </ContextMenu>
             </div>

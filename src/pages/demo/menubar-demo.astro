@@ -5,7 +5,9 @@ import {
     MenuBarTrigger,
     MenuBarContent,
     MenuBarItem,
+    MenuBarItems,
     MenuBarGroup,
+    MenuBarGroups,
     MenuBarSubMenu,
     MenuBarSubTrigger,
     MenuBarShortcut,
@@ -139,7 +141,7 @@ import { Divider } from '@/components/ui/layout';
                                 <span x-text="menu.name"></span>
                             </MenuBarTrigger>
                             <MenuBarContent role="menu">
-                                <MenuBarGroup
+                                <MenuBarGroups
                                     x-for="(group, groupIndex) in menu.groups"
                                     x-key="groupIndex"
                                     divider
@@ -162,8 +164,10 @@ import { Divider } from '@/components/ui/layout';
 
                                         <!-- False slot: Submenu items -->
                                         <MenuBarSubMenu slot="false">
-                                            <MenuBarSubTrigger x-text="item.text" />
-                                            <MenuBarItem
+                                            <MenuBarSubTrigger
+                                                x-text="item.text"
+                                            />
+                                            <MenuBarItems
                                                 slot="submenu"
                                                 x-for="subitem in item.submenu"
                                                 x-key="subitem.text"
@@ -171,7 +175,7 @@ import { Divider } from '@/components/ui/layout';
                                             />
                                         </MenuBarSubMenu>
                                     </MenuBarConditional>
-                                </MenuBarGroup>
+                                </MenuBarGroups>
                             </MenuBarContent>
                         </MenuBar>
                     </template>

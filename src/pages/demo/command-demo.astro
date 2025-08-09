@@ -4,7 +4,9 @@ import {
     Command,
     CommandInput,
     CommandGroup,
+    CommandGroups,
     CommandItem,
+    CommandItems,
     CommandShortcut,
     CommandFooter,
     CommandTrigger,
@@ -76,12 +78,12 @@ const commandItems = {
                     slot="input"
                     placeholder="Type a command or search..."
                 />
-                <CommandGroup
+                <CommandGroups
                     x-for="[categoryName, categoryItems] in Object.entries(filteredItems)"
                     x-key="categoryName"
                     showDivider={true}
                 >
-                    <CommandItem
+                    <CommandItems
                         x-for="item in categoryItems"
                         x-key="item.value"
                     >
@@ -101,8 +103,8 @@ const commandItems = {
                             slot="shortcut"
                             x-text="item.shortcut"
                         />
-                    </CommandItem>
-                </CommandGroup>
+                    </CommandItems>
+                </CommandGroups>
                 <CommandFooter slot="footer" />
             </Command>
         </div>
