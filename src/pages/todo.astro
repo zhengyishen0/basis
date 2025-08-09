@@ -70,7 +70,7 @@ const pageData = `{
             </Card>
 
             <!-- Authenticated state - Todo App -->
-            <Row slot="true" justify="center" align="start" class="gap-8">
+            <Row slot="true" class="gap-8">
                 <!-- Left Column: My Todos -->
                 <Card width="30rem" height="32rem">
                     <CardHeader>
@@ -81,22 +81,25 @@ const pageData = `{
                             <Row class="justify-start items-center gap-1">
                                 <Button
                                     @click="todo.setUserFilter('all')"
-                                    :variant="todo.userFilter === 'all' ? 'default' : 'outline'"
+                                    variant="outline"
                                     size="xs"
+                                    :class="todo.userFilter === 'all' && '!bg-primary !text-primary-foreground !border-transparent hover:!bg-primary/90'"
                                 >
                                     All
                                 </Button>
                                 <Button
                                     @click="todo.setUserFilter('active')"
-                                    :variant="todo.userFilter === 'active' ? 'default' : 'outline'"
+                                    variant="outline"
                                     size="xs"
+                                    :class="todo.userFilter === 'active' && '!bg-primary !text-primary-foreground !border-transparent hover:!bg-primary/90'"
                                 >
                                     Active
                                 </Button>
                                 <Button
                                     @click="todo.setUserFilter('completed')"
-                                    :variant="todo.userFilter === 'completed' ? 'default' : 'outline'"
+                                    variant="outline"
                                     size="xs"
+                                    :class="todo.userFilter === 'completed' && '!bg-primary !text-primary-foreground !border-transparent hover:!bg-primary/90'"
                                 >
                                     Completed
                                 </Button>
@@ -225,22 +228,25 @@ const pageData = `{
                             <Row class="gap-1">
                                 <Button
                                     @click="todo.setAllFilter('all')"
-                                    :variant="todo.allFilter === 'all' ? 'default' : 'outline'"
+                                    variant="outline"
                                     size="xs"
+                                    :class="todo.allFilter === 'all' && '!bg-primary !text-primary-foreground !border-transparent hover:!bg-primary/90'"
                                 >
                                     All
                                 </Button>
                                 <Button
                                     @click="todo.setAllFilter('active')"
-                                    :variant="todo.allFilter === 'active' ? 'default' : 'outline'"
+                                    variant="outline"
                                     size="xs"
+                                    :class="todo.allFilter === 'active' && '!bg-primary !text-primary-foreground !border-transparent hover:!bg-primary/90'"
                                 >
                                     Active
                                 </Button>
                                 <Button
                                     @click="todo.setAllFilter('completed')"
-                                    :variant="todo.allFilter === 'completed' ? 'default' : 'outline'"
+                                    variant="outline"
                                     size="xs"
+                                    :class="todo.allFilter === 'completed' && '!bg-primary !text-primary-foreground !border-transparent hover:!bg-primary/90'"
                                 >
                                     Completed
                                 </Button>

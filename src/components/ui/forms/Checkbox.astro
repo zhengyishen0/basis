@@ -9,20 +9,18 @@ export interface Props {
     indeterminate?: boolean;
     disabled?: boolean;
     label?: string;
-    size?: 'sm' | 'md' | 'lg';
     class?: string;
     // Alpine.js pass-through
     [key: string]: any;
 }
 
 const {
-    id = `checkbox-${Math.random().toString(36).substring(2, 11)}`,
+    id,
     name = id,
     checked = false,
     indeterminate = false,
     disabled = false,
     label,
-    size = 'md',
     class: className = '',
     ...alpineProps
 } = Astro.props;
@@ -33,14 +31,15 @@ const {
         'relative inline-flex items-center gap-3 cursor-pointer group disabled:cursor-not-allowed text-base',
         className
     )}
-    for={id}
+    x-id="['checkbox']"
+    :for="$id('checkbox')"
     x-data={`{ isChecked: ${checked}, isIndeterminate: ${indeterminate}, isDisabled: ${disabled} }`}
 >
     <!-- Native input for accessibility and form handling -->
     <input
         type="checkbox"
-        id={id}
-        name={name}
+        :id="$id('checkbox')"
+        name={name || id}
         :checked="isChecked"
         :disabled="isDisabled"
         class="sr-only peer"
@@ -53,7 +52,6 @@ const {
         :checked="isChecked"
         :indeterminate="isIndeterminate"
         :disabled="isDisabled"
-        size={size}
     />
 
     <!-- Label with disabled state -->
@@ -77,11 +75,10 @@ Usage Examples:
 
 <Checkbox label="Accept terms" />
 <Checkbox checked={true} disabled={true} />
-<Checkbox indeterminate={true} size="lg" />
+<Checkbox indeterminate={true} />
 <Checkbox x-model="isChecked" />
 
 Features:
-- Multiple sizes (sm, md, lg)
 - Checked/unchecked/indeterminate states
 - Uses CheckboxIndicator component
 - Smooth animations and transitions

@@ -5,23 +5,16 @@ import { semanticVariants, overflowVariants } from '@/lib/component-variants';
 import { Check } from 'lucide-astro';
 
 const checkboxIndicatorVariants = cva(
-    'relative flex items-center justify-center shrink-0 transform-gpu rounded bg-background transition-all duration-300 ease-out h-5 w-5 border border-primary shadow-sm',
+    'relative flex items-center justify-center shrink-0 transform-gpu rounded-md bg-white transition-all duration-300 ease-out h-5 w-5 border border-primary shadow-sm',
     {
         variants: {
-            size: {
-                sm: 'h-4 w-4 rounded-sm',
-                md: 'h-5 w-5 rounded',
-                lg: 'h-6 w-6 rounded-md',
-            },
             state: {
                 default: '',
-                checked: 'bg-primary border-primary scale-105',
-                indeterminate: 'bg-primary border-primary scale-105',
+                checked: 'bg-white border-primary',
+                indeterminate: 'bg-white border-primary',
                 disabled: 'opacity-50 cursor-not-allowed',
             },
-            variant: semanticVariants,
-            overflow: overflowVariants
-        }
+        },
     }
 );
 
@@ -29,7 +22,6 @@ export interface Props extends VariantProps<typeof checkboxIndicatorVariants> {
     checked?: boolean;
     indeterminate?: boolean;
     disabled?: boolean;
-    size?: 'sm' | 'md' | 'lg';
     name?: string;
     value?: string;
     class?: string;
@@ -40,10 +32,7 @@ const {
     checked = false,
     indeterminate = false,
     disabled = false,
-    size = 'md',
     state = 'default',
-    variant = 'default',
-    overflow = 'fixed',
     name,
     value,
     class: className,
@@ -51,18 +40,12 @@ const {
 } = Astro.props;
 
 // Extract Alpine expressions from alpineProps if they exist
-const { 
-    ':checked': checkedExpr, 
-    ':indeterminate': indeterminateExpr, 
-    ':disabled': disabledExpr, 
-    ...restAlpineProps 
+const {
+    ':checked': checkedExpr,
+    ':indeterminate': indeterminateExpr,
+    ':disabled': disabledExpr,
+    ...restAlpineProps
 } = alpineProps;
-
-const checkSizes = {
-    sm: 'h-2 w-2',
-    md: 'h-3 w-3', 
-    lg: 'h-4 w-4'
-};
 ---
 
 <!-- 
@@ -77,44 +60,39 @@ Usage:
 <CheckboxIndicator disabled={true} />
 
 Features:
-- Multiple sizes (sm, md, lg)
 - Checked/unchecked/indeterminate states
 - Smooth transitions and animations
 - Disabled state styling
 - Alpine.js reactive support
 -->
-
-<div
-    class="checkbox-input-wrapper relative"
-    {...restAlpineProps}
->
+<div class="checkbox-input-wrapper relative" {...restAlpineProps}>
     <div
         class={cn(
-            checkboxIndicatorVariants({ size, state, variant, overflow }),
+            checkboxIndicatorVariants({ state }),
             className
         )}
         :class={`[
-            (${checkedExpr || checked}) || (${indeterminateExpr || indeterminate}) ? 'bg-primary border-primary scale-105' : 'bg-background border-primary',
+            (${checkedExpr || checked}) || (${indeterminateExpr || indeterminate}) ? 'bg-white border-primary' : 'bg-white border-primary',
             ${disabledExpr || disabled} ? 'opacity-50 cursor-not-allowed' : 'group-hover:border-primary/80'
         ]`}
     >
         <!-- Checkmark icon -->
         <div
-            class="text-primary-foreground transition-all duration-300 ease-out transform-gpu"
+            class="text-primary transition-all duration-300 ease-out transform-gpu"
             :class={`${checkedExpr || checked} ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`}
             x-show={`!(${indeterminateExpr || indeterminate})`}
         >
-            <Check class={cn('stroke-current', checkSizes[size])} />
+            <Check class="stroke-current h-3 w-3" />
         </div>
-        
+
         <!-- Indeterminate indicator -->
         <div
-            class="text-primary-foreground transition-all duration-300 ease-out transform-gpu"
+            class="text-primary transition-all duration-300 ease-out transform-gpu"
             :class={`${indeterminateExpr || indeterminate} ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`}
             x-show={`${indeterminateExpr || indeterminate}`}
         >
             <!-- Horizontal line for indeterminate -->
-            <div class={cn('bg-current rounded-full h-0.5', size === 'sm' ? 'w-2' : size === 'lg' ? 'w-4' : 'w-3')}></div>
+            <div class="bg-current rounded-full h-0.5 w-3"></div>
         </div>
     </div>
 </div>
