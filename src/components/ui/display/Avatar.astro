@@ -1,0 +1,77 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+import {
+    shapes,
+    elevationOptions,
+    semanticVariants,
+} from '@/lib/component-variants';
+
+const avatarVariants = cva(
+    'relative flex shrink-0 overflow-hidden items-center justify-center',
+    {
+        variants: {
+            variant: semanticVariants,
+            size: {
+                xs: `h-6 w-6`,
+                sm: `h-8 w-8`,
+                md: `h-10 w-10`,
+                lg: `h-12 w-12`,
+                xl: `h-14 w-14`,
+            },
+            shape: shapes,
+            elevation: elevationOptions,
+        },
+    }
+);
+
+export interface Props extends VariantProps<typeof avatarVariants> {
+    src?: string;
+    alt?: string;
+    fallback?: string;
+    href?: string;
+    className?: string;
+    [key: string]: any;
+}
+
+const {
+    src,
+    alt,
+    fallback,
+    variant = 'ghost',
+    size = 'md',
+    shape = 'pill',
+    elevation = 'none',
+    className,
+    href,
+    ...alpineProps
+} = Astro.props;
+
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+    {...src ? { 'x-data': '{ imageLoaded: false, imageError: false }' } : {}}
+    class={cn(avatarVariants({ variant, size, shape, elevation }), className)}
+    {...href ? { href } : {}}
+    {...alpineProps}
+>
+    {
+        src && (
+            <img
+                x-show="imageLoaded && !imageError"
+                x-on:load="imageLoaded = true; imageError = false"
+                x-on:error="imageError = true; imageLoaded = false"
+                src={src}
+                alt={alt || ''}
+                class="aspect-square h-full w-full object-cover"
+            />
+        )
+    }
+    <div
+        x-show={'!imageLoaded || imageError'}
+        class="flex h-full w-full items-center justify-center bg-muted text-muted-foreground font-medium text-sm"
+    >
+        {fallback || <slot />}
+    </div>
+</Tag>

@@ -1,37 +1,36 @@
 ---
 import { cn } from '@/lib/utils';
-import {
-    createLayoutComponent,
-    type LayoutComponentProps,
-    type VariantProps,
-} from '@/lib/component-variants';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { overflowVariants } from '@/lib/component-variants';
 
-const accordionVariants = createLayoutComponent('relative w-full', {
-    maxWidth: {
-        sm: 'max-w-sm',
-        md: 'max-w-md',
-        lg: 'max-w-lg',
-        xl: 'max-w-xl',
-        full: 'max-w-full',
-    },
-    centered: {
-        true: 'mx-auto',
-        false: '',
-    },
+const accordionVariants = cva('relative w-full', {
+    variants: {
+        maxWidth: {
+            sm: 'max-w-sm',
+            md: 'max-w-md',
+            lg: 'max-w-lg',
+            xl: 'max-w-xl',
+            full: 'max-w-full',
+        },
+        centered: {
+            true: 'mx-auto',
+            false: '',
+        },
+        overflow: overflowVariants
+    }
 });
 
-export interface Props
-    extends LayoutComponentProps,
-        VariantProps<typeof accordionVariants> {
+export interface Props extends VariantProps<typeof accordionVariants> {
     maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
     centered?: boolean;
+    class?: string;
+    [key: string]: any; // Alpine.js pass-through
 }
 
 const {
-    gap,
-    padding,
     maxWidth = 'md',
     centered = true,
+    overflow = 'fixed',
     class: className,
     ...alpineProps
 } = Astro.props;
@@ -48,7 +47,7 @@ const defaultXData = `{
     x-data={defaultXData}
     {...alpineProps}
     class={cn(
-        accordionVariants({ gap, padding, maxWidth, centered }),
+        accordionVariants({ maxWidth, centered, overflow }),
         className
     )}
 >

@@ -1,63 +1,50 @@
 ---
 import { cn } from '@/lib/utils';
-import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { semanticVariants, sizes, overflowVariants } from '@/lib/component-variants';
 
-const accordionItemVariants = createUIComponent(
+const accordionItemVariants = cva(
   'duration-200 ease-out bg-background border border-border rounded-md cursor-pointer group mb-2',
   {
-    variant: {
-      default: 'bg-background border-border',
-      elevated: 'bg-background border-border shadow-elevated',
-      flat: 'bg-background border-border shadow-flat'
+    variants: {
+      variant: {
+        default: 'bg-background border-border',
+        elevated: 'bg-background border-border shadow-elevated',
+        flat: 'bg-background border-border shadow-flat'
+      },
+      size: sizes,
+      overflow: overflowVariants
     }
   }
 );
 
-export interface Props extends UIComponentProps, VariantProps<typeof accordionItemVariants> {
+export interface Props extends VariantProps<typeof accordionItemVariants> {
   value?: string;
   variant?: 'default' | 'elevated' | 'flat';
+  item?: { id?: string; question?: string; answer?: string };
+  class?: string;
+  [key: string]: any; // Alpine.js pass-through
 }
 
 const {
   value,
-  size,
-  padding = 'none',
-  elevation,
+  size = 'md',
   variant = 'default',
+  overflow = 'fixed',
+  item,
   class: className,
   ...alpineProps
 } = Astro.props;
-
-// Extract x-for and x-key from alpineProps so they don't get passed to the div
-const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
 ---
 
-{
-  xFor ? (
-    <template x-for={xFor} x-key={xKey}>
-      <div 
-        x-data="{ id: $id('accordion') }"
-        {...restProps}
-        :class={`"${cn(
-          accordionItemVariants({ size, padding, elevation, variant }),
-          className
-        )}"`}
-        x-cloak
-      >
-        <slot />
-      </div>
-    </template>
-  ) : (
-    <div 
-      x-data="{ id: $id('accordion') }"
-      {...restProps}
-      :class={`"${cn(
-        accordionItemVariants({ size, padding, elevation, variant }),
-        className
-      )}"`}
-      x-cloak
-    >
-      <slot />
-    </div>
-  )
-}
+<div 
+  x-data="{ id: $id('accordion') }"
+  {...alpineProps}
+  :class={`"${cn(
+    accordionItemVariants({ size, variant, overflow }),
+    className
+  )}"`}
+  x-cloak
+>
+  <slot />
+</div>

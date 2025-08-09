@@ -1,47 +1,27 @@
 ---
 import { cn } from '@/lib/utils';
-import {
-    createContentComponent,
-    universalVariants,
-    type UniversalSpacing,
-    type UniversalAlign
-} from '@/lib/component-variants';
+import { cva } from 'class-variance-authority';
+import { overflowVariants } from '@/lib/component-variants';
 
-const listVariants = createContentComponent('flex flex-col items-stretch max-h-screen', {
-    overflow: {
-        auto: universalVariants.overflow.auto,     // Scroll when needed
-        fixed: universalVariants.overflow.fixed,   // Content has fixed boundaries
-    }
+const listVariants = cva('flex flex-col max-h-screen', {
+    variants: {
+        overflow: overflowVariants,
+    },
 });
 
 export interface Props {
-    gap?: UniversalSpacing;
-    overflow?: 'auto' | 'fixed';
-    align?: UniversalAlign;
+    overflow?: 'auto' | 'fixed' | 'expand' | 'wrap' | 'show';
     class?: string;
     [key: string]: any; // Alpine.js pass-through
 }
 
 const {
-    gap = 'xs',
     overflow = 'auto',
-    align = 'stretch',
     class: className = '',
     ...alpineProps
 } = Astro.props;
 
-const overflowClasses = {
-    auto: 'overflow-auto',
-    fixed: 'overflow-hidden'
-};
-
-const classes = cn(
-    'flex flex-col max-h-screen',
-    listVariants({ gap }),
-    overflowClasses[overflow],
-    universalVariants.align[align],
-    className
-);
+const classes = cn(listVariants({ overflow }), className);
 ---
 
 <div class={classes} {...alpineProps}>

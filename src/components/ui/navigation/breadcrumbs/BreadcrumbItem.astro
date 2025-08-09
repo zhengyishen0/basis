@@ -6,6 +6,7 @@ export interface Props {
   href?: string;
   separator?: 'chevron' | 'slash' | 'dot' | 'arrow';
   icon?: string;
+  item?: any; // Dynamic item data
   class?: string;
   [key: string]: any;
 }
@@ -14,12 +15,13 @@ const {
   href,
   separator,
   icon,
+  item,
   class: className,
   ...alpineProps
 } = Astro.props;
 
-// Extract x-for, x-key, x-text from alpineProps (like dropdown menu pattern)
-const { 'x-for': xFor, 'x-key': xKey, 'x-text': xText, ':href': dynamicHref, ':separator': dynamicSeparator, ...restProps } = alpineProps;
+// Extract x-text from alpineProps for dynamic text binding
+const { 'x-text': xText, ':href': dynamicHref, ':separator': dynamicSeparator, ...restProps } = alpineProps;
 
 const separatorComponents = {
   chevron: ChevronRight,
@@ -29,11 +31,11 @@ const separatorComponents = {
 };
 ---
 
-{xFor ? (
-  <template x-for={xFor} x-key={xKey}>
-    <div class="contents">
-      <li class={cn('flex items-center', className)} {...restProps}>
-        <!-- Breadcrumb content - handle null href automatically -->
+<div class="contents">
+  <li class={cn('flex items-center', className)} {...restProps}>
+    {item ? (
+      // Dynamic item rendering
+      <>
         <template x-if="item.href && !item.current">
           <a
             :href={dynamicHref || 'item.href'}
@@ -63,24 +65,10 @@ const separatorComponents = {
             <slot />
           </span>
         </template>
-      </li>
-      
-      <!-- Separator (outside li, auto-hide for last item) -->
-      <span 
-        class="mx-2 text-muted-foreground flex items-center"
-        x-show={dynamicSeparator ? dynamicSeparator : `'${separator}' && (typeof items !== 'undefined' ? index < items.length - 1 : true)`}
-      >
-        <slot name="separator">
-          <ChevronRight class="w-4 h-4" />
-        </slot>
-      </span>
-    </div>
-  </template>
-) : (
-  <div class="contents">
-    <li class={cn('flex items-center', className)} {...restProps}>
-      <!-- Static breadcrumb content -->
-      {href ? (
+      </>
+    ) : (
+      // Static rendering
+      href ? (
         <a
           href={href}
           class="flex items-center gap-1.5 no-underline"
@@ -106,11 +94,22 @@ const separatorComponents = {
           {xText && <span x-text={xText}></span>}
           <slot />
         </span>
-      )}
-    </li>
-    
-    <!-- Separator -->
-    {(separator || Astro.slots.has('separator')) && (
+      )
+    )}
+  </li>
+  
+  <!-- Separator -->
+  {item ? (
+    <span 
+      class="mx-2 text-muted-foreground flex items-center"
+      x-show={dynamicSeparator ? dynamicSeparator : `'${separator}' && (typeof items !== 'undefined' ? index < items.length - 1 : true)`}
+    >
+      <slot name="separator">
+        <ChevronRight class="w-4 h-4" />
+      </slot>
+    </span>
+  ) : (
+    (separator || Astro.slots.has('separator')) && (
       <span class="mx-2 text-muted-foreground flex items-center">
         <slot name="separator">
           {separator === 'chevron' && <ChevronRight class="w-4 h-4" />}
@@ -119,6 +118,6 @@ const separatorComponents = {
           {separator === 'arrow' && <ChevronRight class="w-4 h-4" />}
         </slot>
       </span>
-    )}
-  </div>
-)}
+    )
+  )}
+</div>

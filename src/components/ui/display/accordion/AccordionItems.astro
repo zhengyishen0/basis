@@ -1,0 +1,33 @@
+---
+import AccordionItem from './AccordionItem.astro';
+
+export interface Props {
+  variant?: 'default' | 'elevated' | 'flat';
+  size?: 'sm' | 'md' | 'lg';
+  padding?: 'sm' | 'md' | 'lg' | 'none';
+  elevation?: 'none' | 'sm' | 'md' | 'lg';
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  variant,
+  size,
+  padding,
+  elevation,
+  class: className,
+  ...alpineProps
+} = Astro.props;
+
+// Extract x-for and x-key from alpineProps for dynamic rendering
+const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
+
+// Component props to pass down to AccordionItem
+const itemProps = { variant, size, padding, elevation, class: className };
+---
+
+<template x-for={xFor} x-key={xKey || 'item.id'}>
+  <AccordionItem {...itemProps} {...restProps}>
+    <slot />
+  </AccordionItem>
+</template>

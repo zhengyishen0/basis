@@ -1,57 +1,27 @@
 ---
 import { cn } from '@/lib/utils';
-import {
-    createLayoutComponent,
-    universalVariants,
-    type UniversalSpacing,
-    type UniversalJustify,
-    type UniversalAlign,
-    type UniversalLayoutSize
-} from '@/lib/component-variants';
+import { cva } from 'class-variance-authority';
+import { overflowVariants } from '@/lib/component-variants';
 
-const rowVariants = createLayoutComponent('flex flex-row', {
-    overflow: {
-        auto: universalVariants.overflow.auto, // Content scrolls when needed
-        fixed: universalVariants.overflow.fixed, // Content has fixed boundaries
-        wrap: universalVariants.overflow.wrap, // Wrap to new rows
-    },
+const rowVariants = cva('flex flex-row', {
+    variants: {
+        overflow: overflowVariants
+    }
 });
 
 export interface Props {
-    justify?: UniversalJustify;
-    align?: UniversalAlign;
-    overflow?: 'auto' | 'fixed' | 'wrap';
-    gap?: UniversalSpacing;
-    size?: UniversalLayoutSize;
+    overflow?: 'auto' | 'fixed' | 'expand' | 'wrap' | 'show';
     class?: string;
     [key: string]: any; // Alpine.js pass-through
 }
 
 const {
-    justify = 'start',
-    align = 'center',
-    overflow = 'fixed',
-    gap = 'sm',
-    size = 'fit',
+    overflow = 'expand',
     class: className = '',
     ...alpineProps
 } = Astro.props;
 
-const overflowClasses = {
-    auto: 'overflow-auto',
-    fixed: 'overflow-hidden',
-    wrap: 'flex-wrap',
-};
-
-const classes = cn(
-    'flex flex-row',
-    size === 'fit' ? 'w-auto flex-shrink-0' : '',
-    rowVariants({ justify, align }),
-    overflowClasses[overflow],
-    universalVariants.gap[gap],
-    universalVariants.layoutSize[size],
-    className
-);
+const classes = cn(rowVariants({ overflow }), className);
 ---
 
 <div class={classes} {...alpineProps}>

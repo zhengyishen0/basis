@@ -17,5 +17,5 @@ export {
     AccordionTrigger,
 } from './accordion';
 
-// Avatar components
-export { Avatar, AvatarFallback, AvatarImage } from './avatar';
+// Avatar component
+export { default as Avatar } from './Avatar.astro';

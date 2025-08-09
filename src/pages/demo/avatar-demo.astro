@@ -1,108 +1,299 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/display';
+import { Avatar } from '@/components/ui/display';
 ---
 
 <Layout title="Avatar Demo">
-  <main class="container mx-auto p-8">
-    <h1 class="text-3xl font-bold mb-8">Avatar Component Demo</h1>
-    
-    <div class="space-y-8">
-      <!-- Basic Usage -->
-      <section>
-        <h2 class="text-xl font-semibold mb-4">Basic Avatar</h2>
-        <div class="flex items-center gap-4">
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          
-          <Avatar>
-            <AvatarImage src="https://invalid-url.jpg" alt="Broken" />
-            <AvatarFallback>BR</AvatarFallback>
-          </Avatar>
-          
-          <Avatar>
-            <AvatarFallback>JD</AvatarFallback>
-          </Avatar>
-        </div>
-      </section>
+    <main class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-8">Avatar Component Demo</h1>
+        <p class="text-muted-foreground mb-8">
+            Comprehensive testing of Avatar components with simplified
+            props-based API.
+        </p>
 
-      <!-- Size Variants -->
-      <section>
-        <h2 class="text-xl font-semibold mb-4">Size Variants</h2>
-        <div class="flex items-center gap-4">
-          <Avatar size="sm">
-            <AvatarImage src="https://github.com/shadcn.png" alt="Small" />
-            <AvatarFallback>SM</AvatarFallback>
-          </Avatar>
-          
-          <Avatar size="default">
-            <AvatarImage src="https://github.com/shadcn.png" alt="Default" />
-            <AvatarFallback>DF</AvatarFallback>
-          </Avatar>
-          
-          <Avatar size="lg">
-            <AvatarImage src="https://github.com/shadcn.png" alt="Large" />
-            <AvatarFallback>LG</AvatarFallback>
-          </Avatar>
-          
-          <Avatar size="xl">
-            <AvatarImage src="https://github.com/shadcn.png" alt="Extra Large" />
-            <AvatarFallback>XL</AvatarFallback>
-          </Avatar>
-        </div>
-      </section>
+        <div class="space-y-12">
+            <!-- Simplified API -->
+            <section>
+                <h2 class="text-2xl font-semibold mb-4">Simplified API</h2>
+                <p class="text-muted-foreground mb-4">
+                    Clean and simple props-based API with automatic fallback
+                    management.
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="text-center">
+                        <Avatar
+                            src="https://github.com/shadcn.png"
+                            alt="@shadcn"
+                            fallback="CN"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">
+                            Simple props
+                        </p>
+                    </div>
 
-      <!-- Custom Styling -->
-      <section>
-        <h2 class="text-xl font-semibold mb-4">Custom Styling</h2>
-        <div class="flex items-center gap-4">
-          <Avatar class="border-2 border-primary">
-            <AvatarImage src="https://github.com/shadcn.png" alt="Bordered" />
-            <AvatarFallback>BD</AvatarFallback>
-          </Avatar>
-          
-          <Avatar class="rounded-lg">
-            <AvatarImage src="https://github.com/shadcn.png" alt="Square" />
-            <AvatarFallback class="rounded-lg bg-primary text-primary-foreground">SQ</AvatarFallback>
-          </Avatar>
-        </div>
-      </section>
+                    <div class="text-center">
+                        <Avatar
+                            src="https://github.com/vercel.png"
+                            alt="@vercel"
+                            fallback="VR"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">
+                            Clean API
+                        </p>
+                    </div>
+                </div>
+            </section>
 
-      <!-- Alpine.js Integration -->
-      <section>
-        <h2 class="text-xl font-semibold mb-4">Alpine.js Integration</h2>
-        <div class="flex items-center gap-4">
-          <Avatar 
-            x-data="{ clicked: false }"
-            x-on:click="clicked = !clicked"
-            :class="clicked ? 'ring-2 ring-primary' : ''"
-            class="cursor-pointer transition-all"
-          >
-            <AvatarImage src="https://github.com/shadcn.png" alt="Interactive" />
-            <AvatarFallback>IN</AvatarFallback>
-          </Avatar>
-          
-          <Avatar 
-            x-data="{ hovered: false }"
-            x-on:mouseenter="hovered = true"
-            x-on:mouseleave="hovered = false"
-            :class="hovered ? 'scale-110' : 'scale-100'"
-            class="transition-transform duration-200"
-          >
-            <AvatarImage src="https://github.com/shadcn.png" alt="Hover Effect" />
-            <AvatarFallback>HV</AvatarFallback>
-          </Avatar>
+            <!-- Fallback Testing -->
+            <section>
+                <h2 class="text-2xl font-semibold mb-4">
+                    Fallback Logic Testing
+                </h2>
+                <p class="text-muted-foreground mb-4">
+                    Testing various scenarios where fallback content should be
+                    displayed.
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <Avatar
+                            src="https://github.com/shadcn.png"
+                            alt="Valid Image"
+                            fallback="VI"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">
+                            Valid image
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <Avatar
+                            src="https://invalid-url-will-fail.jpg"
+                            alt="Broken Image"
+                            fallback="BR"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">
+                            Broken image
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <Avatar fallback="FB" />
+                        <p class="text-xs text-muted-foreground mt-2">
+                            Fallback only
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <Avatar
+                            src="https://via.placeholder.com/40x40/cccccc/ffffff?text=SL"
+                            alt="Slow Loading"
+                            fallback="SL"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">
+                            Slow loading
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Size Variants -->
+            <section>
+                <h2 class="text-2xl font-semibold mb-4">Size Variants</h2>
+                <div class="flex items-center gap-6">
+                    <div class="text-center">
+                        <Avatar
+                            size="xs"
+                            src="https://github.com/shadcn.png"
+                            alt="Extra Small"
+                            fallback="XS"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">xs</p>
+                    </div>
+
+                    <div class="text-center">
+                        <Avatar
+                            size="sm"
+                            src="https://github.com/shadcn.png"
+                            alt="Small"
+                            fallback="SM"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">sm</p>
+                    </div>
+
+                    <div class="text-center">
+                        <Avatar
+                            size="md"
+                            src="https://github.com/shadcn.png"
+                            alt="Medium"
+                            fallback="MD"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">md</p>
+                    </div>
+
+                    <div class="text-center">
+                        <Avatar
+                            size="lg"
+                            src="https://github.com/shadcn.png"
+                            alt="Large"
+                            fallback="LG"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">lg</p>
+                    </div>
+
+                    <div class="text-center">
+                        <Avatar
+                            size="xl"
+                            src="https://github.com/shadcn.png"
+                            alt="Extra Large"
+                            fallback="XL"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">xl</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Shape Variants -->
+            <section>
+                <h2 class="text-2xl font-semibold mb-4">Shape Variants</h2>
+                <div class="flex items-center gap-6">
+                    <div class="text-center">
+                        <Avatar
+                            shape="rounded"
+                            src="https://github.com/shadcn.png"
+                            alt="Rounded"
+                            fallback="RD"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">
+                            rounded
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <Avatar
+                            shape="rectangle"
+                            src="https://github.com/shadcn.png"
+                            alt="Rectangle"
+                            fallback="RC"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">
+                            rectangle
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <Avatar
+                            shape="pill"
+                            src="https://github.com/shadcn.png"
+                            alt="Circle"
+                            fallback="CI"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">pill</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Custom Styling -->
+            <section>
+                <h2 class="text-2xl font-semibold mb-4">Custom Styling</h2>
+                <div class="flex items-center gap-6">
+                    <div class="text-center">
+                        <Avatar
+                            variant="border"
+                            src="https://github.com/shadcn.png"
+                            alt="Bordered"
+                            fallback="BD"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">
+                            Bordered
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <Avatar
+                            variant="ring"
+                            src="https://github.com/shadcn.png"
+                            alt="Ring"
+                            fallback="RG"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">Ring</p>
+                    </div>
+
+                    <div class="text-center">
+                        <Avatar
+                            src="https://github.com/shadcn.png"
+                            alt="Custom Fallback"
+                            fallback="GR"
+                        />
+                        <p class="text-xs text-muted-foreground mt-2">
+                            Custom fallback!
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Image Loading States -->
+            <section>
+                <h2 class="text-2xl font-semibold mb-4">
+                    Image Loading States
+                </h2>
+                <p class="text-muted-foreground mb-4">
+                    Watch how the fallback is shown while images load and when
+                    they fail.
+                </p>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4">
+                        <Avatar
+                            src="https://picsum.photos/40/40?random=1"
+                            alt="Random 1"
+                            fallback="R1"
+                        />
+                        <Avatar
+                            src="https://picsum.photos/40/40?random=2"
+                            alt="Random 2"
+                            fallback="R2"
+                        />
+                        <Avatar
+                            src="https://picsum.photos/40/40?random=3"
+                            alt="Random 3"
+                            fallback="R3"
+                        />
+                    </div>
+                    <p class="text-xs text-muted-foreground">
+                        Random images from Picsum (may be slow to load)
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slot-based Content -->
+            <section>
+                <h2 class="text-2xl font-semibold mb-4">Slot-based Content</h2>
+                <p class="text-muted-foreground mb-4">
+                    You can still use slots for custom content when needed.
+                </p>
+                <div class="flex items-center gap-4">
+                    <Avatar>
+                        <div
+                            class="flex items-center justify-center h-full w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold"
+                        >
+                            👨‍💻
+                        </div>
+                    </Avatar>
+                    <Avatar>
+                        <div
+                            class="flex items-center justify-center h-full w-full bg-gradient-to-r from-green-400 to-blue-500 text-white text-xs"
+                        >
+                            +99
+                        </div>
+                    </Avatar>
+                </div>
+            </section>
         </div>
-      </section>
-    </div>
-  </main>
+    </main>
 </Layout>
 
 <script>
-// Initialize Alpine.js for this page
-document.addEventListener('alpine:init', () => {
-  console.log('Avatar demo page Alpine.js initialized');
-});
+    // Initialize Alpine.js for this page
+    document.addEventListener('alpine:init', () => {
+        console.log('Avatar demo page with simplified API initialized');
+    });
 </script>

@@ -1,34 +1,25 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
-import {
-  universalVariants,
-  type UniversalSpacing,
-  type UniversalElevation,
-  type UIOverflow,
-} from '@/lib/component-variants';
+import { semanticVariants, overflowVariants } from '@/lib/component-variants';
 import { X } from 'lucide-astro';
 import Text from '@/components/ui/display/Text.astro';
 
 const alertVariants = cva(
-  'relative w-full rounded-lg border flex items-start gap-3',
+  'relative w-full rounded-lg border flex items-start gap-3 p-md',
   {
     variants: {
       variant: {
         default: 'bg-primary border-primary text-primary-foreground',
-        outline: 'bg-background border-border text-primary',
+        secondary: 'bg-secondary border-secondary text-secondary-foreground',
         destructive: 'bg-background border-destructive text-destructive',
+        success: 'bg-background border-success text-success',
+        warning: 'bg-background border-warning text-warning',
+        info: 'bg-background border-info text-info',
+        outline: 'bg-background border-border text-foreground',
       },
-      padding: universalVariants.padding,
-      elevation: universalVariants.elevation,
-      overflow: universalVariants.overflow,
-    },
-    defaultVariants: {
-      variant: 'default',
-      padding: 'md',
-      elevation: 'none',
-      overflow: 'fixed',
-    },
+      overflow: overflowVariants,
+    }
   }
 );
 
@@ -37,21 +28,19 @@ export interface Props extends VariantProps<typeof alertVariants> {
   description?: string;
   icon?: any; // Lucide icon component
   dismissible?: boolean;
-  className?: string;
+  class?: string;
   // Alpine.js pass-through
   [key: string]: any;
 }
 
 const { 
   variant = 'default',
+  overflow = 'fixed',
   title,
   description,
   icon: IconComponent,
   dismissible = false,
-  padding = 'md',
-  elevation = 'none',
-  overflow = 'fixed',
-  className,
+  class: className,
   ...alpineProps
 } = Astro.props;
 ---
@@ -84,7 +73,7 @@ Features:
   x-data={dismissible ? '{ dismissed: false }' : undefined}
   x-show={dismissible ? '!dismissed' : undefined}
   class={cn(
-    alertVariants({ variant, padding, elevation, overflow }),
+    alertVariants({ variant, overflow }),
     className
   )}
   {...alpineProps}

@@ -1,31 +1,31 @@
 ---
 import { cn } from '@/lib/utils';
-import {
-    createUIComponent,
-    type UIComponentProps,
-    type VariantProps,
-} from '@/lib/component-variants';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { semanticVariants, sizes, overflowVariants } from '@/lib/component-variants';
 import Text from '@/components/ui/display/Text.astro';
 
-const accordionContentVariants = createUIComponent('pt-0', {
-    variant: {
-        default: '',
-        emphasized: '',
-    },
+const accordionContentVariants = cva('pt-0', {
+    variants: {
+        variant: {
+            default: '',
+            emphasized: '',
+        },
+        size: sizes,
+        overflow: overflowVariants
+    }
 });
 
-export interface Props
-    extends UIComponentProps,
-        VariantProps<typeof accordionContentVariants> {
+export interface Props extends VariantProps<typeof accordionContentVariants> {
     text?: string;
     variant?: 'default' | 'emphasized';
+    class?: string;
+    [key: string]: any; // Alpine.js pass-through
 }
 
 const {
-    size,
-    padding = 'lg',
-    elevation,
+    size = 'md',
     variant = 'default',
+    overflow = 'fixed',
     text,
     class: className,
     ...alpineProps
@@ -34,7 +34,7 @@ const {
 
 <div x-show="activeAccordion==id" x-collapse x-cloak {...alpineProps}>
     <div
-        :class={`"${cn(accordionContentVariants({ size, padding, elevation, variant }), className)}"`}
+        :class={`"${cn(accordionContentVariants({ size, variant, overflow }), className)}"`}
     >
         <Text variant={variant === 'emphasized' ? 'body' : 'accordion-content'}>
             {text ? <span x-text={text} /> : <slot />}

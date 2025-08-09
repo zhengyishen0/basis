@@ -2,16 +2,15 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import {
-    universalVariants,
-    type UniversalSpacing,
-    type UniversalDirection,
-    type UIOverflow,
-    type UniversalJustify,
-    type UniversalAlign,
+    overflowVariants,
+    semanticVariants,
+    interactiveEffects,
+    shapes,
+    elevationOptions,
 } from '@/lib/component-variants';
 
 const cardVariants = cva(
-    'text-card-foreground flex transition-all duration-200 [&_.card-header]:relative [&_.card-content]:relative [&_.card-footer]:relative [&_.card-header>*:first-child]:relative [&_.card-header>*:first-child]:z-10 [&_.card-content>*:first-child]:relative [&_.card-content>*:first-child]:z-10 [&_.card-footer>*:first-child]:relative [&_.card-footer>*:first-child]:z-10',
+    'text-card-foreground flex flex-col transition-all duration-200 [&_.card-header]:relative [&_.card-content]:relative [&_.card-footer]:relative [&_.card-header>*:first-child]:relative [&_.card-header>*:first-child]:z-10 [&_.card-content>*:first-child]:relative [&_.card-content>*:first-child]:z-10 [&_.card-footer>*:first-child]:relative [&_.card-footer>*:first-child]:z-10',
     {
         variants: {
             // Surface variants
@@ -24,18 +23,9 @@ const cardVariants = cva(
                     'border border-border bg-gradient-to-br from-background to-muted',
             },
             // Shape variants
-            shape: {
-                rectangle: 'rounded-none',
-                rounded: 'rounded-lg',
-                pill: 'rounded-full',
-            },
+            shape: shapes,
             // Elevation variants
-            elevation: {
-                flat: 'shadow-none',
-                shadow: 'shadow-sm',
-                elevated: 'shadow-md',
-                floating: 'shadow-lg',
-            },
+            elevation: elevationOptions,
             // Interactive states
             interactive: {
                 static: '',
@@ -57,6 +47,7 @@ const cardVariants = cva(
                 vertical: 'w-fit h-full',
                 full: 'w-full h-full',
             },
+            overflow: overflowVariants,
         },
         compoundVariants: [
             // Hover effects - lift
@@ -115,24 +106,15 @@ const cardVariants = cva(
                 class: '[&.active]:translate-y-0.5 [&.active]:scale-[0.99]',
             },
         ],
-        defaultVariants: {
-            variant: 'default',
-            shape: 'rounded',
-            elevation: 'shadow',
-            interactive: 'static',
-            effect: 'lift',
-            size: 'fixed',
-        },
     }
 );
 
 export interface Props extends VariantProps<typeof cardVariants> {
-    className?: string;
-    padding?: UniversalSpacing;
-    overflow?: UIOverflow;
-    direction?: UniversalDirection;
-    justify?: UniversalJustify;
-    align?: UniversalAlign;
+    padding?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+    direction?: 'row' | 'column';
+    justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
+    align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
+    class?: string;
     // Custom sizing props
     width?: string;
     height?: string;
@@ -143,18 +125,18 @@ export interface Props extends VariantProps<typeof cardVariants> {
 const {
     variant = 'default',
     shape = 'rounded',
-    elevation = 'shadow',
+    elevation = 'elevated',
     interactive = 'static',
     effect = 'lift',
     size = 'fixed',
-    padding = 'none',
     overflow = 'fixed',
+    padding = 'none',
     direction = 'column',
     justify = 'center',
     align = 'stretch',
     width,
     height,
-    className,
+    class: className,
     ...alpineProps
 } = Astro.props;
 ---
@@ -168,12 +150,12 @@ const {
             interactive,
             effect,
             size: width || height ? undefined : size,
+            overflow,
         }),
-        universalVariants.padding[padding],
-        universalVariants.overflow[overflow],
-        universalVariants.direction[direction],
-        universalVariants.justify[justify],
-        universalVariants.align[align],
+        padding && `p-${padding}`,
+        direction === 'row' ? 'flex-row' : 'flex-col',
+        justify && `justify-${justify}`,
+        align && `items-${align}`,
         className
     )}
     style={`${width ? `width: ${width};` : ''}${height ? `height: ${height};` : ''}`}

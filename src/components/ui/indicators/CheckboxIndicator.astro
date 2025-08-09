@@ -1,32 +1,39 @@
 ---
 import { cn } from '@/lib/utils';
-import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { semanticVariants, overflowVariants } from '@/lib/component-variants';
 import { Check } from 'lucide-astro';
 
-const checkboxIndicatorVariants = createUIComponent(
+const checkboxIndicatorVariants = cva(
     'relative flex items-center justify-center shrink-0 transform-gpu rounded bg-background transition-all duration-300 ease-out h-5 w-5 border border-primary shadow-sm',
     {
-        size: {
-            sm: 'h-4 w-4 rounded-sm',
-            md: 'h-5 w-5 rounded',
-            lg: 'h-6 w-6 rounded-md',
-        },
-        state: {
-            default: '',
-            checked: 'bg-primary border-primary scale-105',
-            indeterminate: 'bg-primary border-primary scale-105',
-            disabled: 'opacity-50 cursor-not-allowed',
+        variants: {
+            size: {
+                sm: 'h-4 w-4 rounded-sm',
+                md: 'h-5 w-5 rounded',
+                lg: 'h-6 w-6 rounded-md',
+            },
+            state: {
+                default: '',
+                checked: 'bg-primary border-primary scale-105',
+                indeterminate: 'bg-primary border-primary scale-105',
+                disabled: 'opacity-50 cursor-not-allowed',
+            },
+            variant: semanticVariants,
+            overflow: overflowVariants
         }
     }
 );
 
-export interface Props extends UIComponentProps, VariantProps<typeof checkboxIndicatorVariants> {
+export interface Props extends VariantProps<typeof checkboxIndicatorVariants> {
     checked?: boolean;
     indeterminate?: boolean;
     disabled?: boolean;
     size?: 'sm' | 'md' | 'lg';
     name?: string;
     value?: string;
+    class?: string;
+    [key: string]: any; // Alpine.js pass-through
 }
 
 const {
@@ -34,10 +41,11 @@ const {
     indeterminate = false,
     disabled = false,
     size = 'md',
+    state = 'default',
+    variant = 'default',
+    overflow = 'fixed',
     name,
     value,
-    padding,
-    elevation,
     class: className,
     ...alpineProps
 } = Astro.props;
@@ -82,7 +90,7 @@ Features:
 >
     <div
         class={cn(
-            checkboxIndicatorVariants({ size, padding, elevation }),
+            checkboxIndicatorVariants({ size, state, variant, overflow }),
             className
         )}
         :class={`[

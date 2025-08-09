@@ -4,45 +4,49 @@ import { cn } from '@/lib/utils';
 export interface Props {
   value?: string;
   className?: string;
+  item?: any;
   [key: string]: any;
 }
 
 const {
   value,
   className,
+  item,
   ...alpineProps
 } = Astro.props;
 
 // Generate unique ID if not provided
-const menuId = value || `nav-item-${Math.random().toString(36).substring(2, 11)}`;
-
-// Extract x-for, x-key from alpineProps for dynamic rendering
-const { 'x-for': xFor, 'x-key': xKey, ...restProps } = alpineProps;
-
-// Determine if this is dynamic usage based on x-for attribute
-const isDynamic = !!xFor;
+const menuId = value || (item?.id) || `nav-item-${Math.random().toString(36).substring(2, 11)}`;
 ---
 
-{isDynamic ? (
-  <!-- Dynamic usage with x-for -->
-  <template x-for={xFor} x-key={xKey || "item.id"}>
-    <div
-      x-data=`{
-        menuId: item.id || '${menuId}',
-        get isOpen() {
-          return activeMenu === this.menuId;
-        },
-        get hasContent() {
-          return item.type !== 'link' && item.links && item.links.length > 0;
-        }
-      }`
-      @mouseenter="!keyboardActive && hasContent && openMenu(menuId)"
-      @mouseleave="!keyboardActive && hasContent && scheduleClose(menuId)"
-      @focusin="cancelClose(); hasContent && openMenu(menuId)"
-      class={cn('relative', className)}
-      data-navigation-menu-item
-      {...restProps}
-    >
+<div
+  x-data={item ? `{
+    menuId: item.id || '${menuId}',
+    get isOpen() {
+      return activeMenu === this.menuId;
+    },
+    get hasContent() {
+      return item.type !== 'link' && item.links && item.links.length > 0;
+    }
+  }` : `{
+    menuId: '${menuId}',
+    get isOpen() {
+      return activeMenu === this.menuId;
+    },
+    get hasContent() {
+      return !!$el.querySelector('[data-navigation-menu-content]');
+    }
+  }`}
+  @mouseenter="!keyboardActive && hasContent && openMenu(menuId)"
+  @mouseleave="!keyboardActive && hasContent && scheduleClose(menuId)"
+  @focusin="cancelClose(); hasContent && openMenu(menuId)"
+  class={cn('relative', className)}
+  data-navigation-menu-item
+  {...alpineProps}
+>
+  {item ? (
+    // Dynamic item rendering
+    <>
       <!-- Link type -->
       <template x-if="item.type === 'link'">
         <div>
@@ -53,35 +57,13 @@ const isDynamic = !!xFor;
       <!-- Menu types (list, grid, feature) -->
       <template x-if="item.type !== 'link'">
         <div>
-          <!-- Trigger for all menu types -->
           <slot name="trigger" />
-          
-          <!-- Content for all menu types -->
           <slot name="content" />
         </div>
       </template>
-    </div>
-  </template>
-) : (
-  <!-- Static usage -->
-  <div
-    x-data=`{
-      menuId: '${menuId}',
-      get isOpen() {
-        return activeMenu === this.menuId;
-      },
-      get hasContent() {
-        // For static usage, check if there's content slot
-        return !!$el.querySelector('[data-navigation-menu-content]');
-      }
-    }`
-    @mouseenter="!keyboardActive && hasContent && openMenu(menuId)"
-    @mouseleave="!keyboardActive && hasContent && scheduleClose(menuId)"
-    @focusin="cancelClose(); hasContent && openMenu(menuId)"
-    class={cn('relative', className)}
-    data-navigation-menu-item
-    {...restProps}
-  >
+    </>
+  ) : (
+    // Static rendering
     <slot />
-  </div>
-)}
+  )}
+</div>

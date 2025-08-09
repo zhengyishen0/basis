@@ -43,7 +43,7 @@ import Badge from '@/components/ui/feedback/Badge.astro';
                         <Badge
                             x-data="{ clicked: false }"
                             @click="clicked = !clicked; count++"
-                            :class="clicked && 'scale-110 transition-transform'"
+                            :class="clicked && 'transition-transform'"
                             variant="default"
                         >
                             <span x-text="count"></span>

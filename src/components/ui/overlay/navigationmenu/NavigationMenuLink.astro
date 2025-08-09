@@ -22,6 +22,7 @@ export interface Props extends VariantProps<typeof navigationMenuLinkVariants> {
   active?: boolean;
   className?: string;
   disabled?: boolean;
+  link?: any;  // Dynamic link data
   [key: string]: any;
 }
 
@@ -31,94 +32,49 @@ const {
   disabled = false,
   className,
   variant = active ? 'active' : 'default',
+  link,
   ...alpineProps
 } = Astro.props;
 
-// Extract x-for, x-key, x-text from alpineProps for dynamic rendering
-const { 'x-for': xFor, 'x-key': xKey, 'x-text': xText, ...restProps } = alpineProps;
+// Extract x-text from alpineProps for dynamic text binding
+const { 'x-text': xText, ...restProps } = alpineProps;
 
-// Determine if this is dynamic usage based on x-for attribute
-const isDynamic = !!xFor;
-
-const Tag = href ? 'a' : 'div';
+const Tag = href || link ? 'a' : 'div';
 ---
 
-{isDynamic ? (
-  <!-- Dynamic usage with x-for -->
-  <template x-for={xFor} x-key={xKey || "link.id"}>
-    <a
-      :href="link.url"
-      @click="closeAllMenus()"
-      @keydown.enter.prevent="window.location.href = link.url; closeAllMenus()"
-      class={cn(
-        'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-        className
-      )}
-      data-navigation-menu-link
-      tabindex="0"
-      {...restProps}
-    >
-      <div class="text-sm font-medium leading-none" x-text="link.title"></div>
-      <p class="line-clamp-2 text-sm leading-snug text-muted-foreground" x-text="link.description"></p>
-    </a>
-  </template>
+{link ? (
+  <!-- Dynamic link with link data -->
+  <a
+    :href="link.url"
+    @click="closeAllMenus()"
+    @keydown.enter.prevent="window.location.href = link.url; closeAllMenus()"
+    class={cn(
+      'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+      className
+    )}
+    data-navigation-menu-link
+    tabindex="0"
+    {...restProps}
+  >
+    <div class="text-sm font-medium leading-none" x-text="link.title"></div>
+    <p class="line-clamp-2 text-sm leading-snug text-muted-foreground" x-text="link.description"></p>
+  </a>
 ) : (
-  <!-- Static usage -->
-  <>
-    <!-- Dynamic link when used with link data (from parent x-for) -->
-    <template x-if="typeof link !== 'undefined'">
-      <a
-        :href="link.url"
-        @click="closeAllMenus()"
-        @keydown.enter.prevent="window.location.href = link.url; closeAllMenus()"
-        class={cn(
-          'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-          className
-        )}
-        data-navigation-menu-link
-        tabindex="0"
-        {...restProps}
-      >
-        <div class="text-sm font-medium leading-none" x-text="link.title"></div>
-        <p class="line-clamp-2 text-sm leading-snug text-muted-foreground" x-text="link.description"></p>
-      </a>
-    </template>
-
-    <!-- Dynamic link when used with item data (for navigation type) -->
-    <template x-if="typeof link === 'undefined' && typeof item !== 'undefined' && item.href">
-      <a
-        :href="item.href"
-        @click="closeAllMenus()"
-        @keydown.enter.prevent="window.location.href = item.href; closeAllMenus()"
-        class={cn(
-          'group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50',
-          className
-        )}
-        data-navigation-menu-link
-        tabindex="0"
-        {...restProps}
-      >
-        <span x-text="item.label"></span>
-      </a>
-    </template>
-
-    <!-- Static link when used with slots -->
-    <template x-if="typeof link === 'undefined' && (typeof item === 'undefined' || !item.href)">
-      <a
-        href={href}
-        @click="closeAllMenus()"
-        @keydown.enter.prevent={href ? `window.location.href = '${href}'; closeAllMenus()` : ''}
-        class={cn(
-          navigationMenuLinkVariants({ variant }),
-          disabled && 'pointer-events-none opacity-50',
-          className
-        )}
-        data-navigation-menu-link
-        tabindex="0"
-        {...restProps}
-      >
-        <slot />
-      </a>
-    </template>
-  </>
+  <!-- Static link -->
+  <a
+    href={href}
+    @click="closeAllMenus()"
+    @keydown.enter.prevent={href ? `window.location.href = '${href}'; closeAllMenus()` : ''}
+    class={cn(
+      navigationMenuLinkVariants({ variant }),
+      disabled && 'pointer-events-none opacity-50',
+      className
+    )}
+    data-navigation-menu-link
+    tabindex="0"
+    {...restProps}
+  >
+    {xText && <span x-text={xText}></span>}
+    <slot />
+  </a>
 )}

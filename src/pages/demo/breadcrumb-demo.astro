@@ -3,6 +3,7 @@ import Layout from '@/layouts/Layout.astro';
 import {
     Breadcrumb,
     BreadcrumbItem,
+    BreadcrumbItems,
     SmartBreadcrumb,
     BreadcrumbEllipsis,
 } from '@/components/ui/navigation/breadcrumbs';
@@ -124,7 +125,7 @@ const veryLongBreadcrumbs = [
                     <Breadcrumb
                         x-data={`{ items: ${JSON.stringify(dynamicBreadcrumbs)} }`}
                     >
-                        <BreadcrumbItem
+                        <BreadcrumbItems
                             x-for="(item, index) in items"
                             x-key="index"
                             href="item.href"
@@ -139,7 +140,7 @@ const veryLongBreadcrumbs = [
                     <Breadcrumb
                         x-data={`{ items: ${JSON.stringify(dynamicBreadcrumbs)} }`}
                     >
-                        <BreadcrumbItem
+                        <BreadcrumbItems
                             x-for="(item, index) in items"
                             x-key="index"
                             href="item.href"
@@ -149,7 +150,7 @@ const veryLongBreadcrumbs = [
                                 <Home class="w-4 h-4" />
                             </template>
                             <span x-text="item.label"></span>
-                        </BreadcrumbItem>
+                        </BreadcrumbItems>
                     </Breadcrumb>
                 </div>
             </div>

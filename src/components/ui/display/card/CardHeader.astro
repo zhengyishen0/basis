@@ -1,36 +1,17 @@
 ---
 import { cn } from '@/lib/utils';
-import {
-    universalVariants,
-    type UniversalSpacing,
-    type UniversalJustify,
-    type UniversalAlign,
-} from '@/lib/component-variants';
 
 export interface Props {
-    className?: string;
-    padding?: UniversalSpacing;
-    justify?: UniversalJustify;
-    align?: UniversalAlign;
-    // Alpine.js pass-through
-    [key: string]: any;
+    class?: string;
+    [key: string]: any; // Alpine.js pass-through
 }
 
-const {
-    padding = 'lg',
-    justify = 'start',
-    align = 'start',
-    className,
-    ...alpineProps
-} = Astro.props;
+const { class: className, ...alpineProps } = Astro.props;
 ---
 
 <div
     class={cn(
-        'flex flex-col gap-y-1.5 card-header justify-start',
-        universalVariants.padding[padding],
-        universalVariants.justify[justify],
-        universalVariants.align[align],
+        'flex flex-col gap-y-1.5 card-header justify-start p-sm items-start',
         className
     )}
     {...alpineProps}

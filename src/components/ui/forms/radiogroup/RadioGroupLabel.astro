@@ -1,35 +1,38 @@
 ---
 import { cn } from '@/lib/utils';
-import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { overflowVariants } from '@/lib/component-variants';
 
-const radioGroupLabelVariants = createUIComponent(
+const radioGroupLabelVariants = cva(
     'radio-title font-medium text-foreground leading-none transition-colors duration-200',
     {
-        variant: {
-            default: '',
-            emphasized: 'font-semibold',
-            subtle: 'font-normal text-muted-foreground',
-        },
-        size: {
-            sm: 'text-sm',
-            md: 'text-base',
-            lg: 'text-lg',
+        variants: {
+            variant: {
+                default: '',
+                emphasized: 'font-semibold',
+                subtle: 'font-normal text-muted-foreground',
+            },
+            size: {
+                sm: 'text-sm',
+                md: 'text-base',
+                lg: 'text-lg',
+            },
+            overflow: overflowVariants
         }
     }
 );
 
-export interface Props extends UIComponentProps, VariantProps<typeof radioGroupLabelVariants> {
+export interface Props extends VariantProps<typeof radioGroupLabelVariants> {
     text?: string;
-    variant?: 'default' | 'emphasized' | 'subtle';
-    size?: 'sm' | 'md' | 'lg';
+    class?: string;
+    [key: string]: any; // Alpine.js pass-through
 }
 
 const {
     text,
     variant = 'default',
     size = 'md',
-    padding,
-    elevation,
+    overflow = 'fixed',
     class: className,
     ...alpineProps
 } = Astro.props;
@@ -53,7 +56,7 @@ Features:
 <div
     {...alpineProps}
     class={cn(
-        radioGroupLabelVariants({ variant, size, padding, elevation }),
+        radioGroupLabelVariants({ variant, size, overflow }),
         className
     )}
     :class="(itemDisabled || disabled) ? 'opacity-50' : ''"

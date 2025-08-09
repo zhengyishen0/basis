@@ -1,25 +1,32 @@
 ---
 import { Star } from 'lucide-astro';
 import { cn } from '@/lib/utils';
-import { createUIComponent, type UIComponentProps } from '@/lib/component-variants';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { semanticVariants, overflowVariants } from '@/lib/component-variants';
 
-const ratingVariants = createUIComponent(
+const ratingVariants = cva(
   'flex flex-col items-center gap-2 text-muted-foreground [&_.rating-star[data-filled="true"]]:text-warning [&_.rating-star:hover]:text-warning/80',
   {
-    size: {
-      sm: '[&_.stars-container]:gap-1 [&_.rating-star]:w-4 [&_.rating-star]:h-4',
-      md: '[&_.stars-container]:gap-1.5 [&_.rating-star]:w-5 [&_.rating-star]:h-5',
-      lg: '[&_.stars-container]:gap-2 [&_.rating-star]:w-6 [&_.rating-star]:h-6'
+    variants: {
+      size: {
+        sm: '[&_.stars-container]:gap-1 [&_.rating-star]:w-4 [&_.rating-star]:h-4',
+        md: '[&_.stars-container]:gap-1.5 [&_.rating-star]:w-5 [&_.rating-star]:h-5',
+        lg: '[&_.stars-container]:gap-2 [&_.rating-star]:w-6 [&_.rating-star]:h-6'
+      },
+      variant: semanticVariants,
+      overflow: overflowVariants
     }
   }
 );
 
-export interface Props extends UIComponentProps {
+export interface Props extends VariantProps<typeof ratingVariants> {
   maxStars?: number;
   initialValue?: number;
   disabled?: boolean;
   readonly?: boolean;
   name?: string;
+  class?: string;
+  [key: string]: any; // Alpine.js pass-through
 }
 
 const { 
@@ -29,9 +36,7 @@ const {
   readonly = false,
   name,
   size = 'md',
-  padding = 'none',
-  margin = 'none',
-  elevation = 'none',
+  variant = 'default',
   overflow = 'fixed',
   class: className,
   ...alpineProps
@@ -87,7 +92,7 @@ const {
   x-init="stars = value"
   x-modelable="value"
   {...alpineProps}
-  class={cn(ratingVariants({ size, padding, margin, elevation, overflow }), className)}
+  class={cn(ratingVariants({ size, variant, overflow }), className)}
 >
   {name && (
     <input 
@@ -113,7 +118,7 @@ const {
       }"
       class="rating-star focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm transition-all duration-200 hover:scale-110 disabled:hover:scale-100"
       type="button"
-      :aria-label="`Rate ${star} out of ${maxStars} stars`"
+      :aria-label="'Rate ' + star + ' out of ' + maxStars + ' stars'"
     >
       <Star class="transition-colors duration-200" fill="currentColor" />
     </button>

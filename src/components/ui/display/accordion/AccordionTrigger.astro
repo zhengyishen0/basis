@@ -1,31 +1,37 @@
 ---
 import { cn } from '@/lib/utils';
-import { createUIComponent, type UIComponentProps, type VariantProps } from '@/lib/component-variants';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { semanticVariants, sizes, overflowVariants } from '@/lib/component-variants';
 import { ChevronDown, Plus, Minus } from 'lucide-astro';
 import Text from '@/components/ui/display/Text.astro';
 
-const accordionTriggerVariants = createUIComponent(
+const accordionTriggerVariants = cva(
   'flex items-center justify-between w-full text-left',
   {
-    variant: {
-      default: 'hover:opacity-80',
-      subtle: 'opacity-70 hover:opacity-100'
+    variants: {
+      variant: {
+        default: 'hover:opacity-80',
+        subtle: 'opacity-70 hover:opacity-100'
+      },
+      size: sizes,
+      overflow: overflowVariants
     }
   }
 );
 
-export interface Props extends UIComponentProps, VariantProps<typeof accordionTriggerVariants> {
+export interface Props extends VariantProps<typeof accordionTriggerVariants> {
   iconType?: 'chevron' | 'plus';
   text?: string;
   variant?: 'default' | 'subtle';
+  class?: string;
+  [key: string]: any; // Alpine.js pass-through
 }
 
 const {
   iconType = 'chevron',
-  size,
-  padding = 'lg',
-  elevation,
+  size = 'md',
   variant = 'default',
+  overflow = 'fixed',
   text,
   class: className,
   ...alpineProps
@@ -36,7 +42,7 @@ const {
   @click="setActiveAccordion(id)"
   {...alpineProps}
   :class={`"${cn(
-    accordionTriggerVariants({ size, padding, elevation, variant }),
+    accordionTriggerVariants({ size, variant, overflow }),
     className
   )}"`}
   type="button"

@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/display/card';
 import Navbar from '@/components/ui/display/Navbar.astro';
 import List from '@/components/ui/layout/List.astro';
-import ListItem from '@/components/ui/layout/ListItem.astro';
+import ListItems from '@/components/ui/layout/ListItems.astro';
 import Page from '@/components/ui/layout/Page.astro';
 import Row from '@/components/ui/layout/Row.astro';
 import Spacer from '@/components/ui/layout/Spacer.astro';
@@ -131,7 +131,7 @@ const pageData = `{
                         <!-- Scrollable Container for List -->
                         <List maxHeight="48">
                             <!-- User Todo List -->
-                            <ListItem
+                            <ListItems
                                 x-for="item in todo.filteredUserTodos"
                                 x-key="item.id"
                                 padding="sm"
@@ -153,7 +153,7 @@ const pageData = `{
                                 >
                                     Delete
                                 </Button>
-                            </ListItem>
+                            </ListItems>
 
                             <!-- Empty State -->
                             <Empty
@@ -272,7 +272,7 @@ const pageData = `{
                         <!-- Scrollable Container for List -->
                         <List maxHeight="48">
                             <!-- All Todos List -->
-                            <ListItem
+                            <ListItems
                                 x-for="item in todo.filteredAllTodos"
                                 x-key="item.id"
                                 padding="sm"
@@ -320,7 +320,7 @@ const pageData = `{
                                         >No completed todos.</Text
                                     >
                                 </Empty>
-                            </ListItem>
+                            </ListItems>
                         </List>
                     </CardContent>
                     <CardFooter>

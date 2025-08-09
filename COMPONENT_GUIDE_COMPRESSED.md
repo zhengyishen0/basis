@@ -37,18 +37,21 @@
 **CN vs CVA Guidelines:**
 
 **Use CVA When:**
+
 - UI components with 2+ independent variants (Button, Badge, Card)
 - Complex variant combinations need TypeScript safety
 - Component used extensively across codebase
 - Structured variant system provides clarity
 
 **Use cn() with conditionals When:**
+
 - Simple utility components (Divider, Spacer)
 - Dynamic values that can't be predefined (`my-${spacing}`)
 - One-off styling logic is more readable
 - Conditional classes are straightforward
 
 **Standard Patterns:**
+
 - **Complex UI**: `class={cn(variants({ variant, size }), className)}`
 - **Simple Utility**: `class={cn('base', condition && 'extra', `dynamic-${value}`, className)}`
 
@@ -65,26 +68,28 @@
 ### **Layout System Principles:**
 
 **Content-Driven Components (List, Grid, Inline):**
+
 - Only have `gap` property for spacing between items
 - Size determined by internal elements
 - Have sensible default constraints (easily overridable with Tailwind)
 - Handle dynamic/data-driven content
 - Universal overflow behaviors:
-  - **List**: `auto` (vertical scroll), `fixed` (clip), `expand` (grow) + default `max-h-screen`
-  - **Grid**: `auto` (both scroll), `fixed` (clip), `expand` (grow)  
-  - **Inline**: `auto` (horizontal scroll), `fixed` (clip), `expand` (grow), `wrap` (wrap to rows) + default `max-w-full`
+    - **List**: `auto` (vertical scroll), `fixed` (clip), `expand` (grow) + default `max-h-screen`
+    - **Grid**: `auto` (both scroll), `fixed` (clip), `expand` (grow)
+    - **Inline**: `auto` (horizontal scroll), `fixed` (clip), `expand` (grow), `wrap` (wrap to rows) + default `max-w-full`
 
 **Layout-Driven Components (Column, Row):**
-- Only have `justify` and `align` properties  
+
+- Only have `justify` and `align` properties
 - No gap or padding
 - Take up available space from parent container
 - Handle static layout positioning
 - Universal overflow behaviors:
-  - **Row**: `auto` (scroll), `fixed` (clip), `expand` (grow), `wrap` (flex wrap)
-  - **Column**: `auto` (scroll), `fixed` (clip), `expand` (grow)
-
+    - **Row**: `auto` (scroll), `fixed` (clip), `expand` (grow), `wrap` (flex wrap)
+    - **Column**: `auto` (scroll), `fixed` (clip), `expand` (grow)
 
 **UI Components (Card, Button, Badge, etc.):**
+
 - Have `padding` and `margin` properties (default to none/0)
 - Default to fixed size
 - Universal overflow options: `auto` (scroll), `fixed` (clip, default), `expand` (grow)
@@ -95,15 +100,16 @@
 **Four consistent overflow options across all components:**
 
 - **`auto`**: Smart scrolling - container keeps size, content scrolls when needed (`overflow-auto`)
-- **`fixed`**: Clipped content - container keeps size, content gets cut off (`overflow-hidden`)  
+- **`fixed`**: Clipped content - container keeps size, content gets cut off (`overflow-hidden`)
 - **`expand`**: Container grows - container expands to fit all content naturally (no constraints)
 - **`wrap`**: Flex wrapping - content wraps to new lines (Row/Inline only, `flex-wrap`)
 
 **Default overflow by component type:**
+
 - Content Components (List, Grid, Inline): `auto`
-- Layout Components (Row, Column): `expand`  
+- Layout Components (Row, Column): `expand`
 - UI Components (Card, Button): `fixed`
-- Dynamic Items (ListItem, GridItem): Simple divs with minimal styling
+- Dynamic Items (ListItems, GridItems): Simple divs with minimal styling
 
 ### **Spacing Principles:**
 
@@ -125,6 +131,7 @@
 The Card component is the premium UI component for styled content containers:
 
 **Surface Variants:**
+
 - `default` - Standard background with border
 - `muted` - Muted background color
 - `outline` - Border only, transparent background
@@ -132,22 +139,26 @@ The Card component is the premium UI component for styled content containers:
 - `gradient` - Gradient background from background to muted
 
 **Shape Variants:**
+
 - `rectangle` - Sharp corners (`rounded-none`)
 - `rounded` - Standard rounded corners (`rounded-lg`)
 - `pill` - Fully rounded ends (`rounded-full`)
 
 **Elevation Variants:**
+
 - `flat` - No shadow (`shadow-none`)
 - `shadow` - Subtle shadow (`shadow-sm`)
 - `elevated` - Medium shadow (`shadow-md`)
 - `floating` - Strong shadow (`shadow-lg`)
 
 **Interactive States:**
+
 - `static` - No interaction (default)
 - `hover` - Visual feedback on mouse hover only
 - `click` - Click toggle effects only (no hover)
 
 **Effect Presets (for interactive cards):**
+
 - `lift` - Moves up/down with shadow changes
 - `scale` - Scales larger/smaller
 - `glow` - Changes shadow intensity + background opacity
@@ -155,6 +166,7 @@ The Card component is the premium UI component for styled content containers:
 - `bounce` - Moves up on hover, down when clicked/active
 
 **Usage Examples:**
+
 ```astro
 <!-- Basic content card -->
 <Card variant="default" padding="lg">
@@ -172,28 +184,31 @@ The Card component is the premium UI component for styled content containers:
 </Card>
 ```
 
-### **GridItem & ListItem - Simple Layout Containers:**
+### **GridItems & ListItems - Simple Layout Containers:**
 
-GridItem and ListItem are now **simple div containers** focused purely on layout:
+GridItems and ListItems are now **simple div containers** focused purely on layout:
 
-**GridItem:**
+**GridItems:**
+
 - **Purpose**: Column-oriented layout container for grid content
 - **Props**: `padding`, `justify`, `align`, `overflow` (layout essentials only)
-- **Base**: `flex flex-col w-full` 
+- **Base**: `flex flex-col w-full`
 - **Styling**: Add via `class` prop as needed
 
-**ListItem:**
-- **Purpose**: Row-oriented layout container for list content  
+**ListItems:**
+
+- **Purpose**: Row-oriented layout container for list content
 - **Props**: `padding`, `justify`, `align`, `overflow` (layout essentials only)
 - **Base**: `flex flex-row w-full min-h-[2.5rem]`
 - **Styling**: Add via `class` prop as needed
 
 **When to Use What:**
+
 ```astro
 <!-- Simple layout container -->
-<GridItem padding="md" class="border rounded-lg">
+<GridItems padding="md" class="border rounded-lg">
   <h3>Simple Content</h3>
-</GridItem>
+</GridItems>
 
 <!-- Rich styled card -->
 <Card variant="default" elevation="shadow" interactive="hover" effect="lift">
@@ -263,19 +278,22 @@ const componentVariants = cva("base-classes", {
 ### **Factory Functions:**
 
 **Content-Driven Components:**
+
 ```astro
 import { createContentComponent } from '@/lib/component-variants'
 const variants = createContentComponent('base-classes', { custom: {...} })
 ```
 
 **Layout-Driven Components:**
+
 ```astro
 import { createLayoutComponent } from '@/lib/component-variants'
 const variants = createLayoutComponent('base-classes', { custom: {...} })
 ```
 
 **UI Components:**
-```astro  
+
+```astro
 import { createUIComponent } from '@/lib/component-variants'
 const variants = createUIComponent('base-classes', { variant: {...} })
 ```
@@ -283,11 +301,13 @@ const variants = createUIComponent('base-classes', { variant: {...} })
 ### **Universal Props:**
 
 **Content-Driven:** `gap` + component-specific overflow options
+
 - **List**: `gap`, `overflow` (scroll/extend) + default `max-h-screen`
-- **Grid**: `gap`, `overflow` (scroll/extend) 
+- **Grid**: `gap`, `overflow` (scroll/extend)
 - **Inline**: `gap`, `overflow` (scroll/extend/wrap) + default `max-w-full`
 
 **Layout-Driven:** `justify`, `align` + component-specific overflow options
+
 - **Row**: `justify`, `align`, `overflow` (shrink/wrap)
 - **Column**: `justify`, `align`, `overflow` (shrink/extend)
 
@@ -303,6 +323,7 @@ const variants = createUIComponent('base-classes', { variant: {...} })
 ### **Implementation Examples:**
 
 **Content Component:**
+
 ```astro
 // List example
 const listVariants = createContentComponent('flex flex-col', {
@@ -320,8 +341,9 @@ const { gap, overflow, class: className, ...alpineProps } = Astro.props
 ```
 
 **Layout Component:**
+
 ```astro
-// Row example  
+// Row example
 const rowVariants = createLayoutComponent('flex flex-row', {
     justify: {
         ...universalVariants.justify,
@@ -343,6 +365,7 @@ const { justify, align, overflow, class: className, ...alpineProps } = Astro.pro
 ```
 
 **UI Component:**
+
 ```astro
 export interface Props extends UIComponentProps, VariantProps<typeof variants> {
   customProp?: string
@@ -353,12 +376,14 @@ const { size, padding, margin, elevation, overflow, customProp, class: className
 
 ## **Component Status**
 
-**✅ Universal System Compliant:** 
+**✅ Universal System Compliant:**
+
 - **Content-Driven**: List (max-h-screen), Grid, Inline (max-w-full)
-- **Layout-Driven**: Row, Column, GridItem (simple div), ListItem (simple div)
+- **Layout-Driven**: Row, Column, GridItems (simple div), ListItems (simple div)
 - **UI Components**: Card (universal variant system), CardHeader, CardContent, CardFooter, Button, Badge, Alert, Navbar
 
 **✅ Card System Complete:**
+
 - Universal variant system matching Button/Badge
 - Interactive states: static, hover, click
 - Rich effect presets: lift, scale, glow, subtle, bounce
@@ -366,7 +391,8 @@ const { size, padding, margin, elevation, overflow, customProp, class: className
 - Inherits from universal variant system in `component-variants.ts`
 
 **✅ Layout Items Simplified:**
-- GridItem & ListItem converted to simple div containers
+
+- GridItems & ListItems converted to simple div containers
 - Layout-focused props only: padding, justify, align, overflow
 - Custom styling via class prop
 - Clear separation from rich Card component
@@ -374,7 +400,8 @@ const { size, padding, margin, elevation, overflow, customProp, class: className
 **⚠️ Needs Migration:** TextInput, Modal, Table, Command, and remaining UI components
 
 **Key Architecture Decisions:**
+
 - **Card**: Rich styled content containers with full feature set
-- **GridItem/ListItem**: Simple layout divs, add styling via class
+- **GridItems/ListItems**: Simple layout divs, add styling via class
 - **Universal variants**: Shared system across Button, Badge, Card
 - **Performance focused**: Minimal overhead for basic layout containers
