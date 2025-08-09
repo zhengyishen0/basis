@@ -1,189 +1,301 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/navigation';
+import {
+    Tabs,
+    TabsList,
+    TabsTrigger,
+    TabsContent,
+} from '@/components/ui/navigation';
 import { Card, CardContent } from '@/components/ui/display/card';
 import { Button } from '@/components/ui/forms';
 import { Badge } from '@/components/ui/feedback';
 ---
 
 <Layout title="Tabs Demo">
-  <main class="container mx-auto px-4 py-8 space-y-12">
-    <div class="max-w-4xl mx-auto">
-      <h1 class="text-3xl font-bold mb-8">Tabs Component Demo</h1>
-      
-      <!-- Pills Horizontal -->
-      <section class="space-y-4">
-        <h2 class="text-2xl font-semibold">Pills - Horizontal</h2>
-        <Tabs defaultValue="account" orientation="horizontal">
-          <TabsList variant="pills">
-            <TabsTrigger value="account" variant="pills">Account</TabsTrigger>
-            <TabsTrigger value="password" variant="pills">Password</TabsTrigger>
-            <TabsTrigger value="settings" variant="pills">Settings</TabsTrigger>
-          </TabsList>
-          <TabsContent value="account">
-            <Card>
-              <CardContent padding="lg">
-                <h3 class="text-lg font-medium mb-2">Account Settings</h3>
-                <p class="text-muted-foreground mb-4">Make changes to your account here. Click save when you're done.</p>
-                <div class="space-y-2">
-                  <label class="text-sm font-medium">Name</label>
-                  <input class="w-full px-3 py-2 border rounded-md" value="John Doe" />
-                </div>
-                <Button class="mt-4">Save changes</Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          <TabsContent value="password">
-            <Card>
-              <CardContent padding="lg">
-                <h3 class="text-lg font-medium mb-2">Password</h3>
-                <p class="text-muted-foreground mb-4">Change your password here. After saving, you'll be logged out.</p>
-                <div class="space-y-2">
-                  <label class="text-sm font-medium">Current password</label>
-                  <input type="password" class="w-full px-3 py-2 border rounded-md" />
-                </div>
-                <Button class="mt-4">Save password</Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          <TabsContent value="settings">
-            <Card>
-              <CardContent padding="lg">
-                <h3 class="text-lg font-medium mb-2">Settings</h3>
-                <p class="text-muted-foreground mb-4">Configure your application settings.</p>
-                <div class="flex items-center justify-between">
-                  <span>Email notifications</span>
-                  <Badge variant="secondary">Enabled</Badge>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </section>
+    <main class="container mx-auto px-4 py-8 space-y-12">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-3xl font-bold mb-8">Tabs Component Demo</h1>
 
-      <!-- Pills Vertical -->
-      <section class="space-y-4">
-        <h2 class="text-2xl font-semibold">Pills - Vertical</h2>
-        <Tabs defaultValue="dashboard" orientation="vertical" class="flex gap-6">
-          <TabsList variant="pills" orientation="vertical">
-            <TabsTrigger value="dashboard" variant="pills">Dashboard</TabsTrigger>
-            <TabsTrigger value="analytics" variant="pills">Analytics</TabsTrigger>
-            <TabsTrigger value="reports" variant="pills">Reports</TabsTrigger>
-          </TabsList>
-          <div class="flex-1">
-            <TabsContent value="dashboard">
-              <Card>
-                <CardContent padding="lg">
-                  <h3 class="text-lg font-medium mb-2">Dashboard</h3>
-                  <p class="text-muted-foreground">Overview of your key metrics and recent activity.</p>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            <TabsContent value="analytics">
-              <Card>
-                <CardContent padding="lg">
-                  <h3 class="text-lg font-medium mb-2">Analytics</h3>
-                  <p class="text-muted-foreground">Deep dive into your data and performance metrics.</p>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            <TabsContent value="reports">
-              <Card>
-                <CardContent padding="lg">
-                  <h3 class="text-lg font-medium mb-2">Reports</h3>
-                  <p class="text-muted-foreground">Generate and download detailed reports.</p>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </div>
-        </Tabs>
-      </section>
+            <!-- Pills Horizontal -->
+            <section class="space-y-4 min-h-[600px]">
+                <h2 class="text-2xl font-semibold">Pills - Horizontal</h2>
+                <Tabs defaultValue="account" orientation="horizontal" class="min-h-[500px]">
+                    <TabsList variant="pills">
+                        <TabsTrigger value="account" variant="pills"
+                            >Account</TabsTrigger
+                        >
+                        <TabsTrigger value="password" variant="pills"
+                            >Password</TabsTrigger
+                        >
+                        <TabsTrigger value="settings" variant="pills"
+                            >Settings</TabsTrigger
+                        >
+                    </TabsList>
+                    <TabsContent value="account">
+                        <Card>
+                            <h3 class="text-lg font-medium mb-2">
+                                Account Settings
+                            </h3>
+                            <p class="text-muted-foreground mb-4">
+                                Make changes to your account here. Click save
+                                when you're done.
+                            </p>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium">Name</label>
+                                <input
+                                    class="w-full px-3 py-2 border rounded-md"
+                                    value="John Doe"
+                                />
+                            </div>
+                            <Button class="mt-4">Save changes</Button>
+                        </Card>
+                    </TabsContent>
+                    <TabsContent value="password">
+                        <Card>
+                            <CardContent padding="lg">
+                                <h3 class="text-lg font-medium mb-2">
+                                    Password
+                                </h3>
+                                <p class="text-muted-foreground mb-4">
+                                    Change your password here. After saving,
+                                    you'll be logged out.
+                                </p>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium"
+                                        >Current password</label
+                                    >
+                                    <input
+                                        type="password"
+                                        class="w-full px-3 py-2 border rounded-md"
+                                    />
+                                </div>
+                                <Button class="mt-4">Save password</Button>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                    <TabsContent value="settings">
+                        <Card>
+                            <CardContent padding="lg">
+                                <h3 class="text-lg font-medium mb-2">
+                                    Settings
+                                </h3>
+                                <p class="text-muted-foreground mb-4">
+                                    Configure your application settings.
+                                </p>
+                                <div class="flex items-center justify-between">
+                                    <span>Email notifications</span>
+                                    <Badge variant="secondary">Enabled</Badge>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                </Tabs>
+            </section>
 
-      <!-- Underline Horizontal -->
-      <section class="space-y-4">
-        <h2 class="text-2xl font-semibold">Underline - Horizontal</h2>
-        <Tabs defaultValue="overview" orientation="horizontal">
-          <TabsList variant="underline">
-            <TabsTrigger value="overview" variant="underline">Overview</TabsTrigger>
-            <TabsTrigger value="customers" variant="underline">Customers</TabsTrigger>
-            <TabsTrigger value="products" variant="underline">Products</TabsTrigger>
-            <TabsTrigger value="settings" variant="underline">Settings</TabsTrigger>
-          </TabsList>
-          <TabsContent value="overview">
-            <div class="p-6 bg-muted/50 rounded-lg">
-              <h3 class="text-lg font-medium mb-2">Overview</h3>
-              <p class="text-muted-foreground">Get a high-level view of your business performance and key metrics.</p>
-            </div>
-          </TabsContent>
-          <TabsContent value="customers">
-            <div class="p-6 bg-muted/50 rounded-lg">
-              <h3 class="text-lg font-medium mb-2">Customers</h3>
-              <p class="text-muted-foreground">Manage your customer relationships and view customer insights.</p>
-            </div>
-          </TabsContent>
-          <TabsContent value="products">
-            <div class="p-6 bg-muted/50 rounded-lg">
-              <h3 class="text-lg font-medium mb-2">Products</h3>
-              <p class="text-muted-foreground">View and manage your product catalog and inventory.</p>
-            </div>
-          </TabsContent>
-          <TabsContent value="settings">
-            <div class="p-6 bg-muted/50 rounded-lg">
-              <h3 class="text-lg font-medium mb-2">Settings</h3>
-              <p class="text-muted-foreground">Configure your account and application preferences.</p>
-            </div>
-          </TabsContent>
-        </Tabs>
-      </section>
+            <!-- Pills Vertical -->
+            <section class="space-y-4 min-h-[600px]">
+                <h2 class="text-2xl font-semibold">Pills - Vertical</h2>
+                <Tabs
+                    defaultValue="dashboard"
+                    orientation="vertical"
+                    class="flex gap-6 min-h-[500px]"
+                >
+                    <TabsList variant="pills" orientation="vertical">
+                        <TabsTrigger value="dashboard" variant="pills"
+                            >Dashboard</TabsTrigger
+                        >
+                        <TabsTrigger value="analytics" variant="pills"
+                            >Analytics</TabsTrigger
+                        >
+                        <TabsTrigger value="reports" variant="pills"
+                            >Reports</TabsTrigger
+                        >
+                    </TabsList>
+                    <div class="flex-1">
+                        <TabsContent value="dashboard">
+                            <Card>
+                                <CardContent padding="lg">
+                                    <h3 class="text-lg font-medium mb-2">
+                                        Dashboard
+                                    </h3>
+                                    <p class="text-muted-foreground">
+                                        Overview of your key metrics and recent
+                                        activity.
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+                        <TabsContent value="analytics">
+                            <Card>
+                                <CardContent padding="lg">
+                                    <h3 class="text-lg font-medium mb-2">
+                                        Analytics
+                                    </h3>
+                                    <p class="text-muted-foreground">
+                                        Deep dive into your data and performance
+                                        metrics.
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+                        <TabsContent value="reports">
+                            <Card>
+                                <CardContent padding="lg">
+                                    <h3 class="text-lg font-medium mb-2">
+                                        Reports
+                                    </h3>
+                                    <p class="text-muted-foreground">
+                                        Generate and download detailed reports.
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+                    </div>
+                </Tabs>
+            </section>
 
-      <!-- Underline Vertical -->
-      <section class="space-y-4">
-        <h2 class="text-2xl font-semibold">Underline - Vertical</h2>
-        <Tabs defaultValue="profile" orientation="vertical" class="flex gap-6">
-          <TabsList variant="underline" orientation="vertical">
-            <TabsTrigger value="profile" variant="underline">Profile</TabsTrigger>
-            <TabsTrigger value="billing" variant="underline">Billing</TabsTrigger>
-            <TabsTrigger value="team" variant="underline">Team</TabsTrigger>
-            <TabsTrigger value="integrations" variant="underline">Integrations</TabsTrigger>
-          </TabsList>
-          <div class="flex-1">
-            <TabsContent value="profile">
-              <div class="p-6 bg-muted/50 rounded-lg">
-                <h3 class="text-lg font-medium mb-2">Profile Settings</h3>
-                <p class="text-muted-foreground mb-4">Update your personal information and preferences.</p>
-                <div class="space-y-3">
-                  <div class="flex items-center justify-between">
-                    <span>Display name</span>
-                    <Badge variant="outline">John Doe</Badge>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span>Email</span>
-                    <Badge variant="outline">john@example.com</Badge>
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-            <TabsContent value="billing">
-              <div class="p-6 bg-muted/50 rounded-lg">
-                <h3 class="text-lg font-medium mb-2">Billing & Usage</h3>
-                <p class="text-muted-foreground">Manage your subscription and view usage details.</p>
-              </div>
-            </TabsContent>
-            <TabsContent value="team">
-              <div class="p-6 bg-muted/50 rounded-lg">
-                <h3 class="text-lg font-medium mb-2">Team Management</h3>
-                <p class="text-muted-foreground">Invite team members and manage permissions.</p>
-              </div>
-            </TabsContent>
-            <TabsContent value="integrations">
-              <div class="p-6 bg-muted/50 rounded-lg">
-                <h3 class="text-lg font-medium mb-2">Integrations</h3>
-                <p class="text-muted-foreground">Connect with third-party services and APIs.</p>
-              </div>
-            </TabsContent>
-          </div>
-        </Tabs>
-      </section>
-    </div>
-  </main>
+            <!-- Underline Horizontal -->
+            <section class="space-y-4 min-h-[600px]">
+                <h2 class="text-2xl font-semibold">Underline - Horizontal</h2>
+                <Tabs defaultValue="overview" orientation="horizontal" class="min-h-[500px]">
+                    <TabsList variant="underline">
+                        <TabsTrigger value="overview" variant="underline"
+                            >Overview</TabsTrigger
+                        >
+                        <TabsTrigger value="customers" variant="underline"
+                            >Customers</TabsTrigger
+                        >
+                        <TabsTrigger value="products" variant="underline"
+                            >Products</TabsTrigger
+                        >
+                        <TabsTrigger value="settings" variant="underline"
+                            >Settings</TabsTrigger
+                        >
+                    </TabsList>
+                    <TabsContent value="overview">
+                        <div class="p-6 bg-muted/50 rounded-lg">
+                            <h3 class="text-lg font-medium mb-2">Overview</h3>
+                            <p class="text-muted-foreground">
+                                Get a high-level view of your business
+                                performance and key metrics.
+                            </p>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="customers">
+                        <div class="p-6 bg-muted/50 rounded-lg">
+                            <h3 class="text-lg font-medium mb-2">Customers</h3>
+                            <p class="text-muted-foreground">
+                                Manage your customer relationships and view
+                                customer insights.
+                            </p>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="products">
+                        <div class="p-6 bg-muted/50 rounded-lg">
+                            <h3 class="text-lg font-medium mb-2">Products</h3>
+                            <p class="text-muted-foreground">
+                                View and manage your product catalog and
+                                inventory.
+                            </p>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="settings">
+                        <div class="p-6 bg-muted/50 rounded-lg">
+                            <h3 class="text-lg font-medium mb-2">Settings</h3>
+                            <p class="text-muted-foreground">
+                                Configure your account and application
+                                preferences.
+                            </p>
+                        </div>
+                    </TabsContent>
+                </Tabs>
+            </section>
+
+            <!-- Underline Vertical -->
+            <section class="space-y-4 min-h-[600px]">
+                <h2 class="text-2xl font-semibold">Underline - Vertical</h2>
+                <Tabs
+                    defaultValue="profile"
+                    orientation="vertical"
+                    class="flex gap-6 min-h-[500px]"
+                >
+                    <TabsList variant="underline" orientation="vertical">
+                        <TabsTrigger value="profile" variant="underline"
+                            >Profile</TabsTrigger
+                        >
+                        <TabsTrigger value="billing" variant="underline"
+                            >Billing</TabsTrigger
+                        >
+                        <TabsTrigger value="team" variant="underline"
+                            >Team</TabsTrigger
+                        >
+                        <TabsTrigger value="integrations" variant="underline"
+                            >Integrations</TabsTrigger
+                        >
+                    </TabsList>
+                    <div class="flex-1">
+                        <TabsContent value="profile">
+                            <div class="p-6 bg-muted/50 rounded-lg">
+                                <h3 class="text-lg font-medium mb-2">
+                                    Profile Settings
+                                </h3>
+                                <p class="text-muted-foreground mb-4">
+                                    Update your personal information and
+                                    preferences.
+                                </p>
+                                <div class="space-y-3">
+                                    <div
+                                        class="flex items-center justify-between"
+                                    >
+                                        <span>Display name</span>
+                                        <Badge variant="outline">John Doe</Badge
+                                        >
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-between"
+                                    >
+                                        <span>Email</span>
+                                        <Badge variant="outline"
+                                            >john@example.com</Badge
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </TabsContent>
+                        <TabsContent value="billing">
+                            <div class="p-6 bg-muted/50 rounded-lg">
+                                <h3 class="text-lg font-medium mb-2">
+                                    Billing & Usage
+                                </h3>
+                                <p class="text-muted-foreground">
+                                    Manage your subscription and view usage
+                                    details.
+                                </p>
+                            </div>
+                        </TabsContent>
+                        <TabsContent value="team">
+                            <div class="p-6 bg-muted/50 rounded-lg">
+                                <h3 class="text-lg font-medium mb-2">
+                                    Team Management
+                                </h3>
+                                <p class="text-muted-foreground">
+                                    Invite team members and manage permissions.
+                                </p>
+                            </div>
+                        </TabsContent>
+                        <TabsContent value="integrations">
+                            <div class="p-6 bg-muted/50 rounded-lg">
+                                <h3 class="text-lg font-medium mb-2">
+                                    Integrations
+                                </h3>
+                                <p class="text-muted-foreground">
+                                    Connect with third-party services and APIs.
+                                </p>
+                            </div>
+                        </TabsContent>
+                    </div>
+                </Tabs>
+            </section>
+        </div>
+    </main>
 </Layout>

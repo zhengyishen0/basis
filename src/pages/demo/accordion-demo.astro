@@ -3,10 +3,10 @@ import Layout from '@/layouts/Layout.astro';
 import {
     Accordion,
     AccordionItem,
+    AccordionItems,
     AccordionTrigger,
     AccordionContent,
-} from '@/components/ui/display';
-import AccordionItems from '@/components/ui/display/accordion/AccordionItems.astro';
+} from '@/components/ui/display/accordion';
 import Text from '@/components/ui/display/Text.astro';
 
 const faqData = [
@@ -31,13 +31,13 @@ const faqData = [
 <Layout title="Composable Accordion Demo">
     <div class="min-h-screen bg-gray-50 py-12">
         <div class="max-w-2xl mx-auto px-6 space-y-12">
-            <Text variant="page-title" class="mb-8">
-                Accordion Demo
-            </Text>
+            <Text variant="page-title" class="mb-8"> Accordion Demo </Text>
 
-            <!-- Dynamic x-for Example using AccordionItemList -->
+            <!-- Dynamic x-for Example using AccordionItems -->
             <section class="space-y-4">
-                <h2 class="text-2xl font-semibold">Dynamic Accordion (x-for)</h2>
+                <h2 class="text-2xl font-semibold">
+                    Dynamic Accordion (x-for)
+                </h2>
                 <div x-data={`{items: ${JSON.stringify(faqData)}}`}>
                     <Accordion>
                         <AccordionItems x-for="item in items" x-key="item.id">
@@ -56,21 +56,23 @@ const faqData = [
             <section class="space-y-4">
                 <h2 class="text-2xl font-semibold">Static Accordion</h2>
                 <Accordion>
-                    <AccordionItem>
+                    <AccordionItem id="static-1">
                         <AccordionTrigger iconType="plus">
                             What makes this better?
                         </AccordionTrigger>
                         <AccordionContent>
-                            The wrapper pattern eliminates code duplication while keeping clean usage patterns.
+                            The wrapper pattern eliminates code duplication
+                            while keeping clean usage patterns.
                         </AccordionContent>
                     </AccordionItem>
-                    
-                    <AccordionItem>
+
+                    <AccordionItem id="static-2">
                         <AccordionTrigger iconType="plus">
                             How does the wrapper work?
                         </AccordionTrigger>
                         <AccordionContent>
-                            AccordionItemList handles the x-for logic and passes slots through to the base AccordionItem component.
+                            The AccordionItems wrapper handles the x-for logic
+                            and generates proper IDs for dynamic content.
                         </AccordionContent>
                     </AccordionItem>
                 </Accordion>
@@ -78,18 +80,22 @@ const faqData = [
 
             <!-- Static Multiple Items Example -->
             <section class="space-y-4">
-                <h2 class="text-2xl font-semibold">Multiple Static Items</h2>
+                <h2 class="text-2xl font-semibold">
+                    Multiple Static Items (.map)
+                </h2>
                 <Accordion>
-                    {faqData.map((item) => (
-                        <AccordionItem>
-                            <AccordionTrigger iconType="chevron">
-                                {item.question}
-                            </AccordionTrigger>
-                            <AccordionContent>
-                                {item.answer}
-                            </AccordionContent>
-                        </AccordionItem>
-                    ))}
+                    {
+                        faqData.map(item => (
+                            <AccordionItem id={item.id}>
+                                <AccordionTrigger iconType="chevron">
+                                    {item.question}
+                                </AccordionTrigger>
+                                <AccordionContent>
+                                    {item.answer}
+                                </AccordionContent>
+                            </AccordionItem>
+                        ))
+                    }
                 </Accordion>
             </section>
         </div>

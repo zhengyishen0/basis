@@ -10,12 +10,7 @@ export { default as Navbar } from './Navbar.astro';
 export { Card, CardContent, CardFooter, CardHeader } from './card';
 
 // Accordion components
-export {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from './accordion';
+export * from './accordion';
 
 // Avatar component
 export { default as Avatar } from './Avatar.astro';

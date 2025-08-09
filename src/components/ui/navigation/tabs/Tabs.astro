@@ -1,7 +1,7 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
-import { semanticVariants, sizes, overflowVariants } from '@/lib/component-variants';
+import { sizes, overflowVariants } from '@/lib/component-variants';
 
 const tabsVariants = cva('w-full flex gap-2', {
     variants: {
@@ -9,10 +9,9 @@ const tabsVariants = cva('w-full flex gap-2', {
             horizontal: 'flex-col',
             vertical: 'flex-row',
         },
-        variant: semanticVariants,
         size: sizes,
-        overflow: overflowVariants
-    }
+        overflow: overflowVariants,
+    },
 });
 
 export interface Props extends VariantProps<typeof tabsVariants> {
@@ -24,13 +23,11 @@ export interface Props extends VariantProps<typeof tabsVariants> {
 const {
     defaultValue,
     orientation = 'horizontal',
-    variant = 'default',
     size = 'md',
     overflow = 'fixed',
     class: className,
     ...alpineProps
 } = Astro.props;
-
 ---
 
 <div
@@ -41,7 +38,6 @@ const {
     class={cn(
         tabsVariants({
             orientation,
-            variant,
             size,
             overflow,
         }),
