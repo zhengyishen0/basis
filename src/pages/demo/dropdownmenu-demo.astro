@@ -5,7 +5,9 @@ import {
     DropdownMenuTrigger,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuItems,
     DropdownMenuGroup,
+    DropdownMenuGroups,
     DropdownMenuSubMenu,
     DropdownMenuSubTrigger,
     DropdownMenuShortcut,
@@ -75,7 +77,7 @@ import { ChevronDown } from 'lucide-astro';
                         Dynamic Menu <ChevronDown class="w-4 h-4" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent label="File Manager" role="menu">
-                        <DropdownMenuGroup
+                        <DropdownMenuGroups
                             x-for="group in menuGroups"
                             x-key="group.heading"
                             x-text="group.heading"
@@ -86,7 +88,7 @@ import { ChevronDown } from 'lucide-astro';
                                 condition="!item.submenu"
                             >
                                 <!-- True slot: Regular menu items (using x-text attribute) -->
-                                <DropdownMenuItem
+                                <DropdownMenuItems
                                     slot="true"
                                     x-text="item.text"
                                 >
@@ -94,7 +96,7 @@ import { ChevronDown } from 'lucide-astro';
                                         x-text="item.shortcut"
                                         x-show="item.shortcut"
                                     />
-                                </DropdownMenuItem>
+                                </DropdownMenuItems>
 
                                 <!-- False slot: Submenu items (using x-text attribute) -->
                                 <DropdownMenuSubMenu slot="false">
@@ -102,7 +104,7 @@ import { ChevronDown } from 'lucide-astro';
                                         x-text="item.text"
                                     />
 
-                                    <DropdownMenuItem
+                                    <DropdownMenuItems
                                         slot="submenu"
                                         x-for="subitem in item.submenu"
                                         x-key="subitem.text"
@@ -110,7 +112,7 @@ import { ChevronDown } from 'lucide-astro';
                                     />
                                 </DropdownMenuSubMenu>
                             </DropdownMenuConditional>
-                        </DropdownMenuGroup>
+                        </DropdownMenuGroups>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>

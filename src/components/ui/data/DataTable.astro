@@ -7,8 +7,6 @@ import TableHead from './TableHead.astro';
 import TableCell from './TableCell.astro';
 import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-astro';
 import { cn } from '@/lib/utils';
-import type { TableComponentProps } from '@/lib/component-variants';
-
 export interface Column {
   key: string;
   label: string;
@@ -20,7 +18,12 @@ export interface Column {
   render?: (value: any, row: any) => string;
 }
 
-export interface Props extends TableComponentProps {
+export interface Props {
+  variant?: 'default' | 'bordered' | 'striped' | 'hoverable';
+  density?: 'compact' | 'normal' | 'comfortable';
+  size?: 'sm' | 'md' | 'lg';
+  interactive?: 'none' | 'hover' | 'click';
+  responsive?: boolean;
   data: any[];
   columns: Column[];
   searchable?: boolean;

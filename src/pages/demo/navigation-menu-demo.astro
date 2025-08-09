@@ -4,9 +4,11 @@ import {
     NavigationMenu,
     NavigationMenuList,
     NavigationMenuItem,
+    NavigationMenuItems,
     NavigationMenuTrigger,
     NavigationMenuContent,
     NavigationMenuLink,
+    NavigationMenuLinks,
     NavigationMenuFeatured,
 } from '@/components/ui/overlay/navigationmenu';
 
@@ -173,8 +175,8 @@ const navigationItems = [
                                             <p
                                                 class="line-clamp-2 text-sm leading-snug text-muted-foreground"
                                             >
-                                                Reusable UI components built with
-                                                Alpine.js
+                                                Reusable UI components built
+                                                with Alpine.js
                                             </p>
                                         </NavigationMenuLink>
                                     </div>
@@ -278,7 +280,7 @@ const navigationItems = [
                         <NavigationMenu className="mx-auto">
                             <NavigationMenuList>
                                 <!-- All menu items rendered dynamically based on type -->
-                                <NavigationMenuItem
+                                <NavigationMenuItems
                                     x-for="item in navigationItems"
                                     x-key="item.id"
                                 >
@@ -293,10 +295,14 @@ const navigationItems = [
                                     <!-- Content with explicit layout -->
                                     <NavigationMenuContent slot="content">
                                         <!-- Feature layout: featured card + links -->
-                                        <template x-if="item.type === 'feature'">
+                                        <template
+                                            x-if="item.type === 'feature'"
+                                        >
                                             <NavigationMenuFeatured />
-                                            <div class="flex flex-col space-y-2">
-                                                <NavigationMenuLink
+                                            <div
+                                                class="flex flex-col space-y-2"
+                                            >
+                                                <NavigationMenuLinks
                                                     x-for="link in item.links"
                                                     x-key="link.id"
                                                 />
@@ -307,13 +313,13 @@ const navigationItems = [
                                         <template
                                             x-if="item.type !== 'feature'"
                                         >
-                                            <NavigationMenuLink
+                                            <NavigationMenuLinks
                                                 x-for="link in item.links"
                                                 x-key="link.id"
                                             />
                                         </template>
                                     </NavigationMenuContent>
-                                </NavigationMenuItem>
+                                </NavigationMenuItems>
                             </NavigationMenuList>
                         </NavigationMenu>
                     </div>

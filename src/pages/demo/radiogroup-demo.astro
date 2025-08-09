@@ -3,6 +3,7 @@ import Layout from '@/layouts/Layout.astro';
 import {
     RadioGroup,
     RadioGroupItem,
+    RadioGroupItems,
     RadioGroupLabel,
     RadioGroupDescription,
 } from '@/components/ui/forms/radiogroup';
@@ -20,29 +21,28 @@ import {
                 </h3>
                 <div
                     x-data="{ 
-                    debugValue: 'option2',
+                    debugValue: 'option1',
                     options: [
                         { value: 'option1', label: 'Option 1', description: 'First option', disabled: false },
-                        { value: 'option2', label: 'Option 2', description: 'Second option', disabled: true },
+                        { value: 'option2', label: 'Option 2', description: 'Second option', disabled: false },
                         { value: 'option3', label: 'Option 3', description: 'Third option', disabled: false }
                     ]
                 }"
                 >
                     <RadioGroup
                         name="test"
-                        selectedOption="option2"
+                        selectedOption="option1"
                         x-model="debugValue"
                     >
-                        <RadioGroupItem
+                        <RadioGroupItems
                             x-for="option in options"
                             x-key="option.value"
-                            value="dummy"
                         >
                             <RadioGroupLabel x-text="option.label" />
                             <RadioGroupDescription
                                 x-text="option.description"
                             />
-                        </RadioGroupItem>
+                        </RadioGroupItems>
                     </RadioGroup>
 
                     <div class="mt-4 p-3 bg-muted rounded">

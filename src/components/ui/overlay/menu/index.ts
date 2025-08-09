@@ -1,4 +1,5 @@
 export { default as MenuItem } from './MenuItem.astro';
+export { default as MenuItems } from './MenuItems.astro';
 export { default as MenuGroup } from './MenuGroup.astro';
 export { default as MenuInput } from './MenuInput.astro';
 export { default as MenuContainer } from './MenuContainer.astro';

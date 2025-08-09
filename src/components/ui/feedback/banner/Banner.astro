@@ -97,12 +97,8 @@ Features:
         : '-translate-y-10 opacity-0'}
     class={cn(
         bannerVariants({ variant, position, overflow }),
-        padding && `p-${padding}`,
-        elevation === 'flat' && 'shadow-flat',
-        elevation === 'elevated' && 'shadow-elevated',
-        elevation === 'floating' && 'shadow-floating',
-        elevation === 'lifted' && 'shadow-lifted',
-        elevation === 'high' && 'shadow-high',
+        'p-4', // Default padding
+        'shadow-sm', // Default elevation
         className
     )}
     {...alpineProps}

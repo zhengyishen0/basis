@@ -31,7 +31,7 @@ const itemProps = { disabled, layout, variant, size, padding, elevation, class: 
 ---
 
 <template x-for={xFor} x-key={xKey || 'option.value'}>
-  <RadioGroupItem {...itemProps} {...restProps}>
+  <RadioGroupItem {...itemProps} {...restProps} option="option">
     <slot />
   </RadioGroupItem>
 </template>
