@@ -1,4 +1,7 @@
-# Design System Guide
+---
+title: Design System Guide
+description: Complete guide to the 3-layer design system architecture
+---
 
 ## Overview
 

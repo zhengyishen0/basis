@@ -1,0 +1,72 @@
+---
+title: Card
+description: Container component for grouping related content
+category: display
+order: 2
+---
+
+import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/display/card';
+import Button from '@/components/ui/forms/Button.astro';
+import Code from '@/components/ui/display/Code.astro';
+
+## Overview
+
+Cards are surfaces that display content and actions on a single topic. They should be easy to scan for relevant and actionable information.
+
+## Import
+
+<Code 
+    code="import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/display/card';" 
+    language="typescript" 
+/>
+
+## Basic Usage
+
+<Card class="max-w-md">
+    <CardHeader>
+        <h3 class="text-lg font-semibold">Card Title</h3>
+        <p class="text-sm text-muted-foreground">Card description goes here</p>
+    </CardHeader>
+    <CardContent>
+        <p>This is the main content area of the card. You can place any content here.</p>
+    </CardContent>
+    <CardFooter>
+        <Button variant="outline">Cancel</Button>
+        <Button>Save</Button>
+    </CardFooter>
+</Card>
+
+<Code 
+    code={'<Card>\n    <CardHeader>\n        <h3>Card Title</h3>\n        <p>Card description</p>\n    </CardHeader>\n    <CardContent>\n        <p>Main content</p>\n    </CardContent>\n    <CardFooter>\n        <Button>Action</Button>\n    </CardFooter>\n</Card>'}
+    language="astro" 
+/>
+
+## Card Variants
+
+### Simple Card
+
+<Card class="max-w-md">
+    <CardContent>
+        <p>A simple card with just content, no header or footer.</p>
+    </CardContent>
+</Card>
+
+### Interactive Card
+
+<Card class="max-w-md hover:shadow-lg transition-shadow cursor-pointer">
+    <CardContent>
+        <h3 class="font-semibold mb-2">Clickable Card</h3>
+        <p class="text-sm text-muted-foreground">This card has hover effects and can be clicked.</p>
+    </CardContent>
+</Card>
+
+## API Reference
+
+### Props
+
+| Component | Props | Description |
+|-----------|-------|-------------|
+| `Card` | `class` | Container wrapper with padding and border |
+| `CardHeader` | `class` | Header section with title and description |
+| `CardContent` | `class` | Main content area |
+| `CardFooter` | `class` | Footer with actions |

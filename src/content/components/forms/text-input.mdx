@@ -1,0 +1,80 @@
+---
+title: Text Input
+description: Single-line text input field for forms
+category: forms
+order: 2
+---
+
+import TextInput from '@/components/ui/forms/TextInput.astro';
+import Code from '@/components/ui/display/Code.astro';
+
+## Overview
+
+Text Input component provides a styled input field with support for different types, placeholders, and validation states.
+
+## Import
+
+<Code 
+    code="import TextInput from '@/components/ui/forms/TextInput.astro';" 
+    language="typescript" 
+/>
+
+## Basic Usage
+
+<div class="space-y-4 max-w-md">
+    <TextInput placeholder="Enter your name" />
+    <TextInput type="email" placeholder="Email address" />
+    <TextInput type="password" placeholder="Password" />
+</div>
+
+<Code 
+    code={'<TextInput placeholder="Enter your name" />\n<TextInput type="email" placeholder="Email address" />\n<TextInput type="password" placeholder="Password" />'}
+    language="astro" 
+/>
+
+## With Labels
+
+<div class="space-y-4 max-w-md">
+    <div>
+        <label for="name" class="block text-sm font-medium mb-2">Name</label>
+        <TextInput id="name" placeholder="John Doe" />
+    </div>
+    <div>
+        <label for="email" class="block text-sm font-medium mb-2">Email</label>
+        <TextInput id="email" type="email" placeholder="john@example.com" />
+    </div>
+</div>
+
+## States
+
+<div class="space-y-4 max-w-md">
+    <TextInput placeholder="Normal input" />
+    <TextInput placeholder="Disabled input" disabled />
+    <TextInput placeholder="Read-only input" readonly value="Read-only value" />
+</div>
+
+<Code 
+    code={'<TextInput placeholder="Normal input" />\n<TextInput placeholder="Disabled input" disabled />\n<TextInput placeholder="Read-only input" readonly />'}
+    language="astro" 
+/>
+
+## Alpine.js Integration
+
+<Code 
+    code={'<div x-data="{ value: \'\' }">\n    <TextInput \n        x-model="value" \n        @input="console.log($event.target.value)"\n        placeholder="Type something..."\n    />\n    <p x-text="\'You typed: \' + value"></p>\n</div>'}
+    language="astro" 
+/>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `type` | `string` | `'text'` | Input type (text, email, password, etc.) |
+| `placeholder` | `string` | - | Placeholder text |
+| `value` | `string` | - | Input value |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `readonly` | `boolean` | `false` | Read-only state |
+| `required` | `boolean` | `false` | Required field |
+| `class` | `string` | - | Additional CSS classes |

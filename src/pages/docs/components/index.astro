@@ -1,0 +1,72 @@
+---
+import DocsLayout from '@/layouts/DocsLayout.astro';
+---
+
+<DocsLayout 
+    title="Components" 
+    description="Explore our comprehensive UI component library built with Astro and Alpine.js"
+    slug="components"
+>
+    <div class="space-y-8">
+        <section>
+            <h2 id="overview">Component Library Overview</h2>
+            <p>
+                Our component library provides a complete set of UI components built with Astro, 
+                Alpine.js, and Tailwind CSS. All components follow a consistent design system and 
+                support theme variants.
+            </p>
+        </section>
+
+        <section>
+            <h2 id="categories">Component Categories</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 not-prose">
+                <div class="border rounded-lg p-4">
+                    <h3 class="font-semibold mb-2">Data Components</h3>
+                    <p class="text-sm text-muted-foreground">Tables, lists, and data display components</p>
+                </div>
+                <div class="border rounded-lg p-4">
+                    <h3 class="font-semibold mb-2">Display Components</h3>
+                    <p class="text-sm text-muted-foreground">Badges, cards, alerts, and visual elements</p>
+                </div>
+                <div class="border rounded-lg p-4">
+                    <h3 class="font-semibold mb-2">Feedback Components</h3>
+                    <p class="text-sm text-muted-foreground">Toasts, modals, progress indicators</p>
+                </div>
+                <div class="border rounded-lg p-4">
+                    <h3 class="font-semibold mb-2">Form Components</h3>
+                    <p class="text-sm text-muted-foreground">Inputs, buttons, selects, and form controls</p>
+                </div>
+                <div class="border rounded-lg p-4">
+                    <h3 class="font-semibold mb-2">Layout Components</h3>
+                    <p class="text-sm text-muted-foreground">Containers, grids, sections, and dividers</p>
+                </div>
+                <div class="border rounded-lg p-4">
+                    <h3 class="font-semibold mb-2">Navigation Components</h3>
+                    <p class="text-sm text-muted-foreground">Menus, breadcrumbs, tabs, and navigation bars</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 id="usage">Using Components</h2>
+            <p>
+                All components are built as Astro components and can be imported directly:
+            </p>
+            <pre><code>{`import { Button } from '@/components/ui/forms';
+import { Card } from '@/components/ui/display';`}</code></pre>
+        </section>
+
+        <section>
+            <h2 id="theming">Theming</h2>
+            <p>
+                Components use CVA (Class Variance Authority) for consistent theming with variants:
+            </p>
+            <ul>
+                <li><strong>default</strong> - Primary brand color</li>
+                <li><strong>secondary</strong> - Secondary color scheme</li>
+                <li><strong>destructive</strong> - Error/danger states</li>
+                <li><strong>outline</strong> - Bordered variant</li>
+            </ul>
+        </section>
+    </div>
+</DocsLayout>

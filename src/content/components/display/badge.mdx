@@ -1,0 +1,62 @@
+---
+title: Badge
+description: Small label component for displaying status or metadata
+category: display
+order: 1
+---
+
+import Badge from '@/components/ui/feedback/Badge.astro';
+import Code from '@/components/ui/display/Code.astro';
+
+## Overview
+
+Badges are used to highlight important information, show status, or display metadata in a compact format.
+
+## Import
+
+<Code 
+    code="import Badge from '@/components/ui/feedback/Badge.astro';" 
+    language="typescript" 
+/>
+
+## Basic Usage
+
+<div class="flex gap-4 mb-6">
+    <Badge variant="default">Default</Badge>
+    <Badge variant="secondary">Secondary</Badge>
+    <Badge variant="destructive">Destructive</Badge>
+    <Badge variant="outline">Outline</Badge>
+</div>
+
+<Code 
+    code={'<Badge variant="default">Default</Badge>\n<Badge variant="secondary">Secondary</Badge>\n<Badge variant="destructive">Destructive</Badge>\n<Badge variant="outline">Outline</Badge>'}
+    language="astro" 
+/>
+
+## Real-world Examples
+
+### Status Indicators
+
+<div class="flex gap-4 mb-6">
+    <Badge variant="default">Active</Badge>
+    <Badge variant="secondary">Pending</Badge>
+    <Badge variant="destructive">Error</Badge>
+    <Badge variant="outline">Draft</Badge>
+</div>
+
+### With Numbers
+
+<div class="flex gap-4 mb-6">
+    <Badge variant="destructive">5</Badge>
+    <Badge variant="default">12</Badge>
+    <Badge variant="secondary">99+</Badge>
+</div>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'default' \| 'secondary' \| 'destructive' \| 'outline'` | `'default'` | Badge variant |
+| `class` | `string` | - | Additional CSS classes |

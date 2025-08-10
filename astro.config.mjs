@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
+import mdx from '@astrojs/mdx';
 
 // Dynamic configuration for GitHub Pages
 const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
@@ -23,6 +24,7 @@ export default defineConfig({
 
     // Enable client-side hydration for Alpine.js and Tailwind CSS
     integrations: [
+        mdx(),
         tailwind(),
         icon({
             include: {

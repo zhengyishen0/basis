@@ -1,0 +1,67 @@
+---
+title: Alert
+description: Display important messages and notifications
+category: feedback
+order: 1
+---
+
+import Alert from '@/components/ui/feedback/Alert.astro';
+import Code from '@/components/ui/display/Code.astro';
+
+## Overview
+
+Alerts display important messages in a way that attracts user attention without interrupting the user's task.
+
+## Import
+
+<Code 
+    code="import Alert from '@/components/ui/feedback/Alert.astro';" 
+    language="typescript" 
+/>
+
+## Basic Usage
+
+<div class="space-y-4">
+    <Alert variant="default">
+        <strong>Information:</strong> This is a default alert message.
+    </Alert>
+    <Alert variant="success">
+        <strong>Success!</strong> Your changes have been saved.
+    </Alert>
+    <Alert variant="warning">
+        <strong>Warning:</strong> Please review your input.
+    </Alert>
+    <Alert variant="destructive">
+        <strong>Error:</strong> Something went wrong.
+    </Alert>
+</div>
+
+<Code 
+    code={'<Alert variant="default">Default alert message</Alert>\n<Alert variant="success">Success message</Alert>\n<Alert variant="warning">Warning message</Alert>\n<Alert variant="destructive">Error message</Alert>'}
+    language="astro" 
+/>
+
+## With Icons and Actions
+
+<Alert variant="success" class="flex items-center justify-between">
+    <div>
+        <strong>Upload Complete!</strong> Your file has been uploaded successfully.
+    </div>
+    <button class="text-sm underline">View File</button>
+</Alert>
+
+## Dismissible Alert
+
+<Code 
+    code={'<div x-data="{ show: true }">\n    <Alert x-show="show" variant="warning">\n        <span>Dismissible alert</span>\n        <button @click="show = false">✕</button>\n    </Alert>\n</div>'}
+    language="astro" 
+/>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'default' \| 'success' \| 'warning' \| 'destructive'` | `'default'` | Alert style variant |
+| `class` | `string` | - | Additional CSS classes |

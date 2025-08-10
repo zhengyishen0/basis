@@ -1,0 +1,248 @@
+---
+import SiteLayout from './SiteLayout.astro';
+import { Row, Column, Divider } from '@/components/ui/layout';
+import Breadcrumb from '@/components/ui/navigation/breadcrumbs/Breadcrumb.astro';
+import BreadcrumbItem from '@/components/ui/navigation/breadcrumbs/BreadcrumbItem.astro';
+import { TableOfContents } from '@/components/ui/display';
+import Button from '@/components/ui/forms/Button.astro';
+import { getCollection } from 'astro:content';
+import { cn } from '@/lib/utils';
+
+export interface Props {
+    title: string;
+    description?: string;
+    slug?: string;
+    prevPage?: { href: string; title: string };
+    nextPage?: { href: string; title: string };
+}
+
+const { title, description, slug, prevPage, nextPage } = Astro.props;
+
+// Get all documentation entries
+const docs = await getCollection('docs');
+const components = await getCollection('components');
+
+// Group docs by category (based on folder structure)
+const docsByCategory = docs.reduce(
+    (acc, doc) => {
+        const parts = doc.slug.split('/');
+        const category = parts.length > 1 ? parts[0] : 'General';
+        if (!acc[category]) acc[category] = [];
+        acc[category].push(doc);
+        return acc;
+    },
+    {} as Record<string, typeof docs>
+);
+
+// Sort docs within each category by order
+Object.keys(docsByCategory).forEach(category => {
+    docsByCategory[category].sort((a, b) => {
+        const orderA = a.data.order ?? 999;
+        const orderB = b.data.order ?? 999;
+        return orderA - orderB;
+    });
+});
+
+// Group components by category
+const componentsByCategory = components.reduce(
+    (acc, component) => {
+        const parts = component.slug.split('/');
+        const category = parts.length > 1 ? parts[0] : 'General';
+        if (!acc[category]) acc[category] = [];
+        acc[category].push(component);
+        return acc;
+    },
+    {} as Record<string, typeof components>
+);
+
+// Sort components within each category by order
+Object.keys(componentsByCategory).forEach(category => {
+    componentsByCategory[category].sort((a, b) => {
+        const orderA = a.data.order ?? 999;
+        const orderB = b.data.order ?? 999;
+        return orderA - orderB;
+    });
+});
+
+// Format category names
+const formatCategory = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).replace(/-/g, ' ');
+};
+
+// Format component name
+const formatComponentName = (str: string) => {
+    return str
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+};
+
+// Prepare data for Alpine.js
+const docsData = Object.entries(docsByCategory).map(([category, items]) => ({
+    category: formatCategory(category),
+    items: items.map(item => ({
+        href: `/docs/${item.slug}`,
+        title: item.data.title,
+        active: slug === item.slug
+    }))
+}));
+
+const componentsData = Object.entries(componentsByCategory).map(([category, items]) => ({
+    category: formatCategory(category),
+    items: items.map(item => ({
+        href: `/docs/components/${item.slug}`,
+        title: item.data.title,
+        active: slug === `components/${item.slug}`
+    }))
+}));
+---
+
+<SiteLayout title={title} description={description}>
+    <div class="flex min-h-[calc(100vh-3.5rem)]">
+        <!-- Left Sidebar -->
+        <aside
+            class="w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+            x-data={`{
+                docsData: ${JSON.stringify(docsData)},
+                componentsData: ${JSON.stringify(componentsData)},
+                currentSlug: '${slug || ''}'
+            }`}
+        >
+            <div
+                class="sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-6 px-4"
+            >
+                <div class="space-y-6">
+                    <!-- Documentation Section -->
+                    <div x-show="docsData.length > 0" class="space-y-3">
+                        <h3 class="text-sm font-semibold text-foreground px-2">Documentation</h3>
+                        <template x-for="category in docsData" :key="category.category">
+                            <div class="space-y-1">
+                                <div class="text-sm font-medium text-muted-foreground px-3 py-1" x-text="category.category"></div>
+                                <template x-for="item in category.items" :key="item.href">
+                                    <a
+                                        :href="item.href"
+                                        :class="{
+                                            'bg-accent text-accent-foreground font-medium': item.active,
+                                            'text-muted-foreground hover:text-foreground': !item.active
+                                        }"
+                                        class="block px-2 py-1.5 text-sm rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
+                                        x-text="item.title"
+                                    ></a>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Components Section -->
+                    <div x-show="componentsData.length > 0" class="space-y-3">
+                        <h3 class="text-sm font-semibold text-foreground px-2">Components</h3>
+                        <template x-for="category in componentsData" :key="category.category">
+                            <div class="space-y-1">
+                                <div class="text-sm font-medium text-muted-foreground px-3 py-1" x-text="category.category"></div>
+                                <template x-for="item in category.items" :key="item.href">
+                                    <a
+                                        :href="item.href"
+                                        :class="{
+                                            'bg-accent text-accent-foreground font-medium': item.active,
+                                            'text-muted-foreground hover:text-foreground': !item.active
+                                        }"
+                                        class="block px-2 py-1.5 text-sm rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
+                                        x-text="item.title"
+                                    ></a>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex">
+            <main class="flex-1 max-w-4xl mx-auto px-8 py-8">
+                <!-- Breadcrumb -->
+                {
+                    slug && (
+                        <Breadcrumb class="mb-4">
+                            <BreadcrumbItem href="/docs">Docs</BreadcrumbItem>
+                            {slug.split('/').map((part, index, arr) => (
+                                <BreadcrumbItem
+                                    href={`/docs/${arr.slice(0, index + 1).join('/')}`}
+                                    active={index === arr.length - 1}
+                                >
+                                    {formatCategory(part)}
+                                </BreadcrumbItem>
+                            ))}
+                        </Breadcrumb>
+                    )
+                }
+
+                <!-- Page Header -->
+                <div class="space-y-2 mb-8">
+                    <h1 class="text-4xl font-bold tracking-tight">{title}</h1>
+                    {
+                        description && (
+                            <p class="text-lg text-muted-foreground">
+                                {description}
+                            </p>
+                        )
+                    }
+                </div>
+
+                <Divider class="mb-8" />
+
+                <!-- Content Slot -->
+                <div class="prose prose-gray dark:prose-invert max-w-none">
+                    <slot />
+                </div>
+
+                <!-- Footer Navigation -->
+                {
+                    (prevPage || nextPage) && (
+                        <>
+                            <Divider class="mt-12 mb-8" />
+                            <div class="flex items-center justify-between">
+                                {prevPage ? (
+                                    <Button
+                                        variant="outline"
+                                        href={prevPage.href}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <span>←</span>
+                                        <span>{prevPage.title}</span>
+                                    </Button>
+                                ) : (
+                                    <div />
+                                )}
+
+                                {nextPage && (
+                                    <Button
+                                        variant="outline"
+                                        href={nextPage.href}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <span>{nextPage.title}</span>
+                                        <span>→</span>
+                                    </Button>
+                                )}
+                            </div>
+                        </>
+                    )
+                }
+            </main>
+
+            <!-- Right Sidebar (Table of Contents) -->
+            <aside class="hidden xl:block w-64">
+                <div
+                    class="sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-8 pr-4"
+                >
+                    <TableOfContents
+                        containerSelector="main"
+                        title="On this page"
+                        class="text-sm"
+                    />
+                </div>
+            </aside>
+        </div>
+    </div>
+</SiteLayout>

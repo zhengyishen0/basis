@@ -1,38 +1,34 @@
 ---
 import { cn } from '@/lib/utils';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { overflowVariants } from '@/lib/component-variants';
 
-const navbarVariants = cva('grid grid-cols-[1fr_auto_1fr] items-center p-md', {
-    variants: {
-        overflow: overflowVariants,
-    },
-});
-
-export interface Props extends VariantProps<typeof navbarVariants> {
-    as?: 'nav' | 'header' | 'div';
+export interface Props {
+    sticky?: boolean;
     class?: string;
     [key: string]: any; // Alpine.js pass-through
 }
 
-const {
-    overflow = 'fixed',
-    as: Tag = 'nav',
-    class: className,
-    ...alpineProps
-} = Astro.props;
+const { sticky = true, class: className, ...alpineProps } = Astro.props;
+
+const headerClasses = cn(
+    sticky && 'sticky top-0 z-50',
+    'w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'
+);
+
+const navClasses = cn(
+    'container px-4 flex items-center justify-between h-16',
+    className
+);
 ---
 
-<Tag class={cn(navbarVariants({ overflow }), className)} {...alpineProps}>
-    <div class="justify-self-start">
-        <slot name="left" />
-    </div>
+<header class={headerClasses} {...alpineProps}>
+    <nav class={navClasses}>
+        <div class="flex items-center gap-6">
+            <slot name="brand" />
+            <slot name="links" />
+        </div>
 
-    <div class="justify-self-center">
-        <slot />
-    </div>
-
-    <div class="justify-self-end">
-        <slot name="right" />
-    </div>
-</Tag>
+        <div class="flex items-center gap-4">
+            <slot name="actions" />
+        </div>
+    </nav>
+</header>

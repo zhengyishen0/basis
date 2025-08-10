@@ -19,6 +19,7 @@
     "@alpinejs/resize": "^3.14.9",
     "@alpinejs/sort": "^3.14.9",
     "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^4.3.3",
     "@iconify-json/lucide": "^1.2.62",
     "@supabase/supabase-js": "^2.51.0",
     "alpinejs": "^3.14.9",

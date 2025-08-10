@@ -1,0 +1,101 @@
+---
+title: Button
+description: Interactive button component with multiple variants and sizes
+category: forms
+order: 1
+---
+
+import { Button } from '@/components/ui/forms';
+import Code from '@/components/ui/display/Code.astro';
+
+## Overview
+
+The Button component is a versatile, accessible button element that supports multiple variants, sizes, and states.
+
+## Import
+
+<Code 
+    code="import { Button } from '@/components/ui/forms';" 
+    language="typescript" 
+/>
+
+## Basic Usage
+
+<div class="flex gap-4 mb-6">
+    <Button variant="default">Default</Button>
+    <Button variant="secondary">Secondary</Button>
+    <Button variant="destructive">Destructive</Button>
+    <Button variant="outline">Outline</Button>
+</div>
+
+<Code 
+    code={'<Button variant="default">Default</Button>\n<Button variant="secondary">Secondary</Button>\n<Button variant="destructive">Destructive</Button>\n<Button variant="outline">Outline</Button>'}
+    language="astro" 
+/>
+
+## Sizes
+
+<div class="flex gap-4 items-center mb-6">
+    <Button size="sm">Small</Button>
+    <Button size="md">Medium</Button>
+    <Button size="lg">Large</Button>
+</div>
+
+<Code 
+    code={'<Button size="sm">Small</Button>\n<Button size="md">Medium</Button>\n<Button size="lg">Large</Button>'}
+    language="astro" 
+/>
+
+## With Icons
+
+<div class="flex gap-4 mb-6">
+    <Button variant="default">
+        <span>Save Changes</span>
+    </Button>
+    <Button variant="outline">
+        <span>Download</span>
+    </Button>
+</div>
+
+## Disabled State
+
+<div class="flex gap-4 mb-6">
+    <Button disabled>Disabled</Button>
+    <Button variant="secondary" disabled>Disabled</Button>
+</div>
+
+<Code 
+    code="<Button disabled>Disabled</Button>" 
+    language="astro" 
+/>
+
+## As Link
+
+<Button as="a" href="/docs" variant="outline">
+    Documentation
+</Button>
+
+<Code 
+    code={'<Button as="a" href="/docs" variant="outline">\n    Documentation\n</Button>'}
+    language="astro" 
+/>
+
+## Alpine.js Integration
+
+<Code 
+    code={'<div x-data="{ count: 0 }">\n    <Button @click="count++">\n        Clicked: <span x-text="count"></span> times\n    </Button>\n</div>'}
+    language="astro" 
+/>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'default' \| 'secondary' \| 'destructive' \| 'outline'` | `'default'` | Button variant |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Button size |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `as` | `'button' \| 'a'` | `'button'` | Render as button or anchor |
+| `href` | `string` | - | URL when rendered as anchor |
+| `class` | `string` | - | Additional CSS classes |
