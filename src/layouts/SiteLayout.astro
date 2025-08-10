@@ -1,6 +1,9 @@
 ---
 import Layout from './Layout.astro';
 import Navbar from '@/components/ui/display/Navbar.astro';
+import Button from '@/components/ui/forms/Button.astro';
+import { Icon } from 'astro-icon/components';
+import { List, ListItems, Row } from '@/components/ui/layout';
 
 export interface Props {
     title: string;
@@ -9,86 +12,77 @@ export interface Props {
 
 const { title, description } = Astro.props;
 
-// Navigation configuration
-const navConfig = {
-    brand: {
-        name: 'Basis Stack',
-        href: '/'
-    },
-    links: [
-        { label: 'Home', href: '/' },
-        { label: 'Documentation', href: '/docs' },
-        { label: 'Components', href: '/docs/components' },
-        { label: 'Examples', href: '/examples' }
-    ],
-    actions: [
-        { label: 'GitHub', href: 'https://github.com', external: true }
-    ]
-};
+// Navigation links
+const navLinks = [
+    { label: 'Home', href: '/' },
+    { label: 'Documentation', href: '/docs' },
+    { label: 'Components', href: '/docs/components' },
+    { label: 'Examples', href: '/examples' },
+];
 ---
 
 <Layout title={title} description={description}>
     <div class="min-h-screen flex flex-col">
         <!-- Site-wide Navbar with Alpine.js dynamic rendering -->
-        <Navbar x-data={`{ nav: ${JSON.stringify(navConfig)} }`}>
-            <a 
-                slot="brand" 
-                href={navConfig.brand.href}
+        <Navbar x-data={`{ links: ${JSON.stringify(navLinks)} }`}>
+            <a
+                slot="brand"
+                href="/"
                 class="flex items-center space-x-2 font-bold text-xl hover:text-primary transition-colors"
             >
-                <span>{navConfig.brand.name}</span>
+                <span>Basis Stack</span>
             </a>
-            
-            <div slot="links" class="hidden md:flex items-center space-x-6">
-                <template x-for="link in nav.links" :key="link.href">
-                    <a 
+
+            <Row slot="links">
+                <template x-for="link in links" :key="link.href">
+                    <Button
                         :href="link.href"
-                        class="text-sm font-medium transition-colors hover:text-primary"
-                        :class="window.location.pathname === link.href && 'text-primary'"
+                        variant="ghost"
                         x-text="link.label"
-                    ></a>
+                        size="sm"
+                    />
                 </template>
-            </div>
-            
-            <div slot="actions" class="flex items-center space-x-4">
-                <template x-for="action in nav.actions" :key="action.href">
-                    <a 
-                        :href="action.href"
-                        :target="action.external ? '_blank' : '_self'"
-                        class="text-sm font-medium transition-colors hover:text-primary"
-                        x-text="action.label"
-                    ></a>
-                </template>
-                
-                <!-- Mobile menu button -->
-                <button 
-                    @click="$dispatch('toggle-mobile-menu')"
-                    class="md:hidden p-2 rounded-md hover:bg-accent"
+            </Row>
+
+            <Row slot="actions">
+                <Button
+                    href="https://github.com/zhengyishen0/basis"
+                    target="_blank"
+                    size="sm"
                 >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
+                    GitHub
+                </Button>
+
+                <!-- Mobile menu button -->
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="md:hidden"
+                    x-on:click="$dispatch('toggle-mobile-menu')"
+                >
+                    <Icon name="lucide:menu" class="w-5 h-5" />
+                </Button>
+            </Row>
         </Navbar>
 
         <!-- Mobile menu (hidden by default) -->
-        <div 
-            x-data={`{ open: false, links: ${JSON.stringify(navConfig.links)} }`}
+        <div
+            x-data={`{ open: false, links: ${JSON.stringify(navLinks)} }`}
             @toggle-mobile-menu.window="open = !open"
             x-show="open"
             x-transition
             class="md:hidden border-b bg-background"
         >
-            <nav class="container mx-auto px-4 py-4 space-y-2">
-                <template x-for="link in links" :key="link.href">
-                    <a 
+            <List>
+                <ListItems x-for="link in links" :key="link.href">
+                    <Button
                         :href="link.href"
-                        class="block px-3 py-2 text-sm font-medium rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
                         x-text="link.label"
-                    ></a>
-                </template>
-            </nav>
+                        variant="ghost"
+                        size="sm"
+                    />
+                </ListItems>
+            </List>
         </div>
 
         <!-- Main Content -->

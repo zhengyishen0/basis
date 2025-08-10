@@ -35,10 +35,12 @@ const {
   type = 'button',
   className,
   href,
+  ':href': dynamicHref,
   ...alpineProps
 } = Astro.props;
 
-const Tag = href ? 'a' : 'button';
+// Check for both static href and Alpine.js dynamic :href
+const Tag = (href || dynamicHref) ? 'a' : 'button';
 ---
 
 <!-- 
@@ -57,10 +59,11 @@ Props: href (renders as <a> tag when provided)
 -->
 
 <Tag 
-  type={href ? undefined : type}
+  type={(href || dynamicHref) ? undefined : type}
   href={href}
-  disabled={href ? undefined : disabled}
+  disabled={(href || dynamicHref) ? undefined : disabled}
   class={cn(buttonVariants({ variant, size, shape, elevation, effect }), className)}
+  {...(dynamicHref ? {':href': dynamicHref} : {})}
   {...alpineProps}
 >
   <slot />

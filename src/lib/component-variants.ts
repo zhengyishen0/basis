@@ -26,11 +26,11 @@ export const semanticVariants = {
 // ===== UNIFIED SIZING SYSTEM =====
 // Standard sizes with height, padding, and text - used by buttons, badges, inputs, etc.
 export const sizes = {
-    xs: 'h-5 px-sm text-xs font-light',
-    sm: 'h-7 px-sm text-sm font-normal',
-    md: 'h-9 px-md text-base font-medium',
-    lg: 'h-11 px-lg text-lg font-semibold',
-    xl: 'h-13 px-xl text-xl font-semibold',
+    xs: 'h-5 p-sm text-xs font-light',
+    sm: 'h-7 p-md text-sm font-normal',
+    md: 'h-9 p-md text-base font-medium',
+    lg: 'h-11 p-lg text-lg font-semibold',
+    xl: 'h-13 p-xl text-xl font-semibold',
     icon: 'h-9 w-9 px-0', // Special case for icon buttons
 };
 

@@ -24,7 +24,9 @@ const navClasses = cn(
     <nav class={navClasses}>
         <div class="flex items-center gap-6">
             <slot name="brand" />
-            <slot name="links" />
+            <div class="hidden md:flex items-center space-x-6">
+                <slot name="links" />
+            </div>
         </div>
 
         <div class="flex items-center gap-4">

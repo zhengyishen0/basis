@@ -1,8 +1,9 @@
 ---
 import SiteLayout from './SiteLayout.astro';
-import { Row, Column, Divider } from '@/components/ui/layout';
+import { Row, Column, Divider, Spacer } from '@/components/ui/layout';
 import Breadcrumb from '@/components/ui/navigation/breadcrumbs/Breadcrumb.astro';
 import BreadcrumbItem from '@/components/ui/navigation/breadcrumbs/BreadcrumbItem.astro';
+import BreadcrumbItems from '@/components/ui/navigation/breadcrumbs/BreadcrumbItems.astro';
 import { TableOfContents } from '@/components/ui/display';
 import Button from '@/components/ui/forms/Button.astro';
 import { getCollection } from 'astro:content';
@@ -83,110 +84,147 @@ const docsData = Object.entries(docsByCategory).map(([category, items]) => ({
     items: items.map(item => ({
         href: `/docs/${item.slug}`,
         title: item.data.title,
-        active: slug === item.slug
-    }))
+        active: slug === item.slug,
+    })),
 }));
 
-const componentsData = Object.entries(componentsByCategory).map(([category, items]) => ({
-    category: formatCategory(category),
-    items: items.map(item => ({
-        href: `/docs/components/${item.slug}`,
-        title: item.data.title,
-        active: slug === `components/${item.slug}`
-    }))
-}));
+const componentsData = Object.entries(componentsByCategory).map(
+    ([category, items]) => ({
+        category: formatCategory(category),
+        items: items.map(item => ({
+            href: `/docs/components/${item.slug}`,
+            title: item.data.title,
+            active: slug === `components/${item.slug}`,
+        })),
+    })
+);
+
+// Prepare breadcrumb data for Alpine.js
+const breadcrumbItems = slug
+    ? [
+          { label: 'Docs', href: '/docs' },
+          ...slug.split('/').map((part, index, arr) => ({
+              label: formatCategory(part),
+              href:
+                  index === arr.length - 1
+                      ? null
+                      : `/docs/${arr.slice(0, index + 1).join('/')}`,
+              current: index === arr.length - 1,
+          })),
+      ]
+    : [];
 ---
 
 <SiteLayout title={title} description={description}>
     <div class="flex min-h-[calc(100vh-3.5rem)]">
         <!-- Left Sidebar -->
         <aside
-            class="w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+            class="w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-6 px-4"
             x-data={`{
                 docsData: ${JSON.stringify(docsData)},
                 componentsData: ${JSON.stringify(componentsData)},
                 currentSlug: '${slug || ''}'
             }`}
         >
-            <div
-                class="sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-6 px-4"
-            >
-                <div class="space-y-6">
-                    <!-- Documentation Section -->
-                    <div x-show="docsData.length > 0" class="space-y-3">
-                        <h3 class="text-sm font-semibold text-foreground px-2">Documentation</h3>
-                        <template x-for="category in docsData" :key="category.category">
-                            <div class="space-y-1">
-                                <div class="text-sm font-medium text-muted-foreground px-3 py-1" x-text="category.category"></div>
-                                <template x-for="item in category.items" :key="item.href">
-                                    <a
-                                        :href="item.href"
-                                        :class="{
-                                            'bg-accent text-accent-foreground font-medium': item.active,
-                                            'text-muted-foreground hover:text-foreground': !item.active
-                                        }"
-                                        class="block px-2 py-1.5 text-sm rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
-                                        x-text="item.title"
-                                    ></a>
-                                </template>
+            <div class="space-y-6">
+                <!-- Documentation Section -->
+                <div x-show="docsData.length > 0" class="space-y-3">
+                    <h3 class="text-sm font-semibold text-foreground px-4">
+                        Documentation
+                    </h3>
+                    <template
+                        x-for="category in docsData"
+                        :key="category.category"
+                    >
+                        <div class="space-y-1">
+                            <div
+                                class="text-sm font-medium text-muted-foreground px-4 py-1"
+                                x-text="category.category"
+                            >
                             </div>
-                        </template>
-                    </div>
+                            <template
+                                x-for="item in category.items"
+                                :key="item.href"
+                            >
+                                <Button
+                                    :href="item.href"
+                                    variant="ghost"
+                                    size="sm"
+                                    className="w-full justify-start"
+                                    x-text="item.title"
+                                />
+                            </template>
+                        </div>
+                    </template>
+                </div>
 
-                    <!-- Components Section -->
-                    <div x-show="componentsData.length > 0" class="space-y-3">
-                        <h3 class="text-sm font-semibold text-foreground px-2">Components</h3>
-                        <template x-for="category in componentsData" :key="category.category">
-                            <div class="space-y-1">
-                                <div class="text-sm font-medium text-muted-foreground px-3 py-1" x-text="category.category"></div>
-                                <template x-for="item in category.items" :key="item.href">
-                                    <a
-                                        :href="item.href"
-                                        :class="{
-                                            'bg-accent text-accent-foreground font-medium': item.active,
-                                            'text-muted-foreground hover:text-foreground': !item.active
-                                        }"
-                                        class="block px-2 py-1.5 text-sm rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
-                                        x-text="item.title"
-                                    ></a>
-                                </template>
+                <!-- Components Section -->
+                <div x-show="componentsData.length > 0" class="space-y-3">
+                    <h3 class="text-sm font-semibold text-foreground px-4">
+                        Components
+                    </h3>
+                    <template
+                        x-for="category in componentsData"
+                        :key="category.category"
+                    >
+                        <div class="space-y-1">
+                            <div
+                                class="text-sm font-medium text-muted-foreground px-4 py-1"
+                                x-text="category.category"
+                            >
                             </div>
-                        </template>
-                    </div>
+                            <template
+                                x-for="item in category.items"
+                                :key="item.href"
+                            >
+                                <Button
+                                    :href="item.href"
+                                    variant="ghost"
+                                    size="sm"
+                                    className="w-full justify-start"
+                                    x-text="item.title"
+                                />
+                            </template>
+                        </div>
+                    </template>
                 </div>
             </div>
         </aside>
 
         <!-- Main Content Area -->
         <div class="flex-1 flex">
-            <main class="flex-1 max-w-4xl mx-auto px-8 py-8">
+            <main
+                class="flex-1 max-w-4xl mx-auto px-8 py-8"
+                x-data={`{
+                    hasSlug: ${slug ? 'true' : 'false'},
+                    hasDescription: ${description ? 'true' : 'false'},
+                    hasPrevPage: ${prevPage ? 'true' : 'false'},
+                    hasNextPage: ${nextPage ? 'true' : 'false'},
+                    breadcrumbItems: ${JSON.stringify(breadcrumbItems)}
+                }`}
+            >
                 <!-- Breadcrumb -->
-                {
-                    slug && (
-                        <Breadcrumb class="mb-4">
-                            <BreadcrumbItem href="/docs">Docs</BreadcrumbItem>
-                            {slug.split('/').map((part, index, arr) => (
-                                <BreadcrumbItem
-                                    href={`/docs/${arr.slice(0, index + 1).join('/')}`}
-                                    active={index === arr.length - 1}
-                                >
-                                    {formatCategory(part)}
-                                </BreadcrumbItem>
-                            ))}
-                        </Breadcrumb>
-                    )
-                }
+
+                <Breadcrumb class="mb-4" x-show="hasSlug" x-cloak>
+                    <BreadcrumbItems
+                        x-for="(item, index) in breadcrumbItems"
+                        x-key="index"
+                        :href="item.href"
+                        separator="chevron"
+                        x-text="item.label"
+                    />
+                </Breadcrumb>
 
                 <!-- Page Header -->
                 <div class="space-y-2 mb-8">
                     <h1 class="text-4xl font-bold tracking-tight">{title}</h1>
-                    {
-                        description && (
-                            <p class="text-lg text-muted-foreground">
-                                {description}
-                            </p>
-                        )
-                    }
+                    <p
+                        x-show="hasDescription"
+                        x-cloak
+                        class="text-lg text-muted-foreground"
+                    >
+                        {description}
+                    </p>
                 </div>
 
                 <Divider class="mb-8" />
@@ -197,51 +235,43 @@ const componentsData = Object.entries(componentsByCategory).map(([category, item
                 </div>
 
                 <!-- Footer Navigation -->
-                {
-                    (prevPage || nextPage) && (
-                        <>
-                            <Divider class="mt-12 mb-8" />
-                            <div class="flex items-center justify-between">
-                                {prevPage ? (
-                                    <Button
-                                        variant="outline"
-                                        href={prevPage.href}
-                                        className="flex items-center gap-2"
-                                    >
-                                        <span>←</span>
-                                        <span>{prevPage.title}</span>
-                                    </Button>
-                                ) : (
-                                    <div />
-                                )}
+                <div x-show="hasPrevPage || hasNextPage" x-cloak>
+                    <Divider class="mt-12 mb-8" />
+                    <Row class="justify-between">
+                        <Button
+                            variant="outline"
+                            href={prevPage?.href || '#'}
+                            className="flex items-center gap-2"
+                            x-show="hasPrevPage"
+                        >
+                            <span>←</span>
+                            <span>{prevPage?.title || ''}</span>
+                        </Button>
 
-                                {nextPage && (
-                                    <Button
-                                        variant="outline"
-                                        href={nextPage.href}
-                                        className="flex items-center gap-2"
-                                    >
-                                        <span>{nextPage.title}</span>
-                                        <span>→</span>
-                                    </Button>
-                                )}
-                            </div>
-                        </>
-                    )
-                }
+                        <Spacer x-show="!hasPrevPage" />
+
+                        <Button
+                            variant="outline"
+                            href={nextPage?.href || '#'}
+                            className="flex items-center gap-2"
+                            x-show="hasNextPage"
+                        >
+                            <span>{nextPage?.title || ''}</span>
+                            <span>→</span>
+                        </Button>
+                    </Row>
+                </div>
             </main>
 
             <!-- Right Sidebar (Table of Contents) -->
-            <aside class="hidden xl:block w-64">
-                <div
-                    class="sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-8 pr-4"
-                >
-                    <TableOfContents
-                        containerSelector="main"
-                        title="On this page"
-                        class="text-sm"
-                    />
-                </div>
+            <aside
+                class="hidden xl:block w-64 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-8 pr-4"
+            >
+                <TableOfContents
+                    containerSelector="main"
+                    title="On this page"
+                    class="text-sm"
+                />
             </aside>
         </div>
     </div>
