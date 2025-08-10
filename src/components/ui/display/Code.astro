@@ -1,15 +1,13 @@
 ---
-import Card from '@/components/ui/display/card/Card.astro';
-import CopyToClipboard from '@/components/ui/interactive/CopyToClipboard.astro';
 import { cn } from '@/lib/utils';
 import { codeToHtml } from 'shiki';
+import CopyToClipboard from '@/components/ui/interactive/CopyToClipboard.astro';
 
 export interface Props {
     code: string;
     language?: string;
     title?: string;
     showCopy?: boolean;
-    showLineNumbers?: boolean;
     theme?: 'github-light' | 'github-dark' | 'vitesse-light' | 'vitesse-dark';
     class?: string;
     [key: string]: any;
@@ -17,26 +15,25 @@ export interface Props {
 
 const {
     code,
-    language = 'astro',
+    language = 'javascript',
     title,
     showCopy = true,
-    showLineNumbers = true,
     theme = 'github-dark',
     class: className,
     ...alpineProps
 } = Astro.props;
 
-// Generate syntax highlighted HTML using Shiki with line numbers
+// Generate syntax highlighted HTML using Shiki
 const highlightedCode = await codeToHtml(code, {
     lang: language,
     theme: theme,
 });
 ---
 
-<div class={cn('w-full', className)} {...alpineProps}>
+<div class={cn('w-full prose prose-neutral dark:prose-invert max-w-none', className)} {...alpineProps}>
     {
         title && (
-            <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center justify-between mb-2 not-prose">
                 <h4 class="text-sm font-medium text-foreground">{title}</h4>
                 <span class="text-xs text-muted-foreground uppercase tracking-wide">
                     {language}
@@ -45,27 +42,20 @@ const highlightedCode = await codeToHtml(code, {
         )
     }
 
-    <div class="relative bg-black border border-gray-800 rounded-md">
+    <div class="relative group">
         {
             showCopy && (
-                <div class="absolute top-3 right-3 z-20">
+                <div class="absolute top-2 right-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
                     <CopyToClipboard
                         text={code}
                         variant="icon"
-                        class="bg-gray-800/90 hover:bg-gray-700 border-gray-600 text-gray-300 hover:text-white transition-colors"
+                        size="sm"
+                        className="bg-muted hover:bg-accent text-muted-foreground hover:text-accent-foreground"
                     />
                 </div>
             )
         }
-
-        <div
-            class={cn(
-                'overflow-auto text-sm max-h-[400px]',
-                showCopy && 'pr-12',
-                '[&_pre]:!bg-black [&_pre]:!p-4 [&_pre]:!m-0',
-                showLineNumbers && 'line-numbers'
-            )}
-            set:html={highlightedCode}
-        />
+        
+        <Fragment set:html={highlightedCode} />
     </div>
 </div>

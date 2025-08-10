@@ -149,8 +149,7 @@ const breadcrumbItems = slug
                                 <Button
                                     :href="item.href"
                                     variant="ghost"
-                                    size="sm"
-                                    className="w-full justify-start"
+                                    className="w-full justify-start text-sm"
                                     x-text="item.title"
                                 />
                             </template>
@@ -180,8 +179,7 @@ const breadcrumbItems = slug
                                 <Button
                                     :href="item.href"
                                     variant="ghost"
-                                    size="sm"
-                                    className="w-full justify-start"
+                                    className="w-full justify-start text-sm"
                                     x-text="item.title"
                                 />
                             </template>
@@ -230,7 +228,13 @@ const breadcrumbItems = slug
                 <Divider class="mb-8" />
 
                 <!-- Content Slot -->
-                <div class="prose prose-gray dark:prose-invert max-w-none">
+                <div
+                    class="prose prose-neutral dark:prose-invert max-w-none
+                    prose-pre:max-h-[500px] prose-pre:overflow-auto
+                    [&_pre::-webkit-scrollbar]:w-2 [&_pre::-webkit-scrollbar]:h-2
+                    [&_pre::-webkit-scrollbar-thumb]:bg-muted-foreground
+                    [&_pre::-webkit-scrollbar-thumb]:rounded-full"
+                >
                     <slot />
                 </div>
 

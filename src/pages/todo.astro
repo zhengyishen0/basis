@@ -9,13 +9,15 @@ import {
     CardContent,
 } from '@/components/ui/display/card';
 
-import Navbar from '@/components/ui/display/Navbar.astro';
-import List from '@/components/ui/layout/List.astro';
-import ListItems from '@/components/ui/layout/ListItems.astro';
-import Page from '@/components/ui/layout/Page.astro';
-import Row from '@/components/ui/layout/Row.astro';
-import Spacer from '@/components/ui/layout/Spacer.astro';
-import Conditional from '@/components/ui/layout/Conditional.astro';
+import {
+    List,
+    ListItems,
+    Page,
+    Row,
+    Conditional,
+    Spacer,
+    Grid,
+} from '@/components/ui/layout';
 import { Empty, Loading, Error } from '@/components/ui/feedback';
 import Text from '@/components/ui/display/Text.astro';
 import Checkbox from '@/components/ui/forms/Checkbox.astro';
@@ -44,11 +46,17 @@ const pageData = `{
 <Layout title={title}>
     <Page maxWidth="full" x-data={pageData} x-init="init()">
         <!-- Navigation Bar -->
-        <Navbar class="bg-white border-b">
-            <Button slot="left" href="../" size="sm"> Back to Home </Button>
-            <Text variant="section-title"> Supabase Todo App </Text>
+        <Grid class="bg-white border-b p-4">
+            <div class="flex justify-start">
+                <Button href="../" size="sm"> Back to Home </Button>
+            </div>
+
+            <Text variant="section-title" class="flex justify-center">
+                Supabase Todo App
+            </Text>
+
             <Spacer />
-        </Navbar>
+        </Grid>
 
         <!-- Main Content -->
         <Conditional
