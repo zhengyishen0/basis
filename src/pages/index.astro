@@ -1,5 +1,5 @@
 ---
-import Layout from '@/layouts/Layout.astro';
+import SiteLayout from '@/layouts/SiteLayout.astro';
 import { getEntry } from 'astro:content';
 
 // UI Components for better styling
@@ -22,7 +22,7 @@ const homeContent = await getEntry('pages', 'home');
 const pageData = JSON.stringify(homeContent?.data || []);
 ---
 
-<Layout>
+<SiteLayout>
     <Page class="min-h-screen" x-data={pageData}>
         <!-- GitHub Avatar in upper right -->
         <Section class="absolute top-4 right-4 z-20">
@@ -116,4 +116,4 @@ const pageData = JSON.stringify(homeContent?.data || []);
             </Grid>
         </Section>
     </Page>
-</Layout>
+</SiteLayout>
