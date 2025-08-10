@@ -2,7 +2,7 @@
 import { cn } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { semanticVariants, overflowVariants } from '@/lib/component-variants';
-import { Check } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 
 const checkboxIndicatorVariants = cva(
     'relative flex items-center justify-center shrink-0 transform-gpu rounded-md bg-white transition-all duration-300 ease-out h-5 w-5 border border-primary shadow-sm',
@@ -54,10 +54,10 @@ CheckboxIndicator Component
 A reusable checkbox visual indicator that can be used in various contexts.
 
 Usage:
-<CheckboxIndicator checked={true} />
-<CheckboxIndicator :checked="isSelected" />
-<CheckboxIndicator indeterminate={true} />
-<CheckboxIndicator disabled={true} />
+<Icon name="lucide:check"boxIndicator checked={true} />
+<Icon name="lucide:check"boxIndicator :checked="isSelected" />
+<Icon name="lucide:check"boxIndicator indeterminate={true} />
+<Icon name="lucide:check"boxIndicator disabled={true} />
 
 Features:
 - Checked/unchecked/indeterminate states
@@ -82,7 +82,7 @@ Features:
             :class={`${checkedExpr || checked} ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`}
             x-show={`!(${indeterminateExpr || indeterminate})`}
         >
-            <Check class="stroke-current h-3 w-3" />
+            <Icon name="lucide:check" class="stroke-current h-3 w-3" />
         </div>
 
         <!-- Indeterminate indicator -->

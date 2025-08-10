@@ -1,6 +1,6 @@
 ---
 import { cn } from '@/lib/utils';
-import { X } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 
 export interface Props {
   className?: string;
@@ -40,5 +40,5 @@ Features:
   )}
   {...alpineProps}
 >
-  <X class="w-4 h-4" />
+  <Icon name="lucide:x" class="w-4 h-4" />
 </button>

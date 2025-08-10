@@ -1,6 +1,6 @@
 ---
 import { cn } from '@/lib/utils';
-import { ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 
 export interface Props {
   showInfo?: boolean;
@@ -58,7 +58,7 @@ const {
       x-bind:disabled="currentPage <= 1"
       title="First page"
     >
-      <ChevronsLeft class="h-4 w-4" />
+      <Icon name="lucide:chevrons-left" class="h-4 w-4" />
     </button>
 
     <!-- Previous page -->
@@ -124,7 +124,7 @@ const {
       x-bind:disabled="currentPage >= totalPages"
       title="Last page"
     >
-      <ChevronsRight class="h-4 w-4" />
+      <Icon name="lucide:chevrons-right" class="h-4 w-4" />
     </button>
   </div>
 </div>

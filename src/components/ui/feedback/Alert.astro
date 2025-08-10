@@ -2,7 +2,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { semanticVariants, overflowVariants } from '@/lib/component-variants';
-import { X } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 import Text from '@/components/ui/display/Text.astro';
 
 const alertVariants = cva(
@@ -26,7 +26,6 @@ const alertVariants = cva(
 export interface Props extends VariantProps<typeof alertVariants> {
   title?: string;
   description?: string;
-  icon?: any; // Lucide icon component
   dismissible?: boolean;
   class?: string;
   // Alpine.js pass-through
@@ -38,7 +37,6 @@ const {
   overflow = 'fixed',
   title,
   description,
-  icon: IconComponent,
   dismissible = false,
   class: className,
   ...alpineProps
@@ -78,11 +76,8 @@ Features:
   )}
   {...alpineProps}
 >
-  {IconComponent && (
-    <div class="flex-shrink-0 w-5 h-5 mt-[2px]">
-      <IconComponent class="w-5 h-5" />
-    </div>
-  )}
+  <!-- Icon slot -->
+  <slot name="icon" />
   
   <div class="flex-1 min-w-0">
     {title && (
@@ -111,7 +106,7 @@ Features:
       type="button"
       aria-label="Dismiss alert"
     >
-      <X class="w-4 h-4" />
+      <Icon name="lucide:x" class="w-4 h-4" />
     </button>
   )}
 </div>

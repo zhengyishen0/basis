@@ -1,6 +1,6 @@
 ---
 import { cn } from '@/lib/utils';
-import { Search } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 
 export interface Props {
   placeholder?: string;
@@ -35,7 +35,7 @@ const classes = cn(
 
 <div class="flex items-center border-b px-3" cmdk-input-wrapper="">
   {showIcon && (
-    <Search class="mr-2 h-4 w-4 shrink-0 opacity-50" />
+    <Icon name="lucide:search" class="mr-2 h-4 w-4 shrink-0 opacity-50" />
   )}
   <input
     x-model={searchModel}

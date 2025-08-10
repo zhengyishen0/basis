@@ -2,7 +2,7 @@
 import Layout from '@/layouts/Layout.astro';
 import Alert from '@/components/ui/feedback/Alert.astro';
 import Text from '@/components/ui/display/Text.astro';
-import { CheckCircle, Info, AlertTriangle, AlertCircle } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 ---
 
 <Layout title="Alert Component Demo">
@@ -16,13 +16,17 @@ import { CheckCircle, Info, AlertTriangle, AlertCircle } from 'lucide-astro';
     <section class="space-y-4">
       <Text variant="section-title">Default Variant (Primary Background)</Text>
       
-      <Alert variant="default" title="Success!" description="Your changes have been saved successfully." icon={CheckCircle} />
+      <Alert variant="default" title="Success!" description="Your changes have been saved successfully.">
+        <Icon slot="icon" name="lucide:check-circle" class="w-5 h-5" />
+      </Alert>
       
-      <Alert variant="default" title="System Update" icon={Info}>
+      <Alert variant="default" title="System Update">
+        <Icon slot="icon" name="lucide:info" class="w-5 h-5" />
         <Text variant="alert-description">A new version is available for download.</Text>
       </Alert>
       
-      <Alert variant="default" icon={Info}>
+      <Alert variant="default">
+        <Icon slot="icon" name="lucide:info" class="w-5 h-5" />
         <Text variant="alert-title">Manual Title</Text>
         <Text variant="alert-description">Using Text components for full control over styling.</Text>
       </Alert>
@@ -36,9 +40,12 @@ import { CheckCircle, Info, AlertTriangle, AlertCircle } from 'lucide-astro';
     <section class="space-y-4">
       <Text variant="section-title">Outline Variant (Background with Primary Text)</Text>
       
-      <Alert variant="outline" title="Information" description="This is important information you should know about." icon={Info} />
+      <Alert variant="outline" title="Information" description="This is important information you should know about.">
+        <Icon slot="icon" name="lucide:info" class="w-5 h-5" />
+      </Alert>
       
-      <Alert variant="outline" icon={AlertCircle}>
+      <Alert variant="outline">
+        <Icon slot="icon" name="lucide:alert-circle" class="w-5 h-5" />
         <Text variant="alert-title">Attention Required</Text>
         <Text variant="alert-description">Please review the following details before proceeding.</Text>
       </Alert>
@@ -52,9 +59,12 @@ import { CheckCircle, Info, AlertTriangle, AlertCircle } from 'lucide-astro';
     <section class="space-y-4">
       <Text variant="section-title">Destructive Variant (Background with Danger Text)</Text>
       
-      <Alert variant="destructive" title="Error Occurred" description="Something went wrong with your request. Please try again." icon={AlertTriangle} />
+      <Alert variant="destructive" title="Error Occurred" description="Something went wrong with your request. Please try again.">
+        <Icon slot="icon" name="lucide:alert-triangle" class="w-5 h-5" />
+      </Alert>
       
-      <Alert variant="destructive" icon={AlertTriangle}>
+      <Alert variant="destructive">
+        <Icon slot="icon" name="lucide:alert-triangle" class="w-5 h-5" />
         <Text variant="alert-title">Critical Error</Text>
         <Text variant="alert-description">The system encountered a critical error and needs to restart.</Text>
       </Alert>
@@ -68,15 +78,18 @@ import { CheckCircle, Info, AlertTriangle, AlertCircle } from 'lucide-astro';
     <section class="space-y-4">
       <Text variant="section-title">Universal Props Testing</Text>
       
-      <Alert variant="default" padding="lg" elevation="elevated" icon={CheckCircle}>
+      <Alert variant="default" padding="lg" elevation="elevated">
+        <Icon slot="icon" name="lucide:check-circle" class="w-5 h-5" />
         Large padding with elevated shadow.
       </Alert>
       
-      <Alert variant="outline" padding="sm" elevation="floating" icon={Info}>
+      <Alert variant="outline" padding="sm" elevation="floating">
+        <Icon slot="icon" name="lucide:info" class="w-5 h-5" />
         Small padding with floating shadow.
       </Alert>
       
-      <Alert variant="destructive" padding="xl" elevation="lifted" icon={AlertTriangle}>
+      <Alert variant="destructive" padding="xl" elevation="lifted">
+        <Icon slot="icon" name="lucide:alert-triangle" class="w-5 h-5" />
         Extra large padding with lifted shadow.
       </Alert>
     </section>
@@ -85,7 +98,8 @@ import { CheckCircle, Info, AlertTriangle, AlertCircle } from 'lucide-astro';
     <section class="space-y-4">
       <Text variant="section-title">Alert Text Variants</Text>
       
-      <Alert variant="outline" icon={Info}>
+      <Alert variant="outline">
+        <Icon slot="icon" name="lucide:info" class="w-5 h-5" />
         <Text variant="alert-title">Alert Title Variant</Text>
         <Text variant="alert-description">Alert description variant with proper styling and line height for longer content that might wrap to multiple lines.</Text>
       </Alert>
@@ -105,10 +119,10 @@ import { CheckCircle, Info, AlertTriangle, AlertCircle } from 'lucide-astro';
       
       <Alert 
         variant="default" 
-        icon={Info}
         x-data="{ count: 0 }"
         x-init="console.log('Alert initialized')"
       >
+        <Icon slot="icon" name="lucide:info" class="w-5 h-5" />
         <Text variant="alert-title">Interactive Alert</Text>
         <div class="mt-2">
           <button 

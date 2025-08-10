@@ -2,12 +2,10 @@
 import Layout from '@/layouts/Layout.astro';
 import Badge from '@/components/ui/feedback/Badge.astro';
 import Button from '@/components/ui/forms/Button.astro';
-import {
-    Card,
-    CardHeader,
-    CardContent,
-    CardFooter,
-} from '@/components/ui/display/card';
+import Card from '@/components/ui/display/card/Card.astro';
+import CardHeader from '@/components/ui/display/card/CardHeader.astro';
+import CardFooter from '@/components/ui/display/card/CardFooter.astro';
+import CardContent from '@/components/ui/display/card/CardContent.astro';
 import Navbar from '@/components/ui/display/Navbar.astro';
 import List from '@/components/ui/layout/List.astro';
 import ListItems from '@/components/ui/layout/ListItems.astro';
@@ -15,7 +13,9 @@ import Page from '@/components/ui/layout/Page.astro';
 import Row from '@/components/ui/layout/Row.astro';
 import Spacer from '@/components/ui/layout/Spacer.astro';
 import Conditional from '@/components/ui/layout/Conditional.astro';
-import { Empty, Error, Loading } from '@/components/ui/feedback';
+import Empty from '@/components/ui/feedback/Empty.astro';
+import Loading from '@/components/ui/feedback/Loading.astro';
+import Error from '@/components/ui/feedback/Error.astro';
 import Text from '@/components/ui/display/Text.astro';
 import Checkbox from '@/components/ui/forms/Checkbox.astro';
 import TextInput from '@/components/ui/forms/TextInput.astro';
@@ -349,4 +349,23 @@ const pageData = `{
             </Row>
         </Conditional>
     </Page>
+    
+    <!-- Page-specific Alpine stores for Supabase -->
+    <script>
+        import Alpine from 'alpinejs';
+        import { todoStore } from '/src/lib/todoStore.js';
+        import { authStore } from '/src/lib/authStore.js';
+        
+        // Register stores before Alpine starts
+        // Wait for Alpine to be available
+        if (window.Alpine) {
+            Alpine.store('todo', todoStore);
+            Alpine.store('auth', authStore);
+        } else {
+            document.addEventListener('alpine:init', () => {
+                Alpine.store('todo', todoStore);
+                Alpine.store('auth', authStore);
+            });
+        }
+    </script>
 </Layout>

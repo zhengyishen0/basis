@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import icon from 'astro-icon';
 
 // Dynamic configuration for GitHub Pages
 const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
@@ -21,5 +22,12 @@ export default defineConfig({
     output: 'static', //  'server' | 'static'
 
     // Enable client-side hydration for Alpine.js and Tailwind CSS
-    integrations: [tailwind()],
+    integrations: [
+        tailwind(),
+        icon({
+            include: {
+                lucide: ['*'], // Include all lucide icons (they're still tree-shaken)
+            },
+        }),
+    ],
 });

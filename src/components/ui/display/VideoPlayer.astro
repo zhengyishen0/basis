@@ -2,7 +2,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import Slider from '@/components/ui/forms/Slider.astro';
-import { Play, Pause, Volume2, Volume1, VolumeX } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 
 const videoPlayerVariants = cva(
   'relative bg-black overflow-hidden max-w-2xl',
@@ -181,7 +181,7 @@ const {
         @click="togglePlay()"
         class="bg-black/50 hover:bg-black/70 text-white rounded-full p-4 transition-all duration-200 hover:scale-110"
       >
-        <Play class="w-8 h-8" fill="currentColor" />
+        <Icon name="lucide:play" class="w-8 h-8" fill="currentColor" />
       </button>
     </div>
     
@@ -215,8 +215,8 @@ const {
             @click="togglePlay()"
             class="text-white p-2 rounded"
           >
-            <Play x-show="!playing" class="w-6 h-6" fill="currentColor" />
-            <Pause x-show="playing" class="w-6 h-6" fill="currentColor" />
+            <Icon name="lucide:play" x-show="!playing" class="w-6 h-6" fill="currentColor" />
+            <Icon name="lucide:pause" x-show="playing" class="w-6 h-6" fill="currentColor" />
           </button>
           
           <!-- Time Display -->
@@ -234,9 +234,9 @@ const {
             @click="toggleMute()"
             class="text-white p-2 rounded"
           >
-            <Volume2 x-show="!muted && volume > 0.5" class="w-5 h-5" />
-            <Volume1 x-show="!muted && volume <= 0.5 && volume > 0" class="w-5 h-5" />
-            <VolumeX x-show="muted || volume === 0" class="w-5 h-5" />
+            <Icon name="lucide:volume-2" x-show="!muted && volume > 0.5" class="w-5 h-5" />
+            <Icon name="lucide:volume-1" x-show="!muted && volume <= 0.5 && volume > 0" class="w-5 h-5" />
+            <Icon name="lucide:volume-x" x-show="muted || volume === 0" class="w-5 h-5" />
           </button>
           
           <!-- Volume Slider -->

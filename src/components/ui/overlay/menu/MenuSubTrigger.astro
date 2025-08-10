@@ -1,6 +1,6 @@
 ---
 import { cn } from '@/lib/utils';
-import { ChevronRight } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 
 export interface Props {
     className?: string;
@@ -30,5 +30,5 @@ const { 'x-text': xText, ...restProps } = alpineProps;
 >
     {xText && <span x-text={xText}></span>}
     <slot />
-    <ChevronRight class="h-4 w-4" />
+    <Icon name="lucide:chevron-right" class="h-4 w-4" />
 </div>

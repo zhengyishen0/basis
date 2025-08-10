@@ -10,7 +10,7 @@ import {
     SelectGroups,
 } from '@/components/ui/forms/select';
 import MenuItem from '@/components/ui/overlay/menu/MenuItem.astro';
-import { ChevronDown } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 ---
 
 <Layout title="Select Demo">
@@ -39,7 +39,7 @@ import { ChevronDown } from 'lucide-astro';
                             <span
                                 x-text="selectedLabel"
                                 class="flex-1 text-left"></span>
-                            <ChevronDown class="w-4 h-4" />
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
                         </SelectTrigger>
                         <SelectContent role="listbox">
                             <SelectGroup>
@@ -74,7 +74,7 @@ import { ChevronDown } from 'lucide-astro';
                     <SelectTrigger variant="outline" class="w-56">
                         <span x-text="selectedLabel" class="flex-1 text-left"
                         ></span>
-                        <ChevronDown class="w-4 h-4" />
+                        <Icon name="lucide:chevron-down" class="w-4 h-4" />
                     </SelectTrigger>
                     <SelectContent role="listbox">
                         <SelectGroup x-text="'Desktop Browsers'">
@@ -131,7 +131,7 @@ import { ChevronDown } from 'lucide-astro';
                     <SelectTrigger variant="outline" class="w-full">
                         <span x-text="selectedLabel" class="flex-1 text-left"
                         ></span>
-                        <ChevronDown class="w-4 h-4" />
+                        <Icon name="lucide:chevron-down" class="w-4 h-4" />
                     </SelectTrigger>
                     <SelectContent role="listbox">
                         <SelectItems x-for="item in languages" />
@@ -182,7 +182,7 @@ import { ChevronDown } from 'lucide-astro';
                     <SelectTrigger variant="outline" class="w-full">
                         <span x-text="selectedLabel" class="flex-1 text-left"
                         ></span>
-                        <ChevronDown class="w-4 h-4" />
+                        <Icon name="lucide:chevron-down" class="w-4 h-4" />
                     </SelectTrigger>
                     <SelectContent role="listbox">
                         <SelectGroups

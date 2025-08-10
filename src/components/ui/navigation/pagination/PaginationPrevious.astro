@@ -1,6 +1,6 @@
 ---
 import { cn } from '@/lib/utils';
-import { ChevronLeft } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 
 export interface Props {
   disabled?: boolean;
@@ -25,6 +25,6 @@ const {
   disabled={disabled}
   {...alpineProps}
 >
-  <ChevronLeft class="w-4 h-4 mr-1" />
+  <Icon name="lucide:chevron-left" class="w-4 h-4 mr-1" />
   <slot>Previous</slot>
 </button>

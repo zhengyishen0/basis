@@ -7,7 +7,7 @@ import {
     SmartBreadcrumb,
     BreadcrumbEllipsis,
 } from '@/components/ui/navigation/breadcrumbs';
-import { ChevronRight, Home, ArrowRight } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 
 const dynamicBreadcrumbs = [
     { label: 'Home', href: '/', icon: 'home' },
@@ -67,7 +67,7 @@ const veryLongBreadcrumbs = [
                     </h3>
                     <Breadcrumb>
                         <BreadcrumbItem href="/" separator="chevron">
-                            <Home class="w-4 h-4" />
+                            <Icon name="lucide:home" class="w-4 h-4" />
                             Home
                         </BreadcrumbItem>
                         <BreadcrumbItem href="/products" separator="chevron"
@@ -99,7 +99,7 @@ const veryLongBreadcrumbs = [
                     <Breadcrumb>
                         <BreadcrumbItem href="/">
                             Home
-                            <ArrowRight slot="separator" class="w-4 h-4" />
+                            <Icon name="lucide:arrow-right" slot="separator" class="w-4 h-4" />
                         </BreadcrumbItem>
                         <BreadcrumbItem href="/products">
                             Products
@@ -147,7 +147,7 @@ const veryLongBreadcrumbs = [
                             separator="chevron"
                         >
                             <template x-if="item.icon === 'home'">
-                                <Home class="w-4 h-4" />
+                                <Icon name="lucide:home" class="w-4 h-4" />
                             </template>
                             <span x-text="item.label"></span>
                         </BreadcrumbItems>

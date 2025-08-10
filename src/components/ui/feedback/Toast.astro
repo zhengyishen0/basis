@@ -1,6 +1,6 @@
 ---
 // Pine UI Toast - exact copy
-import { CheckCircle, Info, AlertTriangle, XCircle, X } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 ---
 
 <div
@@ -415,22 +415,18 @@ import { CheckCircle, Info, AlertTriangle, XCircle, X } from 'lucide-astro';
                             class="flex items-center"
                             :class="{ 'text-green-500' : toast.type=='success', 'text-blue-500' : toast.type=='info', 'text-orange-400' : toast.type=='warning', 'text-red-500' : toast.type=='danger', 'text-gray-800' : toast.type=='default' }"
                         >
-                            <CheckCircle
+                            <Icon name="lucide:check-circle"
                                 x-show="toast.type=='success'"
-                                class="w-[18px] h-[18px] mr-1.5 flex-shrink-0"
-                            />
-                            <Info
+                                class="w-[18px] h-[18px] mr-1.5 flex-shrink-0" />
+                            <Icon name="lucide:info"
                                 x-show="toast.type=='info'"
-                                class="w-[18px] h-[18px] mr-1.5 flex-shrink-0"
-                            />
-                            <AlertTriangle
+                                class="w-[18px] h-[18px] mr-1.5 flex-shrink-0" />
+                            <Icon name="lucide:alert-triangle"
                                 x-show="toast.type=='warning'"
-                                class="w-[18px] h-[18px] mr-1.5 flex-shrink-0"
-                            />
-                            <XCircle
+                                class="w-[18px] h-[18px] mr-1.5 flex-shrink-0" />
+                            <Icon name="lucide:x-circle"
                                 x-show="toast.type=='danger'"
-                                class="w-[18px] h-[18px] mr-1.5 flex-shrink-0"
-                            />
+                                class="w-[18px] h-[18px] mr-1.5 flex-shrink-0" />
                             <span
                                 class="text-[13px] font-medium text-gray-800"
                                 x-text="toast.message"
@@ -454,7 +450,7 @@ import { CheckCircle, Info, AlertTriangle, XCircle, X } from 'lucide-astro';
                     class="flex-shrink-0 p-1 ml-2 text-gray-400 duration-100 ease-in-out rounded-full opacity-0 cursor-pointer hover:bg-gray-50 hover:text-gray-500 self-start"
                     :class="{ 'opacity-100' : toastHovered, 'opacity-0' : !toastHovered }"
                 >
-                    <X class="w-3 h-3" />
+                    <Icon name="lucide:x" class="w-3 h-3" />
                 </span>
             </span>
         </li>

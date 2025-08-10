@@ -1,6 +1,6 @@
 ---
 import { cn } from '@/lib/utils';
-import { MoreHorizontal } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 
 export interface Props {
     class?: string;
@@ -20,5 +20,5 @@ const { class: className, ...alpineProps } = Astro.props;
     )}
     {...alpineProps}
 >
-    <MoreHorizontal class="h-4 w-4" />
+    <Icon name="lucide:more-horizontal" class="h-4 w-4" />
 </span>

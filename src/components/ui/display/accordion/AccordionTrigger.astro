@@ -2,7 +2,8 @@
 import { cn } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { semanticVariants, sizes, overflowVariants } from '@/lib/component-variants';
-import { ChevronDown, Plus, Minus } from 'lucide-astro';
+// Using astro-icon for better performance - only loads the icons we need
+import { Icon } from 'astro-icon/components';
 import Text from '@/components/ui/display/Text.astro';
 
 const accordionTriggerVariants = cva(
@@ -62,17 +63,20 @@ const {
       <!-- Default Icons -->
       {iconType === 'plus' ? (
         <div class="relative flex items-center justify-center">
-          <Plus 
+          <Icon 
+            name="lucide:plus"
             class="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-all duration-300"
             :class="{ 'opacity-0': activeAccordion==id }"
           />
-          <Minus 
+          <Icon 
+            name="lucide:minus"
             class="absolute w-4 h-4 text-muted-foreground group-hover:text-foreground transition-all duration-300"
             :class="{ 'opacity-0': activeAccordion!=id }"
           />
         </div>
       ) : (
-        <ChevronDown 
+        <Icon 
+          name="lucide:chevron-down"
           class="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-transform duration-200"
           :class="{ 'rotate-180': activeAccordion==id }"
         />

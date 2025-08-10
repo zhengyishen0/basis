@@ -1,5 +1,5 @@
 ---
-import { Star } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 import { cn } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
 const ratingVariants = cva(
@@ -104,7 +104,7 @@ const {
       type="button"
       :aria-label="'Rate ' + star + ' out of ' + maxStars + ' stars'"
     >
-      <Star class="transition-colors duration-200" :fill="(stars >= star) || (value >= star && stars === 0) ? 'currentColor' : 'none'" />
+      <Icon name="lucide:star" class="transition-colors duration-200" :fill="(stars >= star) || (value >= star && stars === 0) ? 'currentColor' : 'none'" />
     </button>
     </template>
   </div>

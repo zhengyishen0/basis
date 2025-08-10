@@ -14,7 +14,7 @@ import {
     DropdownMenuConditional,
 } from '@/components/ui/overlay/dropdownmenu';
 import { Divider } from '@/components/ui/layout';
-import { ChevronDown } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 ---
 
 <Layout title="Dropdown Menu Demo">
@@ -74,7 +74,7 @@ import { ChevronDown } from 'lucide-astro';
             >
                 <DropdownMenu trigger="click">
                     <DropdownMenuTrigger variant="outline">
-                        Dynamic Menu <ChevronDown class="w-4 h-4" />
+                        Dynamic Menu <Icon name="lucide:chevron-down" class="w-4 h-4" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent label="File Manager" role="menu">
                         <DropdownMenuGroups
@@ -125,7 +125,7 @@ import { ChevronDown } from 'lucide-astro';
             <div class="flex gap-4 flex-wrap">
                 <DropdownMenu trigger="click">
                     <DropdownMenuTrigger variant="default">
-                        Actions <ChevronDown class="w-4 h-4" />
+                        Actions <Icon name="lucide:chevron-down" class="w-4 h-4" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent label="File Actions" role="menu">
                         <DropdownMenuGroup>
