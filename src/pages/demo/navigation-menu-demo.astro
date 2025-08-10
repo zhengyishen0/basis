@@ -11,6 +11,7 @@ import {
     NavigationMenuLinks,
     NavigationMenuFeatured,
 } from '@/components/ui/overlay/navigationmenu';
+import { Column, Row, Conditional } from '@/components/ui/layout';
 
 // Sample navigation data for dynamic rendering
 const navigationItems = [
@@ -285,7 +286,12 @@ const navigationItems = [
                                     x-key="item.id"
                                 >
                                     <!-- Link type -->
-                                    <NavigationMenuLink slot="link" />
+                                    <NavigationMenuLink
+                                        slot="link"
+                                        :href="item.href"
+                                        x-text="item.label"
+                                        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                    />
 
                                     <!-- Trigger for menu types -->
                                     <NavigationMenuTrigger slot="trigger">
@@ -295,27 +301,29 @@ const navigationItems = [
                                     <!-- Content with explicit layout -->
                                     <NavigationMenuContent slot="content">
                                         <!-- Feature layout: featured card + links -->
+
                                         <template
                                             x-if="item.type === 'feature'"
                                         >
-                                            <NavigationMenuFeatured />
-                                            <div
-                                                class="flex flex-col space-y-2"
-                                            >
-                                                <NavigationMenuLinks
-                                                    x-for="link in item.links"
-                                                    x-key="link.id"
-                                                />
-                                            </div>
+                                            <Row slot="true">
+                                                <NavigationMenuFeatured />
+                                                <Column>
+                                                    <NavigationMenuLinks
+                                                        x-for="link in item.links"
+                                                        x-key="link.id"
+                                                    />
+                                                </Column>
+                                            </Row>
                                         </template>
-
-                                        <!-- Links for non-feature types -->
                                         <template
                                             x-if="item.type !== 'feature'"
                                         >
+                                            <!-- Links for non-feature types -->
+
                                             <NavigationMenuLinks
                                                 x-for="link in item.links"
                                                 x-key="link.id"
+                                                slot="false"
                                             />
                                         </template>
                                     </NavigationMenuContent>

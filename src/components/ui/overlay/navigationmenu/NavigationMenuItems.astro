@@ -19,7 +19,9 @@ const itemProps = { className };
 ---
 
 <template x-for={xFor} x-key={xKey || 'item.id'}>
-  <NavigationMenuItem {...itemProps} {...restProps}>
-    <slot />
+  <NavigationMenuItem {...itemProps} {...restProps} :item="item">
+    <slot name="link" slot="link" />
+    <slot name="trigger" slot="trigger" />
+    <slot name="content" slot="content" />
   </NavigationMenuItem>
 </template>

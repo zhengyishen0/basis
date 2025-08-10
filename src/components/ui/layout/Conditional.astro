@@ -9,7 +9,7 @@ export interface Props {
 
 const { condition, class: className = '', ...alpineProps } = Astro.props;
 
-const classes = cn('w-full flex justify-center', className);
+const classes = cn(className);
 ---
 
 <div class={classes} {...alpineProps}>

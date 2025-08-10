@@ -50,7 +50,10 @@ const pageData = `{
         </Navbar>
 
         <!-- Main Content -->
-        <Conditional condition="auth.isAuthenticated" class="mt-8">
+        <Conditional
+            condition="auth.isAuthenticated"
+            class="mt-8 w-full flex justify-center"
+        >
             <!-- Not authenticated state -->
             <Card slot="false" width="28rem" height="20rem">
                 <CardHeader>

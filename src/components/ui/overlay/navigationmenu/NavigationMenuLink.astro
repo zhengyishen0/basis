@@ -42,8 +42,8 @@ const { 'x-text': xText, ...restProps } = alpineProps;
 const Tag = href || link ? 'a' : 'div';
 ---
 
-{link ? (
-  <!-- Dynamic link with link data -->
+<!-- Dynamic link with link data from Alpine scope -->
+<template x-if="typeof link !== 'undefined'">
   <a
     :href="link.url"
     @click="closeAllMenus()"
@@ -59,8 +59,10 @@ const Tag = href || link ? 'a' : 'div';
     <div class="text-sm font-medium leading-none" x-text="link.title"></div>
     <p class="line-clamp-2 text-sm leading-snug text-muted-foreground" x-text="link.description"></p>
   </a>
-) : (
-  <!-- Static link -->
+</template>
+
+<!-- Static link -->
+<template x-if="typeof link === 'undefined'">
   <a
     href={href}
     @click="closeAllMenus()"
@@ -74,7 +76,7 @@ const Tag = href || link ? 'a' : 'div';
     tabindex="0"
     {...restProps}
   >
-    {xText && <span x-text={xText}></span>}
+    <span x-text={xText} x-show={xText}></span>
     <slot />
   </a>
-)}
+</template>

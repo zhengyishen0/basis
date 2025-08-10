@@ -11,29 +11,20 @@ export interface Props {
 const {
   value,
   className,
-  item,
   ...alpineProps
 } = Astro.props;
-
-// Generate unique ID if not provided
-const menuId = value || (item?.id) || `nav-item-${Math.random().toString(36).substring(2, 11)}`;
 ---
 
 <div
-  x-data={item ? `{
-    menuId: item.id || '${menuId}',
+  x-data={`{
+    menuId: typeof item !== 'undefined' ? item.id : ('${value}' || $id('nav-item')),
     get isOpen() {
       return activeMenu === this.menuId;
     },
     get hasContent() {
-      return item.type !== 'link' && item.links && item.links.length > 0;
-    }
-  }` : `{
-    menuId: '${menuId}',
-    get isOpen() {
-      return activeMenu === this.menuId;
-    },
-    get hasContent() {
+      if (typeof item !== 'undefined') {
+        return item.type !== 'link' && item.links && item.links.length > 0;
+      }
       return !!$el.querySelector('[data-navigation-menu-content]');
     }
   }`}
@@ -44,26 +35,24 @@ const menuId = value || (item?.id) || `nav-item-${Math.random().toString(36).sub
   data-navigation-menu-item
   {...alpineProps}
 >
-  {item ? (
-    // Dynamic item rendering
-    <>
-      <!-- Link type -->
-      <template x-if="item.type === 'link'">
-        <div>
-          <slot name="link" />
-        </div>
-      </template>
-      
-      <!-- Menu types (list, grid, feature) -->
-      <template x-if="item.type !== 'link'">
-        <div>
-          <slot name="trigger" />
-          <slot name="content" />
-        </div>
-      </template>
-    </>
-  ) : (
-    // Static rendering
-    <slot />
-  )}
+  <!-- Dynamic item rendering (when item exists in Alpine scope) -->
+  <template x-if="typeof item !== 'undefined' && item.type === 'link'">
+    <div>
+      <slot name="link" />
+    </div>
+  </template>
+  
+  <template x-if="typeof item !== 'undefined' && item.type !== 'link'">
+    <div>
+      <slot name="trigger" />
+      <slot name="content" />
+    </div>
+  </template>
+  
+  <!-- Static rendering (when no item in Alpine scope) -->
+  <template x-if="typeof item === 'undefined'">
+    <div>
+      <slot />
+    </div>
+  </template>
 </div>
