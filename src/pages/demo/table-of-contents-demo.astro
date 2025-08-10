@@ -1,0 +1,271 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { TableOfContents } from '@/components/ui/display';
+---
+
+<Layout title="Table of Contents Demo">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Toggle for demo -->
+        <div class="mb-6 p-4 bg-muted rounded-lg">
+            <p class="text-sm text-muted-foreground mb-2">
+                Demo: The Table of Contents has auto-collapse enabled.
+                Sub-headings will only show for the active section.
+            </p>
+            <p class="text-sm text-muted-foreground">
+                Try scrolling to see sections expand and collapse automatically!
+            </p>
+        </div>
+
+        <div class="flex gap-10">
+            <!-- Main Content -->
+            <main class="min-w-0 flex-1 max-w-4xl">
+                <article class="prose prose-lg max-w-none dark:prose-invert">
+                    <h1>Table of Contents Component Demo</h1>
+                    <p class="lead">
+                        This page demonstrates the Table of Contents component
+                        with scrollspy functionality. Scroll down to see the
+                        active section highlighted in the sidebar.
+                    </p>
+
+                    <h2 id="introduction">Introduction</h2>
+                    <p>
+                        The Table of Contents (TOC) component provides an easy
+                        way to navigate through long documents. It automatically
+                        tracks your scroll position and highlights the currently
+                        visible section, making it easy for users to understand
+                        where they are in the document.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                    </p>
+                    <p>
+                        Duis aute irure dolor in reprehenderit in voluptate
+                        velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in
+                        culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+
+                    <h2 id="getting-started">Getting Started</h2>
+                    <p>
+                        To use the Table of Contents component, you need to
+                        provide an array of heading objects with depth, slug,
+                        and text properties.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua.
+                    </p>
+
+                    <h3 id="installation">Installation</h3>
+                    <p>
+                        The component is built with Astro and Alpine.js,
+                        leveraging the Intersection Observer API for efficient
+                        scroll tracking.
+                    </p>
+                    <pre><code>npm install alpinejs</code></pre>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                    </p>
+
+                    <h3 id="configuration">Configuration</h3>
+                    <p>
+                        Configure the component by passing the headings prop
+                        with your document structure. The component will
+                        automatically generate the navigation links.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                    </p>
+                    <p>
+                        Duis aute irure dolor in reprehenderit in voluptate
+                        velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in
+                        culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+
+                    <h2 id="features">Features</h2>
+                    <p>
+                        The Table of Contents component comes with several
+                        built-in features to enhance the user experience.
+                    </p>
+
+                    <h3 id="scrollspy">Scrollspy Functionality</h3>
+                    <p>
+                        The scrollspy feature automatically highlights the
+                        current section based on scroll position. It uses the
+                        Intersection Observer API for optimal performance.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                    </p>
+                    <p>
+                        Duis aute irure dolor in reprehenderit in voluptate
+                        velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in
+                        culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+
+                    <h3 id="smooth-scroll">Smooth Scrolling</h3>
+                    <p>
+                        Clicking on a TOC link smoothly scrolls to the
+                        corresponding section, providing a pleasant navigation
+                        experience.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua.
+                    </p>
+
+                    <h3 id="responsive">Responsive Design</h3>
+                    <p>
+                        The component is hidden on mobile devices and displayed
+                        as a sticky sidebar on larger screens, ensuring optimal
+                        usability across all devices.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                    </p>
+
+                    <h2 id="api-reference">API Reference</h2>
+                    <p>
+                        The Table of Contents component accepts the following
+                        props and provides several methods for interaction.
+                    </p>
+
+                    <h3 id="props">Component Props</h3>
+                    <p>
+                        The component accepts a <code>headings</code> prop which
+                        is an array of heading objects:
+                    </p>
+                    <pre><code>{`interface Heading {
+  depth: number;  // 2, 3, or 4 for h2, h3, h4
+  slug: string;   // Unique ID for the heading
+  text: string;   // Display text
+}`}</code></pre>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua.
+                    </p>
+
+                    <h3 id="methods">Methods</h3>
+                    <p>
+                        The component provides several Alpine.js methods for
+                        programmatic control:
+                    </p>
+                    <ul>
+                        <li>
+                            <code>scrollTo(slug)</code> - Scroll to a specific section
+                        </li>
+                        <li><code>init()</code> - Initialize the observer</li>
+                        <li><code>destroy()</code> - Clean up the observer</li>
+                    </ul>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                    </p>
+
+                    <h2 id="examples">Examples</h2>
+                    <p>
+                        Here are some examples of how to use the Table of
+                        Contents component in different scenarios.
+                    </p>
+
+                    <h3 id="basic-usage">Basic Usage</h3>
+                    <p>
+                        The simplest way to use the component is to pass an
+                        array of headings:
+                    </p>
+                    <pre><code>{`<TableOfContents headings={headings} />`}</code></pre>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua.
+                    </p>
+
+                    <h3 id="advanced">Advanced Configuration</h3>
+                    <p>
+                        You can customize the component with additional classes
+                        and configure the Intersection Observer settings for
+                        different scrollspy behavior.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                    </p>
+                    <p>
+                        Duis aute irure dolor in reprehenderit in voluptate
+                        velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in
+                        culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+
+                    <h2 id="conclusion">Conclusion</h2>
+                    <p>
+                        The Table of Contents component provides a powerful and
+                        flexible way to enhance navigation in long documents.
+                        With its scrollspy functionality, smooth scrolling, and
+                        responsive design, it offers an excellent user
+                        experience.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                    </p>
+                    <p>
+                        Duis aute irure dolor in reprehenderit in voluptate
+                        velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in
+                        culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua.
+                    </p>
+                </article>
+            </main>
+
+            <!-- TOC Sidebar -->
+            <aside class="w-64 shrink-0">
+                <!-- Using automatic extraction from article -->
+                <TableOfContents
+                    containerSelector="article"
+                    class="ml-6"
+                    title="Table of Contents"
+                />
+            </aside>
+        </div>
+    </div>
+</Layout>

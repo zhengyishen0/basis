@@ -14,3 +14,6 @@ export * from './accordion';
 
 // Avatar component
 export { default as Avatar } from './Avatar.astro';
+
+// Table of Contents component
+export { default as TableOfContents } from './TableOfContents.astro';
