@@ -18,7 +18,7 @@ const {
     language = 'javascript',
     title,
     showCopy = true,
-    theme = 'github-dark',
+    theme = 'github-light',
     class: className,
     ...alpineProps
 } = Astro.props;
@@ -30,7 +30,13 @@ const highlightedCode = await codeToHtml(code, {
 });
 ---
 
-<div class={cn('w-full prose prose-neutral dark:prose-invert max-w-none', className)} {...alpineProps}>
+<div
+    class={cn(
+        'w-full prose prose-neutral dark:prose-invert max-w-none',
+        className
+    )}
+    {...alpineProps}
+>
     {
         title && (
             <div class="flex items-center justify-between mb-2 not-prose">
@@ -42,20 +48,17 @@ const highlightedCode = await codeToHtml(code, {
         )
     }
 
-    <div class="relative group">
+    <div class="relative group bg-secondary rounded-lg overflow-hidden">
         {
             showCopy && (
-                <div class="absolute top-2 right-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <CopyToClipboard
-                        text={code}
-                        variant="icon"
-                        size="sm"
-                        className="bg-muted hover:bg-accent text-muted-foreground hover:text-accent-foreground"
-                    />
+                <div class="absolute top-2 right-2 z-20 opacity-70 group-hover:opacity-100 transition-opacity">
+                    <CopyToClipboard text={code} variant="icon" />
                 </div>
             )
         }
-        
-        <Fragment set:html={highlightedCode} />
+
+        <div class="[&>pre]:!bg-transparent [&>pre]:!m-0 [&>pre]:p-4">
+            <Fragment set:html={highlightedCode} />
+        </div>
     </div>
 </div>
