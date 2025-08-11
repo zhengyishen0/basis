@@ -23,7 +23,7 @@ const navLinks = [
 <Layout title={title} description={description}>
     <div class="min-h-screen flex flex-col">
         <!-- Site-wide Navbar with Alpine.js dynamic rendering -->
-        <Navbar x-data={`{ links: ${JSON.stringify(navLinks)} }`}>
+        <Navbar x-data={`{ links: ${JSON.stringify(navLinks)} }`} class="mx-4">
             <a
                 slot="brand"
                 href="/"
