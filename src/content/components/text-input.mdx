@@ -6,64 +6,100 @@ order: 2
 ---
 
 import TextInput from '@/components/ui/forms/TextInput.astro';
+import { Card } from '@/components/ui/display/card';
 import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
 Text Input component provides a styled input field with support for different types, placeholders, and validation states.
 
-## Import
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="flex flex-col justify-center items-center">
+            <div class="w-full max-w-md space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium mb-2">Name</label>
+                    <TextInput id="name" placeholder="Enter your name" />
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium mb-2">Email</label>
+                    <TextInput id="email" type="email" placeholder="john@example.com" />
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium mb-2">Password</label>
+                    <TextInput id="password" type="password" placeholder="Enter password" />
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium mb-2">Phone Number</label>
+                    <TextInput id="phone" type="tel" placeholder="(555) 123-4567" />
+                </div>
+                <div>
+                    <label for="disabled" class="block text-sm font-medium mb-2">Disabled Input</label>
+                    <TextInput id="disabled" placeholder="Disabled input" disabled />
+                </div>
+                <div>
+                    <label for="readonly" class="block text-sm font-medium mb-2">Read-only Input</label>
+                    <TextInput id="readonly" placeholder="Read-only input" readonly value="This is read-only" />
+                </div>
+                <div x-data="{ value: '' }">
+                    <label for="reactive" class="block text-sm font-medium mb-2">Reactive Input (Alpine.js)</label>
+                    <TextInput 
+                        id="reactive"
+                        x-model="value" 
+                        placeholder="Type something..."
+                    />
+                    <p class="text-sm text-muted-foreground mt-2" x-text="value ? 'You typed: ' + value : 'Start typing above...'"></p>
+                </div>
+            </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code
+            language="astro"
+            code={`---
+import TextInput from '@/components/ui/forms/TextInput.astro';
+---
+<!-- Basic Input -->
+<TextInput placeholder="Enter your name" />
 
-<Code 
-    code="import TextInput from '@/components/ui/forms/TextInput.astro';" 
-    language="typescript" 
-/>
+<!-- Input Types -->
+<TextInput type="email" placeholder="Email address" />
+<TextInput type="password" placeholder="Password" />
+<TextInput type="tel" placeholder="Phone number" />
 
-## Basic Usage
-
-<div class="space-y-4 max-w-md">
-    <TextInput placeholder="Enter your name" />
-    <TextInput type="email" placeholder="Email address" />
-    <TextInput type="password" placeholder="Password" />
+<!-- With Labels -->
+<div>
+    <label for="name" class="block text-sm font-medium mb-2">Name</label>
+    <TextInput id="name" placeholder="John Doe" />
 </div>
 
-<Code 
-    code={'<TextInput placeholder="Enter your name" />\n<TextInput type="email" placeholder="Email address" />\n<TextInput type="password" placeholder="Password" />'}
-    language="astro" 
-/>
+<!-- States -->
+<TextInput placeholder="Normal input" />
+<TextInput placeholder="Disabled input" disabled />
+<TextInput placeholder="Read-only input" readonly value="Read-only value" />
+<TextInput placeholder="Required input" required />
 
-## With Labels
-
-<div class="space-y-4 max-w-md">
-    <div>
-        <label for="name" class="block text-sm font-medium mb-2">Name</label>
-        <TextInput id="name" placeholder="John Doe" />
-    </div>
-    <div>
-        <label for="email" class="block text-sm font-medium mb-2">Email</label>
-        <TextInput id="email" type="email" placeholder="john@example.com" />
-    </div>
-</div>
-
-## States
-
-<div class="space-y-4 max-w-md">
-    <TextInput placeholder="Normal input" />
-    <TextInput placeholder="Disabled input" disabled />
-    <TextInput placeholder="Read-only input" readonly value="Read-only value" />
-</div>
-
-<Code 
-    code={'<TextInput placeholder="Normal input" />\n<TextInput placeholder="Disabled input" disabled />\n<TextInput placeholder="Read-only input" readonly />'}
-    language="astro" 
-/>
-
-## Alpine.js Integration
-
-<Code 
-    code={'<div x-data="{ value: \'\' }">\n    <TextInput \n        x-model="value" \n        @input="console.log($event.target.value)"\n        placeholder="Type something..."\n    />\n    <p x-text="\'You typed: \' + value"></p>\n</div>'}
-    language="astro" 
-/>
+<!-- Alpine.js Integration -->
+<div x-data="{ value: '' }">
+    <TextInput 
+        x-model="value" 
+        placeholder="Type something..."
+    />
+    <p x-text="'You typed: ' + value"></p>
+</div>`}
+        />
+    </TabsContent>
+</Tabs>
 
 ## API Reference
 

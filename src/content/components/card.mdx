@@ -5,68 +5,79 @@ category: display
 order: 2
 ---
 
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/display/card';
+import {
+    Card,
+    CardHeader,
+    CardContent,
+    CardFooter,
+} from '@/components/ui/display/card';
 import Button from '@/components/ui/forms/Button.astro';
 import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
 Cards are surfaces that display content and actions on a single topic. They should be easy to scan for relevant and actionable information.
 
-## Import
-
-<Code 
-    code="import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/display/card';" 
-    language="typescript" 
-/>
-
-## Basic Usage
-
-<Card class="max-w-md">
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="flex flex-col justify-center items-center gap-4">
+            <Card class="max-w-md">
+                <CardHeader>
+                    <h3 class="text-lg font-semibold">Card with Header</h3>
+                    <p class="text-sm text-muted-foreground">Card description goes here</p>
+                </CardHeader>
+                <CardContent>
+                    <p>This is the main content area of the card. You can place any content here.</p>
+                </CardContent>
+                <CardFooter class="flex gap-2">
+                    <Button>Save</Button>
+                    <Button variant="outline">Cancel</Button>
+                </CardFooter>
+            </Card>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code
+            language="astro"
+            code={`---
+import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/display/card';
+import Button from '@/components/ui/forms/Button.astro';
+---
+<!-- Full Card -->
+<Card>
     <CardHeader>
-        <h3 class="text-lg font-semibold">Card Title</h3>
+        <h3 class="text-lg font-semibold">Card with Header</h3>
         <p class="text-sm text-muted-foreground">Card description goes here</p>
     </CardHeader>
     <CardContent>
-        <p>This is the main content area of the card. You can place any content here.</p>
+        <p>This is the main content area of the card.</p>
     </CardContent>
-    <CardFooter>
-        <Button variant="outline">Cancel</Button>
+    <CardFooter class="flex gap-2">
         <Button>Save</Button>
+        <Button variant="outline">Cancel</Button>
     </CardFooter>
-</Card>
-
-<Code 
-    code={'<Card>\n    <CardHeader>\n        <h3>Card Title</h3>\n        <p>Card description</p>\n    </CardHeader>\n    <CardContent>\n        <p>Main content</p>\n    </CardContent>\n    <CardFooter>\n        <Button>Action</Button>\n    </CardFooter>\n</Card>'}
-    language="astro" 
-/>
-
-## Card Variants
-
-### Simple Card
-
-<Card class="max-w-md">
-    <CardContent>
-        <p>A simple card with just content, no header or footer.</p>
-    </CardContent>
-</Card>
-
-### Interactive Card
-
-<Card class="max-w-md hover:shadow-lg transition-shadow cursor-pointer">
-    <CardContent>
-        <h3 class="font-semibold mb-2">Clickable Card</h3>
-        <p class="text-sm text-muted-foreground">This card has hover effects and can be clicked.</p>
-    </CardContent>
-</Card>
+</Card>`}
+        />
+    </TabsContent>
+</Tabs>
 
 ## API Reference
 
 ### Props
 
-| Component | Props | Description |
-|-----------|-------|-------------|
-| `Card` | `class` | Container wrapper with padding and border |
-| `CardHeader` | `class` | Header section with title and description |
-| `CardContent` | `class` | Main content area |
-| `CardFooter` | `class` | Footer with actions |
+| Component     | Props                | Description                               |
+| ------------- | -------------------- | ----------------------------------------- |
+| `Card`        | `class`, `elevation` | Container wrapper with padding and border |
+| `CardHeader`  | `class`              | Header section with title and description |
+| `CardContent` | `class`              | Main content area                         |
+| `CardFooter`  | `class`              | Footer with actions                       |

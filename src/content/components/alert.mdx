@@ -6,56 +6,73 @@ order: 1
 ---
 
 import Alert from '@/components/ui/feedback/Alert.astro';
+import { Card } from '@/components/ui/display/card';
 import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+import { Icon } from 'astro-icon/components';
 
 ## Overview
 
 Alerts display important messages in a way that attracts user attention without interrupting the user's task.
 
-## Import
-
-<Code 
-    code="import Alert from '@/components/ui/feedback/Alert.astro';" 
-    language="typescript" 
-/>
-
-## Basic Usage
-
-<div class="space-y-4">
-    <Alert variant="default">
-        <strong>Information:</strong> This is a default alert message.
-    </Alert>
-    <Alert variant="success">
-        <strong>Success!</strong> Your changes have been saved.
-    </Alert>
-    <Alert variant="warning">
-        <strong>Warning:</strong> Please review your input.
-    </Alert>
-    <Alert variant="destructive">
-        <strong>Error:</strong> Something went wrong.
-    </Alert>
-</div>
-
-<Code 
-    code={'<Alert variant="default">Default alert message</Alert>\n<Alert variant="success">Success message</Alert>\n<Alert variant="warning">Warning message</Alert>\n<Alert variant="destructive">Error message</Alert>'}
-    language="astro" 
-/>
-
-## With Icons and Actions
-
-<Alert variant="success" class="flex items-center justify-between">
-    <div>
-        <strong>Upload Complete!</strong> Your file has been uploaded successfully.
-    </div>
-    <button class="text-sm underline">View File</button>
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-4">
+            <Alert variant="default" title="Success!" description="Your changes have been saved successfully.">
+                <Icon slot="icon" name="lucide:check-circle" class="w-5 h-5" />
+            </Alert>
+            
+            <Alert variant="outline" title="Information" description="This is important information you should know about.">
+                <Icon slot="icon" name="lucide:info" class="w-5 h-5" />
+            </Alert>
+            
+            <Alert variant="destructive" title="Error Occurred" description="Something went wrong with your request. Please try again.">
+                <Icon slot="icon" name="lucide:alert-triangle" class="w-5 h-5" />
+            </Alert>
+            
+            <Alert variant="default" dismissible={true}>
+                This is a dismissible alert without an icon.
+            </Alert>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code
+            language="astro"
+            code={`---
+import Alert from '@/components/ui/feedback/Alert.astro';
+import { Icon } from 'astro-icon/components';
+---
+<!-- Default Variant with Icon -->
+<Alert variant="default" title="Success!" description="Your changes have been saved successfully.">
+    <Icon slot="icon" name="lucide:check-circle" class="w-5 h-5" />
 </Alert>
 
-## Dismissible Alert
+<!-- Outline Variant -->
+<Alert variant="outline" title="Information" description="This is important information you should know about.">
+    <Icon slot="icon" name="lucide:info" class="w-5 h-5" />
+</Alert>
 
-<Code 
-    code={'<div x-data="{ show: true }">\n    <Alert x-show="show" variant="warning">\n        <span>Dismissible alert</span>\n        <button @click="show = false">✕</button>\n    </Alert>\n</div>'}
-    language="astro" 
-/>
+<!-- Destructive Variant -->
+<Alert variant="destructive" title="Error Occurred" description="Something went wrong with your request. Please try again.">
+    <Icon slot="icon" name="lucide:alert-triangle" class="w-5 h-5" />
+</Alert>
+
+<!-- Dismissible Alert -->
+<Alert variant="default" dismissible={true}>
+    This is a dismissible alert without an icon.
+</Alert>`}
+        />
+    </TabsContent>
+</Tabs>
 
 ## API Reference
 
@@ -63,5 +80,17 @@ Alerts display important messages in a way that attracts user attention without 
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `'default' \| 'success' \| 'warning' \| 'destructive'` | `'default'` | Alert style variant |
+| `variant` | `'default' \| 'outline' \| 'destructive'` | `'default'` | Alert style variant |
+| `title` | `string` | - | Alert title text |
+| `description` | `string` | - | Alert description text |
+| `dismissible` | `boolean` | `false` | Shows dismiss button |
+| `padding` | `string` | - | Padding size |
+| `elevation` | `string` | - | Shadow elevation |
 | `class` | `string` | - | Additional CSS classes |
+
+### Slots
+
+| Slot | Description |
+|------|-------------|
+| `icon` | Icon to display in the alert |
+| `default` | Alert content when not using title/description props |

@@ -6,86 +6,84 @@ order: 1
 ---
 
 import { Button } from '@/components/ui/forms';
+import { Card } from '@/components/ui/display/card';
 import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
 The Button component is a versatile, accessible button element that supports multiple variants, sizes, and states.
 
-## Import
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-4">
+            <div class="flex flex-row gap-4 flex-wrap justify-center items-center">
+                <Button variant="default">Default</Button>
+                <Button variant="secondary">Secondary</Button>
+                <Button variant="destructive">Destructive</Button>
+                <Button variant="outline">Outline</Button>
+            </div>
+            <div class="flex flex-row gap-4 flex-wrap justify-center items-center">
+                <Button size="sm">Small</Button>
+                <Button size="md">Medium</Button>
+                <Button size="lg">Large</Button>
+            </div>
+            <div class="flex flex-row gap-4 flex-wrap justify-center items-center">
+                <Button disabled>Disabled</Button>
+                <Button variant="secondary" disabled>Disabled Secondary</Button>
+            </div>
+            <div class="flex flex-row gap-4 flex-wrap justify-center items-center">
+                <Button as="a" href="#" variant="outline">Link Button</Button>
+                <div x-data="{ count: 0 }">
+                    <Button x-on:click="count++">
+                        Clicked: <span x-text="count"></span> times
+                    </Button>
+                </div>
+            </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code
+            language="astro"
+            code={`---
+import { Button } from '@/components/ui/forms';
+---
+<!-- Variants -->
+<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
 
-<Code 
-    code="import { Button } from '@/components/ui/forms';" 
-    language="typescript" 
-/>
+<!-- Sizes -->
+<Button size="sm">Small</Button>
+<Button size="md">Medium</Button>
+<Button size="lg">Large</Button>
 
-## Basic Usage
+<!-- Disabled -->
+<Button disabled>Disabled</Button>
+<Button variant="secondary" disabled>Disabled Secondary</Button>
 
-<div class="flex gap-4 mb-6">
-    <Button variant="default">Default</Button>
-    <Button variant="secondary">Secondary</Button>
-    <Button variant="destructive">Destructive</Button>
-    <Button variant="outline">Outline</Button>
-</div>
+<!-- As Link -->
+<Button as="a" href="#" variant="outline">Link Button</Button>
 
-<Code 
-    code={'<Button variant="default">Default</Button>\n<Button variant="secondary">Secondary</Button>\n<Button variant="destructive">Destructive</Button>\n<Button variant="outline">Outline</Button>'}
-    language="astro" 
-/>
-
-## Sizes
-
-<div class="flex gap-4 items-center mb-6">
-    <Button size="sm">Small</Button>
-    <Button size="md">Medium</Button>
-    <Button size="lg">Large</Button>
-</div>
-
-<Code 
-    code={'<Button size="sm">Small</Button>\n<Button size="md">Medium</Button>\n<Button size="lg">Large</Button>'}
-    language="astro" 
-/>
-
-## With Icons
-
-<div class="flex gap-4 mb-6">
-    <Button variant="default">
-        <span>Save Changes</span>
+<!-- Alpine.js Integration -->
+<div x-data="{ count: 0 }">
+    <Button @click="count++">
+        Clicked: <span x-text="count"></span> times
     </Button>
-    <Button variant="outline">
-        <span>Download</span>
-    </Button>
-</div>
-
-## Disabled State
-
-<div class="flex gap-4 mb-6">
-    <Button disabled>Disabled</Button>
-    <Button variant="secondary" disabled>Disabled</Button>
-</div>
-
-<Code 
-    code="<Button disabled>Disabled</Button>" 
-    language="astro" 
-/>
-
-## As Link
-
-<Button as="a" href="/docs" variant="outline">
-    Documentation
-</Button>
-
-<Code 
-    code={'<Button as="a" href="/docs" variant="outline">\n    Documentation\n</Button>'}
-    language="astro" 
-/>
-
-## Alpine.js Integration
-
-<Code 
-    code={'<div x-data="{ count: 0 }">\n    <Button @click="count++">\n        Clicked: <span x-text="count"></span> times\n    </Button>\n</div>'}
-    language="astro" 
-/>
+</div>`}
+        />
+    </TabsContent>
+</Tabs>
 
 ## API Reference
 

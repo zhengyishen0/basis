@@ -5,69 +5,150 @@ category: navigation
 order: 1
 ---
 
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/navigation/tabs';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+import { Card } from '@/components/ui/display/card';
 import Code from '@/components/ui/display/Code.astro';
 
 ## Overview
 
 Tabs organize content into multiple sections and allow users to navigate between them. Each tab panel contains content that is independent of other panels.
 
-## Import
-
-<Code 
-    code="import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/navigation/tabs';" 
-    language="typescript" 
-/>
-
-## Basic Usage
-
-<Tabs defaultValue="tab1" class="w-full">
-    <TabsList>
-        <TabsTrigger value="tab1">Account</TabsTrigger>
-        <TabsTrigger value="tab2">Password</TabsTrigger>
-        <TabsTrigger value="tab3">Settings</TabsTrigger>
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
     </TabsList>
-    <TabsContent value="tab1">
+    <TabsContent value="preview" preview class="flex flex-col justify-center space-y-8">
+            <div>
+                <h4 class="text-sm font-semibold mb-3">Pills Variant</h4>
+                <Tabs defaultValue="account" class="w-full">
+                    <TabsList variant="pills" slot="list">
+                        <TabsTrigger value="account" variant="pills">Account</TabsTrigger>
+                        <TabsTrigger value="password" variant="pills">Password</TabsTrigger>
+                        <TabsTrigger value="settings" variant="pills">Settings</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="account">
+                        <div class="p-4 bg-muted/50 rounded-lg">
+                            <h3 class="font-semibold mb-2">Account Information</h3>
+                            <p class="text-sm">Manage your account details and preferences here.</p>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="password">
+                        <div class="p-4 bg-muted/50 rounded-lg">
+                            <h3 class="font-semibold mb-2">Password Settings</h3>
+                            <p class="text-sm">Update your password and security settings.</p>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="settings">
+                        <div class="p-4 bg-muted/50 rounded-lg">
+                            <h3 class="font-semibold mb-2">General Settings</h3>
+                            <p class="text-sm">Configure your application preferences.</p>
+                        </div>
+                    </TabsContent>
+                </Tabs>
+            </div>
+            <div>
+                <h4 class="text-sm font-semibold mb-3">Ghost Variant with Underline</h4>
+                <Tabs defaultValue="overview" underline class="w-full">
+                    <TabsList variant="ghost" slot="list">
+                        <TabsTrigger value="overview" variant="ghost">Overview</TabsTrigger>
+                        <TabsTrigger value="analytics" variant="ghost">Analytics</TabsTrigger>
+                        <TabsTrigger value="reports" variant="ghost">Reports</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="overview">
+                        <div class="p-4 bg-muted/50 rounded-lg">
+                            <h3 class="font-semibold mb-2">Overview</h3>
+                            <p class="text-sm">Get a high-level view of your metrics.</p>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="analytics">
+                        <div class="p-4 bg-muted/50 rounded-lg">
+                            <h3 class="font-semibold mb-2">Analytics</h3>
+                            <p class="text-sm">Deep dive into your data.</p>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="reports">
+                        <div class="p-4 bg-muted/50 rounded-lg">
+                            <h3 class="font-semibold mb-2">Reports</h3>
+                            <p class="text-sm">Generate and export reports.</p>
+                        </div>
+                    </TabsContent>
+                </Tabs>
+            </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code
+            language="astro"
+            code={`---
+
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+---
+<!-- Pills Variant -->
+<Tabs defaultValue="account">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="account" variant="pills">Account</TabsTrigger>
+        <TabsTrigger value="password" variant="pills">Password</TabsTrigger>
+        <TabsTrigger value="settings" variant="pills">Settings</TabsTrigger>
+    </TabsList>
+    <TabsContent value="account">
         <div class="p-4">
-            <h3 class="font-semibold mb-2">Account Information</h3>
-            <p>Manage your account details and preferences here.</p>
+            <h3>Account Information</h3>
+            <p>Manage your account details.</p>
         </div>
     </TabsContent>
-    <TabsContent value="tab2">
+    <TabsContent value="password">
         <div class="p-4">
-            <h3 class="font-semibold mb-2">Password Settings</h3>
-            <p>Update your password and security settings.</p>
+            <h3>Password Settings</h3>
+            <p>Update your password.</p>
         </div>
     </TabsContent>
-    <TabsContent value="tab3">
+    <TabsContent value="settings">
         <div class="p-4">
-            <h3 class="font-semibold mb-2">General Settings</h3>
-            <p>Configure your application preferences.</p>
+            <h3>General Settings</h3>
+            <p>Configure preferences.</p>
         </div>
     </TabsContent>
 </Tabs>
 
-<Code 
-    code={'<Tabs defaultValue="tab1">\n    <TabsList>\n        <TabsTrigger value="tab1">Tab 1</TabsTrigger>\n        <TabsTrigger value="tab2">Tab 2</TabsTrigger>\n    </TabsList>\n    <TabsContent value="tab1">\n        Content 1\n    </TabsContent>\n    <TabsContent value="tab2">\n        Content 2\n    </TabsContent>\n</Tabs>'}
-    language="astro" 
-/>
+<!-- Ghost Variant with Underline -->
 
-## Alpine.js Integration
-
-The Tabs component uses Alpine.js for state management:
-
-<Code 
-    code={'<div x-data="{ activeTab: \'tab1\' }">\n    <TabsList>\n        <TabsTrigger @click="activeTab = \'tab1\'" :class="activeTab === \'tab1\' && \'active\'">\n            Tab 1\n        </TabsTrigger>\n    </TabsList>\n</div>'}
-    language="astro" 
-/>
+<Tabs defaultValue="overview" underline>
+    <TabsList variant="ghost" slot="list">
+        <TabsTrigger value="overview" variant="ghost">Overview</TabsTrigger>
+        <TabsTrigger value="analytics" variant="ghost">Analytics</TabsTrigger>
+        <TabsTrigger value="reports" variant="ghost">Reports</TabsTrigger>
+    </TabsList>
+    <TabsContent value="overview">
+        <div class="p-4">Content for Overview</div>
+    </TabsContent>
+    <TabsContent value="analytics">
+        <div class="p-4">Content for Analytics</div>
+    </TabsContent>
+    <TabsContent value="reports">
+        <div class="p-4">Content for Reports</div>
+    </TabsContent>
+</Tabs>`}
+        />
+    </TabsContent>
+</Tabs>
 
 ## API Reference
 
 ### Props
 
-| Component | Props | Description |
-|-----------|-------|-------------|
-| `Tabs` | `defaultValue`, `class` | Container with default active tab |
-| `TabsList` | `class` | Container for tab triggers |
-| `TabsTrigger` | `value`, `class` | Individual tab button |
-| `TabsContent` | `value`, `class` | Content panel for each tab |
+| Component     | Props                                               | Description                       |
+| ------------- | --------------------------------------------------- | --------------------------------- |
+| `Tabs`        | `defaultValue`, `underline`, `orientation`, `class` | Container with default active tab |
+| `TabsList`    | `variant`, `orientation`, `class`                   | Container for tab triggers        |
+| `TabsTrigger` | `value`, `variant`, `class`                         | Individual tab button             |
+| `TabsContent` | `value`, `class`                                    | Content panel for each tab        |
