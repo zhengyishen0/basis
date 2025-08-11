@@ -69,6 +69,6 @@ basis-stack/
 
 ## Next Steps
 
-- [Configure Supabase](/docs/getting-started/supabase-setup)
+- [Configure Supabase](/docs/getting-started-supabase-setup)
 - [Explore Components](/docs/components)
 - [Learn Alpine.js Integration](/docs/guides/alpine)

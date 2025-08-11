@@ -1,6 +1,14 @@
 ---
 import SiteLayout from './SiteLayout.astro';
-import { Row, Column, Divider, Spacer } from '@/components/ui/layout';
+import {
+    Row,
+    Column,
+    Divider,
+    Spacer,
+    List,
+    ListItems,
+    Section,
+} from '@/components/ui/layout';
 import Breadcrumb from '@/components/ui/navigation/breadcrumbs/Breadcrumb.astro';
 import BreadcrumbItem from '@/components/ui/navigation/breadcrumbs/BreadcrumbItem.astro';
 import BreadcrumbItems from '@/components/ui/navigation/breadcrumbs/BreadcrumbItems.astro';
@@ -23,46 +31,18 @@ const { title, description, slug, prevPage, nextPage } = Astro.props;
 const docs = await getCollection('docs');
 const components = await getCollection('components');
 
-// Group docs by category (based on folder structure)
-const docsByCategory = docs.reduce(
-    (acc, doc) => {
-        const parts = doc.slug.split('/');
-        const category = parts.length > 1 ? parts[0] : 'General';
-        if (!acc[category]) acc[category] = [];
-        acc[category].push(doc);
-        return acc;
-    },
-    {} as Record<string, typeof docs>
-);
-
-// Sort docs within each category by order
-Object.keys(docsByCategory).forEach(category => {
-    docsByCategory[category].sort((a, b) => {
-        const orderA = a.data.order ?? 999;
-        const orderB = b.data.order ?? 999;
-        return orderA - orderB;
-    });
+// Sort docs by order (flat structure)
+const sortedDocs = [...docs].sort((a, b) => {
+    const orderA = a.data.order ?? 999;
+    const orderB = b.data.order ?? 999;
+    return orderA - orderB;
 });
 
-// Group components by category
-const componentsByCategory = components.reduce(
-    (acc, component) => {
-        const parts = component.slug.split('/');
-        const category = parts.length > 1 ? parts[0] : 'General';
-        if (!acc[category]) acc[category] = [];
-        acc[category].push(component);
-        return acc;
-    },
-    {} as Record<string, typeof components>
-);
-
-// Sort components within each category by order
-Object.keys(componentsByCategory).forEach(category => {
-    componentsByCategory[category].sort((a, b) => {
-        const orderA = a.data.order ?? 999;
-        const orderB = b.data.order ?? 999;
-        return orderA - orderB;
-    });
+// Sort components by order (flat structure)
+const sortedComponents = [...components].sort((a, b) => {
+    const orderA = a.data.order ?? 999;
+    const orderB = b.data.order ?? 999;
+    return orderA - orderB;
 });
 
 // Format category names
@@ -78,26 +58,18 @@ const formatComponentName = (str: string) => {
         .join(' ');
 };
 
-// Prepare data for Alpine.js
-const docsData = Object.entries(docsByCategory).map(([category, items]) => ({
-    category: formatCategory(category),
-    items: items.map(item => ({
-        href: `/docs/${item.slug}`,
-        title: item.data.title,
-        active: slug === item.slug,
-    })),
+// Prepare data for Alpine.js (flat structure)
+const docsData = sortedDocs.map(item => ({
+    href: `/docs/${item.slug}`,
+    title: item.data.title,
+    active: slug === item.slug,
 }));
 
-const componentsData = Object.entries(componentsByCategory).map(
-    ([category, items]) => ({
-        category: formatCategory(category),
-        items: items.map(item => ({
-            href: `/docs/components/${item.slug}`,
-            title: item.data.title,
-            active: slug === `components/${item.slug}`,
-        })),
-    })
-);
+const componentsData = sortedComponents.map(item => ({
+    href: `/docs/components/${item.slug}`,
+    title: item.data.title,
+    active: slug === `components/${item.slug}`,
+}));
 
 // Prepare breadcrumb data for Alpine.js
 const breadcrumbItems = slug
@@ -128,63 +100,44 @@ const breadcrumbItems = slug
         >
             <div class="space-y-6">
                 <!-- Documentation Section -->
-                <div x-show="docsData.length > 0" class="space-y-3">
-                    <h3 class="text-sm font-semibold text-foreground px-4">
+                <div x-show="docsData.length > 0">
+                    <h3
+                        class="text-sm font-semibold text-muted-foreground px-4 mb-2"
+                    >
                         Documentation
                     </h3>
-                    <template
-                        x-for="category in docsData"
-                        :key="category.category"
-                    >
-                        <div class="space-y-1">
-                            <div
-                                class="text-sm font-medium text-muted-foreground px-4 py-1"
-                                x-text="category.category"
-                            >
-                            </div>
-                            <template
-                                x-for="item in category.items"
-                                :key="item.href"
-                            >
-                                <Button
-                                    :href="item.href"
-                                    variant="ghost"
-                                    className="w-full justify-start text-sm"
-                                    x-text="item.title"
-                                />
-                            </template>
-                        </div>
-                    </template>
+                    <List>
+                        <ListItems x-for="item in docsData" :key="item.href">
+                            <Button
+                                :href="item.href"
+                                variant="ghost"
+                                className="w-full justify-start text-sm"
+                                x-text="item.title"
+                            />
+                        </ListItems>
+                    </List>
                 </div>
 
                 <!-- Components Section -->
-                <div x-show="componentsData.length > 0" class="space-y-3">
-                    <h3 class="text-sm font-semibold text-foreground px-4">
+                <div x-show="componentsData.length > 0">
+                    <h3
+                        class="text-sm font-semibold text-muted-foreground px-4 mb-2"
+                    >
                         Components
                     </h3>
-                    <template
-                        x-for="category in componentsData"
-                        :key="category.category"
-                    >
-                        <div class="space-y-1">
-                            <div
-                                class="text-sm font-medium text-muted-foreground px-4 py-1"
-                                x-text="category.category"
-                            >
-                            </div>
-                            <template
-                                x-for="item in category.items"
-                                :key="item.href"
-                            >
-                                <Button
-                                    :href="item.href"
-                                    variant="ghost"
-                                    className="w-full justify-start text-sm"
-                                    x-text="item.title"
-                                />
-                            </template>
-                        </div>
-                    </template>
+                    <List>
+                        <ListItems
+                            x-for="item in componentsData"
+                            :key="item.href"
+                        >
+                            <Button
+                                :href="item.href"
+                                variant="ghost"
+                                className="w-full justify-start text-sm"
+                                x-text="item.title"
+                            />
+                        </ListItems>
+                    </List>
                 </div>
             </div>
         </aside>
@@ -214,7 +167,7 @@ const breadcrumbItems = slug
                 </Breadcrumb>
 
                 <!-- Page Header -->
-                <div class="space-y-2 mb-8">
+                <Section class="space-y-2 mb-8">
                     <h1 class="text-4xl font-bold tracking-tight">{title}</h1>
                     <p
                         x-show="hasDescription"
@@ -223,7 +176,7 @@ const breadcrumbItems = slug
                     >
                         {description}
                     </p>
-                </div>
+                </Section>
 
                 <Divider class="mb-8" />
 
@@ -239,7 +192,7 @@ const breadcrumbItems = slug
                 </div>
 
                 <!-- Footer Navigation -->
-                <div x-show="hasPrevPage || hasNextPage" x-cloak>
+                <Section x-show="hasPrevPage || hasNextPage" x-cloak>
                     <Divider class="mt-12 mb-8" />
                     <Row class="justify-between">
                         <Button
@@ -264,7 +217,7 @@ const breadcrumbItems = slug
                             <span>→</span>
                         </Button>
                     </Row>
-                </div>
+                </Section>
             </main>
 
             <!-- Right Sidebar (Table of Contents) -->
