@@ -1,30 +1,24 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
-import { overflowVariants } from '@/lib/component-variants';
 
 const tabsListVariants = cva(
-    'relative inline-grid items-center select-none w-fit gap-1 p-1',
+    'relative inline-flex items-center select-none w-fit h-fit',
     {
         variants: {
             variant: {
-                'pills-horizontal':
-                    'h-10 bg-gray-100 rounded-lg grid-flow-col auto-cols-max',
-                'pills-vertical':
-                    'w-fit bg-gray-100 rounded-lg grid-flow-row auto-rows-max',
-                'underline-horizontal':
-                    'h-10 bg-transparent p-0 grid-flow-col auto-cols-max border-b border-border',
-                'underline-vertical':
-                    'w-fit bg-transparent p-0 grid-flow-row auto-rows-max border-r border-border pr-1',
+                pills: 'bg-muted rounded-lg p-1 gap-1',
+                ghost: 'bg-transparent p-0 gap-1',
             },
-            overflow: overflowVariants
-        }
+            orientation: {
+                horizontal: 'flex-row',
+                vertical: 'flex-col',
+            },
+        },
     }
 );
 
-export interface Props extends Omit<VariantProps<typeof tabsListVariants>, 'variant'> {
-    variant?: 'pills' | 'underline';
-    orientation?: 'horizontal' | 'vertical';
+export interface Props extends VariantProps<typeof tabsListVariants> {
     class?: string;
     [key: string]: any; // Alpine.js pass-through
 }
@@ -32,21 +26,14 @@ export interface Props extends Omit<VariantProps<typeof tabsListVariants>, 'vari
 const {
     variant = 'pills',
     orientation = 'horizontal',
-    overflow = 'fixed',
     class: className,
     ...alpineProps
 } = Astro.props;
-
-const combinedVariant = `${variant}-${orientation}` as
-    | 'pills-horizontal'
-    | 'pills-vertical'
-    | 'underline-horizontal'
-    | 'underline-vertical';
 ---
 
 <div
     class={cn(
-        tabsListVariants({ variant: combinedVariant, overflow }),
+        tabsListVariants({ variant, orientation }),
         'tabs-list',
         className
     )}

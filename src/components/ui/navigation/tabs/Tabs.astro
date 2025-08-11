@@ -1,21 +1,20 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
-import { sizes, overflowVariants } from '@/lib/component-variants';
+import Divider from '@/components/ui/layout/Divider.astro';
 
-const tabsVariants = cva('w-full flex gap-2', {
+const tabsVariants = cva('flex gap-2', {
     variants: {
         orientation: {
-            horizontal: 'flex-col',
-            vertical: 'flex-row',
+            horizontal: 'flex-col items-start',
+            vertical: 'flex-row items-start',
         },
-        size: sizes,
-        overflow: overflowVariants,
     },
 });
 
 export interface Props extends VariantProps<typeof tabsVariants> {
     defaultValue?: string;
+    underline?: boolean;
     class?: string;
     [key: string]: any; // Alpine.js pass-through
 }
@@ -23,8 +22,7 @@ export interface Props extends VariantProps<typeof tabsVariants> {
 const {
     defaultValue,
     orientation = 'horizontal',
-    size = 'md',
-    overflow = 'fixed',
+    underline = false,
     class: className,
     ...alpineProps
 } = Astro.props;
@@ -38,13 +36,29 @@ const {
     class={cn(
         tabsVariants({
             orientation,
-            size,
-            overflow,
         }),
         className
     )}
     data-orientation={orientation}
     {...alpineProps}
 >
+    <div class="relative w-fit">
+        <slot name="list" />
+        {
+            underline && (
+                <Divider
+                    direction={orientation || 'horizontal'}
+                    color="gray"
+                    thickness="1"
+                    class={cn(
+                        'absolute',
+                        orientation === 'horizontal'
+                            ? 'bottom-0 left-0 w-full'
+                            : 'top-0 right-0 h-full'
+                    )}
+                />
+            )
+        }
+    </div>
     <slot />
 </div>

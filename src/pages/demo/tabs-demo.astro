@@ -20,7 +20,7 @@ import { Badge } from '@/components/ui/feedback';
             <section class="space-y-4 min-h-[600px]">
                 <h2 class="text-2xl font-semibold">Pills - Horizontal</h2>
                 <Tabs defaultValue="account" orientation="horizontal" class="min-h-[500px]">
-                    <TabsList variant="pills">
+                    <TabsList variant="pills" slot="list">
                         <TabsTrigger value="account" variant="pills"
                             >Account</TabsTrigger
                         >
@@ -100,7 +100,7 @@ import { Badge } from '@/components/ui/feedback';
                     orientation="vertical"
                     class="flex gap-6 min-h-[500px]"
                 >
-                    <TabsList variant="pills" orientation="vertical">
+                    <TabsList variant="pills" orientation="vertical" slot="list">
                         <TabsTrigger value="dashboard" variant="pills"
                             >Dashboard</TabsTrigger
                         >
@@ -157,18 +157,18 @@ import { Badge } from '@/components/ui/feedback';
             <!-- Underline Horizontal -->
             <section class="space-y-4 min-h-[600px]">
                 <h2 class="text-2xl font-semibold">Underline - Horizontal</h2>
-                <Tabs defaultValue="overview" orientation="horizontal" class="min-h-[500px]">
-                    <TabsList variant="underline">
-                        <TabsTrigger value="overview" variant="underline"
+                <Tabs defaultValue="overview" orientation="horizontal" underline class="min-h-[500px]">
+                    <TabsList variant="ghost" slot="list">
+                        <TabsTrigger value="overview" variant="ghost"
                             >Overview</TabsTrigger
                         >
-                        <TabsTrigger value="customers" variant="underline"
+                        <TabsTrigger value="customers" variant="ghost"
                             >Customers</TabsTrigger
                         >
-                        <TabsTrigger value="products" variant="underline"
+                        <TabsTrigger value="products" variant="ghost"
                             >Products</TabsTrigger
                         >
-                        <TabsTrigger value="settings" variant="underline"
+                        <TabsTrigger value="settings" variant="ghost"
                             >Settings</TabsTrigger
                         >
                     </TabsList>
@@ -211,25 +211,71 @@ import { Badge } from '@/components/ui/feedback';
                 </Tabs>
             </section>
 
+            <!-- Ghost Horizontal -->
+            <section class="space-y-4 min-h-[600px]">
+                <h2 class="text-2xl font-semibold">Ghost - Horizontal</h2>
+                <Tabs defaultValue="home" orientation="horizontal" class="min-h-[500px]">
+                    <TabsList variant="ghost" slot="list">
+                        <TabsTrigger value="home" variant="ghost">Home</TabsTrigger>
+                        <TabsTrigger value="about" variant="ghost">About</TabsTrigger>
+                        <TabsTrigger value="services" variant="ghost">Services</TabsTrigger>
+                        <TabsTrigger value="contact" variant="ghost">Contact</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="home">
+                        <div class="p-6 bg-muted/50 rounded-lg">
+                            <h3 class="text-lg font-medium mb-2">Home</h3>
+                            <p class="text-muted-foreground">
+                                Welcome to our homepage. Explore our features and services.
+                            </p>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="about">
+                        <div class="p-6 bg-muted/50 rounded-lg">
+                            <h3 class="text-lg font-medium mb-2">About Us</h3>
+                            <p class="text-muted-foreground">
+                                Learn more about our company and mission.
+                            </p>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="services">
+                        <div class="p-6 bg-muted/50 rounded-lg">
+                            <h3 class="text-lg font-medium mb-2">Services</h3>
+                            <p class="text-muted-foreground">
+                                Discover the services we offer to help your business grow.
+                            </p>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="contact">
+                        <div class="p-6 bg-muted/50 rounded-lg">
+                            <h3 class="text-lg font-medium mb-2">Contact</h3>
+                            <p class="text-muted-foreground">
+                                Get in touch with our team for support and inquiries.
+                            </p>
+                        </div>
+                    </TabsContent>
+                </Tabs>
+            </section>
+
             <!-- Underline Vertical -->
             <section class="space-y-4 min-h-[600px]">
                 <h2 class="text-2xl font-semibold">Underline - Vertical</h2>
                 <Tabs
                     defaultValue="profile"
                     orientation="vertical"
+                    underline
                     class="flex gap-6 min-h-[500px]"
                 >
-                    <TabsList variant="underline" orientation="vertical">
-                        <TabsTrigger value="profile" variant="underline"
+                    <TabsList variant="ghost" orientation="vertical" slot="list">
+                        <TabsTrigger value="profile" variant="ghost"
                             >Profile</TabsTrigger
                         >
-                        <TabsTrigger value="billing" variant="underline"
+                        <TabsTrigger value="billing" variant="ghost"
                             >Billing</TabsTrigger
                         >
-                        <TabsTrigger value="team" variant="underline"
+                        <TabsTrigger value="team" variant="ghost"
                             >Team</TabsTrigger
                         >
-                        <TabsTrigger value="integrations" variant="underline"
+                        <TabsTrigger value="integrations" variant="ghost"
                             >Integrations</TabsTrigger
                         >
                     </TabsList>
