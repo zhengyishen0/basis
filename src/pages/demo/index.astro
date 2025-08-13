@@ -3,7 +3,13 @@ import Layout from '@/layouts/Layout.astro';
 import { Card, CardContent, CardHeader } from '@/components/ui/display/card';
 
 // Get all demo files dynamically
-const demoFiles = await Astro.glob('./*.astro');
+const demoFilesGlob = import.meta.glob('./*.astro');
+const demoFiles = await Promise.all(
+  Object.entries(demoFilesGlob).map(async ([path, loader]) => {
+    const module = await loader();
+    return { ...module, file: path };
+  })
+);
 
 // Filter out this index file and create demo data
 const demos = demoFiles
@@ -22,7 +28,7 @@ const demos = demoFiles
       'badge-demo': 'Small status indicators and labels with color variants and sizes',
       'button-demo': 'Interactive buttons with variants, sizes, states, and loading indicators',
       'card-demo': 'Flexible content containers with headers, footers, and different layouts',
-      'checkbox': 'Simple checkbox with primary theme, Lucide checkmark, smooth animations, and Alpine.js integration',
+      'checkbox': 'Simple checkbox with primary theme, custom checkmark, smooth animations, and Alpine.js integration',
       'image-demo': 'Responsive images with aspect ratios, lazy loading, and gallery features',
       'layout-test': 'Layout components testing grid systems, spacing, and responsive behavior',
       'radio-group': 'Single-select option groups with primary theme, smooth animations, and Alpine.js integration',

@@ -62,7 +62,7 @@ The Navbar component provides a responsive navigation bar with slots for brand, 
                 </div>
                 <div slot="actions" class="flex items-center gap-2">
                     <button 
-                        @click="mobileMenuOpen = !mobileMenuOpen"
+                        x-on:click="mobileMenuOpen = !mobileMenuOpen"
                         class="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
                     >
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

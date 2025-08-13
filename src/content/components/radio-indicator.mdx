@@ -52,15 +52,15 @@ The RadioIndicator component provides a visual radio button element with smooth 
                 <div x-data="{ selected: 'option1' }">
                     <div class="space-y-3">
                         <div class="flex items-center gap-3 cursor-pointer" x-on:click="selected = 'option1'">
-                            <RadioIndicator :checked="selected === 'option1'" />
+                            <RadioIndicator checked="selected === 'option1'" />
                             <span>Option 1</span>
                         </div>
                         <div class="flex items-center gap-3 cursor-pointer" x-on:click="selected = 'option2'">
-                            <RadioIndicator :checked="selected === 'option2'" />
+                            <RadioIndicator checked="selected === 'option2'" />
                             <span>Option 2</span>
                         </div>
                         <div class="flex items-center gap-3 cursor-pointer" x-on:click="selected = 'option3'">
-                            <RadioIndicator :checked="selected === 'option3'" />
+                            <RadioIndicator checked="selected === 'option3'" />
                             <span>Option 3</span>
                         </div>
                     </div>
@@ -77,7 +77,7 @@ The RadioIndicator component provides a visual radio button element with smooth 
                         <h4 class="font-medium">Choose your preferred theme:</h4>
                         <div class="space-y-3">
                             <label class="flex items-center gap-3 cursor-pointer">
-                                <RadioIndicator :checked="theme === 'light'" />
+                                <RadioIndicator checked="theme === 'light'" />
                                 <input type="radio" x-model="theme" value="light" class="sr-only" />
                                 <div>
                                     <div class="font-medium">Light Theme</div>
@@ -86,7 +86,7 @@ The RadioIndicator component provides a visual radio button element with smooth 
                             </label>
                             
                             <label class="flex items-center gap-3 cursor-pointer">
-                                <RadioIndicator :checked="theme === 'dark'" />
+                                <RadioIndicator checked="theme === 'dark'" />
                                 <input type="radio" x-model="theme" value="dark" class="sr-only" />
                                 <div>
                                     <div class="font-medium">Dark Theme</div>
@@ -95,7 +95,7 @@ The RadioIndicator component provides a visual radio button element with smooth 
                             </label>
                             
                             <label class="flex items-center gap-3 cursor-pointer">
-                                <RadioIndicator :checked="theme === 'system'" />
+                                <RadioIndicator checked="theme === 'system'" />
                                 <input type="radio" x-model="theme" value="system" class="sr-only" />
                                 <div>
                                     <div class="font-medium">System Default</div>
@@ -120,15 +120,15 @@ The RadioIndicator component provides a visual radio button element with smooth 
                         <h4 class="font-medium">Select size preference:</h4>
                         <div class="space-y-3">
                             <div class="flex items-center gap-3 cursor-pointer" x-on:click="size = 'small'">
-                                <RadioIndicator :checked="size === 'small'" />
+                                <RadioIndicator checked="size === 'small'" />
                                 <span>Small</span>
                             </div>
                             <div class="flex items-center gap-3 cursor-pointer" x-on:click="size = 'medium'">
-                                <RadioIndicator :checked="size === 'medium'" />
+                                <RadioIndicator checked="size === 'medium'" />
                                 <span>Medium (Default)</span>
                             </div>
                             <div class="flex items-center gap-3 cursor-pointer" x-on:click="size = 'large'">
-                                <RadioIndicator :checked="size === 'large'" />
+                                <RadioIndicator checked="size === 'large'" />
                                 <span>Large</span>
                             </div>
                         </div>
@@ -142,8 +142,8 @@ The RadioIndicator component provides a visual radio button element with smooth 
                     <div class="space-y-4">
                         <h4 class="font-medium">Choose payment method:</h4>
                         <div class="space-y-3">
-                            <label class="flex items-start gap-3 cursor-pointer p-3 border rounded-lg hover:bg-gray-50" :class="paymentMethod === 'card' ? 'border-blue-300 bg-blue-50' : ''">
-                                <RadioIndicator :checked="paymentMethod === 'card'" class="mt-1" />
+                            <label class="flex items-start gap-3 cursor-pointer p-3 border rounded-lg hover:bg-gray-50" x-bind:class="paymentMethod === 'card' ? 'border-blue-300 bg-blue-50' : ''">
+                                <RadioIndicator checked="paymentMethod === 'card'" class="mt-1" />
                                 <input type="radio" x-model="paymentMethod" value="card" class="sr-only" />
                                 <div class="flex-1">
                                     <div class="font-medium">Credit Card</div>
@@ -152,8 +152,8 @@ The RadioIndicator component provides a visual radio button element with smooth 
                                 <div class="text-right text-sm text-green-600 font-medium" x-show="paymentMethod === 'card'">Selected</div>
                             </label>
                             
-                            <label class="flex items-start gap-3 cursor-pointer p-3 border rounded-lg hover:bg-gray-50" :class="paymentMethod === 'paypal' ? 'border-blue-300 bg-blue-50' : ''">
-                                <RadioIndicator :checked="paymentMethod === 'paypal'" class="mt-1" />
+                            <label class="flex items-start gap-3 cursor-pointer p-3 border rounded-lg hover:bg-gray-50" x-bind:class="paymentMethod === 'paypal' ? 'border-blue-300 bg-blue-50' : ''">
+                                <RadioIndicator checked="paymentMethod === 'paypal'" class="mt-1" />
                                 <input type="radio" x-model="paymentMethod" value="paypal" class="sr-only" />
                                 <div class="flex-1">
                                     <div class="font-medium">PayPal</div>
@@ -162,8 +162,8 @@ The RadioIndicator component provides a visual radio button element with smooth 
                                 <div class="text-right text-sm text-green-600 font-medium" x-show="paymentMethod === 'paypal'">Selected</div>
                             </label>
                             
-                            <label class="flex items-start gap-3 cursor-pointer p-3 border rounded-lg hover:bg-gray-50" :class="paymentMethod === 'bank' ? 'border-blue-300 bg-blue-50' : ''">
-                                <RadioIndicator :checked="paymentMethod === 'bank'" class="mt-1" />
+                            <label class="flex items-start gap-3 cursor-pointer p-3 border rounded-lg hover:bg-gray-50" x-bind:class="paymentMethod === 'bank' ? 'border-blue-300 bg-blue-50' : ''">
+                                <RadioIndicator checked="paymentMethod === 'bank'" class="mt-1" />
                                 <input type="radio" x-model="paymentMethod" value="bank" class="sr-only" />
                                 <div class="flex-1">
                                     <div class="font-medium">Bank Transfer</div>
@@ -210,11 +210,11 @@ import { RadioIndicator } from '@/components/ui/indicators';
 {/* Single selection with Alpine.js */}
 <div x-data="{ selected: 'option1' }">
     <div x-on:click="selected = 'option1'" class="flex items-center gap-3 cursor-pointer">
-        <RadioIndicator :checked="selected === 'option1'" />
+        <RadioIndicator checked="selected === 'option1'" />
         <span>Option 1</span>
     </div>
     <div x-on:click="selected = 'option2'" class="flex items-center gap-3 cursor-pointer">
-        <RadioIndicator :checked="selected === 'option2'" />
+        <RadioIndicator checked="selected === 'option2'" />
         <span>Option 2</span>
     </div>
 </div>
@@ -222,19 +222,19 @@ import { RadioIndicator } from '@/components/ui/indicators';
 {/* Form integration */}
 <form x-data="{ theme: 'system' }">
     <label class="flex items-center gap-3 cursor-pointer">
-        <RadioIndicator :checked="theme === 'light'" />
+        <RadioIndicator checked="theme === 'light'" />
         <input type="radio" x-model="theme" value="light" class="sr-only" />
         <span>Light Theme</span>
     </label>
     
     <label class="flex items-center gap-3 cursor-pointer">
-        <RadioIndicator :checked="theme === 'dark'" />
+        <RadioIndicator checked="theme === 'dark'" />
         <input type="radio" x-model="theme" value="dark" class="sr-only" />
         <span>Dark Theme</span>
     </label>
     
     <label class="flex items-center gap-3 cursor-pointer">
-        <RadioIndicator :checked="theme === 'system'" />
+        <RadioIndicator checked="theme === 'system'" />
         <input type="radio" x-model="theme" value="system" class="sr-only" />
         <span>System Default</span>
     </label>
@@ -244,7 +244,7 @@ import { RadioIndicator } from '@/components/ui/indicators';
 <div x-data="{ method: 'card' }">
     <label class="block p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
         <div class="flex items-start gap-3">
-            <RadioIndicator :checked="method === 'card'" />
+            <RadioIndicator checked="method === 'card'" />
             <input type="radio" x-model="method" value="card" class="sr-only" />
             <div>
                 <div class="font-medium">Credit Card</div>
@@ -323,11 +323,11 @@ The component includes these smooth transitions:
 ```astro
 <div x-data="{ selected: null }">
     <div x-on:click="selected = 'value1'">
-        <RadioIndicator :checked="selected === 'value1'" />
+        <RadioIndicator checked="selected === 'value1'" />
         <span>Option 1</span>
     </div>
     <div x-on:click="selected = 'value2'">
-        <RadioIndicator :checked="selected === 'value2'" />
+        <RadioIndicator checked="selected === 'value2'" />
         <span>Option 2</span>
     </div>
 </div>
@@ -337,13 +337,13 @@ The component includes these smooth transitions:
 ```astro
 <form x-data="{ preference: '' }">
     <label class="flex items-center gap-3">
-        <RadioIndicator :checked="preference === 'email'" />
+        <RadioIndicator checked="preference === 'email'" />
         <input type="radio" x-model="preference" value="email" class="sr-only" />
         <span>Email notifications</span>
     </label>
     
     <label class="flex items-center gap-3">
-        <RadioIndicator :checked="preference === 'sms'" />
+        <RadioIndicator checked="preference === 'sms'" />
         <input type="radio" x-model="preference" value="sms" class="sr-only" />
         <span>SMS notifications</span>
     </label>
@@ -354,9 +354,9 @@ The component includes these smooth transitions:
 ```astro
 <div x-data="{ plan: 'basic' }">
     <label class="block border rounded-lg p-4 cursor-pointer hover:bg-gray-50"
-           :class="plan === 'basic' ? 'border-blue-500 bg-blue-50' : ''">
+           x-bind:class="plan === 'basic' ? 'border-blue-500 bg-blue-50' : ''">
         <div class="flex items-start gap-3">
-            <RadioIndicator :checked="plan === 'basic'" />
+            <RadioIndicator checked="plan === 'basic'" />
             <div class="flex-1">
                 <div class="font-semibold">Basic Plan</div>
                 <div class="text-sm text-gray-600">$9/month</div>
