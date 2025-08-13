@@ -1,0 +1,175 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import DataTable from '@/components/ui/data/DataTable.astro';
+import TableToolbar from '@/components/ui/data/TableToolbar.astro';
+import TablePagination from '@/components/ui/data/TablePagination.astro';
+
+// Sample data
+const users = [
+  { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active', joinDate: '2024-01-15' },
+  { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User', status: 'Active', joinDate: '2024-02-20' },
+  { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Editor', status: 'Inactive', joinDate: '2024-01-10' },
+  { id: 4, name: 'Alice Wilson', email: 'alice@example.com', role: 'User', status: 'Active', joinDate: '2024-03-05' },
+  { id: 5, name: 'Charlie Brown', email: 'charlie@example.com', role: 'Admin', status: 'Active', joinDate: '2024-02-28' },
+  { id: 6, name: 'Diana Prince', email: 'diana@example.com', role: 'Editor', status: 'Active', joinDate: '2024-01-22' },
+  { id: 7, name: 'Frank Miller', email: 'frank@example.com', role: 'User', status: 'Inactive', joinDate: '2024-02-14' },
+  { id: 8, name: 'Grace Lee', email: 'grace@example.com', role: 'Admin', status: 'Active', joinDate: '2024-03-10' },
+  { id: 9, name: 'Henry Ford', email: 'henry@example.com', role: 'User', status: 'Active', joinDate: '2024-01-30' },
+  { id: 10, name: 'Ivy Chen', email: 'ivy@example.com', role: 'Editor', status: 'Active', joinDate: '2024-02-25' },
+  { id: 11, name: 'Jack Ryan', email: 'jack@example.com', role: 'User', status: 'Inactive', joinDate: '2024-01-18' },
+  { id: 12, name: 'Kate Moss', email: 'kate@example.com', role: 'Admin', status: 'Active', joinDate: '2024-03-08' },
+];
+
+// Column definitions
+const columns = [
+  {
+    key: 'name',
+    label: 'Name',
+    sortable: true,
+    filterable: true
+  },
+  {
+    key: 'email',
+    label: 'Email',
+    sortable: true,
+    filterable: true
+  },
+  {
+    key: 'role',
+    label: 'Role',
+    sortable: true,
+    filterable: true,
+    render: (value) => `<span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">${value}</span>`
+  },
+  {
+    key: 'status',
+    label: 'Status',
+    sortable: true,
+    render: (value) => {
+      const color = value === 'Active' ? 'green' : 'red';
+      return `<span class="px-2 py-1 text-xs rounded-full bg-${color}-100 text-${color}-800">${value}</span>`;
+    }
+  },
+  {
+    key: 'joinDate',
+    label: 'Join Date',
+    sortable: true,
+    align: 'right'
+  },
+  {
+    key: 'actions',
+    label: 'Actions',
+    align: 'center',
+    render: (value, row) => `
+      <div class="flex items-center gap-2">
+        <button class="px-2 py-1 text-xs text-blue-600 hover:text-blue-800" onclick="editUser(${row.id})">Edit</button>
+        <button class="px-2 py-1 text-xs text-red-600 hover:text-red-800" onclick="deleteUser(${row.id})">Delete</button>
+      </div>
+    `
+  }
+];
+---
+
+<Layout title="Data Table Demo">
+  <div class="container mx-auto py-8 space-y-8">
+    <div class="text-center">
+      <h1 class="text-3xl font-bold text-gray-900 mb-4">Data Table Demo</h1>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        Elegant and powerful data table component with sorting, filtering, pagination, and selection features.
+        Built with Astro, Alpine.js, and the universal component system.
+      </p>
+    </div>
+
+    <!-- Basic Table Example -->
+    <section class="space-y-4">
+      <h2 class="text-2xl font-semibold">Basic Data Table</h2>
+      <p class="text-gray-600">Simple table with sorting and search functionality.</p>
+      
+      <DataTable 
+        data={users}
+        columns={columns}
+        searchable={true}
+        variant="default"
+        density="normal"
+        class="max-w-6xl mx-auto"
+      />
+    </section>
+
+    <!-- Advanced Table Example -->
+    <section class="space-y-4">
+      <h2 class="text-2xl font-semibold">Advanced Data Table</h2>
+      <p class="text-gray-600">Full-featured table with selection, pagination, and custom toolbar.</p>
+      
+      <DataTable 
+        data={users}
+        columns={columns}
+        searchable={true}
+        selectable={true}
+        paginated={true}
+        pageSize={5}
+        variant="striped"
+        density="comfortable"
+        class="max-w-6xl mx-auto"
+      >
+        <TableToolbar slot="toolbar" searchPlaceholder="Search users...">
+          <div slot="actions" class="flex gap-2">
+            <button class="px-4 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+              Add User
+            </button>
+            <button class="px-4 py-2 text-sm border border-input rounded-md bg-background hover:bg-accent">
+              Export
+            </button>
+          </div>
+          
+          <div slot="selection-actions" class="flex gap-2">
+            <button class="px-3 py-1 text-sm bg-destructive text-destructive-foreground rounded-md hover:bg-destructive/90">
+              Delete Selected
+            </button>
+            <button class="px-3 py-1 text-sm border border-input rounded-md bg-background hover:bg-accent">
+              Export Selected
+            </button>
+          </div>
+        </TableToolbar>
+
+        <TablePagination slot="pagination" />
+      </DataTable>
+    </section>
+
+    <!-- Compact Table Example -->
+    <section class="space-y-4">
+      <h2 class="text-2xl font-semibold">Compact Table</h2>
+      <p class="text-gray-600">Space-efficient table with minimal padding.</p>
+      
+      <DataTable 
+        data={users.slice(0, 6)}
+        columns={columns.slice(0, 4)}
+        searchable={true}
+        variant="bordered"
+        density="compact"
+        interactive="hover"
+        class="max-w-4xl mx-auto"
+      />
+    </section>
+
+    <!-- Component Guide Link -->
+    <div class="text-center pt-8">
+      <p class="text-gray-600">
+        For more information about table components, see the 
+        <a href="/COMPONENT_GUIDE_COMPRESSED.md" class="text-blue-600 hover:underline">Component Development Guide</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Demo action functions
+    function editUser(id) {
+      alert(`Edit user with ID: ${id}`);
+    }
+    
+    function deleteUser(id) {
+      if (confirm(`Delete user with ID: ${id}?`)) {
+        alert(`User ${id} deleted`);
+      }
+    }
+  </script>
+</Layout>

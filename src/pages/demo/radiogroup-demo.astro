@@ -1,0 +1,83 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+    RadioGroup,
+    RadioGroupItem,
+    RadioGroupItems,
+    RadioGroupLabel,
+    RadioGroupDescription,
+} from '@/components/ui/forms/radiogroup';
+---
+
+<Layout title="Test RadioGroup">
+    <main class="min-h-screen bg-background py-8">
+        <div class="max-w-2xl mx-auto px-6 space-y-8">
+            <h1 class="text-3xl font-bold">Test RadioGroup</h1>
+
+            <!-- Simple test with x-for -->
+            <div class="bg-card border border-border rounded-lg p-6">
+                <h3 class="text-lg font-semibold mb-4">
+                    Simple Test with x-for
+                </h3>
+                <div
+                    x-data="{ 
+                    debugValue: 'option1',
+                    options: [
+                        { value: 'option1', label: 'Option 1', description: 'First option', disabled: false },
+                        { value: 'option2', label: 'Option 2', description: 'Second option', disabled: false },
+                        { value: 'option3', label: 'Option 3', description: 'Third option', disabled: false }
+                    ]
+                }"
+                >
+                    <RadioGroup
+                        name="test"
+                        selectedOption="option1"
+                        x-model="debugValue"
+                    >
+                        <RadioGroupItems
+                            x-for="option in options"
+                            x-key="option.value"
+                        >
+                            <RadioGroupLabel x-text="option.label" />
+                            <RadioGroupDescription
+                                x-text="option.description"
+                            />
+                        </RadioGroupItems>
+                    </RadioGroup>
+
+                    <div class="mt-4 p-3 bg-muted rounded">
+                        <strong>Debug Value:</strong>
+                        <span x-text="debugValue"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- State display -->
+            <div class="bg-card border border-border rounded-lg p-6">
+                <h3 class="text-lg font-semibold mb-4">State Display</h3>
+                <div x-data="{ testValue: 'B' }">
+                    <RadioGroup
+                        name="state-test"
+                        selectedOption="B"
+                        x-model="testValue"
+                    >
+                        <RadioGroupItem value="A">
+                            <RadioGroupLabel>Option A</RadioGroupLabel>
+                        </RadioGroupItem>
+                        <RadioGroupItem value="B">
+                            <RadioGroupLabel>Option B</RadioGroupLabel>
+                        </RadioGroupItem>
+                        <RadioGroupItem value="C" disabled={true}>
+                            <RadioGroupLabel>Option C</RadioGroupLabel>
+                        </RadioGroupItem>
+                    </RadioGroup>
+
+                    <div class="mt-4 p-3 bg-muted rounded">
+                        <strong>Selected:</strong>
+                        <span x-text="testValue"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</Layout>

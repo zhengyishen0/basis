@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import DocsLayout from '@/layouts/DocsLayout.astro';
+
+export async function getStaticPaths() {
+    const components = await getCollection('components');
+    
+    // Sort components by order if specified
+    const sortedComponents = components.sort((a, b) => {
+        const orderA = a.data.order ?? 999;
+        const orderB = b.data.order ?? 999;
+        return orderA - orderB;
+    });
+
+    return sortedComponents.map((entry, index) => {
+        // Find previous and next pages for navigation
+        const prevPage = index > 0 ? {
+            href: `/docs/components/${sortedComponents[index - 1].slug}`,
+            title: sortedComponents[index - 1].data.title
+        } : undefined;
+        
+        const nextPage = index < sortedComponents.length - 1 ? {
+            href: `/docs/components/${sortedComponents[index + 1].slug}`,
+            title: sortedComponents[index + 1].data.title
+        } : undefined;
+
+        return {
+            params: { slug: entry.slug },
+            props: { entry, prevPage, nextPage }
+        };
+    });
+}
+
+const { entry, prevPage, nextPage } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<DocsLayout 
+    title={entry.data.title}
+    description={entry.data.description}
+    slug={`components/${entry.slug}`}
+    prevPage={prevPage}
+    nextPage={nextPage}
+>
+    <Content />
+</DocsLayout>

@@ -1,0 +1,208 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Slider from '@/components/ui/forms/Slider.astro';
+---
+
+<Layout title="Slider Component Demo">
+  <main class="min-h-screen bg-background py-8">
+    <div class="max-w-4xl mx-auto px-6 space-y-12">
+      
+      <!-- Header -->
+      <div class="text-center space-y-4">
+        <div class="mb-8">
+          <a 
+            href="/demo"
+            class="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Back to Demos
+          </a>
+        </div>
+        <h1 class="text-4xl font-bold text-foreground">Slider Component</h1>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Universal real-time drag slider with buffer support, variants, and perfect Alpine.js integration
+        </p>
+      </div>
+      
+      <div class="space-y-8">
+        <div class="bg-card border border-border rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-card-foreground mb-4">Basic Slider</h3>
+          <Slider value={50} max={100} />
+        </div>
+        
+        <div class="bg-card border border-border rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-card-foreground mb-4">With Buffer</h3>
+          <Slider value={30} buffered={60} max={100} />
+        </div>
+        
+        <div class="bg-card border border-border rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-card-foreground mb-4">Size Variants</h3>
+          <div class="space-y-4">
+            <div>
+              <label class="text-sm font-medium text-card-foreground">Small</label>
+              <Slider value={30} size="sm" />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-card-foreground">Medium (default)</label>
+              <Slider value={60} size="md" />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-card-foreground">Large</label>
+              <Slider value={80} size="lg" />
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-card border border-border rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-card-foreground mb-4">Color Variants</h3>
+          <div class="space-y-4">
+            <div>
+              <label class="text-sm font-medium text-card-foreground">Primary (theme)</label>
+              <Slider value={50} variant="primary" />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-card-foreground">Secondary (theme)</label>
+              <Slider value={40} variant="secondary" />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-card-foreground">Black</label>
+              <Slider value={75} variant="black" />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-card-foreground">White</label>
+              <div class="bg-gray-900 p-4 rounded">
+                <Slider value={65} variant="white" />
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-card border border-border rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-card-foreground mb-4">Thumb Variants</h3>
+          <div class="space-y-6">
+            <div class="space-y-4">
+              <h4 class="font-medium text-card-foreground">Outline (default)</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="text-sm text-muted-foreground">Primary outline</label>
+                  <Slider value={50} variant="primary" thumb="outline" />
+                </div>
+                <div>
+                  <label class="text-sm text-muted-foreground">Black outline</label>
+                  <Slider value={60} variant="black" thumb="outline" />
+                </div>
+              </div>
+            </div>
+            
+            <div class="space-y-4">
+              <h4 class="font-medium text-card-foreground">Solid</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="text-sm text-muted-foreground">Primary solid</label>
+                  <Slider value={50} variant="primary" thumb="solid" />
+                </div>
+                <div>
+                  <label class="text-sm text-muted-foreground">Black solid</label>
+                  <Slider value={60} variant="black" thumb="solid" />
+                </div>
+              </div>
+            </div>
+            
+            <div class="space-y-4">
+              <h4 class="font-medium text-card-foreground">Disabled State</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="text-sm text-muted-foreground">Disabled outline (progress color border)</label>
+                  <Slider value={50} variant="primary" thumb="outline" disabled={true} />
+                </div>
+                <div>
+                  <label class="text-sm text-muted-foreground">Disabled solid (full progress color)</label>
+                  <Slider value={60} variant="primary" thumb="solid" disabled={true} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-card border border-border rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-card-foreground mb-4">Custom Colors</h3>
+          <div class="space-y-6">
+            <div class="space-y-4">
+              <h4 class="font-medium text-card-foreground">Default Behavior</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="text-sm text-muted-foreground">Primary (theme colors)</label>
+                  <Slider value={50} buffered={70} variant="primary" />
+                </div>
+                <div>
+                  <label class="text-sm text-muted-foreground">Black (30%/50%/100% ratios)</label>
+                  <Slider value={60} buffered={80} variant="black" />
+                </div>
+              </div>
+            </div>
+            
+            <div class="space-y-4">
+              <h4 class="font-medium text-card-foreground">Custom Colors</h4>
+              <div class="space-y-3">
+                <div>
+                  <label class="text-sm text-muted-foreground">Custom red theme</label>
+                  <Slider 
+                    value={40} 
+                    buffered={65} 
+                    trackColor="bg-red-200" 
+                    bufferColor="bg-red-400/60" 
+                    progressColor="bg-red-600" 
+                  />
+                </div>
+                <div>
+                  <label class="text-sm text-muted-foreground">Custom blue gradient</label>
+                  <Slider 
+                    value={75} 
+                    buffered={90} 
+                    trackColor="bg-blue-100" 
+                    bufferColor="bg-blue-300/70" 
+                    progressColor="bg-gradient-to-r from-blue-500 to-purple-600" 
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-card border border-border rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-card-foreground mb-4">Use Cases</h3>
+          <div class="space-y-4">
+            <div>
+              <label class="text-sm font-medium text-card-foreground">Volume Control (solid thumb)</label>
+              <Slider value={75} variant="secondary" size="sm" thumb="solid" />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-card-foreground">Progress Indicator (disabled, outline)</label>
+              <Slider value={87} variant="primary" disabled={true} thumb="outline" />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-card-foreground">Video Progress with Buffer (solid thumb)</label>
+              <Slider value={30} buffered={60} variant="primary" size="lg" thumb="solid" />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-card-foreground">Video Player Style (custom white colors)</label>
+              <div class="bg-black p-4 rounded">
+                <Slider 
+                  value={45} 
+                  buffered={70} 
+                  trackColor="bg-white/30" 
+                  bufferColor="bg-white/50" 
+                  progressColor="bg-white" 
+                  size="lg"
+                  thumb="solid"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

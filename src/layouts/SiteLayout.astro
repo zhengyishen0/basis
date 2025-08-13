@@ -1,0 +1,170 @@
+---
+import Layout from './Layout.astro';
+import Navbar from '@/components/ui/display/Navbar.astro';
+import Button from '@/components/ui/forms/Button.astro';
+import { Icon } from 'astro-icon/components';
+import { List, ListItems, Row } from '@/components/ui/layout';
+import {
+    Command,
+    CommandTrigger,
+    CommandInput,
+    CommandGroups,
+    CommandItems,
+    CommandFooter,
+} from '@/components/ui/overlay/command';
+
+export interface Props {
+    title: string;
+    description?: string;
+}
+
+const { title, description } = Astro.props;
+
+// Navigation links
+const navLinks = [
+    { label: 'Docs', href: '/docs' },
+    { label: 'Components', href: '/docs/components/' },
+    { label: 'Todo', href: '/todo' },
+];
+
+// Command palette groups
+const commandGroups = {
+    Pages: [
+        { title: 'Home', value: '/', icon: 'home' },
+        { title: 'Documentation', value: '/docs', icon: 'book' },
+        { title: 'Components', value: '/docs/components', icon: 'layers' },
+        { title: 'Todo', value: '/todo', icon: 'check-square' },
+    ],
+    Actions: [
+        { title: 'Toggle Theme', value: 'action:theme', icon: 'palette' },
+        { title: 'Toggle Width', value: 'action:width', icon: 'expand' },
+    ],
+};
+---
+
+<Layout title={title} description={description}>
+    <div
+        class="flex flex-col"
+        x-data="{
+            theme: $store.theme,
+            layout: $store.layout
+         }"
+        x-init="$store.theme.init(); $store.layout.init()"
+    >
+        <!-- Site-wide Navbar with Alpine.js dynamic rendering -->
+        <Navbar x-data={`{ links: ${JSON.stringify(navLinks)} }`} class="mx-4">
+            <a
+                slot="brand"
+                href="/"
+                class="flex items-center space-x-2 font-bold text-xl hover:text-primary transition-colors"
+            >
+                <span>Basis Stack</span>
+            </a>
+
+            <Row slot="links">
+                <template x-for="link in links" :key="link.href">
+                    <Button
+                        :href="link.href"
+                        variant="ghost"
+                        x-text="link.label"
+                        size="sm"
+                    />
+                </template>
+            </Row>
+
+            <Row slot="actions">
+                <!-- GitHub Icon Button -->
+                <Button
+                    href="https://github.com/zhengyishen0/basis-ui"
+                    target="_blank"
+                    variant="ghost"
+                    size="icon"
+                    title="GitHub"
+                >
+                    <Icon name="lucide:github" class="w-4 h-4" />
+                </Button>
+
+                <!-- Theme Toggle -->
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    x-on:click="$store.theme.toggle()"
+                    :title="'Theme: ' + $store.theme.current"
+                >
+                    <Icon
+                        x-show="$store.theme.current === 'light'"
+                        name="lucide:sun"
+                        class="w-4 h-4"
+                    />
+                    <Icon
+                        x-show="$store.theme.current === 'dark'"
+                        name="lucide:moon"
+                        class="w-4 h-4"
+                    />
+                    <Icon
+                        x-show="$store.theme.current === 'system'"
+                        name="lucide:laptop"
+                        class="w-4 h-4"
+                    />
+                </Button>
+
+                <!-- Width Toggle -->
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    x-on:click="$store.layout.toggleWidth()"
+                    :title="$store.layout.wide ? 'Collapse Width' : 'Expand Width'"
+                >
+                    <Icon
+                        x-show="!$store.layout.wide"
+                        name="lucide:expand"
+                        class="w-4 h-4"
+                    />
+                    <Icon
+                        x-show="$store.layout.wide"
+                        name="lucide:shrink"
+                        class="w-4 h-4"
+                    />
+                </Button>
+
+                <!-- Mobile menu button -->
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="md:hidden"
+                    x-on:click="$dispatch('toggle-mobile-menu')"
+                >
+                    <Icon name="lucide:menu" class="w-5 h-5" />
+                </Button>
+            </Row>
+        </Navbar>
+    </div>
+
+    <!-- Mobile menu (hidden by default) -->
+    <div
+        x-data={JSON.stringify({ open: false, links: navLinks })}
+        @toggle-mobile-menu.window="open = !open"
+        x-show="open"
+        x-transition
+        class="md:hidden border-b bg-background"
+    >
+        <List>
+            <ListItems x-for="link in links" :key="link.href">
+                <Button
+                    :href="link.href"
+                    x-text="link.label"
+                    variant="ghost"
+                    size="sm"
+                />
+            </ListItems>
+        </List>
+    </div>
+
+    <!-- Main Content -->
+    <main
+        class="flex-1 transition-all duration-300"
+        :class="$store.layout.wide ? '' : 'container mx-auto px-4'"
+    >
+        <slot />
+    </main>
+</Layout>

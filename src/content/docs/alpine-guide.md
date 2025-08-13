@@ -30,6 +30,7 @@ alpinejs@3.14.9
 ## Basic Alpine.js Usage
 
 ### Simple Counter Component
+
 ```astro
 <div x-data="{ count: 0 }" class="counter-container">
   <button x-on:click="count--">-</button>
@@ -39,6 +40,7 @@ alpinejs@3.14.9
 ```
 
 ### Form with Validation
+
 ```astro
 <div x-data="{ email: '', valid: false }" class="form-container">
   <input
@@ -60,6 +62,7 @@ alpinejs@3.14.9
 ## Using Alpine.js Plugins
 
 ### @alpinejs/mask - Input Formatting
+
 ```astro
 <input x-mask="(999) 999-9999" placeholder="Phone number" />
 <input x-mask="99/99/9999" placeholder="MM/DD/YYYY" />
@@ -67,6 +70,7 @@ alpinejs@3.14.9
 ```
 
 ### @alpinejs/persist - Data Persistence
+
 ```astro
 <div x-data="{ theme: $persist('light') }">
   <button x-on:click="theme = theme === 'light' ? 'dark' : 'light'">
@@ -76,6 +80,7 @@ alpinejs@3.14.9
 ```
 
 ### @alpinejs/intersect - Scroll Animations
+
 ```astro
 <div x-intersect="$el.classList.add('animate-fadeIn')">
   Content that animates in when scrolled into view
@@ -83,6 +88,7 @@ alpinejs@3.14.9
 ```
 
 ### @alpinejs/collapse - Smooth Animations
+
 ```astro
 <div x-data="{ open: false }">
   <button x-on:click="open = !open">Toggle</button>
@@ -93,6 +99,7 @@ alpinejs@3.14.9
 ```
 
 ### @alpinejs/focus - Focus Management
+
 ```astro
 <div x-data="{ open: false }" x-on:keydown.escape="open = false">
   <button x-on:click="open = true">Open Dialog</button>
@@ -104,6 +111,7 @@ alpinejs@3.14.9
 ```
 
 ### @alpinejs/sort - Drag and Drop
+
 ```astro
 <ul x-data x-sort>
   <li x-sort:item>Item 1</li>
@@ -117,41 +125,43 @@ alpinejs@3.14.9
 Basis uses Alpine.store() for global state management. Here's how to create and use stores:
 
 ### Creating a Store
+
 ```javascript
 // src/lib/myStore.js
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
-Alpine.store('myStore', {
+Alpine.store("myStore", {
   // State
   items: [],
   loading: false,
-  
+
   // Actions
   async fetchItems() {
     this.loading = true;
     try {
-      const response = await fetch('/api/items');
+      const response = await fetch("/api/items");
       this.items = await response.json();
     } finally {
       this.loading = false;
     }
   },
-  
+
   addItem(item) {
     this.items.push(item);
-  }
+  },
 });
 ```
 
 ### Using a Store in Components
+
 ```astro
 <div x-data="$store.myStore" x-init="fetchItems()">
   <div x-show="loading">Loading...</div>
-  
+
   <template x-for="item in items" :key="item.id">
     <div x-text="item.name"></div>
   </template>
-  
+
   <button @click="addItem({ name: 'New Item' })">
     Add Item
   </button>
@@ -161,12 +171,15 @@ Alpine.store('myStore', {
 ## Best Practices
 
 ### 1. Component Organization
+
 - Keep Alpine.js logic simple and focused
 - Use stores for shared state
 - Extract complex logic into separate JavaScript files
 
 ### 2. Performance
+
 - Use `x-cloak` to prevent flash of unstyled content:
+
 ```astro
 <style>
   [x-cloak] { display: none !important; }
@@ -178,13 +191,15 @@ Alpine.store('myStore', {
 ```
 
 ### 3. Accessibility
+
 - Use Alpine's focus management for keyboard navigation
 - Add proper ARIA attributes
 - Test with keyboard and screen readers
 
 ### 4. Error Handling
+
 ```astro
-<div x-data="{ 
+<div x-data="{
   error: null,
   async fetchData() {
     try {
@@ -199,7 +214,9 @@ Alpine.store('myStore', {
 ```
 
 ### 5. Debugging
+
 - Use `x-init` with console.log for debugging:
+
 ```astro
 <div x-data="{ count: 0 }" x-init="console.log('Component initialized', $data)">
   <!-- Component content -->
@@ -209,6 +226,7 @@ Alpine.store('myStore', {
 ## Testing Alpine.js Components
 
 Test your Alpine.js components at these routes:
+
 - Basic functionality: `/test/quick-test`
 - Advanced interactions: `/test/advanced-test`
 - Individual component tests: `/test/[component-name]`
@@ -216,6 +234,7 @@ Test your Alpine.js components at these routes:
 ## Common Patterns
 
 ### Toggle Visibility
+
 ```astro
 <div x-data="{ show: false }">
   <button @click="show = !show">Toggle</button>
@@ -224,9 +243,10 @@ Test your Alpine.js components at these routes:
 ```
 
 ### Dynamic Classes
+
 ```astro
 <div x-data="{ active: false }">
-  <button 
+  <button
     @click="active = !active"
     :class="{ 'button-active': active }"
   >
@@ -236,6 +256,7 @@ Test your Alpine.js components at these routes:
 ```
 
 ### Two-way Binding
+
 ```astro
 <div x-data="{ message: '' }">
   <input x-model="message" />
@@ -244,6 +265,7 @@ Test your Alpine.js components at these routes:
 ```
 
 ### Conditional Rendering
+
 ```astro
 <div x-data="{ type: 'info' }">
   <template x-if="type === 'info'">
@@ -258,6 +280,7 @@ Test your Alpine.js components at these routes:
 ## Integration with Basis
 
 Alpine.js works seamlessly with:
+
 - **Astro Components**: Use Alpine in any .astro file
 - **HTMX**: Combine for powerful interactions
 - **Supabase**: Reactive UI with real-time data

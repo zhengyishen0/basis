@@ -1,0 +1,235 @@
+---
+import SiteLayout from './SiteLayout.astro';
+import {
+    Row,
+    Column,
+    Divider,
+    Spacer,
+    List,
+    ListItems,
+    Section,
+} from '@/components/ui/layout';
+import Breadcrumb from '@/components/ui/navigation/breadcrumbs/Breadcrumb.astro';
+import BreadcrumbItem from '@/components/ui/navigation/breadcrumbs/BreadcrumbItem.astro';
+import BreadcrumbItems from '@/components/ui/navigation/breadcrumbs/BreadcrumbItems.astro';
+import { TableOfContents } from '@/components/ui/display';
+import Button from '@/components/ui/forms/Button.astro';
+import { getCollection } from 'astro:content';
+import { cn } from '@/lib/utils';
+
+export interface Props {
+    title: string;
+    description?: string;
+    slug?: string;
+    prevPage?: { href: string; title: string };
+    nextPage?: { href: string; title: string };
+}
+
+const { title, description, slug, prevPage, nextPage } = Astro.props;
+
+// Get all documentation entries
+const docs = await getCollection('docs');
+const components = await getCollection('components');
+
+// Sort docs by order (flat structure)
+const sortedDocs = [...docs].sort((a, b) => {
+    const orderA = a.data.order ?? 999;
+    const orderB = b.data.order ?? 999;
+    return orderA - orderB;
+});
+
+// Sort components by order (flat structure)
+const sortedComponents = [...components].sort((a, b) => {
+    const orderA = a.data.order ?? 999;
+    const orderB = b.data.order ?? 999;
+    return orderA - orderB;
+});
+
+// Format category names
+const formatCategory = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).replace(/-/g, ' ');
+};
+
+// Format component name
+const formatComponentName = (str: string) => {
+    return str
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+};
+
+// Prepare data for Alpine.js (flat structure)
+const docsData = sortedDocs.map(item => ({
+    href: `/docs/${item.slug}`,
+    title: item.data.title,
+    active: slug === item.slug,
+}));
+
+const componentsData = sortedComponents.map(item => ({
+    href: `/docs/components/${item.slug}`,
+    title: item.data.title,
+    active: slug === `components/${item.slug}`,
+}));
+
+// Prepare breadcrumb data for Alpine.js
+const breadcrumbItems = slug
+    ? [
+          { label: 'Docs', href: '/docs' },
+          ...slug.split('/').map((part, index, arr) => ({
+              label: formatCategory(part),
+              href:
+                  index === arr.length - 1
+                      ? null
+                      : `/docs/${arr.slice(0, index + 1).join('/')}`,
+              current: index === arr.length - 1,
+          })),
+      ]
+    : [];
+---
+
+<SiteLayout title={title} description={description}>
+    <div class="flex min-h-[calc(100vh-3.5rem)]">
+        <!-- Left Sidebar -->
+        <aside
+            class="w-64 border-r bg-background/5 backdrop-blur supports-[backdrop-filter]:bg-background/10 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-6 px-4"
+            x-data={`{
+                docsData: ${JSON.stringify(docsData)},
+                componentsData: ${JSON.stringify(componentsData)},
+                currentSlug: '${slug || ''}'
+            }`}
+        >
+            <div class="space-y-6">
+                <!-- Documentation Section -->
+                <div x-show="docsData.length > 0">
+                    <h3
+                        class="text-sm font-semibold text-muted-foreground px-4 mb-2"
+                    >
+                        Documentation
+                    </h3>
+                    <Column>
+                        <ListItems x-for="item in docsData" :key="item.href">
+                            <Button
+                                :href="item.href"
+                                variant="ghost"
+                                className="w-full justify-start text-sm"
+                                x-text="item.title"
+                            />
+                        </ListItems>
+                    </Column>
+                </div>
+
+                <!-- Components Section -->
+                <div x-show="componentsData.length > 0">
+                    <h3
+                        class="text-sm font-semibold text-muted-foreground px-4 mb-2"
+                    >
+                        Components
+                    </h3>
+                    <Column>
+                        <ListItems
+                            x-for="item in componentsData"
+                            :key="item.href"
+                        >
+                            <Button
+                                :href="item.href"
+                                variant="ghost"
+                                className="w-full justify-start text-sm"
+                                x-text="item.title"
+                            />
+                        </ListItems>
+                    </Column>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex">
+            <main
+                class="flex-1 max-w-4xl mx-auto px-8 py-8"
+                x-data={`{
+                    hasSlug: ${slug ? 'true' : 'false'},
+                    hasDescription: ${description ? 'true' : 'false'},
+                    hasPrevPage: ${prevPage ? 'true' : 'false'},
+                    hasNextPage: ${nextPage ? 'true' : 'false'},
+                    breadcrumbItems: ${JSON.stringify(breadcrumbItems)}
+                }`}
+            >
+                <!-- Breadcrumb -->
+
+                <Breadcrumb class="mb-4" x-show="hasSlug" x-cloak>
+                    <BreadcrumbItems
+                        x-for="(item, index) in breadcrumbItems"
+                        x-key="index"
+                        :href="item.href"
+                        separator="chevron"
+                        x-text="item.label"
+                    />
+                </Breadcrumb>
+
+                <!-- Page Header -->
+                <Section class="space-y-2 mb-8">
+                    <h1 class="text-4xl font-bold tracking-tight">{title}</h1>
+                    <p
+                        x-show="hasDescription"
+                        x-cloak
+                        class="text-lg text-muted-foreground"
+                    >
+                        {description}
+                    </p>
+                </Section>
+
+                <Divider class="mb-8" />
+
+                <!-- Content Slot -->
+                <div
+                    class="prose prose-neutral dark:prose-invert max-w-none
+                    prose-pre:max-h-[500px] prose-pre:overflow-auto
+                    [&_pre::-webkit-scrollbar]:w-2 [&_pre::-webkit-scrollbar]:h-2
+                    [&_pre::-webkit-scrollbar-thumb]:bg-muted-foreground
+                    [&_pre::-webkit-scrollbar-thumb]:rounded-full"
+                >
+                    <slot />
+                </div>
+
+                <!-- Footer Navigation -->
+                <Section x-show="hasPrevPage || hasNextPage" x-cloak>
+                    <Divider class="mt-12 mb-8" />
+                    <Row class="justify-between">
+                        <Button
+                            variant="outline"
+                            href={prevPage?.href || '#'}
+                            className="flex items-center gap-2"
+                            x-show="hasPrevPage"
+                        >
+                            <span>←</span>
+                            <span>{prevPage?.title || ''}</span>
+                        </Button>
+
+                        <Spacer x-show="!hasPrevPage" />
+
+                        <Button
+                            variant="outline"
+                            href={nextPage?.href || '#'}
+                            className="flex items-center gap-2"
+                            x-show="hasNextPage"
+                        >
+                            <span>{nextPage?.title || ''}</span>
+                            <span>→</span>
+                        </Button>
+                    </Row>
+                </Section>
+            </main>
+
+            <!-- Right Sidebar (Table of Contents) -->
+            <aside
+                class="hidden xl:block w-64 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-8 pr-4"
+            >
+                <TableOfContents
+                    containerSelector="main"
+                    title="On this page"
+                    class="text-sm"
+                />
+            </aside>
+        </div>
+    </div>
+</SiteLayout>

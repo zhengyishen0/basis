@@ -1,0 +1,164 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+    DatePicker,
+    DatePickerTrigger,
+    DatePickerContent,
+    DatePickerCalendar,
+} from '@/components/ui/forms/datepicker';
+---
+
+<Layout title="Layer Abstraction Test">
+    <div class="container mx-auto p-8 max-w-4xl">
+        <section class="p-8 border border-gray-200 rounded-lg mb-8">
+            <h2 class="text-2xl font-semibold mb-6">
+                Compose DatePicker from Popup Components
+            </h2>
+            <div class="border border-green-200 rounded p-4">
+                <div class="text-sm text-gray-600 mb-4">
+                    Custom DatePicker: Popup + PopupTrigger + PopupContent +
+                    Calendar (with selectedDate binding)
+                </div>
+
+                <!-- Single Date DatePicker -->
+                <div class="mb-6" x-data="{ selectedDate: null }">
+                    <h4 class="text-sm font-semibold mb-2">Single Date:</h4>
+                    <DatePicker trigger="click">
+                        <DatePickerTrigger>
+                            <div
+                                class="px-4 py-2 border rounded bg-white cursor-pointer hover:bg-gray-50 flex items-center gap-2"
+                            >
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <rect
+                                        x="3"
+                                        y="4"
+                                        width="18"
+                                        height="18"
+                                        rx="2"
+                                        ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                <span
+                                    x-text="selectedDate ? new Date(selectedDate).toLocaleDateString() : 'Select a date'"
+                                ></span>
+                            </div>
+                        </DatePickerTrigger>
+                        <DatePickerContent className="w-fit p-0">
+                            <DatePickerCalendar
+                                mode="single"
+                                numberOfMonths={1}
+                                @date-selected="selectedDate = $event.detail.date; open = false"
+                            />
+                        </DatePickerContent>
+                    </DatePicker>
+                    <div class="text-xs text-gray-500 mt-2">
+                        Selected: <span x-text="selectedDate || 'None'"></span>
+                    </div>
+                </div>
+
+                <!-- Range DatePicker -->
+                <div class="mb-6" x-data="{ selectedRange: null }">
+                    <h4 class="text-sm font-semibold mb-2">Date Range:</h4>
+                    <DatePicker trigger="click">
+                        <DatePickerTrigger>
+                            <div
+                                class="px-4 py-2 border rounded bg-white cursor-pointer hover:bg-gray-50 flex items-center gap-2"
+                            >
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <rect
+                                        x="3"
+                                        y="4"
+                                        width="18"
+                                        height="18"
+                                        rx="2"
+                                        ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                <span
+                                    x-text="selectedRange && selectedRange.from ? 
+                                    (new Date(selectedRange.from).toLocaleDateString() + 
+                                    (selectedRange.to ? ' - ' + new Date(selectedRange.to).toLocaleDateString() : ' - ...')) 
+                                    : 'Select date range'"
+                                ></span>
+                            </div>
+                        </DatePickerTrigger>
+                        <DatePickerContent className="w-fit p-0">
+                            <DatePickerCalendar
+                                mode="range"
+                                numberOfMonths={1}
+                                @date-selected="selectedRange = $event.detail.date"
+                            />
+                        </DatePickerContent>
+                    </DatePicker>
+                    <div class="text-xs text-gray-500 mt-2">
+                        Selected: <span
+                            x-text="selectedRange ? JSON.stringify(selectedRange) : 'None'"
+                        ></span>
+                    </div>
+                </div>
+
+                <!-- Two Month Range DatePicker -->
+                <div x-data="{ selectedRange: null }">
+                    <h4 class="text-sm font-semibold mb-2">Two Month Range:</h4>
+                    <DatePicker trigger="click">
+                        <DatePickerTrigger>
+                            <div
+                                class="px-4 py-2 border rounded bg-white cursor-pointer hover:bg-gray-50 flex items-center gap-2"
+                            >
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <rect
+                                        x="3"
+                                        y="4"
+                                        width="18"
+                                        height="18"
+                                        rx="2"
+                                        ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                <span
+                                    x-text="selectedRange && selectedRange.from ? 
+                                    (new Date(selectedRange.from).toLocaleDateString() + 
+                                    (selectedRange.to ? ' - ' + new Date(selectedRange.to).toLocaleDateString() : ' - ...')) 
+                                    : 'Select two month range'"
+                                ></span>
+                            </div>
+                        </DatePickerTrigger>
+                        <DatePickerContent className="w-fit p-0">
+                            <DatePickerCalendar
+                                mode="range"
+                                numberOfMonths={2}
+                                @date-selected="selectedRange = $event.detail.date"
+                            />
+                        </DatePickerContent>
+                    </DatePicker>
+                    <div class="text-xs text-gray-500 mt-2">
+                        Selected: <span
+                            x-text="selectedRange ? JSON.stringify(selectedRange) : 'None'"
+                        ></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</Layout>

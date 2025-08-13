@@ -1,0 +1,96 @@
+---
+title: Alert
+description: Display important messages and notifications
+category: feedback
+order: 1
+---
+
+import Alert from '@/components/ui/feedback/Alert.astro';
+import { Card } from '@/components/ui/display/card';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+import { Icon } from 'astro-icon/components';
+
+## Overview
+
+Alerts display important messages in a way that attracts user attention without interrupting the user's task.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-4">
+            <Alert variant="default" title="Success!" description="Your changes have been saved successfully.">
+                <Icon slot="icon" name="lucide:check-circle" class="w-5 h-5" />
+            </Alert>
+            
+            <Alert variant="outline" title="Information" description="This is important information you should know about.">
+                <Icon slot="icon" name="lucide:info" class="w-5 h-5" />
+            </Alert>
+            
+            <Alert variant="destructive" title="Error Occurred" description="Something went wrong with your request. Please try again.">
+                <Icon slot="icon" name="lucide:alert-triangle" class="w-5 h-5" />
+            </Alert>
+            
+            <Alert variant="default" dismissible={true}>
+                This is a dismissible alert without an icon.
+            </Alert>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code
+            language="astro"
+            code={`---
+import Alert from '@/components/ui/feedback/Alert.astro';
+import { Icon } from 'astro-icon/components';
+---
+{/* Default Variant with Icon */}
+<Alert variant="default" title="Success!" description="Your changes have been saved successfully.">
+    <Icon slot="icon" name="lucide:check-circle" class="w-5 h-5" />
+</Alert>
+
+{/* Outline Variant */}
+<Alert variant="outline" title="Information" description="This is important information you should know about.">
+    <Icon slot="icon" name="lucide:info" class="w-5 h-5" />
+</Alert>
+
+{/* Destructive Variant */}
+<Alert variant="destructive" title="Error Occurred" description="Something went wrong with your request. Please try again.">
+    <Icon slot="icon" name="lucide:alert-triangle" class="w-5 h-5" />
+</Alert>
+
+{/* Dismissible Alert */}
+<Alert variant="default" dismissible={true}>
+    This is a dismissible alert without an icon.
+</Alert>`}
+        />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'default' | 'outline' | 'destructive'` | `'default'` | Alert style variant |
+| `title` | `string` | - | Alert title text |
+| `description` | `string` | - | Alert description text |
+| `dismissible` | `boolean` | `false` | Shows dismiss button |
+| `padding` | `string` | - | Padding size |
+| `elevation` | `string` | - | Shadow elevation |
+| `class` | `string` | - | Additional CSS classes |
+
+### Slots
+
+| Slot | Description |
+|------|-------------|
+| `icon` | Icon to display in the alert |
+| `default` | Alert content when not using title/description props |

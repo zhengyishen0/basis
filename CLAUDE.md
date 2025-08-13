@@ -7,6 +7,22 @@ My tech stack is:
 - Markdown Content: Use Astro Content Collections with frontmatter to store landing page content in MD files - put structured data (hero, features, testimonials) in frontmatter and long-form content in markdown body, then render with getEntry() and <Content /> components.
 - Github Actions: Host static pages on Github Pages
 
+# Component Development Reminder
+
+**ALWAYS READ**: Component development guide at `/COMPONENT_GUIDE_COMPRESSED.md`
+**AND MUST FOLLOW THE GUIDE !!!!**
+
+**Component Locations**:
+
+- UI Components Index: `/src/components/ui/{component-name}.astro`
+
+**Universal Theme System**:
+
+- All components use CVA + shadcn variants (default, secondary, destructive, outline)
+- Theme colors defined in `tailwind.config.js`
+- Use `cn()` utility from `@/lib/utils` for class merging
+- Enable Alpine.js pass-through with `{...alpineProps}`
+
 # Testing Reminder
 
 Always test code myself before claiming it works. Use techniques like:
@@ -16,4 +32,3 @@ Always test code myself before claiming it works. Use techniques like:
 - Create test pages to verify component functionality
 - Check browser console for errors
 - Test Alpine.store() state changes
--

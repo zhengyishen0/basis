@@ -1,0 +1,225 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuItems,
+    DropdownMenuGroup,
+    DropdownMenuGroups,
+    DropdownMenuSubMenu,
+    DropdownMenuSubTrigger,
+    DropdownMenuShortcut,
+    DropdownMenuConditional,
+} from '@/components/ui/overlay/dropdownmenu';
+import { Divider } from '@/components/ui/layout';
+import { Icon } from 'astro-icon/components';
+---
+
+<Layout title="Dropdown Menu Demo">
+    <main class="container mx-auto p-8 space-y-12">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold mb-4">
+                Dropdown Menu Component Demo
+            </h1>
+            <p class="text-muted-foreground mb-8">
+                Composable dropdown menu components with keyboard navigation,
+                submenus, and smart positioning
+            </p>
+        </div>
+
+        <!-- Dynamic x-for Example -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Dynamic x-for Support</h2>
+
+            <div
+                x-data="{
+                    menuGroups: [
+                        {
+                            heading: 'File Actions',
+                            items: [
+                                { text: 'New File', shortcut: 'Ctrl+N' },
+                                { text: 'Open File', shortcut: 'Ctrl+O' },
+                                { text: 'Save File', shortcut: 'Ctrl+S' }
+                            ]
+                        },
+                        {
+                            heading: 'Edit Actions', 
+                            items: [
+                                { text: 'Cut', shortcut: 'Ctrl+X' },
+                                { text: 'Copy', shortcut: 'Ctrl+C' },
+                                { text: 'Paste', shortcut: 'Ctrl+V', disabled: true },
+                                { 
+                                    text: 'Share', 
+                                    submenu: [
+                                        { text: 'Email' },
+                                        { text: 'Copy Link' },
+                                        { text: 'Social Media' }
+                                    ]
+                                },
+                                { 
+                                    text: 'Export', 
+                                    submenu: [
+                                        { text: 'PDF' },
+                                        { text: 'Excel' },
+                                        { text: 'Image' }
+                                    ]
+                                }
+                            ]
+                        },
+                    ]
+                }"
+                class="text-center"
+            >
+                <DropdownMenu trigger="click">
+                    <DropdownMenuTrigger variant="outline">
+                        Dynamic Menu <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent label="File Manager" role="menu">
+                        <DropdownMenuGroups
+                            x-for="group in menuGroups"
+                            x-key="group.heading"
+                            x-text="group.heading"
+                        >
+                            <DropdownMenuConditional
+                                condition="!item.submenu"
+                                x-for="item in group.items"
+                                x-key="item.text"
+                            >
+                                <!-- True slot: Regular menu items -->
+                                <DropdownMenuItem
+                                    slot="true"
+                                    x-text="item.text"
+                                    :disabled="item.disabled"
+                                >
+                                    <DropdownMenuShortcut
+                                        x-text="item.shortcut"
+                                        x-show="item.shortcut"
+                                    />
+                                </DropdownMenuItem>
+
+                                <!-- False slot: Submenu items -->
+                                <DropdownMenuSubMenu slot="false">
+                                    <DropdownMenuSubTrigger
+                                        x-text="item.text"
+                                    />
+                                    <DropdownMenuItems
+                                        slot="submenu"
+                                        x-for="subitem in item.submenu"
+                                        x-key="subitem.text"
+                                        x-text="subitem.text"
+                                    />
+                                </DropdownMenuSubMenu>
+                            </DropdownMenuConditional>
+                        </DropdownMenuGroups>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
+        </section>
+
+        <!-- Basic Dropdown Menu Example -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Basic Dropdown Menu</h2>
+
+            <div class="flex gap-4 flex-wrap">
+                <DropdownMenu trigger="click">
+                    <DropdownMenuTrigger variant="default">
+                        Actions <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent label="File Actions" role="menu">
+                        <DropdownMenuGroup>
+                            <!-- Using x-text for simple text -->
+                            <DropdownMenuItem x-text="'New File'">
+                                <DropdownMenuShortcut
+                                    >Ctrl+N</DropdownMenuShortcut
+                                >
+                            </DropdownMenuItem>
+                            <!-- Using slot for complex content -->
+                            <DropdownMenuItem>
+                                <span class="flex-1">Open File</span>
+                                <DropdownMenuShortcut
+                                    >Ctrl+O</DropdownMenuShortcut
+                                >
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <span class="flex-1">Save File</span>
+                                <DropdownMenuShortcut
+                                    >Ctrl+S</DropdownMenuShortcut
+                                >
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
+
+                        <Divider />
+
+                        <DropdownMenuGroup>
+                            <DropdownMenuItem>
+                                <span class="flex-1">Cut</span>
+                                <DropdownMenuShortcut
+                                    >Ctrl+X</DropdownMenuShortcut
+                                >
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <span class="flex-1">Copy</span>
+                                <DropdownMenuShortcut
+                                    >Ctrl+C</DropdownMenuShortcut
+                                >
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <span class="flex-1">Paste</span>
+                                <DropdownMenuShortcut
+                                    >Ctrl+V</DropdownMenuShortcut
+                                >
+                            </DropdownMenuItem>
+
+                            <DropdownMenuSubMenu>
+                                <DropdownMenuSubTrigger>
+                                    <span class="flex-1">Share</span>
+                                </DropdownMenuSubTrigger>
+
+                                <DropdownMenuItem slot="submenu">
+                                    <span class="flex-1">Email</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem slot="submenu">
+                                    <span class="flex-1">Copy Link</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem slot="submenu">
+                                    <span class="flex-1">Social Media</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuSubMenu>
+                        </DropdownMenuGroup>
+
+                        <Divider />
+
+                        <DropdownMenuItem variant="destructive">
+                            <span class="flex-1">Delete</span>
+                            <DropdownMenuShortcut>Del</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+
+                <DropdownMenu trigger="hover">
+                    <DropdownMenuTrigger variant="outline">
+                        Hover Menu
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent role="menu">
+                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                        <DropdownMenuItem>Settings</DropdownMenuItem>
+                        <Divider />
+                        <DropdownMenuItem>Sign out</DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+
+                <DropdownMenu trigger="click">
+                    <DropdownMenuTrigger variant="ghost" size="sm">
+                        Small Menu
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent size="sm" role="menu">
+                        <DropdownMenuItem>Option 1</DropdownMenuItem>
+                        <DropdownMenuItem>Option 2</DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
+        </section>
+    </main>
+</Layout>

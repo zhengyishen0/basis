@@ -1,0 +1,588 @@
+---
+title: Slider
+description: Universal real-time drag slider with buffer support, multiple variants, and perfect Alpine.js integration
+category: forms
+order: 7
+---
+
+import Slider from '@/components/ui/forms/Slider.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The Slider component provides a customizable range input with real-time dragging, buffer support, multiple visual variants, and comprehensive Alpine.js integration. Perfect for volume controls, progress indicators, and range selections.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-8">
+        <div class="space-y-8">
+            <div>
+                <h4 class="font-medium mb-4">Basic Slider</h4>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Volume (50%)</label>
+                        <Slider value={50} max={100} />
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-4">With Buffer Support</h4>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Video Progress (30% played, 60% buffered)</label>
+                        <Slider value={30} buffered={60} max={100} />
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-4">Color Variants</h4>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Primary (theme colors)</label>
+                        <Slider value={50} variant="primary" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Secondary (theme colors)</label>
+                        <Slider value={40} variant="secondary" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Black (with opacity ratios)</label>
+                        <Slider value={75} variant="black" />
+                    </div>
+                    <div class="bg-gray-900 p-4 rounded">
+                        <label class="block text-sm font-medium mb-2 text-white">White (for dark backgrounds)</label>
+                        <Slider value={65} variant="white" />
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-4">Thumb Styles</h4>
+                <div class="space-y-6">
+                    <div>
+                        <h5 class="font-medium mb-3">Outline Thumbs (default)</h5>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-sm text-muted-foreground">Primary outline</label>
+                                <Slider value={50} variant="primary" thumb="outline" />
+                            </div>
+                            <div>
+                                <label class="text-sm text-muted-foreground">Black outline</label>
+                                <Slider value={60} variant="black" thumb="outline" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h5 class="font-medium mb-3">Solid Thumbs</h5>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-sm text-muted-foreground">Primary solid</label>
+                                <Slider value={50} variant="primary" thumb="solid" />
+                            </div>
+                            <div>
+                                <label class="text-sm text-muted-foreground">Black solid</label>
+                                <Slider value={60} variant="black" thumb="solid" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-4">Custom Colors</h4>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Custom red theme</label>
+                        <Slider 
+                            value={40} 
+                            buffered={65} 
+                            trackColor="bg-red-200" 
+                            bufferColor="bg-red-400/60" 
+                            progressColor="bg-red-600" 
+                        />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Custom blue gradient</label>
+                        <Slider 
+                            value={75} 
+                            buffered={90} 
+                            trackColor="bg-blue-100" 
+                            bufferColor="bg-blue-300/70" 
+                            progressColor="bg-gradient-to-r from-blue-500 to-purple-600" 
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-4">Interactive Examples</h4>
+                <div class="space-y-6">
+                    <div x-data="{ volume: 75, isMuted: false }">
+                        <div class="flex items-center gap-3 mb-2">
+                            <label class="text-sm font-medium">Volume Control</label>
+                            <button 
+                                x-on:click="isMuted = !isMuted"
+                                class="px-2 py-1 text-xs bg-secondary rounded hover:bg-secondary/80"
+                                x-text="isMuted ? 'Unmute' : 'Mute'"
+                            ></button>
+                        </div>
+                        <Slider 
+                            x-bind:value="isMuted ? 0 : volume"
+                            x-bind:disabled="isMuted"
+                            variant="primary" 
+                            thumb="solid"
+                            x-on:slider-change="volume = $event.detail.value"
+                        />
+                        <div class="text-xs text-muted-foreground mt-1">
+                            Volume: <span x-text="isMuted ? '0 (Muted)' : Math.round(volume) + '%'"></span>
+                        </div>
+                    </div>
+
+                    <div x-data="{ brightness: 50, contrast: 70 }">
+                        <h5 class="font-medium mb-3">Image Adjustments</h5>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">
+                                    Brightness: <span x-bind:text="Math.round(brightness) + '%'"></span>
+                                </label>
+                                <Slider 
+                                    x-bind:value="brightness"
+                                    variant="secondary"
+                                    x-on:slider-change="brightness = $event.detail.value"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">
+                                    Contrast: <span x-bind:text="Math.round(contrast) + '%'"></span>
+                                </label>
+                                <Slider 
+                                    x-bind:value="contrast"
+                                    variant="secondary"
+                                    x-on:slider-change="contrast = $event.detail.value"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div x-data="{ progress: 25, isPlaying: false, buffer: 45 }">
+                        <h5 class="font-medium mb-3">Video Player Simulation</h5>
+                        <div class="bg-black p-4 rounded">
+                            <div class="flex items-center gap-3 mb-3">
+                                <button 
+                                    x-on:click="isPlaying = !isPlaying"
+                                    class="px-3 py-1 text-sm bg-white text-black rounded hover:bg-gray-100"
+                                    x-text="isPlaying ? 'Pause' : 'Play'"
+                                ></button>
+                                <span class="text-white text-sm">
+                                    <span x-text="Math.floor(progress * 1.2)"></span>:<span x-text="(Math.floor((progress * 1.2) % 1 * 60)).toString().padStart(2, '0')"></span>
+                                    / 2:00
+                                </span>
+                            </div>
+                            <Slider 
+                                x-bind:value="progress"
+                                x-bind:buffered="buffer"
+                                trackColor="bg-white/30" 
+                                bufferColor="bg-white/50" 
+                                progressColor="bg-white" 
+                                thumb="solid"
+                                x-on:slider-change="progress = $event.detail.value"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-4">Disabled State</h4>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Disabled progress indicator</label>
+                        <Slider value={87} variant="primary" disabled={true} thumb="outline" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Disabled with solid thumb</label>
+                        <Slider value={60} variant="primary" disabled={true} thumb="solid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import Slider from '@/components/ui/forms/Slider.astro';
+---
+{/* Basic Usage */}
+<Slider value={50} max={100} />
+
+{/* With Buffer Support */}
+<Slider value={30} buffered={60} max={100} />
+
+{/* Different Variants */}
+<Slider value={50} variant="primary" />
+<Slider value={40} variant="secondary" />
+<Slider value={75} variant="black" />
+<Slider value={65} variant="white" />
+
+{/* Thumb Styles */}
+<Slider value={50} thumb="outline" />  {/* default */}
+<Slider value={60} thumb="solid" />
+
+{/* Custom Colors */}
+<Slider 
+    value={40} 
+    buffered={65} 
+    trackColor="bg-red-200" 
+    bufferColor="bg-red-400/60" 
+    progressColor="bg-red-600" 
+/>
+
+{/* Disabled State */}
+<Slider value={87} disabled={true} />
+
+{/* Alpine.js Integration */}
+<div x-data="{ volume: 75 }">
+    <Slider 
+        x-bind:value="volume"
+        x-on:slider-change="volume = $event.detail.value"
+    />
+    <p x-text="'Volume: ' + Math.round(volume) + '%'"></p>
+</div>
+
+{/* Range and Step */}
+<Slider 
+    value={25} 
+    min={0} 
+    max={200} 
+    step={5}
+    name="custom-range"
+/>`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'primary' | 'secondary' | 'black' | 'white'` | `'primary'` | Color variant for the slider |
+| `className` | `string` | - | Additional CSS classes |
+| `min` | `number` | `0` | Minimum value |
+| `max` | `number` | `100` | Maximum value |
+| `value` | `number` | `0` | Current value |
+| `buffered` | `number` | `0` | Buffered value (for progress indicators) |
+| `step` | `number` | `1` | Step increment |
+| `disabled` | `boolean` | `false` | Whether the slider is disabled |
+| `name` | `string` | - | Name attribute for form submission |
+| `id` | `string` | - | ID attribute |
+| `thumb` | `'solid' | 'outline'` | `'outline'` | Thumb style |
+| `trackColor` | `string` | - | Custom track color (CSS class) |
+| `bufferColor` | `string` | - | Custom buffer color (CSS class) |
+| `progressColor` | `string` | - | Custom progress color (CSS class) |
+
+### Color System
+
+#### Variants
+
+- **primary**: Uses theme colors (`bg-primary`, `bg-secondary`, etc.)
+- **secondary**: Uses secondary theme colors 
+- **black**: Uses black with opacity ratios (30%/50%/100%)
+- **white**: Uses white with opacity ratios (30%/50%/100%)
+
+#### Custom Colors
+
+Override default colors with custom CSS classes:
+
+```astro
+<Slider 
+    trackColor="bg-gray-200"
+    bufferColor="bg-gray-400/50" 
+    progressColor="bg-blue-500"
+/>
+```
+
+### Alpine.js Integration
+
+The component provides comprehensive Alpine.js integration:
+
+#### State Properties
+
+- `currentValue`: Current slider value
+- `bufferedValue`: Buffer value
+- `dragging`: Whether user is currently dragging
+- `disabled`: Disabled state
+
+#### Events
+
+- `slider-change`: Fired when value changes (on mouse up)
+- `slider-drag`: Fired continuously while dragging
+
+#### Methods
+
+- `setCurrentValue(value)`: Programmatically set the value
+- `getCurrentValue()`: Get current value
+- `getCurrentPercentage()`: Get current value as percentage
+
+### Accessibility Features
+
+- Full keyboard navigation support
+- Proper ARIA attributes and roles
+- Screen reader compatibility
+- Focus management with visible focus indicators
+- Semantic HTML with hidden native input for form compatibility
+
+## Usage Examples
+
+### Volume Control
+
+```astro
+<div x-data="{ 
+    volume: 75, 
+    isMuted: false,
+    previousVolume: 75,
+    toggleMute() {
+        if (this.isMuted) {
+            this.volume = this.previousVolume;
+            this.isMuted = false;
+        } else {
+            this.previousVolume = this.volume;
+            this.volume = 0;
+            this.isMuted = true;
+        }
+    }
+}">
+    <div class="flex items-center gap-3 mb-2">
+        <span class="text-sm font-medium">Volume</span>
+        <button 
+            x-on:click="toggleMute()"
+            class="p-1 hover:bg-accent rounded"
+            x-bind:class="isMuted ? 'text-muted-foreground' : ''"
+        >
+            <Icon :name="isMuted ? 'lucide:volume-x' : volume > 50 ? 'lucide:volume-2' : 'lucide:volume-1'" class="w-4 h-4" />
+        </button>
+        <span class="text-sm tabular-nums min-w-[2.5rem]" x-text="Math.round(volume) + '%'"></span>
+    </div>
+    
+    <Slider 
+        x-model="volume"
+        variant="primary"
+        thumb="solid"
+        x-bind:disabled="isMuted"
+        x-on:slider-change="isMuted = false"
+    />
+</div>
+```
+
+### Video Progress Bar
+
+```astro
+<div x-data="{ 
+    currentTime: 45,
+    duration: 180,
+    buffered: 90,
+    isPlaying: false,
+    
+    formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return mins + ':' + secs.toString().padStart(2, '0');
+    },
+    
+    seek(newTime) {
+        this.currentTime = newTime;
+        // Trigger video seek in real implementation
+    }
+}">
+    <div class="bg-gray-900 text-white p-4 rounded-lg">
+        <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+                <button 
+                    x-on:click="isPlaying = !isPlaying"
+                    class="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center"
+                >
+                    <Icon :name="isPlaying ? 'lucide:pause' : 'lucide:play'" class="w-5 h-5" />
+                </button>
+                <div class="text-sm">
+                    <span x-text="formatTime(currentTime)"></span>
+                    <span class="text-white/60"> / </span>
+                    <span x-text="formatTime(duration)"></span>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <Icon name="lucide:volume-2" class="w-4 h-4" />
+                <Slider 
+                    value={75}
+                    variant="white"
+                    thumb="solid"
+                    class="w-20"
+                />
+            </div>
+        </div>
+        
+        <Slider 
+            x-bind:value="currentTime"
+            :buffered="buffered"
+            :max="duration"
+            trackColor="bg-white/20"
+            bufferColor="bg-white/40"
+            progressColor="bg-red-500"
+            thumb="solid"
+            x-on:slider-change="seek($event.detail.value)"
+            x-on:slider-drag="currentTime = $event.detail.value"
+        />
+    </div>
+</div>
+```
+
+### Image Editor Controls
+
+```astro
+<div x-data="{ 
+    brightness: 100,
+    contrast: 100,
+    saturation: 100,
+    
+    get filterStyle() {
+        return `brightness(${this.brightness}%) contrast(${this.contrast}%) saturate(${this.saturation}%)`;
+    },
+    
+    resetAll() {
+        this.brightness = 100;
+        this.contrast = 100;
+        this.saturation = 100;
+    }
+}">
+    <div class="space-y-6">
+        <div class="aspect-video bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg overflow-hidden">
+            <img 
+                src="https://picsum.photos/600/400" 
+                :style="'filter: ' + filterStyle"
+                class="w-full h-full object-cover transition-all duration-200"
+                alt="Sample image"
+            />
+        </div>
+        
+        <div class="space-y-4">
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label class="text-sm font-medium">Brightness</label>
+                    <span class="text-sm text-muted-foreground tabular-nums" x-text="brightness + '%'"></span>
+                </div>
+                <Slider 
+                    x-model="brightness"
+                    :min="0"
+                    :max="200"
+                    variant="secondary"
+                />
+            </div>
+            
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label class="text-sm font-medium">Contrast</label>
+                    <span class="text-sm text-muted-foreground tabular-nums" x-text="contrast + '%'"></span>
+                </div>
+                <Slider 
+                    x-model="contrast"
+                    :min="0"
+                    :max="200"
+                    variant="secondary"
+                />
+            </div>
+            
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label class="text-sm font-medium">Saturation</label>
+                    <span class="text-sm text-muted-foreground tabular-nums" x-text="saturation + '%'"></span>
+                </div>
+                <Slider 
+                    x-model="saturation"
+                    :min="0"
+                    :max="200"
+                    variant="secondary"
+                />
+            </div>
+            
+            <div class="flex justify-between pt-2">
+                <button 
+                    x-on:click="resetAll()"
+                    class="px-3 py-1 text-sm bg-muted text-muted-foreground rounded hover:bg-muted/80"
+                >
+                    Reset All
+                </button>
+                <div class="text-xs text-muted-foreground space-x-2">
+                    <span>B: <span x-text="brightness"></span>%</span>
+                    <span>C: <span x-text="contrast"></span>%</span>
+                    <span>S: <span x-text="saturation"></span>%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Range Selector
+
+```astro
+<div x-data="{ 
+    minValue: 25,
+    maxValue: 75,
+    rangeMin: 0,
+    rangeMax: 100,
+    
+    get selectedRange() {
+        return this.maxValue - this.minValue;
+    }
+}">
+    <div class="space-y-4">
+        <h4 class="font-medium">Price Range Selector</h4>
+        
+        <div class="relative">
+            <div class="flex justify-between text-sm text-muted-foreground mb-2">
+                <span>$0</span>
+                <span>$100</span>
+            </div>
+            
+            {/* Min value slider */}
+            <div class="mb-2">
+                <Slider 
+                    x-model="minValue"
+                    :min="rangeMin"
+                    :max="maxValue - 1"
+                    variant="primary"
+                    progressColor="bg-primary/30"
+                />
+            </div>
+            
+            {/* Max value slider */}
+            <div>
+                <Slider 
+                    x-model="maxValue"
+                    :min="minValue + 1"
+                    :max="rangeMax"
+                    variant="primary"
+                />
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center text-sm">
+            <div>
+                Range: $<span x-text="minValue"></span> - $<span x-text="maxValue"></span>
+            </div>
+            <div class="text-muted-foreground">
+                Span: $<span x-text="selectedRange"></span>
+            </div>
+        </div>
+    </div>
+</div>
+```

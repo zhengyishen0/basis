@@ -1,0 +1,103 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+    Accordion,
+    AccordionItem,
+    AccordionItems,
+    AccordionTrigger,
+    AccordionContent,
+} from '@/components/ui/display/accordion';
+import Text from '@/components/ui/display/Text.astro';
+
+const faqData = [
+    {
+        id: 'faq-1',
+        question: 'What is this accordion?',
+        answer: 'This is a composable accordion component built with Alpine.js and Astro.',
+    },
+    {
+        id: 'faq-2',
+        question: 'How do I use it?',
+        answer: 'Import the components and pass data through x-for loops or use static content.',
+    },
+    {
+        id: 'faq-3',
+        question: 'Can I customize it?',
+        answer: 'Yes, you can pass className props and use different icon types.',
+    },
+];
+---
+
+<Layout title="Composable Accordion Demo">
+    <div class="min-h-screen bg-gray-50 py-12">
+        <div class="max-w-2xl mx-auto px-6 space-y-12">
+            <Text variant="page-title" class="mb-8"> Accordion Demo </Text>
+
+            <!-- Dynamic x-for Example using AccordionItems -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-semibold">
+                    Dynamic Accordion (x-for)
+                </h2>
+                <div x-data={`{items: ${JSON.stringify(faqData)}}`}>
+                    <Accordion>
+                        <AccordionItems x-for="item in items" x-key="item.id">
+                            <AccordionTrigger iconType="chevron">
+                                <span x-text="item.question"></span>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                                <span x-text="item.answer"></span>
+                            </AccordionContent>
+                        </AccordionItems>
+                    </Accordion>
+                </div>
+            </section>
+
+            <!-- Static Example using individual AccordionItem -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-semibold">Static Accordion</h2>
+                <Accordion>
+                    <AccordionItem id="static-1">
+                        <AccordionTrigger iconType="plus">
+                            What makes this better?
+                        </AccordionTrigger>
+                        <AccordionContent>
+                            The wrapper pattern eliminates code duplication
+                            while keeping clean usage patterns.
+                        </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem id="static-2">
+                        <AccordionTrigger iconType="plus">
+                            How does the wrapper work?
+                        </AccordionTrigger>
+                        <AccordionContent>
+                            The AccordionItems wrapper handles the x-for logic
+                            and generates proper IDs for dynamic content.
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+            </section>
+
+            <!-- Static Multiple Items Example -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-semibold">
+                    Multiple Static Items (.map)
+                </h2>
+                <Accordion>
+                    {
+                        faqData.map(item => (
+                            <AccordionItem id={item.id}>
+                                <AccordionTrigger iconType="chevron">
+                                    {item.question}
+                                </AccordionTrigger>
+                                <AccordionContent>
+                                    {item.answer}
+                                </AccordionContent>
+                            </AccordionItem>
+                        ))
+                    }
+                </Accordion>
+            </section>
+        </div>
+    </div>
+</Layout>

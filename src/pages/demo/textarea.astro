@@ -1,0 +1,69 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Textarea from '@/components/ui/forms/Textarea.astro';
+import { Column } from '@/components/ui/layout';
+---
+
+<Layout title="Textarea Demo">
+  <Column gap="lg" class="max-w-2xl mx-auto p-8">
+    <h1 class="text-3xl font-bold">Textarea Component Demo</h1>
+    
+    <div class="space-y-6">
+      <!-- Basic Textarea -->
+      <div>
+        <h2 class="text-xl font-semibold mb-2">Basic Textarea</h2>
+        <Textarea placeholder="Enter your message here..." rows={4} />
+      </div>
+
+      <!-- Auto-resize Textarea -->
+      <div>
+        <h2 class="text-xl font-semibold mb-2">Auto-resize Textarea</h2>
+        <Textarea 
+          autoResize 
+          placeholder="This textarea will grow as you type..." 
+          rows={3}
+        />
+      </div>
+
+      <!-- Disabled Textarea -->
+      <div>
+        <h2 class="text-xl font-semibold mb-2">Disabled Textarea</h2>
+        <Textarea 
+          disabled 
+          value="This textarea is disabled"
+          placeholder="Disabled placeholder"
+        />
+      </div>
+
+      <!-- With Alpine.js integration -->
+      <div>
+        <h2 class="text-xl font-semibold mb-2">With Alpine.js Integration</h2>
+        <div x-data="{ message: 'Hello Alpine!' }">
+          <Textarea 
+            x-model="message"
+            placeholder="Type something..."
+            rows={3}
+          />
+          <p class="mt-2 text-sm text-gray-600">
+            Message: <span x-text="message"></span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Custom styling -->
+      <div>
+        <h2 class="text-xl font-semibold mb-2">Custom Styling</h2>
+        <Textarea 
+          placeholder="Custom styled textarea"
+          className="border-2 border-blue-500 rounded-xl"
+          rows={3}
+        />
+      </div>
+    </div>
+  </Column>
+</Layout>
+
+<script>
+  // Test auto-initialization
+  console.log('Textarea demo page loaded');
+</script>

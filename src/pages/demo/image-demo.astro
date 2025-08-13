@@ -1,0 +1,347 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Image from '@/components/ui/display/Image.astro';
+---
+
+<Layout title="Image Component Demo">
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div class="container mx-auto px-6 py-12">
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">Image Component</h1>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          A flexible image component with aspect ratios, object fit options, overlays, and Alpine.js integration
+        </p>
+      </div>
+
+      <div class="max-w-7xl mx-auto space-y-20">
+        <!-- Basic Usage -->
+        <section class="space-y-8">
+          <div class="text-center">
+            <h2 class="text-3xl font-semibold text-gray-900 mb-3">Basic Usage</h2>
+            <p class="text-lg text-gray-600">Simple image with automatic sizing</p>
+          </div>
+          <div class="flex justify-center">
+            <Image 
+              src="https://picsum.photos/600/400" 
+              alt="Beautiful landscape"
+              class="rounded-lg shadow-md max-w-lg"
+            />
+          </div>
+        </section>
+
+        <!-- Aspect Ratios -->
+        <section class="space-y-8">
+          <div class="text-center">
+            <h2 class="text-3xl font-semibold text-gray-900 mb-3">Aspect Ratios</h2>
+            <p class="text-lg text-gray-600">Control image proportions with predefined ratios</p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+            <div class="text-center space-y-4">
+              <Image 
+                src="https://picsum.photos/400/300" 
+                alt="Auto aspect ratio"
+                aspectRatio="auto"
+                class="w-full rounded-lg shadow-sm"
+              />
+              <div>
+                <p class="font-semibold text-gray-900 text-lg">Auto</p>
+                <p class="text-gray-500">Natural ratio</p>
+              </div>
+            </div>
+            <div class="text-center space-y-4">
+              <Image 
+                src="https://picsum.photos/400/400" 
+                alt="Square aspect ratio"
+                aspectRatio="1/1"
+                class="w-full rounded-lg shadow-sm"
+              />
+              <div>
+                <p class="font-semibold text-gray-900 text-lg">Square</p>
+                <p class="text-gray-500">1:1 ratio</p>
+              </div>
+            </div>
+            <div class="text-center space-y-4">
+              <Image 
+                src="https://picsum.photos/400/225" 
+                alt="Video aspect ratio"
+                aspectRatio="16/9"
+                class="w-full rounded-lg shadow-sm"
+              />
+              <div>
+                <p class="font-semibold text-gray-900 text-lg">Video</p>
+                <p class="text-gray-500">16:9 ratio</p>
+              </div>
+            </div>
+            <div class="text-center space-y-4">
+              <Image 
+                src="https://picsum.photos/400/300" 
+                alt="Photo aspect ratio"
+                aspectRatio="4/3"
+                class="w-full rounded-lg shadow-sm"
+              />
+              <div>
+                <p class="font-semibold text-gray-900 text-lg">Photo</p>
+                <p class="text-gray-500">4:3 ratio</p>
+              </div>
+            </div>
+            <div class="text-center space-y-4">
+              <Image 
+                src="https://picsum.photos/300/200" 
+                alt="Wide aspect ratio"
+                aspectRatio="3/2"
+                class="w-full rounded-lg shadow-sm"
+              />
+              <div>
+                <p class="font-semibold text-gray-900 text-lg">Wide</p>
+                <p class="text-gray-500">3:2 ratio</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Shapes -->
+        <section class="space-y-8">
+          <div class="text-center">
+            <h2 class="text-3xl font-semibold text-gray-900 mb-3">Shape Options</h2>
+            <p class="text-lg text-gray-600">Control border radius and image shape</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div class="text-center space-y-4">
+              <Image 
+                src="https://picsum.photos/400/400" 
+                alt="Rectangle shape"
+                aspectRatio="1/1"
+                shape="rectangle"
+                class="w-48 mx-auto shadow-sm"
+              />
+              <div>
+                <p class="font-semibold text-gray-900 text-lg">Rectangle</p>
+                <p class="text-gray-500">Sharp corners</p>
+              </div>
+            </div>
+            <div class="text-center space-y-4">
+              <Image 
+                src="https://picsum.photos/400/400" 
+                alt="Rounded shape"
+                aspectRatio="1/1"
+                shape="rounded"
+                class="w-48 mx-auto shadow-sm"
+              />
+              <div>
+                <p class="font-semibold text-gray-900 text-lg">Rounded</p>
+                <p class="text-gray-500">Rounded corners</p>
+              </div>
+            </div>
+            <div class="text-center space-y-4">
+              <Image 
+                src="https://picsum.photos/400/400" 
+                alt="Pill shape"
+                aspectRatio="1/1"
+                shape="pill"
+                class="w-48 mx-auto shadow-sm"
+              />
+              <div>
+                <p class="font-semibold text-gray-900 text-lg">Pill</p>
+                <p class="text-gray-500">Fully rounded</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Object Fit -->
+        <section class="space-y-8">
+          <div class="text-center">
+            <h2 class="text-3xl font-semibold text-gray-900 mb-3">Object Fit Options</h2>
+            <p class="text-lg text-gray-600">Control how images fit within their containers</p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+            <div class="text-center space-y-4">
+              <Image 
+                src="https://picsum.photos/600/300" 
+                alt="Object fit cover"
+                aspectRatio="1/1"
+                objectFit="cover"
+                class="w-full rounded-lg shadow-sm"
+              />
+              <div>
+                <p class="font-semibold text-gray-900 text-lg">Cover</p>
+                <p class="text-gray-500">Fills container</p>
+              </div>
+            </div>
+            <div class="text-center space-y-4">
+              <Image 
+                src="https://picsum.photos/600/300" 
+                alt="Object fit contain"
+                aspectRatio="1/1"
+                objectFit="contain"
+                class="w-full rounded-lg shadow-sm bg-gray-100"
+              />
+              <div>
+                <p class="font-semibold text-gray-900 text-lg">Contain</p>
+                <p class="text-gray-500">Fits entirely</p>
+              </div>
+            </div>
+            <div class="text-center space-y-4">
+              <Image 
+                src="https://picsum.photos/600/300" 
+                alt="Object fit fill"
+                aspectRatio="1/1"
+                objectFit="fill"
+                class="w-full rounded-lg shadow-sm"
+              />
+              <div>
+                <p class="font-semibold text-gray-900 text-lg">Fill</p>
+                <p class="text-gray-500">Stretches</p>
+              </div>
+            </div>
+            <div class="text-center space-y-4">
+              <Image 
+                src="https://picsum.photos/600/300" 
+                alt="Object fit none"
+                aspectRatio="1/1"
+                objectFit="none"
+                class="w-full rounded-lg shadow-sm bg-gray-100"
+              />
+              <div>
+                <p class="font-semibold text-gray-900 text-lg">None</p>
+                <p class="text-gray-500">Natural size</p>
+              </div>
+            </div>
+            <div class="text-center space-y-4">
+              <Image 
+                src="https://picsum.photos/100/50" 
+                alt="Object fit scale down"
+                aspectRatio="1/1"
+                objectFit="scaleDown"
+                class="w-full rounded-lg shadow-sm bg-gray-100"
+              />
+              <div>
+                <p class="font-semibold text-gray-900 text-lg">Scale Down</p>
+                <p class="text-gray-500">Smaller only</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Overlays -->
+        <section class="space-y-8">
+          <div class="text-center">
+            <h2 class="text-3xl font-semibold text-gray-900 mb-3">Overlay Effects</h2>
+            <p class="text-lg text-gray-600">Add overlays and content on top of images</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div class="space-y-4">
+              <Image 
+                src="https://picsum.photos/600/400" 
+                alt="Gradient overlay"
+                aspectRatio="4/3"
+                overlay="bg-gradient-to-t from-black/70 via-black/20 to-transparent"
+                class="w-full rounded-lg shadow-md"
+              >
+                <div class="absolute bottom-4 left-4 text-white">
+                  <h3 class="text-lg font-semibold">Gradient Overlay</h3>
+                  <p class="text-sm opacity-90">Perfect for text readability</p>
+                </div>
+              </Image>
+              <p class="text-center text-gray-600 font-medium">Gradient overlay for text</p>
+            </div>
+
+            <div class="space-y-4">
+              <Image 
+                src="https://picsum.photos/600/400" 
+                alt="Color overlay"
+                aspectRatio="4/3"
+                overlay="bg-blue-600/30"
+                class="w-full rounded-lg shadow-md"
+              >
+                <div class="absolute inset-0 flex items-center justify-center text-white">
+                  <div class="text-center">
+                    <h3 class="text-lg font-semibold">Color Tint</h3>
+                    <p class="text-sm">Brand color overlay</p>
+                  </div>
+                </div>
+              </Image>
+              <p class="text-center text-gray-600 font-medium">Solid color overlay</p>
+            </div>
+
+            <div class="space-y-4">
+              <Image 
+                src="https://picsum.photos/600/400" 
+                alt="Hover overlay"
+                aspectRatio="4/3"
+                class="w-full rounded-lg shadow-md group cursor-pointer"
+              >
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 flex items-center justify-center rounded-lg">
+                  <div class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center">
+                    <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
+                    <p class="text-sm">Hover to interact</p>
+                  </div>
+                </div>
+              </Image>
+              <p class="text-center text-gray-600 font-medium">Interactive hover effect</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Alpine.js Integration -->
+        <section class="space-y-8">
+          <div class="text-center">
+            <h2 class="text-3xl font-semibold text-gray-900 mb-3">Alpine.js Integration</h2>
+            <p class="text-lg text-gray-600">Dynamic image switching with smooth transitions</p>
+          </div>
+          <div x-data="{ 
+            currentImage: 'https://picsum.photos/600/400',
+            currentLabel: 'Landscape'
+          }" class="space-y-8">
+            <div class="flex flex-wrap justify-center gap-4">
+              <button 
+                @click="currentImage = 'https://picsum.photos/600/400'; currentLabel = 'Landscape'"
+                class="px-8 py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors shadow-md text-lg font-medium"
+                :class="{ 'ring-2 ring-blue-300 bg-blue-600': currentLabel === 'Landscape' }"
+              >
+                🏞️ Landscape
+              </button>
+              <button 
+                @click="currentImage = 'https://picsum.photos/400/600'; currentLabel = 'Portrait'"
+                class="px-8 py-4 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors shadow-md text-lg font-medium"
+                :class="{ 'ring-2 ring-green-300 bg-green-600': currentLabel === 'Portrait' }"
+              >
+                📸 Portrait
+              </button>
+              <button 
+                @click="currentImage = 'https://picsum.photos/500/500'; currentLabel = 'Square'"
+                class="px-8 py-4 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors shadow-md text-lg font-medium"
+                :class="{ 'ring-2 ring-purple-300 bg-purple-600': currentLabel === 'Square' }"
+              >
+                ⬜ Square
+              </button>
+            </div>
+            
+            <div class="flex justify-center">
+              <div class="space-y-4">
+                <div 
+                  class="relative overflow-hidden aspect-[4/3] w-96 rounded-lg shadow-lg transition-all duration-500"
+                  x-transition:enter="transition ease-out duration-300"
+                  x-transition:enter-start="opacity-0 scale-95"
+                  x-transition:enter-end="opacity-100 scale-100"
+                >
+                  <img 
+                    :src="currentImage"
+                    alt="Dynamic image"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <p class="text-center text-gray-600 text-lg font-medium" x-text="`Current: ${currentLabel}`"></p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</Layout>

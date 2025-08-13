@@ -1,0 +1,492 @@
+---
+title: Select
+description: Dropdown select component with popup-based design, keyboard navigation, and grouping support
+category: forms
+order: 5
+---
+
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectItems, SelectGroup, SelectGroups } from '@/components/ui/forms/select';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+import { Icon } from 'astro-icon/components';
+
+## Overview
+
+The Select component provides a dropdown selection interface built on top of the Popup component. Features keyboard navigation, smart positioning, grouping support, and seamless Alpine.js integration for reactive behavior.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-6">
+        <div class="space-y-6">
+            <div>
+                <h4 class="font-medium mb-3">Basic Select</h4>
+                <div x-data="{
+                    selectedValue: 'apple',
+                    selectedLabel: 'Apple'
+                }">
+                    <Select>
+                        <SelectTrigger variant="button" class="w-48 justify-between">
+                            <span x-text="selectedLabel" class="flex-1 text-left"></span>
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </SelectTrigger>
+                        <SelectContent role="listbox" class="w-48">
+                            <SelectItem value="apple" label="Apple" />
+                            <SelectItem value="banana" label="Banana" />
+                            <SelectItem value="orange" label="Orange" />
+                            <SelectItem value="grape" label="Grape" />
+                        </SelectContent>
+                    </Select>
+                    <div class="mt-2 text-sm text-muted-foreground">
+                        Selected: <span x-text="selectedValue" class="font-mono text-primary"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-3">Grouped Options</h4>
+                <div x-data="{
+                    selectedValue: 'chrome',
+                    selectedLabel: 'Chrome'
+                }">
+                    <Select>
+                        <SelectTrigger variant="button" class="w-56 justify-between">
+                            <span x-text="selectedLabel" class="flex-1 text-left"></span>
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </SelectTrigger>
+                        <SelectContent role="listbox" class="w-56">
+                            <SelectGroup x-text="'Desktop Browsers'">
+                                <SelectItem value="chrome" label="Chrome" />
+                                <SelectItem value="firefox" label="Firefox" />
+                                <SelectItem value="safari" label="Safari" />
+                            </SelectGroup>
+                            <SelectGroup x-text="'Mobile Browsers'">
+                                <SelectItem value="chrome-mobile" label="Chrome Mobile" />
+                                <SelectItem value="safari-mobile" label="Safari Mobile" />
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <div class="mt-2 text-sm text-muted-foreground">
+                        Selected: <span x-text="selectedValue" class="font-mono text-primary"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-3">Dynamic Options</h4>
+                <div x-data="{
+                    selectedValue: 'js',
+                    selectedLabel: 'JavaScript',
+                    languages: [
+                        { value: 'js', label: 'JavaScript' },
+                        { value: 'ts', label: 'TypeScript' },
+                        { value: 'py', label: 'Python' },
+                        { value: 'java', label: 'Java' },
+                        { value: 'rust', label: 'Rust' }
+                    ]
+                }">
+                    <label class="block text-sm font-medium mb-2">Programming Language</label>
+                    <Select>
+                        <SelectTrigger variant="button" class="w-full justify-between">
+                            <span x-text="selectedLabel" class="flex-1 text-left"></span>
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </SelectTrigger>
+                        <SelectContent role="listbox">
+                            <SelectItems x-for="item in languages" />
+                        </SelectContent>
+                    </Select>
+                    <div class="mt-2 text-sm text-muted-foreground">
+                        Selected: <span x-text="selectedValue" class="font-mono text-primary"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-3">Grouped Dynamic Options</h4>
+                <div x-data="{
+                    selectedValue: 'chrome',
+                    selectedLabel: 'Chrome',
+                    browserGroups: [
+                        {
+                            heading: 'Desktop Browsers',
+                            items: [
+                                { value: 'chrome', label: 'Chrome' },
+                                { value: 'firefox', label: 'Firefox' },
+                                { value: 'safari', label: 'Safari' }
+                            ]
+                        },
+                        {
+                            heading: 'Mobile Browsers',
+                            items: [
+                                { value: 'chrome-mobile', label: 'Chrome Mobile' },
+                                { value: 'safari-mobile', label: 'Safari Mobile' }
+                            ]
+                        }
+                    ]
+                }">
+                    <label class="block text-sm font-medium mb-2">Browser Selection</label>
+                    <Select>
+                        <SelectTrigger variant="button" class="w-full justify-between">
+                            <span x-text="selectedLabel" class="flex-1 text-left"></span>
+                            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                        </SelectTrigger>
+                        <SelectContent role="listbox">
+                            <SelectGroups
+                                x-for="group in browserGroups"
+                                x-key="group.heading"
+                                x-text="group.heading"
+                            >
+                                <SelectItems x-for="item in group.items" />
+                            </SelectGroups>
+                        </SelectContent>
+                    </Select>
+                    <div class="mt-2 text-sm text-muted-foreground">
+                        Selected: <span x-text="selectedValue" class="font-mono text-primary"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import { 
+    Select, 
+    SelectTrigger, 
+    SelectContent, 
+    SelectItem,
+    SelectItems,
+    SelectGroup,
+    SelectGroups 
+} from '@/components/ui/forms/select';
+import { Icon } from 'astro-icon/components';
+---
+{/* Basic Select */}
+<div x-data="{ selectedValue: 'apple', selectedLabel: 'Apple' }">
+    <Select>
+        <SelectTrigger variant="button" class="w-48 justify-between">
+            <span x-text="selectedLabel"></span>
+            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+        </SelectTrigger>
+        <SelectContent role="listbox">
+            <SelectItem value="apple" label="Apple" />
+            <SelectItem value="banana" label="Banana" />
+            <SelectItem value="orange" label="Orange" />
+        </SelectContent>
+    </Select>
+</div>
+
+{/* Grouped Options */}
+<Select>
+    <SelectTrigger variant="button" class="w-56">
+        <span x-text="selectedLabel"></span>
+        <Icon name="lucide:chevron-down" class="w-4 h-4" />
+    </SelectTrigger>
+    <SelectContent role="listbox">
+        <SelectGroup x-text="'Desktop Browsers'">
+            <SelectItem value="chrome" label="Chrome" />
+            <SelectItem value="firefox" label="Firefox" />
+        </SelectGroup>
+        <SelectGroup x-text="'Mobile Browsers'">
+            <SelectItem value="chrome-mobile" label="Chrome Mobile" />
+        </SelectGroup>
+    </SelectContent>
+</Select>
+
+{/* Dynamic Options */}
+<div x-data="{
+    selectedValue: 'js',
+    selectedLabel: 'JavaScript',
+    languages: [
+        { value: 'js', label: 'JavaScript' },
+        { value: 'py', label: 'Python' }
+    ]
+}">
+    <Select>
+        <SelectTrigger variant="button">
+            <span x-text="selectedLabel"></span>
+            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+        </SelectTrigger>
+        <SelectContent role="listbox">
+            <SelectItems x-for="item in languages" />
+        </SelectContent>
+    </Select>
+</div>`} />
+    </TabsContent>
+</Tabs>
+
+## Components
+
+### Select
+
+The root component that manages select state and provides context for child components.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | - | Additional CSS classes |
+
+#### Alpine.js State
+
+Automatically provides the following reactive state:
+- `selectedValue`: Currently selected option value
+- `selectedLabel`: Currently selected option label
+
+### SelectTrigger
+
+The clickable element that triggers the dropdown. Built on PopupTrigger.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'default' | 'button' | 'ghost' | 'link'` | `'default'` | Visual style variant |
+| `className` | `string` | - | Additional CSS classes |
+
+#### Slots
+
+| Slot | Description |
+|------|-------------|
+| Default | Trigger content (typically selected value and icon) |
+
+### SelectContent
+
+The dropdown content container with smooth animations. Built on PopupContent.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `theme` | `'default' | 'dark' | 'minimal'` | `'default'` | Visual theme |
+| `placement` | `'top' | 'bottom' | 'left' | 'right'` | `'bottom'` | Dropdown position |
+| `role` | `string` | `'dialog'` | ARIA role attribute |
+| `className` | `string` | - | Additional CSS classes |
+
+#### Slots
+
+| Slot | Description |
+|------|-------------|
+| Default | Dropdown content (SelectItems, SelectGroups, etc.) |
+
+### SelectItem
+
+Individual selectable option with hover and selected states.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | - | **Required.** Option value |
+| `label` | `string` | `value` | Display label for the option |
+| `disabled` | `boolean` | `false` | Whether the option is disabled |
+| `class` | `string` | - | Additional CSS classes |
+
+#### Slots
+
+| Slot | Description |
+|------|-------------|
+| Default | Custom option content (overrides `label` prop) |
+
+### SelectItems
+
+Template component for rendering dynamic options using Alpine.js `x-for` directive.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `x-for` | `string` | - | **Required.** Alpine.js x-for expression |
+| `x-key` | `string` | `'item.value'` | Key for x-for iteration |
+| `class` | `string` | - | Additional CSS classes |
+
+### SelectGroup
+
+Container for grouping related options with an optional heading.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `x-text` | `string` | - | Dynamic text binding for group heading |
+| `className` | `string` | - | Additional CSS classes |
+
+#### Slots
+
+| Slot | Description |
+|------|-------------|
+| Default | Group content (SelectItems) |
+
+### SelectGroups
+
+Template component for rendering dynamic groups using Alpine.js `x-for` directive.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `x-for` | `string` | - | **Required.** Alpine.js x-for expression |
+| `x-key` | `string` | `'group.id'` | Key for x-for iteration |
+| `x-text` | `string` | - | Dynamic text binding for group headings |
+| `className` | `string` | - | Additional CSS classes |
+
+## Alpine.js Integration
+
+The Select component automatically manages state and provides the following reactive properties:
+
+- `selectedValue`: Current selected option value
+- `selectedLabel`: Current selected option label
+- `close()`: Method to close the dropdown
+
+## Usage Examples
+
+### Form Integration
+
+```astro
+<form method="POST">
+    <div class="space-y-4">
+        <div>
+            <label class="block text-sm font-medium mb-2">Country</label>
+            <div x-data="{ selectedValue: '', selectedLabel: 'Select a country' }">
+                <Select>
+                    <SelectTrigger variant="button" class="w-full justify-between">
+                        <span x-text="selectedLabel" class="flex-1 text-left"></span>
+                        <Icon name="lucide:chevron-down" class="w-4 h-4" />
+                    </SelectTrigger>
+                    <SelectContent role="listbox">
+                        <SelectItem value="us" label="United States" />
+                        <SelectItem value="ca" label="Canada" />
+                        <SelectItem value="mx" label="Mexico" />
+                    </SelectContent>
+                </Select>
+                <input type="hidden" name="country" x-bind:value="selectedValue" />
+            </div>
+        </div>
+        
+        <button type="submit">Submit</button>
+    </div>
+</form>
+```
+
+### Multi-Select Simulation
+
+```astro
+<div x-data="{
+    selectedItems: [],
+    availableItems: [
+        { value: 'js', label: 'JavaScript' },
+        { value: 'py', label: 'Python' },
+        { value: 'rust', label: 'Rust' }
+    ],
+    toggleItem(value, label) {
+        const index = this.selectedItems.findIndex(item => item.value === value);
+        if (index > -1) {
+            this.selectedItems.splice(index, 1);
+        } else {
+            this.selectedItems.push({ value, label });
+        }
+    },
+    isSelected(value) {
+        return this.selectedItems.some(item => item.value === value);
+    }
+}">
+    <div class="space-y-2">
+        <div x-show="selectedItems.length > 0" class="flex flex-wrap gap-1">
+            <template x-for="item in selectedItems" x-key="item.value">
+                <span class="inline-flex items-center gap-1 px-2 py-1 bg-primary text-primary-foreground text-xs rounded">
+                    <span x-text="item.label"></span>
+                    <button x-on:click="toggleItem(item.value, item.label)" class="hover:bg-primary-foreground/20 rounded">
+                        <Icon name="lucide:x" class="w-3 h-3" />
+                    </button>
+                </span>
+            </template>
+        </div>
+        
+        <Select>
+            <SelectTrigger variant="button" class="w-full justify-between">
+                <span x-text="selectedItems.length > 0 ? selectedItems.length + ' selected' : 'Select languages'"></span>
+                <Icon name="lucide:chevron-down" class="w-4 h-4" />
+            </SelectTrigger>
+            <SelectContent role="listbox">
+                <template x-for="item in availableItems" x-key="item.value">
+                    <div 
+                        x-on:click="toggleItem(item.value, item.label)"
+                        class="flex items-center gap-2 px-3 py-2 hover:bg-accent cursor-pointer"
+                        x-bind:class="isSelected(item.value) ? 'bg-accent text-accent-foreground' : ''"
+                    >
+                        <div class="w-4 h-4 flex items-center justify-center">
+                            <Icon x-show="isSelected(item.value)" name="lucide:check" class="w-3 h-3" />
+                        </div>
+                        <span x-text="item.label"></span>
+                    </div>
+                </template>
+            </SelectContent>
+        </Select>
+    </div>
+</div>
+```
+
+### Searchable Select
+
+```astro
+<div x-data="{
+    selectedValue: '',
+    selectedLabel: 'Select option',
+    searchQuery: '',
+    allOptions: [
+        { value: 'apple', label: 'Apple' },
+        { value: 'banana', label: 'Banana' },
+        { value: 'cherry', label: 'Cherry' },
+        { value: 'date', label: 'Date' },
+        { value: 'elderberry', label: 'Elderberry' }
+    ],
+    get filteredOptions() {
+        return this.allOptions.filter(option =>
+            option.label.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
+    }
+}">
+    <Select>
+        <SelectTrigger variant="button" class="w-full justify-between">
+            <span x-text="selectedLabel" class="flex-1 text-left"></span>
+            <Icon name="lucide:chevron-down" class="w-4 h-4" />
+        </SelectTrigger>
+        <SelectContent role="listbox">
+            <div class="p-2">
+                <input
+                    type="text"
+                    x-model="searchQuery"
+                    placeholder="Search options..."
+                    class="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-primary"
+                    x-on:click="$event.stopPropagation()"
+                />
+            </div>
+            <div x-show="filteredOptions.length === 0" class="px-3 py-2 text-sm text-muted-foreground">
+                No options found
+            </div>
+            <template x-for="option in filteredOptions" x-key="option.value">
+                <div
+                    x-on:click="selectedValue = option.value; selectedLabel = option.label; close()"
+                    class="px-3 py-2 hover:bg-accent cursor-pointer text-sm"
+                    x-bind:class="selectedValue === option.value ? 'bg-accent text-accent-foreground' : ''"
+                >
+                    <span x-text="option.label"></span>
+                </div>
+            </template>
+        </SelectContent>
+    </Select>
+</div>
+```
+
+## Accessibility Features
+
+- Full keyboard navigation support
+- Proper ARIA attributes and roles
+- Screen reader compatibility
+- Focus management with visible indicators
+- Escape key to close dropdown
+- Click outside to dismiss

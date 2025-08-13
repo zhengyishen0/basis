@@ -1,0 +1,171 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Checkbox from '@/components/ui/forms/Checkbox.astro';
+---
+
+<Layout title="Checkbox Component Demo">
+  <main class="min-h-screen bg-background py-8">
+    <div class="max-w-4xl mx-auto px-6 space-y-12">
+      
+      <!-- Header -->
+      <div class="text-center space-y-4">
+        <div class="mb-8">
+          <a 
+            href="/demo"
+            class="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Back to Demos
+          </a>
+        </div>
+        <h1 class="text-4xl font-bold text-foreground">Checkbox Component</h1>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Simple checkbox with primary border, visible checkmark, smooth animations, and Alpine.js integration
+        </p>
+      </div>
+      
+      <div class="space-y-8">
+        <!-- Basic Usage -->
+        <div class="bg-card border border-border rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-card-foreground mb-4">Basic Usage</h3>
+          <div class="space-y-4">
+            <Checkbox label="Accept terms and conditions" />
+            <Checkbox label="Subscribe to newsletter" checked={true} />
+            <Checkbox label="Remember my preferences" />
+          </div>
+        </div>
+        
+        <!-- Checked States -->
+        <div class="bg-card border border-border rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-card-foreground mb-4">Checked States</h3>
+          <div class="space-y-4">
+            <Checkbox label="Unchecked checkbox" />
+            <Checkbox label="Checked checkbox" checked={true} />
+            <Checkbox label="Another option" />
+          </div>
+        </div>
+        
+        <!-- Disabled State -->
+        <div class="bg-card border border-border rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-card-foreground mb-4">Disabled State</h3>
+          <div class="space-y-4">
+            <Checkbox label="Disabled unchecked" disabled={true} />
+            <Checkbox label="Disabled checked" disabled={true} checked={true} />
+            <Checkbox label="Another disabled option" disabled={true} />
+          </div>
+        </div>
+        
+        <!-- Interactive Demo -->
+        <div class="bg-card border border-border rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-card-foreground mb-4">Interactive Demo</h3>
+          <div 
+            x-data="{
+              notifications: false,
+              marketing: true,
+              analytics: false,
+              darkMode: false
+            }"
+            class="space-y-4"
+          >
+            <Checkbox 
+              label="Enable notifications" 
+              x-model="notifications"
+            />
+            <Checkbox 
+              label="Marketing emails" 
+              x-model="marketing"
+            />
+            <Checkbox 
+              label="Analytics tracking" 
+              x-model="analytics"
+            />
+            <Checkbox 
+              label="Dark mode" 
+              x-model="darkMode"
+            />
+            
+            <!-- State Display -->
+            <div class="mt-6 p-4 bg-muted rounded-lg">
+              <h4 class="font-medium text-muted-foreground mb-2">Current State:</h4>
+              <div class="text-sm font-mono space-y-1">
+                <div>notifications: <span x-text="notifications" class="text-primary"></span></div>
+                <div>marketing: <span x-text="marketing" class="text-primary"></span></div>
+                <div>analytics: <span x-text="analytics" class="text-primary"></span></div>
+                <div>darkMode: <span x-text="darkMode" class="text-primary"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Animation Showcase -->
+        <div class="bg-card border border-border rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-card-foreground mb-4">Animation Showcase</h3>
+          <div 
+            x-data="{ 
+              demo1: false, 
+              demo2: false, 
+              demo3: false,
+              toggleAll() {
+                this.demo1 = !this.demo1;
+                setTimeout(() => this.demo2 = !this.demo2, 150);
+                setTimeout(() => this.demo3 = !this.demo3, 300);
+              }
+            }"
+            class="space-y-4"
+          >
+            <button 
+              @click="toggleAll()"
+              class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+            >
+              Toggle All (with stagger)
+            </button>
+            
+            <div class="space-y-3">
+              <Checkbox label="Animation demo 1" x-model="demo1" />
+              <Checkbox label="Animation demo 2" x-model="demo2" />
+              <Checkbox label="Animation demo 3" x-model="demo3" />
+            </div>
+          </div>
+        </div>
+        
+        <!-- Real-world Examples -->
+        <div class="bg-card border border-border rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-card-foreground mb-4">Real-world Examples</h3>
+          <div class="space-y-6">
+            <!-- Settings Panel -->
+            <div>
+              <h4 class="font-medium text-card-foreground mb-3">Settings Panel</h4>
+              <div class="space-y-3">
+                <Checkbox label="Auto-save documents" checked={true} />
+                <Checkbox label="Show line numbers" />
+                <Checkbox label="Enable spell check" checked={true} />
+              </div>
+            </div>
+            
+            <!-- Form Agreement -->
+            <div>
+              <h4 class="font-medium text-card-foreground mb-3">Form Agreement</h4>
+              <div class="space-y-3">
+                <Checkbox label="I agree to the Terms of Service and Privacy Policy" />
+                <Checkbox label="I want to receive product updates and newsletters" />
+              </div>
+            </div>
+            
+            <!-- Todo List Style -->
+            <div>
+              <h4 class="font-medium text-card-foreground mb-3">Todo List Style</h4>
+              <div class="space-y-2">
+                <Checkbox label="Complete project documentation" checked={true} />
+                <Checkbox label="Review pull requests" />
+                <Checkbox label="Update dependencies" />
+                <Checkbox label="Deploy to production" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

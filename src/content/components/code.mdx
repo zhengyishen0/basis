@@ -1,0 +1,183 @@
+---
+title: Code
+description: Syntax highlighting code component with copy functionality
+category: display
+order: 8
+---
+
+import Code from '@/components/ui/display/Code.astro';
+import { Card } from '@/components/ui/display/card';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The Code component provides syntax highlighting for various programming languages with built-in copy-to-clipboard functionality using Shiki.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-4">
+        <div class="space-y-4">
+            <Code
+                title="JavaScript Example"
+                language="javascript"
+                code={`function greet(name) {
+    console.log(\`Hello, \${name}!\`);
+    return \`Welcome, \${name}\`;
+}
+
+const user = 'World';
+greet(user);`}
+            />
+            
+            <Code
+                language="python"
+                code={`def calculate_fibonacci(n):
+    if n <= 1:
+        return n
+    return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+
+# Generate first 10 fibonacci numbers
+for i in range(10):
+    print(f"F({i}) = {calculate_fibonacci(i)}")`}
+            />
+            
+            <Code
+                title="TypeScript Interface"
+                language="typescript"
+                theme="vitesse-dark"
+                code={`interface User {
+    id: number;
+    name: string;
+    email: string;
+    preferences?: {
+        theme: 'light' | 'dark';
+        notifications: boolean;
+    };
+}
+
+const createUser = (userData: Omit<User, 'id'>): User => {
+    return {
+        id: Math.floor(Math.random() * 1000),
+        ...userData
+    };
+};`}
+            />
+            
+            <Code
+                language="bash"
+                showCopy={false}
+                code={`# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build`}
+            />
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code
+            language="astro"
+            code={`---
+import Code from '@/components/ui/display/Code.astro';
+---
+
+{/* Basic usage */}
+<Code
+    language="javascript"
+    code={\`console.log('Hello, World!');\`}
+/>
+
+{/* With title and copy functionality */}
+<Code
+    title="JavaScript Example"
+    language="javascript"
+    code={\`function greet(name) {
+    console.log(\\\`Hello, \\\${name}!\\\`);
+    return \\\`Welcome, \\\${name}\\\`;
+}
+
+const user = 'World';
+greet(user);\`}
+/>
+
+{/* Different themes */}
+<Code
+    language="typescript"
+    theme="vitesse-dark"
+    code={\`interface User {
+    id: number;
+    name: string;
+}\`}
+/>
+
+{/* Disable copy functionality */}
+<Code
+    language="bash"
+    showCopy={false}
+    code={\`npm install\`}
+/>`}
+        />
+    </TabsContent>
+</Tabs>
+
+## Supported Languages
+
+The Code component supports syntax highlighting for numerous programming languages including:
+
+- **Web**: HTML, CSS, JavaScript, TypeScript, JSX, TSX
+- **Backend**: Python, Java, C#, Go, Rust, PHP
+- **Shell**: Bash, PowerShell, Zsh
+- **Config**: JSON, YAML, TOML, XML
+- **Markup**: Markdown, MDX
+- **Databases**: SQL, PostgreSQL, MySQL
+
+## Themes
+
+Available syntax highlighting themes:
+
+- `github-light` (default)
+- `github-dark`
+- `vitesse-light`
+- `vitesse-dark`
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `code` | `string` | - | **Required.** The code content to highlight |
+| `language` | `string` | `'javascript'` | Programming language for syntax highlighting |
+| `title` | `string` | - | Optional title displayed above the code block |
+| `showCopy` | `boolean` | `true` | Show/hide copy-to-clipboard button |
+| `theme` | `'github-light' \| 'github-dark' \| 'vitesse-light' \| 'vitesse-dark'` | `'github-light'` | Syntax highlighting theme |
+| `class` | `string` | - | Additional CSS classes |
+
+### Features
+
+- **Syntax Highlighting**: Powered by Shiki for accurate, fast highlighting
+- **Copy to Clipboard**: Built-in copy functionality with visual feedback
+- **Theme Support**: Multiple color schemes for different environments
+- **Language Detection**: Supports 100+ programming languages
+- **Responsive Design**: Adapts to container width with horizontal scrolling
+- **Alpine.js Compatible**: Supports reactive props and event handling
+
+### Usage Tips
+
+- Use descriptive titles for complex code examples
+- Choose themes that match your site's design system
+- Disable copy functionality for short snippets or terminal outputs
+- Consider using `vitesse-dark` theme for dark mode interfaces

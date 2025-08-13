@@ -1,0 +1,380 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+import Button from '@/components/ui/forms/Button.astro';
+import {
+    Card,
+    CardHeader,
+    CardFooter,
+    CardContent,
+} from '@/components/ui/display/card';
+
+import {
+    List,
+    ListItems,
+    Page,
+    Row,
+    Conditional,
+    Spacer,
+    Grid,
+} from '@/components/ui/layout';
+import { Empty, Loading, Error } from '@/components/ui/feedback';
+import Text from '@/components/ui/display/Text.astro';
+import Checkbox from '@/components/ui/forms/Checkbox.astro';
+import TextInput from '@/components/ui/forms/TextInput.astro';
+
+const title = 'Todo App with Supabase';
+
+const pageData = `{ 
+            auth: $store.auth,
+            todo: $store.todo,
+            async init() {
+                await this.auth.init();
+                await this.todo.loadTodos();
+            },
+            async signInAnonymously() {
+                await this.auth.signInAnonymously();
+                await this.todo.loadTodos();
+            },
+            async signOut() {
+                await this.auth.signOut();
+                this.todo.cleanup();
+            }
+        }`;
+---
+
+<Layout title={title}>
+    <Page maxWidth="full" x-data={pageData} x-init="init()">
+        <!-- Navigation Bar -->
+        <Grid class="bg-white border-b p-4">
+            <div class="flex justify-start">
+                <Button href="../" size="sm"> Back to Home </Button>
+            </div>
+
+            <Text variant="section-title" class="flex justify-center">
+                Supabase Todo App
+            </Text>
+
+            <Spacer />
+        </Grid>
+
+        <!-- Main Content -->
+        <Conditional
+            condition="auth.isAuthenticated"
+            class="mt-8 w-full flex justify-center"
+        >
+            <!-- Not authenticated state -->
+            <Card slot="false" width="28rem" height="20rem">
+                <CardHeader>
+                    <Text variant="body"> Click to start using the app </Text>
+                </CardHeader>
+                <CardContent
+                    class="flex flex-col items-center justify-center h-full text-center"
+                >
+                    <Button
+                        @click="signInAnonymously()"
+                        :disabled="auth.loading || todo.loading"
+                        variant="default"
+                        size="lg"
+                        x-text="auth.loading ? 'Signing in...' : 'Sign In Anonymously'"
+                    />
+                </CardContent>
+            </Card>
+
+            <!-- Authenticated state - Todo App -->
+            <Row slot="true" class="gap-8">
+                <!-- Left Column: My Todos -->
+                <Card width="30rem" height="32rem">
+                    <CardHeader>
+                        <Text variant="card-title"> My Todos </Text>
+                        <!-- Filter Buttons and Auth Info -->
+                        <Row class="justify-between w-full">
+                            <!-- Status Filter Buttons (Left) -->
+                            <Row class="justify-start items-center gap-1">
+                                <Button
+                                    @click="todo.setUserFilter('all')"
+                                    variant="outline"
+                                    size="xs"
+                                    :class="todo.userFilter === 'all' && '!bg-primary !text-primary-foreground !border-transparent hover:!bg-primary/90'"
+                                >
+                                    All
+                                </Button>
+                                <Button
+                                    @click="todo.setUserFilter('active')"
+                                    variant="outline"
+                                    size="xs"
+                                    :class="todo.userFilter === 'active' && '!bg-primary !text-primary-foreground !border-transparent hover:!bg-primary/90'"
+                                >
+                                    Active
+                                </Button>
+                                <Button
+                                    @click="todo.setUserFilter('completed')"
+                                    variant="outline"
+                                    size="xs"
+                                    :class="todo.userFilter === 'completed' && '!bg-primary !text-primary-foreground !border-transparent hover:!bg-primary/90'"
+                                >
+                                    Completed
+                                </Button>
+                            </Row>
+
+                            <!-- Auth Info (Right) -->
+                            <Row>
+                                <Text variant="body-small"
+                                    >Signed in as: <strong
+                                        x-text="auth.userDisplayId"
+                                    ></strong></Text
+                                >
+                                <Button
+                                    @click="signOut()"
+                                    size="xs"
+                                    variant="default">Sign Out</Button
+                                >
+                            </Row>
+                        </Row>
+                    </CardHeader>
+                    <CardContent>
+                        <!-- Error Message -->
+                        <Error x-show="todo.error" x-text="todo.error" />
+
+                        <!-- Loading State -->
+                        <Loading
+                            x-show="todo.loading && todo.filteredUserTodos.length === 0"
+                        >
+                            Loading your todos...
+                        </Loading>
+
+                        <!-- Scrollable Container for List -->
+                        <List maxHeight="48">
+                            <!-- User Todo List -->
+                            <ListItems
+                                x-for="item in todo.filteredUserTodos"
+                                x-key="item.id"
+                                padding="sm"
+                                class="border-b border-gray-200 last:border-b-0 hover:bg-gray-50"
+                            >
+                                <Checkbox
+                                    :checked="item.is_complete"
+                                    @change="todo.toggleTodo(item.id, $event.target.checked)"
+                                />
+                                <Text
+                                    class="flex-1 min-w-0"
+                                    :state="item.is_complete ? 'completed' : 'active'"
+                                    x-text="item.task"
+                                />
+                                <Button
+                                    @click="todo.deleteTodo(item.id)"
+                                    size="sm"
+                                    variant="destructive"
+                                >
+                                    Delete
+                                </Button>
+                            </ListItems>
+
+                            <!-- Empty State -->
+                            <Empty
+                                x-show="todo.filteredUserTodos.length === 0 && !todo.loading"
+                            >
+                                <Text
+                                    variant="body"
+                                    x-show="todo.userFilter === 'all'"
+                                    >No todos yet. Add one below!</Text
+                                >
+                                <Text
+                                    variant="body"
+                                    x-show="todo.userFilter === 'active'"
+                                    >No active todos.</Text
+                                >
+                                <Text
+                                    variant="body"
+                                    x-show="todo.userFilter === 'completed'"
+                                    >No completed todos.</Text
+                                >
+                            </Empty>
+                        </List>
+                    </CardContent>
+                    <CardFooter>
+                        <!-- Stats -->
+                        <div x-show="todo.userTodos.length > 0">
+                            <Text
+                                variant="body-small"
+                                x-text="todo.userActiveCount"
+                            />
+                            active,
+                            <Text
+                                variant="body-small"
+                                x-text="todo.userCompletedCount"
+                            /> completed
+                        </div>
+
+                        <!-- Add Todo Form -->
+                        <form
+                            @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''"
+                            class="w-full"
+                        >
+                            <Row gap="xs" size="full">
+                                <TextInput
+                                    x-ref="todoInput"
+                                    type="text"
+                                    placeholder="Add a new todo..."
+                                    required
+                                />
+                                <Button
+                                    type="submit"
+                                    :disabled="todo.loading"
+                                    size="sm"
+                                    variant="default"
+                                    x-text="todo.loading ? '...' : 'Add'"
+                                />
+                            </Row>
+                        </form>
+                    </CardFooter>
+                </Card>
+
+                <!-- Right Column: All Todos -->
+                <Card width="30rem" height="32rem">
+                    <CardHeader>
+                        <Text variant="card-title"> Realtime Todos </Text>
+                        <!-- Filter Buttons and User Count -->
+                        <Row class="justify-between w-full">
+                            <!-- Status Filter Buttons (Left) -->
+                            <Row class="gap-1">
+                                <Button
+                                    @click="todo.setAllFilter('all')"
+                                    variant="outline"
+                                    size="xs"
+                                    :class="todo.allFilter === 'all' && '!bg-primary !text-primary-foreground !border-transparent hover:!bg-primary/90'"
+                                >
+                                    All
+                                </Button>
+                                <Button
+                                    @click="todo.setAllFilter('active')"
+                                    variant="outline"
+                                    size="xs"
+                                    :class="todo.allFilter === 'active' && '!bg-primary !text-primary-foreground !border-transparent hover:!bg-primary/90'"
+                                >
+                                    Active
+                                </Button>
+                                <Button
+                                    @click="todo.setAllFilter('completed')"
+                                    variant="outline"
+                                    size="xs"
+                                    :class="todo.allFilter === 'completed' && '!bg-primary !text-primary-foreground !border-transparent hover:!bg-primary/90'"
+                                >
+                                    Completed
+                                </Button>
+                            </Row>
+
+                            <!-- User Count (Right) -->
+                            <Text variant="body-small"
+                                ><Text
+                                    variant="body-small"
+                                    x-text="todo.uniqueUserCount"
+                                /> contributor<Text
+                                    variant="body-small"
+                                    x-show="todo.uniqueUserCount !== 1">s</Text
+                                > online</Text
+                            >
+                        </Row>
+                    </CardHeader>
+                    <CardContent>
+                        <!-- Error Message -->
+                        <Error x-show="todo.error" x-text="todo.error" />
+
+                        <!-- Loading State -->
+                        <Loading
+                            x-show="todo.loading && todo.filteredAllTodos.length === 0"
+                        >
+                            Loading all todos...
+                        </Loading>
+
+                        <!-- Scrollable Container for List -->
+                        <List maxHeight="48">
+                            <!-- All Todos List -->
+                            <ListItems
+                                x-for="item in todo.filteredAllTodos"
+                                x-key="item.id"
+                                padding="sm"
+                                justify="between"
+                                class="border-b border-gray-200 last:border-b-0"
+                            >
+                                <Checkbox
+                                    :checked="item.is_complete"
+                                    style="pointer-events: none;"
+                                />
+                                <Text
+                                    class="min-w-0 w-full"
+                                    :state="item.is_complete ? 'completed' : 'active'"
+                                    x-text="item.task"
+                                />
+                                <Row>
+                                    <Badge
+                                        x-show="item.user_id === auth.currentUser?.id"
+                                        size="xs"
+                                        color="primary">You</Badge
+                                    >
+                                    <Text
+                                        variant="caption"
+                                        x-text="item.user_id.slice(0, 8) + '...'"
+                                    />
+                                </Row>
+
+                                <!-- Empty State -->
+                                <Empty
+                                    x-show="todo.filteredAllTodos.length === 0 && !todo.loading"
+                                >
+                                    <Text
+                                        variant="body"
+                                        x-show="todo.allFilter === 'all'"
+                                        >No todos in database.</Text
+                                    >
+                                    <Text
+                                        variant="body"
+                                        x-show="todo.allFilter === 'active'"
+                                        >No active todos.</Text
+                                    >
+                                    <Text
+                                        variant="body"
+                                        x-show="todo.allFilter === 'completed'"
+                                        >No completed todos.</Text
+                                    >
+                                </Empty>
+                            </ListItems>
+                        </List>
+                    </CardContent>
+                    <CardFooter>
+                        <!-- Stats -->
+                        <div x-show="todo.allTodos.length > 0">
+                            <Text
+                                variant="body-small"
+                                x-text="todo.allActiveCount"
+                            /> active,
+                            <Text
+                                variant="body-small"
+                                x-text="todo.allCompletedCount"
+                            /> completed
+                        </div>
+                    </CardFooter>
+                </Card>
+            </Row>
+        </Conditional>
+    </Page>
+
+    <!-- Page-specific Alpine stores for Supabase -->
+    <script>
+        import Alpine from 'alpinejs';
+        import { todoStore } from '/src/lib/todoStore.js';
+        import { authStore } from '/src/lib/authStore.js';
+
+        // Register stores before Alpine starts
+        // Wait for Alpine to be available
+        if (window.Alpine) {
+            Alpine.store('todo', todoStore);
+            Alpine.store('auth', authStore);
+        } else {
+            document.addEventListener('alpine:init', () => {
+                Alpine.store('todo', todoStore);
+                Alpine.store('auth', authStore);
+            });
+        }
+    </script>
+</Layout>

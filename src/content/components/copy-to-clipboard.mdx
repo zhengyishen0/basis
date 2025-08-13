@@ -1,0 +1,188 @@
+---
+title: CopyToClipboard
+description: Interactive copy-to-clipboard component with visual feedback and customizable variants
+category: interactive
+order: 1
+---
+
+import CopyToClipboard from '@/components/ui/interactive/CopyToClipboard.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The CopyToClipboard component provides a simple way to copy text to the user's clipboard with visual feedback. It supports both button and icon variants with customizable success/error messages and timeout durations.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-6">
+        <div class="space-y-4">
+            <h3 class="text-lg font-medium">Button Variant</h3>
+            <div class="flex flex-row gap-4 flex-wrap items-center">
+                <CopyToClipboard 
+                    text="Hello, World!"
+                    variant="button"
+                    successMessage="Text copied!"
+                />
+                <CopyToClipboard 
+                    text="npm install @basis/ui"
+                    variant="button"
+                    successMessage="Command copied!"
+                />
+            </div>
+        </div>
+        
+        <div class="space-y-4">
+            <h3 class="text-lg font-medium">Icon Variant</h3>
+            <div class="flex flex-row gap-4 flex-wrap items-center">
+                <div class="relative p-4 bg-gray-100 rounded-lg">
+                    <p class="text-sm text-gray-600 pr-10">Some code or content here</p>
+                    <CopyToClipboard 
+                        text="Some code or content here"
+                        variant="icon"
+                        class="absolute top-2 right-2"
+                    />
+                </div>
+                <div class="relative p-4 bg-gray-100 rounded-lg">
+                    <code class="text-sm font-mono pr-10">const hello = "world";</code>
+                    <CopyToClipboard 
+                        text={'const hello = "world";'}
+                        variant="icon"
+                        class="absolute top-2 right-2"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-4">
+            <h3 class="text-lg font-medium">Custom Messages & Timeout</h3>
+            <div class="flex flex-row gap-4 flex-wrap items-center">
+                <CopyToClipboard 
+                    text="Custom success message demo"
+                    variant="button"
+                    successMessage="Great! It worked!"
+                    errorMessage="Oops! Something went wrong"
+                    timeout={5000}
+                />
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code
+            language="astro"
+            code={`---
+import CopyToClipboard from '@/components/ui/interactive/CopyToClipboard.astro';
+---
+
+{/* Button Variant */}
+<CopyToClipboard 
+    text="Hello, World!"
+    variant="button"
+    successMessage="Text copied!"
+/>
+
+<CopyToClipboard 
+    text="npm install @basis/ui"
+    variant="button"
+    successMessage="Command copied!"
+/>
+
+{/* Icon Variant */}
+<div class="relative p-4 bg-gray-100 rounded-lg">
+    <p class="text-sm text-gray-600 pr-10">Some code or content here</p>
+    <CopyToClipboard 
+        text="Some code or content here"
+        variant="icon"
+        class="absolute top-2 right-2"
+    />
+</div>
+
+{/* Custom Messages & Timeout */}
+<CopyToClipboard 
+    text="Custom success message demo"
+    variant="button"
+    successMessage="Great! It worked!"
+    errorMessage="Oops! Something went wrong"
+    timeout={5000}
+/>`}
+        />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `text` | `string` | - | Text to copy to clipboard (required) |
+| `variant` | `'button' | 'icon'` | `'button'` | Display variant |
+| `successMessage` | `string` | `'Copied!'` | Message shown on successful copy |
+| `errorMessage` | `string` | `'Failed to copy'` | Message shown on copy failure |
+| `timeout` | `number` | `3000` | Duration to show notification (milliseconds) |
+| `class` | `string` | - | Additional CSS classes |
+
+### Features
+
+- **Clipboard Integration**: Uses the modern Navigator Clipboard API for reliable copying
+- **Visual Feedback**: Shows success/error states with animated transitions
+- **Button Variant**: Full button with text and icons that change based on state
+- **Icon Variant**: Compact icon-only version perfect for code blocks
+- **Customizable Messages**: Configure success and error messages
+- **Auto-hide Notification**: Configurable timeout for notification visibility
+- **Tooltip Support**: Icon variant shows helpful tooltips
+- **Accessibility**: Proper focus states and keyboard interaction
+- **Alpine.js Integration**: Fully reactive with Alpine.js state management
+
+### Usage Examples
+
+#### In Code Blocks
+Perfect for adding copy functionality to code snippets:
+
+```astro
+<div class="relative">
+    <pre><code>npm install my-package</code></pre>
+    <CopyToClipboard 
+        text="npm install my-package"
+        variant="icon"
+        class="absolute top-2 right-2"
+    />
+</div>
+```
+
+#### With Dynamic Content
+Use with Alpine.js for dynamic content:
+
+```astro
+<div x-data="{ code: 'const x = 42;' }">
+    <textarea x-model="code"></textarea>
+    <CopyToClipboard 
+        x-bind:text="code"
+        variant="button"
+        successMessage="Code copied!"
+    />
+</div>
+```
+
+#### API Keys or Tokens
+For copying sensitive information:
+
+```astro
+<CopyToClipboard 
+    text="sk-1234567890abcdef"
+    variant="button"
+    successMessage="API key copied!"
+    errorMessage="Failed to copy API key"
+    class="text-sm"
+/>
+```

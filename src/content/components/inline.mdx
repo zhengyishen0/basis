@@ -1,0 +1,312 @@
+---
+title: Inline
+description: Content-driven horizontal component with gap spacing, wrapping, and width constraints
+category: layout
+order: 7
+---
+
+import Inline from '@/components/ui/layout/Inline.astro';
+import Column from '@/components/ui/layout/Column.astro';
+import Button from '@/components/ui/forms/Button.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The Inline component is a content-driven component that arranges elements horizontally with gap spacing. It has a default `max-w-full` constraint and `wrap` overflow behavior. Perfect for tags, badges, button groups, and any content that should flow horizontally and wrap to new lines when needed.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-6">
+        <div>
+            <h3 class="text-sm font-medium mb-4">Tag Collection with Wrap (Default)</h3>
+            <div class="max-w-md border p-4 rounded bg-gray-50">
+                <Inline class="gap-2">
+                    <Badge>JavaScript</Badge>
+                    <Badge variant="secondary">React</Badge>
+                    <Badge variant="success">Node.js</Badge>
+                    <Badge variant="info">TypeScript</Badge>
+                    <Badge variant="warning">CSS</Badge>
+                    <Badge variant="destructive">HTML</Badge>
+                    <Badge>Database</Badge>
+                    <Badge variant="secondary">API</Badge>
+                    <Badge variant="success">Testing</Badge>
+                </Inline>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Button Toolbar</h3>
+            <div class="border p-4 rounded bg-white">
+                <Inline class="gap-2">
+                    <Button size="sm">New</Button>
+                    <Button size="sm" variant="secondary">Save</Button>
+                    <Button size="sm" variant="outline">Copy</Button>
+                    <Button size="sm" variant="outline">Cut</Button>
+                    <Button size="sm" variant="outline">Paste</Button>
+                    <Button size="sm" variant="destructive">Delete</Button>
+                </Inline>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Different Overflow Behaviors</h3>
+            <Column class="space-y-4">
+                <div>
+                    <p class="text-xs text-gray-500 mb-2">Wrap (default) - items wrap to new lines</p>
+                    <div class="max-w-xs border p-3 rounded bg-gray-50">
+                        <Inline overflow="wrap" class="gap-2">
+                            <Badge>Long Tag Name</Badge>
+                            <Badge variant="secondary">Another Long Tag</Badge>
+                            <Badge variant="success">Short</Badge>
+                            <Badge variant="info">Medium Tag</Badge>
+                            <Badge variant="warning">Extra Long Tag Name</Badge>
+                        </Inline>
+                    </div>
+                </div>
+                
+                <div>
+                    <p class="text-xs text-gray-500 mb-2">Auto - horizontal scroll when needed</p>
+                    <div class="max-w-xs border p-3 rounded bg-gray-50">
+                        <Inline overflow="auto" class="gap-2">
+                            <Badge>Long Tag Name</Badge>
+                            <Badge variant="secondary">Another Long Tag</Badge>
+                            <Badge variant="success">Short</Badge>
+                            <Badge variant="info">Medium Tag</Badge>
+                            <Badge variant="warning">Extra Long Tag Name</Badge>
+                        </Inline>
+                    </div>
+                </div>
+                
+                <div>
+                    <p class="text-xs text-gray-500 mb-2">Fixed - content clips when overflow</p>
+                    <div class="max-w-xs border p-3 rounded bg-gray-50">
+                        <Inline overflow="fixed" class="gap-2">
+                            <Badge>Long Tag Name</Badge>
+                            <Badge variant="secondary">Another Long Tag</Badge>
+                            <Badge variant="success">Short</Badge>
+                            <Badge variant="info">Medium Tag</Badge>
+                        </Inline>
+                    </div>
+                </div>
+                
+                <div>
+                    <p class="text-xs text-gray-500 mb-2">Expand - grows naturally without constraints</p>
+                    <div class="border p-3 rounded bg-gray-50">
+                        <Inline overflow="expand" class="gap-2">
+                            <Badge>Tag 1</Badge>
+                            <Badge variant="secondary">Tag 2</Badge>
+                            <Badge variant="success">Tag 3</Badge>
+                            <Badge variant="info">Tag 4</Badge>
+                            <Badge variant="warning">Tag 5</Badge>
+                            <Badge variant="destructive">Tag 6</Badge>
+                        </Inline>
+                    </div>
+                </div>
+            </Column>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Navigation Breadcrumbs</h3>
+            <div class="border p-4 rounded bg-white">
+                <Inline class="gap-1">
+                    <Button variant="ghost" size="sm">Home</Button>
+                    <span class="text-gray-400">/</span>
+                    <Button variant="ghost" size="sm">Products</Button>
+                    <span class="text-gray-400">/</span>
+                    <Button variant="ghost" size="sm">Electronics</Button>
+                    <span class="text-gray-400">/</span>
+                    <span class="text-sm font-medium">Laptop</span>
+                </Inline>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Alpine.js Integration Demo</h3>
+            <div x-data="{ 
+                selectedTags: ['javascript', 'react'],
+                availableTags: [
+                    { id: 'javascript', name: 'JavaScript', color: 'default' },
+                    { id: 'react', name: 'React', color: 'secondary' },
+                    { id: 'vue', name: 'Vue.js', color: 'success' },
+                    { id: 'angular', name: 'Angular', color: 'info' },
+                    { id: 'svelte', name: 'Svelte', color: 'warning' },
+                    { id: 'node', name: 'Node.js', color: 'destructive' }
+                ],
+                toggleTag(tagId) {
+                    if (this.selectedTags.includes(tagId)) {
+                        this.selectedTags = this.selectedTags.filter(id => id !== tagId);
+                    } else {
+                        this.selectedTags.push(tagId);
+                    }
+                }
+            }">
+                <div class="space-y-3">
+                    <p class="text-sm font-medium">Selected Technologies:</p>
+                    <div class="border p-4 rounded bg-white min-h-[3rem] flex items-center">
+                        <Inline class="gap-2">
+                            <template x-for="tagId in selectedTags" x-key="tagId">
+                                <Badge x-text="availableTags.find(t => t.id === tagId)?.name"
+                                       x-on:click="toggleTag(tagId)"
+                                       class="cursor-pointer hover:opacity-80"></Badge>
+                            </template>
+                            <template x-show="selectedTags.length === 0">
+                                <span class="text-gray-500 text-sm">No technologies selected</span>
+                            </template>
+                        </Inline>
+                    </div>
+                    
+                    <p class="text-sm font-medium">Available Technologies:</p>
+                    <div class="border p-4 rounded bg-gray-50">
+                        <Inline class="gap-2">
+                            <template x-for="tag in availableTags" x-key="tag.id">
+                                <Badge x-text="tag.name"
+                                       x-on:click="toggleTag(tag.id)"
+                                       class="cursor-pointer hover:opacity-80 transition-opacity"
+                                       x-bind:class="selectedTags.includes(tag.id) ? 'opacity-50' : ''"></Badge>
+                            </template>
+                        </Inline>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import Inline from '@/components/ui/layout/Inline.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+import Button from '@/components/ui/forms/Button.astro';
+---
+
+{/* Basic tag collection (wraps by default) */}
+<Inline class="gap-2">
+    <Badge>JavaScript</Badge>
+    <Badge variant="secondary">React</Badge>
+    <Badge variant="success">Node.js</Badge>
+    <Badge variant="info">TypeScript</Badge>
+</Inline>
+
+{/* Button toolbar */}
+<Inline class="gap-2">
+    <Button size="sm">New</Button>
+    <Button size="sm" variant="secondary">Save</Button>
+    <Button size="sm" variant="outline">Copy</Button>
+    <Button size="sm" variant="destructive">Delete</Button>
+</Inline>
+
+{/* Different overflow behaviors */}
+
+{/* Wrap (default) - items wrap to new lines */}
+<Inline overflow="wrap" class="gap-2 max-w-xs">
+    <Badge>Long Tag Name</Badge>
+    <Badge>Another Tag</Badge>
+    <Badge>More Tags</Badge>
+</Inline>
+
+{/* Auto - horizontal scroll when needed */}
+<Inline overflow="auto" class="gap-2 max-w-xs">
+    <Badge>Tag 1</Badge>
+    <Badge>Tag 2</Badge>
+    <Badge>Tag 3</Badge>
+    <Badge>Tag 4</Badge>
+</Inline>
+
+{/* Fixed - clips content */}
+<Inline overflow="fixed" class="gap-2 max-w-xs">
+    <Badge>This content will be clipped</Badge>
+    <Badge>Hidden</Badge>
+</Inline>
+
+{/* Expand - grows naturally */}
+<Inline overflow="expand" class="gap-2">
+    <Badge>No width constraints</Badge>
+    <Badge>Grows naturally</Badge>
+</Inline>
+
+{/* Navigation breadcrumbs */}
+<Inline class="gap-1">
+    <Button variant="ghost" size="sm">Home</Button>
+    <span>/</span>
+    <Button variant="ghost" size="sm">Products</Button>
+    <span>/</span>
+    <span class="font-medium">Current Page</span>
+</Inline>
+
+{/* Alpine.js integration */}
+<div x-data="{ 
+    tags: ['javascript', 'react', 'vue'],
+    addTag(tag) { if (!this.tags.includes(tag)) this.tags.push(tag); }
+}">
+    <Inline class="gap-2">
+        <template x-for="tag in tags" x-key="tag">
+            <Badge x-text="tag" 
+                   x-on:click="tags = tags.filter(t => t !== tag)"
+                   class="cursor-pointer"></Badge>
+        </template>
+    </Inline>
+</div>`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `overflow` | `'auto' | 'fixed' | 'expand' | 'wrap' | 'show'` | `'wrap'` | Controls overflow behavior |
+| `class` | `string` | - | Additional CSS classes |
+| `...alpineProps` | `any` | - | Alpine.js attributes (x-data, x-for, etc.) |
+
+### Base Classes
+
+- **`flex flex-row justify-start items-center max-w-full gap-2`**
+- Horizontal layout with left alignment
+- Items centered vertically
+- Default maximum width constraint
+- Small gap between items
+
+### Overflow Behaviors
+
+- **`wrap`** (default): Items wrap to new lines using flex-wrap
+- **`auto`**: Horizontal scrolling when content overflows
+- **`fixed`**: Content is clipped at container boundaries
+- **`expand`**: Container grows naturally (removes max-w-full)
+- **`show`**: Content can spill outside container bounds
+
+### Default Constraints
+
+- **`max-w-full`**: Default maximum width constraint (can be overridden)
+- **`flex flex-row`**: Horizontal layout with flexbox
+
+### Slots
+
+| Slot | Description |
+|------|-------------|
+| default | Items to be arranged horizontally with optional wrapping |
+
+## Design Principles
+
+Inline is a **content-driven component** that:
+- Only has gap property for spacing between items
+- Size determined by internal elements with sensible default constraints
+- Handles dynamic/data-driven content
+- Default `max-w-full` with `wrap` overflow for natural line wrapping
+- Perfect for tags, badges, button groups, and breadcrumbs
+- Default wrapping behavior makes it ideal for responsive tag collections
+- Can be easily overridden with custom CSS classes for specific width constraints
+
+## Common Use Cases
+
+- **Tag Collections**: Perfect for displaying multiple tags that wrap naturally
+- **Button Toolbars**: Horizontal button groups that can wrap on smaller screens
+- **Breadcrumb Navigation**: Linear navigation elements with separators
+- **Filter Pills**: Interactive filter options that wrap when numerous
+- **Social Media Links**: Horizontal social icons that adapt to container width

@@ -1,0 +1,458 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/overlay/tooltip';
+---
+
+<Layout title="Tooltip Demo">
+    <main class="container mx-auto p-8 space-y-12">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold mb-4">Tooltip Component Demo</h1>
+            <p class="text-muted-foreground mb-8">
+                Composable tooltips with different placements, themes, and trigger behaviors
+            </p>
+        </div>
+
+        <!-- Basic Examples -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Basic Tooltips</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                <!-- Default Tooltip -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Default</h3>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <button class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90">
+                                Hover me
+                            </button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            This is a tooltip!
+                        </TooltipContent>
+                    </Tooltip>
+                </div>
+
+                <!-- Quick Tooltip -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Quick (No Delay)</h3>
+                    <Tooltip delay={0}>
+                        <TooltipTrigger>
+                            <button class="px-4 py-2 border rounded-md hover:bg-accent">
+                                Instant
+                            </button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            Appears immediately
+                        </TooltipContent>
+                    </Tooltip>
+                </div>
+
+                <!-- Slow Tooltip -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Slow (1s delay)</h3>
+                    <Tooltip delay={1000}>
+                        <TooltipTrigger>
+                            <button class="px-4 py-2 border rounded-md hover:bg-accent">
+                                Wait for it...
+                            </button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            Worth the wait!
+                        </TooltipContent>
+                    </Tooltip>
+                </div>
+
+                <!-- Icon Tooltip -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Icon Tooltip</h3>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <button class="p-2 rounded-md hover:bg-accent">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            Get help and information
+                        </TooltipContent>
+                    </Tooltip>
+                </div>
+            </div>
+        </section>
+
+        <!-- Placement Examples -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Placement Options</h2>
+            
+            <div class="flex items-center justify-center">
+                <div class="relative grid grid-cols-3 gap-8 items-center">
+                    <!-- Top -->
+                    <div class="col-start-2 text-center">
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <button class="px-4 py-2 border rounded-md hover:bg-accent">
+                                    Top
+                                </button>
+                            </TooltipTrigger>
+                            <TooltipContent placement="top">
+                                Tooltip above
+                            </TooltipContent>
+                        </Tooltip>
+                    </div>
+
+                    <!-- Left -->
+                    <div class="text-center">
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <button class="px-4 py-2 border rounded-md hover:bg-accent">
+                                    Left
+                                </button>
+                            </TooltipTrigger>
+                            <TooltipContent placement="left">
+                                Tooltip to the left
+                            </TooltipContent>
+                        </Tooltip>
+                    </div>
+
+                    <!-- Center (no tooltip, just placeholder) -->
+                    <div class="text-center text-muted-foreground">
+                        <div class="w-16 h-16 border-2 border-dashed border-muted rounded-lg flex items-center justify-center">
+                            <span class="text-xs">Target</span>
+                        </div>
+                    </div>
+
+                    <!-- Right -->
+                    <div class="text-center">
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <button class="px-4 py-2 border rounded-md hover:bg-accent">
+                                    Right
+                                </button>
+                            </TooltipTrigger>
+                            <TooltipContent placement="right">
+                                Tooltip to the right
+                            </TooltipContent>
+                        </Tooltip>
+                    </div>
+
+                    <!-- Bottom -->
+                    <div class="col-start-2 text-center">
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <button class="px-4 py-2 border rounded-md hover:bg-accent">
+                                    Bottom
+                                </button>
+                            </TooltipTrigger>
+                            <TooltipContent placement="bottom">
+                                Tooltip below
+                            </TooltipContent>
+                        </Tooltip>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Theme Variants -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Theme Variants</h2>
+            
+            <div class="flex flex-wrap gap-6 justify-center">
+                <Tooltip>
+                    <TooltipTrigger>
+                        <button class="px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800">
+                            Dark Theme
+                        </button>
+                    </TooltipTrigger>
+                    <TooltipContent theme="dark">
+                        Dark tooltip theme
+                    </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                    <TooltipTrigger>
+                        <button class="px-4 py-2 bg-white border-2 rounded-md hover:bg-gray-50">
+                            Light Theme
+                        </button>
+                    </TooltipTrigger>
+                    <TooltipContent theme="light">
+                        Light tooltip theme
+                    </TooltipContent>
+                </Tooltip>
+            </div>
+        </section>
+
+        <!-- Interactive Elements -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Interactive Elements</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Form Input -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Form Input Help</h3>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium">Email Address</label>
+                        <div class="flex gap-2 items-center">
+                            <input type="email" placeholder="user@example.com" class="flex-1 px-3 py-2 border rounded-md" />
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <button class="p-2 text-muted-foreground hover:text-foreground">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </button>
+                                </TooltipTrigger>
+                                <TooltipContent placement="right" theme="light">
+                                    We'll use this to send you updates
+                                </TooltipContent>
+                            </Tooltip>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Icon Buttons -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Icon Actions</h3>
+                    <div class="flex gap-2">
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <button class="p-2 rounded-md hover:bg-accent">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                    </svg>
+                                </button>
+                            </TooltipTrigger>
+                            <TooltipContent>Edit</TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <button class="p-2 rounded-md hover:bg-accent">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                    </svg>
+                                </button>
+                            </TooltipTrigger>
+                            <TooltipContent>Copy</TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <button class="p-2 rounded-md hover:bg-red-50 text-red-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </TooltipTrigger>
+                            <TooltipContent theme="light">Delete</TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <button class="p-2 rounded-md hover:bg-accent">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" transform="rotate(90 12 12)"></path>
+                                    </svg>
+                                </button>
+                            </TooltipTrigger>
+                            <TooltipContent>More options</TooltipContent>
+                        </Tooltip>
+                    </div>
+                </div>
+
+                <!-- Status Indicators -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Status Indicators</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2">
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                </TooltipTrigger>
+                                <TooltipContent theme="light">
+                                    Service is online
+                                </TooltipContent>
+                            </Tooltip>
+                            <span class="text-sm">API Service</span>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                </TooltipTrigger>
+                                <TooltipContent theme="light">
+                                    Experiencing delays
+                                </TooltipContent>
+                            </Tooltip>
+                            <span class="text-sm">Database</span>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                </TooltipTrigger>
+                                <TooltipContent theme="light">
+                                    Service is down
+                                </TooltipContent>
+                            </Tooltip>
+                            <span class="text-sm">Cache</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Examples -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Advanced Examples</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Progress Bar with Tooltip -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Progress with Tooltip</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Upload Progress</span>
+                                <span>75%</span>
+                            </div>
+                            <Tooltip>
+                                <TooltipTrigger className="w-full">
+                                    <div class="w-full bg-gray-200 rounded-full h-2 cursor-pointer">
+                                        <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 75%"></div>
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    75% complete - 2.3MB of 3.1MB
+                                </TooltipContent>
+                            </Tooltip>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Processing</span>
+                                <span>45%</span>
+                            </div>
+                            <Tooltip>
+                                <TooltipTrigger className="w-full">
+                                    <div class="w-full bg-gray-200 rounded-full h-2 cursor-pointer">
+                                        <div class="bg-green-600 h-2 rounded-full transition-all duration-300" style="width: 45%"></div>
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    Processing 45 of 100 items
+                                </TooltipContent>
+                            </Tooltip>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Table Headers -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Table Headers</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-2 text-left">
+                                        <Tooltip>
+                                            <TooltipTrigger>
+                                                <span class="cursor-help border-b border-dotted">Name</span>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                User's full name
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </th>
+                                    <th class="px-4 py-2 text-left">
+                                        <Tooltip>
+                                            <TooltipTrigger>
+                                                <span class="cursor-help border-b border-dotted">Status</span>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                Account status (active/inactive)
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </th>
+                                    <th class="px-4 py-2 text-left">
+                                        <Tooltip>
+                                            <TooltipTrigger>
+                                                <span class="cursor-help border-b border-dotted">Last Active</span>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                Last time user logged in
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-t">
+                                    <td class="px-4 py-2">John Doe</td>
+                                    <td class="px-4 py-2">
+                                        <span class="inline-flex items-center px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-2 text-sm text-gray-600">2 hours ago</td>
+                                </tr>
+                                <tr class="border-t">
+                                    <td class="px-4 py-2">Jane Smith</td>
+                                    <td class="px-4 py-2">
+                                        <span class="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full">
+                                            Inactive
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-2 text-sm text-gray-600">3 days ago</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Example -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold">Dynamic Content</h2>
+            
+            <div x-data="{ 
+                users: [
+                    { id: 1, name: 'Alice Johnson', role: 'Admin', lastSeen: '5 minutes ago' },
+                    { id: 2, name: 'Bob Wilson', role: 'Editor', lastSeen: '1 hour ago' },
+                    { id: 3, name: 'Carol Davis', role: 'Viewer', lastSeen: '2 days ago' }
+                ]
+            }">
+                <h3 class="text-lg font-medium mb-4">User List with Dynamic Tooltips</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <template x-for="user in users" :key="user.id">
+                        <div class="p-4 border rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-medium text-sm"
+                                     x-text="user.name.split(' ').map(n => n[0]).join('')">
+                                </div>
+                                <div class="flex-1">
+                                    <Tooltip>
+                                        <TooltipTrigger>
+                                            <h4 class="font-medium cursor-help" x-text="user.name"></h4>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <div>
+                                                <p class="font-medium text-sm" x-text="user.name"></p>
+                                                <p class="text-xs" x-text="'Role: ' + user.role"></p>
+                                                <p class="text-xs" x-text="'Last seen: ' + user.lastSeen"></p>
+                                            </div>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                    <p class="text-sm text-muted-foreground" x-text="user.role"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>

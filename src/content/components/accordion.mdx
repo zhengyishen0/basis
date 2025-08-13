@@ -1,0 +1,155 @@
+---
+title: Accordion
+description: Collapsible content sections with Alpine.js state management
+category: display
+order: 1
+---
+
+import Accordion from '@/components/ui/display/accordion/Accordion.astro';
+import AccordionItem from '@/components/ui/display/accordion/AccordionItem.astro';
+import AccordionItems from '@/components/ui/display/accordion/AccordionItems.astro';
+import AccordionTrigger from '@/components/ui/display/accordion/AccordionTrigger.astro';
+import AccordionContent from '@/components/ui/display/accordion/AccordionContent.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+A collapsible accordion component built with Alpine.js that supports both static and dynamic content. Features smooth animations with x-collapse directive and customizable icons.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-6">
+        {/* Static Accordion with Variants */}
+        <Accordion>
+            <AccordionItem>
+                <AccordionTrigger iconType="chevron">
+                    What is this accordion?
+                </AccordionTrigger>
+                <AccordionContent>
+                    A composable accordion component built with Alpine.js and Astro. Supports smooth animations and flexible content.
+                </AccordionContent>
+            </AccordionItem>
+            <AccordionItem variant="elevated">
+                <AccordionTrigger iconType="plus">
+                    Can I customize the icons?
+                </AccordionTrigger>
+                <AccordionContent variant="emphasized">
+                    Yes! Use 'chevron' or 'plus' icons, or provide custom icons through the icon slot.
+                </AccordionContent>
+            </AccordionItem>
+            <AccordionItem variant="flat">
+                <AccordionTrigger iconType="chevron" variant="subtle" size="sm">
+                    What about styling variants?
+                </AccordionTrigger>
+                <AccordionContent>
+                    The accordion supports 'default', 'elevated', and 'flat' variants for different visual styles.
+                </AccordionContent>
+            </AccordionItem>
+        </Accordion>
+        
+        {/* Dynamic Accordion */}
+        <div x-data="{
+            items: [
+                { id: 'dynamic-1', question: 'Dynamic Question 1', answer: 'This content is rendered dynamically using x-for loops.' },
+                { id: 'dynamic-2', question: 'Dynamic Question 2', answer: 'You can easily bind data from Alpine.js stores or API responses.' }
+            ]
+        }">
+            <Accordion>
+                <AccordionItems x-for="item in items" x-key="item.id">
+                    <AccordionTrigger iconType="chevron">
+                        <span x-text="item.question"></span>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        <span x-text="item.answer"></span>
+                    </AccordionContent>
+                </AccordionItems>
+            </Accordion>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import Accordion from '@/components/ui/display/accordion/Accordion.astro';
+import AccordionItem from '@/components/ui/display/accordion/AccordionItem.astro';
+import AccordionItems from '@/components/ui/display/accordion/AccordionItems.astro';
+import AccordionTrigger from '@/components/ui/display/accordion/AccordionTrigger.astro';
+import AccordionContent from '@/components/ui/display/accordion/AccordionContent.astro';
+---
+
+{/* Static Accordion */}
+<Accordion>
+    <AccordionItem>
+        <AccordionTrigger iconType="chevron">
+            What is this accordion?
+        </AccordionTrigger>
+        <AccordionContent>
+            A composable accordion component.
+        </AccordionContent>
+    </AccordionItem>
+    <AccordionItem variant="elevated">
+        <AccordionTrigger iconType="plus">
+            Can I customize it?
+        </AccordionTrigger>
+        <AccordionContent variant="emphasized">
+            Yes, you can use different variants and icons!
+        </AccordionContent>
+    </AccordionItem>
+</Accordion>
+
+{/* Dynamic Accordion */}
+<div x-data="{ items: [
+    { id: 'q1', question: 'Question 1', answer: 'Answer 1' },
+    { id: 'q2', question: 'Question 2', answer: 'Answer 2' }
+]}">
+    <Accordion>
+        <AccordionItems x-for="item in items" x-key="item.id">
+            <AccordionTrigger iconType="chevron">
+                <span x-text="item.question"></span>
+            </AccordionTrigger>
+            <AccordionContent>
+                <span x-text="item.answer"></span>
+            </AccordionContent>
+        </AccordionItems>
+    </Accordion>
+</div>`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Accordion
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `maxWidth` | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Maximum width |
+| `centered` | `boolean` | `true` | Center horizontally |
+| `class` | `string` | - | Additional CSS classes |
+
+### AccordionItem
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'default' \| 'elevated' \| 'flat'` | `'default'` | Visual style variant |
+| `class` | `string` | - | Additional CSS classes |
+
+### AccordionTrigger
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `iconType` | `'chevron' \| 'plus'` | `'chevron'` | Icon type |
+| `variant` | `'default' \| 'subtle'` | `'default'` | Visual style |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size |
+| `class` | `string` | - | Additional CSS classes |
+
+### AccordionContent
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'default' \| 'emphasized'` | `'default'` | Visual style |
+| `class` | `string` | - | Additional CSS classes |
