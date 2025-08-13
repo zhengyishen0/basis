@@ -6,7 +6,6 @@ order: 3
 ---
 
 import SmartBreadcrumb from '@/components/ui/navigation/breadcrumbs/SmartBreadcrumb.astro';
-import { Card } from '@/components/ui/display/card';
 import Code from '@/components/ui/display/Code.astro';
 import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
 import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
@@ -26,17 +25,109 @@ The SmartBreadcrumb component automatically generates breadcrumb navigation with
             Code
         </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-4">
-        <SmartBreadcrumb 
-            x-data="{
-                items: [
-                    { label: 'Home', href: '/' },
-                    { label: 'Products', href: '/products' },
-                    { label: 'Electronics', href: '/products/electronics' },
-                    { label: 'Laptops', href: '/products/electronics/laptops' }
-                ]
-            }"
-        />
+    <TabsContent value="preview" preview class="flex flex-col gap-6">
+        <div class="space-y-6">
+            <div>
+                <h4 class="text-sm font-medium mb-2">Basic Usage</h4>
+                <SmartBreadcrumb 
+                    x-data="{
+                        items: [
+                            { label: 'Home', href: '/' },
+                            { label: 'Products', href: '/products' },
+                            { label: 'Electronics', href: '/products/electronics' },
+                            { label: 'Laptops', href: '/products/electronics/laptops' }
+                        ]
+                    }"
+                />
+            </div>
+            <div>
+                <h4 class="text-sm font-medium mb-2">Overflow with Dropdown</h4>
+                <SmartBreadcrumb 
+                    maxItems={4}
+                    x-data="{
+                        items: [
+                            { label: 'Home', href: '/' },
+                            { label: 'Category', href: '/category' },
+                            { label: 'Subcategory', href: '/category/subcategory' },
+                            { label: 'Product Type', href: '/category/subcategory/type' },
+                            { label: 'Brand', href: '/category/subcategory/type/brand' },
+                            { label: 'Model', href: '/category/subcategory/type/brand/model' },
+                            { label: 'Current Page', href: '/category/subcategory/type/brand/model/current' }
+                        ]
+                    }"
+                />
+            </div>
+            <div>
+                <h4 class="text-sm font-medium mb-2">Variants</h4>
+                <div class="space-y-3">
+                    <SmartBreadcrumb 
+                        variant="default"
+                        x-data="{
+                            items: [
+                                { label: 'Home', href: '/' },
+                                { label: 'Documentation', href: '/docs' },
+                                { label: 'Components', href: '/docs/components' }
+                            ]
+                        }"
+                    />
+                    <SmartBreadcrumb 
+                        variant="minimal"
+                        x-data="{
+                            items: [
+                                { label: 'Home', href: '/' },
+                                { label: 'Documentation', href: '/docs' },
+                                { label: 'Components', href: '/docs/components' }
+                            ]
+                        }"
+                    />
+                    <SmartBreadcrumb 
+                        variant="compact"
+                        x-data="{
+                            items: [
+                                { label: 'Home', href: '/' },
+                                { label: 'Documentation', href: '/docs' },
+                                { label: 'Components', href: '/docs/components' }
+                            ]
+                        }"
+                    />
+                </div>
+            </div>
+            <div>
+                <h4 class="text-sm font-medium mb-2">Custom Separators</h4>
+                <div class="space-y-3">
+                    <SmartBreadcrumb 
+                        separator="chevron"
+                        x-data="{
+                            items: [
+                                { label: 'Home', href: '/' },
+                                { label: 'Products', href: '/products' },
+                                { label: 'Laptops', href: '/products/laptops' }
+                            ]
+                        }"
+                    />
+                    <SmartBreadcrumb 
+                        separator="slash"
+                        x-data="{
+                            items: [
+                                { label: 'Home', href: '/' },
+                                { label: 'Products', href: '/products' },
+                                { label: 'Laptops', href: '/products/laptops' }
+                            ]
+                        }"
+                    />
+                </div>
+            </div>
+            <div>
+                <h4 class="text-sm font-medium mb-2">Slot Content Fallback</h4>
+                <SmartBreadcrumb>
+                    <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+                    <li class="mx-2 text-muted-foreground">/</li>
+                    <li><a href="/blog" class="hover:text-primary transition-colors">Blog</a></li>
+                    <li class="mx-2 text-muted-foreground">/</li>
+                    <li class="text-foreground font-medium">Article Title</li>
+                </SmartBreadcrumb>
+            </div>
+        </div>
     </TabsContent>
     <TabsContent value="code">
         <Code
@@ -44,6 +135,8 @@ The SmartBreadcrumb component automatically generates breadcrumb navigation with
             code={`---
 import SmartBreadcrumb from '@/components/ui/navigation/breadcrumbs/SmartBreadcrumb.astro';
 ---
+
+<!-- Basic Usage -->
 <SmartBreadcrumb 
     x-data="{
         items: [
@@ -53,46 +146,9 @@ import SmartBreadcrumb from '@/components/ui/navigation/breadcrumbs/SmartBreadcr
             { label: 'Laptops', href: '/products/electronics/laptops' }
         ]
     }"
-/>`}
-        />
-    </TabsContent>
-</Tabs>
+/>
 
-## Overflow Handling
-
-When there are more items than the maxItems limit, the component automatically shows ellipsis with a dropdown:
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">
-            Preview
-        </TabsTrigger>
-        <TabsTrigger value="code" variant="pills">
-            Code
-        </TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-4">
-        <SmartBreadcrumb 
-            maxItems={4}
-            x-data="{
-                items: [
-                    { label: 'Home', href: '/' },
-                    { label: 'Category', href: '/category' },
-                    { label: 'Subcategory', href: '/category/subcategory' },
-                    { label: 'Product Type', href: '/category/subcategory/type' },
-                    { label: 'Brand', href: '/category/subcategory/type/brand' },
-                    { label: 'Model', href: '/category/subcategory/type/brand/model' },
-                    { label: 'Current Page', href: '/category/subcategory/type/brand/model/current' }
-                ]
-            }"
-        />
-    </TabsContent>
-    <TabsContent value="code">
-        <Code
-            language="astro"
-            code={`---
-import SmartBreadcrumb from '@/components/ui/navigation/breadcrumbs/SmartBreadcrumb.astro';
----
+<!-- Overflow with Dropdown -->
 <SmartBreadcrumb 
     maxItems={4}
     x-data="{
@@ -106,140 +162,18 @@ import SmartBreadcrumb from '@/components/ui/navigation/breadcrumbs/SmartBreadcr
             { label: 'Current Page', href: '/category/subcategory/type/brand/model/current' }
         ]
     }"
-/>`}
-        />
-    </TabsContent>
-</Tabs>
-
-## Variants
-
-Different visual styles for various contexts:
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">
-            Preview
-        </TabsTrigger>
-        <TabsTrigger value="code" variant="pills">
-            Code
-        </TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-6">
-        <div class="space-y-4">
-            <div>
-                <h4 class="text-sm font-medium mb-2">Default</h4>
-                <SmartBreadcrumb 
-                    variant="default"
-                    x-data="{
-                        items: [
-                            { label: 'Home', href: '/' },
-                            { label: 'Documentation', href: '/docs' },
-                            { label: 'Components', href: '/docs/components' }
-                        ]
-                    }"
-                />
-            </div>
-            <div>
-                <h4 class="text-sm font-medium mb-2">Minimal</h4>
-                <SmartBreadcrumb 
-                    variant="minimal"
-                    x-data="{
-                        items: [
-                            { label: 'Home', href: '/' },
-                            { label: 'Documentation', href: '/docs' },
-                            { label: 'Components', href: '/docs/components' }
-                        ]
-                    }"
-                />
-            </div>
-            <div>
-                <h4 class="text-sm font-medium mb-2">Compact</h4>
-                <SmartBreadcrumb 
-                    variant="compact"
-                    x-data="{
-                        items: [
-                            { label: 'Home', href: '/' },
-                            { label: 'Documentation', href: '/docs' },
-                            { label: 'Components', href: '/docs/components' }
-                        ]
-                    }"
-                />
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code
-            language="astro"
-            code={`---
-import SmartBreadcrumb from '@/components/ui/navigation/breadcrumbs/SmartBreadcrumb.astro';
----
-<!-- Default -->
-<SmartBreadcrumb 
-    variant="default"
-    x-data="{
-        items: [
-            { label: 'Home', href: '/' },
-            { label: 'Documentation', href: '/docs' },
-            { label: 'Components', href: '/docs/components' }
-        ]
-    }"
 />
 
-<!-- Minimal -->
-<SmartBreadcrumb 
-    variant="minimal"
-    x-data="{
-        items: [
-            { label: 'Home', href: '/' },
-            { label: 'Documentation', href: '/docs' },
-            { label: 'Components', href: '/docs/components' }
-        ]
-    }"
-/>
+<!-- Variants -->
+<SmartBreadcrumb variant="default" x-data="{ items: [...] }" />
+<SmartBreadcrumb variant="minimal" x-data="{ items: [...] }" />
+<SmartBreadcrumb variant="compact" x-data="{ items: [...] }" />
 
-<!-- Compact -->
-<SmartBreadcrumb 
-    variant="compact"
-    x-data="{
-        items: [
-            { label: 'Home', href: '/' },
-            { label: 'Documentation', href: '/docs' },
-            { label: 'Components', href: '/docs/components' }
-        ]
-    }"
-/>`}
-        />
-    </TabsContent>
-</Tabs>
+<!-- Custom Separators -->
+<SmartBreadcrumb separator="chevron" x-data="{ items: [...] }" />
+<SmartBreadcrumb separator="slash" x-data="{ items: [...] }" />
 
-## Fallback Slot Content
-
-When no Alpine.js data is provided, the component falls back to slot content:
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">
-            Preview
-        </TabsTrigger>
-        <TabsTrigger value="code" variant="pills">
-            Code
-        </TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-4">
-        <SmartBreadcrumb>
-            <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
-            <li class="mx-2 text-muted-foreground">/</li>
-            <li><a href="/blog" class="hover:text-primary transition-colors">Blog</a></li>
-            <li class="mx-2 text-muted-foreground">/</li>
-            <li class="text-foreground font-medium">Article Title</li>
-        </SmartBreadcrumb>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code
-            language="astro"
-            code={`---
-import SmartBreadcrumb from '@/components/ui/navigation/breadcrumbs/SmartBreadcrumb.astro';
----
+<!-- Slot Content Fallback -->
 <SmartBreadcrumb>
     <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
     <li class="mx-2 text-muted-foreground">/</li>
@@ -251,136 +185,19 @@ import SmartBreadcrumb from '@/components/ui/navigation/breadcrumbs/SmartBreadcr
     </TabsContent>
 </Tabs>
 
-## Custom Separators
-
-The component uses chevron separators by default, but supports other separators:
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">
-            Preview
-        </TabsTrigger>
-        <TabsTrigger value="code" variant="pills">
-            Code
-        </TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-4">
-        <div class="space-y-4">
-            <div>
-                <h4 class="text-sm font-medium mb-2">Chevron (Default)</h4>
-                <SmartBreadcrumb 
-                    separator="chevron"
-                    x-data="{
-                        items: [
-                            { label: 'Home', href: '/' },
-                            { label: 'Products', href: '/products' },
-                            { label: 'Laptops', href: '/products/laptops' }
-                        ]
-                    }"
-                />
-            </div>
-            <div>
-                <h4 class="text-sm font-medium mb-2">Slash</h4>
-                <SmartBreadcrumb 
-                    separator="slash"
-                    x-data="{
-                        items: [
-                            { label: 'Home', href: '/' },
-                            { label: 'Products', href: '/products' },
-                            { label: 'Laptops', href: '/products/laptops' }
-                        ]
-                    }"
-                />
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code
-            language="astro"
-            code={`---
-import SmartBreadcrumb from '@/components/ui/navigation/breadcrumbs/SmartBreadcrumb.astro';
----
-<!-- Chevron separator -->
-<SmartBreadcrumb 
-    separator="chevron"
-    x-data="{
-        items: [
-            { label: 'Home', href: '/' },
-            { label: 'Products', href: '/products' },
-            { label: 'Laptops', href: '/products/laptops' }
-        ]
-    }"
-/>
-
-<!-- Slash separator -->
-<SmartBreadcrumb 
-    separator="slash"
-    x-data="{
-        items: [
-            { label: 'Home', href: '/' },
-            { label: 'Products', href: '/products' },
-            { label: 'Laptops', href: '/products/laptops' }
-        ]
-    }"
-/>`}
-        />
-    </TabsContent>
-</Tabs>
-
-## URL-Based Auto Generation
-
-You can create breadcrumbs automatically from the current URL path:
-
-<Tabs defaultValue="code" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="code" variant="pills">
-            Code
-        </TabsTrigger>
-    </TabsList>
-    <TabsContent value="code">
-        <Code
-            language="astro"
-            code={`---
-import SmartBreadcrumb from '@/components/ui/navigation/breadcrumbs/SmartBreadcrumb.astro';
-
-// Auto-generate breadcrumbs from URL
-const url = new URL(Astro.request.url);
-const pathSegments = url.pathname.split('/').filter(Boolean);
-
-const breadcrumbItems = [
-    { label: 'Home', href: '/' },
-    ...pathSegments.map((segment, index) => {
-        const href = '/' + pathSegments.slice(0, index + 1).join('/');
-        const label = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
-        return { label, href };
-    })
-];
----
-<SmartBreadcrumb 
-    x-data={\`{ items: \${JSON.stringify(breadcrumbItems)} }\`}
-/>`}
-        />
-    </TabsContent>
-</Tabs>
-
 ## API Reference
-
-### Props
 
 | Prop         | Type                                           | Default      | Description                               |
 | ------------ | ---------------------------------------------- | ------------ | ----------------------------------------- |
 | `variant`    | `'default' | 'minimal' | 'compact'`          | `'default'`  | Visual style variant                      |
 | `size`       | `'sm' | 'md' | 'lg'`                        | `'md'`       | Size of the breadcrumb                    |
-| `overflow`   | `'fixed' | 'wrap' | 'scroll'`               | `'fixed'`    | Overflow handling strategy                |
-| `aria-label` | `string`                                       | `'breadcrumb'` | ARIA label for accessibility           |
 | `maxItems`   | `number`                                       | `5`          | Maximum items before showing ellipsis    |
 | `separator`  | `'chevron' | 'slash' | 'dot' | 'arrow'`      | `'chevron'`  | Separator icon between items             |
+| `overflow`   | `'fixed' | 'wrap' | 'scroll'`               | `'fixed'`    | Overflow handling strategy                |
+| `aria-label` | `string`                                       | `'breadcrumb'` | ARIA label for accessibility           |
 | `class`      | `string`                                       | -            | Additional CSS classes                    |
-| `...`        | `any`                                          | -            | Alpine.js props passed through            |
 
 ### Alpine.js Data Structure
-
-The component expects an `items` array in Alpine.js data:
 
 ```typescript
 {
@@ -390,32 +207,3 @@ The component expects an `items` array in Alpine.js data:
   }>
 }
 ```
-
-### Internal Alpine.js Properties
-
-| Property              | Type      | Description                                  |
-| --------------------- | --------- | -------------------------------------------- |
-| `showDropdown`        | `boolean` | Controls ellipsis dropdown visibility        |
-| `processed.displayItems` | `array` | Items to display (includes ellipsis)        |
-| `processed.hidden`    | `array`   | Items hidden in the ellipsis dropdown       |
-| `processed.shouldShowEllipsis` | `boolean` | Whether to show ellipsis             |
-
-## Features
-
-- **Intelligent Overflow**: Automatically handles too many breadcrumb items
-- **Dropdown Navigation**: Hidden items accessible via ellipsis dropdown
-- **Multiple Variants**: Different visual styles for various contexts
-- **Responsive Design**: Adapts to different screen sizes
-- **Accessibility**: Proper ARIA labels and semantic HTML
-- **Flexible Data**: Works with Alpine.js data or slot content
-- **Auto-generation**: Can be generated from URL paths
-- **Custom Separators**: Multiple separator icon options
-
-## Usage Notes
-
-- The component automatically shows first, second-to-last, and last items when overflow occurs
-- Hidden items in the middle are accessible via the ellipsis dropdown
-- When no Alpine.js items data is provided, it falls back to slot content
-- The dropdown closes when clicking outside or selecting an item
-- Perfect for deep navigation hierarchies in documentation sites
-- Integrates seamlessly with Astro's file-based routing

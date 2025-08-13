@@ -6,9 +6,9 @@ order: 1
 ---
 
 import DropdownMenu from '@/components/ui/overlay/dropdownmenu/DropdownMenu.astro';
+import MenuItem from '@/components/ui/overlay/menu/MenuItem.astro';
 import MenuContainer from '@/components/ui/overlay/menu/MenuContainer.astro';
 import MenuInput from '@/components/ui/overlay/menu/MenuInput.astro';
-import MenuItem from '@/components/ui/overlay/menu/MenuItem.astro';
 import MenuItems from '@/components/ui/overlay/menu/MenuItems.astro';
 import MenuGroup from '@/components/ui/overlay/menu/MenuGroup.astro';
 import MenuShortcut from '@/components/ui/overlay/menu/MenuShortcut.astro';
@@ -22,20 +22,20 @@ import Code from '@/components/ui/display/Code.astro';
 
 ## Overview
 
-DropdownMenu displays a menu of actions or options in a dropdown overlay. It's commonly used for user menus, action buttons, and as an alternative to select components when you need more complex menu items.
+DropdownMenu displays a menu of actions or options in a dropdown overlay. It's commonly used for user menus, action buttons, and complex selection interfaces with icons and shortcuts.
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
         <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col justify-center space-y-8">
+    <TabsContent value="preview" preview class="flex flex-wrap gap-8 justify-start items-start">
         <div>
-            <h4 class="text-sm font-semibold mb-3">User Menu</h4>
+            <h4 class="text-sm font-medium mb-3">User Menu</h4>
             <DropdownMenu trigger="click">
                 <Button variant="outline" slot="trigger">
                     <Icon name="lucide:user" class="w-4 h-4 mr-2" />
-                    My Account
+                    Account
                     <Icon name="lucide:chevron-down" class="w-4 h-4 ml-2" />
                 </Button>
                 <div slot="content" class="w-56">
@@ -48,29 +48,26 @@ DropdownMenu displays a menu of actions or options in a dropdown overlay. It's c
                         <MenuItem>
                             <Icon name="lucide:credit-card" class="w-4 h-4 mr-2" />
                             Billing
-                            <MenuShortcut>⌘B</MenuShortcut>
                         </MenuItem>
                         <MenuItem>
                             <Icon name="lucide:settings" class="w-4 h-4 mr-2" />
                             Settings
-                            <MenuShortcut>⌘S</MenuShortcut>
                         </MenuItem>
                         <div class="border-t my-1"></div>
                         <MenuItem>
                             <Icon name="lucide:log-out" class="w-4 h-4 mr-2" />
                             Log out
-                            <MenuShortcut>⇧⌘Q</MenuShortcut>
                         </MenuItem>
                     </div>
                 </div>
             </DropdownMenu>
         </div>
         <div>
-            <h4 class="text-sm font-semibold mb-3">Actions Menu</h4>
+            <h4 class="text-sm font-medium mb-3">Actions Menu</h4>
             <DropdownMenu trigger="click">
                 <Button variant="outline" slot="trigger">
                     Actions
-                    <Icon name="lucide:chevron-down" class="w-4 h-4 ml-2" />
+                    <Icon name="lucide:more-horizontal" class="w-4 h-4 ml-2" />
                 </Button>
                 <div slot="content" class="w-48">
                     <div class="rounded-md border bg-popover text-popover-foreground shadow-md py-1">
@@ -82,7 +79,7 @@ DropdownMenu displays a menu of actions or options in a dropdown overlay. It's c
                             <Icon name="lucide:copy" class="w-4 h-4 mr-2" />
                             Duplicate
                         </MenuItem>
-                        <MenuItem>
+                        <MenuItem disabled>
                             <Icon name="lucide:archive" class="w-4 h-4 mr-2" />
                             Archive
                         </MenuItem>
@@ -92,43 +89,6 @@ DropdownMenu displays a menu of actions or options in a dropdown overlay. It's c
                             Delete
                         </MenuItem>
                     </div>
-                </div>
-            </DropdownMenu>
-        </div>
-        <div>
-            <h4 class="text-sm font-semibold mb-3">With Search</h4>
-            <DropdownMenu trigger="click">
-                <Button variant="outline" slot="trigger">
-                    Choose Option
-                    <Icon name="lucide:chevron-down" class="w-4 h-4 ml-2" />
-                </Button>
-                <div slot="content">
-                    <MenuContainer 
-                        size="sm"
-                        x-data="{
-                            menuItems: {
-                                'Recent': [
-                                    { id: '1', title: 'Project Alpha', value: 'alpha', icon: 'lucide:folder' },
-                                    { id: '2', title: 'Project Beta', value: 'beta', icon: 'lucide:folder' }
-                                ],
-                                'All Projects': [
-                                    { id: '3', title: 'Project Gamma', value: 'gamma', icon: 'lucide:folder' },
-                                    { id: '4', title: 'Project Delta', value: 'delta', icon: 'lucide:folder' },
-                                    { id: '5', title: 'Project Epsilon', value: 'epsilon', icon: 'lucide:folder' }
-                                ]
-                            }
-                        }"
-                    >
-                        <MenuInput slot="input" placeholder="Search projects..." />
-                        <template x-for="[groupName, items] in Object.entries(filteredItems)" x-key="groupName">
-                            <MenuGroup x-text="groupName">
-                                <MenuItems x-for="item in items" x-key="item.id">
-                                    <Icon x-bind:name="item.icon" class="w-4 h-4 mr-2" slot="icon" />
-                                    <span x-text="item.title"></span>
-                                </MenuItems>
-                            </MenuGroup>
-                        </template>
-                    </MenuContainer>
                 </div>
             </DropdownMenu>
         </div>
@@ -148,7 +108,7 @@ import { Icon } from 'astro-icon/components';
 <DropdownMenu trigger="click">
     <Button variant="outline" slot="trigger">
         <Icon name="lucide:user" class="w-4 h-4 mr-2" />
-        My Account
+        Account
         <Icon name="lucide:chevron-down" class="w-4 h-4 ml-2" />
     </Button>
     <div slot="content" class="w-56">
@@ -179,6 +139,7 @@ import { Icon } from 'astro-icon/components';
 <DropdownMenu trigger="click">
     <Button variant="outline" slot="trigger">
         Actions
+        <Icon name="lucide:more-horizontal" class="w-4 h-4 ml-2" />
     </Button>
     <div slot="content" class="w-48">
         <div class="rounded-md border bg-popover text-popover-foreground shadow-md py-1">
@@ -190,7 +151,12 @@ import { Icon } from 'astro-icon/components';
                 <Icon name="lucide:copy" class="w-4 h-4 mr-2" />
                 Duplicate
             </MenuItem>
-            <MenuItem class="text-destructive">
+            <MenuItem disabled>
+                <Icon name="lucide:archive" class="w-4 h-4 mr-2" />
+                Archive
+            </MenuItem>
+            <div class="border-t my-1"></div>
+            <MenuItem class="text-destructive focus:text-destructive">
                 <Icon name="lucide:trash-2" class="w-4 h-4 mr-2" />
                 Delete
             </MenuItem>
@@ -201,96 +167,26 @@ import { Icon } from 'astro-icon/components';
     </TabsContent>
 </Tabs>
 
-## Usage Patterns
-
-### User Menus
-Use dropdown menus for user account actions, profile settings, and authentication options.
-
-### Action Menus
-Perfect for context-sensitive actions on table rows, cards, or other content items.
-
-### Select Alternative
-When you need more complex menu items than a standard select allows (icons, descriptions, shortcuts).
-
 ## API Reference
 
-### DropdownMenu Props
+### DropdownMenu
 
 | Prop        | Type                                     | Default   | Description                    |
 | ----------- | ---------------------------------------- | --------- | ------------------------------ |
 | `trigger`   | `'click' \| 'hover' \| 'focus' \| 'manual'` | `'click'` | How the menu is triggered      |
 | `className` | `string`                                 | -         | Additional CSS classes         |
 
-### MenuItem Props
+### MenuItem
 
 | Prop          | Type                               | Default     | Description                        |
 | ------------- | ---------------------------------- | ----------- | ---------------------------------- |
-| `variant`     | `'default' \| 'command'`           | `'default'` | Visual style variant               |
 | `disabled`    | `boolean`                          | `false`     | Whether the item is disabled       |
-| `shortcut`    | `string`                           | -           | Keyboard shortcut to display       |
-| `activeModel` | `string`                           | -           | Alpine.js model for active state   |
 | `onSelect`    | `string`                           | -           | Click handler function             |
 | `className`   | `string`                           | -           | Additional CSS classes             |
 
-### MenuShortcut Props
+### MenuShortcut
 
 | Prop       | Type     | Default | Description                |
 | ---------- | -------- | ------- | -------------------------- |
 | `shortcut` | `string` | -       | Shortcut text to display   |
 | `class`    | `string` | -       | Additional CSS classes     |
-
-## Examples
-
-### With Icons and Shortcuts
-
-```astro
-<DropdownMenu>
-    <Button slot="trigger">File</Button>
-    <div slot="content">
-        <MenuItem>
-            <Icon name="lucide:file-plus" slot="icon" />
-            New File
-            <MenuShortcut>⌘N</MenuShortcut>
-        </MenuItem>
-        <MenuItem>
-            <Icon name="lucide:folder-open" slot="icon" />
-            Open
-            <MenuShortcut>⌘O</MenuShortcut>
-        </MenuItem>
-    </div>
-</DropdownMenu>
-```
-
-### With Disabled Items
-
-```astro
-<DropdownMenu>
-    <Button slot="trigger">Edit</Button>
-    <div slot="content">
-        <MenuItem>Cut</MenuItem>
-        <MenuItem>Copy</MenuItem>
-        <MenuItem disabled>Paste</MenuItem>
-    </div>
-</DropdownMenu>
-```
-
-### With Groups
-
-```astro
-<DropdownMenu>
-    <Button slot="trigger">View</Button>
-    <div slot="content">
-        <MenuGroup>
-            <span class="font-medium">Appearance</span>
-            <MenuItem>Light Theme</MenuItem>
-            <MenuItem>Dark Theme</MenuItem>
-        </MenuGroup>
-        <div class="border-t my-1"></div>
-        <MenuGroup>
-            <span class="font-medium">Layout</span>
-            <MenuItem>Sidebar</MenuItem>
-            <MenuItem>Full Width</MenuItem>
-        </MenuGroup>
-    </div>
-</DropdownMenu>
-```

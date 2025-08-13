@@ -14,18 +14,16 @@ import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
-A responsive image carousel component with Alpine.js interactivity. Features autoplay functionality, hover-to-reveal navigation, smooth fade transitions, and support for captions. Perfect for showcasing image galleries, product photos, or hero banners.
+Interactive image carousel with autoplay, navigation controls, and smooth fade transitions. Features hover-to-reveal navigation and caption support for showcasing image galleries.
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
         <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-8">
-        {/* Basic Carousel */}
+    <TabsContent value="preview" preview class="space-y-6">
         <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Basic Carousel</h3>
-            <p class="text-sm text-muted-foreground">Hover to reveal navigation controls</p>
+            <h3 class="text-sm font-medium text-muted-foreground">Basic with Captions</h3>
             <div class="max-w-2xl">
                 <Carousel
                     images={[
@@ -50,28 +48,19 @@ A responsive image carousel component with Alpine.js interactivity. Features aut
                 />
             </div>
         </div>
-
-        {/* Autoplay Carousel */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Autoplay Carousel</h3>
-            <p class="text-sm text-muted-foreground">Automatically advances every 4 seconds (pauses on hover)</p>
-            <div class="max-w-xl">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+                <p class="text-sm font-medium text-muted-foreground">Autoplay (4s interval)</p>
                 <Carousel
                     images={[
                         {
                             src: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=600&h=400&fit=crop&auto=format',
-                            alt: 'Ocean beach',
-                            caption: 'Tropical paradise with crystal water'
+                            alt: 'Ocean beach'
                         },
                         {
                             src: 'https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=600&h=400&fit=crop&auto=format',
-                            alt: 'City skyline',
-                            caption: 'Modern city lights at night'
-                        },
-                        {
-                            src: 'https://images.unsplash.com/photo-1520637836862-4d197d17c13a?w=600&h=400&fit=crop&auto=format',
-                            alt: 'Mountain lake',
-                            caption: 'Serene lake reflection'
+                            alt: 'City skyline'
                         }
                     ]}
                     size="md"
@@ -79,132 +68,78 @@ A responsive image carousel component with Alpine.js interactivity. Features aut
                     aspectRatio="4/3"
                 />
             </div>
-        </div>
-
-        {/* Different Sizes */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Size Variants</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-2">
-                    <p class="text-sm font-medium text-muted-foreground">Small (sm)</p>
-                    <Carousel
-                        images={[
-                            {
-                                src: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&h=300&fit=crop&auto=format',
-                                alt: 'Forest',
-                                caption: 'Dense forest canopy'
-                            },
-                            {
-                                src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=400&h=300&fit=crop&auto=format',
-                                alt: 'Mountains',
-                                caption: 'Mountain range view'
-                            }
-                        ]}
-                        size="sm"
-                        aspectRatio="4/3"
-                    />
-                </div>
-                
-                <div class="space-y-2">
-                    <p class="text-sm font-medium text-muted-foreground">Large (lg)</p>
-                    <Carousel
-                        images={[
-                            {
-                                src: 'https://images.unsplash.com/photo-1500534623283-312aade485b7?w=600&h=400&fit=crop&auto=format',
-                                alt: 'Lake sunset',
-                                caption: 'Golden sunset over lake'
-                            },
-                            {
-                                src: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=600&h=400&fit=crop&auto=format',
-                                alt: 'Rocky shore',
-                                caption: 'Waves crashing on rocks'
-                            }
-                        ]}
-                        size="lg"
-                        aspectRatio="3/2"
-                    />
-                </div>
-            </div>
-        </div>
-
-        {/* Different Aspect Ratios */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Aspect Ratio Options</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="space-y-2">
-                    <p class="text-sm font-medium text-muted-foreground">Square (1:1)</p>
-                    <Carousel
-                        images={[
-                            {
-                                src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&auto=format',
-                                alt: 'Square image'
-                            },
-                            {
-                                src: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=400&fit=crop&auto=format',
-                                alt: 'Square image 2'
-                            }
-                        ]}
-                        size="md"
-                        aspectRatio="1/1"
-                    />
-                </div>
-
-                <div class="space-y-2">
-                    <p class="text-sm font-medium text-muted-foreground">Video (16:9)</p>
-                    <Carousel
-                        images={[
-                            {
-                                src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=640&h=360&fit=crop&auto=format',
-                                alt: 'Video aspect'
-                            },
-                            {
-                                src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=640&h=360&fit=crop&auto=format',
-                                alt: 'Video aspect 2'
-                            }
-                        ]}
-                        size="md"
-                        aspectRatio="16/9"
-                    />
-                </div>
-
-                <div class="space-y-2">
-                    <p class="text-sm font-medium text-muted-foreground">Photo (4:3)</p>
-                    <Carousel
-                        images={[
-                            {
-                                src: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&h=300&fit=crop&auto=format',
-                                alt: 'Photo aspect'
-                            },
-                            {
-                                src: 'https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=400&h=300&fit=crop&auto=format',
-                                alt: 'Photo aspect 2'
-                            }
-                        ]}
-                        size="md"
-                        aspectRatio="4/3"
-                    />
-                </div>
-            </div>
-        </div>
-
-        {/* No Captions Example */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Without Captions</h3>
-            <div class="max-w-lg">
+            
+            <div class="space-y-2">
+                <p class="text-sm font-medium text-muted-foreground">Small size</p>
                 <Carousel
                     images={[
                         {
-                            src: 'https://images.unsplash.com/photo-1515041219749-89347f83291a?w=600&h=400&fit=crop&auto=format',
-                            alt: 'Abstract art'
+                            src: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&h=300&fit=crop&auto=format',
+                            alt: 'Forest'
                         },
                         {
-                            src: 'https://images.unsplash.com/photo-1541199249251-f713e6145474?w=600&h=400&fit=crop&auto=format',
-                            alt: 'Geometric patterns'
+                            src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=400&h=300&fit=crop&auto=format',
+                            alt: 'Mountains'
+                        }
+                    ]}
+                    size="sm"
+                    aspectRatio="4/3"
+                />
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="space-y-2">
+                <p class="text-sm font-medium text-muted-foreground">Square (1:1)</p>
+                <Carousel
+                    images={[
+                        {
+                            src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&auto=format',
+                            alt: 'Square image'
+                        },
+                        {
+                            src: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=400&fit=crop&auto=format',
+                            alt: 'Square image 2'
                         }
                     ]}
                     size="md"
-                    aspectRatio="3/2"
-                    autoPlayInterval={3000}
+                    aspectRatio="1/1"
+                />
+            </div>
+            
+            <div class="space-y-2">
+                <p class="text-sm font-medium text-muted-foreground">Video (16:9)</p>
+                <Carousel
+                    images={[
+                        {
+                            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=640&h=360&fit=crop&auto=format',
+                            alt: 'Video aspect'
+                        },
+                        {
+                            src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=640&h=360&fit=crop&auto=format',
+                            alt: 'Video aspect 2'
+                        }
+                    ]}
+                    size="md"
+                    aspectRatio="16/9"
+                />
+            </div>
+            
+            <div class="space-y-2">
+                <p class="text-sm font-medium text-muted-foreground">Photo (4:3)</p>
+                <Carousel
+                    images={[
+                        {
+                            src: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&h=300&fit=crop&auto=format',
+                            alt: 'Photo aspect'
+                        },
+                        {
+                            src: 'https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=400&h=300&fit=crop&auto=format',
+                            alt: 'Photo aspect 2'
+                        }
+                    ]}
+                    size="md"
+                    aspectRatio="4/3"
                 />
             </div>
         </div>
@@ -212,53 +147,43 @@ A responsive image carousel component with Alpine.js interactivity. Features aut
     <TabsContent value="code">
         <Code language="astro" code={`---
 import Carousel from '@/components/ui/display/Carousel.astro';
-
-const carouselImages = [
-    {
-        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&auto=format',
-        alt: 'Mountain landscape',
-        caption: 'Snow-capped mountain at golden hour'
-    },
-    {
-        src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop&auto=format',
-        alt: 'Forest path',
-        caption: 'Peaceful trail through autumn woods'
-    },
-    {
-        src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop&auto=format',
-        alt: 'Desert landscape',
-        caption: 'Vast desert under starry sky'
-    }
-];
 ---
 
-{/* Basic Carousel */}
+{/* Basic with Captions */}
 <Carousel
-    images={carouselImages}
+    images={[
+        {
+            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&auto=format',
+            alt: 'Mountain landscape',
+            caption: 'Snow-capped mountain at golden hour'
+        },
+        {
+            src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop&auto=format',
+            alt: 'Forest path',
+            caption: 'Peaceful trail through autumn woods'
+        }
+    ]}
     size="lg"
     aspectRatio="16/9"
 />
 
-{/* Autoplay Carousel */}
+{/* Autoplay */}
 <Carousel
-    images={carouselImages}
+    images={images}
+    autoPlayInterval={4000}
     size="md"
-    autoPlayInterval={3000}
-    aspectRatio="4/3"
 />
 
-{/* Different Sizes */}
-<Carousel images={carouselImages} size="sm" />
-<Carousel images={carouselImages} size="md" />
-<Carousel images={carouselImages} size="lg" />
-<Carousel images={carouselImages} size="xl" />
+{/* Sizes */}
+<Carousel images={images} size="sm" />
+<Carousel images={images} size="md" />
+<Carousel images={images} size="lg" />
 
-{/* Different Aspect Ratios */}
-<Carousel images={carouselImages} aspectRatio="1/1" />   {/* Square */}
-<Carousel images={carouselImages} aspectRatio="16/9" />  {/* Video */}
-<Carousel images={carouselImages} aspectRatio="4/3" />   {/* Photo */}
-<Carousel images={carouselImages} aspectRatio="3/2" />   {/* Wide */}
-<Carousel images={carouselImages} aspectRatio="auto" />  {/* Natural */}
+{/* Aspect Ratios */}
+<Carousel images={images} aspectRatio="1/1" />   {/* Square */}
+<Carousel images={images} aspectRatio="16/9" />  {/* Video */}
+<Carousel images={images} aspectRatio="4/3" />   {/* Photo */}
+<Carousel images={images} aspectRatio="3/2" />   {/* Wide */}
 
 {/* Without Captions */}
 <Carousel
@@ -266,21 +191,11 @@ const carouselImages = [
         { src: '/image1.jpg', alt: 'Image 1' },
         { src: '/image2.jpg', alt: 'Image 2' }
     ]}
-    size="md"
 />
 
 {/* Alpine.js Integration */}
-<div x-data="{ 
-    currentImages: carouselImages,
-    updateImages() {
-        this.currentImages = [...newImageArray];
-    }
-}">
-    <Carousel 
-        :images="currentImages"
-        size="lg"
-    />
-    <button x-on:click="updateImages()">Update Images</button>
+<div x-data="{ currentImages: images }">
+    <Carousel :images="currentImages" />
 </div>`} />
     </TabsContent>
 </Tabs>
@@ -294,162 +209,15 @@ const carouselImages = [
 | `images` | `Array<ImageObject>` | **Required** | Array of image objects |
 | `autoPlayInterval` | `number` | - | Autoplay interval in milliseconds |
 | `aspectRatio` | `'auto' | '1/1' | '16/9' | '4/3' | '3/2'` | `'16/9'` | Image aspect ratio |
-| `size` | `'sm' | 'md' | 'lg' | 'xl' | 'full'` | `'md'` | Carousel size |
+| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Carousel size |
 | `class` | `string` | - | Additional CSS classes |
 
-### ImageObject Type
+### ImageObject
 
 ```typescript
 interface ImageObject {
-    src: string;        // Image source URL (required)
-    alt?: string;       // Alt text for accessibility
-    thumbnail?: string; // Thumbnail URL (future use)
-    caption?: string;   // Caption text overlay
+    src: string;      // Image source URL (required)
+    alt?: string;     // Alt text for accessibility
+    caption?: string; // Caption text overlay
 }
 ```
-
-### Alpine.js State
-
-The carousel creates the following Alpine.js data structure:
-
-```javascript
-{
-    currentSlide: 0,            // Current active slide index
-    images: [...],              // Array of image objects
-    autoPlayInterval: 3000,     // Autoplay interval in ms
-    autoPlayEnabled: true,      // Whether autoplay is enabled
-    autoPlayTimer: null,        // Timer reference
-    loop: true,                 // Whether to loop slides
-    
-    // Methods
-    init() { ... },            // Initialize autoplay
-    startAutoPlay() { ... },   // Start autoplay timer
-    stopAutoPlay() { ... },    // Stop autoplay timer
-    next() { ... },            // Go to next slide
-    prev() { ... },            // Go to previous slide
-    goToSlide(index) { ... }   // Go to specific slide
-}
-```
-
-### Navigation Features
-
-#### Arrow Navigation
-- Left/right arrow buttons appear on hover
-- Automatically hidden on mobile-first approach
-- Smooth hover transitions with opacity changes
-
-#### Dot Navigation  
-- Dot indicators at bottom center
-- Click any dot to jump to that slide
-- Active dot highlighted with different opacity
-
-#### Slide Counter
-- Optional slide counter in top-right corner
-- Shows current slide / total slides format
-- Hidden by default, visible on hover
-
-### Autoplay Behavior
-
-#### Automatic Playback
-- Starts automatically when `autoPlayInterval` is provided
-- Pauses on mouse enter, resumes on mouse leave
-- Loops infinitely through all slides
-
-#### Manual Control
-- Manual navigation stops autoplay temporarily
-- Autoplay resumes after mouse leave
-- Can be permanently disabled by clearing timer
-
-### Transitions & Effects
-
-#### Fade Transition
-- Smooth opacity-based transitions
-- 1-second duration with ease-in-out timing
-- Overlapping slides with z-index management
-
-#### Caption Overlay
-- Gradient background for text readability
-- Positioned at bottom of image
-- Only shown when caption text is provided
-
-### Accessibility
-
-#### Keyboard Support
-- Arrow keys for navigation (when focused)
-- Tab navigation to controls
-- Enter/Space to activate buttons
-
-#### Screen Reader Support
-- Proper alt text for all images
-- ARIA labels for navigation buttons
-- Semantic button elements
-
-### Advanced Usage
-
-#### Dynamic Image Updates
-
-```astro
-<div x-data="{ 
-    galleryImages: initialImages,
-    updateGallery(newImages) {
-        this.galleryImages = newImages;
-    }
-}">
-    <Carousel :images="galleryImages" />
-    <button x-on:click="updateGallery(newImageArray)">
-        Change Gallery
-    </button>
-</div>
-```
-
-#### Custom Event Handling
-
-```astro
-<div x-data="{ 
-    currentIndex: 0,
-    handleSlideChange(index) {
-        this.currentIndex = index;
-        // Custom logic here
-    }
-}">
-    <Carousel 
-        images={images}
-        x-on:slide-changed="handleSlideChange($event.detail.index)"
-    />
-</div>
-```
-
-#### Responsive Breakpoints
-
-The carousel automatically adjusts for different screen sizes:
-
-- **Mobile**: Simplified controls, larger touch targets
-- **Tablet**: Standard navigation with hover states  
-- **Desktop**: Full feature set with hover effects
-
-### Styling Customization
-
-#### CSS Variables
-```css
-.carousel-container {
-    --carousel-transition-duration: 1000ms;
-    --carousel-overlay-opacity: 0.6;
-    --carousel-dot-size: 10px;
-}
-```
-
-#### Custom Classes
-```astro
-<Carousel 
-    images={images}
-    class="rounded-xl shadow-2xl border-4 border-primary"
-/>
-```
-
-### Performance Considerations
-
-- Images are loaded as needed
-- Smooth animations use CSS transforms
-- Autoplay timer is properly cleaned up
-- Event listeners are efficiently managed
-- Optimized for mobile touch interactions

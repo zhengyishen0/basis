@@ -14,7 +14,7 @@ import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
-Loading is a simple component for displaying loading states with optional spinner animations. It provides consistent styling and spacing for loading messages and can be easily customized with different sizes.
+Loading is a simple component for displaying loading states with optional spinner animations. Provides consistent styling and spacing for loading messages.
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
@@ -23,14 +23,56 @@ Loading is a simple component for displaying loading states with optional spinne
     </TabsList>
     <TabsContent value="preview" preview class="space-y-6">
         <div class="space-y-6">
-            <div>
-                <h3 class="text-lg font-medium mb-4">Basic Loading</h3>
-                <Loading>Loading content...</Loading>
+            <div class="space-y-4">
+                <h3 class="text-lg font-medium">Basic Loading</h3>
+                <div class="border rounded-lg">
+                    <Loading>Loading content...</Loading>
+                </div>
+                <div class="border rounded-lg">
+                    <Loading spinner={true}>Loading with spinner...</Loading>
+                </div>
             </div>
             
-            <div>
-                <h3 class="text-lg font-medium mb-4">With Spinner</h3>
-                <Loading spinner={true}>Loading content...</Loading>
+            <div class="space-y-4">
+                <h3 class="text-lg font-medium">Size Variants</h3>
+                <div class="border rounded-lg">
+                    <Loading size="sm" spinner={true}>Loading...</Loading>
+                </div>
+                <div class="border rounded-lg">
+                    <Loading size="md" spinner={true}>Loading content...</Loading>
+                </div>
+                <div class="border rounded-lg">
+                    <Loading size="lg" spinner={true}>Loading large content...</Loading>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <h3 class="text-lg font-medium">Usage Examples</h3>
+                <div class="border rounded-lg p-4 bg-muted/50">
+                    <h4 class="font-medium mb-2">Table Loading</h4>
+                    <Loading size="sm" spinner={true}>Loading table data...</Loading>
+                </div>
+                
+                <div class="min-h-[150px] border-2 border-dashed border-border rounded-lg flex items-center justify-center">
+                    <Loading size="lg" spinner={true}>Loading page content...</Loading>
+                </div>
+            </div>
+            
+            <div x-data="{ loading: false }" class="space-y-4">
+                <h3 class="text-lg font-medium">Alpine.js Integration</h3>
+                <button x-on:click="loading = true; setTimeout(() => loading = false, 3000)" 
+                        x-bind:disabled="loading"
+                        class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50">
+                    Simulate Loading
+                </button>
+                
+                <div x-show="loading" x-transition class="border rounded-lg p-6">
+                    <Loading spinner={true}>Processing your request...</Loading>
+                </div>
+                
+                <div x-show="!loading" x-transition class="text-success font-medium">
+                    Content loaded successfully!
+                </div>
             </div>
         </div>
     </TabsContent>
@@ -39,170 +81,46 @@ Loading is a simple component for displaying loading states with optional spinne
 import Loading from '@/components/ui/feedback/Loading.astro';
 ---
 
-{/* Basic loading message */}
+{/* Basic loading */}
 <Loading>Loading content...</Loading>
+<Loading spinner={true}>Loading with spinner...</Loading>
 
-{/* With spinner */}
-<Loading spinner={true}>Loading content...</Loading>
-
-{/* Without text (spinner only) */}
-<Loading spinner={true} />`} />
-    </TabsContent>
-</Tabs>
-
-## Size Variants
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-6">
-        <div class="space-y-6">
-            <div>
-                <h3 class="text-lg font-medium mb-4">Small</h3>
-                <Loading size="sm" spinner={true}>Loading...</Loading>
-            </div>
-            
-            <div>
-                <h3 class="text-lg font-medium mb-4">Medium (Default)</h3>
-                <Loading size="md" spinner={true}>Loading content...</Loading>
-            </div>
-            
-            <div>
-                <h3 class="text-lg font-medium mb-4">Large</h3>
-                <Loading size="lg" spinner={true}>Loading large content...</Loading>
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`{/* Small loading */
+{/* Size variants */}
 <Loading size="sm" spinner={true}>Loading...</Loading>
-
-{/* Medium loading (default) */}
 <Loading size="md" spinner={true}>Loading content...</Loading>
+<Loading size="lg" spinner={true}>Loading large content...</Loading>
 
-{/* Large loading */}
-<Loading size="lg" spinner={true}>Loading large content...</Loading>`} />
-    </TabsContent>
-</Tabs>
-
-## Usage Examples
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-6">
-        <div class="space-y-6">
-            <div class="border rounded-lg p-6">
-                <h3 class="text-lg font-medium mb-4">Card Loading State</h3>
-                <Loading spinner={true}>Fetching user data...</Loading>
-            </div>
-            
-            <div class="border rounded-lg p-4 bg-muted/50">
-                <h3 class="text-lg font-medium mb-4">Table Loading</h3>
-                <Loading size="sm" spinner={true}>Loading table data...</Loading>
-            </div>
-            
-            <div class="min-h-[200px] border-2 border-dashed border-border rounded-lg flex items-center justify-center">
-                <Loading size="lg" spinner={true}>Loading page content...</Loading>
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`{/* Card loading state */
-<div class="border rounded-lg p-6">
-  <Loading spinner={true}>Fetching user data...</Loading>
-</div>
-
-{/* Table loading */}
-<div class="border rounded-lg p-4 bg-muted/50">
+{/* Usage examples */}
+<div class="border rounded-lg p-4">
   <Loading size="sm" spinner={true}>Loading table data...</Loading>
 </div>
 
-{/* Page loading */}
-<div class="min-h-[200px] border-2 border-dashed border-border rounded-lg flex items-center justify-center">
+<div class="min-h-[200px] flex items-center justify-center">
   <Loading size="lg" spinner={true}>Loading page content...</Loading>
-</div>`} />
-    </TabsContent>
-</Tabs>
+</div>
 
-## Alpine.js Integration
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div 
-            x-data="{ 
-                loading: false,
-                simulateLoading() {
-                    this.loading = true;
-                    setTimeout(() => {
-                        this.loading = false;
-                    }, 3000);
-                }
-            }"
-            class="space-y-4"
-        >
-            <button 
-                x-on:click="simulateLoading()"
-                x-bind:disabled="loading"
-                class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-                Simulate Loading
-            </button>
-            
-            <div 
-                x-show="loading" 
-                x-transition
-                class="border rounded-lg p-6"
-            >
-                <Loading spinner={true} x-show="loading">Processing your request...</Loading>
-            </div>
-            
-            <div 
-                x-show="!loading"
-                x-transition
-                class="text-success font-medium"
-            >
-                Content loaded successfully!
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`<div 
-  x-data="{ 
-    loading: false,
-    simulateLoading() {
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-      }, 3000);
-    }
-  }"
->
-  <button 
-    x-on:click="simulateLoading()"
-    x-bind:disabled="loading"
-  >
+{/* Alpine.js integration */}
+<div x-data="{ loading: false }">
+  <button x-on:click="loading = true; setTimeout(() => loading = false, 3000)">
     Simulate Loading
   </button>
   
   <div x-show="loading" x-transition>
-    <Loading spinner={true} x-show="loading">
-      Processing your request...
-    </Loading>
+    <Loading spinner={true}>Processing your request...</Loading>
   </div>
   
   <div x-show="!loading" x-transition>
     Content loaded successfully!
   </div>
-</div>`} />
+</div>
+
+{/* Spinner only */}
+<Loading spinner={true} />
+
+{/* Custom styling */}
+<Loading class="bg-accent text-accent-foreground rounded-md" spinner={true}>
+  Custom styled loading...
+</Loading>`} />
     </TabsContent>
 </Tabs>
 
@@ -224,80 +142,8 @@ import Loading from '@/components/ui/feedback/Loading.astro';
 
 ### Size Specifications
 
-| Size | Padding | Text Size | Description |
-|------|---------|-----------|-------------|
-| `sm` | `py-6` | `text-sm` | Compact loading state for small components |
-| `md` | `py-12` | `text-lg` | Default size for most loading states |
-| `lg` | `py-16` | `text-xl` | Large loading state for main content areas |
-
-### Alpine.js Pass-through
-
-The Loading component supports Alpine.js pass-through props:
-
-```astro
-<Loading 
-  spinner={true}
-  x-show="loading"
-  x-transition
-  x-on:click="handleLoadingClick()"
->
-  Loading...
-</Loading>
-```
-
-### Usage Examples
-
-```astro
-{/* Simple text loading */}
-<Loading>Loading...</Loading>
-
-{/* With spinner */}
-<Loading spinner={true}>Fetching data...</Loading>
-
-{/* Different sizes */}
-<Loading size="sm" spinner={true}>Loading...</Loading>
-<Loading size="lg" spinner={true}>Loading large dataset...</Loading>
-
-{/* With Alpine.js */}
-<Loading 
-  spinner={true}
-  x-show="isLoading"
-  x-transition
->
-  Processing request...
-</Loading>
-
-{/* Custom styling */}
-<Loading 
-  class="bg-accent text-accent-foreground rounded-md"
-  spinner={true}
->
-  Custom styled loading...
-</Loading>
-
-{/* Spinner only (no text) */}
-<Loading spinner={true} />
-```
-
-### Features
-
-- **Size Variants**: Three predefined sizes for different contexts
-- **Optional Spinner**: Animated loading spinner with consistent styling
-- **Alpine.js Ready**: Supports all Alpine.js directives and pass-through props
-- **Flexible Content**: Accepts any content through slots
-- **Responsive**: Adapts to parent container
-- **Consistent Styling**: Follows design system color and spacing tokens
-
-### Best Practices
-
-1. **Use appropriate sizes**: Small for inline loading, medium for cards, large for page content
-2. **Include descriptive text**: Help users understand what's loading
-3. **Combine with Alpine.js**: Use `x-show` and `x-transition` for smooth loading states
-4. **Provide alternatives**: Consider skeleton loading for better UX in some cases
-
-### Accessibility
-
-- Uses semantic HTML with appropriate text content
-- Spinner has proper animation that respects `prefers-reduced-motion`
-- Text content is readable by screen readers
-- Color contrast meets WCAG standards
+| Size | Padding | Text Size | Use Case |
+|------|---------|-----------|----------|
+| `sm` | `py-6` | `text-sm` | Compact loading states |
+| `md` | `py-12` | `text-lg` | Standard loading states |
+| `lg` | `py-16` | `text-xl` | Full page loading states |

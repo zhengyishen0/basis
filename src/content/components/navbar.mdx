@@ -6,7 +6,6 @@ order: 1
 ---
 
 import Navbar from '@/components/ui/display/Navbar.astro';
-import { Card } from '@/components/ui/display/card';
 import Code from '@/components/ui/display/Code.astro';
 import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
 import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
@@ -15,7 +14,7 @@ import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
-The Navbar component provides a responsive navigation bar with slots for brand, navigation links, and action buttons. It features sticky positioning with backdrop blur effects and mobile-responsive layout.
+The Navbar component provides a responsive navigation bar with slots for brand, navigation links, and action buttons. It features optional sticky positioning with backdrop blur effects and automatically adapts to mobile layouts.
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
@@ -26,27 +25,56 @@ The Navbar component provides a responsive navigation bar with slots for brand, 
             Code
         </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-4">
-        <Navbar>
-            <div slot="brand" class="flex items-center gap-2">
-                <img src="/logo.svg" alt="Logo" class="w-8 h-8" />
-                <span class="font-bold text-lg">Brand</span>
-            </div>
-            <div slot="links" class="flex items-center space-x-6">
-                <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
-                <a href="#" class="text-sm font-medium hover:text-primary transition-colors">About</a>
-                <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Services</a>
-                <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Contact</a>
-            </div>
-            <div slot="actions" class="flex items-center gap-2">
-                <button class="px-3 py-1 text-sm border border-border rounded-md hover:bg-accent transition-colors">
-                    Sign In
-                </button>
-                <button class="px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
-                    Get Started
-                </button>
-            </div>
-        </Navbar>
+    <TabsContent value="preview" preview class="flex flex-col gap-6">
+        <div>
+            <h4 class="text-sm font-medium mb-2">Default (sticky)</h4>
+            <Navbar>
+                <div slot="brand" class="flex items-center gap-2">
+                    <img src="/logo.svg" alt="Logo" class="w-8 h-8" />
+                    <span class="font-bold text-lg">Brand</span>
+                </div>
+                <div slot="links" class="flex items-center space-x-6">
+                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
+                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">About</a>
+                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Services</a>
+                </div>
+                <div slot="actions" class="flex items-center gap-2">
+                    <button class="px-3 py-1 text-sm border border-border rounded-md hover:bg-accent transition-colors">
+                        Sign In
+                    </button>
+                    <button class="px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+                        Get Started
+                    </button>
+                </div>
+            </Navbar>
+        </div>
+        <div>
+            <h4 class="text-sm font-medium mb-2">Non-sticky with mobile menu</h4>
+            <Navbar sticky={false} x-data="{ mobileMenuOpen: false }">
+                <div slot="brand" class="flex items-center gap-2">
+                    <img src="/logo.svg" alt="Logo" class="w-8 h-8" />
+                    <span class="font-bold text-lg">Brand</span>
+                </div>
+                <div slot="links" class="flex items-center space-x-6">
+                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Products</a>
+                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Pricing</a>
+                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Docs</a>
+                </div>
+                <div slot="actions" class="flex items-center gap-2">
+                    <button 
+                        @click="mobileMenuOpen = !mobileMenuOpen"
+                        class="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <button class="hidden md:block px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+                        Get Started
+                    </button>
+                </div>
+            </Navbar>
+        </div>
     </TabsContent>
     <TabsContent value="code">
         <Code
@@ -54,6 +82,8 @@ The Navbar component provides a responsive navigation bar with slots for brand, 
             code={`---
 import Navbar from '@/components/ui/display/Navbar.astro';
 ---
+
+<!-- Default sticky navbar -->
 <Navbar>
     <div slot="brand" class="flex items-center gap-2">
         <img src="/logo.svg" alt="Logo" class="w-8 h-8" />
@@ -63,7 +93,6 @@ import Navbar from '@/components/ui/display/Navbar.astro';
         <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
         <a href="#" class="text-sm font-medium hover:text-primary transition-colors">About</a>
         <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Services</a>
-        <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Contact</a>
     </div>
     <div slot="actions" class="flex items-center gap-2">
         <button class="px-3 py-1 text-sm border border-border rounded-md hover:bg-accent transition-colors">
@@ -73,47 +102,10 @@ import Navbar from '@/components/ui/display/Navbar.astro';
             Get Started
         </button>
     </div>
-</Navbar>`}
-        />
-    </TabsContent>
-</Tabs>
+</Navbar>
 
-## Non-Sticky Navbar
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">
-            Preview
-        </TabsTrigger>
-        <TabsTrigger value="code" variant="pills">
-            Code
-        </TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-4">
-        <Navbar sticky={false}>
-            <div slot="brand" class="flex items-center gap-2">
-                <img src="/logo.svg" alt="Logo" class="w-8 h-8" />
-                <span class="font-bold text-lg">Brand</span>
-            </div>
-            <div slot="links" class="flex items-center space-x-6">
-                <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Products</a>
-                <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Pricing</a>
-                <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Documentation</a>
-            </div>
-            <div slot="actions" class="flex items-center gap-2">
-                <button class="px-3 py-1 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    Login
-                </button>
-            </div>
-        </Navbar>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code
-            language="astro"
-            code={`---
-import Navbar from '@/components/ui/display/Navbar.astro';
----
-<Navbar sticky={false}>
+<!-- Non-sticky with mobile menu toggle -->
+<Navbar sticky={false} x-data="{ mobileMenuOpen: false }">
     <div slot="brand" class="flex items-center gap-2">
         <img src="/logo.svg" alt="Logo" class="w-8 h-8" />
         <span class="font-bold text-lg">Brand</span>
@@ -121,74 +113,7 @@ import Navbar from '@/components/ui/display/Navbar.astro';
     <div slot="links" class="flex items-center space-x-6">
         <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Products</a>
         <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Pricing</a>
-        <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Documentation</a>
-    </div>
-    <div slot="actions" class="flex items-center gap-2">
-        <button class="px-3 py-1 text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Login
-        </button>
-    </div>
-</Navbar>`}
-        />
-    </TabsContent>
-</Tabs>
-
-## Mobile-Responsive Layout
-
-The Navbar automatically hides navigation links on mobile devices (hidden on screens smaller than `md` breakpoint) and shows them on desktop. You can implement a mobile menu toggle using Alpine.js:
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">
-            Preview
-        </TabsTrigger>
-        <TabsTrigger value="code" variant="pills">
-            Code
-        </TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-4">
-        <Navbar x-data="{ mobileMenuOpen: false }">
-            <div slot="brand" class="flex items-center gap-2">
-                <img src="/logo.svg" alt="Logo" class="w-8 h-8" />
-                <span class="font-bold text-lg">Brand</span>
-            </div>
-            <div slot="links" class="flex items-center space-x-6">
-                <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
-                <a href="#" class="text-sm font-medium hover:text-primary transition-colors">About</a>
-                <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Services</a>
-                <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Contact</a>
-            </div>
-            <div slot="actions" class="flex items-center gap-2">
-                <button 
-                    @click="mobileMenuOpen = !mobileMenuOpen"
-                    class="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-                <button class="hidden md:block px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
-                    Get Started
-                </button>
-            </div>
-        </Navbar>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code
-            language="astro"
-            code={`---
-import Navbar from '@/components/ui/display/Navbar.astro';
----
-<Navbar x-data="{ mobileMenuOpen: false }">
-    <div slot="brand" class="flex items-center gap-2">
-        <img src="/logo.svg" alt="Logo" class="w-8 h-8" />
-        <span class="font-bold text-lg">Brand</span>
-    </div>
-    <div slot="links" class="flex items-center space-x-6">
-        <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
-        <a href="#" class="text-sm font-medium hover:text-primary transition-colors">About</a>
-        <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Services</a>
-        <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Contact</a>
+        <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Docs</a>
     </div>
     <div slot="actions" class="flex items-center gap-2">
         <button 
@@ -225,20 +150,3 @@ import Navbar from '@/components/ui/display/Navbar.astro';
 | `brand`   | Logo, brand name, or brand-related content         |
 | `links`   | Navigation links (hidden on mobile by default)     |
 | `actions` | Action buttons, user menu, or other action items   |
-
-## Features
-
-- **Responsive Design**: Automatically adapts to mobile and desktop layouts
-- **Sticky Positioning**: Optional sticky header with backdrop blur effects
-- **Slot-Based Architecture**: Flexible content organization with named slots
-- **Alpine.js Integration**: Full support for Alpine.js directives and data
-- **Accessible**: Semantic HTML structure with proper navigation landmarks
-- **Customizable**: Easy styling with CSS classes and Tailwind utilities
-
-## Usage Notes
-
-- Navigation links are automatically hidden on mobile devices (screens smaller than `md` breakpoint)
-- The component uses backdrop blur effects for modern browser support
-- Brand slot typically contains logos and company names
-- Actions slot is perfect for login buttons, user avatars, or mobile menu toggles
-- Alpine.js integration allows for dynamic behavior like mobile menu toggles

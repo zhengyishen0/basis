@@ -18,98 +18,68 @@ import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
-A collapsible accordion component built with Alpine.js that supports both static and dynamic content rendering. Features smooth animations with Alpine's x-collapse directive and flexible icon options.
+A collapsible accordion component built with Alpine.js that supports both static and dynamic content. Features smooth animations with x-collapse directive and customizable icons.
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
         <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div class="space-y-4">
-            {/* Basic Static Accordion */}
-            <div class="space-y-2">
-                <h3 class="text-lg font-semibold">Static Accordion</h3>
-                <Accordion>
-                    <AccordionItem>
-                        <AccordionTrigger iconType="chevron">
-                            What is this accordion?
-                        </AccordionTrigger>
-                        <AccordionContent>
-                            This is a composable accordion component built with Alpine.js and Astro. It supports smooth animations and flexible content.
-                        </AccordionContent>
-                    </AccordionItem>
-                    <AccordionItem>
-                        <AccordionTrigger iconType="chevron">
-                            How does it work?
-                        </AccordionTrigger>
-                        <AccordionContent>
-                            The accordion uses Alpine.js for state management and x-collapse for smooth animations. Each item has a unique ID for tracking.
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
-            </div>
-
-            {/* Plus Icon Variant */}
-            <div class="space-y-2">
-                <h3 class="text-lg font-semibold">Plus Icon Variant</h3>
-                <Accordion>
-                    <AccordionItem variant="elevated">
-                        <AccordionTrigger iconType="plus">
-                            Can I customize the icons?
-                        </AccordionTrigger>
-                        <AccordionContent variant="emphasized">
-                            Yes! You can use either 'chevron' or 'plus' icons, or provide your own through the icon slot.
-                        </AccordionContent>
-                    </AccordionItem>
-                    <AccordionItem variant="elevated">
-                        <AccordionTrigger iconType="plus">
-                            What about styling variants?
-                        </AccordionTrigger>
-                        <AccordionContent>
-                            The accordion supports different variants like 'default', 'elevated', and 'flat' for different visual styles.
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
-            </div>
-
-            {/* Dynamic Content Example */}
-            <div x-data="{
-                items: [
-                    {
-                        id: 'dynamic-1',
-                        question: 'Dynamic Question 1',
-                        answer: 'This content is rendered dynamically using x-for loops.'
-                    },
-                    {
-                        id: 'dynamic-2', 
-                        question: 'Dynamic Question 2',
-                        answer: 'You can easily bind data from Alpine.js stores or API responses.'
-                    }
-                ]
-            }" class="space-y-2">
-                <h3 class="text-lg font-semibold">Dynamic Accordion</h3>
-                <Accordion>
-                    <AccordionItems x-for="item in items" x-key="item.id">
-                        <AccordionTrigger iconType="chevron">
-                            <span x-text="item.question"></span>
-                        </AccordionTrigger>
-                        <AccordionContent>
-                            <span x-text="item.answer"></span>
-                        </AccordionContent>
-                    </AccordionItems>
-                </Accordion>
-            </div>
+    <TabsContent value="preview" preview class="space-y-6">
+        {/* Static Accordion with Variants */}
+        <Accordion>
+            <AccordionItem>
+                <AccordionTrigger iconType="chevron">
+                    What is this accordion?
+                </AccordionTrigger>
+                <AccordionContent>
+                    A composable accordion component built with Alpine.js and Astro. Supports smooth animations and flexible content.
+                </AccordionContent>
+            </AccordionItem>
+            <AccordionItem variant="elevated">
+                <AccordionTrigger iconType="plus">
+                    Can I customize the icons?
+                </AccordionTrigger>
+                <AccordionContent variant="emphasized">
+                    Yes! Use 'chevron' or 'plus' icons, or provide custom icons through the icon slot.
+                </AccordionContent>
+            </AccordionItem>
+            <AccordionItem variant="flat">
+                <AccordionTrigger iconType="chevron" variant="subtle" size="sm">
+                    What about styling variants?
+                </AccordionTrigger>
+                <AccordionContent>
+                    The accordion supports 'default', 'elevated', and 'flat' variants for different visual styles.
+                </AccordionContent>
+            </AccordionItem>
+        </Accordion>
+        
+        {/* Dynamic Accordion */}
+        <div x-data="{
+            items: [
+                { id: 'dynamic-1', question: 'Dynamic Question 1', answer: 'This content is rendered dynamically using x-for loops.' },
+                { id: 'dynamic-2', question: 'Dynamic Question 2', answer: 'You can easily bind data from Alpine.js stores or API responses.' }
+            ]
+        }">
+            <Accordion>
+                <AccordionItems x-for="item in items" x-key="item.id">
+                    <AccordionTrigger iconType="chevron">
+                        <span x-text="item.question"></span>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        <span x-text="item.answer"></span>
+                    </AccordionContent>
+                </AccordionItems>
+            </Accordion>
         </div>
     </TabsContent>
     <TabsContent value="code">
         <Code language="astro" code={`---
-import {
-    Accordion,
-    AccordionItem,
-    AccordionTrigger,
-    AccordionContent,
-} from '@/components/ui/display/accordion';
+import Accordion from '@/components/ui/display/accordion/Accordion.astro';
+import AccordionItem from '@/components/ui/display/accordion/AccordionItem.astro';
+import AccordionItems from '@/components/ui/display/accordion/AccordionItems.astro';
+import AccordionTrigger from '@/components/ui/display/accordion/AccordionTrigger.astro';
+import AccordionContent from '@/components/ui/display/accordion/AccordionContent.astro';
 ---
 
 {/* Static Accordion */}
@@ -119,10 +89,10 @@ import {
             What is this accordion?
         </AccordionTrigger>
         <AccordionContent>
-            This is a composable accordion component.
+            A composable accordion component.
         </AccordionContent>
     </AccordionItem>
-    <AccordionItem>
+    <AccordionItem variant="elevated">
         <AccordionTrigger iconType="plus">
             Can I customize it?
         </AccordionTrigger>
@@ -139,7 +109,7 @@ import {
 ]}">
     <Accordion>
         <AccordionItems x-for="item in items" x-key="item.id">
-            <AccordionTrigger>
+            <AccordionTrigger iconType="chevron">
                 <span x-text="item.question"></span>
             </AccordionTrigger>
             <AccordionContent>
@@ -153,100 +123,33 @@ import {
 
 ## API Reference
 
-### Accordion Props
+### Accordion
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `maxWidth` | `'sm' | 'md' | 'lg' | 'xl' | 'full'` | `'md'` | Maximum width of accordion |
-| `centered` | `boolean` | `true` | Center the accordion horizontally |
-| `overflow` | `'fixed' | 'auto' | 'hidden' | 'visible'` | `'fixed'` | Overflow handling |
+| `maxWidth` | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Maximum width |
+| `centered` | `boolean` | `true` | Center horizontally |
 | `class` | `string` | - | Additional CSS classes |
 
-### AccordionItem Props
+### AccordionItem
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `'default' | 'elevated' | 'flat'` | `'default'` | Visual style variant |
+| `variant` | `'default' \| 'elevated' \| 'flat'` | `'default'` | Visual style variant |
 | `class` | `string` | - | Additional CSS classes |
 
-### AccordionTrigger Props
+### AccordionTrigger
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `iconType` | `'chevron' | 'plus'` | `'chevron'` | Icon type for expand/collapse |
-| `text` | `string` | - | Text content (alternative to slots) |
-| `variant` | `'default' | 'subtle'` | `'default'` | Visual style variant |
-| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Size of the trigger |
-| `overflow` | `'fixed' | 'auto' | 'hidden' | 'visible'` | `'fixed'` | Overflow handling |
+| `iconType` | `'chevron' \| 'plus'` | `'chevron'` | Icon type |
+| `variant` | `'default' \| 'subtle'` | `'default'` | Visual style |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size |
 | `class` | `string` | - | Additional CSS classes |
 
-### AccordionContent Props
+### AccordionContent
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `text` | `string` | - | Text content (alternative to slots) |
-| `variant` | `'default' | 'emphasized'` | `'default'` | Visual style variant |
-| `overflow` | `'fixed' | 'auto' | 'hidden' | 'visible'` | `'fixed'` | Overflow handling |
+| `variant` | `'default' \| 'emphasized'` | `'default'` | Visual style |
 | `class` | `string` | - | Additional CSS classes |
-
-### Slots
-
-| Component | Slot | Description |
-|-----------|------|-------------|
-| AccordionTrigger | `default` | Trigger button content |
-| AccordionTrigger | `icon` | Custom icon content |
-| AccordionContent | `default` | Accordion panel content |
-
-### Alpine.js Integration
-
-The accordion automatically manages state using Alpine.js:
-
-```javascript
-// Automatically available in x-data scope:
-{
-  activeAccordion: '',           // Currently active accordion ID
-  setActiveAccordion(id) { ... } // Function to toggle accordion state
-}
-```
-
-### Usage Patterns
-
-#### Static Content
-Use `AccordionItem` for static, predefined content:
-
-```astro
-<Accordion>
-    <AccordionItem>
-        <AccordionTrigger>Static Question</AccordionTrigger>
-        <AccordionContent>Static Answer</AccordionContent>
-    </AccordionItem>
-</Accordion>
-```
-
-#### Dynamic Content  
-Use `AccordionItems` with `x-for` for dynamic data:
-
-```astro
-<Accordion>
-    <AccordionItems x-for="item in items" x-key="item.id">
-        <AccordionTrigger>
-            <span x-text="item.question"></span>
-        </AccordionTrigger>
-        <AccordionContent>
-            <span x-text="item.answer"></span>
-        </AccordionContent>
-    </AccordionItems>
-</Accordion>
-```
-
-#### Custom Icons
-Provide custom icons through the icon slot:
-
-```astro
-<AccordionTrigger>
-    Question Text
-    <div slot="icon" class="custom-icon">
-        {/* Custom icon content */}
-    </div>
-</AccordionTrigger>
-```

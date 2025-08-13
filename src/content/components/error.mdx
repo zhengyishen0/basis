@@ -14,30 +14,58 @@ import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
-Error is a versatile component for displaying error messages, warnings, informational alerts, and success messages. It provides consistent styling with color-coded variants and flexible sizing options for different contexts.
+Error is a versatile component for displaying error messages, warnings, informational alerts, and success messages with color-coded variants and flexible sizing.
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
         <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
+    <TabsContent value="preview" preview class="space-y-6">
         <div class="space-y-4">
-            <Error variant="error">
-                An error occurred while processing your request.
-            </Error>
+            <Error variant="error">An error occurred while processing your request.</Error>
+            <Error variant="warning">Please review your input before proceeding.</Error>
+            <Error variant="info">Your changes have been saved automatically.</Error>
+            <Error variant="success">Operation completed successfully!</Error>
+        </div>
+        
+        <div class="space-y-4">
+            <h3 class="text-lg font-medium">Size Variants</h3>
+            <Error variant="error" size="sm">Small error message for inline feedback.</Error>
+            <Error variant="warning" size="md">Medium warning message for standard alerts.</Error>
+            <Error variant="info" size="lg">Large informational message for important announcements.</Error>
+        </div>
+        
+        <div class="space-y-4">
+            <h3 class="text-lg font-medium">Form Validation</h3>
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Email Address</label>
+                <input type="email" class="w-full p-2 border border-red-300 rounded-md focus:ring-2 focus:ring-red-500" value="invalid-email" />
+                <Error variant="error" size="sm">Please enter a valid email address.</Error>
+            </div>
             
-            <Error variant="warning">
-                Please review your input before proceeding.
-            </Error>
-            
-            <Error variant="info">
-                Your changes have been saved automatically.
-            </Error>
-            
-            <Error variant="success">
-                Operation completed successfully!
-            </Error>
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Username</label>
+                <input type="text" class="w-full p-2 border border-green-300 rounded-md focus:ring-2 focus:ring-green-500" value="john_doe" />
+                <Error variant="success" size="sm">Username is available!</Error>
+            </div>
+        </div>
+        
+        <div x-data="{ showError: false, errorType: 'error', errorMessage: 'Something went wrong!' }" class="space-y-4">
+            <h3 class="text-lg font-medium">Alpine.js Integration</h3>
+            <div class="flex gap-2">
+                <button x-on:click="errorType = 'error'; errorMessage = 'Network connection failed!'; showError = true" 
+                        class="px-3 py-1 bg-destructive text-destructive-foreground rounded text-sm">
+                    Show Error
+                </button>
+                <button x-on:click="errorType = 'success'; errorMessage = 'Settings saved successfully!'; showError = true" 
+                        class="px-3 py-1 bg-success text-success-foreground rounded text-sm">
+                    Show Success
+                </button>
+            </div>
+            <div x-show="showError" x-transition>
+                <Error x-bind:variant="errorType" x-text="errorMessage" x-on:click="showError = false" class="cursor-pointer"></Error>
+            </div>
         </div>
     </TabsContent>
     <TabsContent value="code">
@@ -45,292 +73,32 @@ Error is a versatile component for displaying error messages, warnings, informat
 import Error from '@/components/ui/feedback/Error.astro';
 ---
 
-{/* Error message */}
-<Error variant="error">
-  An error occurred while processing your request.
-</Error>
+{/* Variants */}
+<Error variant="error">An error occurred while processing your request.</Error>
+<Error variant="warning">Please review your input before proceeding.</Error>
+<Error variant="info">Your changes have been saved automatically.</Error>
+<Error variant="success">Operation completed successfully!</Error>
 
-{/* Warning message */}
-<Error variant="warning">
-  Please review your input before proceeding.
-</Error>
+{/* Sizes */}
+<Error variant="error" size="sm">Small error message.</Error>
+<Error variant="warning" size="md">Medium warning message.</Error>
+<Error variant="info" size="lg">Large informational message.</Error>
 
-{/* Info message */}
-<Error variant="info">
-  Your changes have been saved automatically.
-</Error>
+{/* Form validation */}
+<input type="email" class="..." />
+<Error variant="error" size="sm">Please enter a valid email address.</Error>
 
-{/* Success message */}
-<Error variant="success">
-  Operation completed successfully!
-</Error>`} />
-    </TabsContent>
-</Tabs>
-
-## Size Variants
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div class="space-y-4">
-            <div>
-                <h3 class="text-lg font-medium mb-2">Small</h3>
-                <Error variant="error" size="sm">
-                    Small error message for inline feedback.
-                </Error>
-            </div>
-            
-            <div>
-                <h3 class="text-lg font-medium mb-2">Medium (Default)</h3>
-                <Error variant="warning" size="md">
-                    Medium warning message for standard alerts and notifications.
-                </Error>
-            </div>
-            
-            <div>
-                <h3 class="text-lg font-medium mb-2">Large</h3>
-                <Error variant="info" size="lg">
-                    Large informational message for important announcements or page-level feedback.
-                </Error>
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`{/* Small size */
-<Error variant="error" size="sm">
-  Small error message for inline feedback.
-</Error>
-
-{/* Medium size (default) */}
-<Error variant="warning" size="md">
-  Medium warning message for standard alerts.
-</Error>
-
-{/* Large size */}
-<Error variant="info" size="lg">
-  Large informational message for important announcements.
-</Error>`} />
-    </TabsContent>
-</Tabs>
-
-## Form Validation Examples
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div class="space-y-6">
-            <div class="space-y-2">
-                <label class="text-sm font-medium">Email Address</label>
-                <input 
-                    type="email" 
-                    class="w-full p-2 border border-red-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500" 
-                    value="invalid-email"
-                />
-                <Error variant="error" size="sm">
-                    Please enter a valid email address.
-                </Error>
-            </div>
-            
-            <div class="space-y-2">
-                <label class="text-sm font-medium">Password</label>
-                <input 
-                    type="password" 
-                    class="w-full p-2 border border-yellow-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" 
-                    value="weak"
-                />
-                <Error variant="warning" size="sm">
-                    Password should be at least 8 characters long.
-                </Error>
-            </div>
-            
-            <div class="space-y-2">
-                <label class="text-sm font-medium">Username</label>
-                <input 
-                    type="text" 
-                    class="w-full p-2 border border-green-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500" 
-                    value="john_doe"
-                />
-                <Error variant="success" size="sm">
-                    Username is available!
-                </Error>
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`{/* Form validation errors */
-<div class="space-y-2">
-  <label>Email Address</label>
-  <input type="email" class="..." />
-  <Error variant="error" size="sm">
-    Please enter a valid email address.
-  </Error>
-</div>
-
-<div class="space-y-2">
-  <label>Password</label>
-  <input type="password" class="..." />
-  <Error variant="warning" size="sm">
-    Password should be at least 8 characters long.
-  </Error>
-</div>
-
-<div class="space-y-2">
-  <label>Username</label>
-  <input type="text" class="..." />
-  <Error variant="success" size="sm">
-    Username is available!
-  </Error>
-</div>`} />
-    </TabsContent>
-</Tabs>
-
-## Alpine.js Integration
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div 
-            x-data="{ 
-                showError: false,
-                errorType: 'error',
-                errorMessage: 'Something went wrong!',
-                triggerError(type, message) {
-                    this.errorType = type;
-                    this.errorMessage = message;
-                    this.showError = true;
-                    setTimeout(() => { this.showError = false; }, 4000);
-                }
-            }"
-            class="space-y-4"
-        >
-            <div class="flex gap-2">
-                <button 
-                    x-on:click="triggerError('error', 'Network connection failed!')"
-                    class="px-3 py-1 bg-destructive text-destructive-foreground rounded text-sm hover:bg-destructive/90"
-                >
-                    Show Error
-                </button>
-                
-                <button 
-                    x-on:click="triggerError('warning', 'This action cannot be undone.')"
-                    class="px-3 py-1 bg-warning text-warning-foreground rounded text-sm hover:bg-warning/90"
-                >
-                    Show Warning
-                </button>
-                
-                <button 
-                    x-on:click="triggerError('success', 'Settings saved successfully!')"
-                    class="px-3 py-1 bg-success text-success-foreground rounded text-sm hover:bg-success/90"
-                >
-                    Show Success
-                </button>
-            </div>
-            
-            <div 
-                x-show="showError" 
-                x-transition
-            >
-                <Error 
-                    x-bind:variant="errorType"
-                    x-text="errorMessage"
-                    x-on:click="showError = false"
-                    class="cursor-pointer"
-                >
-                </Error>
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`<div 
-  x-data="{ 
-    showError: false,
-    errorType: 'error',
-    errorMessage: 'Something went wrong!',
-    triggerError(type, message) {
-      this.errorType = type;
-      this.errorMessage = message;
-      this.showError = true;
-      setTimeout(() => { this.showError = false; }, 4000);
-    }
-  }"
->
-  <button x-on:click="triggerError('error', 'Network failed!')">
-    Show Error
-  </button>
-  
+{/* Alpine.js integration */}
+<div x-data="{ showError: false, errorType: 'error', errorMessage: 'Something went wrong!' }">
+  <button x-on:click="showError = true">Show Error</button>
   <div x-show="showError" x-transition>
-    <Error 
-      x-bind:variant="errorType"
-      x-text="errorMessage"
-      x-on:click="showError = false"
-    >
-    </Error>
+    <Error x-bind:variant="errorType" x-text="errorMessage"></Error>
   </div>
-</div>`} />
-    </TabsContent>
-</Tabs>
+</div>
 
-## Custom Styling Examples
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div class="space-y-4">
-            <Error 
-                variant="error" 
-                class="border-2 border-dashed font-bold"
-            >
-                Custom styled error with dashed border and bold text.
-            </Error>
-            
-            <Error 
-                variant="info" 
-                class="shadow-lg rounded-xl"
-            >
-                Enhanced info message with shadow and rounded corners.
-            </Error>
-            
-            <Error 
-                variant="success" 
-                class="italic text-center"
-            >
-                Centered success message with italic text.
-            </Error>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`{/* Custom styling with additional classes */
-<Error 
-  variant="error" 
-  class="border-2 border-dashed font-bold"
->
-  Custom styled error with dashed border and bold text.
-</Error>
-
-<Error 
-  variant="info" 
-  class="shadow-lg rounded-xl"
->
-  Enhanced info message with shadow and rounded corners.
-</Error>
-
-<Error 
-  variant="success" 
-  class="italic text-center"
->
-  Centered success message with italic text.
+{/* Custom styling */}
+<Error variant="error" class="border-2 border-dashed font-bold">
+  Custom styled error message.
 </Error>`} />
     </TabsContent>
 </Tabs>
@@ -341,7 +109,7 @@ import Error from '@/components/ui/feedback/Error.astro';
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `'error' | 'warning' | 'info' | 'success'` | `'error'` | Visual variant/theme of the alert |
+| `variant` | `'error' | 'warning' | 'info' | 'success'` | `'error'` | Visual variant/theme |
 | `size` | `'sm' | 'md' | 'lg'` | `'md'` | Size of the component |
 | `class` | `string` | `undefined` | Additional CSS classes |
 
@@ -367,78 +135,3 @@ import Error from '@/components/ui/feedback/Error.astro';
 | `sm` | `p-3` | `text-sm` |
 | `md` | `p-4` | `text-base` |
 | `lg` | `p-6` | `text-lg` |
-
-### Alpine.js Pass-through
-
-The Error component supports all Alpine.js directives:
-
-```astro
-<Error 
-  variant="error"
-  x-show="hasError"
-  x-transition
-  x-on:click="dismissError()"
-  x-text="errorMessage"
->
-</Error>
-```
-
-### Usage Examples
-
-```astro
-{/* Basic error */}
-<Error>Something went wrong!</Error>
-
-{/* Different variants */}
-<Error variant="warning">Warning message</Error>
-<Error variant="info">Information message</Error>
-<Error variant="success">Success message</Error>
-
-{/* Different sizes */}
-<Error size="sm" variant="error">Small error</Error>
-<Error size="lg" variant="info">Large info message</Error>
-
-{/* With Alpine.js */}
-<Error 
-  x-show="showError"
-  x-transition
-  variant="error"
-  x-on:click="showError = false"
->
-  Click to dismiss
-</Error>
-
-{/* Form validation */}
-<input x-model="email" />
-<Error 
-  x-show="!isValidEmail(email)"
-  variant="error"
-  size="sm"
->
-  Please enter a valid email
-</Error>
-```
-
-### Features
-
-- **Semantic Variants**: Color-coded variants for different message types
-- **Flexible Sizing**: Three size options for different contexts
-- **Alpine.js Ready**: Full support for reactive data and event handling
-- **Accessible**: Proper color contrast and semantic HTML
-- **Customizable**: Easy to extend with additional CSS classes
-- **Consistent**: Follows design system spacing and color tokens
-
-### Best Practices
-
-1. **Choose appropriate variants**: Use error for failures, warning for cautions, info for notifications, success for confirmations
-2. **Use correct sizing**: Small for inline feedback, medium for standard alerts, large for page-level messages
-3. **Provide clear messages**: Write actionable, user-friendly error messages
-4. **Handle dismissal**: Consider adding close functionality for non-critical messages
-5. **Combine with forms**: Use small size for field-level validation feedback
-
-### Accessibility
-
-- Uses semantic HTML with appropriate ARIA roles
-- Color-coded variants meet WCAG contrast requirements  
-- Supports keyboard navigation and screen readers
-- Text content is descriptive and actionable

@@ -6,8 +6,6 @@ order: 8
 ---
 
 import Divider from '@/components/ui/layout/Divider.astro';
-import Column from '@/components/ui/layout/Column.astro';
-import Row from '@/components/ui/layout/Row.astro';
 import Button from '@/components/ui/forms/Button.astro';
 import { Card, CardContent } from '@/components/ui/display/card';
 import Code from '@/components/ui/display/Code.astro';
@@ -18,7 +16,7 @@ import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
-The Divider component is a simple utility component for creating visual separation between content sections. It supports both horizontal and vertical orientations with customizable thickness, color, and spacing options.
+A simple utility component for creating visual separation between content sections. Supports both horizontal and vertical orientations with customizable styling.
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
@@ -26,175 +24,59 @@ The Divider component is a simple utility component for creating visual separati
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
     <TabsContent value="preview" preview class="space-y-6">
-        <div>
-            <h3 class="text-sm font-medium mb-4">Horizontal Dividers (Default)</h3>
-            <Column class="space-y-4 max-w-md">
-                <Card padding="md">
-                    <CardContent>Section 1 content</CardContent>
-                </Card>
-                
-                <Divider />
-                
-                <Card padding="md">
-                    <CardContent>Section 2 content</CardContent>
-                </Card>
-                
-                <Divider thickness="2" color="slate" />
-                
-                <Card padding="md">
-                    <CardContent>Section 3 with thicker divider</CardContent>
-                </Card>
-            </Column>
-        </div>
-
-        <div>
-            <h3 class="text-sm font-medium mb-4">Different Thickness Options</h3>
-            <Column class="space-y-4 max-w-md">
-                <div class="text-center py-2">Thickness 1 (default)</div>
-                <Divider thickness="1" />
-                
-                <div class="text-center py-2">Thickness 2</div>
-                <Divider thickness="2" />
-                
-                <div class="text-center py-2">Thickness 4</div>
-                <Divider thickness="4" />
-            </Column>
-        </div>
-
-        <div>
-            <h3 class="text-sm font-medium mb-4">Different Colors</h3>
-            <Column class="space-y-4 max-w-md">
-                <div class="text-center py-2">Gray (default)</div>
-                <Divider color="gray" />
-                
-                <div class="text-center py-2">Neutral</div>
-                <Divider color="neutral" />
-                
-                <div class="text-center py-2">Slate</div>
-                <Divider color="slate" />
-            </Column>
-        </div>
-
-        <div>
-            <h3 class="text-sm font-medium mb-4">Different Spacing</h3>
-            <Column class="max-w-md border rounded p-4 bg-gray-50">
-                <div class="text-center py-1">Spacing 2</div>
-                <Divider spacing="2" />
-                
-                <div class="text-center py-1">Spacing 4 (default)</div>
-                <Divider spacing="4" />
-                
-                <div class="text-center py-1">Spacing 6</div>
-                <Divider spacing="6" />
-                
-                <div class="text-center py-1">Spacing 8</div>
-                <Divider spacing="8" />
-            </Column>
-        </div>
-
-        <div>
-            <h3 class="text-sm font-medium mb-4">Vertical Dividers</h3>
-            <Row class="items-stretch max-w-md border rounded p-4 bg-gray-50">
-                <Button variant="ghost" class="flex-1">Button 1</Button>
-                
-                <Divider direction="vertical" />
-                
-                <Button variant="ghost" class="flex-1">Button 2</Button>
-                
-                <Divider direction="vertical" thickness="2" color="slate" />
-                
-                <Button variant="ghost" class="flex-1">Button 3</Button>
-            </Row>
-        </div>
-
-        <div>
-            <h3 class="text-sm font-medium mb-4">Vertical Dividers with Different Heights</h3>
-            <Row class="items-center justify-center gap-4 p-4 border rounded bg-white">
-                <div class="text-sm">Short content</div>
-                <Divider direction="vertical" class="h-8" />
-                
-                <div class="text-sm py-4">Taller content<br />Multiple lines</div>
-                <Divider direction="vertical" class="h-16" />
-                
-                <div class="text-sm">Short again</div>
-            </Row>
-        </div>
-
-        <div>
-            <h3 class="text-sm font-medium mb-4">In Card Layout</h3>
-            <Card padding="none" class="max-w-md">
-                <div class="p-4">
-                    <h4 class="font-semibold">Card Header</h4>
-                    <p class="text-sm text-gray-600">Header content goes here</p>
-                </div>
-                
-                <Divider spacing="0" />
-                
-                <div class="p-4">
-                    <h4 class="font-semibold">Card Body</h4>
-                    <p class="text-sm text-gray-600">Main content goes here</p>
-                </div>
-                
-                <Divider spacing="0" />
-                
-                <div class="p-4">
-                    <Row class="justify-between">
-                        <Button variant="ghost" size="sm">Cancel</Button>
-                        <Button size="sm">Confirm</Button>
-                    </Row>
-                </div>
+        <div class="space-y-4 max-w-md">
+            <h3 class="text-sm font-medium">Horizontal Dividers</h3>
+            <Card padding="md">
+                <CardContent>Section 1 content</CardContent>
+            </Card>
+            <Divider />
+            <Card padding="md">
+                <CardContent>Section 2 content</CardContent>
+            </Card>
+            <Divider thickness="2" color="slate" />
+            <Card padding="md">
+                <CardContent>Section 3 with thicker divider</CardContent>
             </Card>
         </div>
 
-        <div>
-            <h3 class="text-sm font-medium mb-4">Alpine.js Integration Demo</h3>
-            <div x-data="{ 
-                items: [
-                    { id: 1, title: 'First Item', content: 'Content for the first item' },
-                    { id: 2, title: 'Second Item', content: 'Content for the second item' },
-                    { id: 3, title: 'Third Item', content: 'Content for the third item' }
-                ],
-                showDividers: true 
-            }">
-                <div class="space-y-4">
-                    <label class="flex items-center gap-2">
-                        <input type="checkbox" x-model="showDividers" />
-                        <span class="text-sm">Show dividers</span>
-                    </label>
-                    
-                    <div class="border rounded p-4 bg-white max-w-md">
-                        <template x-for="(item, index) in items" x-key="item.id">
-                            <div>
-                                <div class="py-2">
-                                    <h4 class="font-semibold text-sm" x-text="item.title"></h4>
-                                    <p class="text-xs text-gray-600" x-text="item.content"></p>
-                                </div>
-                                <div x-show="showDividers && index < items.length - 1">
-                                    <Divider spacing="2" />
-                                </div>
-                            </div>
-                        </template>
-                    </div>
-                </div>
+        <div class="space-y-4">
+            <h3 class="text-sm font-medium">Vertical Dividers</h3>
+            <div class="flex items-stretch max-w-md border rounded p-4 bg-gray-50">
+                <Button variant="ghost" class="flex-1">Button 1</Button>
+                <Divider direction="vertical" />
+                <Button variant="ghost" class="flex-1">Button 2</Button>
+                <Divider direction="vertical" thickness="2" color="slate" />
+                <Button variant="ghost" class="flex-1">Button 3</Button>
+            </div>
+        </div>
+
+        <div class="space-y-4">
+            <h3 class="text-sm font-medium">Styling Options</h3>
+            <div class="space-y-3 max-w-md">
+                <div class="text-xs text-gray-600">Thickness 1 (default)</div>
+                <Divider thickness="1" />
+                <div class="text-xs text-gray-600">Thickness 2</div>
+                <Divider thickness="2" />
+                <div class="text-xs text-gray-600">Thickness 4</div>
+                <Divider thickness="4" />
+                <div class="text-xs text-gray-600">Different colors</div>
+                <Divider color="gray" />
+                <Divider color="neutral" />
+                <Divider color="slate" />
             </div>
         </div>
     </TabsContent>
     <TabsContent value="code">
         <Code language="astro" code={`---
 import Divider from '@/components/ui/layout/Divider.astro';
-import { Card, CardContent } from '@/components/ui/display/card';
 import Button from '@/components/ui/forms/Button.astro';
+import { Card, CardContent } from '@/components/ui/display/card';
 ---
 
-{/* Basic horizontal divider (default) */}
-<div>Content above</div>
+{/* Basic horizontal divider */}
+<Card>Content above</Card>
 <Divider />
-<div>Content below</div>
-
-{/* Horizontal dividers with different styles */}
-<Divider thickness="1" color="gray" spacing="4" />
-<Divider thickness="2" color="neutral" spacing="6" />
-<Divider thickness="4" color="slate" spacing="8" />
+<Card>Content below</Card>
 
 {/* Vertical divider */}
 <div class="flex items-center">
@@ -203,107 +85,25 @@ import Button from '@/components/ui/forms/Button.astro';
     <Button>Right</Button>
 </div>
 
-{/* Vertical dividers with custom height */}
-<div class="flex items-center gap-4">
-    <div>Content 1</div>
-    <Divider direction="vertical" class="h-8" />
-    <div>Content 2</div>
-    <Divider direction="vertical" class="h-12" />
-    <div>Content 3</div>
-</div>
+{/* Styling options */}
+<Divider thickness="2" color="slate" spacing="6" />
+<Divider direction="vertical" class="h-8" />
 
-{/* In card layouts */}
+{/* In card layouts with no spacing */}
 <Card padding="none">
-    <div class="p-4">Header content</div>
+    <div class="p-4">Header</div>
     <Divider spacing="0" />
-    <div class="p-4">Body content</div>
-    <Divider spacing="0" />
-    <div class="p-4">Footer content</div>
-</Card>
-
-{/* Different thickness options */}
-<Divider thickness="1" />  {/* 1px height */}
-<Divider thickness="2" />  {/* 2px height */}
-<Divider thickness="4" />  {/* 4px height */}
-
-{/* Different colors */}
-<Divider color="gray" />     {/* bg-gray-200 */}
-<Divider color="neutral" />  {/* bg-neutral-200 */}
-<Divider color="slate" />    {/* bg-slate-200 */}
-
-{/* Different spacing */}
-<Divider spacing="2" />  {/* my-2 */}
-<Divider spacing="4" />  {/* my-4 (default) */}
-<Divider spacing="6" />  {/* my-6 */}
-<Divider spacing="8" />  {/* my-8 */}
-
-{/* Alpine.js integration */}
-<div x-data="{ showDivider: true }">
-    <div>Content 1</div>
-    <div x-show="showDivider">
-        <Divider />
-    </div>
-    <div>Content 2</div>
-</div>`} />
+    <div class="p-4">Body</div>
+</Card>`} />
     </TabsContent>
 </Tabs>
 
 ## API Reference
 
-### Props
-
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `direction` | `'horizontal' | 'vertical'` | `'horizontal'` | Divider orientation |
-| `color` | `'gray' | 'neutral' | 'slate'` | `'gray'` | Divider color |
-| `thickness` | `'1' | '2' | '4'` | `'1'` | Divider thickness in pixels |
-| `spacing` | `'2' | '4' | '6' | '8'` | `'4'` | Spacing around divider |
+| `direction` | `'horizontal' \| 'vertical'` | `'horizontal'` | Divider orientation |
+| `color` | `'gray' \| 'neutral' \| 'slate'` | `'gray'` | Divider color |
+| `thickness` | `'1' \| '2' \| '4'` | `'1'` | Divider thickness in pixels |
+| `spacing` | `'0' \| '2' \| '4' \| '6' \| '8'` | `'4'` | Spacing around divider |
 | `class` | `string` | - | Additional CSS classes |
-| `...rest` | `any` | - | Other HTML attributes |
-
-### Direction Options
-
-- **`horizontal`** (default): Creates a horizontal line divider with width and margin-y
-- **`vertical`**: Creates a vertical line divider with height and margin-x
-
-### Color Options
-
-- **`gray`** (default): `bg-gray-200`
-- **`neutral`**: `bg-neutral-200`  
-- **`slate`**: `bg-slate-200`
-
-### Thickness Options
-
-- **`1`** (default): 1px thickness (`h-px` for horizontal, `w-px` for vertical)
-- **`2`**: 2px thickness (`h-0.5` for horizontal, `w-0.5` for vertical)
-- **`4`**: 4px thickness (`h-1` for horizontal, `w-1` for vertical)
-
-### Spacing Options
-
-- **`2`**: `my-2` (horizontal) or `mx-2` (vertical)
-- **`4`** (default): `my-4` (horizontal) or `mx-4` (vertical)
-- **`6`**: `my-6` (horizontal) or `mx-6` (vertical)
-- **`8`**: `my-8` (horizontal) or `mx-8` (vertical)
-
-### Accessibility
-
-- Includes `role="separator"` for screen readers
-- Includes `aria-orientation` attribute matching the direction
-
-## Design Principles
-
-Divider is a **simple utility component** that:
-- Uses `cn()` utility with conditionals for dynamic styling
-- Provides both horizontal and vertical orientations
-- Supports customizable thickness, color, and spacing
-- Includes proper accessibility attributes
-- Can be easily customized with additional CSS classes
-- Perfect for creating visual separation in layouts, cards, and menus
-
-## Common Use Cases
-
-- **Card Sections**: Separate different areas within cards
-- **Menu Items**: Divide navigation or dropdown menu items
-- **Content Sections**: Create visual breaks between content areas
-- **Toolbar Separation**: Separate groups of buttons or tools
-- **Form Sections**: Divide form fields into logical groups

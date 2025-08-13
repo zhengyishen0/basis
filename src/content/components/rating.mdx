@@ -6,7 +6,6 @@ order: 5
 ---
 
 import Rating from '@/components/ui/forms/Rating.astro';
-import { Card } from '@/components/ui/display/card';
 import Code from '@/components/ui/display/Code.astro';
 import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
 import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
@@ -15,7 +14,7 @@ import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
-The Rating component allows users to provide star-based feedback with interactive hover effects, support for readonly display, and form integration capabilities.
+The Rating component provides interactive star-based feedback with hover effects, readonly mode, form integration, and Alpine.js compatibility. Click stars to set ratings or use the slot content to reset values.
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
@@ -27,47 +26,42 @@ The Rating component allows users to provide star-based feedback with interactiv
         </TabsTrigger>
     </TabsList>
     <TabsContent value="preview" preview class="flex flex-col gap-6 items-center">
-        <Rating initialValue={3} maxStars={5}>
-            <span class="text-sm text-muted-foreground">Click to reset</span>
-        </Rating>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code
-            language="astro"
-            code={`---
-import Rating from '@/components/ui/forms/Rating.astro';
----
-<Rating initialValue={3} maxStars={5}>
-    <span class="text-sm text-muted-foreground">Click to reset</span>
-</Rating>`}
-        />
-    </TabsContent>
-</Tabs>
-
-## Readonly Rating
-
-Perfect for displaying existing ratings without allowing user interaction:
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">
-            Preview
-        </TabsTrigger>
-        <TabsTrigger value="code" variant="pills">
-            Code
-        </TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-4 items-center">
-        <div class="flex flex-col gap-4 items-center">
-            <Rating readonly initialValue={4.5} maxStars={5}>
-                <span class="text-sm font-medium">4.5 out of 5 stars</span>
-            </Rating>
-            <Rating readonly initialValue={2} maxStars={5}>
-                <span class="text-sm font-medium">2.0 out of 5 stars</span>
-            </Rating>
-            <Rating readonly initialValue={5} maxStars={5}>
-                <span class="text-sm font-medium">Perfect rating!</span>
-            </Rating>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
+            <div class="flex flex-col gap-4 items-center">
+                <h3 class="text-sm font-medium text-muted-foreground">Interactive Rating</h3>
+                <Rating initialValue={3} maxStars={5}>
+                    <span class="text-sm text-muted-foreground">Click to reset</span>
+                </Rating>
+            </div>
+            <div class="flex flex-col gap-4 items-center">
+                <h3 class="text-sm font-medium text-muted-foreground">Readonly Display</h3>
+                <Rating readonly initialValue={4.5} maxStars={5}>
+                    <span class="text-sm font-medium">4.5 out of 5 stars</span>
+                </Rating>
+            </div>
+            <div class="flex flex-col gap-4 items-center">
+                <h3 class="text-sm font-medium text-muted-foreground">Custom Star Count</h3>
+                <Rating maxStars={3} initialValue={2}>
+                    <span class="text-sm text-muted-foreground">3-star scale</span>
+                </Rating>
+            </div>
+            <div class="flex flex-col gap-4 items-center">
+                <h3 class="text-sm font-medium text-muted-foreground">Disabled State</h3>
+                <Rating disabled initialValue={3} maxStars={5}>
+                    <span class="text-sm text-muted-foreground">Rating disabled</span>
+                </Rating>
+            </div>
+            <div class="flex flex-col gap-4 items-center md:col-span-2">
+                <h3 class="text-sm font-medium text-muted-foreground">Form Integration</h3>
+                <form class="flex flex-col gap-4 p-4 border border-border rounded-lg w-full max-w-sm">
+                    <Rating name="experience_rating" initialValue={0}>
+                        <span class="text-sm text-muted-foreground">Rate your experience</span>
+                    </Rating>
+                    <button type="submit" class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+                        Submit Rating
+                    </button>
+                </form>
+            </div>
         </div>
     </TabsContent>
     <TabsContent value="code">
@@ -76,164 +70,37 @@ Perfect for displaying existing ratings without allowing user interaction:
             code={`---
 import Rating from '@/components/ui/forms/Rating.astro';
 ---
+
+<!-- Interactive Rating -->
+<Rating initialValue={3} maxStars={5}>
+    <span class="text-sm text-muted-foreground">Click to reset</span>
+</Rating>
+
+<!-- Readonly Display -->
 <Rating readonly initialValue={4.5} maxStars={5}>
     <span class="text-sm font-medium">4.5 out of 5 stars</span>
 </Rating>
-<Rating readonly initialValue={2} maxStars={5}>
-    <span class="text-sm font-medium">2.0 out of 5 stars</span>
-</Rating>
-<Rating readonly initialValue={5} maxStars={5}>
-    <span class="text-sm font-medium">Perfect rating!</span>
-</Rating>`}
-        />
-    </TabsContent>
-</Tabs>
 
-## Custom Star Count
-
-Customize the number of stars for different rating scales:
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">
-            Preview
-        </TabsTrigger>
-        <TabsTrigger value="code" variant="pills">
-            Code
-        </TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-4 items-center">
-        <div class="flex flex-col gap-4 items-center">
-            <Rating maxStars={3} initialValue={2}>
-                <span class="text-sm text-muted-foreground">3-star scale</span>
-            </Rating>
-            <Rating maxStars={10} initialValue={7}>
-                <span class="text-sm text-muted-foreground">10-star scale</span>
-            </Rating>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code
-            language="astro"
-            code={`---
-import Rating from '@/components/ui/forms/Rating.astro';
----
+<!-- Custom Star Count -->
 <Rating maxStars={3} initialValue={2}>
     <span class="text-sm text-muted-foreground">3-star scale</span>
 </Rating>
-<Rating maxStars={10} initialValue={7}>
-    <span class="text-sm text-muted-foreground">10-star scale</span>
-</Rating>`}
-        />
-    </TabsContent>
-</Tabs>
 
-## Form Integration
-
-Use with forms by providing a name attribute:
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">
-            Preview
-        </TabsTrigger>
-        <TabsTrigger value="code" variant="pills">
-            Code
-        </TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-4 items-center">
-        <form class="flex flex-col gap-4 p-4 border border-border rounded-lg">
-            <h3 class="text-lg font-medium">Rate your experience</h3>
-            <Rating name="experience_rating" initialValue={0}>
-                <span class="text-sm text-muted-foreground">Click to rate, then click here to reset</span>
-            </Rating>
-            <button type="submit" class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
-                Submit Rating
-            </button>
-        </form>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code
-            language="astro"
-            code={`---
-import Rating from '@/components/ui/forms/Rating.astro';
----
-<form class="flex flex-col gap-4 p-4 border border-border rounded-lg">
-    <h3 class="text-lg font-medium">Rate your experience</h3>
-    <Rating name="experience_rating" initialValue={0}>
-        <span class="text-sm text-muted-foreground">Click to rate, then click here to reset</span>
-    </Rating>
-    <button type="submit" class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
-        Submit Rating
-    </button>
-</form>`}
-        />
-    </TabsContent>
-</Tabs>
-
-## Disabled State
-
-Disable user interaction while maintaining visual appearance:
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">
-            Preview
-        </TabsTrigger>
-        <TabsTrigger value="code" variant="pills">
-            Code
-        </TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-4 items-center">
-        <Rating disabled initialValue={3} maxStars={5}>
-            <span class="text-sm text-muted-foreground">Rating disabled</span>
-        </Rating>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code
-            language="astro"
-            code={`---
-import Rating from '@/components/ui/forms/Rating.astro';
----
+<!-- Disabled State -->
 <Rating disabled initialValue={3} maxStars={5}>
     <span class="text-sm text-muted-foreground">Rating disabled</span>
-</Rating>`}
-        />
-    </TabsContent>
-</Tabs>
+</Rating>
 
-## Alpine.js Integration
+<!-- Form Integration -->
+<form>
+    <Rating name="experience_rating" initialValue={0}>
+        <span class="text-sm text-muted-foreground">Rate your experience</span>
+    </Rating>
+    <button type="submit">Submit Rating</button>
+</form>
 
-The Rating component integrates seamlessly with Alpine.js for dynamic behavior:
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">
-            Preview
-        </TabsTrigger>
-        <TabsTrigger value="code" variant="pills">
-            Code
-        </TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-4 items-center">
-        <div x-data="{ rating: 0 }" class="flex flex-col gap-4 items-center p-4 border border-border rounded-lg">
-            <Rating 
-                x-model="rating" 
-                @rating-changed="console.log('Rating changed to:', $event.detail)"
-                initialValue={0}
-            >
-                <span class="text-sm text-muted-foreground">Dynamic rating</span>
-            </Rating>
-            <p class="text-sm" x-text="`Current rating: ${rating}`"></p>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code
-            language="astro"
-            code={`---
-import Rating from '@/components/ui/forms/Rating.astro';
----
-<div x-data="{ rating: 0 }" class="flex flex-col gap-4 items-center">
+<!-- Alpine.js Integration -->
+<div x-data="{ rating: 0 }">
     <Rating 
         x-model="rating" 
         @rating-changed="console.log('Rating changed to:', $event.detail)"
@@ -241,7 +108,7 @@ import Rating from '@/components/ui/forms/Rating.astro';
     >
         <span class="text-sm text-muted-foreground">Dynamic rating</span>
     </Rating>
-    <p class="text-sm" x-text="\`Current rating: \${rating}\`"></p>
+    <p x-text="\`Current rating: \${rating}\`"></p>
 </div>`}
         />
     </TabsContent>
@@ -259,52 +126,9 @@ import Rating from '@/components/ui/forms/Rating.astro';
 | `readonly`     | `boolean` | `false` | Make the rating read-only                        |
 | `name`         | `string`  | -       | Form field name for hidden input                |
 | `class`        | `string`  | -       | Additional CSS classes                           |
-| `...`          | `any`     | -       | Alpine.js props passed through to the container |
 
 ### Events
 
 | Event            | Detail   | Description                        |
 | ---------------- | -------- | ---------------------------------- |
 | `rating-changed` | `number` | Fired when the rating value changes|
-
-### Alpine.js Data
-
-The component exposes the following Alpine.js data:
-
-| Property   | Type      | Description                           |
-| ---------- | --------- | ------------------------------------- |
-| `value`    | `number`  | Current rating value                  |
-| `stars`    | `number`  | Currently displayed stars (for hover) |
-| `disabled` | `boolean` | Whether the component is disabled     |
-| `readonly` | `boolean` | Whether the component is readonly     |
-| `maxStars` | `number`  | Maximum number of stars               |
-
-### Alpine.js Methods
-
-| Method           | Parameters | Description                    |
-| ---------------- | ---------- | ------------------------------ |
-| `rate(star)`     | `number`   | Set the rating to a specific value |
-| `reset()`        | -          | Reset the rating to 0          |
-| `hoverStar(star)`| `number`   | Handle star hover              |
-| `mouseLeftStar()`| -          | Handle mouse leave             |
-
-## Features
-
-- **Interactive Rating**: Click stars to set rating values
-- **Hover Effects**: Visual feedback on star hover
-- **Readonly Mode**: Display ratings without user interaction
-- **Form Integration**: Hidden input for form submission
-- **Custom Star Count**: Support for different rating scales
-- **Alpine.js Integration**: Full Alpine.js compatibility with x-model
-- **Accessibility**: Proper ARIA labels and keyboard support
-- **Custom Events**: Emits rating-changed events for integration
-- **Reset Functionality**: Click slot content to reset rating
-
-## Usage Notes
-
-- The component uses Lucide star icons that fill on selection
-- Hover effects provide visual feedback before selection
-- The slot content can be clicked to reset the rating
-- Form integration creates a hidden input with the specified name
-- Alpine.js x-model directive allows two-way data binding
-- Custom events bubble up for integration with parent components

@@ -7,7 +7,6 @@ order: 2
 
 import ContextMenu from '@/components/ui/overlay/contextmenu/ContextMenu.astro';
 import MenuItem from '@/components/ui/overlay/menu/MenuItem.astro';
-import MenuGroup from '@/components/ui/overlay/menu/MenuGroup.astro';
 import MenuShortcut from '@/components/ui/overlay/menu/MenuShortcut.astro';
 import MenuSubMenu from '@/components/ui/overlay/menu/MenuSubMenu.astro';
 import MenuSubTrigger from '@/components/ui/overlay/menu/MenuSubTrigger.astro';
@@ -20,7 +19,7 @@ import Code from '@/components/ui/display/Code.astro';
 
 ## Overview
 
-ContextMenu provides a right-click menu that appears when users right-click on an element. It's perfect for providing contextual actions and shortcuts without cluttering the interface.
+ContextMenu provides a right-click menu that appears when users right-click on an element. Perfect for providing contextual actions and shortcuts without cluttering the interface.
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
@@ -61,21 +60,6 @@ ContextMenu provides a right-click menu that appears when users right-click on a
                             Cut
                             <MenuShortcut>⌘X</MenuShortcut>
                         </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:clipboard" class="w-4 h-4 mr-2" />
-                            Paste
-                            <MenuShortcut>⌘V</MenuShortcut>
-                        </MenuItem>
-                        <div class="border-t my-1"></div>
-                        <MenuItem>
-                            <Icon name="lucide:download" class="w-4 h-4 mr-2" />
-                            Download
-                        </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:share" class="w-4 h-4 mr-2" />
-                            Share
-                        </MenuItem>
-                        <div class="border-t my-1"></div>
                         <MenuItem class="text-destructive focus:text-destructive">
                             <Icon name="lucide:trash-2" class="w-4 h-4 mr-2" />
                             Delete
@@ -93,7 +77,7 @@ ContextMenu provides a right-click menu that appears when users right-click on a
                     class="p-4 border rounded-lg cursor-text select-text bg-muted/20"
                 >
                     <p class="text-sm">
-                        Right-click on this text to see formatting options. You can select text and perform various text operations.
+                        Right-click on this text to see formatting options.
                     </p>
                 </div>
                 <div slot="content" class="w-52">
@@ -108,11 +92,6 @@ ContextMenu provides a right-click menu that appears when users right-click on a
                             Italic
                             <MenuShortcut>⌘I</MenuShortcut>
                         </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:underline" class="w-4 h-4 mr-2" />
-                            Underline
-                            <MenuShortcut>⌘U</MenuShortcut>
-                        </MenuItem>
                         <div class="border-t my-1"></div>
                         <MenuItem>
                             <Icon name="lucide:copy" class="w-4 h-4 mr-2" />
@@ -120,25 +99,9 @@ ContextMenu provides a right-click menu that appears when users right-click on a
                             <MenuShortcut>⌘C</MenuShortcut>
                         </MenuItem>
                         <MenuItem>
-                            <Icon name="lucide:scissors" class="w-4 h-4 mr-2" />
-                            Cut
-                            <MenuShortcut>⌘X</MenuShortcut>
-                        </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:clipboard" class="w-4 h-4 mr-2" />
-                            Paste
-                            <MenuShortcut>⌘V</MenuShortcut>
-                        </MenuItem>
-                        <div class="border-t my-1"></div>
-                        <MenuItem>
                             <Icon name="lucide:search" class="w-4 h-4 mr-2" />
                             Find
                             <MenuShortcut>⌘F</MenuShortcut>
-                        </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:replace" class="w-4 h-4 mr-2" />
-                            Replace
-                            <MenuShortcut>⌘H</MenuShortcut>
                         </MenuItem>
                     </div>
                 </div>
@@ -161,27 +124,6 @@ ContextMenu provides a right-click menu that appears when users right-click on a
                         </MenuItem>
                         <MenuSubMenu>
                             <MenuSubTrigger x-ref="submenuTrigger">
-                                <Icon name="lucide:folder-plus" class="w-4 h-4 mr-2" />
-                                New Folder
-                                <Icon name="lucide:chevron-right" class="w-4 h-4 ml-auto" />
-                            </MenuSubTrigger>
-                            <div slot="submenu" class="w-40">
-                                <MenuItem>
-                                    <Icon name="lucide:folder" class="w-4 h-4 mr-2" />
-                                    Empty Folder
-                                </MenuItem>
-                                <MenuItem>
-                                    <Icon name="lucide:git-branch" class="w-4 h-4 mr-2" />
-                                    Git Repository
-                                </MenuItem>
-                                <MenuItem>
-                                    <Icon name="lucide:archive" class="w-4 h-4 mr-2" />
-                                    Archive
-                                </MenuItem>
-                            </div>
-                        </MenuSubMenu>
-                        <MenuSubMenu>
-                            <MenuSubTrigger x-ref="submenuTrigger">
                                 <Icon name="lucide:file-plus" class="w-4 h-4 mr-2" />
                                 New File
                                 <Icon name="lucide:chevron-right" class="w-4 h-4 ml-auto" />
@@ -198,10 +140,6 @@ ContextMenu provides a right-click menu that appears when users right-click on a
                                 <MenuItem>
                                     <Icon name="lucide:palette" class="w-4 h-4 mr-2" />
                                     CSS
-                                </MenuItem>
-                                <MenuItem>
-                                    <Icon name="lucide:globe" class="w-4 h-4 mr-2" />
-                                    HTML
                                 </MenuItem>
                             </div>
                         </MenuSubMenu>
@@ -236,7 +174,7 @@ import { Icon } from 'astro-icon/components';
 <ContextMenu trigger="rightclick">
     <div 
         slot="trigger" 
-        class="p-4 border rounded-lg cursor-pointer"
+        class="flex items-center space-x-2 p-4 border-2 border-dashed rounded-lg cursor-pointer"
     >
         <Icon name="lucide:file-text" class="w-5 h-5" />
         <span>Right-click on this file</span>
@@ -267,7 +205,7 @@ import { Icon } from 'astro-icon/components';
 
 {/* With Submenus */}
 <ContextMenu trigger="rightclick">
-    <div slot="trigger" class="p-8 border rounded-lg">
+    <div slot="trigger" class="p-8 border-2 border-dashed rounded-lg cursor-pointer">
         Right-click for nested menu
     </div>
     <div slot="content" class="w-48">
@@ -300,109 +238,9 @@ import { Icon } from 'astro-icon/components';
     </TabsContent>
 </Tabs>
 
-## Usage Patterns
-
-### File Operations
-Perfect for file browsers, project explorers, and any interface where users work with files and folders.
-
-### Text Editing
-Essential for rich text editors, code editors, and any text manipulation interface.
-
-### Canvas/Drawing Apps
-Ideal for drawing applications, design tools, and any spatial interface where right-click actions make sense.
-
-### Data Tables
-Great for providing row-specific actions in tables without cluttering the interface.
-
 ## API Reference
-
-### ContextMenu Props
 
 | Prop        | Type                                        | Default       | Description                    |
 | ----------- | ------------------------------------------- | ------------- | ------------------------------ |
 | `trigger`   | `'click' \| 'rightclick' \| 'hover' \| 'manual'` | `'rightclick'` | How the menu is triggered      |
 | `className` | `string`                                    | -             | Additional CSS classes         |
-
-### MenuSubMenu Props
-
-| Prop        | Type     | Default | Description                |
-| ----------- | -------- | ------- | -------------------------- |
-| `className` | `string` | -       | Additional CSS classes     |
-
-### MenuSubTrigger Props
-
-| Prop        | Type     | Default | Description                |
-| ----------- | -------- | ------- | -------------------------- |
-| `className` | `string` | -       | Additional CSS classes     |
-
-## Examples
-
-### Simple Context Menu
-
-```astro
-<ContextMenu>
-    <div slot="trigger">Right-click me</div>
-    <div slot="content">
-        <MenuItem>Action 1</MenuItem>
-        <MenuItem>Action 2</MenuItem>
-        <MenuItem disabled>Disabled Action</MenuItem>
-    </div>
-</ContextMenu>
-```
-
-### With Groups and Separators
-
-```astro
-<ContextMenu>
-    <div slot="trigger">Right-click for grouped menu</div>
-    <div slot="content">
-        <MenuGroup>
-            <MenuItem>Cut</MenuItem>
-            <MenuItem>Copy</MenuItem>
-            <MenuItem>Paste</MenuItem>
-        </MenuGroup>
-        <div class="border-t my-1"></div>
-        <MenuGroup>
-            <MenuItem>Select All</MenuItem>
-            <MenuItem>Find</MenuItem>
-        </MenuGroup>
-    </div>
-</ContextMenu>
-```
-
-### Multi-level Submenus
-
-```astro
-<ContextMenu>
-    <div slot="trigger">Complex menu</div>
-    <div slot="content">
-        <MenuItem>Regular Item</MenuItem>
-        <MenuSubMenu>
-            <MenuSubTrigger x-ref="submenuTrigger">
-                Level 1
-                <Icon name="lucide:chevron-right" class="ml-auto" />
-            </MenuSubTrigger>
-            <div slot="submenu">
-                <MenuItem>Level 1 Item</MenuItem>
-                <MenuSubMenu>
-                    <MenuSubTrigger x-ref="submenuTrigger">
-                        Level 2
-                        <Icon name="lucide:chevron-right" class="ml-auto" />
-                    </MenuSubTrigger>
-                    <div slot="submenu">
-                        <MenuItem>Level 2 Item</MenuItem>
-                    </div>
-                </MenuSubMenu>
-            </div>
-        </MenuSubMenu>
-    </div>
-</ContextMenu>
-```
-
-## Accessibility
-
-- Context menus support keyboard navigation
-- Use semantic HTML roles for screen readers
-- Include keyboard shortcuts where appropriate
-- Ensure sufficient color contrast for menu items
-- Support focus management when opening/closing

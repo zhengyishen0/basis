@@ -14,7 +14,7 @@ import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
-Empty is a minimalist component for displaying empty states with consistent styling and spacing. It's perfect for showing messages when there's no content to display, such as empty lists, search results, or data tables.
+Empty is a minimalist component for displaying empty states with consistent styling and spacing. Perfect for showing messages when there's no content to display.
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
@@ -22,10 +22,57 @@ Empty is a minimalist component for displaying empty states with consistent styl
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
     <TabsContent value="preview" preview class="space-y-6">
-        <div class="border rounded-lg">
-            <Empty>
-                No items found.
-            </Empty>
+        <div class="space-y-6">
+            <div class="border rounded-lg">
+                <Empty size="sm">No notifications.</Empty>
+            </div>
+            
+            <div class="border rounded-lg">
+                <Empty size="md">No search results found. Try adjusting your search criteria.</Empty>
+            </div>
+            
+            <div class="border rounded-lg">
+                <Empty size="lg">Welcome to your dashboard! Start by creating your first project to see data here.</Empty>
+            </div>
+            
+            <div class="border rounded-lg overflow-hidden">
+                <div class="p-4 border-b bg-muted/50">
+                    <h3 class="font-medium">Users Table</h3>
+                </div>
+                <table class="w-full">
+                    <thead class="border-b bg-muted/30">
+                        <tr>
+                            <th class="text-left p-3">Name</th>
+                            <th class="text-left p-3">Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2" class="p-0">
+                                <Empty size="sm">No users have been added yet.</Empty>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div x-data="{ items: [] }" class="border rounded-lg">
+                <div class="p-4 border-b flex justify-between items-center">
+                    <h3 class="font-medium">Dynamic List</h3>
+                    <button x-on:click="items.push('Item ' + (items.length + 1))" 
+                            class="px-3 py-1 bg-primary text-primary-foreground rounded text-sm">
+                        Add Item
+                    </button>
+                </div>
+                <div x-show="items.length > 0">
+                    <template x-for="item in items">
+                        <div class="p-3 border-b last:border-b-0" x-text="item"></div>
+                    </template>
+                </div>
+                <div x-show="items.length === 0">
+                    <Empty size="md">No items added yet. Click "Add Item" to get started.</Empty>
+                </div>
+            </div>
         </div>
     </TabsContent>
     <TabsContent value="code">
@@ -33,317 +80,28 @@ Empty is a minimalist component for displaying empty states with consistent styl
 import Empty from '@/components/ui/feedback/Empty.astro';
 ---
 
-<Empty>
-  No items found.
-</Empty>`} />
-    </TabsContent>
-</Tabs>
+{/* Different sizes */}
+<Empty size="sm">No notifications.</Empty>
+<Empty size="md">No search results found.</Empty>
+<Empty size="lg">Welcome to your dashboard!</Empty>
 
-## Size Variants
+{/* In tables */}
+<tr>
+  <td colspan="3">
+    <Empty size="sm">No users have been added yet.</Empty>
+  </td>
+</tr>
 
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-6">
-        <div class="space-y-6">
-            <div class="border rounded-lg">
-                <h3 class="text-lg font-medium p-4 border-b">Small Empty State</h3>
-                <Empty size="sm">
-                    No notifications.
-                </Empty>
-            </div>
-            
-            <div class="border rounded-lg">
-                <h3 class="text-lg font-medium p-4 border-b">Medium Empty State (Default)</h3>
-                <Empty size="md">
-                    No search results found. Try adjusting your search criteria.
-                </Empty>
-            </div>
-            
-            <div class="border rounded-lg">
-                <h3 class="text-lg font-medium p-4 border-b">Large Empty State</h3>
-                <Empty size="lg">
-                    Welcome to your dashboard! Start by creating your first project to see data and insights here.
-                </Empty>
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`{/* Small empty state */
-<Empty size="sm">
-  No notifications.
-</Empty>
-
-{/* Medium empty state (default) */}
-<Empty size="md">
-  No search results found. Try adjusting your search criteria.
-</Empty>
-
-{/* Large empty state */}
-<Empty size="lg">
-  Welcome to your dashboard! Start by creating your first project 
-  to see data and insights here.
-</Empty>`} />
-    </TabsContent>
-</Tabs>
-
-## Common Use Cases
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-6">
-        <div class="space-y-6">
-            {/* Table Empty State */}
-            <div class="border rounded-lg overflow-hidden">
-                <div class="p-4 border-b bg-muted/50">
-                    <h3 class="font-medium">Users Table</h3>
-                </div>
-                <div class="p-0">
-                    <table class="w-full">
-                        <thead class="border-b bg-muted/30">
-                            <tr>
-                                <th class="text-left p-3">Name</th>
-                                <th class="text-left p-3">Email</th>
-                                <th class="text-left p-3">Role</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="3" class="p-0">
-                                    <Empty size="sm">
-                                        No users have been added yet.
-                                    </Empty>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            {/* List Empty State */}
-            <div class="border rounded-lg">
-                <div class="p-4 border-b">
-                    <h3 class="font-medium">Recent Activity</h3>
-                </div>
-                <Empty size="md">
-                    No recent activity to display. Activity will appear here when users interact with your application.
-                </Empty>
-            </div>
-            
-            {/* Card Grid Empty State */}
-            <div class="border-2 border-dashed border-border rounded-lg min-h-[300px] flex items-center justify-center">
-                <Empty size="lg">
-                    No projects created yet. Click the "New Project" button to get started with your first project.
-                </Empty>
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`{/* Table empty state */
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Role</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan="3">
-        <Empty size="sm">
-          No users have been added yet.
-        </Empty>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-{/* List empty state */}
-<div class="border rounded-lg">
-  <div class="p-4 border-b">
-    <h3>Recent Activity</h3>
+{/* With Alpine.js */}
+<div x-data="{ items: [] }">
+  <div x-show="items.length === 0">
+    <Empty size="md">No items added yet.</Empty>
   </div>
-  <Empty size="md">
-    No recent activity to display.
-  </Empty>
 </div>
 
-{/* Full page empty state */}
-<div class="min-h-[300px] flex items-center justify-center">
-  <Empty size="lg">
-    No projects created yet. Click "New Project" to get started.
-  </Empty>
-</div>`} />
-    </TabsContent>
-</Tabs>
-
-## Alpine.js Integration
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div 
-            x-data="{ 
-                items: [],
-                searchQuery: '',
-                addItem() {
-                    this.items.push('Item ' + (this.items.length + 1));
-                },
-                clearItems() {
-                    this.items = [];
-                },
-                get filteredItems() {
-                    if (!this.searchQuery) return this.items;
-                    return this.items.filter(item => 
-                        item.toLowerCase().includes(this.searchQuery.toLowerCase())
-                    );
-                }
-            }"
-            class="space-y-4"
-        >
-            <div class="flex gap-2">
-                <button 
-                    x-on:click="addItem()"
-                    class="px-3 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors text-sm"
-                >
-                    Add Item
-                </button>
-                
-                <button 
-                    x-on:click="clearItems()"
-                    class="px-3 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/90 transition-colors text-sm"
-                >
-                    Clear All
-                </button>
-                
-                <input 
-                    x-model="searchQuery"
-                    placeholder="Search items..."
-                    class="px-3 py-2 border border-border rounded-md focus:ring-2 focus:ring-ring focus:border-ring"
-                />
-            </div>
-            
-            <div class="border rounded-lg min-h-[200px]">
-                <div class="p-4 border-b bg-muted/50">
-                    <h3 class="font-medium">Dynamic Item List</h3>
-                    <p class="text-sm text-muted-foreground" x-text="items.length + ' total items'"></p>
-                </div>
-                
-                <div x-show="filteredItems.length > 0">
-                    <template x-for="item in filteredItems" x-bind:key="item">
-                        <div class="p-3 border-b last:border-b-0" x-text="item"></div>
-                    </template>
-                </div>
-                
-                <div x-show="filteredItems.length === 0">
-                    <Empty 
-                        x-show="items.length === 0"
-                        size="md"
-                    >
-                        No items added yet. Click "Add Item" to get started.
-                    </Empty>
-                    
-                    <Empty 
-                        x-show="items.length > 0 && filteredItems.length === 0"
-                        size="md"
-                    >
-                        No items match your search criteria.
-                    </Empty>
-                </div>
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`<div 
-  x-data="{ 
-    items: [],
-    searchQuery: '',
-    get filteredItems() {
-      if (!this.searchQuery) return this.items;
-      return this.items.filter(item => 
-        item.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-    }
-  }"
->
-  <input x-model="searchQuery" placeholder="Search..." />
-  
-  <div x-show="filteredItems.length > 0">
-    <template x-for="item in filteredItems">
-      <div x-text="item"></div>
-    </template>
-  </div>
-  
-  <div x-show="filteredItems.length === 0">
-    <Empty 
-      x-show="items.length === 0"
-      size="md"
-    >
-      No items added yet.
-    </Empty>
-    
-    <Empty 
-      x-show="items.length > 0 && filteredItems.length === 0"
-      size="md"
-    >
-      No items match your search.
-    </Empty>
-  </div>
-</div>`} />
-    </TabsContent>
-</Tabs>
-
-## Custom Styling
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div class="space-y-4">
-            <div class="border rounded-lg">
-                <Empty class="bg-accent text-accent-foreground font-medium">
-                    Custom styled empty state with accent colors.
-                </Empty>
-            </div>
-            
-            <div class="border rounded-lg">
-                <Empty class="bg-gradient-to-r from-blue-50 to-purple-50 text-blue-800 italic">
-                    Gradient background with italic text styling.
-                </Empty>
-            </div>
-            
-            <div class="border rounded-lg">
-                <Empty class="border-2 border-dashed border-muted-foreground/30 rounded-lg mx-4 my-4">
-                    Nested dashed border for enhanced visual separation.
-                </Empty>
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`{/* Custom accent styling */
-<Empty class="bg-accent text-accent-foreground font-medium">
-  Custom styled empty state with accent colors.
-</Empty>
-
-{/* Gradient background */}
-<Empty class="bg-gradient-to-r from-blue-50 to-purple-50 text-blue-800 italic">
-  Gradient background with italic text styling.
-</Empty>
-
-{/* Nested border styling */}
-<Empty class="border-2 border-dashed border-muted-foreground/30 rounded-lg mx-4 my-4">
-  Nested dashed border for enhanced visual separation.
+{/* Custom styling */}
+<Empty class="bg-accent text-accent-foreground">
+  Custom styled empty state.
 </Empty>`} />
     </TabsContent>
 </Tabs>
@@ -354,7 +112,7 @@ import Empty from '@/components/ui/feedback/Empty.astro';
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Size of the empty state component |
+| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Size of the empty state |
 | `class` | `string` | `undefined` | Additional CSS classes |
 
 ### Slots
@@ -365,113 +123,8 @@ import Empty from '@/components/ui/feedback/Empty.astro';
 
 ### Size Specifications
 
-| Size | Padding | Text Size | Line Height | Use Case |
-|------|---------|-----------|-------------|----------|
-| `sm` | `py-6` | `text-sm` | `normal` | Compact spaces, table rows, small lists |
-| `md` | `py-12` | `text-lg` | `leading-relaxed` | Standard containers, cards, sections |
-| `lg` | `py-16` | `text-xl` | `leading-relaxed` | Full page states, main content areas |
-
-### Alpine.js Pass-through
-
-The Empty component supports all Alpine.js directives:
-
-```astro
-<Empty 
-  size="md"
-  x-show="items.length === 0"
-  x-transition
-  x-on:click="showHelp = true"
->
-  Empty state content
-</Empty>
-```
-
-### Usage Examples
-
-```astro
-{/* Basic empty state */}
-<Empty>No data available.</Empty>
-
-{/* Different sizes */}
-<Empty size="sm">No items.</Empty>
-<Empty size="lg">Welcome! Start by adding your first item.</Empty>
-
-{/* With Alpine.js */}
-<Empty 
-  x-show="!loading && items.length === 0"
-  x-transition
->
-  No results found.
-</Empty>
-
-{/* Custom styling */}
-<Empty class="bg-muted text-muted-foreground italic">
-  Nothing to see here yet.
-</Empty>
-
-{/* In a table */}
-<tr x-show="users.length === 0">
-  <td colspan="3">
-    <Empty size="sm">No users found.</Empty>
-  </td>
-</tr>
-
-{/* Rich content */}
-<Empty size="lg">
-  <div class="space-y-2">
-    <h3 class="font-semibold text-foreground">No projects yet</h3>
-    <p>Create your first project to start tracking your work.</p>
-  </div>
-</Empty>
-```
-
-### Features
-
-- **Flexible Sizing**: Three responsive size variants for different contexts
-- **Clean Design**: Minimal styling that works with any design system
-- **Alpine.js Ready**: Full support for reactive data binding and transitions
-- **Semantic HTML**: Uses proper text styling and spacing
-- **Customizable**: Easy to extend with additional classes and content
-- **Accessible**: Proper color contrast and readable text
-
-### Best Practices
-
-1. **Choose appropriate sizes**: Small for inline/compact spaces, medium for standard containers, large for full page states
-2. **Provide helpful messages**: Explain what the user can do or what they should expect
-3. **Use with loading states**: Show empty states only after data has loaded
-4. **Add calls to action**: Consider including buttons or links in larger empty states
-5. **Be contextual**: Tailor the message to the specific feature or section
-
-### Common Patterns
-
-```astro
-{/* Search results */}
-<Empty size="md" x-show="searchResults.length === 0 && searchQuery">
-  No results for "<span x-text="searchQuery"></span>". Try a different search term.
-</Empty>
-
-{/* Data tables */}
-<tr x-show="data.length === 0">
-  <td colspan="100%">
-    <Empty size="sm">No records found.</Empty>
-  </td>
-</tr>
-
-{/* Dashboard widgets */}
-<Empty size="lg">
-  <div class="space-y-3">
-    <h3 class="text-lg font-semibold">Welcome to your dashboard</h3>
-    <p>Connect your first data source to see insights here.</p>
-    <button class="mt-2 px-4 py-2 bg-primary text-primary-foreground rounded">
-      Get Started
-    </button>
-  </div>
-</Empty>
-```
-
-### Accessibility
-
-- Uses semantic HTML with appropriate text styling
-- Maintains proper color contrast ratios
-- Works well with screen readers
-- Supports keyboard navigation when interactive elements are included
+| Size | Padding | Text Size | Use Case |
+|------|---------|-----------|----------|
+| `sm` | `py-6` | `text-sm` | Compact spaces, table rows |
+| `md` | `py-12` | `text-lg` | Standard containers, cards |
+| `lg` | `py-16` | `text-xl` | Full page states, main areas |
