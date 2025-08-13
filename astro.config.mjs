@@ -6,18 +6,14 @@ import mdx from '@astrojs/mdx';
 
 // Dynamic configuration for GitHub Pages
 const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
-const githubRepo =
-    process.env.GITHUB_REPOSITORY?.split('/')[1] || 'your-repo-name';
-const githubUser =
-    process.env.GITHUB_REPOSITORY?.split('/')[0] || 'your-username';
 
 // https://astro.build/config
 export default defineConfig({
-    // Dynamic site configuration
+    // Dynamic site configuration - using custom domain
     site: isGitHubPages
-        ? `https://${githubUser}.github.io/${githubRepo}`
+        ? 'https://basis.zhengyishen.com'
         : 'http://localhost:4321',
-    base: isGitHubPages ? `/${githubRepo}/` : undefined,
+    base: undefined, // No base path needed for custom domain
 
     // Static output for GitHub Pages - API routes will be ignored in build
     output: 'static', //  'server' | 'static'

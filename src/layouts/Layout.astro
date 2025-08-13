@@ -14,13 +14,13 @@ const { title = 'Basis Stack' } = Astro.props;
         <link
             rel="icon"
             type="image/svg+xml"
-            href={`${import.meta.env.BASE_URL}favicon.svg`}
+            href="/favicon.svg"
         />
         <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
 
         <!-- Alpine.js with ES6 modules -->
-        <script type="module">
+        <script>
             import '/src/lib/alpine.js';
         </script>
     </head>
