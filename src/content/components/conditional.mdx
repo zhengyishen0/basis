@@ -1,0 +1,229 @@
+---
+title: Conditional
+description: Conditional rendering component for if/else logic with Alpine.js
+category: layout
+order: 12
+---
+
+import { Conditional } from '@/components/ui/layout';
+import { Button } from '@/components/ui/forms';
+import { Card } from '@/components/ui/display/card';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The Conditional component provides a clean way to handle if/else rendering logic in your templates using Alpine.js expressions.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-4">
+        <div class="space-y-6">
+            <Card class="p-6" x-data="{ isLoggedIn: false }">
+                <h3 class="text-lg font-semibold mb-4">User Authentication State</h3>
+                <div class="space-y-4">
+                    <Button x-on:click="isLoggedIn = !isLoggedIn" variant="outline">
+                        Toggle Login State
+                    </Button>
+                    
+                    <Conditional condition="isLoggedIn">
+                        <div slot="true" class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <h4 class="font-medium text-green-800">Welcome back!</h4>
+                            <p class="text-green-600">You are currently logged in.</p>
+                            <Button size="sm" variant="destructive" x-on:click="isLoggedIn = false" class="mt-2">
+                                Logout
+                            </Button>
+                        </div>
+                        <div slot="false" class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <h4 class="font-medium text-blue-800">Please sign in</h4>
+                            <p class="text-blue-600">You need to log in to access this content.</p>
+                            <Button size="sm" x-on:click="isLoggedIn = true" class="mt-2">
+                                Login
+                            </Button>
+                        </div>
+                    </Conditional>
+                </div>
+            </Card>
+
+            <Card class="p-6" x-data="{ theme: 'light', count: 0 }">
+                <h3 class="text-lg font-semibold mb-4">Complex Conditions</h3>
+                <div class="space-y-4">
+                    <div class="flex gap-2">
+                        <Button x-on:click="theme = theme === 'light' ? 'dark' : 'light'" variant="outline" size="sm">
+                            Toggle Theme
+                        </Button>
+                        <Button x-on:click="count++" variant="outline" size="sm">
+                            Increment (<span x-text="count"></span>)
+                        </Button>
+                    </div>
+                    
+                    <Conditional condition="theme === 'dark' && count > 3">
+                        <div slot="true" class="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                            <h4 class="font-medium text-purple-800">Dark Mode + High Count</h4>
+                            <p class="text-purple-600">Theme is dark and count is greater than 3!</p>
+                        </div>
+                        <div slot="false" class="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                            <h4 class="font-medium text-gray-800">Default State</h4>
+                            <p class="text-gray-600">
+                                Current theme: <span x-text="theme" class="font-mono"></span>, 
+                                Count: <span x-text="count" class="font-mono"></span>
+                            </p>
+                        </div>
+                    </Conditional>
+                </div>
+            </Card>
+
+            <Card class="p-6" x-data="{ items: [] }">
+                <h3 class="text-lg font-semibold mb-4">Empty State Handling</h3>
+                <div class="space-y-4">
+                    <div class="flex gap-2">
+                        <Button x-on:click="items.push(`Item ${items.length + 1}`)" variant="outline" size="sm">
+                            Add Item
+                        </Button>
+                        <Button x-on:click="items = []" variant="destructive" size="sm" x-show="items.length > 0">
+                            Clear All
+                        </Button>
+                    </div>
+                    
+                    <Conditional condition="items.length > 0">
+                        <div slot="true" class="space-y-2">
+                            <h4 class="font-medium">Items List:</h4>
+                            <template x-for="item in items" :key="item">
+                                <div class="p-2 bg-blue-50 border border-blue-200 rounded" x-text="item"></div>
+                            </template>
+                        </div>
+                        <div slot="false" class="p-4 bg-gray-50 border border-gray-200 rounded-lg text-center">
+                            <h4 class="font-medium text-gray-800">No Items</h4>
+                            <p class="text-gray-600">Add some items to see them here.</p>
+                        </div>
+                    </Conditional>
+                </div>
+            </Card>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code
+            language="astro"
+            code={`---
+import { Conditional } from '@/components/ui/layout';
+import { Button } from '@/components/ui/forms';
+---
+
+{/* Basic conditional rendering */}
+<div x-data="{ isLoggedIn: false }">
+    <Button x-on:click="isLoggedIn = !isLoggedIn">Toggle Login</Button>
+    
+    <Conditional condition="isLoggedIn">
+        <div slot="true" class="text-green-600">
+            Welcome back! You are logged in.
+        </div>
+        <div slot="false" class="text-blue-600">
+            Please sign in to continue.
+        </div>
+    </Conditional>
+</div>
+
+{/* Complex conditions */}
+<div x-data="{ theme: 'light', count: 0 }">
+    <Conditional condition="theme === 'dark' && count > 3">
+        <div slot="true">Dark mode with high count!</div>
+        <div slot="false">
+            Theme: <span x-text="theme"></span>, Count: <span x-text="count"></span>
+        </div>
+    </Conditional>
+</div>
+
+{/* Empty state handling */}
+<div x-data="{ items: [] }">
+    <Conditional condition="items.length > 0">
+        <div slot="true">
+            <template x-for="item in items">
+                <div x-text="item"></div>
+            </template>
+        </div>
+        <div slot="false">
+            No items to display.
+        </div>
+    </Conditional>
+</div>`}
+        />
+    </TabsContent>
+</Tabs>
+
+## Use Cases
+
+The Conditional component is ideal for:
+
+- **Authentication States**: Show different content for logged in/out users
+- **Loading States**: Display loaders vs content
+- **Empty States**: Handle empty lists or missing data
+- **Feature Flags**: Toggle features based on conditions
+- **Permission Checks**: Show content based on user roles
+- **Form Validation**: Display success/error states
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `condition` | `string` | - | **Required.** Alpine.js expression to evaluate |
+| `class` | `string` | - | Additional CSS classes |
+
+### Slots
+
+| Slot | Description |
+|------|-------------|
+| `true` | Content rendered when condition evaluates to true |
+| `false` | Content rendered when condition evaluates to false |
+
+### Features
+
+- **Alpine.js Integration**: Uses Alpine.js x-show directives for reactive rendering
+- **Performance Optimized**: Only renders content when needed
+- **Flexible Conditions**: Supports any valid Alpine.js expression
+- **Nested Support**: Can be nested within other Conditional components
+- **Clean Syntax**: Provides a declarative approach to conditional rendering
+
+### Alpine.js Expression Examples
+
+```javascript
+// Simple boolean
+condition="isVisible"
+
+// Comparison operators
+condition="count > 5"
+condition="status === 'active'"
+condition="user.role !== 'guest'"
+
+// Logical operators
+condition="isLoggedIn && hasPermission"
+condition="theme === 'dark' || prefersDark"
+condition="!loading && !error"
+
+// Array/Object checks
+condition="items.length > 0"
+condition="user && user.name"
+condition="errors.length === 0"
+
+// Complex expressions
+condition="(status === 'active' || status === 'pending') && !isDisabled"
+```
+
+### Best Practices
+
+- Use descriptive variable names in your Alpine.js data
+- Keep conditions simple and readable
+- Consider extracting complex logic into computed properties
+- Use the false slot to provide meaningful fallback content
+- Combine with other Alpine.js directives for dynamic behavior

@@ -1,0 +1,277 @@
+---
+title: Ellipsis
+description: Interactive ellipsis component for overflow menus and actions
+category: display
+order: 9
+---
+
+import { Ellipsis } from '@/components/ui/indicators';
+import { Button } from '@/components/ui/forms';
+import { Card } from '@/components/ui/display/card';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The Ellipsis component provides a standardized visual indicator for overflow menus, additional actions, or expandable content using the three-dot pattern.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-4">
+        <div class="space-y-6">
+            <Card class="p-6">
+                <h3 class="text-lg font-semibold mb-4">Basic Usage</h3>
+                <div class="flex items-center gap-4">
+                    <Ellipsis />
+                    <span class="text-sm text-muted-foreground">Default ellipsis indicator</span>
+                </div>
+            </Card>
+
+            <Card class="p-6">
+                <h3 class="text-lg font-semibold mb-4">In Table Rows</h3>
+                <div class="border rounded-lg overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-gray-50 border-b">
+                            <tr>
+                                <th class="text-left p-3 font-medium">Name</th>
+                                <th class="text-left p-3 font-medium">Email</th>
+                                <th class="text-left p-3 font-medium">Role</th>
+                                <th class="text-center p-3 font-medium w-12">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="p-3">John Doe</td>
+                                <td class="p-3">john@example.com</td>
+                                <td class="p-3">Admin</td>
+                                <td class="p-3 text-center">
+                                    <Ellipsis />
+                                </td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-3">Jane Smith</td>
+                                <td class="p-3">jane@example.com</td>
+                                <td class="p-3">User</td>
+                                <td class="p-3 text-center">
+                                    <Ellipsis />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="p-3">Bob Johnson</td>
+                                <td class="p-3">bob@example.com</td>
+                                <td class="p-3">Moderator</td>
+                                <td class="p-3 text-center">
+                                    <Ellipsis />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </Card>
+
+            <Card class="p-6">
+                <h3 class="text-lg font-semibold mb-4">Interactive with Alpine.js</h3>
+                <div class="space-y-4" x-data="{ showMenu: false }">
+                    <div class="flex items-center justify-between p-4 border rounded-lg">
+                        <div>
+                            <h4 class="font-medium">Project Alpha</h4>
+                            <p class="text-sm text-muted-foreground">Active development project</p>
+                        </div>
+                        <div class="relative">
+                            <Ellipsis x-on:click="showMenu = !showMenu" />
+                            <div 
+                                x-show="showMenu" 
+                                x-on:click.away="showMenu = false"
+                                x-transition
+                                class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10"
+                            >
+                                <div class="py-1">
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit Project</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Details</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Share</a>
+                                    <div class="border-t border-gray-100"></div>
+                                    <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Card>
+
+            <Card class="p-6">
+                <h3 class="text-lg font-semibold mb-4">Card Actions</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="border rounded-lg p-4">
+                        <div class="flex items-start justify-between mb-3">
+                            <h4 class="font-medium">Task Item 1</h4>
+                            <Ellipsis />
+                        </div>
+                        <p class="text-sm text-muted-foreground">Complete the user interface design for the dashboard component.</p>
+                        <div class="mt-3 flex items-center gap-2">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">In Progress</span>
+                        </div>
+                    </div>
+                    <div class="border rounded-lg p-4">
+                        <div class="flex items-start justify-between mb-3">
+                            <h4 class="font-medium">Task Item 2</h4>
+                            <Ellipsis />
+                        </div>
+                        <p class="text-sm text-muted-foreground">Implement the authentication flow and user session management.</p>
+                        <div class="mt-3 flex items-center gap-2">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </Card>
+
+            <Card class="p-6">
+                <h3 class="text-lg font-semibold mb-4">Custom Styling</h3>
+                <div class="flex items-center gap-4">
+                    <Ellipsis class="text-blue-600 hover:bg-blue-50" />
+                    <Ellipsis class="text-red-600 hover:bg-red-50 h-8 w-8" />
+                    <Ellipsis class="text-green-600 hover:bg-green-50 h-12 w-12" />
+                </div>
+            </Card>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code
+            language="astro"
+            code={`---
+import { Ellipsis } from '@/components/ui/indicators';
+---
+
+{/* Basic usage */}
+<Ellipsis />
+
+{/* In table rows */}
+<table>
+    <tr>
+        <td>John Doe</td>
+        <td>john@example.com</td>
+        <td><Ellipsis /></td>
+    </tr>
+</table>
+
+{/* Interactive with Alpine.js */}
+<div x-data="{ showMenu: false }">
+    <Ellipsis x-on:click="showMenu = !showMenu" />
+    <div 
+        x-show="showMenu" 
+        x-on:click.away="showMenu = false"
+        class="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg"
+    >
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Edit</a>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Delete</a>
+    </div>
+</div>
+
+{/* In card headers */}
+<div class="border rounded-lg p-4">
+    <div class="flex justify-between items-start mb-3">
+        <h4>Card Title</h4>
+        <Ellipsis />
+    </div>
+    <p>Card content...</p>
+</div>
+
+{/* Custom styling */}
+<Ellipsis class="text-blue-600 hover:bg-blue-50" />
+<Ellipsis class="h-8 w-8" />
+<Ellipsis class="text-red-600" />`}
+        />
+    </TabsContent>
+</Tabs>
+
+## Use Cases
+
+The Ellipsis component is commonly used for:
+
+- **Table Actions**: Row-level actions in data tables
+- **Card Menus**: Overflow actions in card components
+- **List Items**: Additional options for list entries
+- **Navigation**: More options in navigation menus
+- **Mobile Interfaces**: Space-saving action triggers
+- **Context Menus**: Visual trigger for contextual actions
+
+## Design Guidelines
+
+### Placement
+- Position at the end of content rows or in corners of cards
+- Maintain consistent alignment across similar components
+- Ensure adequate spacing from other interactive elements
+
+### Interaction
+- Provide clear hover states to indicate interactivity
+- Use with dropdown menus, popovers, or modal dialogs
+- Include keyboard navigation support for accessibility
+
+### Visual Hierarchy
+- Keep ellipsis styling subtle but discoverable
+- Use consistent sizing within the same interface section
+- Consider color variations for different action types
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `class` | `string` | - | Additional CSS classes for customization |
+
+### Features
+
+- **Accessible**: Includes proper ARIA attributes and role
+- **Interactive**: Built-in hover and focus states
+- **Customizable**: Accepts custom classes for styling
+- **Alpine.js Compatible**: Works seamlessly with Alpine.js events
+- **Responsive**: Maintains proper sizing across devices
+
+### Default Styling
+
+The component includes these default styles:
+- `h-9 w-9` - Standard square dimensions
+- `rounded-md` - Subtle border radius
+- `hover:bg-muted` - Hover background color
+- `transition-colors` - Smooth color transitions
+- `cursor-pointer` - Pointer cursor on hover
+
+### Integration Examples
+
+#### With Dropdown Menu
+```astro
+<div x-data="{ open: false }">
+    <Ellipsis x-on:click="open = !open" />
+    <div x-show="open" x-on:click.away="open = false">
+        <!-- Menu items -->
+    </div>
+</div>
+```
+
+#### With Tooltip
+```astro
+<div x-data="{ tooltip: false }">
+    <Ellipsis 
+        x-on:mouseenter="tooltip = true" 
+        x-on:mouseleave="tooltip = false"
+    />
+    <div x-show="tooltip" class="tooltip">More actions</div>
+</div>
+```
+
+### Accessibility
+
+- Uses `role="presentation"` and `aria-hidden="true"` for screen readers
+- Focusable and keyboard accessible when used with interactive elements
+- Maintains proper color contrast ratios
+- Works with assistive technologies when properly labeled

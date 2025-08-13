@@ -1,0 +1,647 @@
+---
+title: Image
+description: Flexible image component with aspect ratios, object fit options, and overlay support
+category: display
+order: 5
+---
+
+import Image from '@/components/ui/display/Image.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+A versatile image component that provides precise control over aspect ratios, object fit behavior, shapes, and overlay effects. Perfect for maintaining consistent image layouts across different screen sizes and content types.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-8">
+        {/* Basic Usage */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Basic Usage</h3>
+            <div class="flex justify-center">
+                <Image 
+                    src="https://picsum.photos/600/400" 
+                    alt="Beautiful landscape"
+                    class="rounded-lg shadow-md max-w-lg"
+                />
+            </div>
+        </div>
+
+        {/* Aspect Ratios */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Aspect Ratio Control</h3>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="text-center space-y-2">
+                    <Image 
+                        src="https://picsum.photos/400/300" 
+                        alt="Auto aspect ratio"
+                        aspectRatio="auto"
+                        class="w-full rounded-lg shadow-sm"
+                    />
+                    <div>
+                        <p class="font-semibold text-sm">Auto</p>
+                        <p class="text-xs text-muted-foreground">Natural ratio</p>
+                    </div>
+                </div>
+                <div class="text-center space-y-2">
+                    <Image 
+                        src="https://picsum.photos/400/400" 
+                        alt="Square aspect ratio"
+                        aspectRatio="1/1"
+                        class="w-full rounded-lg shadow-sm"
+                    />
+                    <div>
+                        <p class="font-semibold text-sm">Square</p>
+                        <p class="text-xs text-muted-foreground">1:1 ratio</p>
+                    </div>
+                </div>
+                <div class="text-center space-y-2">
+                    <Image 
+                        src="https://picsum.photos/640/360" 
+                        alt="Video aspect ratio"
+                        aspectRatio="16/9"
+                        class="w-full rounded-lg shadow-sm"
+                    />
+                    <div>
+                        <p class="font-semibold text-sm">Video</p>
+                        <p class="text-xs text-muted-foreground">16:9 ratio</p>
+                    </div>
+                </div>
+                <div class="text-center space-y-2">
+                    <Image 
+                        src="https://picsum.photos/400/300" 
+                        alt="Photo aspect ratio"
+                        aspectRatio="4/3"
+                        class="w-full rounded-lg shadow-sm"
+                    />
+                    <div>
+                        <p class="font-semibold text-sm">Photo</p>
+                        <p class="text-xs text-muted-foreground">4:3 ratio</p>
+                    </div>
+                </div>
+                <div class="text-center space-y-2">
+                    <Image 
+                        src="https://picsum.photos/300/200" 
+                        alt="Wide aspect ratio"
+                        aspectRatio="3/2"
+                        class="w-full rounded-lg shadow-sm"
+                    />
+                    <div>
+                        <p class="font-semibold text-sm">Wide</p>
+                        <p class="text-xs text-muted-foreground">3:2 ratio</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {/* Object Fit Options */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Object Fit Options</h3>
+            <p class="text-sm text-muted-foreground">How images fit within their containers (all using 1:1 aspect ratio for comparison)</p>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="text-center space-y-2">
+                    <Image 
+                        src="https://picsum.photos/600/300" 
+                        alt="Object fit cover"
+                        aspectRatio="1/1"
+                        objectFit="cover"
+                        class="w-full rounded-lg shadow-sm"
+                    />
+                    <div>
+                        <p class="font-semibold text-sm">Cover</p>
+                        <p class="text-xs text-muted-foreground">Fills container</p>
+                    </div>
+                </div>
+                <div class="text-center space-y-2">
+                    <Image 
+                        src="https://picsum.photos/600/300" 
+                        alt="Object fit contain"
+                        aspectRatio="1/1"
+                        objectFit="contain"
+                        class="w-full rounded-lg shadow-sm bg-gray-100"
+                    />
+                    <div>
+                        <p class="font-semibold text-sm">Contain</p>
+                        <p class="text-xs text-muted-foreground">Fits entirely</p>
+                    </div>
+                </div>
+                <div class="text-center space-y-2">
+                    <Image 
+                        src="https://picsum.photos/600/300" 
+                        alt="Object fit fill"
+                        aspectRatio="1/1"
+                        objectFit="fill"
+                        class="w-full rounded-lg shadow-sm"
+                    />
+                    <div>
+                        <p class="font-semibold text-sm">Fill</p>
+                        <p class="text-xs text-muted-foreground">Stretches</p>
+                    </div>
+                </div>
+                <div class="text-center space-y-2">
+                    <Image 
+                        src="https://picsum.photos/600/300" 
+                        alt="Object fit none"
+                        aspectRatio="1/1"
+                        objectFit="none"
+                        class="w-full rounded-lg shadow-sm bg-gray-100"
+                    />
+                    <div>
+                        <p class="font-semibold text-sm">None</p>
+                        <p class="text-xs text-muted-foreground">Natural size</p>
+                    </div>
+                </div>
+                <div class="text-center space-y-2">
+                    <Image 
+                        src="https://picsum.photos/100/50" 
+                        alt="Object fit scale down"
+                        aspectRatio="1/1"
+                        objectFit="scaleDown"
+                        class="w-full rounded-lg shadow-sm bg-gray-100"
+                    />
+                    <div>
+                        <p class="font-semibold text-sm">Scale Down</p>
+                        <p class="text-xs text-muted-foreground">Smaller only</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {/* Shape Options */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Shape Options</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center space-y-3">
+                    <Image 
+                        src="https://picsum.photos/400/400" 
+                        alt="Rectangle shape"
+                        aspectRatio="1/1"
+                        shape="rectangle"
+                        class="w-48 mx-auto shadow-sm"
+                    />
+                    <div>
+                        <p class="font-semibold">Rectangle</p>
+                        <p class="text-sm text-muted-foreground">Sharp corners</p>
+                    </div>
+                </div>
+                <div class="text-center space-y-3">
+                    <Image 
+                        src="https://picsum.photos/400/400" 
+                        alt="Rounded shape"
+                        aspectRatio="1/1"
+                        shape="rounded"
+                        class="w-48 mx-auto shadow-sm"
+                    />
+                    <div>
+                        <p class="font-semibold">Rounded</p>
+                        <p class="text-sm text-muted-foreground">Rounded corners</p>
+                    </div>
+                </div>
+                <div class="text-center space-y-3">
+                    <Image 
+                        src="https://picsum.photos/400/400" 
+                        alt="Pill shape"
+                        aspectRatio="1/1"
+                        shape="pill"
+                        class="w-48 mx-auto shadow-sm"
+                    />
+                    <div>
+                        <p class="font-semibold">Pill</p>
+                        <p class="text-sm text-muted-foreground">Fully rounded</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {/* Overlay Effects */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Overlay Effects</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="space-y-3">
+                    <Image 
+                        src="https://picsum.photos/600/400" 
+                        alt="Gradient overlay"
+                        aspectRatio="4/3"
+                        overlay="bg-gradient-to-t from-black/70 via-black/20 to-transparent"
+                        class="w-full rounded-lg shadow-md"
+                    >
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-lg font-semibold">Gradient Overlay</h3>
+                            <p class="text-sm opacity-90">Perfect for text readability</p>
+                        </div>
+                    </Image>
+                    <p class="text-center text-muted-foreground text-sm">Gradient overlay for text</p>
+                </div>
+
+                <div class="space-y-3">
+                    <Image 
+                        src="https://picsum.photos/600/400" 
+                        alt="Color overlay"
+                        aspectRatio="4/3"
+                        overlay="bg-blue-600/30"
+                        class="w-full rounded-lg shadow-md"
+                    >
+                        <div class="absolute inset-0 flex items-center justify-center text-white">
+                            <div class="text-center">
+                                <h3 class="text-lg font-semibold">Color Tint</h3>
+                                <p class="text-sm">Brand color overlay</p>
+                            </div>
+                        </div>
+                    </Image>
+                    <p class="text-center text-muted-foreground text-sm">Solid color overlay</p>
+                </div>
+
+                <div class="space-y-3">
+                    <Image 
+                        src="https://picsum.photos/600/400" 
+                        alt="Hover overlay"
+                        aspectRatio="4/3"
+                        class="w-full rounded-lg shadow-md group cursor-pointer"
+                    >
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 flex items-center justify-center rounded-lg">
+                            <div class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center">
+                                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </div>
+                                <p class="text-sm">Hover to interact</p>
+                            </div>
+                        </div>
+                    </Image>
+                    <p class="text-center text-muted-foreground text-sm">Interactive hover effect</p>
+                </div>
+            </div>
+        </div>
+
+        {/* Loading Options */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Loading Behavior</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <p class="font-medium">Lazy Loading (Default)</p>
+                    <Image 
+                        src="https://picsum.photos/400/300?random=1" 
+                        alt="Lazy loaded image"
+                        aspectRatio="4/3"
+                        loading="lazy"
+                        class="w-full rounded-lg shadow-sm"
+                    />
+                    <p class="text-sm text-muted-foreground">Loads when entering viewport</p>
+                </div>
+                <div class="space-y-2">
+                    <p class="font-medium">Eager Loading</p>
+                    <Image 
+                        src="https://picsum.photos/400/300?random=2" 
+                        alt="Eager loaded image"
+                        aspectRatio="4/3"
+                        loading="eager"
+                        class="w-full rounded-lg shadow-sm"
+                    />
+                    <p class="text-sm text-muted-foreground">Loads immediately</p>
+                </div>
+            </div>
+        </div>
+
+        {/* Alpine.js Integration */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Alpine.js Integration</h3>
+            <div x-data="{ 
+                currentImage: 'https://picsum.photos/600/400',
+                currentLabel: 'Landscape',
+                images: [
+                    { src: 'https://picsum.photos/600/400', label: 'Landscape' },
+                    { src: 'https://picsum.photos/400/600', label: 'Portrait' },
+                    { src: 'https://picsum.photos/500/500', label: 'Square' }
+                ]
+            }" class="space-y-4">
+                <div class="flex flex-wrap justify-center gap-2">
+                    <template x-for="image in images" x-bind:key="image.label">
+                        <button 
+                            x-on:click="currentImage = image.src; currentLabel = image.label"
+                            class="px-4 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                            x-bind:class="{ 'ring-2 ring-primary ring-offset-2': currentLabel === image.label }"
+                            x-text="image.label"
+                        ></button>
+                    </template>
+                </div>
+                
+                <div class="flex justify-center">
+                    <div class="space-y-2">
+                        <Image 
+                            x-bind:src="currentImage"
+                            alt="Dynamic image"
+                            aspectRatio="4/3"
+                            class="w-80 rounded-lg shadow-lg transition-all duration-500"
+                        />
+                        <p class="text-center text-muted-foreground" x-text="'Current: ' + currentLabel"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import Image from '@/components/ui/display/Image.astro';
+---
+
+{/* Basic Usage */}
+<Image 
+    src="https://picsum.photos/600/400" 
+    alt="Beautiful landscape"
+    class="rounded-lg shadow-md"
+/>
+
+{/* Aspect Ratio Control */}
+<Image src="/image.jpg" alt="Auto ratio" aspectRatio="auto" />
+<Image src="/image.jpg" alt="Square" aspectRatio="1/1" />
+<Image src="/image.jpg" alt="Video" aspectRatio="16/9" />
+<Image src="/image.jpg" alt="Photo" aspectRatio="4/3" />
+<Image src="/image.jpg" alt="Wide" aspectRatio="3/2" />
+
+{/* Object Fit Options */}
+<Image src="/image.jpg" alt="Cover" objectFit="cover" />
+<Image src="/image.jpg" alt="Contain" objectFit="contain" />
+<Image src="/image.jpg" alt="Fill" objectFit="fill" />
+<Image src="/image.jpg" alt="None" objectFit="none" />
+<Image src="/image.jpg" alt="Scale down" objectFit="scaleDown" />
+
+{/* Shape Variants */}
+<Image src="/image.jpg" alt="Rectangle" shape="rectangle" />
+<Image src="/image.jpg" alt="Rounded" shape="rounded" />
+<Image src="/image.jpg" alt="Pill" shape="pill" />
+
+{/* With Overlays */}
+<Image 
+    src="/hero.jpg" 
+    alt="Hero image"
+    overlay="bg-gradient-to-t from-black/70 to-transparent"
+    class="relative"
+>
+    <div class="absolute bottom-4 left-4 text-white">
+        <h2 class="text-xl font-bold">Overlay Content</h2>
+        <p>Perfect for hero sections</p>
+    </div>
+</Image>
+
+{/* Color Overlay */}
+<Image 
+    src="/image.jpg"
+    alt="Tinted image"
+    overlay="bg-blue-500/30"
+/>
+
+{/* Loading Behavior */}
+<Image src="/image.jpg" alt="Lazy" loading="lazy" />
+<Image src="/hero.jpg" alt="Eager" loading="eager" />
+
+{/* Alpine.js Integration */}
+<div x-data="{ 
+    currentSrc: '/image1.jpg',
+    images: ['/image1.jpg', '/image2.jpg', '/image3.jpg']
+}">
+    <Image 
+        x-bind:src="currentSrc"
+        alt="Dynamic image"
+        aspectRatio="16/9"
+    />
+    <button x-on:click="currentSrc = images[Math.floor(Math.random() * images.length)]">
+        Random Image
+    </button>
+</div>
+
+{/* Responsive Images */}
+<Image 
+    src="/image-large.jpg"
+    alt="Responsive image"
+    aspectRatio="16/9"
+    class="w-full md:w-1/2 lg:w-1/3"
+/>
+
+{/* Interactive States */}
+<Image 
+    src="/image.jpg"
+    alt="Interactive image"
+    class="transition-transform hover:scale-105 cursor-pointer"
+    x-on:click="handleImageClick"
+/>`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `src` | `string` | **Required** | Image source URL |
+| `alt` | `string` | `''` | Alt text for accessibility |
+| `aspectRatio` | `'auto' | '1/1' | '16/9' | '4/3' | '3/2'` | `'auto'` | Aspect ratio constraint |
+| `objectFit` | `'cover' | 'contain' | 'fill' | 'none' | 'scaleDown'` | `'cover'` | How image fits container |
+| `shape` | `'rectangle' | 'rounded' | 'pill'` | `'rectangle'` | Border radius style |
+| `overlay` | `string` | - | CSS classes for overlay div |
+| `loading` | `'lazy' | 'eager'` | `'lazy'` | Image loading behavior |
+| `class` | `string` | - | Additional CSS classes |
+
+### Slots
+
+| Slot | Description |
+|------|-------------|
+| `default` | Content overlaid on top of the image |
+
+### Aspect Ratio Behavior
+
+#### Available Ratios
+- `auto`: Natural image dimensions
+- `1/1`: Perfect square (1:1)
+- `16/9`: Widescreen video format
+- `4/3`: Traditional photo format  
+- `3/2`: Wide photo format
+
+#### Implementation
+Uses Tailwind's aspect ratio utilities:
+```css
+aspect-square    /* 1:1 */
+aspect-video     /* 16:9 */  
+aspect-[4/3]     /* 4:3 */
+aspect-[3/2]     /* 3:2 */
+```
+
+### Object Fit Options
+
+#### Cover (Default)
+- Image covers entire container
+- May crop parts of image
+- Maintains aspect ratio
+
+#### Contain
+- Entire image visible
+- May leave empty space
+- Maintains aspect ratio
+
+#### Fill  
+- Fills container exactly
+- May distort image
+- Ignores aspect ratio
+
+#### None
+- Image keeps natural size
+- May overflow or leave space
+- No scaling applied
+
+#### Scale Down
+- Like `none` or `contain`
+- Only scales down, never up
+- Prevents pixelation
+
+### Shape Variants
+
+#### Rectangle
+- No border radius
+- Sharp corners
+- Default geometric shape
+
+#### Rounded  
+- Medium border radius
+- Softened corners
+- Balanced appearance
+
+#### Pill
+- Maximum border radius
+- Fully rounded edges
+- Circular when square
+
+### Overlay System
+
+#### Gradient Overlays
+Perfect for text readability:
+
+```astro
+<Image 
+    src="/hero.jpg"
+    overlay="bg-gradient-to-t from-black/70 to-transparent"
+>
+    <div class="absolute bottom-4 left-4 text-white">
+        <h2>Readable Text</h2>
+    </div>
+</Image>
+```
+
+#### Color Overlays
+Brand tinting and effects:
+
+```astro
+<Image 
+    src="/image.jpg"
+    overlay="bg-primary/20"
+/>
+```
+
+#### Interactive Overlays
+Hover and focus states:
+
+```astro
+<Image src="/image.jpg" class="group">
+    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors">
+        <div class="opacity-0 group-hover:opacity-100">
+            {/* Hover content */}
+        </div>
+    </div>
+</Image>
+```
+
+### Alpine.js Integration
+
+#### Dynamic Sources
+```astro
+<div x-data="{ imageSrc: '/default.jpg' }">
+    <Image x-bind:src="imageSrc" alt="Dynamic image" />
+    <button x-on:click="imageSrc = '/new-image.jpg'">
+        Change Image
+    </button>
+</div>
+```
+
+#### Image Galleries
+```astro
+<div x-data="{ 
+    currentIndex: 0,
+    images: ['/img1.jpg', '/img2.jpg', '/img3.jpg']
+}">
+    <Image 
+        x-bind:src="images[currentIndex]"
+        alt="Gallery image"
+    />
+    <button x-on:click="currentIndex = (currentIndex + 1) % images.length">
+        Next
+    </button>
+</div>
+```
+
+#### Loading States
+```astro
+<div x-data="{ loading: true }">
+    <Image 
+        src="/image.jpg"
+        alt="Loading example"
+        x-on:load="loading = false"
+        x-bind:class="{ 'opacity-50': loading }"
+    />
+    <div x-show="loading">Loading...</div>
+</div>
+```
+
+### Performance Optimization
+
+#### Lazy Loading
+- Default behavior for performance
+- Images load when entering viewport
+- Reduces initial page load time
+
+#### Eager Loading  
+- For above-the-fold images
+- Critical hero images
+- LCP optimization
+
+#### Responsive Considerations
+```astro
+{/* Responsive sizing */}
+<Image 
+    src="/image.jpg"
+    alt="Responsive image"
+    class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+/>
+
+{/* Different images for different sizes */}
+<div x-data="{ 
+    getImageSrc() {
+        return window.innerWidth > 768 ? '/large.jpg' : '/small.jpg';
+    }
+}">
+    <Image x-bind:src="getImageSrc()" alt="Responsive source" />
+</div>
+```
+
+### Accessibility
+
+#### Alt Text
+- Always provide descriptive alt text
+- Empty alt for decorative images
+- Context-appropriate descriptions
+
+#### Keyboard Navigation
+- Focusable when interactive
+- Proper tab order
+- Clear focus indicators
+
+#### Screen Reader Support
+- Semantic image elements
+- Proper ARIA attributes
+- Meaningful descriptions

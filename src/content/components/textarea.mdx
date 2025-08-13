@@ -1,0 +1,428 @@
+---
+title: Textarea
+description: Multi-line text input with auto-resize functionality and universal theme styling
+category: forms
+order: 6
+---
+
+import Textarea from '@/components/ui/forms/Textarea.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The Textarea component provides a multi-line text input field with support for auto-resize functionality, universal theme styling, and full Alpine.js integration for reactive behavior.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-6">
+        <div class="space-y-6">
+            <div>
+                <h4 class="font-medium mb-3">Basic Textarea</h4>
+                <Textarea placeholder="Enter your message here..." rows={4} />
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-3">Auto-resize Textarea</h4>
+                <Textarea 
+                    autoResize 
+                    placeholder="This textarea will grow as you type. Try typing multiple lines to see it expand automatically..." 
+                    rows={3}
+                />
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-3">Different Sizes</h4>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Small (2 rows)</label>
+                        <Textarea placeholder="Small textarea" rows={2} />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Medium (4 rows)</label>
+                        <Textarea placeholder="Medium textarea" rows={4} />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Large (6 rows)</label>
+                        <Textarea placeholder="Large textarea" rows={6} />
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-3">States</h4>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Normal</label>
+                        <Textarea placeholder="Normal textarea" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Disabled</label>
+                        <Textarea 
+                            disabled 
+                            value="This textarea is disabled"
+                            placeholder="Disabled placeholder"
+                        />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Read-only</label>
+                        <Textarea 
+                            readonly 
+                            value="This textarea is read-only and cannot be edited."
+                        />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Required</label>
+                        <Textarea 
+                            required 
+                            placeholder="This field is required"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div x-data="{ message: 'Hello Alpine.js!\nThis textarea is reactive.' }">
+                <h4 class="font-medium mb-3">Alpine.js Integration</h4>
+                <div class="space-y-3">
+                    <Textarea 
+                        x-model="message"
+                        placeholder="Type something..."
+                        rows={4}
+                    />
+                    <div class="p-3 bg-muted rounded-lg">
+                        <h5 class="text-sm font-medium mb-2">Live Preview:</h5>
+                        <div class="text-sm whitespace-pre-wrap" x-text="message || 'Start typing above...'"></div>
+                    </div>
+                    <div class="text-xs text-muted-foreground">
+                        Character count: <span x-text="message.length" class="font-mono"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-3">Form Integration</h4>
+                <form class="space-y-4" x-on:submit="$event.preventDefault(); alert('Form submitted!')">
+                    <div>
+                        <label for="feedback" class="block text-sm font-medium mb-1">Feedback</label>
+                        <Textarea 
+                            id="feedback"
+                            name="feedback"
+                            placeholder="Please share your feedback..."
+                            rows={4}
+                            required
+                        />
+                    </div>
+                    <button type="submit" class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+                        Submit Feedback
+                    </button>
+                </form>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import Textarea from '@/components/ui/forms/Textarea.astro';
+---
+{/* Basic Usage */}
+<Textarea placeholder="Enter your message here..." rows={4} />
+
+{/* Auto-resize Functionality */}
+<Textarea 
+    autoResize 
+    placeholder="This textarea will grow as you type..." 
+    rows={3}
+/>
+
+{/* Different Sizes */}
+<Textarea placeholder="Small textarea" rows={2} />
+<Textarea placeholder="Medium textarea" rows={4} />
+<Textarea placeholder="Large textarea" rows={6} />
+
+{/* States */}
+<Textarea placeholder="Normal textarea" />
+<Textarea disabled value="This textarea is disabled" />
+<Textarea readonly value="This textarea is read-only" />
+<Textarea required placeholder="This field is required" />
+
+{/* Form Integration */}
+<form method="POST">
+    <label for="message">Message</label>
+    <Textarea 
+        id="message"
+        name="message"
+        placeholder="Enter your message..."
+        rows={4}
+        required
+    />
+    <button type="submit">Submit</button>
+</form>
+
+{/* Alpine.js Integration */}
+<div x-data="{ content: '' }">
+    <Textarea 
+        x-model="content"
+        placeholder="Type something..."
+        rows={4}
+    />
+    <p x-text="'Characters: ' + content.length"></p>
+</div>
+
+{/* Custom Styling */}
+<Textarea 
+    placeholder="Custom styled textarea"
+    className="border-2 border-blue-500 rounded-xl"
+    rows={3}
+/>`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `placeholder` | `string` | - | Placeholder text |
+| `value` | `string` | - | Initial value |
+| `disabled` | `boolean` | `false` | Whether the textarea is disabled |
+| `readonly` | `boolean` | `false` | Whether the textarea is read-only |
+| `required` | `boolean` | `false` | Whether the field is required |
+| `name` | `string` | - | Name attribute for form submission |
+| `id` | `string` | - | ID attribute for labeling |
+| `rows` | `number` | `4` | Number of visible text lines |
+| `autoResize` | `boolean` | `false` | Enable automatic height adjustment |
+| `className` | `string` | - | Additional CSS classes |
+
+### Auto-resize Feature
+
+When `autoResize` is enabled, the textarea automatically adjusts its height based on content:
+
+- Dynamically grows as content is added
+- Shrinks when content is removed
+- Maintains minimum height based on `rows` prop
+- Uses Alpine.js for smooth, reactive resizing
+- No maximum height by default (can be controlled with CSS)
+
+### Alpine.js Integration
+
+The component supports all Alpine.js directives:
+
+- Use `x-model` for two-way data binding
+- Access reactive properties and methods
+- Integrate with Alpine.js state management
+- Auto-resize functionality uses Alpine.js internally when enabled
+
+### Accessibility Features
+
+- Proper semantic HTML with native textarea element
+- Full keyboard navigation support
+- Screen reader compatibility
+- Supports ARIA attributes via pass-through props
+- Focus management with visible focus indicators
+
+## Usage Examples
+
+### Character Counter
+
+```astro
+<div x-data="{ 
+    content: '', 
+    maxLength: 280,
+    get remainingChars() {
+        return this.maxLength - this.content.length;
+    },
+    get isOverLimit() {
+        return this.content.length > this.maxLength;
+    }
+}">
+    <div class="space-y-2">
+        <label class="block text-sm font-medium">Tweet (280 characters max)</label>
+        <Textarea 
+            x-model="content"
+            placeholder="What's happening?"
+            rows={3}
+            autoResize
+            maxlength="300"
+        />
+        <div class="flex justify-between items-center text-sm">
+            <span 
+                x-text="content.length + ' / ' + maxLength + ' characters'"
+                x-bind:class="isOverLimit ? 'text-destructive' : 'text-muted-foreground'"
+            ></span>
+            <button 
+                type="button"
+                x-bind:disabled="content.length === 0 || isOverLimit"
+                class="px-3 py-1 bg-primary text-primary-foreground rounded disabled:opacity-50"
+            >
+                Tweet
+            </button>
+        </div>
+    </div>
+</div>
+```
+
+### Rich Text Preview
+
+```astro
+<div x-data="{ 
+    markdown: '# Hello World\\n\\nThis is **bold** and *italic* text.',
+    get hasContent() {
+        return this.markdown.trim().length > 0;
+    }
+}">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+            <label class="block text-sm font-medium mb-2">Markdown Input</label>
+            <Textarea 
+                x-model="markdown"
+                placeholder="Enter markdown here..."
+                rows={10}
+                autoResize
+                class="font-mono text-sm"
+            />
+        </div>
+        <div>
+            <label class="block text-sm font-medium mb-2">Live Preview</label>
+            <div 
+                class="min-h-[10rem] p-3 border rounded-md bg-muted/30"
+                x-show="hasContent"
+            >
+                {/* You would integrate a markdown parser here */}
+                <div class="prose prose-sm" x-text="markdown"></div>
+            </div>
+            <div 
+                x-show="!hasContent"
+                class="min-h-[10rem] p-3 border rounded-md bg-muted/30 flex items-center justify-center text-muted-foreground"
+            >
+                Preview will appear here...
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Advanced Form Field
+
+```astro
+<div x-data="{ 
+    feedback: '',
+    category: 'general',
+    isSubmitting: false,
+    submitForm() {
+        this.isSubmitting = true;
+        // Simulate API call
+        setTimeout(() => {
+            alert('Feedback submitted!');
+            this.feedback = '';
+            this.isSubmitting = false;
+        }, 1000);
+    }
+}">
+    <form x-on:submit="$event.preventDefault(); submitForm()" class="space-y-4">
+        <div>
+            <label class="block text-sm font-medium mb-1">Category</label>
+            <select x-model="category" class="w-full px-3 py-2 border rounded-md">
+                <option value="general">General Feedback</option>
+                <option value="bug">Bug Report</option>
+                <option value="feature">Feature Request</option>
+            </select>
+        </div>
+        
+        <div>
+            <label class="block text-sm font-medium mb-1">
+                Your Feedback
+                <span class="text-destructive">*</span>
+            </label>
+            <Textarea 
+                x-model="feedback"
+                placeholder="Please share your detailed feedback..."
+                rows={6}
+                autoResize
+                required
+                x-bind:disabled="isSubmitting"
+            />
+            <div class="text-xs text-muted-foreground mt-1">
+                <span x-text="feedback.length"></span> characters
+                <span x-show="feedback.length < 10" class="text-amber-600">
+                    (minimum 10 characters)
+                </span>
+            </div>
+        </div>
+        
+        <button 
+            type="submit"
+            x-bind:disabled="feedback.length < 10 || isSubmitting"
+            class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+            <span x-show="!isSubmitting">Submit Feedback</span>
+            <span x-show="isSubmitting">Submitting...</span>
+        </button>
+    </form>
+</div>
+```
+
+### Template System
+
+```astro
+<div x-data="{ 
+    selectedTemplate: '',
+    content: '',
+    templates: {
+        email: 'Subject: \\n\\nDear [Name],\\n\\n\\n\\nBest regards,\\n[Your Name]',
+        meeting: 'Meeting: [Topic]\\nDate: [Date]\\nTime: [Time]\\n\\nAgenda:\\n1. \\n2. \\n3. ',
+        report: '# Report Title\\n\\n## Summary\\n\\n## Key Findings\\n\\n## Recommendations\\n\\n## Conclusion'
+    },
+    loadTemplate(template) {
+        this.content = this.templates[template] || '';
+    }
+}">
+    <div class="space-y-4">
+        <div class="flex gap-2 flex-wrap">
+            <button 
+                x-on:click="loadTemplate('email')"
+                class="px-3 py-1 text-sm bg-secondary text-secondary-foreground rounded hover:bg-secondary/80"
+            >
+                Email Template
+            </button>
+            <button 
+                x-on:click="loadTemplate('meeting')"
+                class="px-3 py-1 text-sm bg-secondary text-secondary-foreground rounded hover:bg-secondary/80"
+            >
+                Meeting Notes
+            </button>
+            <button 
+                x-on:click="loadTemplate('report')"
+                class="px-3 py-1 text-sm bg-secondary text-secondary-foreground rounded hover:bg-secondary/80"
+            >
+                Report Template
+            </button>
+            <button 
+                x-on:click="content = ''"
+                class="px-3 py-1 text-sm bg-muted text-muted-foreground rounded hover:bg-muted/80"
+            >
+                Clear
+            </button>
+        </div>
+        
+        <Textarea 
+            x-model="content"
+            placeholder="Select a template above or start typing..."
+            rows={12}
+            autoResize
+            class="font-mono text-sm"
+        />
+        
+        <div class="text-xs text-muted-foreground">
+            Lines: <span x-text="content.split('\\n').length"></span> | 
+            Words: <span x-text="content.trim() ? content.trim().split(/\\s+/).length : 0"></span> |
+            Characters: <span x-text="content.length"></span>
+        </div>
+    </div>
+</div>
+```

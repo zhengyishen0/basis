@@ -1,0 +1,970 @@
+---
+title: Popup
+description: Lightweight popup components for tooltips, popovers, and contextual content with multiple trigger options and positioning
+category: overlay
+order: 4
+---
+
+import Popup from '@/components/ui/overlay/popup/Popup.astro';
+import PopupContent from '@/components/ui/overlay/popup/PopupContent.astro';
+import PopupTrigger from '@/components/ui/overlay/popup/PopupTrigger.astro';
+import { Button } from '@/components/ui/forms';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The Popup system provides lightweight components for creating tooltips, popovers, and contextual content that appears on demand. Built with Alpine.js for smooth interactions, the system supports multiple trigger methods (click, hover, focus, right-click), automatic positioning, and flexible content styling.
+
+### Component Architecture
+
+The popup system consists of these core components:
+
+- **Popup**: Main container with state management and trigger handling
+- **PopupContent**: Content wrapper with positioning variants and themes
+- **PopupTrigger**: Trigger element with multiple interaction options
+
+<Tabs defaultValue="tooltips" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="tooltips" variant="pills">Tooltips</TabsTrigger>
+        <TabsTrigger value="popovers" variant="pills">Info Popovers</TabsTrigger>
+        <TabsTrigger value="contextual" variant="pills">Contextual Help</TabsTrigger>
+        <TabsTrigger value="forms" variant="pills">Form Helpers</TabsTrigger>
+    </TabsList>
+    <TabsContent value="tooltips" preview class="space-y-6">
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Tooltip Examples</h3>
+            <div class="flex gap-6 flex-wrap items-center justify-center">
+                <Popup trigger="hover">
+                    <PopupTrigger variant="button">
+                        Hover Tooltip
+                    </PopupTrigger>
+                    <PopupContent theme="dark" placement="top">
+                        <div class="px-3 py-2 text-sm">
+                            This is a hover tooltip
+                        </div>
+                    </PopupContent>
+                </Popup>
+
+                <Popup trigger="click">
+                    <PopupTrigger variant="button">
+                        Click Tooltip
+                    </PopupTrigger>
+                    <PopupContent theme="minimal" placement="bottom">
+                        <div class="px-3 py-2 text-sm">
+                            Click to show/hide tooltip
+                        </div>
+                    </PopupContent>
+                </Popup>
+
+                <Popup trigger="focus">
+                    <PopupTrigger variant="ghost">
+                        <button class="px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Focus Me
+                        </button>
+                    </PopupTrigger>
+                    <PopupContent theme="default" placement="right">
+                        <div class="px-3 py-2 text-sm">
+                            Appears when focused
+                        </div>
+                    </PopupContent>
+                </Popup>
+
+                <Popup trigger="rightclick">
+                    <PopupTrigger variant="outline">
+                        Right Click
+                    </PopupTrigger>
+                    <PopupContent theme="dark" placement="left">
+                        <div class="px-3 py-2 text-sm">
+                            Right-click context tooltip
+                        </div>
+                    </PopupContent>
+                </Popup>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="popovers" preview class="space-y-6">
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Information Popovers</h3>
+            <div class="flex gap-6 flex-wrap items-center justify-center">
+                <Popup trigger="click">
+                    <PopupTrigger variant="ghost">
+                        <div class="flex items-center gap-2">
+                            <span>User Profile</span>
+                            <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </PopupTrigger>
+                    <PopupContent theme="default" placement="bottom">
+                        <div class="p-4 w-72">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-medium">
+                                    JD
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">John Doe</h4>
+                                    <p class="text-sm text-gray-600">Software Engineer</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700 mb-3">
+                                Full-stack developer with 5+ years of experience in React, Node.js, and cloud technologies.
+                            </p>
+                            <div class="flex gap-2">
+                                <Button variant="outline" className="text-xs px-2 py-1">
+                                    View Profile
+                                </Button>
+                                <Button variant="default" className="text-xs px-2 py-1">
+                                    Message
+                                </Button>
+                            </div>
+                        </div>
+                    </PopupContent>
+                </Popup>
+
+                <Popup trigger="hover">
+                    <PopupTrigger variant="ghost">
+                        <div class="flex items-center gap-2">
+                            <span>Feature Info</span>
+                            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                    </PopupTrigger>
+                    <PopupContent theme="minimal" placement="top">
+                        <div class="p-3 w-64">
+                            <h4 class="font-medium mb-2">Advanced Analytics</h4>
+                            <p class="text-sm text-gray-600 mb-3">
+                                Get detailed insights into user behavior, conversion rates, and performance metrics.
+                            </p>
+                            <div class="flex items-center gap-2 text-sm">
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Pro Feature</span>
+                                <span class="text-gray-500">Available in Pro plan</span>
+                            </div>
+                        </div>
+                    </PopupContent>
+                </Popup>
+
+                <Popup trigger="click">
+                    <PopupTrigger variant="link">
+                        Settings Help
+                    </PopupTrigger>
+                    <PopupContent theme="default" placement="bottom">
+                        <div class="p-4 w-80">
+                            <h4 class="font-medium mb-3">Configuration Options</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <span class="text-blue-600 text-xs font-medium">1</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Theme Settings</p>
+                                        <p class="text-xs text-gray-600">Choose between light, dark, or auto theme</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <span class="text-blue-600 text-xs font-medium">2</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Notifications</p>
+                                        <p class="text-xs text-gray-600">Configure email and push notification preferences</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <span class="text-blue-600 text-xs font-medium">3</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Privacy</p>
+                                        <p class="text-xs text-gray-600">Manage data sharing and privacy settings</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </PopupContent>
+                </Popup>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="contextual" preview class="space-y-6">
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Contextual Help & Actions</h3>
+            <div class="flex gap-6 flex-wrap items-center justify-center">
+                <Popup trigger="click">
+                    <PopupTrigger variant="ghost">
+                        <div class="flex items-center gap-2 px-3 py-2 border rounded-md">
+                            <span>API Endpoint</span>
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                            </svg>
+                        </div>
+                    </PopupTrigger>
+                    <PopupContent theme="dark" placement="top">
+                        <div class="p-4 w-96">
+                            <h4 class="font-medium text-white mb-2">API Documentation</h4>
+                            <div class="bg-gray-800 rounded p-3 mb-3">
+                                <code class="text-green-400 text-sm">GET /api/users/{id}</code>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-3">
+                                Retrieve user information by ID. Requires authentication header.
+                            </p>
+                            <div class="flex gap-2">
+                                <button class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded">
+                                    Copy URL
+                                </button>
+                                <button class="bg-gray-700 hover:bg-gray-600 text-white text-xs px-3 py-1 rounded">
+                                    Test API
+                                </button>
+                            </div>
+                        </div>
+                    </PopupContent>
+                </Popup>
+
+                <Popup trigger="hover" delay={300}>
+                    <PopupTrigger variant="ghost">
+                        <div class="w-32 h-20 bg-gradient-to-br from-purple-400 to-pink-400 rounded-lg flex items-center justify-center text-white font-medium cursor-pointer">
+                            Hover Card
+                        </div>
+                    </PopupTrigger>
+                    <PopupContent theme="minimal" placement="right">
+                        <div class="p-4 w-72">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-400 rounded-lg"></div>
+                                <div>
+                                    <h4 class="font-medium">Interactive Card</h4>
+                                    <p class="text-sm text-gray-600">Hover for details</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700 mb-3">
+                                This card contains detailed information that appears when you hover over the trigger element.
+                            </p>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-500">Last updated</span>
+                                <span class="font-medium">2 minutes ago</span>
+                            </div>
+                        </div>
+                    </PopupContent>
+                </Popup>
+
+                <Popup trigger="rightclick">
+                    <PopupTrigger variant="ghost">
+                        <div class="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center cursor-pointer hover:border-gray-400">
+                            <p class="text-sm text-gray-600">Right-click for options</p>
+                        </div>
+                    </PopupTrigger>
+                    <PopupContent theme="default" placement="bottom">
+                        <div class="py-2 w-48">
+                            <button class="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-3">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                                Edit
+                            </button>
+                            <button class="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-3">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                                Duplicate
+                            </button>
+                            <hr class="my-1" />
+                            <button class="w-full px-4 py-2 text-left text-sm hover:bg-red-50 text-red-600 flex items-center gap-3">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                                Delete
+                            </button>
+                        </div>
+                    </PopupContent>
+                </Popup>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="forms" preview class="space-y-6">
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Form Helper Popups</h3>
+            <div class="max-w-md mx-auto space-y-4">
+                <div class="space-y-2">
+                    <label class="text-sm font-medium flex items-center gap-2">
+                        Password
+                        <Popup trigger="hover">
+                            <PopupTrigger variant="ghost">
+                                <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                </svg>
+                            </PopupTrigger>
+                            <PopupContent theme="dark" placement="top">
+                                <div class="p-3 w-64">
+                                    <h4 class="font-medium text-white mb-2">Password Requirements</h4>
+                                    <ul class="text-sm text-gray-300 space-y-1">
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-green-400">✓</span>
+                                            At least 8 characters
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-green-400">✓</span>
+                                            One uppercase letter
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-red-400">✗</span>
+                                            One number
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-red-400">✗</span>
+                                            One special character
+                                        </li>
+                                    </ul>
+                                </div>
+                            </PopupContent>
+                        </Popup>
+                    </label>
+                    <input 
+                        type="password" 
+                        placeholder="Enter password"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-medium flex items-center gap-2">
+                        API Key
+                        <Popup trigger="click">
+                            <PopupTrigger variant="ghost">
+                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </PopupTrigger>
+                            <PopupContent theme="minimal" placement="right">
+                                <div class="p-4 w-80">
+                                    <h4 class="font-medium mb-2">How to get your API Key</h4>
+                                    <ol class="text-sm text-gray-700 space-y-2">
+                                        <li class="flex items-start gap-2">
+                                            <span class="bg-blue-100 text-blue-800 w-5 h-5 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0 mt-0.5">1</span>
+                                            <span>Go to your account settings</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="bg-blue-100 text-blue-800 w-5 h-5 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0 mt-0.5">2</span>
+                                            <span>Navigate to the API section</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="bg-blue-100 text-blue-800 w-5 h-5 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0 mt-0.5">3</span>
+                                            <span>Click "Generate New Key"</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="bg-blue-100 text-blue-800 w-5 h-5 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0 mt-0.5">4</span>
+                                            <span>Copy and save the key securely</span>
+                                        </li>
+                                    </ol>
+                                    <div class="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded">
+                                        <p class="text-xs text-yellow-800">
+                                            ⚠️ Keep your API key secure and never share it publicly
+                                        </p>
+                                    </div>
+                                </div>
+                            </PopupContent>
+                        </Popup>
+                    </label>
+                    <input 
+                        type="text" 
+                        placeholder="sk-..."
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-medium">Upload File</label>
+                    <Popup trigger="focus">
+                        <PopupTrigger variant="ghost">
+                            <div class="w-full p-6 border-2 border-dashed border-gray-300 rounded-lg text-center hover:border-gray-400 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200">
+                                <input type="file" class="sr-only" />
+                                <svg class="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                </svg>
+                                <p class="text-sm text-gray-600">Click to upload or drag and drop</p>
+                            </div>
+                        </PopupTrigger>
+                        <PopupContent theme="default" placement="top">
+                            <div class="p-3 w-64">
+                                <h4 class="font-medium mb-2">Supported File Types</h4>
+                                <div class="text-sm text-gray-600 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-green-600">✓</span>
+                                        <span>PDF (.pdf)</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-green-600">✓</span>
+                                        <span>Images (.jpg, .png, .gif)</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-green-600">✓</span>
+                                        <span>Documents (.doc, .docx)</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-2">
+                                    Maximum file size: 10MB
+                                </p>
+                            </div>
+                        </PopupContent>
+                    </Popup>
+                </div>
+            </div>
+        </div>
+    </TabsContent>
+</Tabs>
+
+## Component API Reference
+
+### Popup (Main Container)
+
+The root Popup component manages state, trigger handling, and popup positioning.
+
+**Props:**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `trigger` | `'click' \| 'hover' \| 'focus' \| 'rightclick' \| 'manual'` | `'click'` | How the popup is triggered |
+| `dismiss` | `'auto' \| 'manual'` | `'manual'` | Auto-dismiss behavior |
+| `delay` | `number` | `0` | Delay in ms before showing popup |
+| `className` | `string` | - | Additional CSS classes |
+
+**Alpine.js State:**
+
+- `open`: `boolean` - Whether popup is currently open
+- `trigger`: `string` - Current trigger method
+- `popupId`: `string` - Unique identifier for this popup
+- `toggle()`: Function to toggle popup state
+- `close()`: Function to close popup
+
+**Trigger Behaviors:**
+
+- `click`: Opens/closes on click, closes on outside click
+- `hover`: Opens on mouseenter, closes on mouseleave  
+- `focus`: Opens on focus, closes on blur
+- `rightclick`: Opens on right-click (prevents context menu)
+- `manual`: Only controlled via Alpine.js methods
+
+### PopupContent
+
+Content wrapper with positioning, themes, and transition animations.
+
+**Props:**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `theme` | `'default' \| 'dark' \| 'minimal'` | `'default'` | Visual theme |
+| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` | Popup positioning |
+| `role` | `string` | `'dialog'` | ARIA role attribute |
+| `className` | `string` | - | Additional CSS classes |
+
+**Theme Variations:**
+
+- `default`: Standard popover with border and shadow
+- `dark`: Dark background with white text
+- `minimal`: Clean white background with subtle shadow
+
+**Placement Options:**
+
+- `top`: Appears above trigger (bottom margin)
+- `bottom`: Appears below trigger (top margin)
+- `left`: Appears to left of trigger (right margin, vertically centered)
+- `right`: Appears to right of trigger (left margin, vertically centered)
+
+### PopupTrigger
+
+Trigger element with styling variants and interaction handling.
+
+**Props:**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'default' \| 'button' \| 'ghost' \| 'link'` | `'default'` | Visual style |
+| `className` | `string` | - | Additional CSS classes |
+
+**Variant Styles:**
+
+- `default`: Unstyled (inherit parent styling)
+- `button`: Button-like appearance with padding and hover effects
+- `ghost`: Subtle hover effects only
+- `link`: Underlined link styling
+
+## Usage Examples
+
+<Tabs defaultValue="basic-usage" class="mt-6">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="basic-usage" variant="pills">Basic Usage</TabsTrigger>
+        <TabsTrigger value="triggers" variant="pills">Trigger Methods</TabsTrigger>
+        <TabsTrigger value="themes" variant="pills">Themes & Positioning</TabsTrigger>
+        <TabsTrigger value="advanced" variant="pills">Advanced Examples</TabsTrigger>
+    </TabsList>
+    <TabsContent value="basic-usage">
+        <Code
+            language="astro"
+            code={`---
+import Popup from '@/components/ui/overlay/popup/Popup.astro';
+import PopupContent from '@/components/ui/overlay/popup/PopupContent.astro';
+import PopupTrigger from '@/components/ui/overlay/popup/PopupTrigger.astro';
+---
+
+{/* Simple Tooltip */}
+<Popup trigger="hover">
+    <PopupTrigger variant="button">
+        Hover me
+    </PopupTrigger>
+    <PopupContent theme="dark" placement="top">
+        <div class="px-3 py-2 text-sm">
+            This is a tooltip
+        </div>
+    </PopupContent>
+</Popup>
+
+{/* Click Popover */}
+<Popup trigger="click">
+    <PopupTrigger variant="outline">
+        Click for info
+    </PopupTrigger>
+    <PopupContent theme="default" placement="bottom">
+        <div class="p-4 w-64">
+            <h4 class="font-medium mb-2">Additional Information</h4>
+            <p class="text-sm text-gray-600">
+                This popover contains detailed information that appears when clicked.
+            </p>
+        </div>
+    </PopupContent>
+</Popup>
+
+{/* Form Helper */}
+<div class="space-y-2">
+    <label class="text-sm font-medium flex items-center gap-2">
+        Field Label
+        <Popup trigger="hover">
+            <PopupTrigger variant="ghost">
+                <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                </svg>
+            </PopupTrigger>
+            <PopupContent theme="minimal" placement="top">
+                <div class="px-3 py-2 text-sm">
+                    Help text for this field
+                </div>
+            </PopupContent>
+        </Popup>
+    </label>
+    <input type="text" class="w-full px-3 py-2 border rounded-md" />
+</div>`}
+        />
+    </TabsContent>
+    <TabsContent value="triggers">
+        <Code
+            language="astro"
+            code={`{/* Hover Trigger */}
+<Popup trigger="hover">
+    <PopupTrigger variant="button">Hover Trigger</PopupTrigger>
+    <PopupContent theme="dark" placement="top">
+        <div class="px-3 py-2 text-sm">Appears on hover</div>
+    </PopupContent>
+</Popup>
+
+{/* Click Trigger */}
+<Popup trigger="click">
+    <PopupTrigger variant="outline">Click Trigger</PopupTrigger>
+    <PopupContent theme="default" placement="bottom">
+        <div class="p-3">Click to toggle</div>
+    </PopupContent>
+</Popup>
+
+{/* Focus Trigger */}
+<Popup trigger="focus">
+    <PopupTrigger variant="ghost">
+        <input 
+            type="text" 
+            placeholder="Focus me"
+            class="px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+    </PopupTrigger>
+    <PopupContent theme="minimal" placement="right">
+        <div class="px-3 py-2 text-sm">Shows when focused</div>
+    </PopupContent>
+</Popup>
+
+{/* Right-click Trigger */}
+<Popup trigger="rightclick">
+    <PopupTrigger variant="outline">Right Click</PopupTrigger>
+    <PopupContent theme="default" placement="left">
+        <div class="py-2 w-48">
+            <button class="w-full px-4 py-2 text-left text-sm hover:bg-gray-100">
+                Context Action 1
+            </button>
+            <button class="w-full px-4 py-2 text-left text-sm hover:bg-gray-100">
+                Context Action 2
+            </button>
+        </div>
+    </PopupContent>
+</Popup>
+
+{/* Manual Trigger with Alpine.js */}
+<div x-data="{ showPopup: false }">
+    <Popup trigger="manual">
+        <PopupTrigger 
+            variant="button"
+            x-on:click="showPopup = !showPopup"
+        >
+            Manual Control
+        </PopupTrigger>
+        <PopupContent 
+            theme="default" 
+            placement="bottom"
+            x-show="showPopup"
+        >
+            <div class="p-3">
+                <p class="mb-2">Controlled manually</p>
+                <button 
+                    class="text-sm text-blue-600 hover:underline"
+                    x-on:click="showPopup = false"
+                >
+                    Close
+                </button>
+            </div>
+        </PopupContent>
+    </Popup>
+</div>`}
+        />
+    </TabsContent>
+    <TabsContent value="themes">
+        <Code
+            language="astro"
+            code={`{/* Theme Variations */}
+<div class="flex gap-4">
+    {/* Default Theme */}
+    <Popup trigger="click">
+        <PopupTrigger variant="outline">Default</PopupTrigger>
+        <PopupContent theme="default" placement="top">
+            <div class="p-3">Default theme with border</div>
+        </PopupContent>
+    </Popup>
+
+    {/* Dark Theme */}
+    <Popup trigger="click">
+        <PopupTrigger variant="outline">Dark</PopupTrigger>
+        <PopupContent theme="dark" placement="top">
+            <div class="p-3 text-white">Dark theme tooltip</div>
+        </PopupContent>
+    </Popup>
+
+    {/* Minimal Theme */}
+    <Popup trigger="click">
+        <PopupTrigger variant="outline">Minimal</PopupTrigger>
+        <PopupContent theme="minimal" placement="top">
+            <div class="p-3">Clean minimal style</div>
+        </PopupContent>
+    </Popup>
+</div>
+
+{/* Positioning Examples */}
+<div class="grid grid-cols-2 gap-8 place-items-center py-8">
+    {/* Top */}
+    <Popup trigger="hover">
+        <PopupTrigger variant="button">Top</PopupTrigger>
+        <PopupContent theme="dark" placement="top">
+            <div class="px-3 py-2 text-sm">Above trigger</div>
+        </PopupContent>
+    </Popup>
+
+    {/* Right */}
+    <Popup trigger="hover">
+        <PopupTrigger variant="button">Right</PopupTrigger>
+        <PopupContent theme="dark" placement="right">
+            <div class="px-3 py-2 text-sm">Right of trigger</div>
+        </PopupContent>
+    </Popup>
+
+    {/* Bottom */}
+    <Popup trigger="hover">
+        <PopupTrigger variant="button">Bottom</PopupTrigger>
+        <PopupContent theme="dark" placement="bottom">
+            <div class="px-3 py-2 text-sm">Below trigger</div>
+        </PopupContent>
+    </Popup>
+
+    {/* Left */}
+    <Popup trigger="hover">
+        <PopupTrigger variant="button">Left</PopupTrigger>
+        <PopupContent theme="dark" placement="left">
+            <div class="px-3 py-2 text-sm">Left of trigger</div>
+        </PopupContent>
+    </Popup>
+</div>
+
+{/* Custom Styling */}
+<Popup trigger="click">
+    <PopupTrigger 
+        variant="default"
+        className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:from-blue-600 hover:to-purple-700"
+    >
+        Custom Styled
+    </PopupTrigger>
+    <PopupContent 
+        theme="default" 
+        placement="bottom"
+        className="border-2 border-blue-200 shadow-xl"
+    >
+        <div class="p-4 bg-gradient-to-r from-blue-50 to-purple-50">
+            <h4 class="font-medium text-blue-900 mb-2">Custom Popup</h4>
+            <p class="text-sm text-blue-700">
+                This popup has custom styling applied to both trigger and content.
+            </p>
+        </div>
+    </PopupContent>
+</Popup>`}
+        />
+    </TabsContent>
+    <TabsContent value="advanced">
+        <Code
+            language="astro"
+            code={`{/* User Profile Card */}
+<Popup trigger="click">
+    <PopupTrigger variant="ghost">
+        <div class="flex items-center gap-2 p-2 rounded hover:bg-gray-100">
+            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                JD
+            </div>
+            <span class="text-sm">John Doe</span>
+        </div>
+    </PopupTrigger>
+    <PopupContent theme="default" placement="bottom">
+        <div class="p-4 w-80">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-medium">
+                    JD
+                </div>
+                <div>
+                    <h4 class="font-semibold">John Doe</h4>
+                    <p class="text-sm text-gray-600">Software Engineer</p>
+                    <p class="text-xs text-gray-500">john.doe@company.com</p>
+                </div>
+            </div>
+            <div class="space-y-3">
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-600">Department:</span>
+                    <span class="font-medium">Engineering</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-600">Location:</span>
+                    <span class="font-medium">San Francisco</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-600">Joined:</span>
+                    <span class="font-medium">March 2023</span>
+                </div>
+            </div>
+            <div class="flex gap-2 mt-4">
+                <button class="flex-1 px-3 py-2 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">
+                    Message
+                </button>
+                <button class="flex-1 px-3 py-2 text-xs border border-gray-300 rounded hover:bg-gray-50">
+                    View Profile
+                </button>
+            </div>
+        </div>
+    </PopupContent>
+</Popup>
+
+{/* Interactive Data Visualization */}
+<div class="space-y-4" x-data="{ selectedData: null }">
+    <div class="grid grid-cols-4 gap-2">
+        {/* Data Points */}
+        <template x-for="i in 4" :key="i">
+            <Popup trigger="hover">
+                <PopupTrigger variant="ghost">
+                    <div 
+                        class="h-16 bg-gradient-to-t from-blue-500 to-blue-300 rounded cursor-pointer hover:from-blue-600 hover:to-blue-400"
+                        :style="`height: ${40 + (i * 20)}px`"
+                        @click="selectedData = { month: 'Month ' + i, value: 40 + (i * 20), growth: '+' + (i * 5) + '%' }"
+                    ></div>
+                </PopupTrigger>
+                <PopupContent theme="dark" placement="top">
+                    <div class="p-3 text-center">
+                        <p class="text-white font-medium" x-text="'Month ' + i"></p>
+                        <p class="text-gray-300 text-sm" x-text="(40 + (i * 20)) + ' units'"></p>
+                        <p class="text-green-300 text-xs" x-text="'+' + (i * 5) + '% growth'"></p>
+                    </div>
+                </PopupContent>
+            </Popup>
+        </template>
+    </div>
+</div>
+
+{/* Dynamic Content with Forms */}
+<Popup trigger="click">
+    <PopupTrigger variant="button">Quick Add</PopupTrigger>
+    <PopupContent theme="default" placement="bottom">
+        <div class="p-4 w-72" x-data="{ task: '', priority: 'medium', errors: {} }">
+            <h4 class="font-medium mb-3">Add New Task</h4>
+            <div class="space-y-3">
+                <div>
+                    <label class="text-sm font-medium">Task</label>
+                    <input 
+                        type="text" 
+                        x-model="task"
+                        placeholder="Enter task description"
+                        class="w-full mt-1 px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+                <div>
+                    <label class="text-sm font-medium">Priority</label>
+                    <select 
+                        x-model="priority"
+                        class="w-full mt-1 px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <div class="flex gap-2 pt-2">
+                    <button 
+                        class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded hover:bg-gray-50"
+                        x-on:click="task = ''; priority = 'medium'; close()"
+                    >
+                        Cancel
+                    </button>
+                    <button 
+                        class="flex-1 px-3 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
+                        x-on:click="if(task.trim()) { console.log('Adding task:', {task, priority}); task = ''; close(); }"
+                    >
+                        Add Task
+                    </button>
+                </div>
+            </div>
+        </div>
+    </PopupContent>
+</Popup>
+
+{/* Delayed Popup with Loading */}
+<Popup trigger="hover" delay={500}>
+    <PopupTrigger variant="outline">
+        Delayed Popup (500ms)
+    </PopupTrigger>
+    <PopupContent theme="minimal" placement="top">
+        <div class="p-3 w-48" x-data="{ loading: true }" x-init="setTimeout(() => loading = false, 300)">
+            <div x-show="loading" class="text-center">
+                <div class="animate-spin w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full mx-auto mb-2"></div>
+                <p class="text-xs text-gray-500">Loading...</p>
+            </div>
+            <div x-show="!loading" class="text-sm">
+                <p class="font-medium mb-1">Loaded Content</p>
+                <p class="text-gray-600">This content appeared after a delay and loading state.</p>
+            </div>
+        </div>
+    </PopupContent>
+</Popup>`}
+        />
+    </TabsContent>
+</Tabs>
+
+## Alpine.js Integration
+
+The Popup system integrates seamlessly with Alpine.js for dynamic content and state management:
+
+### Basic Integration
+
+```javascript
+// Simple popup state
+x-data="{
+    showDetails: false,
+    selectedItem: null,
+    
+    showItemDetails(item) {
+        this.selectedItem = item;
+        this.showDetails = true;
+    }
+}"
+```
+
+### Dynamic Content
+
+```javascript
+// Dynamic popup content based on data
+x-data="{
+    users: [
+        { id: 1, name: 'John Doe', role: 'Admin' },
+        { id: 2, name: 'Jane Smith', role: 'User' }
+    ],
+    selectedUser: null,
+    
+    selectUser(user) {
+        this.selectedUser = user;
+        // Popup will show selected user data
+    }
+}"
+```
+
+### Form Integration
+
+```javascript
+// Form handling within popup
+x-data="{
+    formData: { name: '', email: '', message: '' },
+    isSubmitting: false,
+    
+    async submitForm() {
+        this.isSubmitting = true;
+        try {
+            // Submit form data
+            await fetch('/api/contact', {
+                method: 'POST',
+                body: JSON.stringify(this.formData)
+            });
+            // Reset and close
+            this.formData = { name: '', email: '', message: '' };
+            this.$dispatch('close-popup');
+        } catch (error) {
+            console.error('Submission failed:', error);
+        } finally {
+            this.isSubmitting = false;
+        }
+    }
+}"
+```
+
+## Accessibility
+
+The Popup system includes built-in accessibility features:
+
+### Keyboard Support
+- **Escape Key**: Closes popup when open
+- **Focus Management**: Maintains proper focus handling
+- **Tab Navigation**: Works within popup content
+
+### ARIA Attributes
+- `role="dialog"`: Identifies popup content
+- `aria-expanded`: Shows trigger state
+- `aria-controls`: Links trigger to content
+
+### Screen Reader Support
+- Semantic HTML structure
+- Descriptive content and labels
+- Proper focus announcements
+
+## Best Practices
+
+### Performance
+- Use `trigger="hover"` sparingly for better mobile experience
+- Implement delays for hover triggers to prevent accidental activation
+- Keep popup content lightweight for smooth animations
+
+### User Experience
+- Use appropriate trigger methods based on content type
+- Provide clear visual feedback for interactive elements
+- Keep popup content concise and focused
+- Position popups to avoid viewport edges
+
+### Development
+- Use semantic HTML within popup content
+- Test keyboard navigation and screen reader compatibility
+- Implement proper error handling for dynamic content
+- Consider mobile responsiveness for popup positioning
+
+The Popup system provides a flexible foundation for creating tooltips, popovers, and contextual content that enhances user experience without overwhelming the interface.

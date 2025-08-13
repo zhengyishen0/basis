@@ -1,0 +1,372 @@
+---
+title: Tooltip
+description: Simple hover tooltips with customizable positions and themes
+category: overlay
+order: 1
+---
+
+import Tooltip from '@/components/ui/overlay/tooltip/Tooltip.astro';
+import PopupTrigger from '@/components/ui/overlay/popup/PopupTrigger.astro';
+import PopupContent from '@/components/ui/overlay/popup/PopupContent.astro';
+import Button from '@/components/ui/form/Button.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+A tooltip component that displays helpful information when hovering over elements. Built with Alpine.js for smooth interactions and supports multiple positioning options and themes.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-8">
+        <div class="space-y-6">
+            {/* Basic Tooltip */}
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold">Basic Tooltip</h3>
+                <div class="flex items-center gap-4">
+                    <Tooltip>
+                        <PopupTrigger>
+                            <Button variant="default">Hover me</Button>
+                        </PopupTrigger>
+                        <PopupContent theme="default" placement="top">
+                            This is a helpful tooltip
+                        </PopupContent>
+                    </Tooltip>
+                </div>
+            </div>
+
+            {/* Position Variants */}
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold">Position Variants</h3>
+                <div class="grid grid-cols-2 gap-8 max-w-lg mx-auto">
+                    <div class="flex justify-center">
+                        <Tooltip>
+                            <PopupTrigger>
+                                <Button variant="outline">Top</Button>
+                            </PopupTrigger>
+                            <PopupContent placement="top">
+                                Tooltip on top
+                            </PopupContent>
+                        </Tooltip>
+                    </div>
+                    <div class="flex justify-center">
+                        <Tooltip>
+                            <PopupTrigger>
+                                <Button variant="outline">Bottom</Button>
+                            </PopupTrigger>
+                            <PopupContent placement="bottom">
+                                Tooltip on bottom
+                            </PopupContent>
+                        </Tooltip>
+                    </div>
+                    <div class="flex justify-center">
+                        <Tooltip>
+                            <PopupTrigger>
+                                <Button variant="outline">Left</Button>
+                            </PopupTrigger>
+                            <PopupContent placement="left">
+                                Tooltip on left
+                            </PopupContent>
+                        </Tooltip>
+                    </div>
+                    <div class="flex justify-center">
+                        <Tooltip>
+                            <PopupTrigger>
+                                <Button variant="outline">Right</Button>
+                            </PopupTrigger>
+                            <PopupContent placement="right">
+                                Tooltip on right
+                            </PopupContent>
+                        </Tooltip>
+                    </div>
+                </div>
+            </div>
+
+            {/* Theme Variants */}
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold">Theme Variants</h3>
+                <div class="flex items-center gap-4 flex-wrap">
+                    <Tooltip>
+                        <PopupTrigger>
+                            <Button variant="default">Default</Button>
+                        </PopupTrigger>
+                        <PopupContent theme="default" placement="top">
+                            Default theme tooltip
+                        </PopupContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <PopupTrigger>
+                            <Button variant="secondary">Dark</Button>
+                        </PopupTrigger>
+                        <PopupContent theme="dark" placement="top">
+                            Dark theme tooltip
+                        </PopupContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <PopupTrigger>
+                            <Button variant="outline">Minimal</Button>
+                        </PopupTrigger>
+                        <PopupContent theme="minimal" placement="top">
+                            Minimal theme tooltip
+                        </PopupContent>
+                    </Tooltip>
+                </div>
+            </div>
+
+            {/* Custom Delay */}
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold">Custom Delay</h3>
+                <div class="flex items-center gap-4">
+                    <Tooltip delay={100}>
+                        <PopupTrigger>
+                            <Button variant="outline">Fast (100ms)</Button>
+                        </PopupTrigger>
+                        <PopupContent placement="top">
+                            Quick tooltip
+                        </PopupContent>
+                    </Tooltip>
+                    <Tooltip delay={1000}>
+                        <PopupTrigger>
+                            <Button variant="outline">Slow (1000ms)</Button>
+                        </PopupTrigger>
+                        <PopupContent placement="top">
+                            Delayed tooltip
+                        </PopupContent>
+                    </Tooltip>
+                </div>
+            </div>
+
+            {/* With Icons and Rich Content */}
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold">Rich Content</h3>
+                <div class="flex items-center gap-4">
+                    <Tooltip>
+                        <PopupTrigger>
+                            <span class="text-blue-600 underline cursor-help">Hover for help</span>
+                        </PopupTrigger>
+                        <PopupContent placement="top" class="max-w-xs">
+                            <div class="space-y-2">
+                                <div class="font-semibold">Help Information</div>
+                                <div class="text-sm">This feature helps you understand the component better.</div>
+                            </div>
+                        </PopupContent>
+                    </Tooltip>
+                </div>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import Tooltip from '@/components/ui/overlay/tooltip/Tooltip.astro';
+import { PopupTrigger, PopupContent } from '@/components/ui/overlay/popup';
+import Button from '@/components/ui/form/Button.astro';
+---
+
+{/* Basic Tooltip */}
+<Tooltip>
+    <PopupTrigger>
+        <Button>Hover me</Button>
+    </PopupTrigger>
+    <PopupContent placement="top">
+        This is a helpful tooltip
+    </PopupContent>
+</Tooltip>
+
+{/* Different Positions */}
+<Tooltip>
+    <PopupTrigger>
+        <Button>Top Tooltip</Button>
+    </PopupTrigger>
+    <PopupContent placement="top">Tooltip on top</PopupContent>
+</Tooltip>
+
+<Tooltip>
+    <PopupTrigger>
+        <Button>Bottom Tooltip</Button>
+    </PopupTrigger>
+    <PopupContent placement="bottom">Tooltip on bottom</PopupContent>
+</Tooltip>
+
+{/* Different Themes */}
+<Tooltip>
+    <PopupTrigger>
+        <Button>Dark Theme</Button>
+    </PopupTrigger>
+    <PopupContent theme="dark" placement="top">
+        Dark theme tooltip
+    </PopupContent>
+</Tooltip>
+
+{/* Custom Delay */}
+<Tooltip delay={1000}>
+    <PopupTrigger>
+        <Button>Delayed</Button>
+    </PopupTrigger>
+    <PopupContent placement="top">
+        This tooltip appears after 1 second
+    </PopupContent>
+</Tooltip>
+
+{/* Rich Content */}
+<Tooltip>
+    <PopupTrigger>
+        <span class="text-blue-600 underline cursor-help">Help</span>
+    </PopupTrigger>
+    <PopupContent placement="top" class="max-w-xs">
+        <div class="space-y-2">
+            <div class="font-semibold">Help Information</div>
+            <div class="text-sm">Detailed explanation here.</div>
+        </div>
+    </PopupContent>
+</Tooltip>`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Tooltip Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `delay` | `number` | `500` | Delay in milliseconds before tooltip appears |
+| `className` | `string` | - | Additional CSS classes |
+
+### PopupTrigger Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'default' \| 'button' \| 'ghost' \| 'link'` | `'default'` | Visual style of the trigger |
+| `className` | `string` | - | Additional CSS classes |
+
+### PopupContent Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `theme` | `'default' \| 'dark' \| 'minimal'` | `'default'` | Visual theme of the tooltip |
+| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` | Position relative to trigger |
+| `className` | `string` | - | Additional CSS classes |
+| `role` | `string` | `'dialog'` | ARIA role for accessibility |
+
+### Slots
+
+| Component | Slot | Description |
+|-----------|------|-------------|
+| PopupTrigger | `default` | Content that triggers the tooltip |
+| PopupContent | `default` | Tooltip content |
+
+### Alpine.js Integration
+
+The tooltip automatically manages state using Alpine.js:
+
+```javascript
+// Automatically available in x-data scope:
+{
+  open: false,           // Tooltip visibility state
+  trigger: 'hover',      // Trigger type (always 'hover' for tooltips)
+  popupId: 'popup-xxx',  // Unique ID for accessibility
+  toggle() { ... },      // Toggle tooltip visibility
+  close() { ... }        // Close tooltip
+}
+```
+
+### Usage Patterns
+
+#### Simple Text Tooltip
+For basic informational tooltips:
+
+```astro
+<Tooltip>
+    <PopupTrigger>
+        <Button>Action</Button>
+    </PopupTrigger>
+    <PopupContent placement="top">
+        Simple tooltip text
+    </PopupContent>
+</Tooltip>
+```
+
+#### Help Text Tooltip
+For help information with custom styling:
+
+```astro
+<Tooltip>
+    <PopupTrigger>
+        <span class="text-blue-600 underline cursor-help">
+            Need help?
+        </span>
+    </PopupTrigger>
+    <PopupContent placement="top" class="max-w-xs">
+        <div class="text-sm">
+            Detailed help information goes here.
+        </div>
+    </PopupContent>
+</Tooltip>
+```
+
+#### Rich Content Tooltip
+For tooltips with complex content:
+
+```astro
+<Tooltip>
+    <PopupTrigger>
+        <Button variant="outline">Feature Info</Button>
+    </PopupTrigger>
+    <PopupContent placement="right" class="max-w-sm">
+        <div class="space-y-2">
+            <div class="font-semibold">Feature Name</div>
+            <div class="text-sm text-muted-foreground">
+                This feature provides advanced functionality...
+            </div>
+            <div class="flex gap-2 mt-2">
+                <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                    Pro
+                </span>
+            </div>
+        </div>
+    </PopupContent>
+</Tooltip>
+```
+
+#### Custom Delay Tooltip
+For tooltips that need different timing:
+
+```astro
+<!-- Quick tooltip for frequent interactions -->
+<Tooltip delay={100}>
+    <PopupTrigger>
+        <Button size="sm">Quick Action</Button>
+    </PopupTrigger>
+    <PopupContent>Quick info</PopupContent>
+</Tooltip>
+
+<!-- Delayed tooltip to reduce noise -->
+<Tooltip delay={1000}>
+    <PopupTrigger>
+        <span class="cursor-help">Complex Feature</span>
+    </PopupTrigger>
+    <PopupContent>Detailed explanation after delay</PopupContent>
+</Tooltip>
+```
+
+### Accessibility
+
+The tooltip component includes built-in accessibility features:
+
+- ARIA attributes for screen readers
+- Keyboard navigation support (Escape to close)
+- Focus management
+- Semantic HTML structure
+
+### Styling Notes
+
+- Tooltips inherit the site's design system colors
+- Use `className` prop for custom styling
+- Content automatically wraps with `max-w-xs` by default
+- Dark theme provides high contrast for better readability
+- Minimal theme offers subtle styling for clean interfaces

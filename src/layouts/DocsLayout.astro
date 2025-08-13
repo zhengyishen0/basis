@@ -106,7 +106,7 @@ const breadcrumbItems = slug
                     >
                         Documentation
                     </h3>
-                    <List>
+                    <Column>
                         <ListItems x-for="item in docsData" :key="item.href">
                             <Button
                                 :href="item.href"
@@ -115,7 +115,7 @@ const breadcrumbItems = slug
                                 x-text="item.title"
                             />
                         </ListItems>
-                    </List>
+                    </Column>
                 </div>
 
                 <!-- Components Section -->
@@ -125,7 +125,7 @@ const breadcrumbItems = slug
                     >
                         Components
                     </h3>
-                    <List>
+                    <Column>
                         <ListItems
                             x-for="item in componentsData"
                             :key="item.href"
@@ -137,7 +137,7 @@ const breadcrumbItems = slug
                                 x-text="item.title"
                             />
                         </ListItems>
-                    </List>
+                    </Column>
                 </div>
             </div>
         </aside>

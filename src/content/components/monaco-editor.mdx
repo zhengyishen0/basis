@@ -1,0 +1,327 @@
+---
+title: Monaco Editor
+description: VS Code-style code editor with syntax highlighting, themes, and advanced editing features
+category: interactive
+order: 1
+---
+
+import { MonacoEditor } from '@/components/ui/interactive';
+import { Card } from '@/components/ui/display/card';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The MonacoEditor component provides a full-featured code editor powered by the Monaco Editor (the same editor that powers VS Code). It includes syntax highlighting for 50+ programming languages, multiple themes, IntelliSense, and advanced editing features.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-6">
+        <div class="space-y-4">
+            <h4 class="text-sm font-medium">JavaScript Editor</h4>
+            <MonacoEditor 
+                value="// Welcome to Monaco Editor
+function greetUser(name) {
+    console.log(`Hello, ${name}!`);
+    return `Welcome to the editor, ${name}`;
+}
+
+greetUser('Developer');"
+                language="javascript"
+                theme="vs-dark"
+                height="200px"
+                fontSize={14}
+                minimap={false}
+            />
+        </div>
+        
+        <div class="space-y-4">
+            <h4 class="text-sm font-medium">Python Editor with Light Theme</h4>
+            <MonacoEditor 
+                value="# Python Example
+def calculate_fibonacci(n):
+    if n <= 1:
+        return n
+    return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+
+# Calculate first 10 fibonacci numbers
+for i in range(10):
+    print(f'F({i}) = {calculate_fibonacci(i)}')"
+                language="python"
+                theme="vs-light"
+                height="180px"
+                wordWrap="on"
+                minimap={false}
+            />
+        </div>
+        
+        <div class="space-y-4">
+            <h4 class="text-sm font-medium">Read-only JSON Viewer</h4>
+            <MonacoEditor 
+                value='{
+  "name": "monaco-editor-demo",
+  "version": "1.0.0",
+  "features": [
+    "syntax highlighting",
+    "auto-completion",
+    "error detection",
+    "code formatting"
+  ],
+  "supported_languages": 50,
+  "themes": ["vs-dark", "vs-light", "hc-black"]
+}'
+                language="json"
+                theme="vs-dark"
+                height="160px"
+                readOnly={true}
+                minimap={false}
+            />
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code
+            language="astro"
+            code={`---
+import { MonacoEditor } from '@/components/ui/interactive';
+---
+
+{/* Basic JavaScript Editor */}
+<MonacoEditor 
+    value="console.log('Hello World');"
+    language="javascript"
+    theme="vs-dark"
+    height="300px"
+/>
+
+{/* Python Editor with Custom Settings */}
+<MonacoEditor 
+    language="python"
+    theme="vs-light"
+    fontSize={16}
+    wordWrap="on"
+    minimap={false}
+    placeholder="def main():\n    pass"
+/>
+
+{/* Read-only JSON Viewer */}
+<MonacoEditor 
+    value='{"key": "value"}'
+    language="json"
+    readOnly={true}
+    theme="vs-dark"
+    height="200px"
+/>
+
+{/* Form Integration */}
+<form x-data="{ code: '' }">
+    <MonacoEditor 
+        name="user_code"
+        language="typescript"
+        @monaco-change="code = $event.detail.value"
+    />
+    <button type="submit">Submit Code</button>
+</form>`}
+        />
+    </TabsContent>
+</Tabs>
+
+## Features
+
+- **50+ Programming Languages**: JavaScript, TypeScript, Python, HTML, CSS, JSON, Markdown, SQL, and more
+- **Multiple Themes**: Dark (vs-dark), Light (vs-light), and High Contrast (hc-black)
+- **IntelliSense**: Auto-completion, parameter hints, and error detection
+- **Advanced Editing**: Find/Replace, code formatting, multi-cursor editing
+- **Customizable**: Font size, line numbers, word wrap, minimap toggle
+- **Alpine.js Integration**: Two-way data binding and event handling
+- **Form Compatible**: Works seamlessly with form submissions
+- **Responsive**: Auto-resize capabilities and mobile-friendly
+
+## Supported Languages
+
+The Monaco Editor supports syntax highlighting and IntelliSense for:
+
+**Web Technologies**: `javascript`, `typescript`, `html`, `css`, `scss`, `less`, `json`, `xml`
+
+**Backend Languages**: `python`, `java`, `csharp`, `php`, `ruby`, `go`, `rust`, `kotlin`, `scala`
+
+**Systems Programming**: `c`, `cpp`, `swift`, `objective-c`
+
+**Data & Config**: `sql`, `yaml`, `toml`, `ini`, `dockerfile`
+
+**Markup & Documentation**: `markdown`, `latex`, `restructuredtext`
+
+**And many more...**
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | `string` | Auto-generated | Unique identifier for the editor |
+| `value` | `string` | `''` | Initial code content |
+| `language` | `string` | `'javascript'` | Programming language for syntax highlighting |
+| `theme` | `'vs-dark' \| 'vs-light' \| 'hc-black'` | `'vs-dark'` | Editor theme |
+| `fontSize` | `number` | `14` | Font size in pixels |
+| `lineNumbers` | `'on' \| 'off' \| 'relative' \| 'interval'` | `'on'` | Line number display mode |
+| `wordWrap` | `'on' \| 'off' \| 'wordWrapColumn' \| 'bounded'` | `'off'` | Word wrapping behavior |
+| `minimap` | `boolean` | `true` | Show/hide minimap |
+| `readOnly` | `boolean` | `false` | Make editor read-only |
+| `placeholder` | `string` | `'Start typing...'` | Placeholder text when empty |
+| `height` | `string` | `'400px'` | Editor height |
+| `width` | `string` | `'100%'` | Editor width |
+| `autoResize` | `boolean` | `true` | Auto-resize on window changes |
+| `class` | `string` | `''` | Additional CSS classes for wrapper |
+| `editorClass` | `string` | `''` | Additional CSS classes for editor container |
+| `name` | `string` | `'code'` | Form field name |
+
+### Events
+
+| Event | Description | Detail |
+|-------|-------------|---------|
+| `monaco-ready` | Fired when editor is loaded | `{ value, language, editor }` |
+| `monaco-change` | Fired when content changes | `{ value, language, editor }` |
+| `monaco-focus` | Fired when editor gains focus | `{ value, language, editor }` |
+| `monaco-blur` | Fired when editor loses focus | `{ value, language, editor }` |
+
+### Alpine.js Methods
+
+Access these methods through the component's Alpine.js data:
+
+```javascript
+// Get current value
+const code = this.monacoGetValue();
+
+// Set editor content
+this.monacoSetValue('console.log("Hello");');
+
+// Change language
+this.monacoSetLanguage('python');
+
+// Change theme
+this.monacoSetTheme('vs-light');
+
+// Format code
+this.monacoFormat();
+
+// Toggle minimap
+this.monacoToggleMinimap();
+
+// Toggle word wrap
+this.monacoToggleWordWrap();
+```
+
+## Usage Examples
+
+### Basic Code Editor
+
+```astro
+<MonacoEditor 
+    language="javascript"
+    theme="vs-dark"
+    height="400px"
+    placeholder="// Start coding..."
+/>
+```
+
+### Form Integration
+
+```astro
+<form method="POST">
+    <MonacoEditor 
+        name="source_code"
+        language="python"
+        value="print('Hello World')"
+    />
+    <button type="submit">Save Code</button>
+</form>
+```
+
+### With Alpine.js State Management
+
+```astro
+<div x-data="{ 
+    userCode: '',
+    language: 'javascript',
+    theme: 'vs-dark'
+}">
+    <!-- Language Selector -->
+    <select x-model="language">
+        <option value="javascript">JavaScript</option>
+        <option value="python">Python</option>
+        <option value="html">HTML</option>
+    </select>
+    
+    <!-- Theme Selector -->
+    <select x-model="theme">
+        <option value="vs-dark">Dark</option>
+        <option value="vs-light">Light</option>
+    </select>
+    
+    <!-- Editor -->
+    <MonacoEditor 
+        x-bind:language="language"
+        x-bind:theme="theme"
+        @monaco-change="userCode = $event.detail.value"
+    />
+    
+    <!-- Code Preview -->
+    <pre x-text="userCode"></pre>
+</div>
+```
+
+### Advanced Configuration
+
+```astro
+<MonacoEditor 
+    language="typescript"
+    theme="vs-dark"
+    fontSize={16}
+    lineNumbers="relative"
+    wordWrap="on"
+    minimap={false}
+    height="600px"
+    placeholder="interface User {
+  name: string;
+  email: string;
+}"
+    editorClass="border-2 border-blue-500"
+/>
+```
+
+## Accessibility
+
+The Monaco Editor component includes built-in accessibility features:
+
+- **Keyboard Navigation**: Full keyboard support for navigation and editing
+- **Screen Reader Support**: ARIA labels and announcements
+- **High Contrast Theme**: `hc-black` theme for better visibility
+- **Focus Management**: Proper focus indicators and tab navigation
+- **Zoom Support**: `mouseWheelZoom` enabled for magnification
+
+## Performance Notes
+
+- **Lazy Loading**: Monaco Editor is loaded from CDN only when component is used
+- **Single Instance**: Multiple editors share the same Monaco core for efficiency  
+- **Automatic Layout**: Editor automatically adjusts to container size changes
+- **Memory Management**: Proper cleanup when component is destroyed
+
+## Browser Support
+
+Works in all modern browsers that support:
+- ES6 Modules
+- WebWorkers  
+- IntersectionObserver
+- CSS Grid
+
+**Minimum Versions**: Chrome 60+, Firefox 55+, Safari 12+, Edge 79+

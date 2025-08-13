@@ -57,27 +57,27 @@ The Button component is a versatile, accessible button element that supports mul
             code={`---
 import { Button } from '@/components/ui/forms';
 ---
-<!-- Variants -->
+{/* Variants */}
 <Button variant="default">Default</Button>
 <Button variant="secondary">Secondary</Button>
 <Button variant="destructive">Destructive</Button>
 <Button variant="outline">Outline</Button>
 
-<!-- Sizes -->
+{/* Sizes */}
 <Button size="sm">Small</Button>
 <Button size="md">Medium</Button>
 <Button size="lg">Large</Button>
 
-<!-- Disabled -->
+{/* Disabled */}
 <Button disabled>Disabled</Button>
 <Button variant="secondary" disabled>Disabled Secondary</Button>
 
-<!-- As Link -->
+{/* As Link */}
 <Button as="a" href="#" variant="outline">Link Button</Button>
 
-<!-- Alpine.js Integration -->
+{/* Alpine.js Integration */}
 <div x-data="{ count: 0 }">
-    <Button @click="count++">
+    <Button x-on:click="count++">
         Clicked: <span x-text="count"></span> times
     </Button>
 </div>`}
@@ -91,9 +91,9 @@ import { Button } from '@/components/ui/forms';
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `'default' \| 'secondary' \| 'destructive' \| 'outline'` | `'default'` | Button variant |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Button size |
+| `variant` | `'default' | 'secondary' | 'destructive' | 'outline'` | `'default'` | Button variant |
+| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Button size |
 | `disabled` | `boolean` | `false` | Disabled state |
-| `as` | `'button' \| 'a'` | `'button'` | Render as button or anchor |
+| `as` | `'button' | 'a'` | `'button'` | Render as button or anchor |
 | `href` | `string` | - | URL when rendered as anchor |
 | `class` | `string` | - | Additional CSS classes |

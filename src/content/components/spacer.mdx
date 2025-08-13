@@ -1,0 +1,312 @@
+---
+title: Spacer
+description: Flexible space component that grows to fill available space in flex layouts
+category: layout
+order: 9
+---
+
+import Spacer from '@/components/ui/layout/Spacer.astro';
+import Column from '@/components/ui/layout/Column.astro';
+import Row from '@/components/ui/layout/Row.astro';
+import Button from '@/components/ui/forms/Button.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+import { Card, CardContent } from '@/components/ui/display/card';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The Spacer component is a flexible utility that grows to fill available space in flex layouts. It uses `flex-1 min-w-0` to expand and push elements apart, making it perfect for creating responsive layouts without manually calculating spacing.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-6">
+        <div>
+            <h3 class="text-sm font-medium mb-4">Basic Horizontal Spacing</h3>
+            <div class="space-y-3">
+                <Row class="gap-0 p-4 border rounded bg-gray-50">
+                    <Button size="sm">Left</Button>
+                    <Spacer />
+                    <Button size="sm" variant="secondary">Right</Button>
+                </Row>
+                
+                <Row class="gap-0 p-4 border rounded bg-gray-50">
+                    <Button size="sm">Start</Button>
+                    <Spacer />
+                    <Button size="sm" variant="outline">Middle</Button>
+                    <Spacer />
+                    <Button size="sm" variant="destructive">End</Button>
+                </Row>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Vertical Spacing in Columns</h3>
+            <Row class="gap-4">
+                <Column class="gap-0 flex-1 h-48 p-4 border rounded bg-gray-50">
+                    <div class="text-sm font-medium">Header</div>
+                    <Spacer />
+                    <div class="text-sm text-gray-600">Footer at bottom</div>
+                </Column>
+                
+                <Column class="gap-0 flex-1 h-48 p-4 border rounded bg-gray-50">
+                    <div class="text-sm font-medium">Top Content</div>
+                    <div class="text-xs text-gray-500">Some description</div>
+                    <Spacer />
+                    <Badge variant="success">Status</Badge>
+                    <Button size="sm" class="mt-2">Action</Button>
+                </Column>
+            </Row>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Card Layout with Spacer</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card padding="lg" class="flex flex-col">
+                    <CardContent class="flex flex-col h-full p-0 gap-0">
+                        <h4 class="font-semibold">Product Title</h4>
+                        <p class="text-sm text-gray-600 mt-1">Short description of the product</p>
+                        <Spacer />
+                        <div class="flex items-center justify-between mt-4">
+                            <Badge variant="success">In Stock</Badge>
+                            <span class="font-bold text-lg">$29.99</span>
+                        </div>
+                        <Button class="mt-3">Add to Cart</Button>
+                    </CardContent>
+                </Card>
+                
+                <Card padding="lg" class="flex flex-col">
+                    <CardContent class="flex flex-col h-full p-0 gap-0">
+                        <h4 class="font-semibold">Another Product</h4>
+                        <p class="text-sm text-gray-600 mt-1">This product has a much longer description that takes up more space in the card layout and pushes the footer content down</p>
+                        <Spacer />
+                        <div class="flex items-center justify-between mt-4">
+                            <Badge variant="warning">Limited</Badge>
+                            <span class="font-bold text-lg">$49.99</span>
+                        </div>
+                        <Button class="mt-3">Add to Cart</Button>
+                    </CardContent>
+                </Card>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Navigation Bar with Spacer</h3>
+            <div class="border rounded p-4 bg-white">
+                <Row class="gap-0 items-center">
+                    <div class="font-bold text-lg">Brand</div>
+                    <Spacer />
+                    <div class="flex items-center gap-4">
+                        <Button variant="ghost" size="sm">Home</Button>
+                        <Button variant="ghost" size="sm">About</Button>
+                        <Button variant="ghost" size="sm">Contact</Button>
+                        <Button size="sm">Sign In</Button>
+                    </div>
+                </Row>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Multiple Spacers for Equal Distribution</h3>
+            <Row class="gap-0 p-4 border rounded bg-gray-50">
+                <Button size="sm">Item 1</Button>
+                <Spacer />
+                <Button size="sm" variant="secondary">Item 2</Button>
+                <Spacer />
+                <Button size="sm" variant="outline">Item 3</Button>
+                <Spacer />
+                <Button size="sm" variant="destructive">Item 4</Button>
+            </Row>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Modal/Dialog Footer Layout</h3>
+            <Card padding="none" class="max-w-md">
+                <div class="p-4">
+                    <h4 class="font-semibold">Confirm Action</h4>
+                    <p class="text-sm text-gray-600 mt-2">Are you sure you want to proceed with this action? This cannot be undone.</p>
+                </div>
+                <div class="border-t p-4">
+                    <Row class="gap-0">
+                        <Button variant="ghost">Learn More</Button>
+                        <Spacer />
+                        <Button variant="outline" class="mr-2">Cancel</Button>
+                        <Button variant="destructive">Delete</Button>
+                    </Row>
+                </div>
+            </Card>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Alpine.js Integration Demo</h3>
+            <div x-data="{ 
+                showMiddle: true,
+                items: [
+                    { id: 1, name: 'First', priority: 'high' },
+                    { id: 2, name: 'Second', priority: 'medium' },
+                    { id: 3, name: 'Third', priority: 'low' }
+                ]
+            }">
+                <div class="space-y-4">
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" x-model="showMiddle" />
+                        <span class="text-sm">Show middle content</span>
+                    </label>
+                    
+                    <Row class="gap-0 p-4 border rounded bg-white">
+                        <Badge variant="success">Start</Badge>
+                        <div x-show="showMiddle" class="mx-4">
+                            <Badge variant="info">Middle</Badge>
+                        </div>
+                        <Spacer />
+                        <Badge variant="destructive">End</Badge>
+                    </Row>
+                    
+                    <div class="border rounded p-4 bg-gray-50">
+                        <template x-for="(item, index) in items" x-key="item.id">
+                            <Row class="gap-0 py-2" x-bind:class="index < items.length - 1 ? 'border-b border-gray-200' : ''">
+                                <span class="text-sm font-medium" x-text="item.name"></span>
+                                <Spacer />
+                                <Badge x-text="item.priority" 
+                                       x-bind:class="{
+                                           'bg-red-100 text-red-800': item.priority === 'high',
+                                           'bg-yellow-100 text-yellow-800': item.priority === 'medium',
+                                           'bg-green-100 text-green-800': item.priority === 'low'
+                                       }"></Badge>
+                            </Row>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import Spacer from '@/components/ui/layout/Spacer.astro';
+import Row from '@/components/ui/layout/Row.astro';
+import Column from '@/components/ui/layout/Column.astro';
+import Button from '@/components/ui/forms/Button.astro';
+---
+
+{/* Basic horizontal spacing */}
+<Row class="gap-0">
+    <Button>Left</Button>
+    <Spacer />
+    <Button>Right</Button>
+</Row>
+
+{/* Multiple spacers for equal distribution */}
+<Row class="gap-0">
+    <Button>Item 1</Button>
+    <Spacer />
+    <Button>Item 2</Button>
+    <Spacer />
+    <Button>Item 3</Button>
+</Row>
+
+{/* Vertical spacing in columns */}
+<Column class="gap-0 h-48">
+    <div>Header content</div>
+    <Spacer />
+    <div>Footer content pushed to bottom</div>
+</Column>
+
+{/* Navigation bar layout */}
+<Row class="gap-0">
+    <div class="font-bold">Brand</div>
+    <Spacer />
+    <div class="flex gap-4">
+        <Button variant="ghost">Home</Button>
+        <Button variant="ghost">About</Button>
+        <Button>Sign In</Button>
+    </div>
+</Row>
+
+{/* Card with spacer for footer alignment */}
+<div class="flex flex-col h-64 p-4 border rounded">
+    <h3>Card Title</h3>
+    <p>Variable content length...</p>
+    <Spacer />
+    <Button class="mt-4">Action at bottom</Button>
+</div>
+
+{/* Modal/Dialog footer */}
+<Row class="gap-0 p-4">
+    <Button variant="ghost">Learn More</Button>
+    <Spacer />
+    <Button variant="outline">Cancel</Button>
+    <Button variant="destructive">Confirm</Button>
+</Row>
+
+{/* Custom styling with classes */}
+<Row class="gap-0">
+    <span>Content</span>
+    <Spacer class="min-w-8" /> {/* Minimum width */}
+    <span>More content</span>
+</Row>
+
+{/* Alpine.js integration */}
+<div x-data="{ showSpacer: true }">
+    <Row class="gap-0">
+        <Button>Left</Button>
+        <Spacer x-show="showSpacer" />
+        <Button>Right</Button>
+    </Row>
+</div>`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `class` | `string` | - | Additional CSS classes |
+| `...rest` | `any` | - | All other HTML attributes |
+
+### Base Classes
+
+- **`flex-1`**: Grows to fill available space in flex container
+- **`min-w-0`**: Prevents flex item from having a minimum intrinsic width
+
+## Design Principles
+
+Spacer is a **simple utility component** that:
+- Uses `flex-1` to grow and fill available space
+- Uses `min-w-0` to prevent width calculation issues
+- Works in both horizontal (Row) and vertical (Column) flex layouts
+- Invisible by default - purely functional spacing
+- Can be customized with additional classes if needed
+
+## Common Use Cases
+
+- **Navigation Bars**: Push menu items to opposite ends
+- **Card Footers**: Align action buttons to the bottom
+- **Modal Dialogs**: Separate cancel and confirm buttons  
+- **List Items**: Push status indicators to the right
+- **Product Cards**: Align prices and buttons consistently
+- **Split Layouts**: Create flexible space between sections
+- **Responsive Designs**: Maintain spacing without media queries
+
+## Important Notes
+
+- **No gap in parent**: When using Spacer, set `gap-0` on the parent flex container to avoid double spacing
+- **Flex containers only**: Spacer only works within flex containers (Row, Column, or custom flex divs)
+- **Multiple spacers**: Use multiple spacers to distribute space evenly between multiple elements
+- **Minimum width**: The `min-w-0` prevents content overflow issues in tight spaces
+
+## Comparison with CSS Alternatives
+
+| Method | Use Case | Benefits |
+|--------|----------|----------|
+| `Spacer` | Dynamic layouts | No calculations, responsive, works with Alpine.js |
+| `justify-between` | Fixed 2-item layouts | Simpler CSS, built into flex |
+| `margin-left: auto` | Single push to right | Direct CSS approach |
+| `gap` classes | Equal spacing | Uniform spacing between all items |

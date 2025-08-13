@@ -1,0 +1,366 @@
+---
+title: Video Player
+description: Advanced video player with custom controls, multiple formats, and YouTube integration
+category: display
+order: 15
+---
+
+import { VideoPlayer } from '@/components/ui/display';
+import { Card } from '@/components/ui/display/card';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The VideoPlayer component provides a fully-featured video playback experience with custom controls, progress tracking, volume management, and support for both local video files and YouTube content. Built with Alpine.js for reactive state management.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-6">
+        <div class="space-y-4">
+            <h4 class="text-sm font-medium">YouTube Video Player</h4>
+            <VideoPlayer 
+                youtubeId="dQw4w9WgXcQ"
+                shape="rounded"
+                aspectRatio="16/9"
+                class="max-w-lg mx-auto"
+            />
+        </div>
+        
+        <div class="space-y-4">
+            <h4 class="text-sm font-medium">Local Video with Custom Aspect Ratio</h4>
+            <div class="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center max-w-lg mx-auto">
+                <p class="text-gray-600 text-sm">Local video player would appear here</p>
+                <p class="text-gray-500 text-xs mt-2">Requires actual video file to demonstrate</p>
+            </div>
+        </div>
+        
+        <div class="space-y-4">
+            <h4 class="text-sm font-medium">Cinematic Aspect Ratio (21:9)</h4>
+            <VideoPlayer 
+                youtubeId="ScMzIvxBSi4"
+                shape="rounded"
+                aspectRatio="21/9"
+                class="max-w-2xl mx-auto"
+            />
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code
+            language="astro"
+            code={`---
+import { VideoPlayer } from '@/components/ui/display';
+---
+
+{/* YouTube Video */}
+<VideoPlayer 
+    youtubeId="dQw4w9WgXcQ"
+    shape="rounded"
+    aspectRatio="16/9"
+    autoplay={false}
+/>
+
+{/* Local Video File */}
+<VideoPlayer 
+    src="/videos/demo.mp4"
+    poster="/images/video-poster.jpg"
+    shape="rectangle"
+    aspectRatio="4/3"
+    autoplay={false}
+    loop={true}
+    muted={true}
+/>
+
+{/* Cinematic Video */}
+<VideoPlayer 
+    youtubeId="ScMzIvxBSi4"
+    aspectRatio="21/9"
+    shape="rounded"
+    class="max-w-4xl"
+/>
+
+{/* Auto-playing Muted Video */}
+<VideoPlayer 
+    src="/videos/background.mp4"
+    autoplay={true}
+    muted={true}
+    loop={true}
+    shape="rectangle"
+/>`}
+        />
+    </TabsContent>
+</Tabs>
+
+## Features
+
+- **Dual Source Support**: Local video files and YouTube videos
+- **Custom Controls**: Play/pause, progress bar, volume control, time display
+- **Responsive Design**: Automatic scaling with aspect ratio preservation
+- **Interactive Elements**: Hover controls, smooth animations, gradient overlays
+- **Volume Management**: Visual volume slider with mute toggle
+- **Progress Tracking**: Visual progress bar with buffering indicator
+- **Keyboard Support**: Standard video player keyboard shortcuts
+- **Mobile Friendly**: Touch-optimized controls and responsive layout
+- **Alpine.js Integration**: Reactive state management and event handling
+
+## Aspect Ratios
+
+The component supports three common video aspect ratios:
+
+- **16:9** - Standard widescreen (YouTube, most modern content)
+- **4:3** - Traditional television format
+- **21:9** - Ultra-wide cinematic format
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `src` | `string` | - | Local video file URL (MP4 recommended) |
+| `poster` | `string` | - | Poster image URL displayed before playback |
+| `youtubeId` | `string` | - | YouTube video ID (alternative to src) |
+| `autoplay` | `boolean` | `false` | Auto-start video playback |
+| `loop` | `boolean` | `false` | Loop video when it ends |
+| `muted` | `boolean` | `false` | Start video muted |
+| `shape` | `'rectangle' \| 'rounded'` | `'rounded'` | Corner style of video player |
+| `aspectRatio` | `'16/9' \| '4/3' \| '21/9'` | `'16/9'` | Video aspect ratio |
+| `class` | `string` | - | Additional CSS classes |
+
+### Alpine.js State (Local Video Only)
+
+The local video player exposes these reactive properties:
+
+```javascript
+{
+  playing: false,        // Current playback state
+  muted: false,         // Current mute state  
+  volume: 1,            // Volume level (0-1)
+  currentTime: 0,       // Current playback time in seconds
+  duration: 0,          // Total video duration in seconds
+  buffered: 0,          // Amount of video buffered in seconds
+  loading: true,        // Loading state
+  showControls: false   // Controls visibility state
+}
+```
+
+### Methods (Local Video Only)
+
+Access these methods through Alpine.js component data:
+
+```javascript
+// Playback control
+this.togglePlay()          // Toggle play/pause
+this.seek(timeInSeconds)   // Seek to specific time
+this.seekToPercentage(%)   // Seek to percentage of duration
+
+// Volume control  
+this.toggleMute()          // Toggle mute state
+this.setVolume(0.5)        // Set volume (0-1)
+
+// Utility
+this.formatTime(seconds)   // Format seconds as MM:SS
+this.getProgressPercentage() // Get current progress as percentage
+this.getBufferedPercentage() // Get buffered amount as percentage
+```
+
+## Usage Examples
+
+### Basic YouTube Video
+
+```astro
+<VideoPlayer 
+    youtubeId="dQw4w9WgXcQ"
+    aspectRatio="16/9"
+/>
+```
+
+### Local Video with Poster
+
+```astro
+<VideoPlayer 
+    src="/videos/presentation.mp4"
+    poster="/images/presentation-thumb.jpg"
+    shape="rounded"
+    aspectRatio="16/9"
+/>
+```
+
+### Background Video
+
+```astro
+<VideoPlayer 
+    src="/videos/hero-background.mp4"
+    autoplay={true}
+    muted={true}
+    loop={true}
+    shape="rectangle"
+    class="w-full"
+/>
+```
+
+### Cinematic Format
+
+```astro
+<VideoPlayer 
+    youtubeId="trailer-id"
+    aspectRatio="21/9"
+    shape="rounded"
+    class="max-w-6xl mx-auto"
+/>
+```
+
+### Interactive Player with Events
+
+```astro
+<div x-data="{ 
+    videoPlaying: false,
+    watchTime: 0
+}">
+    <VideoPlayer 
+        src="/videos/tutorial.mp4"
+        @alpine-play="videoPlaying = true"
+        @alpine-pause="videoPlaying = false"
+        @alpine-timeupdate="watchTime = $event.detail.currentTime"
+    />
+    
+    <div class="mt-4 text-sm text-gray-600">
+        <p>Status: <span x-text="videoPlaying ? 'Playing' : 'Paused'"></span></p>
+        <p>Watch time: <span x-text="Math.floor(watchTime)"></span> seconds</p>
+    </div>
+</div>
+```
+
+### Custom Styled Player
+
+```astro
+<VideoPlayer 
+    src="/videos/product-demo.mp4"
+    poster="/images/product-thumb.jpg"
+    aspectRatio="4/3"
+    shape="rounded"
+    class="max-w-md mx-auto border-4 border-blue-500 shadow-2xl"
+/>
+```
+
+## YouTube Integration
+
+When using YouTube videos, the component automatically:
+
+- Embeds the YouTube player with optimal settings
+- Enables JavaScript API for programmatic control
+- Applies modest branding to reduce YouTube UI clutter
+- Disables related videos at the end
+- Supports autoplay (subject to browser policies)
+
+```astro
+<!-- YouTube video with autoplay -->
+<VideoPlayer 
+    youtubeId="your-video-id"
+    autoplay={true}
+    aspectRatio="16/9"
+/>
+```
+
+## Styling and Theming
+
+### Shape Variants
+
+```astro
+<!-- Rounded corners (default) -->
+<VideoPlayer shape="rounded" />
+
+<!-- Sharp rectangular corners -->
+<VideoPlayer shape="rectangle" />
+```
+
+### Custom Sizing
+
+```astro
+<!-- Small player -->
+<VideoPlayer class="max-w-sm" />
+
+<!-- Large player -->
+<VideoPlayer class="max-w-4xl" />
+
+<!-- Full width -->
+<VideoPlayer class="w-full" />
+```
+
+### Container Styling
+
+```astro
+<!-- With border and shadow -->
+<VideoPlayer 
+    class="border-2 border-gray-300 shadow-lg"
+    shape="rounded"
+/>
+
+<!-- Centered with margin -->
+<VideoPlayer 
+    class="mx-auto my-8 max-w-2xl"
+/>
+```
+
+## Accessibility
+
+The VideoPlayer component includes comprehensive accessibility features:
+
+- **Keyboard Controls**: Space (play/pause), Arrow keys (seek), M (mute)
+- **Screen Reader Support**: Proper ARIA labels for all controls
+- **Focus Management**: Visible focus indicators on all interactive elements
+- **High Contrast**: Controls remain visible in high contrast mode
+- **Captions Support**: YouTube videos support closed captions
+- **Reduced Motion**: Respects user's motion preferences
+
+## Performance Considerations
+
+### Local Videos
+- Use modern video formats (MP4 with H.264)
+- Optimize file sizes for web delivery
+- Consider video compression and multiple quality options
+- Use appropriate poster images to reduce initial load
+
+### YouTube Videos
+- Lazy loading is built-in
+- No additional JavaScript bundle impact
+- Leverages YouTube's global CDN
+- Automatic quality adaptation
+
+## Browser Support
+
+**Local Video Features**:
+- Chrome 60+, Firefox 55+, Safari 12+, Edge 79+
+- Requires support for HTML5 video element
+- Progressive enhancement for older browsers
+
+**YouTube Integration**:
+- Works in all browsers that support iframes
+- Enhanced features require JavaScript enabled
+
+## Troubleshooting
+
+### Video Won't Play
+- Check MIME types are configured correctly on your server
+- Ensure video format is supported (MP4 recommended)
+- Verify CORS headers if serving from different domain
+
+### YouTube Videos Not Loading
+- Verify the YouTube video ID is correct
+- Check that the video is public and embeddable
+- Some videos may have regional restrictions
+
+### Controls Not Responsive
+- Ensure Alpine.js is loaded and initialized
+- Check browser console for JavaScript errors
+- Verify video element is properly referenced

@@ -1,0 +1,551 @@
+---
+title: HoverCard
+description: Rich content cards that appear on hover with images, text, and actions
+category: overlay
+order: 2
+---
+
+import HoverCard from '@/components/ui/overlay/hovercard/HoverCard.astro';
+import PopupTrigger from '@/components/ui/overlay/popup/PopupTrigger.astro';
+import PopupContent from '@/components/ui/overlay/popup/PopupContent.astro';
+import Button from '@/components/ui/form/Button.astro';
+import Badge from '@/components/ui/display/Badge.astro';
+import Avatar from '@/components/ui/display/Avatar.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+A hover card component that displays rich content when hovering over elements. Perfect for user profiles, product previews, or detailed information cards with images, text, and interactive elements.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-8">
+        <div class="space-y-6">
+            {/* Basic HoverCard */}
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold">Basic HoverCard</h3>
+                <div class="flex items-center gap-4">
+                    <HoverCard>
+                        <PopupTrigger variant="link">
+                            @john_doe
+                        </PopupTrigger>
+                        <PopupContent placement="top" class="w-80">
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                        JD
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold">John Doe</div>
+                                        <div class="text-sm text-muted-foreground">@john_doe</div>
+                                    </div>
+                                </div>
+                                <p class="text-sm">
+                                    Software engineer passionate about building great user experiences. 
+                                    Currently working on modern web applications.
+                                </p>
+                                <div class="flex items-center gap-4 text-sm text-muted-foreground">
+                                    <span>123 Following</span>
+                                    <span>456 Followers</span>
+                                </div>
+                            </div>
+                        </PopupContent>
+                    </HoverCard>
+                </div>
+            </div>
+
+            {/* Product Preview Card */}
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold">Product Preview</h3>
+                <div class="flex items-center gap-4">
+                    <HoverCard>
+                        <PopupTrigger variant="link">
+                            Premium Headphones
+                        </PopupTrigger>
+                        <PopupContent placement="right" class="w-96">
+                            <div class="space-y-4">
+                                <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
+                                    <div class="text-gray-500 text-sm">Product Image</div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="font-semibold">Premium Wireless Headphones</h4>
+                                        <Badge variant="success">In Stock</Badge>
+                                    </div>
+                                    <p class="text-sm text-muted-foreground">
+                                        High-quality wireless headphones with noise cancellation and 30-hour battery life.
+                                    </p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-lg font-bold">$299.99</span>
+                                        <div class="flex gap-2">
+                                            <Button size="sm" variant="outline">View</Button>
+                                            <Button size="sm">Add to Cart</Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </PopupContent>
+                    </HoverCard>
+                </div>
+            </div>
+
+            {/* Team Member Card */}
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold">Team Member</h3>
+                <div class="flex items-center gap-4">
+                    <HoverCard>
+                        <PopupTrigger>
+                            <div class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                                    SA
+                                </div>
+                                <span class="text-sm font-medium">Sarah Adams</span>
+                            </div>
+                        </PopupTrigger>
+                        <PopupContent placement="bottom" class="w-72">
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                                        SA
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold">Sarah Adams</div>
+                                        <div class="text-sm text-muted-foreground">Senior Designer</div>
+                                        <div class="flex gap-1 mt-1">
+                                            <Badge variant="secondary" size="sm">Design</Badge>
+                                            <Badge variant="secondary" size="sm">UX</Badge>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-muted-foreground">
+                                    Leading our design system and user experience initiatives. 
+                                    5+ years of experience in product design.
+                                </p>
+                                <div class="flex gap-2">
+                                    <Button size="sm" variant="outline" class="flex-1">Message</Button>
+                                    <Button size="sm" variant="outline" class="flex-1">View Profile</Button>
+                                </div>
+                            </div>
+                        </PopupContent>
+                    </HoverCard>
+                </div>
+            </div>
+
+            {/* Quick Action Card */}
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold">Quick Actions</h3>
+                <div class="flex items-center gap-4">
+                    <HoverCard delay={100}>
+                        <PopupTrigger>
+                            <Button variant="outline">Settings</Button>
+                        </PopupTrigger>
+                        <PopupContent placement="top" class="w-64">
+                            <div class="space-y-3">
+                                <div class="font-semibold text-sm">Quick Settings</div>
+                                <div class="space-y-2">
+                                    <button class="w-full text-left p-2 text-sm hover:bg-gray-50 rounded flex items-center gap-2">
+                                        <span>🌙</span>
+                                        Toggle Dark Mode
+                                    </button>
+                                    <button class="w-full text-left p-2 text-sm hover:bg-gray-50 rounded flex items-center gap-2">
+                                        <span>🔔</span>
+                                        Notifications
+                                    </button>
+                                    <button class="w-full text-left p-2 text-sm hover:bg-gray-50 rounded flex items-center gap-2">
+                                        <span>👤</span>
+                                        Profile Settings
+                                    </button>
+                                    <hr class="my-2" />
+                                    <button class="w-full text-left p-2 text-sm hover:bg-gray-50 rounded text-red-600 flex items-center gap-2">
+                                        <span>🚪</span>
+                                        Sign Out
+                                    </button>
+                                </div>
+                            </div>
+                        </PopupContent>
+                    </HoverCard>
+                </div>
+            </div>
+
+            {/* Different Themes */}
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold">Theme Variations</h3>
+                <div class="flex items-center gap-4 flex-wrap">
+                    <HoverCard>
+                        <PopupTrigger>
+                            <Button variant="default">Default Theme</Button>
+                        </PopupTrigger>
+                        <PopupContent theme="default" placement="top" class="w-64">
+                            <div class="space-y-2">
+                                <div class="font-semibold">Default Theme</div>
+                                <p class="text-sm">Standard appearance with default colors.</p>
+                            </div>
+                        </PopupContent>
+                    </HoverCard>
+                    <HoverCard>
+                        <PopupTrigger>
+                            <Button variant="secondary">Dark Theme</Button>
+                        </PopupTrigger>
+                        <PopupContent theme="dark" placement="top" class="w-64">
+                            <div class="space-y-2">
+                                <div class="font-semibold">Dark Theme</div>
+                                <p class="text-sm">High contrast dark appearance.</p>
+                            </div>
+                        </PopupContent>
+                    </HoverCard>
+                    <HoverCard>
+                        <PopupTrigger>
+                            <Button variant="outline">Minimal Theme</Button>
+                        </PopupTrigger>
+                        <PopupContent theme="minimal" placement="top" class="w-64">
+                            <div class="space-y-2">
+                                <div class="font-semibold">Minimal Theme</div>
+                                <p class="text-sm">Clean, subtle appearance.</p>
+                            </div>
+                        </PopupContent>
+                    </HoverCard>
+                </div>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import HoverCard from '@/components/ui/overlay/hovercard/HoverCard.astro';
+import { PopupTrigger, PopupContent } from '@/components/ui/overlay/popup';
+import Button from '@/components/ui/form/Button.astro';
+import Badge from '@/components/ui/display/Badge.astro';
+---
+
+{/* Basic User Profile HoverCard */}
+<HoverCard>
+    <PopupTrigger variant="link">
+        @john_doe
+    </PopupTrigger>
+    <PopupContent placement="top" class="w-80">
+        <div class="space-y-3">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+                    JD
+                </div>
+                <div>
+                    <div class="font-semibold">John Doe</div>
+                    <div class="text-sm text-muted-foreground">@john_doe</div>
+                </div>
+            </div>
+            <p class="text-sm">Software engineer passionate about building great UX.</p>
+            <div class="flex items-center gap-4 text-sm text-muted-foreground">
+                <span>123 Following</span>
+                <span>456 Followers</span>
+            </div>
+        </div>
+    </PopupContent>
+</HoverCard>
+
+{/* Product Preview HoverCard */}
+<HoverCard>
+    <PopupTrigger variant="link">
+        Premium Headphones
+    </PopupTrigger>
+    <PopupContent placement="right" class="w-96">
+        <div class="space-y-4">
+            <div class="aspect-video bg-gray-100 rounded-lg"></div>
+            <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                    <h4 class="font-semibold">Premium Wireless Headphones</h4>
+                    <Badge variant="success">In Stock</Badge>
+                </div>
+                <p class="text-sm text-muted-foreground">
+                    High-quality wireless headphones with noise cancellation.
+                </p>
+                <div class="flex items-center justify-between">
+                    <span class="text-lg font-bold">$299.99</span>
+                    <div class="flex gap-2">
+                        <Button size="sm" variant="outline">View</Button>
+                        <Button size="sm">Add to Cart</Button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </PopupContent>
+</HoverCard>
+
+{/* Team Member HoverCard */}
+<HoverCard>
+    <PopupTrigger>
+        <div class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <div class="w-8 h-8 bg-green-500 rounded-full"></div>
+            <span class="text-sm font-medium">Sarah Adams</span>
+        </div>
+    </PopupTrigger>
+    <PopupContent placement="bottom" class="w-72">
+        <div class="space-y-3">
+            <div class="flex items-center gap-3">
+                <div class="w-16 h-16 bg-green-500 rounded-full"></div>
+                <div class="flex-1">
+                    <div class="font-semibold">Sarah Adams</div>
+                    <div class="text-sm text-muted-foreground">Senior Designer</div>
+                    <div class="flex gap-1 mt-1">
+                        <Badge variant="secondary" size="sm">Design</Badge>
+                        <Badge variant="secondary" size="sm">UX</Badge>
+                    </div>
+                </div>
+            </div>
+            <p class="text-sm text-muted-foreground">
+                Leading our design system initiatives.
+            </p>
+            <div class="flex gap-2">
+                <Button size="sm" variant="outline" class="flex-1">Message</Button>
+                <Button size="sm" variant="outline" class="flex-1">Profile</Button>
+            </div>
+        </div>
+    </PopupContent>
+</HoverCard>
+
+{/* Quick Actions HoverCard */}
+<HoverCard delay={100}>
+    <PopupTrigger>
+        <Button variant="outline">Settings</Button>
+    </PopupTrigger>
+    <PopupContent placement="top" class="w-64">
+        <div class="space-y-3">
+            <div class="font-semibold text-sm">Quick Settings</div>
+            <div class="space-y-2">
+                <button class="w-full text-left p-2 text-sm hover:bg-gray-50 rounded">
+                    Toggle Dark Mode
+                </button>
+                <button class="w-full text-left p-2 text-sm hover:bg-gray-50 rounded">
+                    Notifications
+                </button>
+                <button class="w-full text-left p-2 text-sm hover:bg-gray-50 rounded text-red-600">
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </PopupContent>
+</HoverCard>`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### HoverCard Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `delay` | `number` | `200` | Delay in milliseconds before hover card appears |
+| `className` | `string` | - | Additional CSS classes |
+
+### PopupTrigger Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'default' \| 'button' \| 'ghost' \| 'link'` | `'default'` | Visual style of the trigger |
+| `className` | `string` | - | Additional CSS classes |
+
+### PopupContent Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `theme` | `'default' \| 'dark' \| 'minimal'` | `'default'` | Visual theme of the hover card |
+| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` | Position relative to trigger |
+| `className` | `string` | - | Additional CSS classes |
+| `role` | `string` | `'dialog'` | ARIA role for accessibility |
+
+### Slots
+
+| Component | Slot | Description |
+|-----------|------|-------------|
+| PopupTrigger | `default` | Content that triggers the hover card |
+| PopupContent | `default` | Rich hover card content |
+
+### Alpine.js Integration
+
+The hover card automatically manages state using Alpine.js:
+
+```javascript
+// Automatically available in x-data scope:
+{
+  open: false,           // Hover card visibility state
+  trigger: 'hover',      // Trigger type (always 'hover' for hover cards)
+  popupId: 'popup-xxx',  // Unique ID for accessibility
+  toggle() { ... },      // Toggle hover card visibility
+  close() { ... }        // Close hover card
+}
+```
+
+### Usage Patterns
+
+#### User Profile Cards
+Perfect for displaying user information on hover:
+
+```astro
+<HoverCard>
+    <PopupTrigger variant="link">
+        @username
+    </PopupTrigger>
+    <PopupContent placement="top" class="w-80">
+        <div class="space-y-3">
+            <div class="flex items-center gap-3">
+                <Avatar src="/avatar.jpg" alt="User" />
+                <div>
+                    <div class="font-semibold">User Name</div>
+                    <div class="text-sm text-muted-foreground">@username</div>
+                </div>
+            </div>
+            <p class="text-sm">User bio and description...</p>
+            <div class="flex gap-2">
+                <Button size="sm">Follow</Button>
+                <Button size="sm" variant="outline">Message</Button>
+            </div>
+        </div>
+    </PopupContent>
+</HoverCard>
+```
+
+#### Product Previews
+Show product details without navigating away:
+
+```astro
+<HoverCard>
+    <PopupTrigger>
+        <div class="product-card">
+            <img src="/product.jpg" alt="Product" />
+            <h3>Product Name</h3>
+        </div>
+    </PopupTrigger>
+    <PopupContent placement="right" class="w-96">
+        <div class="space-y-4">
+            <img src="/product-detail.jpg" class="w-full h-48 object-cover rounded" />
+            <div>
+                <h4 class="font-semibold">Product Name</h4>
+                <p class="text-sm text-muted-foreground">Product description...</p>
+                <div class="flex items-center justify-between mt-2">
+                    <span class="font-bold">$99.99</span>
+                    <Button size="sm">Add to Cart</Button>
+                </div>
+            </div>
+        </div>
+    </PopupContent>
+</HoverCard>
+```
+
+#### Team Member Cards
+Display team member information:
+
+```astro
+<HoverCard>
+    <PopupTrigger>
+        <div class="team-member">
+            <Avatar />
+            <span>Team Member</span>
+        </div>
+    </PopupTrigger>
+    <PopupContent placement="bottom" class="w-72">
+        <div class="space-y-3">
+            <div class="flex items-center gap-3">
+                <Avatar size="lg" />
+                <div>
+                    <div class="font-semibold">Member Name</div>
+                    <div class="text-sm text-muted-foreground">Job Title</div>
+                </div>
+            </div>
+            <p class="text-sm">Brief bio and expertise areas...</p>
+            <div class="flex gap-2">
+                <Button size="sm" variant="outline">Contact</Button>
+                <Button size="sm" variant="outline">View Profile</Button>
+            </div>
+        </div>
+    </PopupContent>
+</HoverCard>
+```
+
+#### Quick Action Menus
+Create contextual action menus:
+
+```astro
+<HoverCard delay={100}>
+    <PopupTrigger>
+        <Button variant="ghost" size="sm">⋯</Button>
+    </PopupTrigger>
+    <PopupContent placement="bottom" class="w-48">
+        <div class="space-y-1">
+            <button class="w-full text-left p-2 text-sm hover:bg-gray-50 rounded">
+                Edit
+            </button>
+            <button class="w-full text-left p-2 text-sm hover:bg-gray-50 rounded">
+                Share
+            </button>
+            <button class="w-full text-left p-2 text-sm hover:bg-gray-50 rounded">
+                Copy Link
+            </button>
+            <hr class="my-1" />
+            <button class="w-full text-left p-2 text-sm hover:bg-gray-50 rounded text-red-600">
+                Delete
+            </button>
+        </div>
+    </PopupContent>
+</HoverCard>
+```
+
+#### Information Cards
+Display detailed information on hover:
+
+```astro
+<HoverCard>
+    <PopupTrigger>
+        <span class="text-blue-600 underline cursor-help">
+            Learn more
+        </span>
+    </PopupTrigger>
+    <PopupContent placement="top" class="w-80">
+        <div class="space-y-3">
+            <h4 class="font-semibold">Feature Details</h4>
+            <p class="text-sm text-muted-foreground">
+                Comprehensive explanation of the feature with benefits and usage examples.
+            </p>
+            <div class="flex gap-2">
+                <Badge variant="secondary">New</Badge>
+                <Badge variant="success">Pro</Badge>
+            </div>
+            <div class="flex gap-2 mt-3">
+                <Button size="sm">Try it Now</Button>
+                <Button size="sm" variant="outline">Documentation</Button>
+            </div>
+        </div>
+    </PopupContent>
+</HoverCard>
+```
+
+### Accessibility
+
+The hover card component includes built-in accessibility features:
+
+- ARIA attributes for screen readers
+- Keyboard navigation support (Escape to close)
+- Focus management
+- Semantic HTML structure
+- Proper role attribution
+
+### Styling Guidelines
+
+- Use appropriate width classes (`w-64`, `w-80`, `w-96`) for content
+- Include proper spacing with gap utilities
+- Use semantic HTML elements within content
+- Apply consistent padding and margins
+- Consider content hierarchy with typography scales
+- Use theme variants for different contexts
+
+### Performance Considerations
+
+- Content is only rendered when hovered (lazy loading)
+- Smooth animations with Alpine.js transitions
+- Minimal DOM impact when not active
+- Efficient event handling with Alpine.js
+- Small delay prevents accidental triggers

@@ -1,0 +1,376 @@
+---
+title: Calendar
+description: Interactive calendar component with date selection and Alpine.js state management
+category: display
+order: 3
+---
+
+import Calendar from '@/components/ui/display/Calendar.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+A full-featured calendar component built with Alpine.js that supports single date, range selection, and multiple date modes. Features month navigation, keyboard accessibility, custom date constraints, and flexible styling options.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-8">
+        {/* Basic Single Date Selection */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Single Date Selection</h3>
+            <Calendar mode="single" />
+        </div>
+
+        {/* Range Selection */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Date Range Selection</h3>
+            <Calendar 
+                mode="range" 
+                variant="outline"
+                size="lg"
+            />
+        </div>
+
+        {/* Multiple Date Selection */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Multiple Date Selection</h3>
+            <Calendar 
+                mode="multiple" 
+                variant="minimal"
+                size="sm"
+            />
+        </div>
+
+        {/* Multiple Months */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Multiple Months</h3>
+            <Calendar 
+                mode="range" 
+                numberOfMonths={2}
+                density="compact"
+            />
+        </div>
+
+        {/* Dropdown Navigation */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Dropdown Navigation</h3>
+            <Calendar 
+                mode="single"
+                captionLayout="dropdown"
+                fromYear={2020}
+                toYear={2030}
+            />
+        </div>
+
+        {/* Custom Styling */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Styling Variants</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="space-y-2">
+                    <p class="text-sm font-medium text-muted-foreground">Default</p>
+                    <Calendar 
+                        mode="single"
+                        variant="default"
+                        size="sm"
+                        density="compact"
+                    />
+                </div>
+                <div class="space-y-2">
+                    <p class="text-sm font-medium text-muted-foreground">Outline</p>
+                    <Calendar 
+                        mode="single"
+                        variant="outline"
+                        size="sm"
+                        density="compact"
+                    />
+                </div>
+                <div class="space-y-2">
+                    <p class="text-sm font-medium text-muted-foreground">Minimal</p>
+                    <Calendar 
+                        mode="single"
+                        variant="minimal"
+                        size="sm"
+                        density="compact"
+                    />
+                </div>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import Calendar from '@/components/ui/display/Calendar.astro';
+---
+
+{/* Single Date Selection */}
+<Calendar mode="single" />
+
+{/* Date Range Selection */}
+<Calendar 
+    mode="range" 
+    variant="outline"
+    size="lg"
+/>
+
+{/* Multiple Date Selection */}
+<Calendar 
+    mode="multiple"
+    variant="minimal"
+    size="sm"
+/>
+
+{/* Multiple Months */}
+<Calendar 
+    mode="range" 
+    numberOfMonths={2}
+    density="compact"
+/>
+
+{/* Dropdown Navigation */}
+<Calendar 
+    mode="single"
+    captionLayout="dropdown"
+    fromYear={2020}
+    toYear={2030}
+/>
+
+{/* With Date Constraints */}
+<Calendar 
+    mode="single"
+    minDate={new Date()}
+    maxDate={new Date(2024, 11, 31)}
+    disabled="(date) => date.getDay() === 0 || date.getDay() === 6"
+/>
+
+{/* Custom Event Handling */}
+<div x-data="{ selectedDate: null }">
+    <Calendar 
+        mode="single"
+        x-on:date-selected="selectedDate = $event.detail.date"
+    />
+    <p x-show="selectedDate" x-text="'Selected: ' + selectedDate"></p>
+</div>`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `mode` | `'single' | 'range' | 'multiple'` | `'single'` | Date selection behavior |
+| `selected` | `Date or Date[] or DateRange` | - | Currently selected date(s) |
+| `onSelect` | `string` | `'handleDateSelect'` | Alpine.js function name for selection handling |
+| `defaultSelected` | `Date or Date[] or DateRange` | - | Default selected date(s) |
+| `disabled` | `string` | - | Alpine.js function name that returns boolean for disabled dates |
+| `minDate` | `Date` | - | Minimum selectable date |
+| `maxDate` | `Date` | - | Maximum selectable date |
+| `fromYear` | `number` | `currentYear - 10` | Start year for dropdown navigation |
+| `toYear` | `number` | `currentYear + 10` | End year for dropdown navigation |
+| `numberOfMonths` | `number` | `1` | Number of months to display |
+| `showOutsideDays` | `boolean` | `true` | Show days from previous/next months |
+| `showWeekNumbers` | `boolean` | `false` | Show week numbers |
+| `fixedWeeks` | `boolean` | `false` | Always show 6 weeks |
+| `captionLayout` | `'buttons' | 'dropdown'` | `'buttons'` | Navigation type |
+| `disableNavigation` | `boolean` | `false` | Disable month navigation |
+| `weekStartsOn` | `0 | 1 | 2 | 3 | 4 | 5 | 6` | `0` | First day of week (0 = Sunday) |
+| `modifiers` | `Record<string, string>` | `{}` | Custom date modifiers |
+| `autoFocus` | `boolean` | `false` | Auto-focus calendar on mount |
+| `defaultMonth` | `Date` | `new Date()` | Default month to display |
+| `variant` | `'default' | 'outline' | 'minimal'` | `'default'` | Visual style variant |
+| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Calendar size |
+| `density` | `'compact' | 'normal' | 'comfortable'` | `'normal'` | Spacing density |
+| `className` | `string` | - | Additional CSS classes |
+
+### Selection Modes
+
+#### Single Mode
+Allows selection of one date at a time:
+
+```javascript
+// Selected value structure
+selectedDate = new Date('2024-01-15')
+```
+
+#### Range Mode  
+Allows selection of a date range:
+
+```javascript
+// Selected value structure
+selectedRange = {
+    from: new Date('2024-01-15'),
+    to: new Date('2024-01-20')
+}
+```
+
+#### Multiple Mode
+Allows selection of multiple individual dates:
+
+```javascript
+// Selected value structure  
+selectedDates = [
+    new Date('2024-01-15'),
+    new Date('2024-01-20'),
+    new Date('2024-01-25')
+]
+```
+
+### Events
+
+The calendar dispatches custom events that can be handled with Alpine.js:
+
+```astro
+<Calendar 
+    x-on:date-selected="handleDateSelection($event)"
+    mode="single"
+/>
+
+<script>
+function handleDateSelection(event) {
+    console.log('Selected date:', event.detail.date);
+    console.log('Selection mode:', event.detail.mode);
+}
+</script>
+```
+
+### Alpine.js Integration
+
+#### Built-in State Management
+
+The calendar automatically creates Alpine.js data with the following structure:
+
+```javascript
+{
+    // Core state
+    mode: 'single',
+    selected: null,
+    currentMonth: 0,
+    currentYear: 2024,
+    
+    // Calendar data
+    calendarDays: [],
+    blankDays: [],
+    months: [],
+    
+    // Methods
+    init() { ... },
+    generateCalendar() { ... },
+    selectDate(date) { ... },
+    previousMonth() { ... },
+    nextMonth() { ... },
+    
+    // Date checking methods
+    isToday(date) { ... },
+    isSelected(date) { ... },
+    isDisabled(date) { ... },
+    isInRange(date) { ... }
+}
+```
+
+#### Custom Event Handlers
+
+Define global functions for custom behavior:
+
+```javascript
+// Define in a script tag or Alpine store
+window.handleDateSelect = function(selectedValue) {
+    console.log('Date selected:', selectedValue);
+    // Custom logic here
+};
+
+window.isWeekend = function(date) {
+    const day = date.getDay();
+    return day === 0 || day === 6; // Sunday or Saturday
+};
+```
+
+```astro
+<Calendar 
+    mode="single"
+    onSelect="handleDateSelect"
+    disabled="isWeekend"
+/>
+```
+
+### Accessibility
+
+- Full keyboard navigation support
+- ARIA labels and roles
+- Screen reader announcements
+- Focus management
+- High contrast support
+
+### Keyboard Navigation
+
+| Key | Action |
+|-----|--------|
+| `Arrow Keys` | Navigate between dates |
+| `Enter/Space` | Select date |
+| `Home/End` | Go to start/end of week |
+| `Page Up/Down` | Navigate months |
+| `Tab` | Move to navigation controls |
+
+### Styling Classes
+
+The calendar uses CSS custom properties for consistent theming:
+
+```css
+/* Available CSS classes for customization */
+.calendar-day        /* Individual day cells */
+.calendar-weekday    /* Weekday headers */
+.calendar-header     /* Month navigation header */
+.calendar-body       /* Calendar grid container */
+.calendar-grid       /* Day grid layout */
+```
+
+### Advanced Usage
+
+#### Custom Date Modifiers
+
+Add custom styling for specific dates:
+
+```astro
+<Calendar 
+    mode="single"
+    modifiers={{
+        holiday: "(date) => isHoliday(date)",
+        deadline: "(date) => isDeadline(date)"
+    }}
+/>
+
+<style>
+    .calendar-day.holiday {
+        background-color: #fef2f2;
+        color: #dc2626;
+    }
+    
+    .calendar-day.deadline {
+        border: 2px solid #f59e0b;
+    }
+</style>
+```
+
+#### Integration with Forms
+
+```astro
+<form>
+    <div x-data="{ selectedDate: null }">
+        <Calendar 
+            mode="single"
+            x-on:date-selected="selectedDate = $event.detail.date"
+        />
+        <input 
+            type="hidden" 
+            name="date" 
+            :value="selectedDate?.toISOString()" 
+        />
+    </div>
+</form>
+```

@@ -1,0 +1,485 @@
+---
+title: Grid & GridItems
+description: Complete grid layout system with container and item components for responsive layouts
+category: layout
+order: 3
+---
+
+import Grid from '@/components/ui/layout/Grid.astro';
+import GridItems from '@/components/ui/layout/GridItems.astro';
+import Column from '@/components/ui/layout/Column.astro';
+import { Card, CardContent } from '@/components/ui/display/card';
+import Button from '@/components/ui/forms/Button.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The Grid system provides complete grid layout functionality through two components:
+
+- **Grid**: The container component that creates responsive grid layouts with column control and gap spacing
+- **GridItems**: Simple column-oriented layout containers designed for grid content with Alpine.js integration
+
+Grid is content-driven and only has gap properties for spacing, while GridItems provides minimal styling perfect for dynamic content with `x-for` directives.
+
+<Tabs defaultValue="basic" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="basic" variant="pills">Basic Grid</TabsTrigger>
+        <TabsTrigger value="grid-items" variant="pills">With GridItems</TabsTrigger>
+        <TabsTrigger value="dynamic" variant="pills">Dynamic Content</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="basic" preview class="space-y-6">
+        <div>
+            <h3 class="text-sm font-medium mb-4">Auto-responsive Grid (default)</h3>
+            <Grid class="gap-4">
+                <Card padding="md">
+                    <CardContent>
+                        <h3 class="font-semibold">Feature 1</h3>
+                        <p class="text-sm text-gray-600">Auto-fits content with 280px minimum</p>
+                    </CardContent>
+                </Card>
+                <Card padding="md">
+                    <CardContent>
+                        <h3 class="font-semibold">Feature 2</h3>
+                        <p class="text-sm text-gray-600">Responsive columns</p>
+                    </CardContent>
+                </Card>
+                <Card padding="md">
+                    <CardContent>
+                        <h3 class="font-semibold">Feature 3</h3>
+                        <p class="text-sm text-gray-600">Gap spacing</p>
+                    </CardContent>
+                </Card>
+                <Card padding="md">
+                    <CardContent>
+                        <h3 class="font-semibold">Feature 4</h3>
+                        <p class="text-sm text-gray-600">Content-driven sizing</p>
+                    </CardContent>
+                </Card>
+            </Grid>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Fixed 3-column Grid</h3>
+            <Grid columns={3} class="gap-3">
+                <Card padding="sm">
+                    <CardContent>
+                        <Badge variant="success">1</Badge>
+                        <p class="text-xs mt-1">Column 1</p>
+                    </CardContent>
+                </Card>
+                <Card padding="sm">
+                    <CardContent>
+                        <Badge variant="info">2</Badge>
+                        <p class="text-xs mt-1">Column 2</p>
+                    </CardContent>
+                </Card>
+                <Card padding="sm">
+                    <CardContent>
+                        <Badge variant="warning">3</Badge>
+                        <p class="text-xs mt-1">Column 3</p>
+                    </CardContent>
+                </Card>
+                <Card padding="sm">
+                    <CardContent>
+                        <Badge variant="destructive">4</Badge>
+                        <p class="text-xs mt-1">Wraps to next row</p>
+                    </CardContent>
+                </Card>
+            </Grid>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">12-column Layout System</h3>
+            <Grid columns={12} class="gap-2">
+                <div class="col-span-6 bg-blue-100 p-2 rounded text-center text-xs">6 columns</div>
+                <div class="col-span-3 bg-green-100 p-2 rounded text-center text-xs">3 columns</div>
+                <div class="col-span-3 bg-yellow-100 p-2 rounded text-center text-xs">3 columns</div>
+                <div class="col-span-4 bg-red-100 p-2 rounded text-center text-xs">4 columns</div>
+                <div class="col-span-4 bg-purple-100 p-2 rounded text-center text-xs">4 columns</div>
+                <div class="col-span-4 bg-pink-100 p-2 rounded text-center text-xs">4 columns</div>
+            </Grid>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Grid Overflow Behaviors</h3>
+            <Column class="space-y-4">
+                <div>
+                    <p class="text-xs text-gray-500 mb-2">Auto (default) - scrolls when needed</p>
+                    <Grid columns={4} overflow="auto" class="gap-2 max-w-md border p-2 rounded">
+                        {Array.from({length: 8}, (_, i) => (
+                            <Button key={i} size="sm">{`Item ${i + 1}`}</Button>
+                        ))}
+                    </Grid>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 mb-2">Fixed - clips content</p>
+                    <Grid columns={4} overflow="fixed" class="gap-2 max-w-md max-h-20 border p-2 rounded">
+                        {Array.from({length: 8}, (_, i) => (
+                            <Button key={i} size="sm">{`Item ${i + 1}`}</Button>
+                        ))}
+                    </Grid>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 mb-2">Expand - grows with content</p>
+                    <Grid columns={2} overflow="expand" class="gap-2 border p-2 rounded">
+                        {Array.from({length: 6}, (_, i) => (
+                            <Button key={i} size="sm">{`Item ${i + 1}`}</Button>
+                        ))}
+                    </Grid>
+                </div>
+            </Column>
+        </div>
+    </TabsContent>
+    <TabsContent value="grid-items" preview class="space-y-6">
+        <div>
+            <h3 class="text-sm font-medium mb-4">Grid with GridItems</h3>
+            <Grid columns={3} class="gap-4">
+                <GridItems class="border rounded-lg p-4 bg-gray-50">
+                    <h3 class="font-semibold text-sm">Product 1</h3>
+                    <p class="text-xs text-gray-600">Simple container</p>
+                    <Badge variant="success" class="mt-2">Available</Badge>
+                </GridItems>
+                <GridItems class="border rounded-lg p-4 bg-gray-50">
+                    <h3 class="font-semibold text-sm">Product 2</h3>
+                    <p class="text-xs text-gray-600">Column layout</p>
+                    <Badge variant="warning" class="mt-2">Limited</Badge>
+                </GridItems>
+                <GridItems class="border rounded-lg p-4 bg-gray-50">
+                    <h3 class="font-semibold text-sm">Product 3</h3>
+                    <p class="text-xs text-gray-600">Minimal styling</p>
+                    <Badge variant="info" class="mt-2">New</Badge>
+                </GridItems>
+            </Grid>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Different Padding Options</h3>
+            <Grid columns={3} class="gap-4">
+                <GridItems padding="none" class="border rounded-lg bg-blue-50">
+                    <div class="p-2">
+                        <h4 class="font-semibold text-sm">No Padding</h4>
+                        <p class="text-xs">Container has no padding</p>
+                    </div>
+                </GridItems>
+                <GridItems padding="md" class="border rounded-lg bg-green-50">
+                    <h4 class="font-semibold text-sm">Medium Padding</h4>
+                    <p class="text-xs">Default padding applied</p>
+                </GridItems>
+                <GridItems padding="lg" class="border rounded-lg bg-yellow-50">
+                    <h4 class="font-semibold text-sm">Large Padding</h4>
+                    <p class="text-xs">More spacious container</p>
+                </GridItems>
+            </Grid>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">GridItems Overflow Behaviors</h3>
+            <Grid columns={2} class="gap-4">
+                <div>
+                    <p class="text-xs text-gray-500 mb-2">Expand (default) - grows with content</p>
+                    <GridItems overflow="expand" class="border rounded-lg p-3 bg-gray-50">
+                        <Button size="sm">Button 1</Button>
+                        <Button size="sm" variant="secondary">Button 2</Button>
+                        <Button size="sm" variant="outline">Button 3</Button>
+                        <Button size="sm" variant="destructive">Button 4</Button>
+                    </GridItems>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 mb-2">Auto - scrolls when needed</p>
+                    <GridItems overflow="auto" class="border rounded-lg p-3 bg-gray-50 max-h-32">
+                        <Button size="sm">Button 1</Button>
+                        <Button size="sm" variant="secondary">Button 2</Button>
+                        <Button size="sm" variant="outline">Button 3</Button>
+                        <Button size="sm" variant="destructive">Button 4</Button>
+                        <Button size="sm" variant="success">Button 5</Button>
+                        <Button size="sm" variant="warning">Button 6</Button>
+                    </GridItems>
+                </div>
+            </Grid>
+        </div>
+    </TabsContent>
+    <TabsContent value="dynamic" preview class="space-y-6">
+        <div>
+            <h3 class="text-sm font-medium mb-4">Static Alpine.js Integration</h3>
+            <div x-data="{ products: [{name: 'Product 1', price: '$29.99'}, {name: 'Product 2', price: '$39.99'}] }">
+                <Grid columns={3}>
+                    <template x-for="product in products" x-key="product.name">
+                        <Card padding="md">
+                            <CardContent>
+                                <h3 x-text="product.name" class="font-semibold"></h3>
+                                <p x-text="product.price" class="text-lg font-bold text-green-600"></p>
+                            </CardContent>
+                        </Card>
+                    </template>
+                </Grid>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Dynamic GridItems with Alpine.js</h3>
+            <div x-data="{ 
+                products: [
+                    { id: 1, name: 'Product A', price: '$29.99', status: 'available' },
+                    { id: 2, name: 'Product B', price: '$39.99', status: 'limited' },
+                    { id: 3, name: 'Product C', price: '$19.99', status: 'sold-out' }
+                ]
+            }">
+                <Grid columns={3} class="gap-4">
+                    <GridItems x-for="product in products" x-key="product.id" class="border rounded-lg p-4 bg-white shadow-sm">
+                        <h3 class="font-semibold text-sm" x-text="product.name"></h3>
+                        <p class="text-lg font-bold text-green-600" x-text="product.price"></p>
+                        <Badge x-text="product.status" class="mt-2"></Badge>
+                    </GridItems>
+                </Grid>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Elevation and Styling</h3>
+            <Grid columns={3} class="gap-4">
+                <GridItems elevation="shadow" class="rounded-lg p-4 bg-white">
+                    <h4 class="font-semibold text-sm">Shadow</h4>
+                    <p class="text-xs text-gray-600">Subtle shadow elevation</p>
+                </GridItems>
+                <GridItems elevation="elevated" class="rounded-lg p-4 bg-white">
+                    <h4 class="font-semibold text-sm">Elevated</h4>
+                    <p class="text-xs text-gray-600">Medium shadow elevation</p>
+                </GridItems>
+                <GridItems elevation="floating" class="rounded-lg p-4 bg-white">
+                    <h4 class="font-semibold text-sm">Floating</h4>
+                    <p class="text-xs text-gray-600">Strong shadow elevation</p>
+                </GridItems>
+            </Grid>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import Grid from '@/components/ui/layout/Grid.astro';
+import GridItems from '@/components/ui/layout/GridItems.astro';
+import { Card, CardContent } from '@/components/ui/display/card';
+import Badge from '@/components/ui/feedback/Badge.astro';
+---
+
+{/* Basic Grid with Cards */}
+<Grid columns={3} class="gap-4">
+    <Card padding="md">
+        <CardContent>Feature 1</CardContent>
+    </Card>
+    <Card padding="md">
+        <CardContent>Feature 2</CardContent>
+    </Card>
+    <Card padding="md">
+        <CardContent>Feature 3</CardContent>
+    </Card>
+</Grid>
+
+{/* Grid with GridItems for simple content */}
+<Grid columns={3} class="gap-4">
+    <GridItems class="border rounded-lg p-4 bg-gray-50">
+        <h3>Product Title</h3>
+        <p>Product description</p>
+        <Badge variant="success">Available</Badge>
+    </GridItems>
+</Grid>
+
+{/* Auto-responsive grid (default) */}
+<Grid class="gap-4">
+    <Card padding="md">
+        <CardContent>Auto-fits with 280px minimum</CardContent>
+    </Card>
+    <Card padding="md">
+        <CardContent>Responsive columns</CardContent>
+    </Card>
+</Grid>
+
+{/* 12-column layout system */}
+<Grid columns={12} class="gap-2">
+    <div class="col-span-6">Half width</div>
+    <div class="col-span-3">Quarter width</div>
+    <div class="col-span-3">Quarter width</div>
+</Grid>
+
+{/* GridItems with different padding */}
+<Grid columns={3} class="gap-4">
+    <GridItems padding="none" class="border rounded">
+        <div class="p-2">Custom inner padding</div>
+    </GridItems>
+    <GridItems padding="md" class="border rounded">
+        Default medium padding
+    </GridItems>
+    <GridItems padding="lg" class="border rounded">
+        Large padding for more space
+    </GridItems>
+</Grid>
+
+{/* Alpine.js integration with Grid */}
+<div x-data="{ products: [{name: 'Product 1'}, {name: 'Product 2'}] }">
+    <Grid columns={3} class="gap-4">
+        <template x-for="product in products" x-key="product.name">
+            <Card padding="md">
+                <CardContent>
+                    <h3 x-text="product.name"></h3>
+                </CardContent>
+            </Card>
+        </template>
+    </Grid>
+</div>
+
+{/* Alpine.js integration with GridItems */}
+<div x-data="{ 
+    items: [
+        { id: 1, title: 'Item 1', status: 'active' },
+        { id: 2, title: 'Item 2', status: 'pending' }
+    ]
+}">
+    <Grid columns={2} class="gap-4">
+        <GridItems 
+            x-for="item in items" 
+            x-key="item.id"
+            class="border rounded p-4"
+        >
+            <h3 x-text="item.title"></h3>
+            <Badge x-text="item.status"></Badge>
+        </GridItems>
+    </Grid>
+</div>
+
+{/* Overflow control */}
+<Grid columns={4} overflow="auto" class="gap-2 max-w-md">
+    {/* Grid handles container overflow */}
+</Grid>
+
+<GridItems overflow="auto" class="max-h-32 border rounded p-4">
+    {/* GridItems handles content overflow */}
+    <div>Content that might overflow</div>
+    <div>Will scroll if needed</div>
+</GridItems>`} />
+    </TabsContent>
+</Tabs>
+
+## Grid Component API
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `columns` | `'auto' | 1 | 2 | 3 | 4 | 5 | 6 | 12` | `'auto'` | Number of grid columns |
+| `overflow` | `'auto' | 'fixed' | 'expand' | 'wrap' | 'show'` | `'auto'` | Controls overflow behavior |
+| `class` | `string` | - | Additional CSS classes |
+| `...alpineProps` | `any` | - | Alpine.js attributes (x-data, x-for, etc.) |
+
+### Column Options
+
+- **`auto`** (default): `grid-cols-[repeat(auto-fit,minmax(280px,1fr))]` - Responsive auto-fitting columns
+- **`1`**: Single column layout
+- **`2`**: Two columns on medium screens and up  
+- **`3`**: Three columns on large screens and up
+- **`4`**: Four columns on large screens and up
+- **`5`**: Five columns on large screens and up
+- **`6`**: Six columns on large screens and up
+- **`12`**: Twelve-column layout system for complex grids
+
+### Grid Overflow Behaviors
+
+- **`auto`** (default): Both horizontal and vertical scrolling when needed
+- **`fixed`**: Content is clipped at container boundaries
+- **`expand`**: Container grows to fit all content
+- **`show`**: Content can spill outside container bounds
+
+## GridItems Component API
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `padding` | `'none' | 'sm' | 'md' | 'lg' | 'xl'` | `'md'` | Internal padding |
+| `overflow` | `'auto' | 'fixed' | 'expand' | 'wrap' | 'show'` | `'expand'` | Controls overflow behavior |
+| `elevation` | `'flat' | 'shadow' | 'elevated' | 'floating' | 'lifted' | 'high'` | `'flat'` | Shadow/elevation level |
+| `class` | `string` | - | Additional CSS classes |
+| `x-for` | `string` | - | Alpine.js x-for directive |
+| `x-key` | `string` | - | Alpine.js x-key directive |
+| `...alpineProps` | `any` | - | Other Alpine.js attributes |
+
+### GridItems Overflow Behaviors
+
+- **`expand`** (default): Container grows with content
+- **`auto`**: Vertical scrolling when content overflows
+- **`fixed`**: Content is clipped at container boundaries
+- **`show`**: Content can spill outside container bounds
+
+### Elevation Options
+
+- **`flat`** (default): No shadow
+- **`shadow`**: Subtle shadow
+- **`elevated`**: Medium shadow
+- **`floating`**: Strong shadow
+- **`lifted`**: Extra lift shadow
+- **`high`**: Maximum elevation
+
+### Alpine.js Integration
+
+GridItems is designed to work seamlessly with Alpine.js `x-for`:
+- Automatically extracts `x-for` and `x-key` from props
+- Wraps content in `<template>` tag for Alpine.js iteration
+- Passes through all other Alpine.js attributes
+
+## Slots
+
+### Grid Slots
+
+| Slot | Description |
+|------|-------------|
+| default | Grid items to be arranged in columns |
+
+### GridItems Slots
+
+| Slot | Description |
+|------|-------------|
+| default | Content arranged in a column layout |
+
+## Design Principles
+
+### Grid (Container)
+Grid is a **content-driven component** that:
+- Only has gap property for spacing between items
+- Size determined by internal elements
+- Handles dynamic/data-driven content
+- Default overflow is `auto` with sensible constraints
+- Uses CSS Grid for precise column control
+- Responsive breakpoints built into column presets
+
+### GridItems (Content)
+GridItems is a **simple layout container** that:
+- Provides minimal styling with layout essentials only
+- Uses `flex flex-col w-full` base classes for column layout  
+- Has padding, overflow, and elevation properties for basic customization
+- Custom styling should be added via `class` prop
+- For rich styled content containers, use Card component instead
+- Perfect for Alpine.js dynamic content with x-for directives
+
+## When to Use Each Component
+
+### Use Grid when:
+- Creating responsive grid layouts
+- Need precise column control (2, 3, 4, etc.)
+- Want auto-fitting responsive behavior
+- Building complex 12-column layouts
+- Container-level overflow control needed
+
+### Use GridItems when:
+- Building individual grid cells with minimal styling
+- Working with Alpine.js `x-for` dynamic content
+- Need simple column-oriented layout
+- Want elevation/shadow effects
+- Content-level overflow control needed
+
+### Use Both Together when:
+- Grid provides the layout structure
+- GridItems provide individual cell content with dynamic behavior
+- Perfect for product grids, card layouts, and data-driven interfaces

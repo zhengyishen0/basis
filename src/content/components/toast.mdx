@@ -1,0 +1,276 @@
+---
+title: Toast
+description: Global toast notification system with Alpine.js integration and composable components
+category: feedback
+order: 1
+---
+
+import Toast from '@/components/ui/feedback/Toast.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+Toast is a global notification system that provides temporary, non-intrusive messages to users. It's built with Alpine.js and offers a powerful global API for showing notifications from anywhere in your application. The component handles automatic positioning, stacking, animations, and dismissal.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-4">
+        <Toast />
+        <div class="flex flex-wrap gap-2">
+            <button 
+                x-on:click="toast('Simple message')"
+                class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+            >
+                Basic Toast
+            </button>
+            <button
+                x-on:click="toast('Success!', { type: 'success', description: 'Your action was completed.' })"
+                class="px-4 py-2 bg-success text-success-foreground rounded-md hover:bg-success/90 transition-colors"
+            >
+                Success
+            </button>
+            <button
+                x-on:click="toast('Error occurred', { type: 'danger', description: 'Something went wrong.' })"
+                class="px-4 py-2 bg-destructive text-destructive-foreground rounded-md hover:bg-destructive/90 transition-colors"
+            >
+                Error
+            </button>
+            <button
+                x-on:click="toast('Warning!', { type: 'warning', description: 'Please review input.' })"
+                class="px-4 py-2 bg-warning text-warning-foreground rounded-md hover:bg-warning/90 transition-colors"
+            >
+                Warning
+            </button>
+            <button
+                x-on:click="toast('Info', { type: 'info', description: 'Useful information.' })"
+                class="px-4 py-2 bg-info text-info-foreground rounded-md hover:bg-info/90 transition-colors"
+            >
+                Info
+            </button>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+// Add the Toast container to your layout (once per page)
+import Toast from '@/components/ui/feedback/Toast.astro';
+---
+
+<Toast />
+
+{/* Use the global toast() function anywhere */}
+<button x-on:click="toast('Simple message')">
+  Basic Toast
+</button>
+
+<button x-on:click="toast('Success!', { 
+  type: 'success', 
+  description: 'Your action was completed.' 
+})">
+  Success Toast
+</button>
+
+<button x-on:click="toast('Error occurred', { 
+  type: 'danger', 
+  description: 'Something went wrong.',
+  duration: 0 
+})">
+  Persistent Error
+</button>`} />
+    </TabsContent>
+</Tabs>
+
+## Position Examples
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-4">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <button
+                x-on:click="toast('Top Left', { position: 'top-left' })"
+                class="px-3 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
+            >
+                Top Left
+            </button>
+            <button
+                x-on:click="toast('Top Center', { position: 'top-center' })"
+                class="px-3 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
+            >
+                Top Center
+            </button>
+            <button
+                x-on:click="toast('Top Right', { position: 'top-right' })"
+                class="px-3 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
+            >
+                Top Right
+            </button>
+            <button
+                x-on:click="toast('Bottom Left', { position: 'bottom-left' })"
+                class="px-3 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
+            >
+                Bottom Left
+            </button>
+            <button
+                x-on:click="toast('Bottom Center', { position: 'bottom-center' })"
+                class="px-3 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
+            >
+                Bottom Center
+            </button>
+            <button
+                x-on:click="toast('Bottom Right', { position: 'bottom-right' })"
+                class="px-3 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
+            >
+                Bottom Right
+            </button>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="javascript" code={`// Different positions
+toast('Top Left', { position: 'top-left' });
+toast('Top Center', { position: 'top-center' });
+toast('Top Right', { position: 'top-right' });
+toast('Bottom Left', { position: 'bottom-left' });
+toast('Bottom Center', { position: 'bottom-center' });
+toast('Bottom Right', { position: 'bottom-right' });`} />
+    </TabsContent>
+</Tabs>
+
+## Duration and Stacking
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-4">
+        <div class="flex gap-2">
+            <button
+                x-on:click="toast('Quick toast', { duration: 2000 })"
+                class="px-4 py-2 bg-outline border border-border rounded-md hover:bg-accent transition-colors"
+            >
+                2s Duration
+            </button>
+            <button
+                x-on:click="toast('Persistent toast', { type: 'info', description: 'This toast will not auto-dismiss.', duration: 0 })"
+                class="px-4 py-2 bg-outline border border-border rounded-md hover:bg-accent transition-colors"
+            >
+                No Auto-dismiss
+            </button>
+            <button
+                x-on:click="toast('First toast'); setTimeout(() => toast('Second toast'), 300); setTimeout(() => toast('Third toast'), 600);"
+                class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+            >
+                Stack 3 Toasts
+            </button>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="javascript" code={`// Quick toast (2 seconds)
+toast('Quick toast', { duration: 2000 });
+
+// Persistent toast (no auto-dismiss)
+toast('Persistent toast', { 
+  type: 'info', 
+  description: 'This toast will not auto-dismiss.',
+  duration: 0 
+});
+
+// Multiple toasts (stacking)
+toast('First toast');
+setTimeout(() => toast('Second toast'), 300);
+setTimeout(() => toast('Third toast'), 600);`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Global Functions
+
+The Toast component provides a global `toast()` function that can be called from anywhere:
+
+| Function | Description |
+|----------|-------------|
+| `toast(message, options?)` | Shows a toast notification with the given message and options |
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `type` | `'default' | 'success' | 'info' | 'warning' | 'danger'` | `'default'` | Toast variant/type |
+| `description` | `string` | `undefined` | Additional description text |
+| `position` | `'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'` | `'top-center'` | Toast position |
+| `duration` | `number` | `4000` | Auto-dismiss duration in milliseconds (0 = no auto-dismiss) |
+| `html` | `string` | `undefined` | Custom HTML content (overrides message and description) |
+
+### Alpine.js Integration
+
+The Toast component integrates with Alpine.js through:
+
+- **Global Events**: Uses `@toast-show.window` to trigger toasts
+- **State Management**: Manages toast queue and positioning
+- **Animations**: Smooth enter/exit transitions
+- **Interaction**: Hover to expand stacked toasts, click to dismiss
+
+### Usage Examples
+
+```javascript
+// Basic usage
+toast('Hello world!');
+
+// With type and description
+toast('Task completed', {
+  type: 'success',
+  description: 'Your file has been uploaded successfully.'
+});
+
+// Custom position and duration
+toast('Connection lost', {
+  type: 'danger',
+  position: 'bottom-right',
+  duration: 0 // Persistent
+});
+
+// Custom HTML content
+toast('', {
+  html: '<strong>Rich content</strong> with <em>HTML</em>',
+  type: 'info'
+});
+```
+
+### Features
+
+- **Global System**: Single component instance handles all toasts
+- **Smart Stacking**: Automatic positioning and stacking of multiple toasts
+- **Hover Expansion**: Stack expands on hover for better visibility
+- **Smooth Animations**: Enter/exit transitions with position-aware directions
+- **Auto-dismiss**: Configurable duration with pause on hover
+- **Type-based Icons**: Automatic icons for success, error, warning, and info types
+- **Responsive**: Adapts to mobile screens with proper spacing
+- **Accessible**: Includes close buttons and proper ARIA attributes
+
+### Installation
+
+1. Add the Toast component to your layout (once per page):
+
+```astro
+---
+import Toast from '@/components/ui/feedback/Toast.astro';
+---
+
+<Toast />
+```
+
+2. Use the global `toast()` function anywhere in your Alpine.js code:
+
+```html
+<button x-on:click="toast('Hello!')">Show Toast</button>
+```

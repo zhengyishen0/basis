@@ -1,0 +1,472 @@
+---
+title: List
+description: Content-driven vertical list component with gap spacing, scroll management, and list item containers
+category: layout
+order: 5
+---
+
+import List from '@/components/ui/layout/List.astro';
+import ListItems from '@/components/ui/layout/ListItems.astro';
+import Column from '@/components/ui/layout/Column.astro';
+import Row from '@/components/ui/layout/Row.astro';
+import Button from '@/components/ui/forms/Button.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The List component creates a vertical container for organizing items with gap spacing, while ListItems provides row-oriented layout for individual list elements. Together they create flexible, scrollable lists perfect for navigation menus, item lists, and data displays.
+
+**List** is the container component that:
+- Creates vertical lists with gap spacing between items
+- Has default `max-h-screen` constraint with `auto` overflow for scrolling
+- Handles different overflow behaviors (auto, fixed, expand)
+
+**ListItems** is the item component that:
+- Provides horizontal row layout for list content
+- Minimum height of 2.5rem with center alignment
+- Designed for Alpine.js `x-for` integration
+- Uses `justify-between` for natural item distribution
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-6">
+        <div>
+            <h3 class="text-sm font-medium mb-4">Basic List with Gap Spacing</h3>
+            <List class="gap-2 border border-gray-200 p-4 rounded max-w-md">
+                <div class="py-2 px-3 bg-gray-50 rounded">Simple list item 1</div>
+                <div class="py-2 px-3 bg-gray-50 rounded">Simple list item 2</div>
+                <div class="py-2 px-3 bg-gray-50 rounded">Simple list item 3</div>
+            </List>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">List with ListItems Components</h3>
+            <List class="gap-2 border border-gray-200 rounded p-4 max-w-lg">
+                <ListItems class="px-3 py-1 bg-gray-50 rounded">
+                    <span class="font-medium">User Settings</span>
+                    <Button size="sm" variant="ghost">Edit</Button>
+                </ListItems>
+                <ListItems class="px-3 py-1 bg-gray-50 rounded">
+                    <span class="font-medium">Privacy Settings</span>
+                    <Button size="sm" variant="ghost">Edit</Button>
+                </ListItems>
+                <ListItems class="px-3 py-1 bg-gray-50 rounded">
+                    <span class="font-medium">Notification Settings</span>
+                    <Button size="sm" variant="ghost">Edit</Button>
+                </ListItems>
+            </List>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Navigation Menu Style</h3>
+            <List class="gap-1 border border-gray-200 rounded p-2 max-w-xs bg-white">
+                <Button variant="ghost" class="w-full justify-start">Dashboard</Button>
+                <Button variant="ghost" class="w-full justify-start">Settings</Button>
+                <Button variant="ghost" class="w-full justify-start">Profile</Button>
+                <Button variant="ghost" class="w-full justify-start">Help</Button>
+                <Button variant="ghost" class="w-full justify-start text-red-600">Logout</Button>
+            </List>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Contact List with Rich Content</h3>
+            <List class="gap-1 border border-gray-200 rounded p-2 max-w-md bg-white">
+                <ListItems class="px-3 hover:bg-gray-50 rounded transition-colors">
+                    <div>
+                        <div class="font-medium text-sm">John Doe</div>
+                        <div class="text-xs text-gray-500">john@example.com</div>
+                    </div>
+                    <Badge variant="success" size="sm">Online</Badge>
+                </ListItems>
+                <ListItems class="px-3 hover:bg-gray-50 rounded transition-colors">
+                    <div>
+                        <div class="font-medium text-sm">Jane Smith</div>
+                        <div class="text-xs text-gray-500">jane@example.com</div>
+                    </div>
+                    <Badge variant="secondary" size="sm">Away</Badge>
+                </ListItems>
+                <ListItems class="px-3 hover:bg-gray-50 rounded transition-colors">
+                    <div>
+                        <div class="font-medium text-sm">Bob Wilson</div>
+                        <div class="text-xs text-gray-500">bob@example.com</div>
+                    </div>
+                    <Badge variant="destructive" size="sm">Offline</Badge>
+                </ListItems>
+            </List>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Scrollable List (Auto Overflow)</h3>
+            <List overflow="auto" class="gap-2 border border-gray-200 p-4 rounded max-w-md max-h-32">
+                <ListItems class="py-2 px-3 bg-blue-50 rounded">
+                    <span>Task 1 - High Priority</span>
+                    <Badge variant="destructive" size="sm">Urgent</Badge>
+                </ListItems>
+                <ListItems class="py-2 px-3 bg-blue-50 rounded">
+                    <span>Task 2 - Medium Priority</span>
+                    <Badge variant="warning" size="sm">Medium</Badge>
+                </ListItems>
+                <ListItems class="py-2 px-3 bg-blue-50 rounded">
+                    <span>Task 3 - Low Priority</span>
+                    <Badge variant="success" size="sm">Low</Badge>
+                </ListItems>
+                <ListItems class="py-2 px-3 bg-blue-50 rounded">
+                    <span>Task 4 - Completed</span>
+                    <Badge variant="secondary" size="sm">Done</Badge>
+                </ListItems>
+                <ListItems class="py-2 px-3 bg-blue-50 rounded">
+                    <span>Task 5 - In Progress</span>
+                    <Badge variant="info" size="sm">Active</Badge>
+                </ListItems>
+                <ListItems class="py-2 px-3 bg-blue-50 rounded">
+                    <span>Task 6 - Pending Review</span>
+                    <Badge variant="warning" size="sm">Review</Badge>
+                </ListItems>
+            </List>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">List Overflow Behaviors</h3>
+            <Row class="gap-4">
+                <div class="flex-1">
+                    <p class="text-xs text-gray-500 mb-2">Auto (default) - scrolls vertically</p>
+                    <List overflow="auto" class="gap-2 border p-3 rounded max-h-24">
+                        <div class="py-1 px-2 bg-gray-100 rounded text-sm">Item 1</div>
+                        <div class="py-1 px-2 bg-gray-100 rounded text-sm">Item 2</div>
+                        <div class="py-1 px-2 bg-gray-100 rounded text-sm">Item 3</div>
+                        <div class="py-1 px-2 bg-gray-100 rounded text-sm">Item 4</div>
+                        <div class="py-1 px-2 bg-gray-100 rounded text-sm">Item 5</div>
+                    </List>
+                </div>
+                <div class="flex-1">
+                    <p class="text-xs text-gray-500 mb-2">Fixed - clips content</p>
+                    <List overflow="fixed" class="gap-2 border p-3 rounded max-h-24">
+                        <div class="py-1 px-2 bg-gray-100 rounded text-sm">Item 1</div>
+                        <div class="py-1 px-2 bg-gray-100 rounded text-sm">Item 2</div>
+                        <div class="py-1 px-2 bg-gray-100 rounded text-sm">Item 3</div>
+                        <div class="py-1 px-2 bg-gray-100 rounded text-sm">Item 4</div>
+                    </List>
+                </div>
+                <div class="flex-1">
+                    <p class="text-xs text-gray-500 mb-2">Expand - grows naturally</p>
+                    <List overflow="expand" class="gap-2 border p-3 rounded">
+                        <div class="py-1 px-2 bg-gray-100 rounded text-sm">Item 1</div>
+                        <div class="py-1 px-2 bg-gray-100 rounded text-sm">Item 2</div>
+                        <div class="py-1 px-2 bg-gray-100 rounded text-sm">Item 3</div>
+                    </List>
+                </div>
+            </Row>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">ListItems Overflow Behaviors</h3>
+            <div class="space-y-4">
+                <div>
+                    <p class="text-xs text-gray-500 mb-2">Expand (default) - content determines size</p>
+                    <List class="gap-1 border rounded p-2 max-w-lg">
+                        <ListItems overflow="expand" class="px-3 bg-blue-50 rounded">
+                            <span>This is a normal length item</span>
+                            <Button size="sm">Action</Button>
+                        </ListItems>
+                        <ListItems overflow="expand" class="px-3 bg-blue-50 rounded">
+                            <span>This is a much longer item that will expand the container naturally</span>
+                            <Button size="sm">Action</Button>
+                        </ListItems>
+                    </List>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 mb-2">Auto - horizontal scroll when needed</p>
+                    <List class="gap-1 border rounded p-2 max-w-sm">
+                        <ListItems overflow="auto" class="px-3 bg-green-50 rounded">
+                            <span>Very long content that will scroll horizontally when the container is too narrow</span>
+                            <Button size="sm">Action</Button>
+                        </ListItems>
+                    </List>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 mb-2">Wrap - items wrap to multiple lines</p>
+                    <List class="gap-1 border rounded p-2 max-w-xs">
+                        <ListItems overflow="wrap" class="px-3 bg-yellow-50 rounded">
+                            <span>Long content item</span>
+                            <Button size="sm">Action 1</Button>
+                            <Button size="sm" variant="secondary">Action 2</Button>
+                            <Badge>Status</Badge>
+                        </ListItems>
+                    </List>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-sm font-medium mb-4">Alpine.js Integration Demo</h3>
+            <div x-data="{ 
+                tasks: [
+                    { id: 1, title: 'Review pull request', completed: false, priority: 'high' },
+                    { id: 2, title: 'Update documentation', completed: true, priority: 'medium' },
+                    { id: 3, title: 'Fix responsive layout', completed: false, priority: 'low' },
+                    { id: 4, title: 'Deploy to production', completed: false, priority: 'high' }
+                ],
+                toggleTask(taskId) {
+                    const task = this.tasks.find(t => t.id === taskId);
+                    if (task) task.completed = !task.completed;
+                }
+            }">
+                <List class="gap-1 border rounded p-2 max-w-lg bg-white">
+                    <ListItems 
+                        x-for="task in tasks" 
+                        x-key="task.id"
+                        class="px-3 py-2 hover:bg-gray-50 rounded cursor-pointer transition-colors"
+                        x-on:click="toggleTask(task.id)"
+                    >
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" 
+                                   x-model="task.completed" 
+                                   class="rounded" />
+                            <span x-text="task.title" 
+                                  x-bind:class="task.completed ? 'line-through text-gray-500' : ''"></span>
+                        </div>
+                        <Badge x-text="task.priority" 
+                               x-bind:class="{
+                                   'bg-red-100 text-red-800': task.priority === 'high',
+                                   'bg-yellow-100 text-yellow-800': task.priority === 'medium', 
+                                   'bg-green-100 text-green-800': task.priority === 'low'
+                               }"></Badge>
+                    </ListItems>
+                </List>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import List from '@/components/ui/layout/List.astro';
+import ListItems from '@/components/ui/layout/ListItems.astro';
+import Button from '@/components/ui/forms/Button.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+---
+
+{/* Basic list with simple items */}
+<List class="gap-2 border p-4 rounded">
+    <div class="py-2 px-3 bg-gray-50 rounded">Simple item 1</div>
+    <div class="py-2 px-3 bg-gray-50 rounded">Simple item 2</div>
+    <div class="py-2 px-3 bg-gray-50 rounded">Simple item 3</div>
+</List>
+
+{/* List with ListItems for structured content */}
+<List class="gap-2 border p-4 rounded">
+    <ListItems class="px-3 py-1 bg-gray-50 rounded">
+        <span class="font-medium">Settings</span>
+        <Button size="sm" variant="ghost">Edit</Button>
+    </ListItems>
+    <ListItems class="px-3 py-1 bg-gray-50 rounded">
+        <span class="font-medium">Privacy</span>
+        <Button size="sm" variant="ghost">Edit</Button>
+    </ListItems>
+</List>
+
+{/* Navigation menu */}
+<List class="gap-1 border rounded p-2">
+    <Button variant="ghost" class="w-full justify-start">Dashboard</Button>
+    <Button variant="ghost" class="w-full justify-start">Settings</Button>
+    <Button variant="ghost" class="w-full justify-start">Profile</Button>
+</List>
+
+{/* Contact list with rich content */}
+<List class="gap-1 border rounded p-2">
+    <ListItems class="px-3 hover:bg-gray-50 rounded">
+        <div>
+            <div class="font-medium">John Doe</div>
+            <div class="text-xs text-gray-500">john@example.com</div>
+        </div>
+        <Badge variant="success">Online</Badge>
+    </ListItems>
+</List>
+
+{/* Scrollable list with custom height */}
+<List overflow="auto" class="gap-2 max-h-32 border p-4">
+    <ListItems class="py-2 px-3 bg-blue-50 rounded">
+        <span>Task 1</span>
+        <Badge variant="destructive" size="sm">Urgent</Badge>
+    </ListItems>
+    <ListItems class="py-2 px-3 bg-blue-50 rounded">
+        <span>Task 2</span>
+        <Badge variant="warning" size="sm">Medium</Badge>
+    </ListItems>
+    {/* More items... */}
+</List>
+
+{/* Different overflow behaviors */}
+<List overflow="expand" class="gap-2">
+    <div>Grows with content</div>
+    <div>No height restrictions</div>
+</List>
+
+<List overflow="fixed" class="gap-2 max-h-24">
+    <div>Fixed height</div>
+    <div>Content gets clipped</div>
+</List>
+
+{/* ListItems overflow behaviors */}
+<List class="gap-1 border rounded p-2">
+    {/* Expand (default) */}
+    <ListItems class="px-3 bg-gray-50 rounded">
+        <span>Content expands naturally</span>
+        <Button size="sm">Action</Button>
+    </ListItems>
+    
+    {/* Auto - horizontal scroll */}
+    <ListItems overflow="auto" class="px-3 bg-gray-50 rounded max-w-xs">
+        <span>Very long content that will scroll</span>
+        <Button size="sm">Action</Button>
+    </ListItems>
+    
+    {/* Wrap - flex wrap */}
+    <ListItems overflow="wrap" class="px-3 bg-gray-50 rounded max-w-xs">
+        <span>Content</span>
+        <Button size="sm">Button 1</Button>
+        <Button size="sm">Button 2</Button>
+        <Badge>Status</Badge>
+    </ListItems>
+</List>
+
+{/* Alpine.js integration */}
+<div x-data="{ 
+    tasks: [
+        { id: 1, title: 'Review PR', completed: false, priority: 'high' },
+        { id: 2, title: 'Update docs', completed: true, priority: 'medium' }
+    ],
+    toggleTask(taskId) {
+        const task = this.tasks.find(t => t.id === taskId);
+        if (task) task.completed = !task.completed;
+    }
+}">
+    <List class="gap-1 border rounded p-2">
+        <ListItems 
+            x-for="task in tasks" 
+            x-key="task.id"
+            class="px-3 py-2 hover:bg-gray-50 rounded cursor-pointer"
+            x-on:click="toggleTask(task.id)"
+        >
+            <div class="flex items-center gap-2">
+                <input type="checkbox" x-model="task.completed" />
+                <span x-text="task.title" 
+                      :class="task.completed ? 'line-through text-gray-500' : ''"></span>
+            </div>
+            <Badge x-text="task.priority"></Badge>
+        </ListItems>
+    </List>
+</div>`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### List Component
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `overflow` | `'auto' | 'fixed' | 'expand' | 'wrap' | 'show'` | `'auto'` | Controls overflow behavior |
+| `class` | `string` | - | Additional CSS classes |
+| `...alpineProps` | `any` | - | Alpine.js attributes (x-data, x-for, etc.) |
+
+#### Overflow Behaviors
+
+- **`auto`** (default): Vertical scrolling when content exceeds container height
+- **`fixed`**: Content is clipped at container boundaries
+- **`expand`**: Container grows to fit all content (removes max-h-screen)
+- **`show`**: Content can spill outside container bounds
+
+#### Default Constraints
+
+- **`max-h-screen`**: Default maximum height constraint (can be overridden with CSS classes)
+- **`flex flex-col`**: Vertical layout with flexbox
+
+#### Slots
+
+| Slot | Description |
+|------|-------------|
+| default | List items to be arranged vertically |
+
+### ListItems Component
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `overflow` | `'auto' | 'fixed' | 'expand' | 'wrap' | 'show'` | `'expand'` | Controls overflow behavior |
+| `class` | `string` | - | Additional CSS classes |
+| `x-for` | `string` | - | Alpine.js x-for directive |
+| `x-key` | `string` | - | Alpine.js x-key directive |
+| `...alpineProps` | `any` | - | Other Alpine.js attributes |
+
+#### Base Classes
+
+- **`flex flex-row w-full min-h-[2.5rem] items-center justify-between gap-2`**
+- Horizontal layout with minimum height
+- Content aligned to center vertically
+- Space between first and last elements
+- Small gap between adjacent items
+
+#### Overflow Behaviors
+
+- **`expand`** (default): Content determines container size
+- **`auto`**: Horizontal scrolling when content overflows
+- **`fixed`**: Content is clipped at container boundaries
+- **`wrap`**: Flex items wrap to new lines
+- **`show`**: Content can spill outside container bounds
+
+#### Slots
+
+| Slot | Description |
+|------|-------------|
+| default | Content arranged horizontally in the row |
+
+#### Alpine.js Integration
+
+ListItems is designed to work seamlessly with Alpine.js `x-for`:
+- Automatically extracts `x-for` and `x-key` from props
+- Wraps content in `<template>` tag for Alpine.js iteration
+- Passes through all other Alpine.js attributes
+
+## Design Principles
+
+### List Component
+
+List is a **content-driven component** that:
+- Only has gap property for spacing between items
+- Size determined by internal elements with sensible default constraints
+- Handles dynamic/data-driven content
+- Default `max-h-screen` with `auto` overflow for vertical scrolling
+- Perfect for navigation menus, item lists, and scrollable content
+- Can be easily overridden with custom CSS classes for specific height constraints
+
+### ListItems Component
+
+ListItems is a **simple layout container** that:
+- Provides row-oriented layout with `flex flex-row`
+- Has minimum height of 2.5rem for consistent list item sizing
+- Uses `items-center justify-between` for natural item arrangement
+- Minimal styling - add custom styles via `class` prop
+- Perfect for Alpine.js dynamic content with x-for directives
+- For rich styled content containers, use Card component instead
+
+## Working Together
+
+List and ListItems are designed to work together:
+
+1. **List** provides the vertical container with gap spacing and scroll management
+2. **ListItems** provides consistent row layout for individual items
+3. Both support Alpine.js for dynamic content
+4. Both use the content-driven principle where gap and overflow control behavior
+5. Combine them for professional-looking lists with minimal markup
+
+Use List alone for simple content, or combine with ListItems for structured, interactive lists with consistent spacing and alignment.

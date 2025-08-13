@@ -1,0 +1,183 @@
+---
+title: Column
+description: Layout-driven component for vertical arrangement of elements with justify and align properties
+category: layout
+order: 2
+---
+
+import Column from '@/components/ui/layout/Column.astro';
+import Row from '@/components/ui/layout/Row.astro';
+import Button from '@/components/ui/forms/Button.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The Column component is a layout-driven component that arranges elements vertically. It focuses purely on positioning through `justify` and `align` properties, with no gap or padding properties. Content sizing is determined by child elements.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-4">
+        <div class="space-y-6">
+            <div>
+                <h3 class="text-sm font-medium mb-2">Different Alignment Options</h3>
+                <Row gap="md">
+                    <div class="flex-1">
+                        <p class="text-xs text-gray-500 mb-2">Start (default)</p>
+                        <Column overflow="expand" class="h-32 p-4 bg-gray-100 rounded">
+                            <Button size="sm">Item 1</Button>
+                            <Button size="sm" variant="secondary">Item 2</Button>
+                        </Column>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-xs text-gray-500 mb-2">Center alignment</p>
+                        <Column overflow="expand" class="h-32 p-4 bg-gray-100 rounded">
+                            <Button size="sm">Item 1</Button>
+                            <Button size="sm" variant="secondary">Item 2</Button>
+                        </Column>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-xs text-gray-500 mb-2">Stretch items</p>
+                        <Column overflow="expand" class="h-32 p-4 bg-gray-100 rounded">
+                            <Button size="sm">Stretched</Button>
+                            <Button size="sm" variant="outline">Button</Button>
+                        </Column>
+                    </div>
+                </Row>
+            </div>
+            
+            <div>
+                <h3 class="text-sm font-medium mb-2">Overflow Behaviors</h3>
+                <Row gap="md">
+                    <div class="flex-1">
+                        <p class="text-xs text-gray-500 mb-1">Expand (default)</p>
+                        <Column overflow="expand" class="p-4 bg-gray-100 rounded">
+                            <Button size="sm">Button 1</Button>
+                            <Button size="sm">Button 2</Button>
+                            <Button size="sm">Button 3</Button>
+                            <Button size="sm">Button 4</Button>
+                        </Column>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-xs text-gray-500 mb-1">Auto - scroll when needed</p>
+                        <Column overflow="auto" class="h-32 p-4 bg-gray-100 rounded">
+                            <Button size="sm">Button 1</Button>
+                            <Button size="sm">Button 2</Button>
+                            <Button size="sm">Button 3</Button>
+                            <Button size="sm">Button 4</Button>
+                            <Button size="sm">Button 5</Button>
+                            <Button size="sm">Button 6</Button>
+                        </Column>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-xs text-gray-500 mb-1">Fixed - content clipped</p>
+                        <Column overflow="fixed" class="h-32 p-4 bg-gray-100 rounded">
+                            <Button size="sm">Button 1</Button>
+                            <Button size="sm">Button 2</Button>
+                            <Button size="sm">Button 3</Button>
+                            <Button size="sm">Button 4</Button>
+                        </Column>
+                    </div>
+                </Row>
+            </div>
+            
+            <div>
+                <h3 class="text-sm font-medium mb-2">Justify Content</h3>
+                <Row gap="md">
+                    <div class="flex-1">
+                        <p class="text-xs text-gray-500 mb-2">Start (default)</p>
+                        <Column overflow="expand" class="h-24 p-4 bg-gray-100 rounded">
+                            <Badge>Top</Badge>
+                        </Column>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-xs text-gray-500 mb-2">Center</p>
+                        <Column overflow="expand" class="h-24 p-4 bg-gray-100 rounded">
+                            <Badge>Middle</Badge>
+                        </Column>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-xs text-gray-500 mb-2">End</p>
+                        <Column overflow="expand" class="h-24 p-4 bg-gray-100 rounded">
+                            <Badge>Bottom</Badge>
+                        </Column>
+                    </div>
+                </Row>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import Column from '@/components/ui/layout/Column.astro';
+import Button from '@/components/ui/forms/Button.astro';
+---
+
+{/* Basic vertical layout */}
+<Column>
+    <Button>Item 1</Button>
+    <Button>Item 2</Button>
+</Column>
+
+{/* Stretch child elements */}
+<Column class="w-64 p-4">
+    <Button>Full Width</Button>
+    <Button variant="outline">Stretched</Button>
+</Column>
+
+{/* With scrolling overflow */}
+<Column overflow="auto" class="h-32">
+    <Button>Button 1</Button>
+    <Button>Button 2</Button>
+    <Button>Button 3</Button>
+    <Button>Button 4</Button>
+</Column>
+
+{/* Alpine.js integration */}
+<div x-data="{ items: ['Item 1', 'Item 2', 'Item 3'] }">
+    <Column>
+        <template x-for="item in items" x-key="item">
+            <Button x-text="item"></Button>
+        </template>
+    </Column>
+</div>`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `overflow` | `'auto' | 'fixed' | 'expand' | 'wrap' | 'show'` | `'expand'` | Controls overflow behavior |
+| `class` | `string` | - | Additional CSS classes |
+| `...alpineProps` | `any` | - | Alpine.js attributes (x-data, x-show, etc.) |
+
+### Overflow Behaviors
+
+- **`expand`** (default): No constraints, container grows with content
+- **`auto`**: Vertical scrolling when content overflows
+- **`fixed`**: Content is clipped at container boundaries  
+- **`show`**: Content can spill outside container bounds
+
+### Slots
+
+| Slot | Description |
+|------|-------------|
+| default | Content to be arranged vertically |
+
+## Design Principles
+
+Column is a **layout-driven component** that:
+- Focuses on positioning with flexbox justify and align properties
+- Has no gap or padding properties (use CSS classes if needed)
+- Takes available space from parent container
+- Handles static layout positioning
+- Default overflow is `expand` for natural growth

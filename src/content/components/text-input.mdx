@@ -69,27 +69,27 @@ Text Input component provides a styled input field with support for different ty
             code={`---
 import TextInput from '@/components/ui/forms/TextInput.astro';
 ---
-<!-- Basic Input -->
+{/* Basic Input */}
 <TextInput placeholder="Enter your name" />
 
-<!-- Input Types -->
+{/* Input Types */}
 <TextInput type="email" placeholder="Email address" />
 <TextInput type="password" placeholder="Password" />
 <TextInput type="tel" placeholder="Phone number" />
 
-<!-- With Labels -->
+{/* With Labels */}
 <div>
     <label for="name" class="block text-sm font-medium mb-2">Name</label>
     <TextInput id="name" placeholder="John Doe" />
 </div>
 
-<!-- States -->
+{/* States */}
 <TextInput placeholder="Normal input" />
 <TextInput placeholder="Disabled input" disabled />
 <TextInput placeholder="Read-only input" readonly value="Read-only value" />
 <TextInput placeholder="Required input" required />
 
-<!-- Alpine.js Integration -->
+{/* Alpine.js Integration */}
 <div x-data="{ value: '' }">
     <TextInput 
         x-model="value" 

@@ -1,0 +1,159 @@
+---
+title: Row
+description: Layout-driven component for horizontal arrangement of elements with justify and align properties
+category: layout
+order: 1
+---
+
+import Row from '@/components/ui/layout/Row.astro';
+import Column from '@/components/ui/layout/Column.astro';
+import Button from '@/components/ui/forms/Button.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+The Row component is a layout-driven component that arranges elements horizontally. It focuses purely on positioning through `justify` and `align` properties, with no gap or padding properties. Content sizing is determined by child elements.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-4">
+        <div class="space-y-6">
+            <div>
+                <h3 class="text-sm font-medium mb-2">Different Justify Options</h3>
+                <Column gap="sm">
+                    <Row overflow="expand" class="w-full p-4 bg-gray-100 rounded">
+                        <Button size="sm">Start (Default)</Button>
+                        <Button size="sm" variant="secondary">Item 2</Button>
+                    </Row>
+                    <Row overflow="expand" class="w-full p-4 bg-gray-100 rounded">
+                        <Button size="sm">Center</Button>
+                        <Button size="sm" variant="secondary">Item 2</Button>
+                    </Row>
+                    <Row overflow="expand" class="w-full p-4 bg-gray-100 rounded">
+                        <Button size="sm">Between</Button>
+                        <Button size="sm" variant="secondary">Item 2</Button>
+                    </Row>
+                </Column>
+            </div>
+            
+            <div>
+                <h3 class="text-sm font-medium mb-2">Overflow Behaviors</h3>
+                <Column gap="sm">
+                    <div>
+                        <p class="text-xs text-gray-500 mb-1">Expand (default) - container grows</p>
+                        <Row overflow="expand" class="p-4 bg-gray-100 rounded">
+                            <Button size="sm">Button 1</Button>
+                            <Button size="sm">Button 2</Button>
+                            <Button size="sm">Button 3</Button>
+                        </Row>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 mb-1">Wrap - items wrap to new lines</p>
+                        <Row overflow="wrap" class="w-64 p-4 bg-gray-100 rounded">
+                            <Button size="sm">Long Button 1</Button>
+                            <Button size="sm">Long Button 2</Button>
+                            <Button size="sm">Button 3</Button>
+                            <Button size="sm">Button 4</Button>
+                        </Row>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 mb-1">Auto - horizontal scroll when needed</p>
+                        <Row overflow="auto" class="w-64 p-4 bg-gray-100 rounded">
+                            <Button size="sm">Button 1</Button>
+                            <Button size="sm">Button 2</Button>
+                            <Button size="sm">Button 3</Button>
+                            <Button size="sm">Button 4</Button>
+                            <Button size="sm">Button 5</Button>
+                        </Row>
+                    </div>
+                </Column>
+            </div>
+            
+            <div>
+                <h3 class="text-sm font-medium mb-2">Alignment Options</h3>
+                <Column gap="sm">
+                    <Row overflow="expand" class="w-full h-20 p-4 bg-gray-100 rounded">
+                        <Button size="sm">Top Aligned</Button>
+                        <div class="h-12 w-12 bg-blue-200 rounded"></div>
+                        <Badge>Default (Center)</Badge>
+                    </Row>
+                </Column>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+import Row from '@/components/ui/layout/Row.astro';
+import Button from '@/components/ui/forms/Button.astro';
+---
+
+{/* Basic horizontal layout */}
+<Row>
+    <Button>Item 1</Button>
+    <Button>Item 2</Button>
+</Row>
+
+{/* Justify content between */}
+<Row class="w-full p-4">
+    <Button>Left</Button>
+    <Button>Right</Button>
+</Row>
+
+{/* Wrapping overflow */}
+<Row overflow="wrap" class="w-64">
+    <Button>Long Button 1</Button>
+    <Button>Long Button 2</Button>
+    <Button>Button 3</Button>
+</Row>
+
+{/* Alpine.js integration */}
+<div x-data="{ items: ['Item 1', 'Item 2', 'Item 3'] }">
+    <Row>
+        <template x-for="item in items" x-key="item">
+            <Button x-text="item"></Button>
+        </template>
+    </Row>
+</div>`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `overflow` | `'auto' | 'fixed' | 'expand' | 'wrap' | 'show'` | `'expand'` | Controls overflow behavior |
+| `class` | `string` | - | Additional CSS classes |
+| `...alpineProps` | `any` | - | Alpine.js attributes (x-data, x-show, etc.) |
+
+### Overflow Behaviors
+
+- **`expand`** (default): No constraints, container grows with content
+- **`auto`**: Horizontal scrolling when content overflows
+- **`fixed`**: Content is clipped at container boundaries
+- **`wrap`**: Flex items wrap to new lines
+- **`show`**: Content can spill outside container bounds
+
+### Slots
+
+| Slot | Description |
+|------|-------------|
+| default | Content to be arranged horizontally |
+
+## Design Principles
+
+Row is a **layout-driven component** that:
+- Focuses on positioning with flexbox justify and align properties
+- Has no gap or padding properties (use CSS classes if needed)
+- Takes available space from parent container
+- Handles static layout positioning
+- Default overflow is `expand` for natural growth

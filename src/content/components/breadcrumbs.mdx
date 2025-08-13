@@ -1,0 +1,337 @@
+---
+title: Breadcrumbs
+description: Navigate hierarchical paths with composable breadcrumb components supporting Alpine.js dynamic rendering and smart ellipsis handling.
+category: navigation
+order: 8
+---
+
+import { Breadcrumb, BreadcrumbItem, BreadcrumbItems, SmartBreadcrumb } from '@/components/ui/navigation/breadcrumbs';
+import { Icon } from 'astro-icon/components';
+import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+
+## Overview
+
+Breadcrumbs provide navigation hierarchy showing the user's location within a website or application. The component system includes a basic `Breadcrumb` container, individual `BreadcrumbItem` components, dynamic `BreadcrumbItems` for Alpine.js x-for loops, and `SmartBreadcrumb` for automatic ellipsis handling with dropdown overflow.
+
+The components support multiple separator types (chevron, slash, dot, arrow), custom icons, and responsive design patterns. All components integrate seamlessly with Alpine.js for dynamic path generation and state management.
+
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-8">
+        {/* Basic Static Breadcrumbs */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-medium">Static Breadcrumbs</h3>
+            <Breadcrumb>
+                <BreadcrumbItem href="/" separator="chevron">
+                    <Icon name="lucide:home" class="w-4 h-4" />
+                    Home
+                </BreadcrumbItem>
+                <BreadcrumbItem href="/products" separator="chevron">Products</BreadcrumbItem>
+                <BreadcrumbItem>Laptops</BreadcrumbItem>
+            </Breadcrumb>
+        </div>
+
+        {/* Different Separators */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-medium">Different Separators</h3>
+            <div class="space-y-2">
+                <div>
+                    <span class="text-sm text-muted-foreground block mb-1">Slash separators</span>
+                    <Breadcrumb>
+                        <BreadcrumbItem href="/" separator="slash">Home</BreadcrumbItem>
+                        <BreadcrumbItem href="/docs" separator="slash">Docs</BreadcrumbItem>
+                        <BreadcrumbItem>Components</BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+                <div>
+                    <span class="text-sm text-muted-foreground block mb-1">Dot separators</span>
+                    <Breadcrumb>
+                        <BreadcrumbItem href="/" separator="dot">Home</BreadcrumbItem>
+                        <BreadcrumbItem href="/blog" separator="dot">Blog</BreadcrumbItem>
+                        <BreadcrumbItem>Current Post</BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+            </div>
+        </div>
+
+        {/* Dynamic Breadcrumbs */}
+        <div class="space-y-4" x-data={`{ 
+            items: [
+                { label: 'Home', href: '/', icon: 'home' },
+                { label: 'Products', href: '/products' },
+                { label: 'Electronics', href: '/products/electronics' },
+                { label: 'Laptops', current: true }
+            ]
+        }`}>
+            <h3 class="text-lg font-medium">Dynamic Breadcrumbs with x-for</h3>
+            <Breadcrumb>
+                <BreadcrumbItems
+                    x-for="(item, index) in items"
+                    x-key="index"
+                    href="item.href"
+                    separator="chevron"
+                    x-text="item.label"
+                />
+            </Breadcrumb>
+        </div>
+
+        {/* Smart Breadcrumb with Ellipsis */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-medium">Smart Breadcrumb with Ellipsis</h3>
+            <div class="space-y-2">
+                <div x-data={`{ 
+                    shortPath: [
+                        { label: 'Home', href: '/' },
+                        { label: 'Products', href: '/products' },
+                        { label: 'Electronics', href: '/products/electronics' },
+                        { label: 'Laptops', current: true }
+                    ]
+                }`}>
+                    <span class="text-sm text-muted-foreground block mb-1">Short path (no ellipsis)</span>
+                    <SmartBreadcrumb />
+                </div>
+                <div x-data={`{ 
+                    items: [
+                        { label: 'Home', href: '/' },
+                        { label: 'Corporate', href: '/corporate' },
+                        { label: 'Departments', href: '/corporate/departments' },
+                        { label: 'Engineering', href: '/corporate/departments/engineering' },
+                        { label: 'Software', href: '/corporate/departments/engineering/software' },
+                        { label: 'Frontend', href: '/corporate/departments/engineering/software/frontend' },
+                        { label: 'React Team', href: '/corporate/departments/engineering/software/frontend/react' },
+                        { label: 'Components', current: true }
+                    ]
+                }`}>
+                    <span class="text-sm text-muted-foreground block mb-1">Long path (with ellipsis dropdown)</span>
+                    <SmartBreadcrumb />
+                </div>
+            </div>
+        </div>
+
+        {/* Different Variants */}
+        <div class="space-y-4">
+            <h3 class="text-lg font-medium">Variants</h3>
+            <div class="space-y-2">
+                <div>
+                    <span class="text-sm text-muted-foreground block mb-1">Default</span>
+                    <Breadcrumb variant="default">
+                        <BreadcrumbItem href="/" separator="chevron">Home</BreadcrumbItem>
+                        <BreadcrumbItem href="/docs" separator="chevron">Docs</BreadcrumbItem>
+                        <BreadcrumbItem>Current</BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+                <div>
+                    <span class="text-sm text-muted-foreground block mb-1">Minimal</span>
+                    <Breadcrumb variant="minimal">
+                        <BreadcrumbItem href="/" separator="chevron">Home</BreadcrumbItem>
+                        <BreadcrumbItem href="/docs" separator="chevron">Docs</BreadcrumbItem>
+                        <BreadcrumbItem>Current</BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+                <div>
+                    <span class="text-sm text-muted-foreground block mb-1">Compact</span>
+                    <Breadcrumb variant="compact">
+                        <BreadcrumbItem href="/" separator="chevron">Home</BreadcrumbItem>
+                        <BreadcrumbItem href="/docs" separator="chevron">Docs</BreadcrumbItem>
+                        <BreadcrumbItem>Current</BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+            </div>
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code language="astro" code={`---
+// Static breadcrumbs
+import { Breadcrumb, BreadcrumbItem } from '@/components/ui/navigation/breadcrumbs';
+import { Icon } from 'astro-icon/components';
+---
+
+{/* Basic static breadcrumb */}
+<Breadcrumb>
+    <BreadcrumbItem href="/" separator="chevron">
+        <Icon name="lucide:home" class="w-4 h-4" />
+        Home
+    </BreadcrumbItem>
+    <BreadcrumbItem href="/products" separator="chevron">
+        Products
+    </BreadcrumbItem>
+    <BreadcrumbItem>Current Page</BreadcrumbItem>
+</Breadcrumb>
+
+{/* Dynamic breadcrumbs with Alpine.js */}
+<Breadcrumb x-data="{ items: [
+    { label: 'Home', href: '/', icon: 'home' },
+    { label: 'Products', href: '/products' },
+    { label: 'Current', current: true }
+]}">
+    <BreadcrumbItems
+        x-for="(item, index) in items"
+        x-key="index"
+        href="item.href"
+        separator="chevron"
+        x-text="item.label"
+    />
+</Breadcrumb>
+
+{/* Smart breadcrumb with ellipsis for long paths */}
+<SmartBreadcrumb 
+    x-data="{ items: [
+        { label: 'Home', href: '/' },
+        { label: 'Very', href: '/very' },
+        { label: 'Long', href: '/very/long' },
+        { label: 'Navigation', href: '/very/long/navigation' },
+        { label: 'Path', href: '/very/long/navigation/path' },
+        { label: 'Here', current: true }
+    ]}"
+    maxItems={5}
+/>
+
+{/* Different separators */}
+<Breadcrumb>
+    <BreadcrumbItem href="/" separator="slash">Home</BreadcrumbItem>
+    <BreadcrumbItem href="/docs" separator="slash">Docs</BreadcrumbItem>
+    <BreadcrumbItem>Current</BreadcrumbItem>
+</Breadcrumb>
+
+{/* Custom separator via slot */}
+<Breadcrumb>
+    <BreadcrumbItem href="/">
+        Home
+        <Icon name="lucide:arrow-right" slot="separator" class="w-4 h-4" />
+    </BreadcrumbItem>
+    <BreadcrumbItem href="/products">
+        Products
+        <span slot="separator">→</span>
+    </BreadcrumbItem>
+    <BreadcrumbItem>Current</BreadcrumbItem>
+</Breadcrumb>`} />
+    </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Breadcrumb
+
+The main container component for breadcrumb navigation.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'default' | 'minimal' | 'compact'` | `'default'` | Visual variant of the breadcrumb |
+| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Size of the breadcrumb container |
+| `overflow` | `'fixed' | 'scroll' | 'hidden'` | `'fixed'` | Overflow handling behavior |
+| `aria-label` | `string` | `'breadcrumb'` | Accessibility label for the navigation |
+| `class` | `string` | - | Additional CSS classes |
+
+### BreadcrumbItem  
+
+Individual breadcrumb item component.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `href` | `string` | - | URL for the breadcrumb link. If omitted, renders as current page |
+| `separator` | `'chevron' | 'slash' | 'dot' | 'arrow'` | `'chevron'` | Type of separator to show after this item |
+| `icon` | `string` | - | Icon identifier to display alongside text |
+| `item` | `object` | - | Dynamic item data for Alpine.js integration |
+| `class` | `string` | - | Additional CSS classes |
+
+#### Slots
+
+| Slot | Description |
+|------|-------------|
+| default | Content of the breadcrumb item |
+| `separator` | Custom separator element (overrides separator prop) |
+
+### BreadcrumbItems
+
+Template component for rendering breadcrumb items dynamically with Alpine.js x-for.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `separator` | `'chevron' | 'slash' | 'dot' | 'arrow'` | `'chevron'` | Separator type for all items |
+| `icon` | `string` | - | Icon for all items |
+| `class` | `string` | - | Additional CSS classes |
+| `x-for` | `string` | - | Alpine.js x-for expression |
+| `x-key` | `string` | `'item.id'` | Alpine.js x-key expression |
+
+#### Slots
+
+| Slot | Description |
+|------|-------------|
+| default | Content template for each breadcrumb item |
+
+### SmartBreadcrumb
+
+Advanced breadcrumb component with automatic ellipsis handling for long paths.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'default' | 'minimal' | 'compact'` | `'default'` | Visual variant |
+| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Size of the breadcrumb |
+| `maxItems` | `number` | `5` | Maximum items to show before ellipsis |
+| `separator` | `'chevron' | 'slash' | 'dot' | 'arrow'` | `'chevron'` | Separator type |
+| `aria-label` | `string` | `'breadcrumb'` | Accessibility label |
+| `class` | `string` | - | Additional CSS classes |
+
+## Alpine.js Integration
+
+All breadcrumb components integrate seamlessly with Alpine.js for dynamic behavior:
+
+### Data Structure
+
+```javascript
+// Expected data structure for dynamic breadcrumbs
+{
+  items: [
+    {
+      id: string,           // Unique identifier
+      label: string,        // Display text
+      href?: string,        // Link URL (optional for current page)
+      current?: boolean,    // Whether this is the current page
+      icon?: string         // Icon identifier (optional)
+    }
+  ]
+}
+```
+
+### SmartBreadcrumb Features
+
+- **Automatic ellipsis**: Shows "..." when path exceeds `maxItems`
+- **Dropdown overflow**: Click ellipsis to see hidden items
+- **Responsive patterns**: Adapts to different screen sizes
+- **Keyboard navigation**: Full keyboard accessibility
+
+### Events
+
+The breadcrumb components don't emit custom events but integrate with standard navigation patterns and Alpine.js reactivity.
+
+## Accessibility
+
+- Uses semantic `<nav>` and `<ol>` elements
+- Proper `aria-label` and `aria-current` attributes
+- Keyboard navigation support in SmartBreadcrumb dropdown
+- Screen reader friendly with proper markup structure
+- Focus management for interactive elements
+
+## Best Practices
+
+1. **Use semantic markup**: Always wrap breadcrumbs in the provided nav element
+2. **Current page indication**: Use `current: true` or omit `href` for current page
+3. **Reasonable depth**: Keep breadcrumb paths manageable (5-7 levels max)
+4. **Consistent separators**: Use the same separator throughout your application
+5. **Mobile considerations**: Consider using SmartBreadcrumb for responsive designs
+6. **Icon usage**: Use icons sparingly and consistently (typically just for home)
