@@ -24,19 +24,6 @@ const pageData = JSON.stringify(homeContent?.data || []);
 
 <SiteLayout>
     <Page class="min-h-screen" x-data={pageData}>
-        <!-- GitHub Avatar in upper right -->
-        <Section class="absolute top-4 right-4 z-20">
-            <Avatar
-                size="lg"
-                href="https://github.com/zhengyishen0/basis"
-                className="bg-black hover:bg-gray-800 hover:scale-110 transition-all duration-200 cursor-pointer shadow-lg"
-                aria-label="GitHub Repository"
-                imageSize="1/2"
-                src={githubIconUrl}
-                alt="GitHub"
-            />
-        </Section>
-
         <!-- Hero Section -->
         <Section
             class="text-center py-16 px-4 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden min-h-[60vh] flex flex-col justify-center items-center gap-4"

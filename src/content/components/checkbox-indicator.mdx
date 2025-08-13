@@ -53,14 +53,14 @@ The CheckboxIndicator component provides a visual checkbox element with support 
 
             <Card class="p-6">
                 <h3 class="text-lg font-semibold mb-4">Interactive Example</h3>
-                <div x-data="{ 
+                <div x-data="{
                     checked: false,
-                    toggleCheck() { 
-                        this.checked = !this.checked 
+                    toggleCheck() {
+                        this.checked = !this.checked
                     }
                 }">
                     <div class="flex items-center gap-3 cursor-pointer" x-on:click="toggleCheck()">
-                        <CheckboxIndicator :checked="checked" />
+                        <CheckboxIndicator x-bind:checked="checked" />
                         <span>Click to toggle (Alpine.js)</span>
                     </div>
                     <p class="text-sm text-muted-foreground mt-2">
@@ -98,17 +98,17 @@ The CheckboxIndicator component provides a visual checkbox element with support 
                 }">
                     <div class="space-y-3">
                         <div class="flex items-center gap-3 cursor-pointer border-b pb-3" x-on:click="toggleAll()">
-                            <CheckboxIndicator 
-                                :checked="allSelected" 
-                                :indeterminate="someSelected"
+                            <CheckboxIndicator
+                                x-bind:checked="allSelected"
+                                x-bind:indeterminate="someSelected"
                             />
                             <span class="font-medium">Select All Tasks</span>
                             <span class="text-sm text-muted-foreground ml-auto" x-text="`${selectedItems.length}/${items.length} selected`"></span>
                         </div>
-                        
-                        <template x-for="item in items" :key="item.id">
+
+                        <template x-for="item in items" x-bind:key="item.id">
                             <div class="flex items-center gap-3 cursor-pointer py-2" x-on:click="toggleItem(item.id)">
-                                <CheckboxIndicator :checked="item.selected" />
+                                <CheckboxIndicator x-bind:checked="item.selected" />
                                 <span x-text="item.name"></span>
                             </div>
                         </template>
@@ -118,7 +118,7 @@ The CheckboxIndicator component provides a visual checkbox element with support 
 
             <Card class="p-6">
                 <h3 class="text-lg font-semibold mb-4">Form Integration</h3>
-                <div x-data="{ 
+                <div x-data="{
                     preferences: {
                         newsletter: true,
                         notifications: false,
@@ -129,32 +129,32 @@ The CheckboxIndicator component provides a visual checkbox element with support 
                     <form class="space-y-4">
                         <div class="space-y-3">
                             <h4 class="font-medium">Email Preferences</h4>
-                            
+
                             <label class="flex items-center gap-3 cursor-pointer">
-                                <CheckboxIndicator :checked="preferences.newsletter" />
+                                <CheckboxIndicator x-bind:checked="preferences.newsletter" />
                                 <input type="checkbox" x-model="preferences.newsletter" class="sr-only" />
                                 <span>Weekly Newsletter</span>
                             </label>
-                            
+
                             <label class="flex items-center gap-3 cursor-pointer">
-                                <CheckboxIndicator :checked="preferences.notifications" />
+                                <CheckboxIndicator x-bind:checked="preferences.notifications" />
                                 <input type="checkbox" x-model="preferences.notifications" class="sr-only" />
                                 <span>Push Notifications</span>
                             </label>
-                            
+
                             <label class="flex items-center gap-3 cursor-pointer">
-                                <CheckboxIndicator :checked="preferences.updates" />
+                                <CheckboxIndicator x-bind:checked="preferences.updates" />
                                 <input type="checkbox" x-model="preferences.updates" class="sr-only" />
                                 <span>Product Updates</span>
                             </label>
-                            
+
                             <label class="flex items-center gap-3 cursor-pointer">
-                                <CheckboxIndicator :checked="preferences.marketing" />
+                                <CheckboxIndicator x-bind:checked="preferences.marketing" />
                                 <input type="checkbox" x-model="preferences.marketing" class="sr-only" />
                                 <span>Marketing Communications</span>
                             </label>
                         </div>
-                        
+
                         <div class="mt-4 p-3 bg-gray-50 rounded-lg">
                             <h5 class="font-medium text-sm mb-2">Current Preferences:</h5>
                             <pre class="text-xs" x-text="JSON.stringify(preferences, null, 2)"></pre>
@@ -186,25 +186,32 @@ The CheckboxIndicator component provides a visual checkbox element with support 
         <Code
             language="astro"
             code={`---
-import { CheckboxIndicator } from '@/components/ui/indicators';
----
+
+## import { CheckboxIndicator } from '@/components/ui/indicators';
 
 {/* Basic states */}
+
 <CheckboxIndicator checked={false} />
 <CheckboxIndicator checked={true} />
 <CheckboxIndicator indeterminate={true} />
 <CheckboxIndicator disabled={true} />
 
 {/* Interactive with Alpine.js */}
+
 <div x-data="{ checked: false }">
-    <div x-on:click="checked = !checked" class="flex items-center gap-3 cursor-pointer">
-        <CheckboxIndicator :checked="checked" />
+    <div
+        x-on:click="checked = !checked"
+        class="flex items-center gap-3 cursor-pointer"
+    >
+        <CheckboxIndicator x-bind:checked="checked" />
         <span>Click to toggle</span>
     </div>
 </div>
 
 {/* Multi-select with indeterminate state */}
-<div x-data="{
+
+<div
+    x-data="{
     items: [
         { id: 1, name: 'Item 1', selected: false },
         { id: 2, name: 'Item 2', selected: false }
@@ -219,28 +226,34 @@ import { CheckboxIndicator } from '@/components/ui/indicators';
         const newState = !this.allSelected;
         this.items.forEach(item => item.selected = newState);
     }
-}">
+}"
+>
     <div x-on:click="toggleAll()">
-        <CheckboxIndicator :checked="allSelected" :indeterminate="someSelected" />
+        <CheckboxIndicator
+            x-bind:checked="allSelected"
+            x-bind:indeterminate="someSelected"
+        />
         <span>Select All</span>
     </div>
-    
+
     <template x-for="item in items">
         <div x-on:click="item.selected = !item.selected">
-            <CheckboxIndicator :checked="item.selected" />
+            <CheckboxIndicator x-bind:checked="item.selected" />
             <span x-text="item.name"></span>
         </div>
     </template>
 </div>
 
 {/* Form integration */}
+
 <label class="flex items-center gap-3 cursor-pointer">
-    <CheckboxIndicator :checked="newsletter" />
+    <CheckboxIndicator x-bind:checked="newsletter" />
     <input type="checkbox" x-model="newsletter" class="sr-only" />
     <span>Subscribe to newsletter</span>
 </label>
 
 {/* Custom styling */}
+
 <CheckboxIndicator checked={true} class="border-blue-500 text-blue-600" />
 <CheckboxIndicator checked={true} class="h-6 w-6" />`}
         />
@@ -252,18 +265,22 @@ import { CheckboxIndicator } from '@/components/ui/indicators';
 The CheckboxIndicator supports three primary visual states:
 
 ### Unchecked
+
 - Default state with empty checkbox
 - Border visible, no fill or icon
 
 ### Checked
+
 - Filled state with checkmark icon
 - Smooth scale animation on state change
 
 ### Indeterminate
+
 - Partial selection state with horizontal line
 - Useful for parent checkboxes in hierarchical lists
 
 ### Disabled
+
 - Reduced opacity and no interaction
 - Maintains visual state but prevents user input
 
@@ -271,25 +288,25 @@ The CheckboxIndicator supports three primary visual states:
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `checked` | `boolean` | `false` | Checked state of the checkbox |
-| `indeterminate` | `boolean` | `false` | Indeterminate state (overrides checked) |
-| `disabled` | `boolean` | `false` | Disabled state |
-| `state` | `'default' \| 'checked' \| 'indeterminate' \| 'disabled'` | `'default'` | Visual state variant |
-| `name` | `string` | - | Form input name attribute |
-| `value` | `string` | - | Form input value |
-| `class` | `string` | - | Additional CSS classes |
+| Prop            | Type                                                      | Default     | Description                             |
+| --------------- | --------------------------------------------------------- | ----------- | --------------------------------------- |
+| `checked`       | `boolean`                                                 | `false`     | Checked state of the checkbox           |
+| `indeterminate` | `boolean`                                                 | `false`     | Indeterminate state (overrides checked) |
+| `disabled`      | `boolean`                                                 | `false`     | Disabled state                          |
+| `state`         | `'default' \| 'checked' \| 'indeterminate' \| 'disabled'` | `'default'` | Visual state variant                    |
+| `name`          | `string`                                                  | -           | Form input name attribute               |
+| `value`         | `string`                                                  | -           | Form input value                        |
+| `class`         | `string`                                                  | -           | Additional CSS classes                  |
 
 ### Alpine.js Props
 
 When using with Alpine.js, you can pass reactive expressions:
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `:checked` | `string` | Alpine.js expression for checked state |
+| Prop             | Type     | Description                                  |
+| ---------------- | -------- | -------------------------------------------- |
+| `:checked`       | `string` | Alpine.js expression for checked state       |
 | `:indeterminate` | `string` | Alpine.js expression for indeterminate state |
-| `:disabled` | `string` | Alpine.js expression for disabled state |
+| `:disabled`      | `string` | Alpine.js expression for disabled state      |
 
 ### Features
 
@@ -303,6 +320,7 @@ When using with Alpine.js, you can pass reactive expressions:
 ### Animation Details
 
 The component includes these smooth transitions:
+
 - **Scale Animation**: 0.95 to 1.0 scale on state changes
 - **Opacity Transition**: Fade in/out for icons
 - **Duration**: 300ms ease-out timing
@@ -311,13 +329,14 @@ The component includes these smooth transitions:
 ### Best Practices
 
 #### Form Integration
+
 ```astro
 <label class="flex items-center gap-3 cursor-pointer">
-    <CheckboxIndicator :checked="formData.agree" />
-    <input 
-        type="checkbox" 
-        x-model="formData.agree" 
-        class="sr-only" 
+    <CheckboxIndicator x-bind:checked="formData.agree" />
+    <input
+        type="checkbox"
+        x-model="formData.agree"
+        class="sr-only"
         name="agree"
         required
     />
@@ -326,6 +345,7 @@ The component includes these smooth transitions:
 ```
 
 #### Hierarchical Selection
+
 ```javascript
 // Alpine.js data for parent-child checkboxes
 {

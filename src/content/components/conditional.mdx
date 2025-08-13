@@ -98,7 +98,7 @@ The Conditional component provides a clean way to handle if/else rendering logic
                     <Conditional condition="items.length > 0">
                         <div slot="true" class="space-y-2">
                             <h4 class="font-medium">Items List:</h4>
-                            <template x-for="item in items" :key="item">
+                            <template x-for="item in items" x-bind:key="item">
                                 <div class="p-2 bg-blue-50 border border-blue-200 rounded" x-text="item"></div>
                             </template>
                         </div>
