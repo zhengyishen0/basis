@@ -59,14 +59,15 @@ const formatComponentName = (str: string) => {
 };
 
 // Prepare data for Alpine.js (flat structure)
+const baseUrl = import.meta.env.BASE_URL;
 const docsData = sortedDocs.map(item => ({
-    href: `/docs/${item.slug}`,
+    href: `${baseUrl}docs/${item.slug}`,
     title: item.data.title,
     active: slug === item.slug,
 }));
 
 const componentsData = sortedComponents.map(item => ({
-    href: `/docs/components/${item.slug}`,
+    href: `${baseUrl}docs/components/${item.slug}`,
     title: item.data.title,
     active: slug === `components/${item.slug}`,
 }));
@@ -74,13 +75,13 @@ const componentsData = sortedComponents.map(item => ({
 // Prepare breadcrumb data for Alpine.js
 const breadcrumbItems = slug
     ? [
-          { label: 'Docs', href: '/docs' },
+          { label: 'Docs', href: `${baseUrl}docs` },
           ...slug.split('/').map((part, index, arr) => ({
               label: formatCategory(part),
               href:
                   index === arr.length - 1
                       ? null
-                      : `/docs/${arr.slice(0, index + 1).join('/')}`,
+                      : `${baseUrl}docs/${arr.slice(0, index + 1).join('/')}`,
               current: index === arr.length - 1,
           })),
       ]

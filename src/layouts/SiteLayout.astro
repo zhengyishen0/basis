@@ -21,19 +21,20 @@ export interface Props {
 const { title, description } = Astro.props;
 
 // Navigation links
+const baseUrl = import.meta.env.BASE_URL;
 const navLinks = [
-    { label: 'Docs', href: '/docs' },
-    { label: 'Components', href: '/docs/components/' },
-    { label: 'Todo', href: '/todo' },
+    { label: 'Docs', href: `${baseUrl}docs` },
+    { label: 'Components', href: `${baseUrl}docs/components/` },
+    { label: 'Todo', href: `${baseUrl}todo` },
 ];
 
 // Command palette groups
 const commandGroups = {
     Pages: [
-        { title: 'Home', value: '/', icon: 'home' },
-        { title: 'Documentation', value: '/docs', icon: 'book' },
-        { title: 'Components', value: '/docs/components', icon: 'layers' },
-        { title: 'Todo', value: '/todo', icon: 'check-square' },
+        { title: 'Home', value: baseUrl, icon: 'home' },
+        { title: 'Documentation', value: `${baseUrl}docs`, icon: 'book' },
+        { title: 'Components', value: `${baseUrl}docs/components`, icon: 'layers' },
+        { title: 'Todo', value: `${baseUrl}todo`, icon: 'check-square' },
     ],
     Actions: [
         { title: 'Toggle Theme', value: 'action:theme', icon: 'palette' },
@@ -55,7 +56,7 @@ const commandGroups = {
         <Navbar x-data={`{ links: ${JSON.stringify(navLinks)} }`} class="mx-4">
             <a
                 slot="brand"
-                href="/"
+                href={baseUrl}
                 class="flex items-center space-x-2 font-bold text-xl hover:text-primary transition-colors"
             >
                 <span>Basis Stack</span>

@@ -21,7 +21,9 @@ const { title = 'Basis Stack' } = Astro.props;
 
         <!-- Alpine.js with ES6 modules -->
         <script type="module">
-            import '/src/lib/alpine.js';
+            import Alpine from 'alpinejs';
+            window.Alpine = Alpine;
+            Alpine.start();
         </script>
     </head>
     <body>
