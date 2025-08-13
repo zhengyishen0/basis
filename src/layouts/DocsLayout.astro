@@ -59,7 +59,7 @@ const formatComponentName = (str: string) => {
 };
 
 // Prepare data for Alpine.js (flat structure)
-const baseUrl = import.meta.env.BASE_URL;
+const baseUrl = import.meta.env.BASE_URL || '/';
 const docsData = sortedDocs.map(item => ({
     href: `${baseUrl}docs/${item.slug}`,
     title: item.data.title,

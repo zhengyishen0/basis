@@ -20,10 +20,8 @@ const { title = 'Basis Stack' } = Astro.props;
         <title>{title}</title>
 
         <!-- Alpine.js with ES6 modules -->
-        <script type="module">
-            import Alpine from 'alpinejs';
-            window.Alpine = Alpine;
-            Alpine.start();
+        <script>
+            import '/src/lib/alpine.js';
         </script>
     </head>
     <body>
