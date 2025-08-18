@@ -46,7 +46,7 @@ const pageData = `{
 <Layout title={title}>
     <Page maxWidth="full" x-data={pageData} x-init="init()">
         <!-- Navigation Bar -->
-        <Grid class="bg-white border-b p-4">
+        <Grid class="bg-card border-b p-4">
             <div class="flex justify-start">
                 <Button href="../" size="sm"> Back to Home </Button>
             </div>
@@ -150,7 +150,7 @@ const pageData = `{
                                 x-for="item in todo.filteredUserTodos"
                                 x-key="item.id"
                                 padding="sm"
-                                class="border-b border-gray-200 last:border-b-0 hover:bg-gray-50"
+                                class="border-b border-border last:border-b-0 hover:bg-muted/30"
                             >
                                 <Checkbox
                                     :checked="item.is_complete"
@@ -295,7 +295,7 @@ const pageData = `{
                                 x-key="item.id"
                                 padding="sm"
                                 justify="between"
-                                class="border-b border-gray-200 last:border-b-0"
+                                class="border-b border-border last:border-b-0"
                             >
                                 <Checkbox
                                     :checked="item.is_complete"

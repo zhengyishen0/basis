@@ -225,9 +225,9 @@ The main container component for breadcrumb navigation.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `'default' | 'minimal' | 'compact'` | `'default'` | Visual variant of the breadcrumb |
-| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Size of the breadcrumb container |
-| `overflow` | `'fixed' | 'scroll' | 'hidden'` | `'fixed'` | Overflow handling behavior |
+| `variant` | `'default', 'minimal', 'compact'` | `'default'` | Visual variant of the breadcrumb |
+| `size` | `'sm', 'md', 'lg'` | `'md'` | Size of the breadcrumb container |
+| `overflow` | `'fixed', 'scroll', 'hidden'` | `'fixed'` | Overflow handling behavior |
 | `aria-label` | `string` | `'breadcrumb'` | Accessibility label for the navigation |
 | `class` | `string` | - | Additional CSS classes |
 
@@ -240,7 +240,7 @@ Individual breadcrumb item component.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `href` | `string` | - | URL for the breadcrumb link. If omitted, renders as current page |
-| `separator` | `'chevron' | 'slash' | 'dot' | 'arrow'` | `'chevron'` | Type of separator to show after this item |
+| `separator` | `'chevron', 'slash', 'dot', 'arrow'` | `'chevron'` | Type of separator to show after this item |
 | `icon` | `string` | - | Icon identifier to display alongside text |
 | `item` | `object` | - | Dynamic item data for Alpine.js integration |
 | `class` | `string` | - | Additional CSS classes |
@@ -260,7 +260,7 @@ Template component for rendering breadcrumb items dynamically with Alpine.js x-f
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `separator` | `'chevron' | 'slash' | 'dot' | 'arrow'` | `'chevron'` | Separator type for all items |
+| `separator` | `'chevron', 'slash', 'dot', 'arrow'` | `'chevron'` | Separator type for all items |
 | `icon` | `string` | - | Icon for all items |
 | `class` | `string` | - | Additional CSS classes |
 | `x-for` | `string` | - | Alpine.js x-for expression |
@@ -280,10 +280,10 @@ Advanced breadcrumb component with automatic ellipsis handling for long paths.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `'default' | 'minimal' | 'compact'` | `'default'` | Visual variant |
-| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Size of the breadcrumb |
+| `variant` | `'default', 'minimal', 'compact'` | `'default'` | Visual variant |
+| `size` | `'sm', 'md', 'lg'` | `'md'` | Size of the breadcrumb |
 | `maxItems` | `number` | `5` | Maximum items to show before ellipsis |
-| `separator` | `'chevron' | 'slash' | 'dot' | 'arrow'` | `'chevron'` | Separator type |
+| `separator` | `'chevron', 'slash', 'dot', 'arrow'` | `'chevron'` | Separator type |
 | `aria-label` | `string` | `'breadcrumb'` | Accessibility label |
 | `class` | `string` | - | Additional CSS classes |
 

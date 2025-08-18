@@ -477,7 +477,7 @@ Main container for navigation menu with Alpine.js state management.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `className` | `string` | - | Additional CSS classes |
-| `orientation` | `'horizontal' | 'vertical'` | `'horizontal'` | Menu layout orientation |
+| `orientation` | `'horizontal', 'vertical'` | `'horizontal'` | Menu layout orientation |
 | `delayDuration` | `number` | `200` | Delay before closing menu on mouse leave (ms) |
 | `skipDelayDuration` | `number` | `300` | Skip delay when quickly switching menus (ms) |
 
@@ -555,7 +555,7 @@ Button that triggers dropdown menu content.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `'default' | 'ghost' | 'link'` | `'default'` | Visual style variant |
+| `variant` | `'default', 'ghost', 'link'` | `'default'` | Visual style variant |
 | `className` | `string` | - | Additional CSS classes |
 | `disabled` | `boolean` | `false` | Whether the trigger is disabled |
 
@@ -573,7 +573,7 @@ Dropdown content container with layout support.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `layout` | `'list' | 'grid' | 'feature'` | `'grid'` | Content layout type |
+| `layout` | `'list', 'grid', 'feature'` | `'grid'` | Content layout type |
 | `gridColumns` | `number` | `2` | Number of grid columns (grid layout) |
 | `minWidth` | `string` | `'400px'` | Minimum content width |
 | `className` | `string` | - | Additional CSS classes |
@@ -593,7 +593,7 @@ Individual navigation link with hover and focus states.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `href` | `string` | - | Link URL |
-| `variant` | `'default' | 'active'` | `'default'` | Visual style variant |
+| `variant` | `'default', 'active'` | `'default'` | Visual style variant |
 | `active` | `boolean` | `false` | Whether link is currently active |
 | `className` | `string` | - | Additional CSS classes |
 | `disabled` | `boolean` | `false` | Whether link is disabled |
@@ -614,7 +614,7 @@ Template component for rendering navigation links dynamically.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `className` | `string` | - | Additional CSS classes |
-| `variant` | `'default' | 'active'` | `'default'` | Style variant for all links |
+| `variant` | `'default', 'active'` | `'default'` | Style variant for all links |
 | `disabled` | `boolean` | `false` | Whether all links are disabled |
 | `x-for` | `string` | - | Alpine.js x-for expression |
 | `x-key` | `string` | `'link.id'` | Alpine.js x-key expression |
@@ -638,8 +638,8 @@ Special featured content component for prominent menu items.
 | `description` | `string` | - | Featured content description |
 | `image` | `string` | - | Background image URL |
 | `className` | `string` | - | Additional CSS classes |
-| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Size variant |
-| `variant` | `'default' | 'card' | 'minimal'` | `'default'` | Style variant |
+| `size` | `'sm', 'md', 'lg'` | `'md'` | Size variant |
+| `variant` | `'default', 'card', 'minimal'` | `'default'` | Style variant |
 
 #### Slots
 

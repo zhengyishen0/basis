@@ -52,11 +52,11 @@ const commandGroups = {
         x-init="$store.theme.init(); $store.layout.init()"
     >
         <!-- Site-wide Navbar with Alpine.js dynamic rendering -->
-        <Navbar x-data={`{ links: ${JSON.stringify(navLinks)} }`} class="mx-4">
+        <Navbar x-data={`{ links: ${JSON.stringify(navLinks)} }`}>
             <a
                 slot="brand"
                 href="/"
-                class="flex items-center space-x-2 font-bold text-xl hover:text-primary transition-colors"
+                class="flex items-center pl-4 space-x-2 font-bold text-xl hover:text-primary transition-colors"
             >
                 <span>Basis Stack</span>
             </a>
@@ -101,11 +101,6 @@ const commandGroups = {
                         name="lucide:moon"
                         class="w-4 h-4"
                     />
-                    <Icon
-                        x-show="$store.theme.current === 'system'"
-                        name="lucide:laptop"
-                        class="w-4 h-4"
-                    />
                 </Button>
 
                 <!-- Width Toggle -->
@@ -146,7 +141,7 @@ const commandGroups = {
         @toggle-mobile-menu.window="open = !open"
         x-show="open"
         x-transition
-        class="md:hidden border-b bg-background"
+        class="md:hidden border-b bg-card border-border"
     >
         <List>
             <ListItems x-for="link in links" :key="link.href">
@@ -162,7 +157,8 @@ const commandGroups = {
 
     <!-- Main Content -->
     <main
-        class="flex-1 transition-all duration-300"
+        class="flex-1 transition-all duration-300 pt-16"
+        x-data
         :class="$store.layout.wide ? '' : 'container mx-auto px-4'"
     >
         <slot />

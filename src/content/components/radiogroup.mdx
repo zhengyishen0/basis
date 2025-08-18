@@ -160,10 +160,10 @@ The root component that manages state and provides context to child components.
 | `name` | `string` | - | **Required.** Name for the radio group |
 | `selectedOption` | `string` | `''` | Initially selected option value |
 | `disabled` | `boolean` | `false` | Disable the entire group |
-| `orientation` | `'vertical' | 'horizontal'` | `'vertical'` | Layout direction |
-| `maxWidth` | `'sm' | 'md' | 'lg' | 'xl' | 'full'` | `'full'` | Maximum width constraint |
+| `orientation` | `'vertical', 'horizontal'` | `'vertical'` | Layout direction |
+| `maxWidth` | `'sm', 'md', 'lg', 'xl', 'full'` | `'full'` | Maximum width constraint |
 | `centered` | `boolean` | `false` | Center the group horizontally |
-| `overflow` | `'fixed' | 'scroll' | 'hidden'` | `'fixed'` | Overflow behavior |
+| `overflow` | `'fixed', 'scroll', 'hidden'` | `'fixed'` | Overflow behavior |
 | `class` | `string` | - | Additional CSS classes |
 
 ### RadioGroupItem
@@ -176,8 +176,8 @@ Individual radio option container with visual styling and interaction handling.
 |------|------|---------|-------------|
 | `value` | `string` | - | **Required.** Value for this radio option |
 | `disabled` | `boolean` | `false` | Disable this specific option |
-| `layout` | `'vertical' | 'horizontal'` | `'vertical'` | Layout direction for content |
-| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Size of the option container |
+| `layout` | `'vertical', 'horizontal'` | `'vertical'` | Layout direction for content |
+| `size` | `'sm', 'md', 'lg'` | `'md'` | Size of the option container |
 | `option` | `any` | - | Dynamic option data (used with RadioGroupItems) |
 | `class` | `string` | - | Additional CSS classes |
 
@@ -208,9 +208,9 @@ Label component for radio options with multiple visual variants.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `text` | `string` | - | Static text content |
-| `variant` | `'default' | 'emphasized' | 'subtle'` | `'default'` | Visual style variant |
-| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Text size |
-| `overflow` | `'fixed' | 'scroll' | 'hidden'` | `'fixed'` | Text overflow behavior |
+| `variant` | `'default', 'emphasized', 'subtle'` | `'default'` | Visual style variant |
+| `size` | `'sm', 'md', 'lg'` | `'md'` | Text size |
+| `overflow` | `'fixed', 'scroll', 'hidden'` | `'fixed'` | Text overflow behavior |
 | `class` | `string` | - | Additional CSS classes |
 
 #### Slots
@@ -228,9 +228,9 @@ Description component for providing additional context about radio options.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `text` | `string` | - | Static text content |
-| `variant` | `'default' | 'emphasized' | 'subtle'` | `'default'` | Visual style variant |
-| `size` | `'xs' | 'sm' | 'md'` | `'sm'` | Text size |
-| `overflow` | `'fixed' | 'scroll' | 'hidden'` | `'fixed'` | Text overflow behavior |
+| `variant` | `'default', 'emphasized', 'subtle'` | `'default'` | Visual style variant |
+| `size` | `'xs', 'sm', 'md'` | `'sm'` | Text size |
+| `overflow` | `'fixed', 'scroll', 'hidden'` | `'fixed'` | Text overflow behavior |
 | `class` | `string` | - | Additional CSS classes |
 
 #### Slots

@@ -214,10 +214,10 @@ const columns = [
 |------|------|---------|-------------|
 | `data` | `any[]` | `[]` | Array of data objects to display |
 | `columns` | `Column[]` | `[]` | Column definitions (see Column interface below) |
-| `variant` | `'default' | 'bordered' | 'striped' | 'hoverable'` | `'default'` | Table visual variant |
-| `density` | `'compact' | 'normal' | 'comfortable'` | `'normal'` | Row padding density |
-| `size` | `'sm' | 'md' | 'lg'` | `'md'` | Table text size |
-| `interactive` | `'none' | 'hover' | 'click'` | `'none'` | Row interaction behavior |
+| `variant` | `'default', 'bordered', 'striped', 'hoverable'` | `'default'` | Table visual variant |
+| `density` | `'compact', 'normal', 'comfortable'` | `'normal'` | Row padding density |
+| `size` | `'sm', 'md', 'lg'` | `'md'` | Table text size |
+| `interactive` | `'none', 'hover', 'click'` | `'none'` | Row interaction behavior |
 | `responsive` | `boolean` | `true` | Enable horizontal scrolling on small screens |
 | `searchable` | `boolean` | `false` | Enable global search functionality |
 | `selectable` | `boolean` | `false` | Enable row selection with checkboxes |
@@ -235,7 +235,7 @@ const columns = [
 | `label` | `string` | - | Column header text |
 | `sortable` | `boolean` | `false` | Enable sorting for this column |
 | `filterable` | `boolean` | `false` | Include column in global search |
-| `align` | `'left' | 'center' | 'right'` | `'left'` | Text alignment |
+| `align` | `'left', 'center', 'right'` | `'left'` | Text alignment |
 | `width` | `string` | - | Column width (CSS class) |
 | `hidden` | `boolean` | `false` | Initially hide column |
 | `render` | `(value: any, row: any) => string` | - | Custom cell renderer |

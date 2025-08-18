@@ -10,8 +10,8 @@ export interface Props {
 const { sticky = true, class: className, ...alpineProps } = Astro.props;
 
 const headerClasses = cn(
-    sticky && 'sticky top-0 z-50',
-    'w-full border-b bg-background/5 backdrop-blur supports-[backdrop-filter]:bg-background/10'
+    sticky && 'fixed top-0 left-0 right-0 z-50',
+    'w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90'
 );
 
 const navClasses = cn(

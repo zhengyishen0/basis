@@ -121,17 +121,17 @@ import Calendar from '@/components/ui/display/Calendar.astro';
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `mode` | `'single' \| 'range' \| 'multiple'` | `'single'` | Date selection behavior |
-| `variant` | `'default' \| 'outline' \| 'minimal'` | `'default'` | Visual style variant |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Calendar size |
-| `density` | `'compact' \| 'normal' \| 'comfortable'` | `'normal'` | Spacing density |
-| `selected` | `Date \| Date[] \| DateRange` | - | Currently selected date(s) |
+| `mode` | `'single' \, 'range' \, 'multiple'` | `'single'` | Date selection behavior |
+| `variant` | `'default' \, 'outline' \, 'minimal'` | `'default'` | Visual style variant |
+| `size` | `'sm' \, 'md' \, 'lg'` | `'md'` | Calendar size |
+| `density` | `'compact' \, 'normal' \, 'comfortable'` | `'normal'` | Spacing density |
+| `selected` | `Date \, Date[] \, DateRange` | - | Currently selected date(s) |
 | `onSelect` | `string` | `'handleDateSelect'` | Alpine.js function name for selection |
 | `disabled` | `string` | - | Alpine.js function for disabled dates |
 | `minDate` | `Date` | - | Minimum selectable date |
 | `maxDate` | `Date` | - | Maximum selectable date |
 | `numberOfMonths` | `number` | `1` | Number of months to display |
-| `captionLayout` | `'buttons' \| 'dropdown'` | `'buttons'` | Navigation type |
+| `captionLayout` | `'buttons' \, 'dropdown'` | `'buttons'` | Navigation type |
 | `fromYear` | `number` | `currentYear - 10` | Start year for dropdown |
 | `toYear` | `number` | `currentYear + 10` | End year for dropdown |
 | `weekStartsOn` | `0-6` | `0` | First day of week (0 = Sunday) |

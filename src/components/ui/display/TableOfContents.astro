@@ -206,7 +206,7 @@ const headingsJson = JSON.stringify(headings);
 >
   <div class="space-y-2 pb-4">
     <p class="font-medium text-sm">{title}</p>
-    <ul class="m-0 list-none border-l text-sm">
+    <ul class="m-0 list-none border-l border-border text-sm">
       <template x-for="(heading, index) in headings" :key="heading.slug">
         <li 
           class="mt-0 overflow-hidden transition-all duration-200"

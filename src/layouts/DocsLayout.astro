@@ -91,7 +91,7 @@ const breadcrumbItems = slug
     <div class="flex min-h-[calc(100vh-3.5rem)]">
         <!-- Left Sidebar -->
         <aside
-            class="w-64 border-r bg-background/5 backdrop-blur supports-[backdrop-filter]:bg-background/10 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-6 px-4"
+            class="w-64 bg-muted/30 backdrop-blur supports-[backdrop-filter]:bg-muted/50 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-6 pl-4 pr-6 relative after:absolute after:right-0 after:top-6 after:bottom-6 after:w-px after:bg-border"
             x-data={`{
                 docsData: ${JSON.stringify(docsData)},
                 componentsData: ${JSON.stringify(componentsData)},
@@ -186,7 +186,14 @@ const breadcrumbItems = slug
                     prose-pre:max-h-[500px] prose-pre:overflow-auto
                     [&_pre::-webkit-scrollbar]:w-2 [&_pre::-webkit-scrollbar]:h-2
                     [&_pre::-webkit-scrollbar-thumb]:bg-muted-foreground
-                    [&_pre::-webkit-scrollbar-thumb]:rounded-full"
+                    [&_pre::-webkit-scrollbar-thumb]:rounded-full
+                    prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground
+                    prose-strong:text-foreground prose-code:text-foreground prose-code:bg-muted/30
+                    prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+                    prose-blockquote:text-muted-foreground prose-blockquote:border-border
+                    prose-hr:border-border prose-thead:border-border prose-tbody:text-foreground
+                    prose-table:text-foreground prose-th:text-foreground prose-td:text-foreground
+                    prose-th:border-border prose-td:border-border"
                 >
                     <slot />
                 </div>
@@ -219,17 +226,17 @@ const breadcrumbItems = slug
                     </Row>
                 </Section>
             </main>
-
-            <!-- Right Sidebar (Table of Contents) -->
-            <aside
-                class="hidden xl:block w-64 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-8 pr-4"
-            >
-                <TableOfContents
-                    containerSelector="main"
-                    title="On this page"
-                    class="text-sm"
-                />
-            </aside>
         </div>
+
+        <!-- Right Sidebar (Table of Contents) -->
+        <aside
+            class="hidden xl:block w-64 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-8 pr-4"
+        >
+            <TableOfContents
+                containerSelector="main"
+                title="On this page"
+                class="text-sm"
+            />
+        </aside>
     </div>
 </SiteLayout>

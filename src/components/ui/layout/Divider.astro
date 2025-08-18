@@ -40,10 +40,8 @@ const classes = cn(
     'inline-block align-top',
   ],
   
-  // Color variants
-  color === 'gray' && 'bg-gray-200',
-  color === 'neutral' && 'bg-neutral-200',
-  color === 'slate' && 'bg-slate-200',
+  // Color variants - using theme-aware border color
+  'bg-border',
   
   className
 );
