@@ -5,14 +5,46 @@ import { getEntry } from 'astro:content';
 // UI Components for better styling
 import Badge from '@/components/ui/feedback/Badge.astro';
 import Button from '@/components/ui/forms/Button.astro';
-import Avatar from '@/components/ui/display/Avatar.astro';
-import { Card, CardHeader, CardContent } from '@/components/ui/display/card';
+import {
+    Card,
+    CardHeader,
+    CardContent,
+    CardFooter,
+} from '@/components/ui/display/card';
 import Text from '@/components/ui/display/Text.astro';
-import Row from '@/components/ui/layout/Row.astro';
-import Grid from '@/components/ui/layout/Grid.astro';
-import GridItems from '@/components/ui/layout/GridItems.astro';
-import Section from '@/components/ui/layout/Section.astro';
-import Page from '@/components/ui/layout/Page.astro';
+import { Column, Row, Section, Page } from '@/components/ui/layout';
+
+// Component showcase imports
+import Calendar from '@/components/ui/display/Calendar.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
+import VideoPlayer from '@/components/ui/display/VideoPlayer.astro';
+import {
+    Accordion,
+    AccordionItem,
+    AccordionTrigger,
+    AccordionContent,
+} from '@/components/ui/display/accordion';
+import {
+    RadioGroup,
+    RadioGroupItem,
+    RadioGroupLabel,
+} from '@/components/ui/forms/radiogroup';
+import {
+    Command,
+    CommandFooter,
+    CommandGroups,
+    CommandItems,
+    CommandShortcut,
+    CommandInput,
+    CommandTrigger,
+} from '@/components/ui/overlay/command';
+import MenuContainer from '@/components/ui/overlay/menu/MenuContainer.astro';
+
+// Import hero image for card demo
+import heroImage from '@/assets/hero-image.png';
 
 // Import GitHub icon
 import githubIconUrl from '@/assets/github-icon-white.svg?url';
@@ -20,20 +52,70 @@ import githubIconUrl from '@/assets/github-icon-white.svg?url';
 // Import essential styles
 const homeContent = await getEntry('pages', 'home');
 const pageData = JSON.stringify(homeContent?.data || []);
+
+const commandItems = {
+    suggestions: [
+        {
+            title: 'Calendar',
+            value: 'calendar',
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4m8-4v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>',
+            show: true,
+            shortcut: '⌘C',
+        },
+        {
+            title: 'Search Emoji',
+            value: 'emoji',
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg>',
+            show: true,
+            shortcut: '⌘E',
+        },
+        {
+            title: 'Calculator',
+            value: 'calculator',
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="m9 10-1 4h1.5l.5-2h1l.5 2H13l-1-4zm3 0h1v4h-1v-4z"/></svg>',
+            show: true,
+            shortcut: '⌘Q',
+        },
+    ],
+    settings: [
+        {
+            title: 'Profile',
+            value: 'profile',
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+            shortcut: '⌘P',
+            show: true,
+        },
+        {
+            title: 'Billing',
+            value: 'billing',
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>',
+            shortcut: '⌘B',
+        },
+        {
+            title: 'Settings',
+            value: 'settings',
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>',
+            shortcut: '⌘S',
+            show: true,
+        },
+    ],
+};
+
+const commandItemsJson = JSON.stringify(commandItems);
 ---
 
 <SiteLayout>
     <Page class="min-h-screen" x-data={pageData}>
         <!-- Hero Section -->
         <Section
-            class="text-center py-16 px-4 bg-gradient-to-br from-muted/30 via-background to-muted/10 relative overflow-hidden min-h-[60vh] flex flex-col justify-center items-center gap-4"
+            class="text-center py-4 px-4 bg-gradient-to-br from-muted/30 via-background to-muted/10 relative overflow-hidden min-h-[60vh] flex flex-col justify-center items-center gap-6"
         >
             <Text
                 variant="hero-title"
-                class="mb-4 relative z-10 drop-shadow-sm tracking-tight"
+                class="relative z-10 drop-shadow-sm tracking-tight"
             >
                 <span class="relative group">
-                    Basis
+                    Basis UI
                     <span
                         class="absolute bottom-[-8px] left-[-5%] w-[110%] h-[5px] bg-primary rounded-full origin-left scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100 transition-all duration-700 ease-out"
                     ></span>
@@ -41,66 +123,180 @@ const pageData = JSON.stringify(homeContent?.data || []);
             </Text>
             <Text
                 variant="hero-description"
-                class="mb-6 max-w-2xl mx-auto relative z-10"
+                class="max-w-2xl mx-auto relative z-10"
             >
                 Build on Fundamentals - A methodology for modern web development
                 using basic tools and clear boundaries
             </Text>
-            <Row class="flex justify-center gap-2 flex-wrap mb-6">
-                <Badge size="sm">Astro</Badge>
-                <Badge size="sm">Alpine</Badge>
-                <Badge size="sm">Supabase</Badge>
+            <Row class="flex justify-center gap-2 flex-wrap">
+                <Badge size="sm" variant="secondary">Astro</Badge>
+                <Badge size="sm" variant="secondary">Alpine</Badge>
+                <Badge size="sm" variant="secondary">Supabase</Badge>
             </Row>
             <Row class="flex justify-center gap-4">
-                <Button href="/todo" size="lg"> Todo </Button>
-                <Button href="/demo" size="lg"> Demo </Button>
+                <Button href="/docs" size="lg"> Get Started </Button>
+                <Button href="/components" size="lg" variant="ghost"
+                    >Components</Button
+                >
             </Row>
         </Section>
 
-        <!-- Features Section -->
+        <!-- Component Showcase Section -->
         <Section class="mx-auto py-16 px-4 bg-muted/30 flex flex-col gap-6">
-            <Text
-                variant="section-title"
-                class="text-center mb-8 tracking-tight"
+            <Calendar
+                size="md"
+                density="compact"
+                numberOfMonths={2}
+                mode="range"
+            />
+
+            <Tabs defaultValue="tab1">
+                <TabsList slot="list" variant="pills" class="mb-4">
+                    <TabsTrigger value="tab1">Home</TabsTrigger>
+                    <TabsTrigger value="tab2">About</TabsTrigger>
+                    <TabsTrigger value="tab3">Contact</TabsTrigger>
+                </TabsList>
+                <TabsContent value="tab1" preview>
+                    Welcome to the home tab
+                </TabsContent>
+                <TabsContent value="tab2" preview>
+                    Learn more about us
+                </TabsContent>
+                <TabsContent value="tab3" preview>
+                    Get in touch with us
+                </TabsContent>
+            </Tabs>
+
+            <div
+                x-data={`{
+                    commandSearch: '',
+                    commandActiveIndex: 0,
+                    commandItems: ${commandItemsJson}
+                }`}
+                class="w-full max-w-md mx-auto"
             >
-                What Makes <span class="relative font-extrabold">
-                    <span class="relative group">
-                        Basis
-                        <span
-                            class="absolute bottom-[-2px] left-[-8%] w-[116%] h-[3px] bg-black rounded-full origin-left scale-x-0 opacity-0 animate-pulse delay-300 group-hover:scale-x-100 group-hover:opacity-100 transition-all duration-700 ease-out"
-                        ></span>
-                    </span>
-                </span> Different
-            </Text>
-            <Grid columns="3" gap="sm">
-                <GridItems x-for="feature in features" x-key="feature.name">
-                    <Card
-                        variant="default"
-                        elevation="elevated"
-                        interactive="hover"
-                        effect="lift"
-                        padding="lg"
-                        size="fixed"
-                        height="16rem"
-                        width="24rem"
+                <MenuContainer
+                    items={commandItems}
+                    searchEnabled={true}
+                    keyboardNav={false}
+                    searchModel="commandSearch"
+                    activeModel="commandActiveIndex"
+                    itemsModel="commandItems"
+                    onSelect="alert('Selected: ' + item.title)"
+                    variant="default"
+                    size="md"
+                    class="w-full"
+                >
+                    <CommandInput
+                        slot="input"
+                        placeholder="Type a command or search..."
+                    />
+                    <CommandGroups
+                        x-for="[categoryName, categoryItems] in Object.entries(filteredItems)"
+                        x-key="categoryName"
+                        x-text="categoryName.charAt(0).toUpperCase() + categoryName.slice(1)"
+                        showDivider={true}
                     >
-                        <CardHeader>
-                            <Badge variant="default" x-text="feature.name" />
-                            <Text
-                                variant="feature-title"
-                                x-text="feature.title"
-                                class="my-2"
+                        <CommandItems
+                            x-for="item in categoryItems"
+                            x-key="item.value"
+                        >
+                            <!-- Icon -->
+                            <div
+                                slot="icon"
+                                class="mr-2 h-4 w-4 shrink-0"
+                                x-html="item.icon"
+                            >
+                            </div>
+
+                            <!-- Title -->
+                            <span x-text="item.title"></span>
+
+                            <!-- Keyboard shortcut -->
+                            <CommandShortcut
+                                slot="shortcut"
+                                x-text="item.shortcut"
                             />
-                        </CardHeader>
-                        <CardContent>
-                            <Text
-                                variant="feature-description"
-                                x-text="feature.description"
-                            />
-                        </CardContent>
-                    </Card>
-                </GridItems>
-            </Grid>
+                        </CommandItems>
+                    </CommandGroups>
+                    <CommandFooter slot="footer" />
+                </MenuContainer>
+            </div>
+
+            <Card variant="outline" class="overflow-hidden">
+                <img
+                    src={heroImage.src}
+                    alt="Hero preview"
+                    class="w-full h-32 object-cover"
+                />
+                <CardHeader>
+                    <Text variant="body" class="font-semibold"
+                        >Modern Web Development</Text
+                    >
+                </CardHeader>
+                <CardContent>
+                    <Text variant="body" class="text-sm text-muted-foreground">
+                        Build beautiful applications with our comprehensive
+                        component library and development methodology.
+                    </Text>
+                </CardContent>
+                <CardFooter justify="start">
+                    <Button size="sm" variant="default">Learn More</Button>
+                </CardFooter>
+            </Card>
+
+            <Accordion maxWidth="full" centered={false}>
+                <AccordionItem>
+                    <AccordionTrigger>What is Basis?</AccordionTrigger>
+                    <AccordionContent>
+                        A modern web development methodology using Astro,
+                        Alpine.js, and Supabase.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem>
+                    <AccordionTrigger>Why choose Basis?</AccordionTrigger>
+                    <AccordionContent>
+                        Simple, fast, and built on fundamentals with clear
+                        boundaries.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem>
+                    <AccordionTrigger>How do I get started?</AccordionTrigger>
+                    <AccordionContent>
+                        Clone the repository, install dependencies, and start
+                        building with our component library.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem>
+                    <AccordionTrigger>Is it production ready?</AccordionTrigger>
+                    <AccordionContent>
+                        Yes! Basis is designed for production use with
+                        TypeScript support and comprehensive testing.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+            <Row>
+                <RadioGroup
+                    name="plan"
+                    selectedOption="basic"
+                    orientation="vertical"
+                >
+                    <RadioGroupItem value="basic">
+                        <RadioGroupLabel>Basic Plan</RadioGroupLabel>
+                    </RadioGroupItem>
+                    <RadioGroupItem value="pro">
+                        <RadioGroupLabel>Pro Plan</RadioGroupLabel>
+                    </RadioGroupItem>
+                    <RadioGroupItem value="enterprise">
+                        <RadioGroupLabel>Enterprise</RadioGroupLabel>
+                    </RadioGroupItem>
+                </RadioGroup>
+                <VideoPlayer
+                    youtubeId="jfKfPfyJRdk"
+                    shape="rounded"
+                    aspectRatio="16/9"
+                />
+            </Row>
         </Section>
     </Page>
 </SiteLayout>

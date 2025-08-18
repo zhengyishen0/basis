@@ -23,7 +23,12 @@ export interface Props extends VariantProps<typeof tabsContentVariants> {
     [key: string]: any; // Alpine.js pass-through
 }
 
-const { value, preview = false, class: className, ...alpineProps } = Astro.props;
+const {
+    value,
+    preview = false,
+    class: className,
+    ...alpineProps
+} = Astro.props;
 ---
 
 <div
@@ -37,11 +42,16 @@ const { value, preview = false, class: className, ...alpineProps } = Astro.props
     data-value={value}
     {...alpineProps}
 >
-    {preview ? (
-        <Card elevation="flat" class={cn("w-full h-[400px] overflow-y-auto p-8", className)}>
+    {
+        preview ? (
+            <Card
+                elevation="flat"
+                class={cn('w-full h-full overflow-y-auto p-8', className)}
+            >
+                <slot />
+            </Card>
+        ) : (
             <slot />
-        </Card>
-    ) : (
-        <slot />
-    )}
+        )
+    }
 </div>
