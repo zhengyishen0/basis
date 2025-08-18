@@ -33,23 +33,24 @@ const {
     )}
     x-id="['checkbox']"
     :for="$id('checkbox')"
-    x-data={`{ isChecked: ${checked}, isIndeterminate: ${indeterminate}, isDisabled: ${disabled} }`}
+    x-data={`{ 
+        isIndeterminate: ${indeterminate}, 
+        isDisabled: ${disabled}
+    }`}
 >
     <!-- Native input for accessibility and form handling -->
     <input
         type="checkbox"
         :id="$id('checkbox')"
         name={name || id}
-        :checked="isChecked"
         :disabled="isDisabled"
         class="sr-only peer"
-        x-model="isChecked"
         {...alpineProps}
     />
 
     <!-- Checkbox visual indicator -->
     <CheckboxIndicator
-        :checked="isChecked"
+        {...alpineProps}
         :indeterminate="isIndeterminate"
         :disabled="isDisabled"
     />

@@ -2,6 +2,7 @@
 import Layout from './Layout.astro';
 import Navbar from '@/components/ui/display/Navbar.astro';
 import Button from '@/components/ui/forms/Button.astro';
+import Badge from '@/components/ui/feedback/Badge.astro';
 import { Icon } from 'astro-icon/components';
 import { List, ListItems, Row } from '@/components/ui/layout';
 import {
@@ -58,7 +59,8 @@ const commandGroups = {
                 href="/"
                 class="flex items-center pl-4 space-x-2 font-bold text-xl hover:text-primary transition-colors"
             >
-                <span>Basis Stack</span>
+                <span>Basis UI</span>
+                <Badge size="xs">Beta</Badge>
             </a>
 
             <Row slot="links">
@@ -73,17 +75,6 @@ const commandGroups = {
             </Row>
 
             <Row slot="actions">
-                <!-- GitHub Icon Button -->
-                <Button
-                    href="https://github.com/zhengyishen0/basis-ui"
-                    target="_blank"
-                    variant="ghost"
-                    size="icon"
-                    title="GitHub"
-                >
-                    <Icon name="lucide:github" class="w-4 h-4" />
-                </Button>
-
                 <!-- Theme Toggle -->
                 <Button
                     variant="ghost"
@@ -112,14 +103,25 @@ const commandGroups = {
                 >
                     <Icon
                         x-show="!$store.layout.wide"
-                        name="lucide:expand"
+                        name="lucide:gallery-horizontal"
                         class="w-4 h-4"
                     />
                     <Icon
                         x-show="$store.layout.wide"
-                        name="lucide:shrink"
+                        name="lucide:gallery-horizontal"
                         class="w-4 h-4"
                     />
+                </Button>
+
+                <!-- GitHub Icon Button -->
+                <Button
+                    href="https://github.com/zhengyishen0/basis-ui"
+                    target="_blank"
+                    variant="ghost"
+                    size="icon"
+                    title="GitHub"
+                >
+                    <Icon name="lucide:github" class="w-4 h-4" />
                 </Button>
 
                 <!-- Mobile menu button -->

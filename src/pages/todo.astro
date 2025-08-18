@@ -1,5 +1,5 @@
 ---
-import Layout from '@/layouts/Layout.astro';
+import SiteLayout from '@/layouts/SiteLayout.astro';
 import Badge from '@/components/ui/feedback/Badge.astro';
 import Button from '@/components/ui/forms/Button.astro';
 import {
@@ -14,9 +14,8 @@ import {
     ListItems,
     Page,
     Row,
+    Column,
     Conditional,
-    Spacer,
-    Grid,
 } from '@/components/ui/layout';
 import { Empty, Loading, Error } from '@/components/ui/feedback';
 import Text from '@/components/ui/display/Text.astro';
@@ -43,21 +42,8 @@ const pageData = `{
         }`;
 ---
 
-<Layout title={title}>
+<SiteLayout title={title}>
     <Page maxWidth="full" x-data={pageData} x-init="init()">
-        <!-- Navigation Bar -->
-        <Grid class="bg-card border-b p-4">
-            <div class="flex justify-start">
-                <Button href="../" size="sm"> Back to Home </Button>
-            </div>
-
-            <Text variant="section-title" class="flex justify-center">
-                Supabase Todo App
-            </Text>
-
-            <Spacer />
-        </Grid>
-
         <!-- Main Content -->
         <Conditional
             condition="auth.isAuthenticated"
@@ -194,39 +180,41 @@ const pageData = `{
                     </CardContent>
                     <CardFooter>
                         <!-- Stats -->
-                        <div x-show="todo.userTodos.length > 0">
-                            <Text
-                                variant="body-small"
-                                x-text="todo.userActiveCount"
-                            />
-                            active,
-                            <Text
-                                variant="body-small"
-                                x-text="todo.userCompletedCount"
-                            /> completed
-                        </div>
+                        <Column class="items-center">
+                            <div x-show="todo.userTodos.length > 0">
+                                <Text
+                                    variant="body-small"
+                                    x-text="todo.userActiveCount"
+                                />
+                                active,
+                                <Text
+                                    variant="body-small"
+                                    x-text="todo.userCompletedCount"
+                                /> completed
+                            </div>
 
-                        <!-- Add Todo Form -->
-                        <form
-                            @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''"
-                            class="w-full"
-                        >
-                            <Row gap="xs" size="full">
-                                <TextInput
-                                    x-ref="todoInput"
-                                    type="text"
-                                    placeholder="Add a new todo..."
-                                    required
-                                />
-                                <Button
-                                    type="submit"
-                                    :disabled="todo.loading"
-                                    size="sm"
-                                    variant="default"
-                                    x-text="todo.loading ? '...' : 'Add'"
-                                />
-                            </Row>
-                        </form>
+                            <!-- Add Todo Form -->
+                            <form
+                                @submit.prevent="todo.addTodo($refs.todoInput.value); $refs.todoInput.value = ''"
+                                class="w-full"
+                            >
+                                <Row gap="xs" size="full">
+                                    <TextInput
+                                        x-ref="todoInput"
+                                        type="text"
+                                        placeholder="Add a new todo..."
+                                        required
+                                    />
+                                    <Button
+                                        type="submit"
+                                        :disabled="todo.loading"
+                                        size="sm"
+                                        variant="default"
+                                        x-text="todo.loading ? '...' : 'Add'"
+                                    />
+                                </Row>
+                            </form>
+                        </Column>
                     </CardFooter>
                 </Card>
 
@@ -299,7 +287,7 @@ const pageData = `{
                             >
                                 <Checkbox
                                     :checked="item.is_complete"
-                                    style="pointer-events: none;"
+                                    disabled={true}
                                 />
                                 <Text
                                     class="min-w-0 w-full"
@@ -341,7 +329,7 @@ const pageData = `{
                             </ListItems>
                         </List>
                     </CardContent>
-                    <CardFooter>
+                    <CardFooter justify="center">
                         <!-- Stats -->
                         <div x-show="todo.allTodos.length > 0">
                             <Text
@@ -377,4 +365,4 @@ const pageData = `{
             });
         }
     </script>
-</Layout>
+</SiteLayout>
