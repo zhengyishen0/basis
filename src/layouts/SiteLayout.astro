@@ -125,15 +125,14 @@ const commandGroups = {
                 </Button>
 
                 <!-- Mobile menu button -->
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    class="md:hidden"
+                <button
+                    class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
                     x-on:click="$store.layout.toggleMobileMenu()"
                     data-mobile-menu-trigger
+                    type="button"
                 >
                     <Icon name="lucide:menu" class="w-5 h-5" />
-                </Button>
+                </button>
             </Row>
         </Navbar>
     </div>
