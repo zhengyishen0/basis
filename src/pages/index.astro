@@ -43,6 +43,7 @@ import {
 } from '@/components/ui/overlay/command';
 import MenuContainer from '@/components/ui/overlay/menu/MenuContainer.astro';
 import Image from '@/components/ui/display/Image.astro';
+import Input from '@/components/ui/forms/Input.astro';
 
 // Import hero image for card demo
 import heroImage from '@/assets/hero-image.png';
@@ -157,70 +158,85 @@ const commandItemsJson = JSON.stringify(commandItems);
                 </Text>
             </div>
 
-            <!-- True Bento-style grid with content-driven tile sizes -->
-            <div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 max-w-7xl mx-auto auto-rows-[minmax(120px,auto)]">
+            <!-- 4+4+6 Column Bento Layout -->
+            <div class="grid grid-cols-4 md:grid-cols-14 gap-4 max-w-7xl mx-auto">
                 
-                <!-- Video Player (wide, short - like revenue chart) 4x2 -->
-                <div class="col-span-4 md:col-span-4 lg:col-span-4 row-span-2 bg-gradient-to-br from-green-50/50 to-emerald-50/50 dark:from-green-950/20 dark:to-emerald-950/20 p-4 rounded-xl border border-green-100/50 dark:border-green-800/30 shadow-sm hover:shadow-md transition-all duration-300">
-                    <div class="mb-3">
-                        <Text variant="body" class="font-medium text-sm text-green-700 dark:text-green-300 mb-1">Video Player</Text>
-                        <Text variant="body" class="text-xs text-green-600/70 dark:text-green-400/70">Rich media playback</Text>
-                    </div>
-                    <div class="aspect-video">
-                        <VideoPlayer youtubeId="jfKfPfyJRdk" shape="rounded" />
-                    </div>
+                <!-- Column 1 (4 cols) -->
+                <div class="col-span-4 space-y-4">
+                    <!-- Login Card -->
+                    <Card class="p-6 bg-white dark:bg-card border shadow-sm hover:shadow-md transition-all duration-300">
+                        <CardHeader class="pb-4">
+                            <Text variant="body" class="font-semibold text-lg text-foreground">Sign in to your account</Text>
+                            <Text variant="body" class="text-sm text-muted-foreground">Welcome back! Please enter your details.</Text>
+                        </CardHeader>
+                        <CardContent class="space-y-4">
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-foreground" for="email">Email</label>
+                                <Input type="email" id="email" placeholder="Enter your email" class="w-full" />
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-foreground" for="password">Password</label>
+                                <Input type="password" id="password" placeholder="Enter your password" class="w-full" />
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <label class="flex items-center space-x-2 text-sm">
+                                    <input type="checkbox" class="rounded border-input" />
+                                    <span class="text-muted-foreground">Remember me</span>
+                                </label>
+                                <a href="#" class="text-sm text-primary hover:underline">Forgot password?</a>
+                            </div>
+                        </CardContent>
+                        <CardFooter class="pt-4">
+                            <Button class="w-full">Sign in</Button>
+                        </CardFooter>
+                    </Card>
+
+                    <!-- FAQ Accordion -->
+                    <Card class="p-6 bg-white dark:bg-card border shadow-sm hover:shadow-md transition-all duration-300">
+                        <CardHeader class="pb-4">
+                            <Text variant="body" class="font-semibold text-lg text-foreground">Frequently Asked Questions</Text>
+                            <Text variant="body" class="text-sm text-muted-foreground">Find answers to common questions</Text>
+                        </CardHeader>
+                        <CardContent>
+                            <Accordion maxWidth="full" centered={false}>
+                                <AccordionItem>
+                                    <AccordionTrigger>How do I reset my password?</AccordionTrigger>
+                                    <AccordionContent>
+                                        Click "Forgot password?" on the login page and follow the instructions sent to your email.
+                                    </AccordionContent>
+                                </AccordionItem>
+                                <AccordionItem>
+                                    <AccordionTrigger>What payment methods do you accept?</AccordionTrigger>
+                                    <AccordionContent>
+                                        We accept all major credit cards, PayPal, and bank transfers for enterprise plans.
+                                    </AccordionContent>
+                                </AccordionItem>
+                                <AccordionItem>
+                                    <AccordionTrigger>Can I cancel my subscription anytime?</AccordionTrigger>
+                                    <AccordionContent>
+                                        Yes, you can cancel your subscription at any time from your account settings. No questions asked.
+                                    </AccordionContent>
+                                </AccordionItem>
+                            </Accordion>
+                        </CardContent>
+                    </Card>
                 </div>
 
-                <!-- Calendar (square - like in screenshot) 3x3 -->
-                <div class="col-span-4 md:col-span-3 lg:col-span-3 row-span-3 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-950/20 dark:to-indigo-950/20 p-4 rounded-xl border border-blue-100/50 dark:border-blue-800/30 shadow-sm hover:shadow-md transition-all duration-300">
-                    <div class="mb-3">
-                        <Text variant="body" class="font-medium text-sm text-blue-700 dark:text-blue-300 mb-1">Calendar</Text>
-                        <Text variant="body" class="text-xs text-blue-600/70 dark:text-blue-400/70">Interactive date selection</Text>
-                    </div>
-                    <div class="scale-90 origin-top-left">
-                        <Calendar size="md" numberOfMonths={1} mode="range" />
-                    </div>
-                </div>
-
-                <!-- Radio Group (tall, narrow - like Move Goal) 2x3 -->
-                <Card class="col-span-4 md:col-span-2 lg:col-span-2 row-span-3 p-4 bg-gradient-to-br from-rose-50/50 to-pink-50/50 dark:from-rose-950/20 dark:to-pink-950/20 border border-rose-100/50 dark:border-rose-800/30 shadow-sm hover:shadow-md transition-all duration-300">
-                    <CardHeader class="pb-3">
-                        <Text variant="body" class="font-medium text-sm text-rose-700 dark:text-rose-300">Radio Group</Text>
-                        <Text variant="body" class="text-xs text-rose-600/70 dark:text-rose-400/70">Single selection</Text>
-                    </CardHeader>
-                    <CardContent class="flex-1">
-                        <RadioGroup
-                            name="plan"
-                            selectedOption="basic"
-                            orientation="vertical"
-                        >
-                            <RadioGroupItem value="basic">
-                                <RadioGroupLabel>Basic</RadioGroupLabel>
-                            </RadioGroupItem>
-                            <RadioGroupItem value="pro">
-                                <RadioGroupLabel>Pro</RadioGroupLabel>
-                            </RadioGroupItem>
-                            <RadioGroupItem value="enterprise">
-                                <RadioGroupLabel>Enterprise</RadioGroupLabel>
-                            </RadioGroupItem>
-                        </RadioGroup>
-                    </CardContent>
-                </Card>
-
-                <!-- Command Palette (wide, medium height - like Exercise Minutes) 5x2 -->
-                <div
-                    x-data={`{
-                                commandSearch: '',
-                                commandActiveIndex: 0,
-                                commandItems: ${commandItemsJson}
-                            }`}
-                    class="col-span-4 md:col-span-5 lg:col-span-5 row-span-2 bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-950/20 dark:to-pink-950/20 p-4 rounded-xl border border-purple-100/50 dark:border-purple-800/30 shadow-sm hover:shadow-md transition-all duration-300"
-                >
-                    <div class="mb-3">
-                        <Text variant="body" class="font-medium text-sm text-purple-700 dark:text-purple-300 mb-1">Command Palette</Text>
-                        <Text variant="body" class="text-xs text-purple-600/70 dark:text-purple-400/70">Quick action menu</Text>
-                    </div>
-                    <div class="h-32 overflow-hidden">
+                <!-- Column 2 (4 cols) -->
+                <div class="col-span-4 space-y-4">
+                    <!-- Command Palette -->
+                    <div
+                        x-data={`{
+                                    commandSearch: '',
+                                    commandActiveIndex: 0,
+                                    commandItems: ${commandItemsJson}
+                                }`}
+                        class="p-6 bg-white dark:bg-card border rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
+                    >
+                        <div class="mb-4">
+                            <Text variant="body" class="font-semibold text-lg text-foreground mb-1">Quick Actions</Text>
+                            <Text variant="body" class="text-sm text-muted-foreground">Type to search for commands and shortcuts</Text>
+                        </div>
                         <MenuContainer
                             items={commandItems}
                             searchEnabled={true}
@@ -230,21 +246,21 @@ const commandItemsJson = JSON.stringify(commandItems);
                             itemsModel="commandItems"
                             onSelect="alert('Selected: ' + item.title)"
                             variant="default"
-                            size="sm"
-                            class="w-full h-full"
+                            size="md"
+                            class="w-full"
                         >
                             <CommandInput
                                 slot="input"
-                                placeholder="Type a command..."
+                                placeholder="Type a command or search..."
                             />
                             <CommandGroups
                                 x-for="[categoryName, categoryItems] in Object.entries(filteredItems)"
                                 x-key="categoryName"
                                 x-text="categoryName.charAt(0).toUpperCase() + categoryName.slice(1)"
-                                showDivider={false}
+                                showDivider={true}
                             >
                                 <CommandItems
-                                    x-for="item in categoryItems.slice(0, 3)"
+                                    x-for="item in categoryItems"
                                     x-key="item.value"
                                 >
                                     <div
@@ -260,79 +276,200 @@ const commandItemsJson = JSON.stringify(commandItems);
                                     />
                                 </CommandItems>
                             </CommandGroups>
+                            <CommandFooter slot="footer" />
                         </MenuContainer>
                     </div>
+
+                    <!-- Dashboard Tabs -->
+                    <Card class="p-6 bg-white dark:bg-card border shadow-sm hover:shadow-md transition-all duration-300">
+                        <CardHeader class="pb-4">
+                            <Text variant="body" class="font-semibold text-lg text-foreground">Dashboard</Text>
+                            <Text variant="body" class="text-sm text-muted-foreground">Monitor your application performance</Text>
+                        </CardHeader>
+                        <CardContent>
+                            <Tabs defaultValue="overview">
+                                <TabsList slot="list" variant="pills" class="mb-4">
+                                    <TabsTrigger value="overview">Overview</TabsTrigger>
+                                    <TabsTrigger value="analytics">Analytics</TabsTrigger>
+                                    <TabsTrigger value="settings">Settings</TabsTrigger>
+                                </TabsList>
+                                <TabsContent value="overview" preview class="h-32">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-2xl font-bold">2,350</p>
+                                            <p class="text-sm text-muted-foreground">Active Users</p>
+                                        </div>
+                                        <div class="text-green-500">
+                                            <span class="text-sm">+12.5%</span>
+                                        </div>
+                                    </div>
+                                </TabsContent>
+                                <TabsContent value="analytics" preview class="h-32">
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between">
+                                            <span class="text-sm">Page Views</span>
+                                            <span class="text-sm font-medium">45,231</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-sm">Bounce Rate</span>
+                                            <span class="text-sm font-medium">23.1%</span>
+                                        </div>
+                                    </div>
+                                </TabsContent>
+                                <TabsContent value="settings" preview class="h-32">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm">Notifications</span>
+                                            <input type="checkbox" checked class="rounded" />
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm">Dark Mode</span>
+                                            <input type="checkbox" class="rounded" />
+                                        </div>
+                                    </div>
+                                </TabsContent>
+                            </Tabs>
+                        </CardContent>
+                    </Card>
                 </div>
 
-                <!-- Accordion (medium rectangle - like Upgrade subscription) 3x2 -->
-                <Card class="col-span-4 md:col-span-3 lg:col-span-3 row-span-2 p-4 bg-gradient-to-br from-amber-50/50 to-orange-50/50 dark:from-amber-950/20 dark:to-orange-950/20 border border-amber-100/50 dark:border-amber-800/30 shadow-sm hover:shadow-md transition-all duration-300">
-                    <CardHeader class="pb-3">
-                        <Text variant="body" class="font-medium text-sm text-amber-700 dark:text-amber-300">Accordion</Text>
-                        <Text variant="body" class="text-xs text-amber-600/70 dark:text-amber-400/70">Collapsible sections</Text>
-                    </CardHeader>
-                    <CardContent class="flex-1">
-                        <Accordion maxWidth="full" centered={false}>
-                            <AccordionItem>
-                                <AccordionTrigger>What is Basis?</AccordionTrigger>
-                                <AccordionContent>
-                                    A modern web development methodology.
-                                </AccordionContent>
-                            </AccordionItem>
-                            <AccordionItem>
-                                <AccordionTrigger>Why choose Basis?</AccordionTrigger>
-                                <AccordionContent>
-                                    Simple, fast, built on fundamentals.
-                                </AccordionContent>
-                            </AccordionItem>
-                        </Accordion>
-                    </CardContent>
-                </Card>
+                <!-- Column 3 (6 cols) -->
+                <div class="col-span-4 md:col-span-6 space-y-4">
+                    <!-- User Data Table -->
+                    <Card class="p-6 bg-white dark:bg-card border shadow-sm hover:shadow-md transition-all duration-300">
+                        <CardHeader class="pb-4">
+                            <Text variant="body" class="font-semibold text-lg text-foreground">Team Members</Text>
+                            <Text variant="body" class="text-sm text-muted-foreground">Manage your team and permissions</Text>
+                        </CardHeader>
+                        <CardContent>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm">
+                                    <thead>
+                                        <tr class="border-b">
+                                            <th class="text-left py-2 font-medium">Name</th>
+                                            <th class="text-left py-2 font-medium">Email</th>
+                                            <th class="text-left py-2 font-medium">Role</th>
+                                            <th class="text-left py-2 font-medium">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y">
+                                        <tr>
+                                            <td class="py-2 flex items-center space-x-2">
+                                                <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">JS</div>
+                                                <span>John Smith</span>
+                                            </td>
+                                            <td class="py-2 text-muted-foreground">john@company.com</td>
+                                            <td class="py-2">Admin</td>
+                                            <td class="py-2"><Badge variant="success" size="sm">Active</Badge></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 flex items-center space-x-2">
+                                                <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">SM</div>
+                                                <span>Sarah Miller</span>
+                                            </td>
+                                            <td class="py-2 text-muted-foreground">sarah@company.com</td>
+                                            <td class="py-2">Editor</td>
+                                            <td class="py-2"><Badge variant="success" size="sm">Active</Badge></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 flex items-center space-x-2">
+                                                <div class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs">MJ</div>
+                                                <span>Mike Johnson</span>
+                                            </td>
+                                            <td class="py-2 text-muted-foreground">mike@company.com</td>
+                                            <td class="py-2">Viewer</td>
+                                            <td class="py-2"><Badge variant="secondary" size="sm">Pending</Badge></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </CardContent>
+                    </Card>
 
-                <!-- Tabs (compact rectangle) 2x2 -->
-                <Card class="col-span-4 md:col-span-2 lg:col-span-2 row-span-2 p-4 bg-gradient-to-br from-indigo-50/50 to-blue-50/50 dark:from-indigo-950/20 dark:to-blue-950/20 border border-indigo-100/50 dark:border-indigo-800/30 shadow-sm hover:shadow-md transition-all duration-300">
-                    <CardHeader class="pb-3">
-                        <Text variant="body" class="font-medium text-sm text-indigo-700 dark:text-indigo-300">Tabs</Text>
-                        <Text variant="body" class="text-xs text-indigo-600/70 dark:text-indigo-400/70">Navigation</Text>
-                    </CardHeader>
-                    <CardContent class="flex-1">
-                        <Tabs defaultValue="tab1">
-                            <TabsList slot="list" variant="pills" class="mb-2 scale-90">
-                                <TabsTrigger value="tab1">Home</TabsTrigger>
-                                <TabsTrigger value="tab2">About</TabsTrigger>
-                            </TabsList>
-                            <TabsContent value="tab1" preview class="h-16 text-xs">
-                                Welcome home
-                            </TabsContent>
-                            <TabsContent value="tab2" preview class="h-16 text-xs">
-                                About us
-                            </TabsContent>
-                        </Tabs>
-                    </CardContent>
-                </Card>
-
-                <!-- Hero Card (small square - like Payments tile) 2x2 -->
-                <Card variant="outline" class="col-span-4 md:col-span-2 lg:col-span-2 row-span-2 p-4 bg-gradient-to-br from-slate-50/50 to-gray-50/50 dark:from-slate-950/20 dark:to-gray-950/20 border border-slate-100/50 dark:border-slate-800/30 shadow-sm hover:shadow-md transition-all duration-300">
-                    <div class="h-full flex flex-col">
-                        <div class="aspect-video mb-2 overflow-hidden rounded">
-                            <Image
-                                src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80"
-                                alt="Hero preview"
-                                shape="rounded"
-                                aspectRatio="16/9"
-                                class="w-full h-full object-cover"
-                            />
+                    <!-- Calendar and Pricing Plans Row -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Event Calendar -->
+                        <div class="bg-white dark:bg-card border rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                            <div class="mb-3">
+                                <Text variant="body" class="font-semibold text-foreground mb-1">Upcoming Events</Text>
+                                <Text variant="body" class="text-xs text-muted-foreground">Schedule and manage meetings</Text>
+                            </div>
+                            <div class="scale-90 origin-top-left">
+                                <Calendar size="sm" numberOfMonths={1} mode="range" />
+                            </div>
+                            <div class="mt-2 space-y-1">
+                                <div class="text-xs flex justify-between">
+                                    <span>Team Meeting</span>
+                                    <span class="text-muted-foreground">2:00 PM</span>
+                                </div>
+                                <div class="text-xs flex justify-between">
+                                    <span>Client Call</span>
+                                    <span class="text-muted-foreground">4:30 PM</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex-1">
-                            <Text variant="body" class="font-medium text-xs text-slate-700 dark:text-slate-300 mb-1">
-                                Modern Dev
-                            </Text>
-                            <Text variant="body" class="text-xs text-slate-600/70 dark:text-slate-400/70 mb-2">
-                                Build with components.
-                            </Text>
-                            <Button size="sm" class="w-full text-xs">Learn More</Button>
+
+                        <!-- Pricing Plans -->
+                        <Card class="p-4 bg-white dark:bg-card border shadow-sm hover:shadow-md transition-all duration-300">
+                            <CardHeader class="pb-3">
+                                <Text variant="body" class="font-semibold text-foreground">Choose Your Plan</Text>
+                                <Text variant="body" class="text-xs text-muted-foreground">Select the perfect plan for your needs</Text>
+                            </CardHeader>
+                            <CardContent>
+                                <RadioGroup
+                                    name="pricing"
+                                    selectedOption="pro"
+                                    orientation="vertical"
+                                >
+                                    <RadioGroupItem value="starter">
+                                        <RadioGroupLabel>
+                                            <div class="flex justify-between w-full">
+                                                <div>
+                                                    <p class="font-medium">Starter</p>
+                                                    <p class="text-xs text-muted-foreground">Perfect for individuals</p>
+                                                </div>
+                                                <span class="font-semibold">$9/mo</span>
+                                            </div>
+                                        </RadioGroupLabel>
+                                    </RadioGroupItem>
+                                    <RadioGroupItem value="pro">
+                                        <RadioGroupLabel>
+                                            <div class="flex justify-between w-full">
+                                                <div>
+                                                    <p class="font-medium">Pro</p>
+                                                    <p class="text-xs text-muted-foreground">Best for small teams</p>
+                                                </div>
+                                                <span class="font-semibold">$29/mo</span>
+                                            </div>
+                                        </RadioGroupLabel>
+                                    </RadioGroupItem>
+                                    <RadioGroupItem value="enterprise">
+                                        <RadioGroupLabel>
+                                            <div class="flex justify-between w-full">
+                                                <div>
+                                                    <p class="font-medium">Enterprise</p>
+                                                    <p class="text-xs text-muted-foreground">For large organizations</p>
+                                                </div>
+                                                <span class="font-semibold">$99/mo</span>
+                                            </div>
+                                        </RadioGroupLabel>
+                                    </RadioGroupItem>
+                                </RadioGroup>
+                            </CardContent>
+                        </Card>
+                    </div>
+
+                    <!-- Video Player -->
+                    <div class="bg-white dark:bg-card border rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                        <div class="mb-3">
+                            <Text variant="body" class="font-semibold text-foreground mb-1">Product Demo</Text>
+                            <Text variant="body" class="text-xs text-muted-foreground">Watch how our platform works</Text>
+                        </div>
+                        <div class="aspect-video">
+                            <VideoPlayer youtubeId="jfKfPfyJRdk" shape="rounded" />
                         </div>
                     </div>
-                </Card>
+                </div>
             </div>
             </div>
         </Section>
