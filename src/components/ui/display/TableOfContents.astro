@@ -51,9 +51,31 @@ const headingsJson = JSON.stringify(headings);
     
     extractHeadings() {
       const container = document.querySelector(this.containerSelector);
-      if (!container) return;
+      if (!container) {
+        console.warn('TableOfContents: Container not found for selector:', this.containerSelector);
+        return;
+      }
+      
+      console.log('TableOfContents: Extracting headings from container:', {
+        containerSelector: this.containerSelector,
+        container: container,
+        containerTag: container.tagName,
+        containerClass: container.className,
+        containerId: container.id
+      });
       
       const headingElements = container.querySelectorAll('h2, h3, h4');
+      console.log('TableOfContents: Found heading elements:', {
+        count: headingElements.length,
+        elements: Array.from(headingElements).map(el => ({ 
+          tagName: el.tagName, 
+          text: el.textContent.trim(),
+          id: el.id || 'no-id',
+          classList: Array.from(el.classList),
+          outerHTML: el.outerHTML.substring(0, 200) + (el.outerHTML.length > 200 ? '...' : '')
+        }))
+      });
+      
       const extractedHeadings = [];
       
       headingElements.forEach(el => {
@@ -75,6 +97,7 @@ const headingsJson = JSON.stringify(headings);
         });
       });
       
+      console.log('TableOfContents: Final extracted headings:', extractedHeadings);
       this.headings = extractedHeadings;
     },
     
