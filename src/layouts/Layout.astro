@@ -15,9 +15,100 @@ const { title = 'Basis UI' } = Astro.props;
         <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
 
-        <!-- Alpine.js with ES6 modules -->
-        <script>
-            import '/src/lib/alpine.js';
+        <!-- Alpine.js CDN -->
+        <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        
+        <!-- Alpine.js stores setup -->
+        <script is:inline>
+            document.addEventListener('alpine:init', () => {
+                // Layout Store
+                Alpine.store('layout', {
+                    wide: false,
+                    mobileMenuOpen: false,
+                    
+                    init() {
+                        this.wide = localStorage.getItem('layout-wide') === 'true';
+                        this.mobileMenuOpen = false;
+                        
+                        window.addEventListener('resize', () => {
+                            if (window.innerWidth >= 768 && this.mobileMenuOpen) {
+                                this.closeMobileMenu();
+                            }
+                        });
+                    },
+                    
+                    toggleWidth() {
+                        this.wide = !this.wide;
+                        this.save();
+                    },
+                    
+                    toggleMobileMenu() {
+                        this.mobileMenuOpen = !this.mobileMenuOpen;
+                        
+                        if (this.mobileMenuOpen) {
+                            document.body.style.overflow = 'hidden';
+                        } else {
+                            document.body.style.overflow = '';
+                        }
+                    },
+                    
+                    closeMobileMenu() {
+                        this.mobileMenuOpen = false;
+                        document.body.style.overflow = '';
+                    },
+                    
+                    setWidth(wide) {
+                        this.wide = Boolean(wide);
+                        this.save();
+                    },
+                    
+                    save() {
+                        localStorage.setItem('layout-wide', this.wide.toString());
+                    },
+                    
+                    get containerClasses() {
+                        return this.wide ? '' : 'container mx-auto px-4';
+                    }
+                });
+
+                // Theme Store
+                Alpine.store('theme', {
+                    current: 'light',
+                    
+                    init() {
+                        this.current = localStorage.getItem('theme') || 'light';
+                        this.updateDOM();
+                    },
+                    
+                    toggle() {
+                        this.current = this.current === 'light' ? 'dark' : 'light';
+                        this.save();
+                        this.updateDOM();
+                    },
+                    
+                    set(theme) {
+                        this.current = theme;
+                        this.save();
+                        this.updateDOM();
+                    },
+                    
+                    save() {
+                        localStorage.setItem('theme', this.current);
+                    },
+                    
+                    updateDOM() {
+                        if (this.current === 'dark') {
+                            document.documentElement.classList.add('dark');
+                        } else {
+                            document.documentElement.classList.remove('dark');
+                        }
+                    }
+                });
+            });
         </script>
     </head>
     <body class="bg-background text-foreground">
