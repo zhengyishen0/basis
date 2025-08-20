@@ -157,139 +157,48 @@ const commandItemsJson = JSON.stringify(commandItems);
                 </Text>
             </div>
 
-            <!-- Masonry-style tile grid -->
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-7xl mx-auto auto-rows-min">
+            <!-- True Bento-style grid with content-driven tile sizes -->
+            <div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 max-w-7xl mx-auto auto-rows-[minmax(120px,auto)]">
                 
-                <!-- Calendar Component Tile (Large - 2x2 on lg, 2x1 on md, full width on sm) -->
-                <div class="col-span-2 lg:col-span-2 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-950/20 dark:to-indigo-950/20 p-6 rounded-2xl border border-blue-100/50 dark:border-blue-800/30 shadow-sm hover:shadow-md transition-all duration-300">
+                <!-- Video Player (wide, short - like revenue chart) 4x2 -->
+                <div class="col-span-4 md:col-span-4 lg:col-span-4 row-span-2 bg-gradient-to-br from-green-50/50 to-emerald-50/50 dark:from-green-950/20 dark:to-emerald-950/20 p-4 rounded-xl border border-green-100/50 dark:border-green-800/30 shadow-sm hover:shadow-md transition-all duration-300">
+                    <div class="mb-3">
+                        <Text variant="body" class="font-medium text-sm text-green-700 dark:text-green-300 mb-1">Video Player</Text>
+                        <Text variant="body" class="text-xs text-green-600/70 dark:text-green-400/70">Rich media playback</Text>
+                    </div>
+                    <div class="aspect-video">
+                        <VideoPlayer youtubeId="jfKfPfyJRdk" shape="rounded" />
+                    </div>
+                </div>
+
+                <!-- Calendar (square - like in screenshot) 3x3 -->
+                <div class="col-span-4 md:col-span-3 lg:col-span-3 row-span-3 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-950/20 dark:to-indigo-950/20 p-4 rounded-xl border border-blue-100/50 dark:border-blue-800/30 shadow-sm hover:shadow-md transition-all duration-300">
                     <div class="mb-3">
                         <Text variant="body" class="font-medium text-sm text-blue-700 dark:text-blue-300 mb-1">Calendar</Text>
                         <Text variant="body" class="text-xs text-blue-600/70 dark:text-blue-400/70">Interactive date selection</Text>
                     </div>
-                    <Calendar size="lg" numberOfMonths={1} mode="range" />
-                </div>
-
-                <!-- Command Palette (Wide - spans 2 cols) -->
-                <div
-                    x-data={`{
-                                commandSearch: '',
-                                commandActiveIndex: 0,
-                                commandItems: ${commandItemsJson}
-                            }`}
-                    class="col-span-2 lg:col-span-2 bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-950/20 dark:to-pink-950/20 p-6 rounded-2xl border border-purple-100/50 dark:border-purple-800/30 shadow-sm hover:shadow-md transition-all duration-300"
-                >
-                    <div class="mb-4">
-                        <Text variant="body" class="font-medium text-sm text-purple-700 dark:text-purple-300 mb-1">Command Palette</Text>
-                        <Text variant="body" class="text-xs text-purple-600/70 dark:text-purple-400/70">Quick action menu</Text>
+                    <div class="scale-90 origin-top-left">
+                        <Calendar size="md" numberOfMonths={1} mode="range" />
                     </div>
-                    <MenuContainer
-                        items={commandItems}
-                        searchEnabled={true}
-                        keyboardNav={false}
-                        searchModel="commandSearch"
-                        activeModel="commandActiveIndex"
-                        itemsModel="commandItems"
-                        onSelect="alert('Selected: ' + item.title)"
-                        variant="default"
-                        size="lg"
-                        class="w-full"
-                    >
-                        <CommandInput
-                            slot="input"
-                            placeholder="Type a command..."
-                        />
-                        <CommandGroups
-                            x-for="[categoryName, categoryItems] in Object.entries(filteredItems)"
-                            x-key="categoryName"
-                            x-text="categoryName.charAt(0).toUpperCase() + categoryName.slice(1)"
-                            showDivider={true}
-                        >
-                            <CommandItems
-                                x-for="item in categoryItems"
-                                x-key="item.value"
-                            >
-                                <div
-                                    slot="icon"
-                                    class="mr-2 h-4 w-4 shrink-0"
-                                    x-html="item.icon"
-                                >
-                                </div>
-                                <span x-text="item.title"></span>
-                                <CommandShortcut
-                                    slot="shortcut"
-                                    x-text="item.shortcut"
-                                />
-                            </CommandItems>
-                        </CommandGroups>
-                        <CommandFooter slot="footer" />
-                    </MenuContainer>
                 </div>
 
-                <!-- Video Player (Wide - spans 2 cols) -->
-                <div class="col-span-2 lg:col-span-2 bg-gradient-to-br from-green-50/50 to-emerald-50/50 dark:from-green-950/20 dark:to-emerald-950/20 p-6 rounded-2xl border border-green-100/50 dark:border-green-800/30 shadow-sm hover:shadow-md transition-all duration-300">
-                    <div class="mb-4">
-                        <Text variant="body" class="font-medium text-sm text-green-700 dark:text-green-300 mb-1">Video Player</Text>
-                        <Text variant="body" class="text-xs text-green-600/70 dark:text-green-400/70">Rich media playback</Text>
-                    </div>
-                    <VideoPlayer youtubeId="jfKfPfyJRdk" shape="rounded" />
-                </div>
-
-                <!-- Accordion (Card container, regular size) -->
-                <Card class="col-span-2 md:col-span-2 lg:col-span-2 p-6 bg-gradient-to-br from-amber-50/50 to-orange-50/50 dark:from-amber-950/20 dark:to-orange-950/20 border border-amber-100/50 dark:border-amber-800/30 shadow-sm hover:shadow-md transition-all duration-300">
-                    <CardHeader class="pb-4">
-                        <Text variant="card-title" class="text-amber-700 dark:text-amber-300">Accordion</Text>
-                        <Text
-                            variant="body"
-                            class="text-sm text-amber-600/70 dark:text-amber-400/70"
-                        >
-                            Collapsible content sections
-                        </Text>
+                <!-- Radio Group (tall, narrow - like Move Goal) 2x3 -->
+                <Card class="col-span-4 md:col-span-2 lg:col-span-2 row-span-3 p-4 bg-gradient-to-br from-rose-50/50 to-pink-50/50 dark:from-rose-950/20 dark:to-pink-950/20 border border-rose-100/50 dark:border-rose-800/30 shadow-sm hover:shadow-md transition-all duration-300">
+                    <CardHeader class="pb-3">
+                        <Text variant="body" class="font-medium text-sm text-rose-700 dark:text-rose-300">Radio Group</Text>
+                        <Text variant="body" class="text-xs text-rose-600/70 dark:text-rose-400/70">Single selection</Text>
                     </CardHeader>
                     <CardContent class="flex-1">
-                        <Accordion maxWidth="full" centered={false}>
-                            <AccordionItem>
-                                <AccordionTrigger
-                                    >What is Basis?</AccordionTrigger
-                                >
-                                <AccordionContent>
-                                    A modern web development methodology using
-                                    Astro, Alpine.js, and Supabase.
-                                </AccordionContent>
-                            </AccordionItem>
-                            <AccordionItem>
-                                <AccordionTrigger
-                                    >Why choose Basis?</AccordionTrigger
-                                >
-                                <AccordionContent>
-                                    Simple, fast, and built on fundamentals.
-                                </AccordionContent>
-                            </AccordionItem>
-                        </Accordion>
-                    </CardContent>
-                </Card>
-
-                <!-- Radio Group (Card container, regular size) -->
-                <Card class="col-span-2 md:col-span-2 lg:col-span-2 p-6 bg-gradient-to-br from-rose-50/50 to-pink-50/50 dark:from-rose-950/20 dark:to-pink-950/20 border border-rose-100/50 dark:border-rose-800/30 shadow-sm hover:shadow-md transition-all duration-300">
-                    <CardHeader class="pb-4">
-                        <Text variant="card-title" class="text-rose-700 dark:text-rose-300">Radio Group</Text>
-                        <Text
-                            variant="body"
-                            class="text-sm text-rose-600/70 dark:text-rose-400/70"
-                        >
-                            Single selection options
-                        </Text>
-                    </CardHeader>
-                    <CardContent class="flex-1 space-y-4">
                         <RadioGroup
                             name="plan"
                             selectedOption="basic"
                             orientation="vertical"
                         >
                             <RadioGroupItem value="basic">
-                                <RadioGroupLabel>Basic Plan</RadioGroupLabel>
+                                <RadioGroupLabel>Basic</RadioGroupLabel>
                             </RadioGroupItem>
                             <RadioGroupItem value="pro">
-                                <RadioGroupLabel>Pro Plan</RadioGroupLabel>
+                                <RadioGroupLabel>Pro</RadioGroupLabel>
                             </RadioGroupItem>
                             <RadioGroupItem value="enterprise">
                                 <RadioGroupLabel>Enterprise</RadioGroupLabel>
@@ -298,62 +207,133 @@ const commandItemsJson = JSON.stringify(commandItems);
                     </CardContent>
                 </Card>
 
-                <!-- Tabs Component (Card container, medium size) -->
-                <Card class="col-span-2 md:col-span-2 lg:col-span-2 p-6 bg-gradient-to-br from-indigo-50/50 to-blue-50/50 dark:from-indigo-950/20 dark:to-blue-950/20 border border-indigo-100/50 dark:border-indigo-800/30 shadow-sm hover:shadow-md transition-all duration-300">
-                    <CardHeader class="pb-4">
-                        <Text variant="card-title" class="text-indigo-700 dark:text-indigo-300">Tabs</Text>
-                        <Text
-                            variant="body"
-                            class="text-sm text-indigo-600/70 dark:text-indigo-400/70"
+                <!-- Command Palette (wide, medium height - like Exercise Minutes) 5x2 -->
+                <div
+                    x-data={`{
+                                commandSearch: '',
+                                commandActiveIndex: 0,
+                                commandItems: ${commandItemsJson}
+                            }`}
+                    class="col-span-4 md:col-span-5 lg:col-span-5 row-span-2 bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-950/20 dark:to-pink-950/20 p-4 rounded-xl border border-purple-100/50 dark:border-purple-800/30 shadow-sm hover:shadow-md transition-all duration-300"
+                >
+                    <div class="mb-3">
+                        <Text variant="body" class="font-medium text-sm text-purple-700 dark:text-purple-300 mb-1">Command Palette</Text>
+                        <Text variant="body" class="text-xs text-purple-600/70 dark:text-purple-400/70">Quick action menu</Text>
+                    </div>
+                    <div class="h-32 overflow-hidden">
+                        <MenuContainer
+                            items={commandItems}
+                            searchEnabled={true}
+                            keyboardNav={false}
+                            searchModel="commandSearch"
+                            activeModel="commandActiveIndex"
+                            itemsModel="commandItems"
+                            onSelect="alert('Selected: ' + item.title)"
+                            variant="default"
+                            size="sm"
+                            class="w-full h-full"
                         >
-                            Organized content navigation
-                        </Text>
+                            <CommandInput
+                                slot="input"
+                                placeholder="Type a command..."
+                            />
+                            <CommandGroups
+                                x-for="[categoryName, categoryItems] in Object.entries(filteredItems)"
+                                x-key="categoryName"
+                                x-text="categoryName.charAt(0).toUpperCase() + categoryName.slice(1)"
+                                showDivider={false}
+                            >
+                                <CommandItems
+                                    x-for="item in categoryItems.slice(0, 3)"
+                                    x-key="item.value"
+                                >
+                                    <div
+                                        slot="icon"
+                                        class="mr-2 h-4 w-4 shrink-0"
+                                        x-html="item.icon"
+                                    >
+                                    </div>
+                                    <span x-text="item.title"></span>
+                                    <CommandShortcut
+                                        slot="shortcut"
+                                        x-text="item.shortcut"
+                                    />
+                                </CommandItems>
+                            </CommandGroups>
+                        </MenuContainer>
+                    </div>
+                </div>
+
+                <!-- Accordion (medium rectangle - like Upgrade subscription) 3x2 -->
+                <Card class="col-span-4 md:col-span-3 lg:col-span-3 row-span-2 p-4 bg-gradient-to-br from-amber-50/50 to-orange-50/50 dark:from-amber-950/20 dark:to-orange-950/20 border border-amber-100/50 dark:border-amber-800/30 shadow-sm hover:shadow-md transition-all duration-300">
+                    <CardHeader class="pb-3">
+                        <Text variant="body" class="font-medium text-sm text-amber-700 dark:text-amber-300">Accordion</Text>
+                        <Text variant="body" class="text-xs text-amber-600/70 dark:text-amber-400/70">Collapsible sections</Text>
+                    </CardHeader>
+                    <CardContent class="flex-1">
+                        <Accordion maxWidth="full" centered={false}>
+                            <AccordionItem>
+                                <AccordionTrigger>What is Basis?</AccordionTrigger>
+                                <AccordionContent>
+                                    A modern web development methodology.
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionTrigger>Why choose Basis?</AccordionTrigger>
+                                <AccordionContent>
+                                    Simple, fast, built on fundamentals.
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+                    </CardContent>
+                </Card>
+
+                <!-- Tabs (compact rectangle) 2x2 -->
+                <Card class="col-span-4 md:col-span-2 lg:col-span-2 row-span-2 p-4 bg-gradient-to-br from-indigo-50/50 to-blue-50/50 dark:from-indigo-950/20 dark:to-blue-950/20 border border-indigo-100/50 dark:border-indigo-800/30 shadow-sm hover:shadow-md transition-all duration-300">
+                    <CardHeader class="pb-3">
+                        <Text variant="body" class="font-medium text-sm text-indigo-700 dark:text-indigo-300">Tabs</Text>
+                        <Text variant="body" class="text-xs text-indigo-600/70 dark:text-indigo-400/70">Navigation</Text>
                     </CardHeader>
                     <CardContent class="flex-1">
                         <Tabs defaultValue="tab1">
-                            <TabsList slot="list" variant="pills" class="mb-4">
+                            <TabsList slot="list" variant="pills" class="mb-2 scale-90">
                                 <TabsTrigger value="tab1">Home</TabsTrigger>
                                 <TabsTrigger value="tab2">About</TabsTrigger>
-                                <TabsTrigger value="tab3">Contact</TabsTrigger>
                             </TabsList>
-                            <TabsContent value="tab1" preview class="h-32">
-                                Welcome to the home tab
+                            <TabsContent value="tab1" preview class="h-16 text-xs">
+                                Welcome home
                             </TabsContent>
-                            <TabsContent value="tab2" preview class="h-32">
-                                Learn more about us
-                            </TabsContent>
-                            <TabsContent value="tab3" preview class="h-32">
-                                Get in touch with us
+                            <TabsContent value="tab2" preview class="h-16 text-xs">
+                                About us
                             </TabsContent>
                         </Tabs>
                     </CardContent>
                 </Card>
 
-                <!-- Hero Card (smaller size for visual balance) -->
-                <Card variant="outline" class="col-span-2 md:col-span-2 lg:col-span-2 p-6 bg-gradient-to-br from-slate-50/50 to-gray-50/50 dark:from-slate-950/20 dark:to-gray-950/20 border border-slate-100/50 dark:border-slate-800/30 shadow-sm hover:shadow-md transition-all duration-300">
-                    <Image
-                        src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80"
-                        alt="Hero preview"
-                        shape="rounded"
-                        aspectRatio="16/9"
-                    />
-                    <CardHeader class="pb-2">
-                        <Text variant="body" class="font-semibold text-sm text-slate-700 dark:text-slate-300">
-                            Modern Development
-                        </Text>
-                    </CardHeader>
-                    <CardContent class="pb-2">
-                        <Text
-                            variant="body"
-                            class="text-xs text-slate-600/70 dark:text-slate-400/70"
-                        >
-                            Build with our component library.
-                        </Text>
-                    </CardContent>
-                    <CardFooter justify="end">
-                        <Button size="sm" variant="default">Learn More</Button>
-                    </CardFooter>
+                <!-- Hero Card (small square - like Payments tile) 2x2 -->
+                <Card variant="outline" class="col-span-4 md:col-span-2 lg:col-span-2 row-span-2 p-4 bg-gradient-to-br from-slate-50/50 to-gray-50/50 dark:from-slate-950/20 dark:to-gray-950/20 border border-slate-100/50 dark:border-slate-800/30 shadow-sm hover:shadow-md transition-all duration-300">
+                    <div class="h-full flex flex-col">
+                        <div class="aspect-video mb-2 overflow-hidden rounded">
+                            <Image
+                                src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80"
+                                alt="Hero preview"
+                                shape="rounded"
+                                aspectRatio="16/9"
+                                class="w-full h-full object-cover"
+                            />
+                        </div>
+                        <div class="flex-1">
+                            <Text variant="body" class="font-medium text-xs text-slate-700 dark:text-slate-300 mb-1">
+                                Modern Dev
+                            </Text>
+                            <Text variant="body" class="text-xs text-slate-600/70 dark:text-slate-400/70 mb-2">
+                                Build with components.
+                            </Text>
+                            <Button size="sm" class="w-full text-xs">Learn More</Button>
+                        </div>
+                    </div>
                 </Card>
+            </div>
             </div>
         </Section>
     </Page>
