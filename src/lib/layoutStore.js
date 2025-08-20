@@ -12,6 +12,9 @@ export const layoutStore = {
     init() {
         this.wide = localStorage.getItem('layout-wide') === 'true';
         
+        // Ensure mobile menu starts closed
+        this.mobileMenuOpen = false;
+        
         // Close mobile menu when screen gets larger
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 768 && this.mobileMenuOpen) {
