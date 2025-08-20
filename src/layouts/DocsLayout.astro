@@ -91,7 +91,7 @@ const breadcrumbItems = slug
     <div class="flex min-h-[calc(100vh-3.5rem)]">
         <!-- Left Sidebar -->
         <aside
-            class="w-64 bg-muted/30 backdrop-blur supports-[backdrop-filter]:bg-muted/50 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-6 pl-4 pr-6 relative after:absolute after:right-0 after:top-6 after:bottom-6 after:w-px after:bg-border"
+            class="hidden md:block w-64 bg-muted/30 backdrop-blur supports-[backdrop-filter]:bg-muted/50 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-6 pl-4 pr-6 relative after:absolute after:right-0 after:top-6 after:bottom-6 after:w-px after:bg-border"
             x-data={`{
                 docsData: ${JSON.stringify(docsData)},
                 componentsData: ${JSON.stringify(componentsData)},
@@ -230,7 +230,7 @@ const breadcrumbItems = slug
 
         <!-- Right Sidebar (Table of Contents) -->
         <aside
-            class="hidden xl:block w-64 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-8 pr-4"
+            class="hidden lg:block w-64 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-8 pr-4"
         >
             <TableOfContents
                 containerSelector="main"

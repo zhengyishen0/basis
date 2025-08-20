@@ -128,8 +128,9 @@ const commandGroups = {
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="md:hidden"
-                    x-on:click="$dispatch('toggle-mobile-menu')"
+                    class="md:hidden"
+                    x-on:click="$store.layout.toggleMobileMenu()"
+                    data-mobile-menu-trigger
                 >
                     <Icon name="lucide:menu" class="w-5 h-5" />
                 </Button>
@@ -137,24 +138,99 @@ const commandGroups = {
         </Navbar>
     </div>
 
-    <!-- Mobile menu (hidden by default) -->
+    <!-- Full-screen glass overlay mobile menu -->
     <div
-        x-data={JSON.stringify({ open: false, links: navLinks })}
-        @toggle-mobile-menu.window="open = !open"
-        x-show="open"
-        x-transition
-        class="md:hidden border-b bg-card border-border"
+        x-show="$store.layout.mobileMenuOpen"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-50 md:hidden"
+        data-mobile-menu
     >
-        <List>
-            <ListItems x-for="link in links" :key="link.href">
+        <!-- Glass backdrop -->
+        <div 
+            class="absolute inset-0 bg-background/80 backdrop-blur-lg"
+            x-on:click="$store.layout.closeMobileMenu()"
+        ></div>
+        
+        <!-- Menu content -->
+        <div 
+            class="relative flex flex-col items-center justify-center h-full px-6"
+            x-transition:enter="transition ease-out duration-300 delay-100"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-95"
+        >
+            <!-- Close button -->
+            <Button
+                variant="ghost"
+                size="icon"
+                class="absolute top-8 right-8"
+                x-on:click="$store.layout.closeMobileMenu()"
+            >
+                <Icon name="lucide:x" class="w-6 h-6" />
+            </Button>
+            
+            <!-- Brand -->
+            <div class="mb-12">
+                <a href="/" class="flex items-center space-x-3 text-3xl font-bold hover:text-primary transition-colors">
+                    <span>Basis UI</span>
+                    <Badge size="sm">Beta</Badge>
+                </a>
+            </div>
+            
+            <!-- Navigation Links -->
+            <nav class="flex flex-col items-center space-y-8 mb-12">
+                <template x-data={`{ links: ${JSON.stringify(navLinks)} }`} x-for="link in links" :key="link.href">
+                    <a 
+                        :href="link.href"
+                        x-text="link.label"
+                        class="text-2xl font-medium text-foreground hover:text-primary transition-colors"
+                        x-on:click="$store.layout.closeMobileMenu()"
+                    ></a>
+                </template>
+            </nav>
+            
+            <!-- Action buttons -->
+            <div class="flex items-center space-x-6">
+                <!-- Theme Toggle -->
                 <Button
-                    :href="link.href"
-                    x-text="link.label"
-                    variant="ghost"
-                    size="sm"
-                />
-            </ListItems>
-        </List>
+                    variant="outline"
+                    size="lg"
+                    x-on:click="$store.theme.toggle()"
+                    :title="'Theme: ' + $store.theme.current"
+                >
+                    <Icon
+                        x-show="$store.theme.current === 'light'"
+                        name="lucide:sun"
+                        class="w-5 h-5 mr-2"
+                    />
+                    <Icon
+                        x-show="$store.theme.current === 'dark'"
+                        name="lucide:moon"
+                        class="w-5 h-5 mr-2"
+                    />
+                    <span x-text="$store.theme.current === 'light' ? 'Dark' : 'Light'">Theme</span>
+                </Button>
+                
+                <!-- GitHub Link -->
+                <Button
+                    href="https://github.com/zhengyishen0/basis-ui"
+                    target="_blank"
+                    variant="outline"
+                    size="lg"
+                    x-on:click="$store.layout.closeMobileMenu()"
+                >
+                    <Icon name="lucide:github" class="w-5 h-5 mr-2" />
+                    <span>GitHub</span>
+                </Button>
+            </div>
+        </div>
     </div>
 
     <!-- Main Content -->

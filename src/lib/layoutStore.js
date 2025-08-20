@@ -1,15 +1,23 @@
 /**
  * Layout Store for Alpine.js
- * Manages page width toggle (normal container vs full width) with localStorage persistence
+ * Manages page width toggle and mobile menu state
  */
 export const layoutStore = {
     wide: false,
+    mobileMenuOpen: false,
     
     /**
      * Initialize layout from localStorage
      */
     init() {
         this.wide = localStorage.getItem('layout-wide') === 'true';
+        
+        // Close mobile menu when screen gets larger
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768 && this.mobileMenuOpen) {
+                this.closeMobileMenu();
+            }
+        });
     },
     
     /**
@@ -18,6 +26,28 @@ export const layoutStore = {
     toggleWidth() {
         this.wide = !this.wide;
         this.save();
+    },
+    
+    /**
+     * Toggle mobile menu overlay
+     */
+    toggleMobileMenu() {
+        this.mobileMenuOpen = !this.mobileMenuOpen;
+        
+        // Prevent body scroll when mobile menu is open
+        if (this.mobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    },
+    
+    /**
+     * Close mobile menu
+     */
+    closeMobileMenu() {
+        this.mobileMenuOpen = false;
+        document.body.style.overflow = '';
     },
     
     /**
