@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const radioIndicatorVariants = cva(
-    'relative flex items-center justify-center shrink-0 transform-gpu rounded-full bg-white transition-all duration-300 ease-out h-5 w-5 border border-primary shadow-sm',
+    'relative flex items-center justify-center shrink-0 transform-gpu rounded-full bg-primary-foreground transition-all duration-300 ease-out h-5 w-5 border border-primary shadow-sm',
     {
         variants: {
             state: {
@@ -60,18 +60,22 @@ Features:
 <div class="radio-input-wrapper relative" {...restAlpineProps}>
     <div
         class={cn(radioIndicatorVariants({ state }), className)}
-        :class={checkedExpr ? `[
-            (${checkedExpr}) ? 'bg-white border-primary scale-105' : 'bg-white border-primary',
+        :class={checkedExpr
+            ? `[
+            (${checkedExpr}) ? 'bg-primary border-primary scale-105' : 'bg-primary border-primary',
             (${disabledExpr || 'false'}) ? 'opacity-50 cursor-not-allowed' : 'group-hover:border-primary/80'
-        ]` : `[
-            ${checked} ? 'bg-white border-primary scale-105' : 'bg-white border-primary',
+        ]`
+            : `[
+            ${checked} ? 'bg-primary border-primary scale-105' : 'bg-primary border-primary',
             ${disabled} ? 'opacity-50 cursor-not-allowed' : 'group-hover:border-primary/80'
         ]`}
     >
         <!-- Radio dot indicator -->
         <div
             class="bg-primary rounded-full transition-all duration-300 ease-out transform-gpu h-3 w-3"
-            :class={checkedExpr ? `(${checkedExpr}) ? 'opacity-100 scale-100' : 'opacity-0 scale-0'` : `${checked} ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`}
+            :class={checkedExpr
+                ? `(${checkedExpr}) ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`
+                : `${checked} ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`}
         >
         </div>
     </div>
