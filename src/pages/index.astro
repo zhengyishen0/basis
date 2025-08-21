@@ -43,6 +43,8 @@ import {
 } from '@/components/ui/overlay/command';
 import MenuContainer from '@/components/ui/overlay/menu/MenuContainer.astro';
 import Image from '@/components/ui/display/Image.astro';
+import TextInput from '@/components/ui/forms/TextInput.astro';
+import CheckBox from '@/components/ui/forms/Checkbox.astro';
 
 // Import hero image for card demo
 import heroImage from '@/assets/hero-image.png';
@@ -157,55 +159,243 @@ const commandItemsJson = JSON.stringify(commandItems);
                 </Text>
             </div>
 
+            <!-- Simple 3-Column Bento Layout -->
             <div
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto"
+                class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto"
             >
-                <!-- Calendar Component Tile -->
-                <div class="p-6 flex flex-col h-fit">
-                    <Calendar size="lg" numberOfMonths={1} mode="range" />
+                <!-- Column 1: Sign in, FAQ, Dashboard tabs -->
+                <div class="space-y-4">
+                    <!-- Sign in Card -->
+                    <Card>
+                        <CardHeader class="pb-4">
+                            <Text
+                                variant="body"
+                                class="font-semibold text-lg text-foreground"
+                                >Sign in to your account</Text
+                            >
+                            <Text
+                                variant="body"
+                                class="text-sm text-muted-foreground"
+                                >Welcome back! Please enter your details.</Text
+                            >
+                        </CardHeader>
+                        <CardContent class="space-y-4">
+                            <div class="space-y-2">
+                                <label
+                                    class="text-sm font-medium text-foreground"
+                                    for="email">Email</label
+                                >
+                                <TextInput
+                                    type="email"
+                                    id="email"
+                                    placeholder="Enter your email"
+                                    class="w-full"
+                                />
+                            </div>
+                            <div class="space-y-2">
+                                <label
+                                    class="text-sm font-medium text-foreground"
+                                    for="password">Password</label
+                                >
+                                <TextInput
+                                    type="password"
+                                    id="password"
+                                    placeholder="Enter your password"
+                                    class="w-full"
+                                />
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <CheckBox
+                                    id="remember-me"
+                                    class="text-sm"
+                                    label="Remember me"
+                                />
+                                <Button
+                                    href="#"
+                                    class="text-sm text-primary hover:underline"
+                                    variant="ghost"
+                                    >Forgot password?
+                                </Button>
+                            </div>
+                        </CardContent>
+                        <CardFooter class="pt-4">
+                            <Button>Sign in</Button>
+                        </CardFooter>
+                    </Card>
+
+                    <!-- FAQ Accordion -->
+                    <Card>
+                        <CardHeader class="pb-4">
+                            <Text
+                                variant="body"
+                                class="font-semibold text-lg text-foreground"
+                                >Frequently Asked Questions</Text
+                            >
+                            <Text
+                                variant="body"
+                                class="text-sm text-muted-foreground"
+                                >Find answers to common questions</Text
+                            >
+                        </CardHeader>
+                        <CardContent>
+                            <Accordion maxWidth="full" centered={false}>
+                                <AccordionItem>
+                                    <AccordionTrigger
+                                        >How do I reset my password?</AccordionTrigger
+                                    >
+                                    <AccordionContent>
+                                        Click "Forgot password?" on the login
+                                        page and follow the instructions sent to
+                                        your email.
+                                    </AccordionContent>
+                                </AccordionItem>
+                                <AccordionItem>
+                                    <AccordionTrigger
+                                        >What payment methods do you accept?</AccordionTrigger
+                                    >
+                                    <AccordionContent>
+                                        We accept all major credit cards,
+                                        PayPal, and bank transfers for
+                                        enterprise plans.
+                                    </AccordionContent>
+                                </AccordionItem>
+                                <AccordionItem>
+                                    <AccordionTrigger
+                                        >Can I cancel my subscription anytime?</AccordionTrigger
+                                    >
+                                    <AccordionContent>
+                                        Yes, you can cancel your subscription at
+                                        any time from your account settings. No
+                                        questions asked.
+                                    </AccordionContent>
+                                </AccordionItem>
+                            </Accordion>
+                        </CardContent>
+                    </Card>
+
+                    <!-- Dashboard Tabs -->
+                    <Card>
+                        <CardHeader class="pb-4">
+                            <Text
+                                variant="body"
+                                class="font-semibold text-lg text-foreground"
+                                >Dashboard</Text
+                            >
+                            <Text
+                                variant="body"
+                                class="text-sm text-muted-foreground"
+                                >Monitor your application performance</Text
+                            >
+                        </CardHeader>
+                        <CardContent>
+                            <Tabs defaultValue="overview">
+                                <TabsList
+                                    slot="list"
+                                    variant="pills"
+                                    class="mb-4"
+                                >
+                                    <TabsTrigger value="overview"
+                                        >Overview</TabsTrigger
+                                    >
+                                    <TabsTrigger value="analytics"
+                                        >Analytics</TabsTrigger
+                                    >
+                                    <TabsTrigger value="settings"
+                                        >Settings</TabsTrigger
+                                    >
+                                </TabsList>
+                                <TabsContent
+                                    value="overview"
+                                    preview
+                                    class="h-32"
+                                >
+                                    <div
+                                        class="flex items-center justify-between"
+                                    >
+                                        <div>
+                                            <p class="text-2xl font-bold">
+                                                2,350
+                                            </p>
+                                            <p
+                                                class="text-sm text-muted-foreground"
+                                            >
+                                                Active Users
+                                            </p>
+                                        </div>
+                                        <div class="text-green-500">
+                                            <span class="text-sm">+12.5%</span>
+                                        </div>
+                                    </div>
+                                </TabsContent>
+                                <TabsContent
+                                    value="analytics"
+                                    preview
+                                    class="h-32"
+                                >
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between">
+                                            <span class="text-sm"
+                                                >Page Views</span
+                                            >
+                                            <span class="text-sm font-medium"
+                                                >45,231</span
+                                            >
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-sm"
+                                                >Bounce Rate</span
+                                            >
+                                            <span class="text-sm font-medium"
+                                                >23.1%</span
+                                            >
+                                        </div>
+                                    </div>
+                                </TabsContent>
+                                <TabsContent
+                                    value="settings"
+                                    preview
+                                    class="h-32"
+                                >
+                                    <div class="space-y-2">
+                                        <div
+                                            class="flex items-center justify-between"
+                                        >
+                                            <span class="text-sm"
+                                                >Notifications</span
+                                            >
+                                            <input
+                                                type="checkbox"
+                                                checked
+                                                class="rounded"
+                                            />
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between"
+                                        >
+                                            <span class="text-sm"
+                                                >Dark Mode</span
+                                            >
+                                            <input
+                                                type="checkbox"
+                                                class="rounded"
+                                            />
+                                        </div>
+                                    </div>
+                                </TabsContent>
+                            </Tabs>
+                        </CardContent>
+                    </Card>
                 </div>
 
-                <!-- Tabs Component Tile -->
-                <Card class="p-6 flex flex-col h-fit">
-                    <CardHeader class="pb-4">
-                        <Text variant="card-title">Tabs</Text>
-                        <Text
-                            variant="body"
-                            class="text-sm text-muted-foreground"
-                        >
-                            Organized content navigation
-                        </Text>
-                    </CardHeader>
-                    <CardContent class="flex-1">
-                        <Tabs defaultValue="tab1">
-                            <TabsList slot="list" variant="pills" class="mb-4">
-                                <TabsTrigger value="tab1">Home</TabsTrigger>
-                                <TabsTrigger value="tab2">About</TabsTrigger>
-                                <TabsTrigger value="tab3">Contact</TabsTrigger>
-                            </TabsList>
-                            <TabsContent value="tab1" preview class="h-48">
-                                Welcome to the home tab
-                            </TabsContent>
-                            <TabsContent value="tab2" preview class="h-48">
-                                Learn more about us
-                            </TabsContent>
-                            <TabsContent value="tab3" preview class="h-48">
-                                Get in touch with us
-                            </TabsContent>
-                        </Tabs>
-                    </CardContent>
-                </Card>
-
-                <!-- Command Menu Component Tile -->
-                <div
-                    x-data={`{
-                                commandSearch: '',
-                                commandActiveIndex: 0,
-                                commandItems: ${commandItemsJson}
-                            }`}
-                    class="w-full p-6 flex flex-col h-fit"
-                >
+                <!-- Column 2: Command palette (no card), Calendar -->
+                <div class="space-y-4">
+                    <!-- Command Palette (without card container) -->
                     <MenuContainer
+                        x-data={`{
+                                    commandSearch: '',
+                                    commandActiveIndex: 0,
+                                    commandItems: ${commandItemsJson}
+                                }`}
                         items={commandItems}
                         searchEnabled={true}
                         keyboardNav={false}
@@ -214,12 +404,12 @@ const commandItemsJson = JSON.stringify(commandItems);
                         itemsModel="commandItems"
                         onSelect="alert('Selected: ' + item.title)"
                         variant="default"
-                        size="lg"
+                        size="md"
                         class="w-full"
                     >
                         <CommandInput
                             slot="input"
-                            placeholder="Type a command..."
+                            placeholder="Type a command or search..."
                         />
                         <CommandGroups
                             x-for="[categoryName, categoryItems] in Object.entries(filteredItems)"
@@ -246,102 +436,256 @@ const commandItemsJson = JSON.stringify(commandItems);
                         </CommandGroups>
                         <CommandFooter slot="footer" />
                     </MenuContainer>
+
+                    <!-- Calendar -->
+
+                    <Calendar size="lg" numberOfMonths={1} mode="range" />
                 </div>
 
-                <!-- Hero Card Component Tile -->
+                <!-- Column 3: Table, Choose your plan, Video -->
+                <div class="space-y-4">
+                    <!-- User Data Table -->
+                    <Card>
+                        <CardHeader class="pb-4">
+                            <Text
+                                variant="body"
+                                class="font-semibold text-lg text-foreground"
+                                >Team Members</Text
+                            >
+                            <Text
+                                variant="body"
+                                class="text-sm text-muted-foreground"
+                                >Manage your team and permissions</Text
+                            >
+                        </CardHeader>
+                        <CardContent>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm">
+                                    <thead>
+                                        <tr class="border-b">
+                                            <th
+                                                class="text-left py-2 font-medium"
+                                                >Name</th
+                                            >
+                                            <th
+                                                class="text-left py-2 font-medium"
+                                                >Role</th
+                                            >
+                                            <th
+                                                class="text-left py-2 font-medium"
+                                                >Status</th
+                                            >
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y">
+                                        <tr>
+                                            <td
+                                                class="py-2 flex items-center space-x-2"
+                                            >
+                                                <div
+                                                    class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs"
+                                                >
+                                                    JS
+                                                </div>
+                                                <span class="text-sm"
+                                                    >John Smith</span
+                                                >
+                                            </td>
+                                            <td class="py-2 text-sm">Admin</td>
+                                            <td class="py-2"
+                                                ><Badge
+                                                    variant="success"
+                                                    size="sm">Active</Badge
+                                                ></td
+                                            >
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="py-2 flex items-center space-x-2"
+                                            >
+                                                <div
+                                                    class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs"
+                                                >
+                                                    SM
+                                                </div>
+                                                <span class="text-sm"
+                                                    >Sarah Miller</span
+                                                >
+                                            </td>
+                                            <td class="py-2 text-sm">Editor</td>
+                                            <td class="py-2"
+                                                ><Badge
+                                                    variant="success"
+                                                    size="sm">Active</Badge
+                                                ></td
+                                            >
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="py-2 flex items-center space-x-2"
+                                            >
+                                                <div
+                                                    class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs"
+                                                >
+                                                    MJ
+                                                </div>
+                                                <span class="text-sm"
+                                                    >Mike Johnson</span
+                                                >
+                                            </td>
+                                            <td class="py-2 text-sm">Viewer</td>
+                                            <td class="py-2"
+                                                ><Badge
+                                                    variant="secondary"
+                                                    size="sm">Pending</Badge
+                                                ></td
+                                            >
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </CardContent>
+                    </Card>
 
-                <Card variant="outline" class="p-6 flex flex-col h-fit">
-                    <Image
-                        src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80"
-                        alt="Hero preview"
-                        shape="rounded"
-                        aspectRatio="16/9"
-                    />
-                    <CardHeader class="pb-2">
-                        <Text variant="body" class="font-semibold text-sm">
-                            Modern Development
-                        </Text>
-                    </CardHeader>
-                    <CardContent class="pb-2">
-                        <Text
-                            variant="body"
-                            class="text-xs text-muted-foreground"
-                        >
-                            Build with our component library.
-                        </Text>
-                    </CardContent>
-                    <CardFooter justify="end">
-                        <Button size="sm" variant="default">Learn More</Button>
-                    </CardFooter>
-                </Card>
+                    <!-- Choose Your Plan -->
+                    <Card>
+                        <CardHeader class="pb-4">
+                            <Text
+                                variant="body"
+                                class="font-semibold text-lg text-foreground"
+                                >Choose Your Plan</Text
+                            >
+                            <Text
+                                variant="body"
+                                class="text-sm text-muted-foreground"
+                                >Select the perfect plan for your needs</Text
+                            >
+                        </CardHeader>
+                        <CardContent>
+                            <RadioGroup
+                                name="pricing"
+                                selectedOption="pro"
+                                orientation="vertical"
+                            >
+                                <RadioGroupItem value="starter">
+                                    <RadioGroupLabel>
+                                        <div
+                                            class="flex justify-between w-full"
+                                        >
+                                            <div>
+                                                <p class="font-medium">
+                                                    Starter
+                                                </p>
+                                                <p
+                                                    class="text-xs text-muted-foreground"
+                                                >
+                                                    Perfect for individuals
+                                                </p>
+                                            </div>
+                                            <span class="font-semibold"
+                                                >$9/mo</span
+                                            >
+                                        </div>
+                                    </RadioGroupLabel>
+                                </RadioGroupItem>
+                                <RadioGroupItem value="pro">
+                                    <RadioGroupLabel>
+                                        <div
+                                            class="flex justify-between w-full"
+                                        >
+                                            <div>
+                                                <p class="font-medium">Pro</p>
+                                                <p
+                                                    class="text-xs text-muted-foreground"
+                                                >
+                                                    Best for small teams
+                                                </p>
+                                            </div>
+                                            <span class="font-semibold"
+                                                >$29/mo</span
+                                            >
+                                        </div>
+                                    </RadioGroupLabel>
+                                </RadioGroupItem>
+                                <RadioGroupItem value="enterprise">
+                                    <RadioGroupLabel>
+                                        <div
+                                            class="flex justify-between w-full"
+                                        >
+                                            <div>
+                                                <p class="font-medium">
+                                                    Enterprise
+                                                </p>
+                                                <p
+                                                    class="text-xs text-muted-foreground"
+                                                >
+                                                    For large organizations
+                                                </p>
+                                            </div>
+                                            <span class="font-semibold"
+                                                >$99/mo</span
+                                            >
+                                        </div>
+                                    </RadioGroupLabel>
+                                </RadioGroupItem>
+                            </RadioGroup>
+                        </CardContent>
+                    </Card>
 
-                <!-- Accordion Component Tile -->
-                <Card class="p-6 flex flex-col h-fit">
-                    <CardHeader class="pb-4">
-                        <Text variant="card-title">Accordion</Text>
-                        <Text
-                            variant="body"
-                            class="text-sm text-muted-foreground"
-                        >
-                            Collapsible content sections
-                        </Text>
-                    </CardHeader>
-                    <CardContent class="flex-1">
-                        <Accordion maxWidth="full" centered={false}>
-                            <AccordionItem>
-                                <AccordionTrigger
-                                    >What is Basis?</AccordionTrigger
-                                >
-                                <AccordionContent>
-                                    A modern web development methodology using
-                                    Astro, Alpine.js, and Supabase.
-                                </AccordionContent>
-                            </AccordionItem>
-                            <AccordionItem>
-                                <AccordionTrigger
-                                    >Why choose Basis?</AccordionTrigger
-                                >
-                                <AccordionContent>
-                                    Simple, fast, and built on fundamentals.
-                                </AccordionContent>
-                            </AccordionItem>
-                        </Accordion>
-                    </CardContent>
-                </Card>
-
-                <!-- Form Components Tile -->
-                <Card class="p-6 flex flex-col h-fit">
-                    <CardHeader class="pb-4">
-                        <Text variant="card-title">Form Components</Text>
-                        <Text
-                            variant="body"
-                            class="text-sm text-muted-foreground"
-                        >
-                            Radio groups and form controls
-                        </Text>
-                    </CardHeader>
-                    <CardContent class="flex-1 space-y-4">
-                        <RadioGroup
-                            name="plan"
-                            selectedOption="basic"
-                            orientation="vertical"
-                        >
-                            <RadioGroupItem value="basic">
-                                <RadioGroupLabel>Basic Plan</RadioGroupLabel>
-                            </RadioGroupItem>
-                            <RadioGroupItem value="pro">
-                                <RadioGroupLabel>Pro Plan</RadioGroupLabel>
-                            </RadioGroupItem>
-                            <RadioGroupItem value="enterprise">
-                                <RadioGroupLabel>Enterprise</RadioGroupLabel>
-                            </RadioGroupItem>
-                        </RadioGroup>
-                    </CardContent>
-                </Card>
-                <div class="p-6 flex flex-col h-fit">
+                    <!-- Video Player -->
                     <VideoPlayer youtubeId="jfKfPfyJRdk" shape="rounded" />
                 </div>
             </div>
         </Section>
     </Page>
 </SiteLayout>
+
+<style>
+    /* Enhanced masonry grid with better responsive behavior */
+    .masonry-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+        grid-auto-rows: min-content;
+        align-items: start;
+    }
+
+    @media (min-width: 768px) {
+        .masonry-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .masonry-grid {
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+        }
+    }
+
+    /* Ensure tiles have proper minimum heights and hover effects */
+    .masonry-tile {
+        transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform, box-shadow;
+    }
+
+    .masonry-tile:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Component-specific styling adjustments */
+    .component-tile-calendar .calendar-container {
+        transform: scale(0.95);
+        transform-origin: top left;
+    }
+
+    .component-tile-video {
+        overflow: hidden;
+    }
+
+    .component-tile-command {
+        max-height: 400px;
+        overflow: hidden;
+    }
+</style>
