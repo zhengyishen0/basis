@@ -135,16 +135,15 @@ const commandGroups = {
                 </button>
             </Row>
         </Navbar>
-    </div>
 
-    <!-- Full-screen glass overlay mobile menu -->
+        <!-- Full-screen glass overlay mobile menu -->
     <div
         x-show="$store.layout.mobileMenuOpen"
         x-cloak
-        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter="transition ease-out duration-25"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave="transition ease-in duration-25"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
         class="fixed inset-0 z-50 md:hidden"
@@ -159,12 +158,6 @@ const commandGroups = {
         <!-- Menu content -->
         <div 
             class="relative flex flex-col items-center justify-center h-full px-6"
-            x-transition:enter="transition ease-out duration-300 delay-100"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95"
         >
             <!-- Close button -->
             <Button
@@ -231,6 +224,7 @@ const commandGroups = {
                 </Button>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Main Content -->

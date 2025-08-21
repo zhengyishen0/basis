@@ -347,22 +347,19 @@ const pageData = `{
         </Conditional>
     </Page>
 
-    <!-- Page-specific Alpine stores for Supabase -->
-    <script>
-        import Alpine from 'alpinejs';
-        import { todoStore } from '/src/lib/todoStore.js';
-        import { authStore } from '/src/lib/authStore.js';
-
-        // Register stores before Alpine starts
-        // Wait for Alpine to be available
-        if (window.Alpine) {
-            Alpine.store('todo', todoStore);
-            Alpine.store('auth', authStore);
-        } else {
-            document.addEventListener('alpine:init', () => {
+    <!-- Note: todo and auth stores are loaded via script tags below -->
+    <script type="module" src="/src/lib/todoStore.js"></script>
+    <script type="module" src="/src/lib/authStore.js"></script>
+    <script is:inline>
+        // Wait for Alpine and register the stores from the modules
+        document.addEventListener('alpine:init', () => {
+            // Import the stores dynamically and register them
+            import('/src/lib/todoStore.js').then(({ todoStore }) => {
                 Alpine.store('todo', todoStore);
+            });
+            import('/src/lib/authStore.js').then(({ authStore }) => {
                 Alpine.store('auth', authStore);
             });
-        }
+        });
     </script>
 </SiteLayout>

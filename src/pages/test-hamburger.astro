@@ -1,0 +1,98 @@
+---
+// Simple test page to check hamburger functionality
+---
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Hamburger Test</title>
+    
+    <!-- Alpine.js CDN - same as Layout.astro -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Tailwind for quick styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Test navigation with hamburger button -->
+    <nav class="bg-white shadow-md p-4" x-data="{ mobileMenuOpen: false }">
+        <div class="flex justify-between items-center">
+            <div class="text-xl font-bold">Test Brand</div>
+            
+            <!-- Desktop menu -->
+            <div class="hidden md:flex space-x-4">
+                <a href="#" class="text-gray-700 hover:text-blue-500">Home</a>
+                <a href="#" class="text-gray-700 hover:text-blue-500">About</a>
+                <a href="#" class="text-gray-700 hover:text-blue-500">Contact</a>
+            </div>
+            
+            <!-- Mobile hamburger button -->
+            <button 
+                class="md:hidden p-2 rounded-md hover:bg-gray-100"
+                @click="mobileMenuOpen = !mobileMenuOpen"
+                x-text="mobileMenuOpen ? '✕' : '☰'"
+            >
+            </button>
+        </div>
+        
+        <!-- Mobile menu overlay -->
+        <div 
+            x-show="mobileMenuOpen"
+            x-cloak
+            class="fixed inset-0 z-50 md:hidden"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100" 
+            x-transition:leave-end="opacity-0"
+        >
+            <!-- Backdrop -->
+            <div 
+                class="absolute inset-0 bg-black bg-opacity-50"
+                @click="mobileMenuOpen = false"
+            ></div>
+            
+            <!-- Menu content -->
+            <div class="relative bg-white h-full w-64 p-6">
+                <div class="flex justify-between items-center mb-8">
+                    <div class="text-xl font-bold">Test Brand</div>
+                    <button 
+                        @click="mobileMenuOpen = false"
+                        class="text-2xl"
+                    >
+                        ✕
+                    </button>
+                </div>
+                
+                <div class="flex flex-col space-y-4">
+                    <a href="#" class="text-gray-700 hover:text-blue-500 py-2">Home</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-500 py-2">About</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-500 py-2">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Debug info -->
+    <div class="p-4">
+        <h1 class="text-2xl font-bold mb-4">Hamburger Menu Test</h1>
+        <p class="mb-2">Resize your browser to mobile size (below 768px) and test the hamburger button.</p>
+        <div x-data="{ mobileMenuOpen: false }" class="mt-4">
+            <p>Menu state: <span x-text="mobileMenuOpen ? 'open' : 'closed'"></span></p>
+            <button 
+                @click="mobileMenuOpen = !mobileMenuOpen"
+                class="bg-blue-500 text-white px-4 py-2 rounded mt-2"
+            >
+                Toggle Menu (test)
+            </button>
+        </div>
+    </div>
+</body>
+</html>
