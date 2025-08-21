@@ -231,8 +231,6 @@ export function createDataStore(tableName, config = {}) {
     subscribe(userId, filters = {}, callbacks = {}) {
       const channelName = `${tableName}_${userId || "public"}_${Date.now()}`;
 
-      console.log("Setting up subscription for:", tableName, "userId:", userId);
-
       // Add user filter if userId is provided
       if (userId && options.userField) {
         filters = { ...filters, [options.userField]: userId };
@@ -269,8 +267,6 @@ export function createDataStore(tableName, config = {}) {
         }
       });
 
-      console.log("Filter string:", filterString);
-
       const channel = supabase
         .channel(channelName)
         .on(
@@ -282,13 +278,10 @@ export function createDataStore(tableName, config = {}) {
             filter: filterString || undefined,
           },
           (payload) => {
-            console.log("Real-time event received:", payload);
             this.handleRealtimeEvent(payload, callbacks);
           },
         )
-        .subscribe((status) => {
-          console.log("Subscription status:", status);
-        });
+        .subscribe();
 
       // Store subscription reference
       this._subscription = channel;

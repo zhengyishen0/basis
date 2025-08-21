@@ -1,5 +1,4 @@
 import { createDataStore } from "./dataStore.js";
-import { authStore } from "./authStore.js";
 
 // Create single todo store
 const baseStore = createDataStore("todos", {
@@ -74,9 +73,14 @@ export const todoStore = {
     return uniqueUsers.size;
   },
 
+  // Helper to get current auth store
+  get authStore() {
+    return typeof Alpine !== 'undefined' ? Alpine.store('auth') : null;
+  },
+
   // Methods that use authStore internally
   async loadTodos() {
-    if (!authStore.currentUser) return;
+    if (!this.authStore?.currentUser) return;
 
     // Load user-specific todos
     await this.loadUserTodos();
@@ -90,15 +94,17 @@ export const todoStore = {
 
   // Load only current user's todos
   async loadUserTodos() {
+    if (!this.authStore?.currentUser) return;
     // Use the dataStore with user filtering
-    await baseStore.load.call(this, authStore.currentUser.id);
+    await baseStore.load.call(this, this.authStore.currentUser.id);
     this.userTodos = [...this.items];
   },
 
   // Load all todos (bypass user filtering)
   async loadAllTodos() {
+    if (!this.authStore?.currentUser) return;
     // Use special filter to bypass user restrictions
-    await baseStore.load.call(this, authStore.currentUser.id, {
+    await baseStore.load.call(this, this.authStore.currentUser.id, {
       _loadAllUsers: true,
     });
     this.allTodos = [...this.items];
@@ -106,7 +112,7 @@ export const todoStore = {
 
   // Simple real-time setup - leverage dataStore's built-in real-time
   startRealtimeSync() {
-    if (!authStore.currentUser) return;
+    if (!this.authStore?.currentUser) return;
 
     // Set up real-time for all todos (will update both arrays when data changes)
     baseStore.subscribe.call(
@@ -133,10 +139,20 @@ export const todoStore = {
   },
 
   async addTodo(text) {
-    if (!text?.trim() || !authStore.currentUser) return;
+    if (!text?.trim() || !this.authStore?.currentUser) {
+      return;
+    }
 
-    const result = await baseStore.create.call(this, authStore.currentUser.id, {
-      task: text.trim(),
+    const trimmedText = text.trim();
+    
+    // Check if text meets minimum length requirement
+    if (trimmedText.length < 3) {
+      this.error = 'Task must be at least 3 characters long';
+      return;
+    }
+
+    const result = await baseStore.create.call(this, this.authStore.currentUser.id, {
+      task: trimmedText,
     });
 
     // Refresh data after successful creation
@@ -146,16 +162,16 @@ export const todoStore = {
   },
 
   async toggleTodo(todoId, completed) {
-    if (!authStore.currentUser) return;
-    await baseStore.update.call(this, authStore.currentUser.id, todoId, {
+    if (!this.authStore?.currentUser) return;
+    await baseStore.update.call(this, this.authStore.currentUser.id, todoId, {
       is_complete: completed,
     });
     await this.refreshData();
   },
 
   async deleteTodo(todoId) {
-    if (!authStore.currentUser) return;
-    await baseStore.delete.call(this, authStore.currentUser.id, todoId);
+    if (!this.authStore?.currentUser) return;
+    await baseStore.delete.call(this, this.authStore.currentUser.id, todoId);
     await this.refreshData();
   },
 

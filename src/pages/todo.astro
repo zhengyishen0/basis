@@ -347,19 +347,4 @@ const pageData = `{
         </Conditional>
     </Page>
 
-    <!-- Note: todo and auth stores are loaded via script tags below -->
-    <script type="module" src="/src/lib/todoStore.js"></script>
-    <script type="module" src="/src/lib/authStore.js"></script>
-    <script is:inline>
-        // Wait for Alpine and register the stores from the modules
-        document.addEventListener('alpine:init', () => {
-            // Import the stores dynamically and register them
-            import('/src/lib/todoStore.js').then(({ todoStore }) => {
-                Alpine.store('todo', todoStore);
-            });
-            import('/src/lib/authStore.js').then(({ authStore }) => {
-                Alpine.store('auth', authStore);
-            });
-        });
-    </script>
 </SiteLayout>

@@ -43,6 +43,12 @@ export const authStore = {
       if (error) throw error;
 
       this.currentUser = data.user;
+      
+      // Force Alpine reactivity update
+      if (typeof Alpine !== 'undefined' && Alpine.store) {
+        Alpine.store('auth').currentUser = data.user;
+      }
+      
       return data.user;
     } catch (error) {
       this.error = "Sign in failed: " + error.message;
