@@ -25,7 +25,7 @@ export * from './display';
 export * from './interactive';
 
 // Animation - Motion and effects
-export * from './animation';
+// export * from './animation';
 
 // Type exports for TypeScript support
 // Layout types
