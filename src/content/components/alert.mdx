@@ -40,9 +40,7 @@ Alerts display important messages in a way that attracts user attention without 
                 <Icon slot="icon" name="lucide:alert-triangle" class="w-5 h-5" />
             </Alert>
             
-            <Alert variant="default" dismissible={true}>
-                This is a dismissible alert without an icon.
-            </Alert>
+            <Alert variant="default" dismissible={true}> This is a dismissible alert without an icon.</Alert>
     </TabsContent>
     <TabsContent value="code">
         <Code
@@ -57,16 +55,27 @@ import { Icon } from 'astro-icon/components';
 </Alert>
 
 {/* Outline Variant */}
-<Alert variant="outline" title="Information" description="This is important information you should know about.">
+
+<Alert
+    variant="outline"
+    title="Information"
+    description="This is important information you should know about."
+>
     <Icon slot="icon" name="lucide:info" class="w-5 h-5" />
 </Alert>
 
 {/* Destructive Variant */}
-<Alert variant="destructive" title="Error Occurred" description="Something went wrong with your request. Please try again.">
+
+<Alert
+    variant="destructive"
+    title="Error Occurred"
+    description="Something went wrong with your request. Please try again."
+>
     <Icon slot="icon" name="lucide:alert-triangle" class="w-5 h-5" />
 </Alert>
 
 {/* Dismissible Alert */}
+
 <Alert variant="default" dismissible={true}>
     This is a dismissible alert without an icon.
 </Alert>`}
@@ -78,19 +87,19 @@ import { Icon } from 'astro-icon/components';
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `'default', 'outline', 'destructive'` | `'default'` | Alert style variant |
-| `title` | `string` | - | Alert title text |
-| `description` | `string` | - | Alert description text |
-| `dismissible` | `boolean` | `false` | Shows dismiss button |
-| `padding` | `string` | - | Padding size |
-| `elevation` | `string` | - | Shadow elevation |
-| `class` | `string` | - | Additional CSS classes |
+| Prop          | Type                                  | Default     | Description            |
+| ------------- | ------------------------------------- | ----------- | ---------------------- |
+| `variant`     | `'default', 'outline', 'destructive'` | `'default'` | Alert style variant    |
+| `title`       | `string`                              | -           | Alert title text       |
+| `description` | `string`                              | -           | Alert description text |
+| `dismissible` | `boolean`                             | `false`     | Shows dismiss button   |
+| `padding`     | `string`                              | -           | Padding size           |
+| `elevation`   | `string`                              | -           | Shadow elevation       |
+| `class`       | `string`                              | -           | Additional CSS classes |
 
 ### Slots
 
-| Slot | Description |
-|------|-------------|
-| `icon` | Icon to display in the alert |
+| Slot      | Description                                          |
+| --------- | ---------------------------------------------------- |
+| `icon`    | Icon to display in the alert                         |
 | `default` | Alert content when not using title/description props |

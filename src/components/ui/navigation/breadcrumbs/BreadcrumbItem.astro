@@ -25,6 +25,29 @@ const { 'x-text': xText, ':href': dynamicHref, ':separator': dynamicSeparator, .
 ---
 
 <div class="contents">
+  <!-- Separator (shown before item, except for first) -->
+  {item ? (
+    <span 
+      class="mx-2 text-muted-foreground flex items-center"
+      x-show={dynamicSeparator ? dynamicSeparator : `'${separator}' && index > 0`}
+    >
+      <slot name="separator">
+        <Icon name="lucide:chevron-right" class="w-4 h-4" />
+      </slot>
+    </span>
+  ) : (
+    (separator || Astro.slots.has('separator')) && (
+      <span class="mx-2 text-muted-foreground flex items-center">
+        <slot name="separator">
+          {separator === 'chevron' && <Icon name="lucide:chevron-right" class="w-4 h-4" />}
+          {separator === 'slash' && <span>/</span>}
+          {separator === 'dot' && <span>•</span>}
+          {separator === 'arrow' && <Icon name="lucide:chevron-right" class="w-4 h-4" />}
+        </slot>
+      </span>
+    )
+  )}
+  
   <li class={cn('flex items-center', className)} {...restProps}>
     {item ? (
       // Dynamic item rendering
@@ -90,27 +113,4 @@ const { 'x-text': xText, ':href': dynamicHref, ':separator': dynamicSeparator, .
       )
     )}
   </li>
-  
-  <!-- Separator -->
-  {item ? (
-    <span 
-      class="mx-2 text-muted-foreground flex items-center"
-      x-show={dynamicSeparator ? dynamicSeparator : `'${separator}' && (typeof items !== 'undefined' ? index < items.length - 1 : true)`}
-    >
-      <slot name="separator">
-        <Icon name="lucide:chevron-right" class="w-4 h-4" />
-      </slot>
-    </span>
-  ) : (
-    (separator || Astro.slots.has('separator')) && (
-      <span class="mx-2 text-muted-foreground flex items-center">
-        <slot name="separator">
-          {separator === 'chevron' && <Icon name="lucide:chevron-right" class="w-4 h-4" />}
-          {separator === 'slash' && <span>/</span>}
-          {separator === 'dot' && <span>•</span>}
-          {separator === 'arrow' && <Icon name="lucide:chevron-right" class="w-4 h-4" />}
-        </slot>
-      </span>
-    )
-  )}
 </div>

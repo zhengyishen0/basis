@@ -42,6 +42,7 @@ const {
 // Extract Alpine expressions from alpineProps if they exist
 const {
     ':checked': checkedExpr,
+    'x-model': xModelExpr,
     ':indeterminate': indeterminateExpr,
     ':disabled': disabledExpr,
     ...restAlpineProps
@@ -79,7 +80,7 @@ Features:
         <!-- Checkmark icon -->
         <div
             class="text-primary transition-all duration-300 ease-out transform-gpu"
-            :class={`${checkedExpr || checked} ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`}
+            :class={`(${checkedExpr || xModelExpr || '$el.closest("label").querySelector("input[type=checkbox]").checked'}) ? 'opacity-100 scale-100' : 'opacity-0 scale-0'`}
             x-show={`!(${indeterminateExpr || indeterminate})`}
         >
             <Icon name="lucide:check" class="stroke-current h-3 w-3" />

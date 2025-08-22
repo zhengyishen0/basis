@@ -7,9 +7,9 @@ const contentVariants = cva(
     {
         variants: {
             theme: {
-                default: 'bg-popover border-border',
-                dark: 'bg-gray-900 border-gray-700 text-white',
-                minimal: 'bg-white border-gray-200 shadow-sm',
+                default: 'bg-popover border-border text-popover-foreground',
+                dark: 'bg-popover border-border text-popover-foreground',
+                minimal: 'bg-background border-border text-foreground shadow-sm',
             },
             placement: {
                 top: 'bottom-full mb-2',

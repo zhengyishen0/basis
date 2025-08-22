@@ -38,11 +38,11 @@ const sortedDocs = [...docs].sort((a, b) => {
     return orderA - orderB;
 });
 
-// Sort components by order (flat structure)
+// Sort components alphabetically by title (case-insensitive)
 const sortedComponents = [...components].sort((a, b) => {
-    const orderA = a.data.order ?? 999;
-    const orderB = b.data.order ?? 999;
-    return orderA - orderB;
+    const titleA = (a.data.title || a.slug || '').toString();
+    const titleB = (b.data.title || b.slug || '').toString();
+    return titleA.localeCompare(titleB, undefined, { sensitivity: 'base' });
 });
 
 // Format category names
@@ -72,19 +72,36 @@ const componentsData = sortedComponents.map(item => ({
 }));
 
 // Prepare breadcrumb data for Alpine.js
-const breadcrumbItems = slug
-    ? [
-          { label: 'Docs', href: '/docs' },
-          ...slug.split('/').map((part, index, arr) => ({
-              label: formatCategory(part),
-              href:
-                  index === arr.length - 1
-                      ? null
-                      : `/docs/${arr.slice(0, index + 1).join('/')}`,
-              current: index === arr.length - 1,
-          })),
-      ]
-    : [];
+// Build cumulative hrefs so each parent directory is clickable
+const buildBreadcrumb = (slugStr?: string, pageTitle?: string) => {
+    if (!slugStr)
+        return [] as {
+            label: string;
+            href: string | null;
+            current?: boolean;
+        }[];
+    const parts = slugStr.split('/');
+    const items: { label: string; href: string | null; current?: boolean }[] = [
+        { label: 'Docs', href: '/docs' },
+    ];
+
+    let cumulative = '';
+    for (let i = 0; i < parts.length; i++) {
+        const part = parts[i];
+        cumulative += (i > 0 ? '/' : '') + part;
+        const isLast = i === parts.length - 1;
+        items.push({
+            label: isLast
+                ? pageTitle || formatCategory(part)
+                : formatCategory(part),
+            href: isLast ? null : `/docs/${cumulative}`,
+            current: isLast,
+        });
+    }
+    return items;
+};
+
+const breadcrumbItems = buildBreadcrumb(slug, title);
 ---
 
 <SiteLayout title={title} description={description}>
@@ -184,7 +201,7 @@ const breadcrumbItems = slug
                 <!-- Content Slot -->
                 <div
                     class="prose prose-neutral dark:prose-invert max-w-none
-                    prose-pre:max-h-[500px] prose-pre:overflow-auto
+                    prose-pre:max-h-[600px] prose-pre:overflow-auto
                     [&_pre::-webkit-scrollbar]:w-2 [&_pre::-webkit-scrollbar]:h-2
                     [&_pre::-webkit-scrollbar-thumb]:bg-muted-foreground
                     [&_pre::-webkit-scrollbar-thumb]:rounded-full

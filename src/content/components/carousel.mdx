@@ -18,138 +18,47 @@ Interactive image carousel with autoplay, navigation controls, and smooth fade t
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-6">
-        <div class="space-y-4">
-            <h3 class="text-sm font-medium text-muted-foreground">Basic with Captions</h3>
-            <div class="max-w-2xl">
-                <Carousel
-                    images={[
-                        {
-                            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&auto=format',
-                            alt: 'Mountain landscape',
-                            caption: 'Snow-capped mountain at golden hour'
-                        },
-                        {
-                            src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop&auto=format',
-                            alt: 'Forest path',
-                            caption: 'Peaceful trail through autumn woods'
-                        },
-                        {
-                            src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop&auto=format',
-                            alt: 'Desert landscape',
-                            caption: 'Vast desert under starry sky'
-                        }
-                    ]}
-                    size="lg"
-                    aspectRatio="16/9"
-                />
-            </div>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-2">
-                <p class="text-sm font-medium text-muted-foreground">Autoplay (4s interval)</p>
-                <Carousel
-                    images={[
-                        {
-                            src: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=600&h=400&fit=crop&auto=format',
-                            alt: 'Ocean beach'
-                        },
-                        {
-                            src: 'https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=600&h=400&fit=crop&auto=format',
-                            alt: 'City skyline'
-                        }
-                    ]}
-                    size="md"
-                    autoPlayInterval={4000}
-                    aspectRatio="4/3"
-                />
-            </div>
-            
-            <div class="space-y-2">
-                <p class="text-sm font-medium text-muted-foreground">Small size</p>
-                <Carousel
-                    images={[
-                        {
-                            src: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&h=300&fit=crop&auto=format',
-                            alt: 'Forest'
-                        },
-                        {
-                            src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=400&h=300&fit=crop&auto=format',
-                            alt: 'Mountains'
-                        }
-                    ]}
-                    size="sm"
-                    aspectRatio="4/3"
-                />
-            </div>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="space-y-2">
-                <p class="text-sm font-medium text-muted-foreground">Square (1:1)</p>
-                <Carousel
-                    images={[
-                        {
-                            src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&auto=format',
-                            alt: 'Square image'
-                        },
-                        {
-                            src: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=400&fit=crop&auto=format',
-                            alt: 'Square image 2'
-                        }
-                    ]}
-                    size="md"
-                    aspectRatio="1/1"
-                />
-            </div>
-            
-            <div class="space-y-2">
-                <p class="text-sm font-medium text-muted-foreground">Video (16:9)</p>
-                <Carousel
-                    images={[
-                        {
-                            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=640&h=360&fit=crop&auto=format',
-                            alt: 'Video aspect'
-                        },
-                        {
-                            src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=640&h=360&fit=crop&auto=format',
-                            alt: 'Video aspect 2'
-                        }
-                    ]}
-                    size="md"
-                    aspectRatio="16/9"
-                />
-            </div>
-            
-            <div class="space-y-2">
-                <p class="text-sm font-medium text-muted-foreground">Photo (4:3)</p>
-                <Carousel
-                    images={[
-                        {
-                            src: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&h=300&fit=crop&auto=format',
-                            alt: 'Photo aspect'
-                        },
-                        {
-                            src: 'https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=400&h=300&fit=crop&auto=format',
-                            alt: 'Photo aspect 2'
-                        }
-                    ]}
-                    size="md"
-                    aspectRatio="4/3"
-                />
-            </div>
-        </div>
+    <TabsContent
+        value="preview"
+        preview
+        class="space-y-6 justify-center items-center"
+    >
+        <Carousel
+            images={[
+                {
+                    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&auto=format',
+                    alt: 'Mountain landscape',
+                    caption: 'Snow-capped mountain at golden hour',
+                },
+                {
+                    src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop&auto=format',
+                    alt: 'Forest path',
+                    caption: 'Peaceful trail through autumn woods',
+                },
+                {
+                    src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop&auto=format',
+                    alt: 'Desert landscape',
+                    caption: 'Vast desert under starry sky',
+                },
+            ]}
+            size="lg"
+            aspectRatio="16/9"
+            autoPlayInterval={4000}
+        />
     </TabsContent>
     <TabsContent value="code">
-        <Code language="astro" code={`---
+        <Code
+            language="astro"
+            code={`---
 import Carousel from '@/components/ui/display/Carousel.astro';
 ---
-
-{/* Basic with Captions */}
 <Carousel
     images={[
         {
@@ -161,42 +70,19 @@ import Carousel from '@/components/ui/display/Carousel.astro';
             src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop&auto=format',
             alt: 'Forest path',
             caption: 'Peaceful trail through autumn woods'
+        },
+        {
+            src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop&auto=format',
+            alt: 'Desert landscape',
+            caption: 'Vast desert under starry sky'
         }
     ]}
     size="lg"
     aspectRatio="16/9"
-/>
-
-{/* Autoplay */}
-<Carousel
-    images={images}
     autoPlayInterval={4000}
-    size="md"
-/>
-
-{/* Sizes */}
-<Carousel images={images} size="sm" />
-<Carousel images={images} size="md" />
-<Carousel images={images} size="lg" />
-
-{/* Aspect Ratios */}
-<Carousel images={images} aspectRatio="1/1" />   {/* Square */}
-<Carousel images={images} aspectRatio="16/9" />  {/* Video */}
-<Carousel images={images} aspectRatio="4/3" />   {/* Photo */}
-<Carousel images={images} aspectRatio="3/2" />   {/* Wide */}
-
-{/* Without Captions */}
-<Carousel
-    images={[
-        { src: '/image1.jpg', alt: 'Image 1' },
-        { src: '/image2.jpg', alt: 'Image 2' }
-    ]}
-/>
-
-{/* Alpine.js Integration */}
-<div x-data="{ currentImages: images }">
-    <Carousel :images="currentImages" />
-</div>`} />
+    />
+`}
+        />
     </TabsContent>
 </Tabs>
 
@@ -204,20 +90,20 @@ import Carousel from '@/components/ui/display/Carousel.astro';
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `images` | `Array<ImageObject>` | **Required** | Array of image objects |
-| `autoPlayInterval` | `number` | - | Autoplay interval in milliseconds |
-| `aspectRatio` | `'auto', '1/1', '16/9', '4/3', '3/2'` | `'16/9'` | Image aspect ratio |
-| `size` | `'sm', 'md', 'lg'` | `'md'` | Carousel size |
-| `class` | `string` | - | Additional CSS classes |
+| Prop               | Type                                  | Default      | Description                       |
+| ------------------ | ------------------------------------- | ------------ | --------------------------------- |
+| `images`           | `Array<ImageObject>`                  | **Required** | Array of image objects            |
+| `autoPlayInterval` | `number`                              | -            | Autoplay interval in milliseconds |
+| `aspectRatio`      | `'auto', '1/1', '16/9', '4/3', '3/2'` | `'16/9'`     | Image aspect ratio                |
+| `size`             | `'sm', 'md', 'lg'`                    | `'md'`       | Carousel size                     |
+| `class`            | `string`                              | -            | Additional CSS classes            |
 
 ### ImageObject
 
 ```typescript
 interface ImageObject {
-    src: string;      // Image source URL (required)
-    alt?: string;     // Alt text for accessibility
+    src: string; // Image source URL (required)
+    alt?: string; // Alt text for accessibility
     caption?: string; // Caption text overlay
 }
 ```

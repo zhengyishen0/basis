@@ -34,7 +34,7 @@ const {
 <div
     x-show={`selectedTab === '${value}'`}
     x-cloak
-    class={cn(tabsContentVariants(), !preview && className)}
+    class={cn(tabsContentVariants(), 'not-prose', !preview && className)}
     role="tabpanel"
     aria-labelledby={`trigger-${value}`}
     id={`content-${value}`}

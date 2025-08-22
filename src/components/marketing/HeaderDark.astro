@@ -79,7 +79,7 @@ const {
 ---
 
 <section
-    class="w-full px-3 antialiased bg-gradient-to-br from-gray-900 via-black to-gray-800 lg:px-6"
+    class="w-full px-3 antialiased bg-background text-foreground lg:px-6"
 >
     <div class="mx-auto max-w-7xl">
         <!-- Navigation -->
@@ -93,10 +93,10 @@ const {
                 <!-- Logo -->
                 <a
                     href={logoHref}
-                    class="flex items-center w-1/4 py-4 pl-6 pr-4 space-x-2 font-extrabold text-white md:py-0"
+                    class="flex items-center w-1/4 py-4 pl-6 pr-4 space-x-2 font-extrabold text-foreground md:py-0"
                 >
                     <span
-                        class="flex items-center justify-center flex-shrink-0 w-8 h-8 text-gray-900 rounded-full bg-gradient-to-br from-white via-gray-200 to-white"
+                        class="flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground"
                     >
                         <svg
                             class="w-auto h-5 -translate-y-px"
@@ -115,7 +115,7 @@ const {
                 <!-- Navigation Menu -->
                 <div
                     :class="{'flex': showMenu, 'hidden md:flex': !showMenu }"
-                    class="absolute z-50 flex-col items-center justify-center w-full h-auto px-2 text-center text-gray-400 -translate-x-1/2 border-0 border-gray-700 rounded-full md:border md:w-auto md:h-10 left-1/2 md:flex-row md:items-center"
+                    class="absolute z-50 flex-col items-center justify-center w-full h-auto px-2 text-center text-muted-foreground -translate-x-1/2 border-0 border-border rounded-full md:border md:w-auto md:h-10 left-1/2 md:flex-row md:items-center"
                 >
                     {
                         navItems.map(item => (
@@ -123,15 +123,15 @@ const {
                                 href={item.href}
                                 class={`relative inline-block w-full h-full px-4 py-5 mx-2 font-medium leading-tight text-center md:py-2 group md:w-auto md:px-2 lg:mx-3 md:text-center transition-colors duration-300 ${
                                     item.active
-                                        ? 'text-white'
-                                        : 'text-gray-400 hover:text-white'
+                                        ? 'text-foreground'
+                                        : 'text-muted-foreground hover:text-foreground'
                                 }`}
                             >
                                 <span>{item.text}</span>
                                 {item.active ? (
-                                    <span class="absolute bottom-0 left-0 w-full h-px duration-300 ease-out translate-y-px bg-gradient-to-r md:from-gray-700 md:via-gray-400 md:to-gray-700 from-gray-900 via-gray-600 to-gray-900" />
+                                    <span class="absolute bottom-0 left-0 w-full h-px duration-300 ease-out translate-y-px bg-primary" />
                                 ) : (
-                                    <span class="absolute bottom-0 w-0 h-px duration-300 ease-out translate-y-px group-hover:left-0 left-1/2 group-hover:w-full bg-gradient-to-r md:from-gray-700 md:via-gray-400 md:to-gray-700 from-gray-900 via-gray-600 to-gray-900" />
+                                    <span class="absolute bottom-0 w-0 h-px duration-300 ease-out translate-y-px group-hover:left-0 left-1/2 group-hover:w-full bg-primary" />
                                 )}
                             </a>
                         ))
@@ -140,18 +140,18 @@ const {
 
                 <!-- Auth Section -->
                 <div
-                    class="fixed top-0 left-0 z-40 items-center hidden w-full h-full p-3 text-sm bg-gray-900 bg-opacity-50 md:w-auto md:bg-transparent md:p-0 md:relative md:flex"
+                    class="fixed top-0 left-0 z-40 items-center hidden w-full h-full p-3 text-sm bg-background/50 md:w-auto md:bg-transparent md:p-0 md:relative md:flex"
                     :class="{'flex': showMenu, 'hidden': !showMenu }"
                 >
                     <div
-                        class="flex-col items-center w-full h-full p-3 overflow-hidden bg-black bg-opacity-50 rounded-lg select-none md:p-0 backdrop-blur-lg md:h-auto md:bg-transparent md:rounded-none md:relative md:flex md:flex-row md:overflow-auto"
+                        class="flex-col items-center w-full h-full p-3 overflow-hidden bg-background/50 rounded-lg select-none md:p-0 backdrop-blur-lg md:h-auto md:bg-transparent md:rounded-none md:relative md:flex md:flex-row md:overflow-auto"
                     >
                         <div
                             class="flex flex-col items-center justify-end w-full h-full pt-2 md:w-full md:flex-row md:py-0"
                         >
                             <a
                                 href={signInHref}
-                                class="w-full py-5 mr-0 text-center text-gray-200 md:py-3 md:w-auto hover:text-white md:pl-0 md:mr-3 lg:mr-5 transition-colors duration-200"
+                                class="w-full py-5 mr-0 text-center text-muted-foreground md:py-3 md:w-auto hover:text-foreground md:pl-0 md:mr-3 lg:mr-5 transition-colors duration-200"
                             >
                                 {signInText}
                             </a>
@@ -171,8 +171,8 @@ const {
                 <!-- Mobile Menu Button -->
                 <div
                     @click="showMenu = !showMenu"
-                    class="absolute right-0 z-50 flex flex-col items-end translate-y-1.5 w-10 h-10 p-2 mr-4 rounded-full cursor-pointer md:hidden hover:bg-gray-200/10 hover:bg-opacity-10 transition-colors duration-200"
-                    :class="{ 'text-gray-400': showMenu, 'text-gray-100': !showMenu }"
+                    class="absolute right-0 z-50 flex flex-col items-end translate-y-1.5 w-10 h-10 p-2 mr-4 rounded-full cursor-pointer md:hidden hover:bg-muted/10 transition-colors duration-200"
+                    :class="{ 'text-muted-foreground': showMenu, 'text-foreground': !showMenu }"
                 >
                     <svg
                         class="w-6 h-6"
@@ -209,24 +209,24 @@ const {
         <!-- Hero Content -->
         <div class="container px-6 py-32 mx-auto md:text-center md:px-4">
             <h1
-                class="text-4xl font-extrabold leading-none leading-10 tracking-tight text-white sm:text-5xl md:text-6xl xl:text-7xl"
+                class="text-4xl font-extrabold leading-none leading-10 tracking-tight text-foreground sm:text-5xl md:text-6xl xl:text-7xl"
             >
                 <span class="block"
                     >{heroTitle.split(' ').slice(0, 4).join(' ')}</span
                 >
-                <span class="relative inline-block mt-3 text-white"
+                <span class="relative inline-block mt-3 text-foreground"
                     >{heroTitle.split(' ').slice(4).join(' ')}</span
                 >
             </h1>
             <p
-                class="mx-auto mt-6 text-sm text-left text-gray-200 md:text-center md:mt-12 sm:text-base md:max-w-xl md:text-lg xl:text-xl"
+                class="mx-auto mt-6 text-sm text-left text-muted-foreground md:text-center md:mt-12 sm:text-base md:max-w-xl md:text-lg xl:text-xl"
             >
                 {heroDescription}
             </p>
 
             <!-- Newsletter Signup -->
             <div
-                class="relative flex items-center mx-auto mt-12 overflow-hidden text-left border border-gray-700 rounded-md md:max-w-md md:text-center"
+                class="relative flex items-center mx-auto mt-12 overflow-hidden text-left border border-border rounded-md md:max-w-md md:text-center"
             >
                 <TextInput
                     type="email"
@@ -235,7 +235,7 @@ const {
                     variant="default"
                     size="lg"
                     class="header-dark-email-input"
-                    inputClass="border-0 rounded-none h-12 px-6 py-2 font-medium text-gray-800 focus:ring-0 focus:border-transparent"
+                    inputClass="border-0 rounded-none h-12 px-6 py-2 font-medium text-foreground bg-background focus:ring-0 focus:border-transparent"
                 />
                 <span class="relative top-0 right-0 block">
                     <Button
@@ -243,13 +243,13 @@ const {
                         variant="solid"
                         color="neutral"
                         size="lg"
-                        class="w-32 h-12 rounded-none border-0 bg-gray-800 hover:bg-gray-700 focus:ring-gray-600"
+                        class="w-32 h-12 rounded-none border-0"
                     >
                         {signupButtonText}
                     </Button>
                 </span>
             </div>
-            <div class="mt-8 text-sm text-gray-300">{termsText}</div>
+            <div class="mt-8 text-sm text-muted-foreground">{termsText}</div>
         </div>
     </div>
 </section>

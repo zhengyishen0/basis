@@ -18,7 +18,7 @@ const itemProps = { separator, icon, class: className };
 ---
 
 <template x-for={xFor} x-key={xKey || 'item.id'}>
-    <BreadcrumbItem {...itemProps} {...restProps}>
+    <BreadcrumbItem item={true} {...itemProps} {...restProps}>
         <slot />
     </BreadcrumbItem>
 </template>
