@@ -5,11 +5,20 @@ category: overlay
 order: 2
 ---
 
-import ContextMenu from '@/components/ui/overlay/contextmenu/ContextMenu.astro';
-import MenuItem from '@/components/ui/overlay/menu/MenuItem.astro';
-import MenuShortcut from '@/components/ui/overlay/menu/MenuShortcut.astro';
-import MenuSubMenu from '@/components/ui/overlay/menu/MenuSubMenu.astro';
-import MenuSubTrigger from '@/components/ui/overlay/menu/MenuSubTrigger.astro';
+import {
+    ContextMenu,
+    ContextMenuTrigger,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuItems,
+    ContextMenuGroup,
+    ContextMenuGroups,
+    ContextMenuSubMenu,
+    ContextMenuSubTrigger,
+    ContextMenuShortcut,
+    ContextMenuConditional,
+} from '@/components/ui/overlay/contextmenu';
+import { Divider } from '@/components/ui/layout';
 import { Icon } from 'astro-icon/components';
 import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
 import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
@@ -26,135 +35,72 @@ ContextMenu provides a right-click menu that appears when users right-click on a
         <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col justify-center space-y-8">
-        <div>
-            <h4 class="text-sm font-semibold mb-3">File Context Menu</h4>
+    <TabsContent value="preview" preview class="flex justify-center">
+        <div
+            x-data="{
+                menuGroups: [
+                    {
+                        heading: 'File Actions',
+                        items: [
+                            { text: 'New File', shortcut: 'Ctrl+N' },
+                            { text: 'Open File', shortcut: 'Ctrl+O' },
+                            { text: 'Save File', shortcut: 'Ctrl+S' }
+                        ]
+                    },
+                    {
+                        heading: 'Edit Actions', 
+                        items: [
+                            { text: 'Cut', shortcut: 'Ctrl+X' },
+                            { text: 'Copy', shortcut: 'Ctrl+C' },
+                            { text: 'Paste', shortcut: 'Ctrl+V' },
+                            { 
+                                text: 'Share', 
+                                submenu: [
+                                    { text: 'Email' },
+                                    { text: 'Copy Link' },
+                                    { text: 'Social Media' }
+                                ]
+                            },
+                            { text: 'Delete', shortcut: 'Del' }
+                        ]
+                    },
+                ]
+            }"
+            class="text-center"
+        >
             <ContextMenu trigger="rightclick">
-                <div 
-                    slot="trigger" 
-                    class="flex items-center space-x-2 p-4 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/50"
-                >
-                    <Icon name="lucide:file-text" class="w-5 h-5 text-muted-foreground" />
-                    <span class="text-sm">Right-click on this file</span>
-                </div>
-                <div slot="content" class="w-48">
-                    <div class="rounded-md border bg-popover text-popover-foreground shadow-md py-1">
-                        <MenuItem>
-                            <Icon name="lucide:eye" class="w-4 h-4 mr-2" />
-                            Open
-                            <MenuShortcut>Enter</MenuShortcut>
-                        </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:edit" class="w-4 h-4 mr-2" />
-                            Edit
-                            <MenuShortcut>F2</MenuShortcut>
-                        </MenuItem>
-                        <div class="border-t my-1"></div>
-                        <MenuItem>
-                            <Icon name="lucide:copy" class="w-4 h-4 mr-2" />
-                            Copy
-                            <MenuShortcut>⌘C</MenuShortcut>
-                        </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:scissors" class="w-4 h-4 mr-2" />
-                            Cut
-                            <MenuShortcut>⌘X</MenuShortcut>
-                        </MenuItem>
-                        <MenuItem class="text-destructive focus:text-destructive">
-                            <Icon name="lucide:trash-2" class="w-4 h-4 mr-2" />
-                            Delete
-                            <MenuShortcut>Del</MenuShortcut>
-                        </MenuItem>
+                <ContextMenuTrigger>
+                    <div class="w-64 h-40 bg-gradient-to-br from-cyan-50 to-blue-100 border rounded-lg flex items-center justify-center mx-auto">
+                        <span class="text-center">Right-click for dynamic menu</span>
                     </div>
-                </div>
-            </ContextMenu>
-        </div>
-        <div>
-            <h4 class="text-sm font-semibold mb-3">Text Context Menu</h4>
-            <ContextMenu trigger="rightclick">
-                <div 
-                    slot="trigger" 
-                    class="p-4 border rounded-lg cursor-text select-text bg-muted/20"
-                >
-                    <p class="text-sm">
-                        Right-click on this text to see formatting options.
-                    </p>
-                </div>
-                <div slot="content" class="w-52">
-                    <div class="rounded-md border bg-popover text-popover-foreground shadow-md py-1">
-                        <MenuItem>
-                            <Icon name="lucide:bold" class="w-4 h-4 mr-2" />
-                            Bold
-                            <MenuShortcut>⌘B</MenuShortcut>
-                        </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:italic" class="w-4 h-4 mr-2" />
-                            Italic
-                            <MenuShortcut>⌘I</MenuShortcut>
-                        </MenuItem>
-                        <div class="border-t my-1"></div>
-                        <MenuItem>
-                            <Icon name="lucide:copy" class="w-4 h-4 mr-2" />
-                            Copy
-                            <MenuShortcut>⌘C</MenuShortcut>
-                        </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:search" class="w-4 h-4 mr-2" />
-                            Find
-                            <MenuShortcut>⌘F</MenuShortcut>
-                        </MenuItem>
-                    </div>
-                </div>
-            </ContextMenu>
-        </div>
-        <div>
-            <h4 class="text-sm font-semibold mb-3">With Submenus</h4>
-            <ContextMenu trigger="rightclick">
-                <div 
-                    slot="trigger" 
-                    class="flex items-center justify-center p-8 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/50"
-                >
-                    <span class="text-sm text-muted-foreground">Right-click for nested menu</span>
-                </div>
-                <div slot="content" class="w-48">
-                    <div class="rounded-md border bg-popover text-popover-foreground shadow-md py-1">
-                        <MenuItem>
-                            <Icon name="lucide:plus" class="w-4 h-4 mr-2" />
-                            New
-                        </MenuItem>
-                        <MenuSubMenu>
-                            <MenuSubTrigger x-ref="submenuTrigger">
-                                <Icon name="lucide:file-plus" class="w-4 h-4 mr-2" />
-                                New File
-                                <Icon name="lucide:chevron-right" class="w-4 h-4 ml-auto" />
-                            </MenuSubTrigger>
-                            <div slot="submenu" class="w-40">
-                                <MenuItem>
-                                    <Icon name="lucide:file-text" class="w-4 h-4 mr-2" />
-                                    Text File
-                                </MenuItem>
-                                <MenuItem>
-                                    <Icon name="lucide:code" class="w-4 h-4 mr-2" />
-                                    JavaScript
-                                </MenuItem>
-                                <MenuItem>
-                                    <Icon name="lucide:palette" class="w-4 h-4 mr-2" />
-                                    CSS
-                                </MenuItem>
-                            </div>
-                        </MenuSubMenu>
-                        <div class="border-t my-1"></div>
-                        <MenuItem>
-                            <Icon name="lucide:refresh-cw" class="w-4 h-4 mr-2" />
-                            Refresh
-                            <MenuShortcut>F5</MenuShortcut>
-                        </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:settings" class="w-4 h-4 mr-2" />
-                            Properties
-                        </MenuItem>
-                    </div>
-                </div>
+                </ContextMenuTrigger>
+                <ContextMenuContent role="menu">
+                    <ContextMenuGroups
+                        x-for="group in menuGroups"
+                        x-key="group.heading"
+                        x-text="group.heading"
+                    >
+                        <ContextMenuConditional
+                            x-for="item in group.items"
+                            x-key="item.text"
+                            condition="!item.submenu"
+                        >
+                            <ContextMenuItem slot="true" x-text="item.text">
+                                <ContextMenuShortcut x-text="item.shortcut" />
+                            </ContextMenuItem>
+
+                            <ContextMenuSubMenu slot="false">
+                                <ContextMenuSubTrigger x-text="item.text" />
+                                <ContextMenuItems
+                                    slot="submenu"
+                                    x-for="subitem in item.submenu"
+                                    x-key="subitem.text"
+                                    x-text="subitem.text"
+                                />
+                            </ContextMenuSubMenu>
+                        </ContextMenuConditional>
+                    </ContextMenuGroups>
+                </ContextMenuContent>
             </ContextMenu>
         </div>
     </TabsContent>
@@ -162,78 +108,87 @@ ContextMenu provides a right-click menu that appears when users right-click on a
         <Code
             language="astro"
             code={`---
-import ContextMenu from '@/components/ui/overlay/contextmenu/ContextMenu.astro';
-import MenuItem from '@/components/ui/overlay/menu/MenuItem.astro';
-import MenuShortcut from '@/components/ui/overlay/menu/MenuShortcut.astro';
-import MenuSubMenu from '@/components/ui/overlay/menu/MenuSubMenu.astro';
-import MenuSubTrigger from '@/components/ui/overlay/menu/MenuSubTrigger.astro';
-import { Icon } from 'astro-icon/components';
+import {
+    ContextMenu,
+    ContextMenuTrigger,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuItems,
+    ContextMenuGroups,
+    ContextMenuSubMenu,
+    ContextMenuSubTrigger,
+    ContextMenuShortcut,
+    ContextMenuConditional,
+} from '@/components/ui/overlay/contextmenu';
 ---
 
-{/* File Context Menu */}
-<ContextMenu trigger="rightclick">
-    <div 
-        slot="trigger" 
-        class="flex items-center space-x-2 p-4 border-2 border-dashed rounded-lg cursor-pointer"
-    >
-        <Icon name="lucide:file-text" class="w-5 h-5" />
-        <span>Right-click on this file</span>
-    </div>
-    <div slot="content" class="w-48">
-        <div class="rounded-md border bg-popover shadow-md py-1">
-            <MenuItem>
-                <Icon name="lucide:eye" class="w-4 h-4 mr-2" />
-                Open
-                <MenuShortcut>Enter</MenuShortcut>
-            </MenuItem>
-            <MenuItem>
-                <Icon name="lucide:edit" class="w-4 h-4 mr-2" />
-                Edit
-            </MenuItem>
-            <div class="border-t my-1"></div>
-            <MenuItem>
-                <Icon name="lucide:copy" class="w-4 h-4 mr-2" />
-                Copy
-            </MenuItem>
-            <MenuItem class="text-destructive">
-                <Icon name="lucide:trash-2" class="w-4 h-4 mr-2" />
-                Delete
-            </MenuItem>
-        </div>
-    </div>
-</ContextMenu>
+{/* Dynamic Context Menu with Alpine.js */}
+<div
+    x-data="{
+        menuGroups: [
+            {
+                heading: 'File Actions',
+                items: [
+                    { text: 'New File', shortcut: 'Ctrl+N' },
+                    { text: 'Open File', shortcut: 'Ctrl+O' },
+                    { text: 'Save File', shortcut: 'Ctrl+S' }
+                ]
+            },
+            {
+                heading: 'Edit Actions', 
+                items: [
+                    { text: 'Cut', shortcut: 'Ctrl+X' },
+                    { text: 'Copy', shortcut: 'Ctrl+C' },
+                    { text: 'Paste', shortcut: 'Ctrl+V' },
+                    { 
+                        text: 'Share', 
+                        submenu: [
+                            { text: 'Email' },
+                            { text: 'Copy Link' },
+                            { text: 'Social Media' }
+                        ]
+                    },
+                    { text: 'Delete', shortcut: 'Del' }
+                ]
+            },
+        ]
+    }"
+>
+    <ContextMenu trigger="rightclick">
+        <ContextMenuTrigger>
+            <div class="w-64 h-40 border rounded-lg flex items-center justify-center cursor-pointer">
+                Right-click for dynamic menu
+            </div>
+        </ContextMenuTrigger>
+        <ContextMenuContent role="menu">
+            <ContextMenuGroups
+                x-for="group in menuGroups"
+                x-key="group.heading"
+                x-text="group.heading"
+            >
+                <ContextMenuConditional
+                    x-for="item in group.items"
+                    x-key="item.text"
+                    condition="!item.submenu"
+                >
+                    <ContextMenuItem slot="true" x-text="item.text">
+                        <ContextMenuShortcut x-text="item.shortcut" />
+                    </ContextMenuItem>
 
-{/* With Submenus */}
-<ContextMenu trigger="rightclick">
-    <div slot="trigger" class="p-8 border-2 border-dashed rounded-lg cursor-pointer">
-        Right-click for nested menu
-    </div>
-    <div slot="content" class="w-48">
-        <div class="rounded-md border bg-popover shadow-md py-1">
-            <MenuItem>
-                <Icon name="lucide:plus" class="w-4 h-4 mr-2" />
-                New
-            </MenuItem>
-            <MenuSubMenu>
-                <MenuSubTrigger x-ref="submenuTrigger">
-                    <Icon name="lucide:file-plus" class="w-4 h-4 mr-2" />
-                    New File
-                    <Icon name="lucide:chevron-right" class="w-4 h-4 ml-auto" />
-                </MenuSubTrigger>
-                <div slot="submenu" class="w-40">
-                    <MenuItem>
-                        <Icon name="lucide:file-text" class="w-4 h-4 mr-2" />
-                        Text File
-                    </MenuItem>
-                    <MenuItem>
-                        <Icon name="lucide:code" class="w-4 h-4 mr-2" />
-                        JavaScript
-                    </MenuItem>
-                </div>
-            </MenuSubMenu>
-        </div>
-    </div>
-</ContextMenu>`}
+                    <ContextMenuSubMenu slot="false">
+                        <ContextMenuSubTrigger x-text="item.text" />
+                        <ContextMenuItems
+                            slot="submenu"
+                            x-for="subitem in item.submenu"
+                            x-key="subitem.text"
+                            x-text="subitem.text"
+                        />
+                    </ContextMenuSubMenu>
+                </ContextMenuConditional>
+            </ContextMenuGroups>
+        </ContextMenuContent>
+    </ContextMenu>
+</div>`}
         />
     </TabsContent>
 </Tabs>
