@@ -31,20 +31,29 @@ Cards are surfaces that display content and actions on a single topic. They shou
             Code
         </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col justify-center items-center gap-4">
-            <Card class="max-w-md">
-                <CardHeader>
-                    <h3 class="text-lg font-semibold">Card with Header</h3>
-                    <p class="text-sm text-muted-foreground">Card description goes here</p>
-                </CardHeader>
-                <CardContent>
-                    <p>This is the main content area of the card. You can place any content here.</p>
-                </CardContent>
-                <CardFooter class="flex gap-2">
-                    <Button>Save</Button>
-                    <Button variant="outline">Cancel</Button>
-                </CardFooter>
-            </Card>
+    <TabsContent
+        value="preview"
+        preview
+        class="flex flex-col justify-center items-center gap-4"
+    >
+        <Card class="max-w-md">
+            <CardHeader>
+                <h3 class="text-lg font-semibold">Card with Header</h3>
+                <p class="text-sm text-muted-foreground">
+                    Card description goes here
+                </p>
+            </CardHeader>
+            <CardContent>
+                <p>
+                    This is the main content area of the card. You can place any
+                    content here.
+                </p>
+            </CardContent>
+            <CardFooter class="flex gap-2">
+                <Button>Save</Button>
+                <Button variant="outline">Cancel</Button>
+            </CardFooter>
+        </Card>
     </TabsContent>
     <TabsContent value="code">
         <Code
@@ -72,8 +81,6 @@ import Button from '@/components/ui/forms/Button.astro';
 </Tabs>
 
 ## API Reference
-
-### Props
 
 | Component     | Props                | Description                               |
 | ------------- | -------------------- | ----------------------------------------- |

@@ -26,14 +26,18 @@ Badges are used to highlight important information, show status, or display meta
             Code
         </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="flex flex-row gap-2 flex-wrap content-center justify-center items-center">
-            <Badge variant="default">Default</Badge>
-            <Badge variant="secondary">Secondary</Badge>
-            <Badge variant="destructive">Destructive</Badge>
-            <Badge variant="outline">Outline</Badge>
-            <Badge variant="destructive">5</Badge>
-            <Badge variant="default">12</Badge>
-            <Badge variant="secondary">99+</Badge>
+    <TabsContent
+        value="preview"
+        preview
+        class="flex flex-row gap-2 flex-wrap content-center justify-center items-center"
+    >
+        <Badge variant="default">Default</Badge>
+        <Badge variant="secondary">Secondary</Badge>
+        <Badge variant="destructive">Destructive</Badge>
+        <Badge variant="outline">Outline</Badge>
+        <Badge variant="destructive">5</Badge>
+        <Badge variant="default">12</Badge>
+        <Badge variant="secondary">99+</Badge>
     </TabsContent>
     <TabsContent value="code">
         <Code
@@ -54,9 +58,7 @@ import Badge from '@/components/ui/feedback/Badge.astro';
 
 ## API Reference
 
-### Props
-
-| Prop      | Type                                                     | Default     | Description            |
-| --------- | -------------------------------------------------------- | ----------- | ---------------------- |
+| Prop      | Type                                               | Default     | Description            |
+| --------- | -------------------------------------------------- | ----------- | ---------------------- |
 | `variant` | `'default', 'secondary', 'destructive', 'outline'` | `'default'` | Badge variant          |
-| `class`   | `string`                                                 | -           | Additional CSS classes |
+| `class`   | `string`                                           | -           | Additional CSS classes |

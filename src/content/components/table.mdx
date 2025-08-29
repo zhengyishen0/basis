@@ -14,14 +14,30 @@ import TableCell from '@/components/ui/data/TableCell.astro';
 import TablePagination from '@/components/ui/data/TablePagination.astro';
 import TableToolbar from '@/components/ui/data/TableToolbar.astro';
 import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
 Complete table system with sortable headers, row selection, pagination, and search functionality. Built with semantic HTML and Alpine.js integration for dynamic interactions.
 
-<div class="space-y-4" preview>
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="flex flex-col gap-6 items-center justify-center">
+
+<div class="space-y-4">
     <h3 class="text-lg font-semibold">Complete Table Example</h3>
-    <div x-data="{
+    <div 
+    x-data="{
         searchQuery: '',
         currentPage: 1,
         pageSize: 5,
@@ -144,15 +160,15 @@ Complete table system with sortable headers, row selection, pagination, and sear
             <TableHeader>
                 <TableRow>
                     <TableHead width="12">
-                        <input 
-                            type="checkbox" 
+                        <input
+                            type="checkbox"
                             class="rounded border-input"
                             x-bind:checked="selectedRows.size === paginatedData.length && paginatedData.length > 0"
                             x-on:change="$event.target.checked ? paginatedData.forEach(item => selectedRows.add(item.id)) : selectedRows.clear()"
                         />
                     </TableHead>
-                    <TableHead 
-                        sortable 
+                    <TableHead
+                        sortable
                         x-on:click="sort('name')"
                         x-bind:class="{ 'text-primary': sortColumn === 'name' }"
                         class="cursor-pointer"
@@ -169,8 +185,8 @@ Complete table system with sortable headers, row selection, pagination, and sear
                 <template x-for="user in paginatedData" x-key="user.id">
                     <TableRow x-bind:selected="selectedRows.has(user.id)">
                         <TableCell>
-                            <input 
-                                type="checkbox" 
+                            <input
+                                type="checkbox"
                                 class="rounded border-input"
                                 x-bind:checked="selectedRows.has(user.id)"
                                 x-on:change="toggleRow(user.id)"
@@ -186,7 +202,7 @@ Complete table system with sortable headers, row selection, pagination, and sear
                         </TableCell>
                         <TableCell x-text="user.email"></TableCell>
                         <TableCell align="center">
-                            <span 
+                            <span
                                 class="px-2 py-1 text-xs rounded-full"
                                 x-bind:class="{
                                     'bg-red-100 text-red-800': user.role === 'Admin',
@@ -197,7 +213,7 @@ Complete table system with sortable headers, row selection, pagination, and sear
                             ></span>
                         </TableCell>
                         <TableCell align="center">
-                            <span 
+                            <span
                                 class="px-2 py-1 text-xs rounded-full"
                                 x-bind:class="{
                                     'bg-green-100 text-green-800': user.status === 'Active',
@@ -214,7 +230,7 @@ Complete table system with sortable headers, row selection, pagination, and sear
                         </TableCell>
                     </TableRow>
                 </template>
-                
+
                 {/* Empty State */}
                 <template x-if="paginatedData.length === 0">
                     <TableRow>
@@ -227,14 +243,16 @@ Complete table system with sortable headers, row selection, pagination, and sear
         </Table>
 
         {/* Pagination */}
-        <TablePagination 
+        <TablePagination
             showInfo={true}
             showPageSize={true}
             pageSizeOptions={[5, 10, 25, 50]}
         />
     </div>
-</div>
 
+</div>
+    </TabsContent>
+    <TabsContent value="code">
 <Code language="astro" code={`---
 import Table from '@/components/ui/data/Table.astro';
 import TableHeader from '@/components/ui/data/TableHeader.astro';
@@ -247,6 +265,7 @@ import TablePagination from '@/components/ui/data/TablePagination.astro';
 ---
 
 {/* Complete Table with All Features */}
+
 <div x-data="{
   searchQuery: '',
   currentPage: 1,
@@ -351,106 +370,119 @@ import TablePagination from '@/components/ui/data/TablePagination.astro';
     </div>
   </TableToolbar>
 
-  {/* Table */}
-  <Table variant="default">
+{/* Table */}
+
+<Table variant="default">
     <TableHeader>
-      <TableRow>
-        <TableHead width="12">
-          <input 
-            type="checkbox" 
-            class="rounded border-input"
-            x-bind:checked="selectedRows.size === paginatedData.length && paginatedData.length > 0"
-            x-on:change="$event.target.checked ? paginatedData.forEach(item => selectedRows.add(item.id)) : selectedRows.clear()"
-          />
-        </TableHead>
-        <TableHead 
-          sortable 
-          x-on:click="sort('name')"
-          x-bind:class="{ 'text-primary': sortColumn === 'name' }"
-          class="cursor-pointer"
-        >
-          Name
-        </TableHead>
-        <TableHead>Email</TableHead>
-        <TableHead align="center">Role</TableHead>
-        <TableHead align="center">Status</TableHead>
-        <TableHead align="right">Actions</TableHead>
-      </TableRow>
+        <TableRow>
+            <TableHead width="12">
+                <input
+                    type="checkbox"
+                    class="rounded border-input"
+                    x-bind:checked="selectedRows.size === paginatedData.length && paginatedData.length > 0"
+                    x-on:change="$event.target.checked ? paginatedData.forEach(item => selectedRows.add(item.id)) : selectedRows.clear()"
+                />
+            </TableHead>
+            <TableHead
+                sortable
+                x-on:click="sort('name')"
+                x-bind:class="{ 'text-primary': sortColumn === 'name' }"
+                class="cursor-pointer"
+            >
+                Name
+            </TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead align="center">Role</TableHead>
+            <TableHead align="center">Status</TableHead>
+            <TableHead align="right">Actions</TableHead>
+        </TableRow>
     </TableHeader>
     <TableBody>
-      <template x-for="user in paginatedData" x-key="user.id">
-        <TableRow x-bind:selected="selectedRows.has(user.id)">
-          <TableCell>
-            <input 
-              type="checkbox" 
-              class="rounded border-input"
-              x-bind:checked="selectedRows.has(user.id)"
-              x-on:change="toggleRow(user.id)"
-            />
-          </TableCell>
-          <TableCell x-text="user.name"></TableCell>
-          <TableCell x-text="user.email"></TableCell>
-          <TableCell align="center">
-            <span 
-              class="px-2 py-1 text-xs rounded-full"
-              x-bind:class="{
+        <template x-for="user in paginatedData" x-key="user.id">
+            <TableRow x-bind:selected="selectedRows.has(user.id)">
+                <TableCell>
+                    <input
+                        type="checkbox"
+                        class="rounded border-input"
+                        x-bind:checked="selectedRows.has(user.id)"
+                        x-on:change="toggleRow(user.id)"
+                    />
+                </TableCell>
+                <TableCell x-text="user.name"></TableCell>
+                <TableCell x-text="user.email"></TableCell>
+                <TableCell align="center">
+                    <span
+                        class="px-2 py-1 text-xs rounded-full"
+                        x-bind:class="{
                 'bg-red-100 text-red-800': user.role === 'Admin',
                 'bg-blue-100 text-blue-800': user.role === 'Editor',
                 'bg-gray-100 text-gray-800': user.role === 'User'
               }"
-              x-text="user.role"
-            ></span>
-          </TableCell>
-          <TableCell align="center">
-            <span 
-              class="px-2 py-1 text-xs rounded-full"
-              x-bind:class="{
+                        x-text="user.role"
+                    ></span>
+                </TableCell>
+                <TableCell align="center">
+                    <span
+                        class="px-2 py-1 text-xs rounded-full"
+                        x-bind:class="{
                 'bg-green-100 text-green-800': user.status === 'Active',
                 'bg-red-100 text-red-800': user.status === 'Inactive'
               }"
-              x-text="user.status"
-            ></span>
-          </TableCell>
-          <TableCell align="right">
-            <div class="flex gap-1 justify-end">
-              <button class="text-blue-600 hover:text-blue-800 text-sm">Edit</button>
-              <button class="text-red-600 hover:text-red-800 text-sm">Delete</button>
-            </div>
-          </TableCell>
-        </TableRow>
-      </template>
-      
-      {/* Empty State */}
-      <template x-if="paginatedData.length === 0">
-        <TableRow>
-          <TableCell colspan={6} align="center" class="py-8 text-muted-foreground">
-            No users found
-          </TableCell>
-        </TableRow>
-      </template>
-    </TableBody>
-  </Table>
+                        x-text="user.status"
+                    ></span>
+                </TableCell>
+                <TableCell align="right">
+                    <div class="flex gap-1 justify-end">
+                        <button class="text-blue-600 hover:text-blue-800 text-sm">
+                            Edit
+                        </button>
+                        <button class="text-red-600 hover:text-red-800 text-sm">
+                            Delete
+                        </button>
+                    </div>
+                </TableCell>
+            </TableRow>
+        </template>
 
-  {/* Pagination */}
+        {/* Empty State */}
+        <template x-if="paginatedData.length === 0">
+            <TableRow>
+                <TableCell
+                    colspan={6}
+                    align="center"
+                    class="py-8 text-muted-foreground"
+                >
+                    No users found
+                </TableCell>
+            </TableRow>
+        </template>
+    </TableBody>
+
+</Table>
+
+{/* Pagination */}
+
   <TablePagination 
     showInfo={true}
     showPageSize={true}
     pageSizeOptions={[5, 10, 25, 50]}
   />
 </div>`} />
+    </TabsContent>
+</Tabs >
 
 ## API Reference
 
-| Component | Props | Description |
-|-----------|-------|-------------|
-| **Table** | `variant`: `default \, bordered \, striped \, hoverable`<br/>`density`: `compact \, normal \, comfortable`<br/>`responsive`: `boolean` | Main table container with styling variants |
-| **TableHeader** | `class`: `string` | Header section wrapper (thead) |
-| **TableBody** | `class`: `string` | Body section wrapper (tbody) |
-| **TableRow** | `selected`: `boolean`<br/>`class`: `string` | Individual table row with selection state |
-| **TableHead** | `sortable`: `boolean`<br/>`align`: `left \, center \, right`<br/>`width`: `string`<br/>`colspan`: `number` | Column header with sorting support |
-| **TableCell** | `align`: `left \, center \, right`<br/>`colspan`: `number`<br/>`class`: `string` | Data cell with alignment options |
-| **TableToolbar** | `searchPlaceholder`: `string`<br/>`showSearch`: `boolean`<br/>`showActions`: `boolean` | Toolbar with search, filters, and actions |
-| **TablePagination** | `showInfo`: `boolean`<br/>`showPageSize`: `boolean`<br/>`pageSizeOptions`: `number[]` | Pagination controls |
+| Component           | Props                                                                                                                                  | Description                                |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| **Table**           | `variant`: `default \, bordered \, striped \, hoverable`<br/>`density`: `compact \, normal \, comfortable`<br/>`responsive`: `boolean` | Main table container with styling variants |
+| **TableHeader**     | `class`: `string`                                                                                                                      | Header section wrapper (thead)             |
+| **TableBody**       | `class`: `string`                                                                                                                      | Body section wrapper (tbody)               |
+| **TableRow**        | `selected`: `boolean`<br/>`class`: `string`                                                                                            | Individual table row with selection state  |
+| **TableHead**       | `sortable`: `boolean`<br/>`align`: `left \, center \, right`<br/>`width`: `string`<br/>`colspan`: `number`                             | Column header with sorting support         |
+| **TableCell**       | `align`: `left \, center \, right`<br/>`colspan`: `number`<br/>`class`: `string`                                                       | Data cell with alignment options           |
+| **TableToolbar**    | `searchPlaceholder`: `string`<br/>`showSearch`: `boolean`<br/>`showActions`: `boolean`                                                 | Toolbar with search, filters, and actions  |
+| **TablePagination** | `showInfo`: `boolean`<br/>`showPageSize`: `boolean`<br/>`pageSizeOptions`: `number[]`                                                  | Pagination controls                        |
 
 ## Required Alpine.js Data
 
@@ -464,14 +496,14 @@ import TablePagination from '@/components/ui/data/TablePagination.astro';
   sortDirection: 'asc',
   currentPage: 1,
   pageSize: 10,
-  
+
   // Computed
   get filteredData() {
     let filtered = this.data;
     if (this.searchQuery) {
       const query = this.searchQuery.toLowerCase();
-      filtered = filtered.filter(item => 
-        Object.values(item).some(value => 
+      filtered = filtered.filter(item =>
+        Object.values(item).some(value =>
           String(value).toLowerCase().includes(query)
         )
       );
@@ -498,7 +530,7 @@ import TablePagination from '@/components/ui/data/TablePagination.astro';
     const start = (this.currentPage - 1) * this.pageSize;
     return this.filteredData.slice(start, start + this.pageSize);
   },
-  
+
   // Methods
   filter() { this.currentPage = 1; },
   sort(column) {

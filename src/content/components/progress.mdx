@@ -18,314 +18,68 @@ Progress is a visual indicator component that displays the completion progress o
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-6">
+    <TabsContent value="preview" preview class="space-y-4">
         <div class="space-y-4">
-            <h3 class="text-lg font-medium">Basic Progress</h3>
-            <Progress value={25} showLabel={true} />
-            <Progress value={50} showLabel={true} />
-            <Progress value={75} showLabel={true} />
-            <Progress value={100} showLabel={true} />
+            <Progress value={70} variant="default" showLabel={true} label="Default Progress"/>
+            <Progress
+                autoIncrement={true}
+                incrementInterval={100}
+                striped={true}
+                animated={true}
+                variant="info"
+                showLabel={true}
+                label="Auto-increment with Animation"
+            />
         </div>
     </TabsContent>
     <TabsContent value="code">
         <Code language="astro" code={`---
 import Progress from '@/components/ui/feedback/Progress.astro';
 ---
-
-{/* Basic usage */}
-<Progress value={25} showLabel={true} />
-<Progress value={50} showLabel={true} />
-<Progress value={75} showLabel={true} />
-<Progress value={100} showLabel={true} />
-
-{/* Without labels */}
-<Progress value={60} />
-
-{/* Custom max value */}
-<Progress value={30} max={50} showLabel={true} />`} />
-    </TabsContent>
-</Tabs>
-
-## Variants
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div class="space-y-4">
-            <div>
-                <p class="text-sm text-muted-foreground mb-2">Default</p>
-                <Progress value={70} variant="default" showLabel={true} />
-            </div>
-            <div>
-                <p class="text-sm text-muted-foreground mb-2">Secondary</p>
-                <Progress value={70} variant="secondary" showLabel={true} />
-            </div>
-            <div>
-                <p class="text-sm text-muted-foreground mb-2">Success</p>
-                <Progress value={70} variant="success" showLabel={true} />
-            </div>
-            <div>
-                <p class="text-sm text-muted-foreground mb-2">Warning</p>
-                <Progress value={70} variant="warning" showLabel={true} />
-            </div>
-            <div>
-                <p class="text-sm text-muted-foreground mb-2">Info</p>
-                <Progress value={70} variant="info" showLabel={true} />
-            </div>
-            <div>
-                <p class="text-sm text-muted-foreground mb-2">Destructive</p>
-                <Progress value={70} variant="destructive" showLabel={true} />
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`{/* Different variants */
-<Progress value={70} variant="default" showLabel={true} />
-<Progress value={70} variant="secondary" showLabel={true} />
-<Progress value={70} variant="success" showLabel={true} />
-<Progress value={70} variant="warning" showLabel={true} />
-<Progress value={70} variant="info" showLabel={true} />
-<Progress value={70} variant="destructive" showLabel={true} />`} />
-    </TabsContent>
-</Tabs>
-
-## Animated and Striped
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div class="space-y-4">
-            <div>
-                <p class="text-sm text-muted-foreground mb-2">Striped</p>
-                <Progress value={80} striped={true} showLabel={true} />
-            </div>
-            <div>
-                <p class="text-sm text-muted-foreground mb-2">Animated</p>
-                <Progress value={65} animated={true} showLabel={true} />
-            </div>
-            <div>
-                <p class="text-sm text-muted-foreground mb-2">Striped + Animated</p>
-                <Progress value={90} striped={true} animated={true} variant="success" showLabel={true} />
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`{/* Striped progress */
-<Progress value={80} striped={true} showLabel={true} />
-
-{/* Animated progress */}
-<Progress value={65} animated={true} showLabel={true} />
-
-{/* Both striped and animated */}
-<Progress 
-  value={90} 
-  striped={true} 
-  animated={true} 
-  variant="success" 
-  showLabel={true} 
-/>`} />
-    </TabsContent>
-</Tabs>
-
-## Auto-increment
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div class="space-y-6">
-            <div>
-                <p class="text-sm text-muted-foreground mb-2">Auto-increment (Fast)</p>
-                <Progress 
-                    autoIncrement={true} 
-                    incrementInterval={50}
-                    showLabel={true}
-                />
-            </div>
-            <div>
-                <p class="text-sm text-muted-foreground mb-2">Auto-increment with Animation</p>
-                <Progress 
-                    autoIncrement={true} 
-                    incrementInterval={100}
-                    striped={true}
-                    animated={true}
-                    variant="info"
-                    showLabel={true}
-                />
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`{/* Auto-incrementing progress */
-<Progress 
-  autoIncrement={true} 
-  incrementInterval={50}
-  showLabel={true}
-/>
-
-{/* Auto-increment with visual effects */}
-<Progress 
-  autoIncrement={true} 
-  incrementInterval={100}
-  striped={true}
-  animated={true}
-  variant="info"
-  showLabel={true}
-/>`} />
-    </TabsContent>
-</Tabs>
-
-## Interactive Demo
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div 
-            x-data="{ 
-                currentValue: 40,
-                updateProgress() {
-                    this.currentValue = Math.floor(Math.random() * 100);
-                }
-            }"
-            class="space-y-4"
-        >
-            <div>
-                <p class="text-sm text-muted-foreground mb-2">Dynamic Progress</p>
-                <Progress 
-                    x-bind:value="currentValue"
-                    showLabel={true}
-                />
-            </div>
-            
-            <button 
-                x-on:click="updateProgress()"
-                class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-            >
-                Update Progress
-            </button>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`<div 
-  x-data="{ 
-    currentValue: 40,
-    updateProgress() {
-      this.currentValue = Math.floor(Math.random() * 100);
-    }
-  }"
->
-  <Progress 
-    x-bind:value="currentValue"
+<Progress value={70} variant="default" showLabel={true} label="Default Progress"/>
+<Progress
+    autoIncrement={true}
+    incrementInterval={100}
+    striped={true}
+    animated={true}
+    variant="info"
     showLabel={true}
-  />
-  
-  <button x-on:click="updateProgress()">
-    Update Progress
-  </button>
-</div>`} />
+    label="Auto-increment with Animation"
+/>
+`} />
     </TabsContent>
+
 </Tabs>
 
 ## API Reference
 
-### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `number` | `0` | Current progress value |
-| `max` | `number` | `100` | Maximum progress value |
-| `variant` | `'default', 'secondary', 'destructive', 'success', 'warning', 'info'` | `'default'` | Progress bar color variant |
-| `animated` | `boolean` | `false` | Enables pulse animation |
-| `striped` | `boolean` | `false` | Adds diagonal striped pattern |
-| `showLabel` | `boolean` | `false` | Shows progress percentage label |
-| `autoIncrement` | `boolean` | `false` | Automatically increments progress |
-| `incrementInterval` | `number` | `100` | Auto-increment interval in milliseconds |
-| `class` | `string` | `undefined` | Additional CSS classes |
+| Prop                | Type                                                                  | Default     | Description                             |
+| ------------------- | --------------------------------------------------------------------- | ----------- | --------------------------------------- |
+| `value`             | `number`                                                              | `0`         | Current progress value                  |
+| `max`               | `number`                                                              | `100`       | Maximum progress value                  |
+| `variant`           | `'default', 'secondary', 'destructive', 'success', 'warning', 'info'` | `'default'` | Progress bar color variant              |
+| `animated`          | `boolean`                                                             | `false`     | Enables pulse animation                 |
+| `striped`           | `boolean`                                                             | `false`     | Adds diagonal striped pattern           |
+| `showLabel`         | `boolean`                                                             | `false`     | Shows progress percentage label         |
+| `autoIncrement`     | `boolean`                                                             | `false`     | Automatically increments progress       |
+| `incrementInterval` | `number`                                                              | `100`       | Auto-increment interval in milliseconds |
+| `class`             | `string`                                                              | `undefined` | Additional CSS classes                  |
 
 ### Alpine.js Integration
 
 The Progress component provides several Alpine.js data properties and methods:
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `progress` | `number` | Current progress value (reactive) |
-| `max` | `number` | Maximum progress value |
-| `percentage` | `number` | Computed percentage (0-100) |
-| `resetProgress()` | `function` | Resets progress to 0 and restarts auto-increment |
-| `startAutoIncrement()` | `function` | Starts the auto-increment timer |
-
-### Usage Examples
-
-```astro
-{/* Basic usage */}
-<Progress value={50} showLabel={true} />
-
-{/* Different variants */}
-<Progress value={75} variant="success" showLabel={true} />
-<Progress value={25} variant="warning" showLabel={true} />
-
-{/* With visual effects */}
-<Progress 
-  value={80} 
-  striped={true} 
-  animated={true} 
-  showLabel={true} 
-/>
-
-{/* Auto-incrementing */}
-<Progress 
-  autoIncrement={true}
-  incrementInterval={200}
-  variant="info"
-  showLabel={true}
-/>
-
-{/* Dynamic with Alpine.js */}
-<div x-data="{ progress: 30 }">
-  <Progress x-bind:value="progress" showLabel={true} />
-  <button x-on:click="progress += 10">Increase</button>
-</div>
-```
-
-### Features
-
-- **CVA Variants**: Full shadcn-style variant system with theme colors
-- **Visual Effects**: Striped patterns and pulse animations
-- **Auto-increment**: Built-in timer functionality with reset controls
-- **Alpine.js Ready**: Reactive data binding and method exposure
-- **Responsive**: Adapts to container width
-- **Accessible**: Semantic progress element with proper ARIA attributes
-- **Customizable**: Full theming support through CSS custom properties
-
-### Styling
-
-The Progress component uses CSS custom properties and Tailwind classes:
-
-```css
-/* Custom striped pattern */
-.bg-stripes {
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.1) 0,
-    rgba(255, 255, 255, 0.1) 0.5rem,
-    transparent 0.5rem,
-    transparent 1rem
-  );
-}
-```
-
-The component supports all theme colors defined in your `tailwind.config.js` file.
+| Property               | Type       | Description                                      |
+| ---------------------- | ---------- | ------------------------------------------------ |
+| `progress`             | `number`   | Current progress value (reactive)                |
+| `max`                  | `number`   | Maximum progress value                           |
+| `percentage`           | `number`   | Computed percentage (0-100)                      |
+| `resetProgress()`      | `function` | Resets progress to 0 and restarts auto-increment |
+| `startAutoIncrement()` | `function` | Starts the auto-increment timer                  |

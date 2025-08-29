@@ -95,8 +95,6 @@ import { Icon } from 'astro-icon/components';
 
 The main container component for breadcrumb navigation.
 
-#### Props
-
 | Prop         | Type                              | Default        | Description                            |
 | ------------ | --------------------------------- | -------------- | -------------------------------------- |
 | `variant`    | `'default', 'minimal', 'compact'` | `'default'`    | Visual variant of the breadcrumb       |
@@ -109,8 +107,6 @@ The main container component for breadcrumb navigation.
 
 Individual breadcrumb item component.
 
-#### Props
-
 | Prop        | Type                                 | Default     | Description                                                      |
 | ----------- | ------------------------------------ | ----------- | ---------------------------------------------------------------- |
 | `href`      | `string`                             | -           | URL for the breadcrumb link. If omitted, renders as current page |
@@ -118,8 +114,6 @@ Individual breadcrumb item component.
 | `icon`      | `string`                             | -           | Icon identifier to display alongside text                        |
 | `item`      | `object`                             | -           | Dynamic item data for Alpine.js integration                      |
 | `class`     | `string`                             | -           | Additional CSS classes                                           |
-
-#### Slots
 
 | Slot        | Description                                         |
 | ----------- | --------------------------------------------------- |
@@ -130,8 +124,6 @@ Individual breadcrumb item component.
 
 Template component for rendering breadcrumb items dynamically with Alpine.js x-for.
 
-#### Props
-
 | Prop        | Type                                 | Default     | Description                  |
 | ----------- | ------------------------------------ | ----------- | ---------------------------- |
 | `separator` | `'chevron', 'slash', 'dot', 'arrow'` | `'chevron'` | Separator type for all items |
@@ -140,8 +132,6 @@ Template component for rendering breadcrumb items dynamically with Alpine.js x-f
 | `x-for`     | `string`                             | -           | Alpine.js x-for expression   |
 | `x-key`     | `string`                             | `'item.id'` | Alpine.js x-key expression   |
 
-#### Slots
-
 | Slot    | Description                               |
 | ------- | ----------------------------------------- |
 | default | Content template for each breadcrumb item |
@@ -149,8 +139,6 @@ Template component for rendering breadcrumb items dynamically with Alpine.js x-f
 ### SmartBreadcrumb
 
 Advanced breadcrumb component with automatic ellipsis handling for long paths.
-
-#### Props
 
 | Prop         | Type                                 | Default        | Description                           |
 | ------------ | ------------------------------------ | -------------- | ------------------------------------- |

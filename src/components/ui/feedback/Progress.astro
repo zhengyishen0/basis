@@ -31,6 +31,7 @@ export interface Props extends VariantProps<typeof progressFillVariants> {
   animated?: boolean;
   striped?: boolean;
   showLabel?: boolean;
+  label?: string;
   autoIncrement?: boolean;
   incrementInterval?: number;
   class?: string;
@@ -44,6 +45,7 @@ const {
   animated = false,
   striped = false,
   showLabel = false,
+  label = 'Progress',
   autoIncrement = false,
   incrementInterval = 100,
   class: className = '',
@@ -121,7 +123,7 @@ Features:
   <!-- Progress label -->
   {showLabel && (
     <div class="flex justify-between items-center mb-2">
-      <span class="text-sm font-medium text-gray-700">Progress</span>
+      <span class="text-sm font-medium text-gray-700">{label}</span>
       <span class="text-sm text-gray-500" x-text="`${Math.round(percentage)}%`"></span>
     </div>
   )}

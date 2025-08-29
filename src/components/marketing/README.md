@@ -230,12 +230,8 @@ These components require Alpine.js for interactive functionality:
 
 ## Customization
 
-### Slots
-
 - **HeroSideBySide**: Use the `image` slot to provide custom image content
 - **HeroCentered**: Use the `image` slot to provide custom image content
-
-### Props
 
 All components accept comprehensive props for customization:
 

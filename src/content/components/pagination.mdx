@@ -5,7 +5,13 @@ category: navigation
 order: 9
 ---
 
-import { Pagination, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/navigation/pagination';
+import {
+    Pagination,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from '@/components/ui/navigation/pagination';
 import { Ellipsis as PaginationEllipsis } from '@/components/ui/indicators';
 import Code from '@/components/ui/display/Code.astro';
 import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
@@ -24,194 +30,52 @@ The components feature smart page visibility algorithms, customizable informatio
         <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-8">
-        {/* Basic Pagination */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-medium">Basic Pagination</h3>
-            <Pagination currentPage={3} totalPages={10} totalItems={89} pageSize={10}>
-                <span slot="info" class="text-sm text-muted-foreground">
-                    Showing <span class="font-medium" x-text="startItem"></span> to
-                    <span class="font-medium" x-text="endItem"></span> of
-                    <span class="font-medium" x-text="totalItems"></span> results
-                </span>
+    <TabsContent value="preview" preview class="space-y-8 justify-center items-center">
+        <Pagination currentPage={3} totalPages={10} totalItems={89} pageSize={10}>
+            <span slot="info" class="text-sm text-muted-foreground">
+                Showing <span class="font-medium" x-text="startItem"></span> to
+                <span class="font-medium" x-text="endItem"></span> of
+                <span class="font-medium" x-text="totalItems"></span> results
+            </span>
 
-                <PaginationPrevious />
+            <PaginationPrevious />
 
-                <PaginationItem x-for="page in visiblePages" x-key="page.number">
-                    <PaginationLink
-                        slot="link"
-                        x-bind:is-active="page.current"
-                        x-on:click="goToPage(page.number)"
-                        x-text="page.number"
-                    />
-                    <PaginationEllipsis slot="ellipsis" />
-                </PaginationItem>
+            <PaginationItem x-for="page in visiblePages" x-key="page.number">
+                <PaginationLink
+                    slot="link"
+                    x-bind:is-active="page.current"
+                    x-on:click="goToPage(page.number)"
+                    x-text="page.number"
+                />
+                <PaginationEllipsis slot="ellipsis" />
+            </PaginationItem>
 
-                <PaginationNext />
-            </Pagination>
-        </div>
-
-        {/* Large Dataset Pagination */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-medium">Large Dataset (Smart Ellipsis)</h3>
-            <Pagination currentPage={8} totalPages={25} totalItems={500} pageSize={20}>
-                <div slot="info" class="text-sm text-blue-600 font-medium">
-                    Page <span x-text="currentPage"></span> of <span x-text="totalPages"></span>
-                    (<span x-text="totalItems"></span> total items)
-                </div>
-
-                <PaginationPrevious />
-
-                <PaginationItem x-for="page in visiblePages" x-key="page.number">
-                    <PaginationLink
-                        slot="link"
-                        x-bind:is-active="page.current"
-                        x-on:click="goToPage(page.number)"
-                        x-text="page.number"
-                    />
-                    <PaginationEllipsis slot="ellipsis" />
-                </PaginationItem>
-
-                <PaginationNext />
-            </Pagination>
-        </div>
-
-        {/* Compact Pagination */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-medium">Compact Pagination</h3>
-            <Pagination 
-                currentPage={2} 
-                totalPages={5} 
-                totalItems={45} 
-                pageSize={10}
-                maxElements={5}
-                showInfo={false}
-            >
-                <PaginationPrevious />
-
-                <PaginationItem x-for="page in visiblePages" x-key="page.number">
-                    <PaginationLink
-                        slot="link"
-                        x-bind:is-active="page.current"
-                        x-on:click="goToPage(page.number)"
-                        x-text="page.number"
-                    />
-                    <PaginationEllipsis slot="ellipsis" />
-                </PaginationItem>
-
-                <PaginationNext />
-            </Pagination>
-        </div>
-
-        {/* Interactive Demo */}
-        <div class="space-y-4" x-data="{ demoPage: 1, demoTotal: 15 }">
-            <h3 class="text-lg font-medium">Interactive Demo</h3>
-            <div class="mb-4 p-4 bg-muted rounded-lg">
-                <h4 class="font-medium mb-2">Current State:</h4>
-                <p class="text-sm">Current Page: <span class="font-mono" x-text="demoPage"></span></p>
-                <p class="text-sm">Total Pages: <span class="font-mono" x-text="demoTotal"></span></p>
-                <div class="flex gap-2 mt-2">
-                    <button 
-                        x-on:click="demoTotal = Math.min(demoTotal + 5, 50)"
-                        class="px-3 py-1 bg-blue-500 text-white rounded text-sm"
-                    >
-                        Add Pages
-                    </button>
-                    <button 
-                        x-on:click="demoTotal = Math.max(demoTotal - 5, 5)"
-                        class="px-3 py-1 bg-red-500 text-white rounded text-sm"
-                    >
-                        Remove Pages
-                    </button>
-                    <button 
-                        x-on:click="demoPage = 1"
-                        class="px-3 py-1 bg-gray-500 text-white rounded text-sm"
-                    >
-                        Reset Page
-                    </button>
-                </div>
-            </div>
-
-            <Pagination
-                x-bind:current-page="demoPage"
-                x-bind:total-pages="demoTotal"
-                total-items={300}
-                page-size={20}
-                x-on:page-change="demoPage = $event.detail.page"
-            >
-                <div slot="info" class="text-sm text-green-600 font-medium">
-                    Interactive: <span x-text="startItem"></span>-<span x-text="endItem"></span> 
-                    of <span x-text="totalItems"></span>
-                </div>
-
-                <PaginationPrevious />
-
-                <PaginationItem x-for="page in visiblePages" x-key="page.number">
-                    <PaginationLink
-                        slot="link"
-                        x-bind:is-active="page.current"
-                        x-on:click="goToPage(page.number)"
-                        x-text="page.number"
-                    />
-                    <PaginationEllipsis slot="ellipsis" />
-                </PaginationItem>
-
-                <PaginationNext />
-            </Pagination>
-        </div>
-
-        {/* Custom Styling */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-medium">Custom Styled Links</h3>
-            <Pagination currentPage={4} totalPages={8} totalItems={160} pageSize={20} class="justify-center">
-                <PaginationPrevious class="bg-purple-100 hover:bg-purple-200 text-purple-800 border-purple-300" />
-
-                <PaginationItem x-for="page in visiblePages" x-key="page.number">
-                    <PaginationLink
-                        slot="link"
-                        x-bind:is-active="page.current"
-                        x-on:click="goToPage(page.number)"
-                        x-text="page.number"
-                        class="hover:bg-purple-50"
-                    />
-                    <PaginationEllipsis slot="ellipsis" />
-                </PaginationItem>
-
-                <PaginationNext class="bg-purple-100 hover:bg-purple-200 text-purple-800 border-purple-300" />
-            </Pagination>
-        </div>
+            <PaginationNext />
+        </Pagination>
     </TabsContent>
     <TabsContent value="code">
         <Code language="astro" code={`---
-// Basic pagination setup
-import { 
-    Pagination, 
-    PaginationItem, 
-    PaginationLink, 
-    PaginationNext, 
-    PaginationPrevious 
+
+import {
+    Pagination,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
 } from '@/components/ui/navigation/pagination';
 import { Ellipsis as PaginationEllipsis } from '@/components/ui/indicators';
+
 ---
 
-{/* Basic composable pagination */}
-<Pagination 
-    currentPage={3} 
-    totalPages={10} 
-    totalItems={89} 
-    pageSize={10}
->
-    {/* Custom info display */}
+<Pagination currentPage={3} totalPages={10} totalItems={89} pageSize={10}>
     <span slot="info" class="text-sm text-muted-foreground">
         Showing <span class="font-medium" x-text="startItem"></span> to
         <span class="font-medium" x-text="endItem"></span> of
         <span class="font-medium" x-text="totalItems"></span> results
     </span>
 
-    {/* Previous button */}
     <PaginationPrevious />
 
-    {/* Dynamic page numbers with x-for */}
     <PaginationItem x-for="page in visiblePages" x-key="page.number">
         <PaginationLink
             slot="link"
@@ -222,57 +86,14 @@ import { Ellipsis as PaginationEllipsis } from '@/components/ui/indicators';
         <PaginationEllipsis slot="ellipsis" />
     </PaginationItem>
 
-    {/* Next button */}
     <PaginationNext />
+
 </Pagination>
 
-{/* Interactive pagination with external state */}
-<div x-data="{ currentPage: 1, totalPages: 20 }">
-    <Pagination
-        x-bind:current-page="currentPage"
-        x-bind:total-pages="totalPages"
-        total-items={400}
-        page-size={20}
-        x-on:page-change="currentPage = $event.detail.page"
-    >
-        <PaginationPrevious />
-        
-        <PaginationItem x-for="page in visiblePages" x-key="page.number">
-            <PaginationLink
-                slot="link"
-                x-bind:is-active="page.current"
-                x-on:click="goToPage(page.number)"
-                x-text="page.number"
-            />
-            <PaginationEllipsis slot="ellipsis" />
-        </PaginationItem>
-        
-        <PaginationNext />
-    </Pagination>
-</div>
+`} />
 
-{/* Compact pagination without info */}
-<Pagination 
-    currentPage={2} 
-    totalPages={5} 
-    maxElements={5}
-    showInfo={false}
->
-    <PaginationPrevious />
-    
-    <PaginationItem x-for="page in visiblePages" x-key="page.number">
-        <PaginationLink
-            slot="link"
-            x-bind:is-active="page.current"
-            x-on:click="goToPage(page.number)"
-            x-text="page.number"
-        />
-        <PaginationEllipsis slot="ellipsis" />
-    </PaginationItem>
-    
-    <PaginationNext />
-</Pagination>`} />
-    </TabsContent>
+</TabsContent>
+
 </Tabs>
 
 ## API Reference
@@ -281,114 +102,94 @@ import { Ellipsis as PaginationEllipsis } from '@/components/ui/indicators';
 
 Main pagination container with built-in Alpine.js state management.
 
-#### Props
+| Prop            | Type      | Default | Description                                                |
+| --------------- | --------- | ------- | ---------------------------------------------------------- |
+| `currentPage`   | `number`  | `1`     | Current active page number                                 |
+| `totalPages`    | `number`  | `1`     | Total number of pages                                      |
+| `totalItems`    | `number`  | `0`     | Total number of items in dataset                           |
+| `pageSize`      | `number`  | `10`    | Number of items per page                                   |
+| `maxVisible`    | `number`  | `5`     | Maximum visible page numbers (deprecated, use maxElements) |
+| `maxElements`   | `number`  | `7`     | Maximum total elements including ellipsis                  |
+| `showInfo`      | `boolean` | `true`  | Whether to show info slot content                          |
+| `showFirstLast` | `boolean` | `true`  | Whether to show first/last page navigation                 |
+| `class`         | `string`  | -       | Additional CSS classes                                     |
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `currentPage` | `number` | `1` | Current active page number |
-| `totalPages` | `number` | `1` | Total number of pages |
-| `totalItems` | `number` | `0` | Total number of items in dataset |
-| `pageSize` | `number` | `10` | Number of items per page |
-| `maxVisible` | `number` | `5` | Maximum visible page numbers (deprecated, use maxElements) |
-| `maxElements` | `number` | `7` | Maximum total elements including ellipsis |
-| `showInfo` | `boolean` | `true` | Whether to show info slot content |
-| `showFirstLast` | `boolean` | `true` | Whether to show first/last page navigation |
-| `class` | `string` | - | Additional CSS classes |
-
-#### Slots
-
-| Slot | Description |
-|------|-------------|
-| default | Pagination controls and navigation elements |
-| `info` | Custom information display (item counts, etc.) |
+| Slot    | Description                                    |
+| ------- | ---------------------------------------------- |
+| default | Pagination controls and navigation elements    |
+| `info`  | Custom information display (item counts, etc.) |
 
 #### Alpine.js State
 
 The Pagination component provides the following reactive properties:
 
-| Property | Type | Description |
-|----------|------|-------------|
+| Property       | Type                  | Description                                                                                     |
+| -------------- | --------------------- | ----------------------------------------------------------------------------------------------- |
 | `visiblePages` | `Array of PageObject` | Array of page objects for rendering (PageObject has number, current, and isEllipsis properties) |
-| `hasPrevious` | `boolean` | Whether previous page navigation is available |
-| `hasNext` | `boolean` | Whether next page navigation is available |
-| `startItem` | `number` | First item number on current page |
-| `endItem` | `number` | Last item number on current page |
+| `hasPrevious`  | `boolean`             | Whether previous page navigation is available                                                   |
+| `hasNext`      | `boolean`             | Whether next page navigation is available                                                       |
+| `startItem`    | `number`              | First item number on current page                                                               |
+| `endItem`      | `number`              | Last item number on current page                                                                |
 
 #### Alpine.js Methods
 
-| Method | Parameters | Description |
-|--------|------------|-------------|
-| `goToPage(page)` | `number` | Navigate to specific page |
-| `nextPage()` | - | Navigate to next page |
-| `previousPage()` | - | Navigate to previous page |
+| Method           | Parameters | Description               |
+| ---------------- | ---------- | ------------------------- |
+| `goToPage(page)` | `number`   | Navigate to specific page |
+| `nextPage()`     | -          | Navigate to next page     |
+| `previousPage()` | -          | Navigate to previous page |
 
 ### PaginationItem
 
 Template component for rendering page items dynamically.
 
-#### Props
+| Prop    | Type     | Default | Description            |
+| ------- | -------- | ------- | ---------------------- |
+| `class` | `string` | -       | Additional CSS classes |
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `class` | `string` | - | Additional CSS classes |
-
-#### Slots
-
-| Slot | Description |
-|------|-------------|
-| `link` | Content for regular page links |
+| Slot       | Description                     |
+| ---------- | ------------------------------- |
+| `link`     | Content for regular page links  |
 | `ellipsis` | Content for ellipsis indicators |
 
 ### PaginationLink
 
 Individual page link component.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `page` | `number` | - | Page number (for static usage) |
+| Prop       | Type      | Default | Description                           |
+| ---------- | --------- | ------- | ------------------------------------- |
+| `page`     | `number`  | -       | Page number (for static usage)        |
 | `isActive` | `boolean` | `false` | Whether this page is currently active |
-| `class` | `string` | - | Additional CSS classes |
+| `class`    | `string`  | -       | Additional CSS classes                |
 
-#### Slots
-
-| Slot | Description |
-|------|-------------|
+| Slot    | Description                          |
+| ------- | ------------------------------------ |
 | default | Link content (typically page number) |
 
 ### PaginationNext
 
 Next page navigation button.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
+| Prop       | Type      | Default | Description                    |
+| ---------- | --------- | ------- | ------------------------------ |
 | `disabled` | `boolean` | `false` | Whether the button is disabled |
-| `class` | `string` | - | Additional CSS classes |
+| `class`    | `string`  | -       | Additional CSS classes         |
 
-#### Slots
-
-| Slot | Description |
-|------|-------------|
+| Slot    | Description                         |
+| ------- | ----------------------------------- |
 | default | Button content (defaults to "Next") |
 
 ### PaginationPrevious
 
 Previous page navigation button.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
+| Prop       | Type      | Default | Description                    |
+| ---------- | --------- | ------- | ------------------------------ |
 | `disabled` | `boolean` | `false` | Whether the button is disabled |
-| `class` | `string` | - | Additional CSS classes |
+| `class`    | `string`  | -       | Additional CSS classes         |
 
-#### Slots
-
-| Slot | Description |
-|------|-------------|
+| Slot    | Description                             |
+| ------- | --------------------------------------- |
 | default | Button content (defaults to "Previous") |
 
 ## Alpine.js Integration
@@ -400,7 +201,7 @@ The pagination system is built around Alpine.js for reactive state management:
 The component uses an intelligent algorithm to determine visible pages:
 
 1. **Small datasets**: Show all pages when total ≤ maxElements
-2. **Start overflow**: Show first pages + ellipsis + last page 
+2. **Start overflow**: Show first pages + ellipsis + last page
 3. **End overflow**: Show first page + ellipsis + last pages
 4. **Middle overflow**: Show first + ellipsis + middle + ellipsis + last
 
@@ -423,8 +224,8 @@ function handlePageChange(newPage) {
 You can control pagination externally by binding to Alpine.js data:
 
 ```javascript
-x-data="{ 
-    currentPage: 1, 
+x-data="{
+    currentPage: 1,
     totalPages: 10,
     handlePageChange(page) {
         this.currentPage = page;
@@ -432,59 +233,3 @@ x-data="{
     }
 }"
 ```
-
-## Accessibility
-
-- **Keyboard navigation**: Full keyboard support for all interactive elements
-- **ARIA attributes**: Proper labeling for screen readers
-- **Focus management**: Logical tab order and focus indicators
-- **State communication**: Active page clearly indicated
-- **Semantic markup**: Uses appropriate button and navigation elements
-
-## Advanced Usage
-
-### Server-Side Integration
-
-```javascript
-// Example with URL updates
-<div x-data="{
-    currentPage: new URLSearchParams(window.location.search).get('page') || 1,
-    handlePageChange(page) {
-        this.currentPage = page;
-        
-        // Update URL without reload
-        const url = new URL(window.location);
-        url.searchParams.set('page', page);
-        window.history.pushState({}, '', url);
-        
-        // Fetch new data
-        this.fetchData(page);
-    },
-    fetchData(page) {
-        // Your data fetching logic
-    }
-}">
-```
-
-### Custom Styling Patterns
-
-```astro
-{/* Rounded style */}
-<PaginationLink class="rounded-full w-10 h-10" />
-
-{/* Minimal style */}
-<PaginationLink class="border-0 bg-transparent hover:bg-gray-100" />
-
-{/* Brand colors */}
-<PaginationLink class="data-[active]:bg-brand-500 data-[active]:text-white" />
-```
-
-## Best Practices
-
-1. **Reasonable page sizes**: Use appropriate pageSize values (10-50 items)
-2. **Clear information**: Always show current position context
-3. **Consistent styling**: Maintain visual consistency with your design system
-4. **Loading states**: Handle loading states during page transitions
-5. **URL synchronization**: Update URLs for shareable pagination states
-6. **Mobile optimization**: Consider touch-friendly button sizes
-7. **Performance**: Implement efficient data fetching strategies
