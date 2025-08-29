@@ -5,13 +5,17 @@ category: overlay
 order: 1
 ---
 
-import DropdownMenu from '@/components/ui/overlay/dropdownmenu/DropdownMenu.astro';
-import MenuItem from '@/components/ui/overlay/menu/MenuItem.astro';
-import MenuContainer from '@/components/ui/overlay/menu/MenuContainer.astro';
-import MenuInput from '@/components/ui/overlay/menu/MenuInput.astro';
-import MenuItems from '@/components/ui/overlay/menu/MenuItems.astro';
-import MenuGroup from '@/components/ui/overlay/menu/MenuGroup.astro';
-import MenuShortcut from '@/components/ui/overlay/menu/MenuShortcut.astro';
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuGroup,
+    DropdownMenuShortcut,
+    DropdownMenuSubMenu,
+    DropdownMenuSubTrigger,
+} from '@/components/ui/overlay/dropdownmenu';
+import Divider from '@/components/ui/layout/Divider.astro';
 import Button from '@/components/ui/forms/Button.astro';
 import { Icon } from 'astro-icon/components';
 import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
@@ -26,143 +30,128 @@ DropdownMenu displays a menu of actions or options in a dropdown overlay. It's c
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="flex flex-wrap gap-8 justify-start items-start">
-        <div>
-            <h4 class="text-sm font-medium mb-3">User Menu</h4>
-            <DropdownMenu trigger="click">
-                <Button variant="outline" slot="trigger">
+    <TabsContent
+        value="preview"
+        preview
+        class="flex flex-wrap gap-8 justify-center items-center"
+    >
+        <DropdownMenu trigger="click">
+            <DropdownMenuTrigger variant="outline">
+                <Button>
                     <Icon name="lucide:user" class="w-4 h-4 mr-2" />
                     Account
-                    <Icon name="lucide:chevron-down" class="w-4 h-4 ml-2" />
                 </Button>
-                <div slot="content" class="w-56">
-                    <div class="rounded-md border bg-popover text-popover-foreground shadow-md py-1">
-                        <MenuItem>
-                            <Icon name="lucide:user" class="w-4 h-4 mr-2" />
-                            Profile
-                            <MenuShortcut>⇧⌘P</MenuShortcut>
-                        </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:credit-card" class="w-4 h-4 mr-2" />
-                            Billing
-                        </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:settings" class="w-4 h-4 mr-2" />
-                            Settings
-                        </MenuItem>
-                        <div class="border-t my-1"></div>
-                        <MenuItem>
-                            <Icon name="lucide:log-out" class="w-4 h-4 mr-2" />
-                            Log out
-                        </MenuItem>
-                    </div>
-                </div>
-            </DropdownMenu>
-        </div>
-        <div>
-            <h4 class="text-sm font-medium mb-3">Actions Menu</h4>
-            <DropdownMenu trigger="click">
-                <Button variant="outline" slot="trigger">
-                    Actions
-                    <Icon name="lucide:more-horizontal" class="w-4 h-4 ml-2" />
-                </Button>
-                <div slot="content" class="w-48">
-                    <div class="rounded-md border bg-popover text-popover-foreground shadow-md py-1">
-                        <MenuItem>
-                            <Icon name="lucide:edit" class="w-4 h-4 mr-2" />
-                            Edit
-                        </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:copy" class="w-4 h-4 mr-2" />
-                            Duplicate
-                        </MenuItem>
-                        <MenuItem disabled>
-                            <Icon name="lucide:archive" class="w-4 h-4 mr-2" />
-                            Archive
-                        </MenuItem>
-                        <div class="border-t my-1"></div>
-                        <MenuItem class="text-destructive focus:text-destructive">
-                            <Icon name="lucide:trash-2" class="w-4 h-4 mr-2" />
-                            Delete
-                        </MenuItem>
-                    </div>
-                </div>
-            </DropdownMenu>
-        </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent role="menu">
+                <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                        <Icon name="lucide:user" class="w-4 h-4 mr-2" />
+                        <span class="flex-1">Profile</span>
+                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <Icon name="lucide:credit-card" class="w-4 h-4 mr-2" />
+                        <span class="flex-1">Billing</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <Icon name="lucide:settings" class="w-4 h-4 mr-2" />
+                        <span class="flex-1">Settings</span>
+                    </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSubMenu>
+                    <DropdownMenuSubTrigger>
+                        <Icon name="lucide:share-2" class="w-4 h-4 mr-2" />
+                        <span class="flex-1">Share</span>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuItem slot="submenu">
+                        <span class="flex-1">Email</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem slot="submenu">
+                        <span class="flex-1">Copy Link</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem slot="submenu">
+                        <span class="flex-1">Social Media</span>
+                    </DropdownMenuItem>
+                </DropdownMenuSubMenu>
+                <Divider />
+                <DropdownMenuItem>
+                    <Icon name="lucide:log-out" class="w-4 h-4 mr-2" />
+                    <span class="flex-1">Log out</span>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
     </TabsContent>
     <TabsContent value="code">
         <Code
             language="astro"
             code={`---
-import DropdownMenu from '@/components/ui/overlay/dropdownmenu/DropdownMenu.astro';
-import MenuItem from '@/components/ui/overlay/menu/MenuItem.astro';
-import MenuShortcut from '@/components/ui/overlay/menu/MenuShortcut.astro';
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuGroup,
+    DropdownMenuShortcut,
+    DropdownMenuSubMenu,
+    DropdownMenuSubTrigger,
+} from '@/components/ui/overlay/dropdownmenu';
+import Divider from '@/components/ui/layout/Divider.astro';
 import Button from '@/components/ui/forms/Button.astro';
 import { Icon } from 'astro-icon/components';
 ---
-
-{/* User Menu */}
 <DropdownMenu trigger="click">
-    <Button variant="outline" slot="trigger">
-        <Icon name="lucide:user" class="w-4 h-4 mr-2" />
-        Account
-        <Icon name="lucide:chevron-down" class="w-4 h-4 ml-2" />
-    </Button>
-    <div slot="content" class="w-56">
-        <div class="rounded-md border bg-popover text-popover-foreground shadow-md py-1">
-            <MenuItem>
+    <DropdownMenuTrigger variant="outline">
+        <Button>
+            <Icon name="lucide:user" class="w-4 h-4 mr-2" />
+            Account
+        </Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent role="menu">
+        <DropdownMenuGroup>
+            <DropdownMenuItem>
                 <Icon name="lucide:user" class="w-4 h-4 mr-2" />
-                Profile
-                <MenuShortcut>⇧⌘P</MenuShortcut>
-            </MenuItem>
-            <MenuItem>
+                <span class="flex-1">Profile</span>
+                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
                 <Icon name="lucide:credit-card" class="w-4 h-4 mr-2" />
-                Billing
-            </MenuItem>
-            <MenuItem>
+                <span class="flex-1">Billing</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
                 <Icon name="lucide:settings" class="w-4 h-4 mr-2" />
-                Settings
-            </MenuItem>
-            <div class="border-t my-1"></div>
-            <MenuItem>
-                <Icon name="lucide:log-out" class="w-4 h-4 mr-2" />
-                Log out
-            </MenuItem>
-        </div>
-    </div>
+                <span class="flex-1">Settings</span>
+            </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSubMenu>
+            <DropdownMenuSubTrigger>
+                <Icon name="lucide:share-2" class="w-4 h-4 mr-2" />
+                <span class="flex-1">Share</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuItem slot="submenu">
+                <span class="flex-1">Email</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem slot="submenu">
+                <span class="flex-1">Copy Link</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem slot="submenu">
+                <span class="flex-1">Social Media</span>
+            </DropdownMenuItem>
+        </DropdownMenuSubMenu>
+        <Divider />
+        <DropdownMenuItem>
+            <Icon name="lucide:log-out" class="w-4 h-4 mr-2" />
+            <span class="flex-1">Log out</span>
+        </DropdownMenuItem>
+    </DropdownMenuContent>
 </DropdownMenu>
-
-{/* Actions Menu */}
-<DropdownMenu trigger="click">
-    <Button variant="outline" slot="trigger">
-        Actions
-        <Icon name="lucide:more-horizontal" class="w-4 h-4 ml-2" />
-    </Button>
-    <div slot="content" class="w-48">
-        <div class="rounded-md border bg-popover text-popover-foreground shadow-md py-1">
-            <MenuItem>
-                <Icon name="lucide:edit" class="w-4 h-4 mr-2" />
-                Edit
-            </MenuItem>
-            <MenuItem>
-                <Icon name="lucide:copy" class="w-4 h-4 mr-2" />
-                Duplicate
-            </MenuItem>
-            <MenuItem disabled>
-                <Icon name="lucide:archive" class="w-4 h-4 mr-2" />
-                Archive
-            </MenuItem>
-            <div class="border-t my-1"></div>
-            <MenuItem class="text-destructive focus:text-destructive">
-                <Icon name="lucide:trash-2" class="w-4 h-4 mr-2" />
-                Delete
-            </MenuItem>
-        </div>
-    </div>
-</DropdownMenu>`}
+`}
         />
     </TabsContent>
 </Tabs>
@@ -171,22 +160,43 @@ import { Icon } from 'astro-icon/components';
 
 ### DropdownMenu
 
-| Prop        | Type                                     | Default   | Description                    |
-| ----------- | ---------------------------------------- | --------- | ------------------------------ |
-| `trigger`   | `'click' \, 'hover' \, 'focus' \, 'manual'` | `'click'` | How the menu is triggered      |
-| `className` | `string`                                 | -         | Additional CSS classes         |
+| Prop        | Type                                        | Default   | Description               |
+| ----------- | ------------------------------------------- | --------- | ------------------------- |
+| `trigger`   | `'click' \| 'hover' \| 'focus' \| 'manual'` | `'click'` | How the menu is triggered |
+| `className` | `string`                                    | -         | Additional CSS classes    |
 
-### MenuItem
+### DropdownMenuTrigger
 
-| Prop          | Type                               | Default     | Description                        |
-| ------------- | ---------------------------------- | ----------- | ---------------------------------- |
-| `disabled`    | `boolean`                          | `false`     | Whether the item is disabled       |
-| `onSelect`    | `string`                           | -           | Click handler function             |
-| `className`   | `string`                           | -           | Additional CSS classes             |
+| Prop      | Type                                | Default     | Description  |
+| --------- | ----------------------------------- | ----------- | ------------ |
+| `variant` | `'default' \| 'outline' \| 'ghost'` | `'default'` | Visual style |
+| `size`    | `'sm' \| 'md' \| 'lg'`              | `'md'`      | Button size  |
 
-### MenuShortcut
+### DropdownMenuContent
 
-| Prop       | Type     | Default | Description                |
-| ---------- | -------- | ------- | -------------------------- |
-| `shortcut` | `string` | -       | Shortcut text to display   |
-| `class`    | `string` | -       | Additional CSS classes     |
+| Prop   | Type                   | Default | Description         |
+| ------ | ---------------------- | ------- | ------------------- |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'`  | Content size        |
+| `role` | `string`               | -       | ARIA role attribute |
+
+### DropdownMenuGroup
+
+| Prop      | Type     | Default | Description            |
+| --------- | -------- | ------- | ---------------------- |
+| `heading` | `string` | -       | Optional group heading |
+
+### DropdownMenuItem
+
+| Prop        | Type                         | Default     | Description                  |
+| ----------- | ---------------------------- | ----------- | ---------------------------- |
+| `variant`   | `'default' \| 'destructive'` | `'default'` | Visual style variant         |
+| `disabled`  | `boolean`                    | `false`     | Whether the item is disabled |
+| `onSelect`  | `string`                     | -           | Click handler function       |
+| `className` | `string`                     | -           | Additional CSS classes       |
+
+### DropdownMenuShortcut
+
+| Prop       | Type     | Default | Description              |
+| ---------- | -------- | ------- | ------------------------ |
+| `shortcut` | `string` | -       | Shortcut text to display |
+| `class`    | `string` | -       | Additional CSS classes   |
