@@ -15,16 +15,9 @@ const { title = 'Basis UI' } = Astro.props;
         <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
 
-        <!-- Load stores before Alpine -->
-        <script type="module">
-            import { authStore } from '/src/lib/authStore.js';
-            import { todoStore } from '/src/lib/todoStore.js';
-            
-            // Make stores available globally
-            window._authStore = authStore;
-            window._todoStore = todoStore;
-        </script>
-
+        <!-- Supabase CDN -->
+        <script is:inline src="https://unpkg.com/@supabase/supabase-js@2"></script>
+        
         <!-- Alpine.js CDN -->
         <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
@@ -34,6 +27,11 @@ const { title = 'Basis UI' } = Astro.props;
         
         <!-- Alpine.js stores setup -->
         <script is:inline>
+            // Initialize Supabase client
+            const supabaseUrl = "https://wiqivthmlgjwtlrnynsq.supabase.co";
+            const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpcWl2dGhtbGdqd3Rscm55bnNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI1NTY1MDgsImV4cCI6MjA2ODEzMjUwOH0.1Nh6nIbXolEkrpSFYzF-l3LqYmkQw0d4xzdi1xoez9M";
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
             document.addEventListener('alpine:init', () => {
                 // Layout Store
                 Alpine.store('layout', {
@@ -119,9 +117,418 @@ const { title = 'Basis UI' } = Astro.props;
                     }
                 });
 
-                // Register todo and auth stores from global variables
-                Alpine.store('auth', window._authStore);
-                Alpine.store('todo', window._todoStore);
+                // Auth Store - Inlined
+                Alpine.store('auth', {
+                    currentUser: null,
+                    loading: false,
+                    error: null,
+                    initialized: false,
+
+                    get isAuthenticated() {
+                        return !!this.currentUser;
+                    },
+
+                    get userDisplayId() {
+                        return this.currentUser ? this.currentUser.id.slice(0, 8) + "..." : "";
+                    },
+
+                    async init() {
+                        if (this.initialized) return;
+
+                        try {
+                            const { data: { user } } = await supabase.auth.getUser();
+                            if (user) {
+                                this.currentUser = user;
+                            }
+                            this.initialized = true;
+                        } catch (error) {
+                            console.error("Auth init failed:", error);
+                            this.error = "Failed to initialize auth: " + error.message;
+                        }
+                    },
+
+                    async signInAnonymously() {
+                        this.loading = true;
+                        this.error = null;
+
+                        try {
+                            const { data, error } = await supabase.auth.signInAnonymously();
+                            if (error) throw error;
+
+                            this.currentUser = data.user;
+                            return data.user;
+                        } catch (error) {
+                            this.error = "Sign in failed: " + error.message;
+                            throw error;
+                        } finally {
+                            this.loading = false;
+                        }
+                    },
+
+                    async signOut() {
+                        this.loading = true;
+                        this.error = null;
+
+                        try {
+                            const { error } = await supabase.auth.signOut();
+                            if (error) throw error;
+
+                            this.currentUser = null;
+                        } catch (error) {
+                            this.error = "Sign out failed: " + error.message;
+                            throw error;
+                        } finally {
+                            this.loading = false;
+                        }
+                    }
+                });
+
+                // Data Store Factory Function
+                function createDataStore(tableName, config = {}) {
+                    const defaults = {
+                        orderBy: "created_at",
+                        ascending: false,
+                        userField: "user_id",
+                        primaryKey: "id",
+                    };
+
+                    const options = { ...defaults, ...config };
+
+                    return {
+                        items: [],
+                        loading: false,
+                        error: null,
+                        currentFilters: {},
+
+                        async load(userId, filters = {}) {
+                            this.loading = true;
+                            this.error = null;
+                            this.currentFilters = filters;
+
+                            try {
+                                let query = supabase.from(tableName).select("*");
+
+                                if (userId && options.userField && !filters._loadAllUsers) {
+                                    filters = { ...filters, [options.userField]: userId };
+                                }
+
+                                Object.entries(filters).forEach(([key, value]) => {
+                                    if (key.startsWith("_") || value === null || value === undefined) return;
+
+                                    if (Array.isArray(value)) {
+                                        query = query.in(key, value);
+                                    } else if (typeof value === "object") {
+                                        if ("min" in value && value.min !== null) {
+                                            query = query.gte(key, value.min);
+                                        }
+                                        if ("max" in value && value.max !== null) {
+                                            query = query.lte(key, value.max);
+                                        }
+                                        if ("like" in value) {
+                                            query = query.like(key, value.like);
+                                        }
+                                        if ("ilike" in value) {
+                                            query = query.ilike(key, value.ilike);
+                                        }
+                                    } else {
+                                        query = query.eq(key, value);
+                                    }
+                                });
+
+                                if (options.orderBy) {
+                                    query = query.order(options.orderBy, {
+                                        ascending: options.ascending,
+                                    });
+                                }
+
+                                const { data, error } = await query;
+                                if (error) throw error;
+
+                                this.items = data || [];
+
+                                if (options.afterLoad) {
+                                    await options.afterLoad.call(this, this.items);
+                                }
+                            } catch (error) {
+                                this.error = `Failed to load ${tableName}: ${error.message}`;
+                            } finally {
+                                this.loading = false;
+                            }
+                        },
+
+                        async create(userId, itemData) {
+                            if (!userId && options.userField) return;
+
+                            this.loading = true;
+                            this.error = null;
+
+                            try {
+                                const dataToInsert = options.userField 
+                                    ? { ...itemData, [options.userField]: userId }
+                                    : itemData;
+
+                                const { data, error } = await supabase
+                                    .from(tableName)
+                                    .insert([dataToInsert])
+                                    .select();
+
+                                if (error) throw error;
+                                return data?.[0];
+                            } catch (error) {
+                                this.error = `Failed to create ${tableName}: ${error.message}`;
+                                throw error;
+                            } finally {
+                                this.loading = false;
+                            }
+                        },
+
+                        async update(userId, itemId, updates) {
+                            if (!userId && options.userField) return;
+
+                            this.loading = true;
+                            this.error = null;
+
+                            try {
+                                let query = supabase
+                                    .from(tableName)
+                                    .update(updates)
+                                    .eq(options.primaryKey, itemId);
+
+                                if (options.userField) {
+                                    query = query.eq(options.userField, userId);
+                                }
+
+                                const { data, error } = await query.select();
+                                if (error) throw error;
+                                return data?.[0];
+                            } catch (error) {
+                                this.error = `Failed to update ${tableName}: ${error.message}`;
+                                throw error;
+                            } finally {
+                                this.loading = false;
+                            }
+                        },
+
+                        async delete(userId, itemId) {
+                            if (!userId && options.userField) return;
+
+                            this.loading = true;
+                            this.error = null;
+
+                            try {
+                                let query = supabase
+                                    .from(tableName)
+                                    .delete()
+                                    .eq(options.primaryKey, itemId);
+
+                                if (options.userField) {
+                                    query = query.eq(options.userField, userId);
+                                }
+
+                                const { error } = await query;
+                                if (error) throw error;
+                                return true;
+                            } catch (error) {
+                                this.error = `Failed to delete ${tableName}: ${error.message}`;
+                                throw error;
+                            } finally {
+                                this.loading = false;
+                            }
+                        },
+
+                        subscribe(userId, filters = {}, callbacks = {}) {
+                            let channel = supabase
+                                .channel(`${tableName}_changes`)
+                                .on('postgres_changes', 
+                                    { event: 'INSERT', schema: 'public', table: tableName },
+                                    (payload) => callbacks.onInsert?.(payload)
+                                )
+                                .on('postgres_changes',
+                                    { event: 'UPDATE', schema: 'public', table: tableName },
+                                    (payload) => callbacks.onUpdate?.(payload)
+                                )
+                                .on('postgres_changes',
+                                    { event: 'DELETE', schema: 'public', table: tableName },
+                                    (payload) => callbacks.onDelete?.(payload)
+                                )
+                                .subscribe();
+                            
+                            this._subscription = channel;
+                        },
+
+                        unsubscribe() {
+                            if (this._subscription) {
+                                supabase.removeChannel(this._subscription);
+                                this._subscription = null;
+                            }
+                        }
+                    };
+                }
+
+                // Todo Store - Inlined with dependencies
+                const baseStore = createDataStore("todos", {
+                    orderBy: "inserted_at",
+                    ascending: false,
+                    primaryKey: "id",
+                    userField: "user_id",
+                });
+
+                Alpine.store('todo', {
+                    ...baseStore,
+                    userTodos: [],
+                    allTodos: [],
+                    userFilter: "all",
+                    allFilter: "all",
+
+                    get filteredUserTodos() {
+                        const todos = this.userTodos || [];
+                        switch (this.userFilter) {
+                            case "active":
+                                return todos.filter((t) => !t.is_complete);
+                            case "completed":
+                                return todos.filter((t) => t.is_complete);
+                            default:
+                                return todos;
+                        }
+                    },
+
+                    get filteredAllTodos() {
+                        const todos = this.allTodos || [];
+                        switch (this.allFilter) {
+                            case "active":
+                                return todos.filter((t) => !t.is_complete);
+                            case "completed":
+                                return todos.filter((t) => t.is_complete);
+                            default:
+                                return todos;
+                        }
+                    },
+
+                    get userActiveCount() {
+                        const todos = this.userTodos || [];
+                        return todos.filter((t) => !t.is_complete).length;
+                    },
+
+                    get userCompletedCount() {
+                        const todos = this.userTodos || [];
+                        return todos.filter((t) => t.is_complete).length;
+                    },
+
+                    get allActiveCount() {
+                        const todos = this.allTodos || [];
+                        return todos.filter((t) => !t.is_complete).length;
+                    },
+
+                    get allCompletedCount() {
+                        const todos = this.allTodos || [];
+                        return todos.filter((t) => t.is_complete).length;
+                    },
+
+                    get uniqueUserCount() {
+                        const todos = this.allTodos || [];
+                        const uniqueUsers = new Set(todos.map((t) => t.user_id));
+                        return uniqueUsers.size;
+                    },
+
+                    get authStore() {
+                        return Alpine.store('auth');
+                    },
+
+                    async loadTodos() {
+                        if (!this.authStore?.currentUser) return;
+                        await this.loadUserTodos();
+                        await this.loadAllTodos();
+                        this.startRealtimeSync();
+                    },
+
+                    async loadUserTodos() {
+                        if (!this.authStore?.currentUser) return;
+                        await baseStore.load.call(this, this.authStore.currentUser.id);
+                        this.userTodos = [...this.items];
+                    },
+
+                    async loadAllTodos() {
+                        if (!this.authStore?.currentUser) return;
+                        await baseStore.load.call(this, this.authStore.currentUser.id, {
+                            _loadAllUsers: true,
+                        });
+                        this.allTodos = [...this.items];
+                    },
+
+                    startRealtimeSync() {
+                        if (!this.authStore?.currentUser) return;
+
+                        baseStore.subscribe.call(
+                            this,
+                            null,
+                            {},
+                            {
+                                onInsert: () => this.refreshData(),
+                                onUpdate: () => this.refreshData(),
+                                onDelete: () => this.refreshData(),
+                            },
+                        );
+                    },
+
+                    async refreshData() {
+                        await this.loadUserTodos();
+                        await this.loadAllTodos();
+                    },
+
+                    stopRealtimeSync() {
+                        baseStore.unsubscribe.call(this);
+                    },
+
+                    async addTodo(text) {
+                        if (!text?.trim() || !this.authStore?.currentUser) {
+                            return;
+                        }
+
+                        const trimmedText = text.trim();
+                        
+                        if (trimmedText.length < 3) {
+                            this.error = 'Task must be at least 3 characters long';
+                            return;
+                        }
+
+                        const result = await baseStore.create.call(this, this.authStore.currentUser.id, {
+                            task: trimmedText,
+                        });
+
+                        if (result || !this.error) {
+                            await this.refreshData();
+                        }
+                    },
+
+                    async toggleTodo(todoId, completed) {
+                        if (!this.authStore?.currentUser) return;
+                        await baseStore.update.call(this, this.authStore.currentUser.id, todoId, {
+                            is_complete: completed,
+                        });
+                        await this.refreshData();
+                    },
+
+                    async deleteTodo(todoId) {
+                        if (!this.authStore?.currentUser) return;
+                        await baseStore.delete.call(this, this.authStore.currentUser.id, todoId);
+                        await this.refreshData();
+                    },
+
+                    setUserFilter(filter) {
+                        this.userFilter = filter;
+                    },
+
+                    setAllFilter(filter) {
+                        this.allFilter = filter;
+                    },
+
+                    cleanup() {
+                        this.stopRealtimeSync();
+                        this.userTodos = [];
+                        this.allTodos = [];
+                        this.items = [];
+                    }
+                });
             });
         </script>
     </head>
