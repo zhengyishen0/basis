@@ -6,6 +6,8 @@ order: 1
 ---
 
 import DataTable from '@/components/ui/data/DataTable.astro';
+import TableToolbar from '@/components/ui/data/TableToolbar.astro';
+import TablePagination from '@/components/ui/data/TablePagination.astro';
 import Code from '@/components/ui/display/Code.astro';
 import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
 import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
@@ -18,323 +20,247 @@ The DataTable component is a comprehensive solution for displaying tabular data 
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-8">
+    <TabsContent value="preview" preview class="space-y-8 justify-start">
         <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Basic Data Table</h3>
-            <div class="max-w-4xl mx-auto" x-data="{
-                users: [
-                    { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active' },
-                    { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User', status: 'Active' },
-                    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Editor', status: 'Inactive' }
-                ],
-                columns: [
-                    { key: 'name', label: 'Name', sortable: true },
-                    { key: 'email', label: 'Email', sortable: true },
-                    { key: 'role', label: 'Role', sortable: true },
-                    { key: 'status', label: 'Status', sortable: true }
-                ]
-            }">
-                <DataTable 
-                    x-bind:data="users"
-                    x-bind:columns="columns"
-                    searchable={true}
-                    variant="default"
-                />
-            </div>
-        </div>
-        
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Advanced Features</h3>
-            <div class="max-w-6xl mx-auto" x-data="{
-                users: [
-                    { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active', joinDate: '2024-01-15' },
-                    { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User', status: 'Active', joinDate: '2024-02-20' },
-                    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Editor', status: 'Inactive', joinDate: '2024-01-10' },
-                    { id: 4, name: 'Alice Wilson', email: 'alice@example.com', role: 'User', status: 'Active', joinDate: '2024-03-05' },
-                    { id: 5, name: 'Charlie Brown', email: 'charlie@example.com', role: 'Admin', status: 'Active', joinDate: '2024-02-28' },
-                    { id: 6, name: 'Diana Prince', email: 'diana@example.com', role: 'Editor', status: 'Active', joinDate: '2024-01-22' }
-                ],
-                columns: [
-                    { key: 'name', label: 'Name', sortable: true },
-                    { key: 'email', label: 'Email', sortable: true },
-                    { key: 'role', label: 'Role', sortable: true, render: (value) => `<span class='px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800'>${value}</span>` },
-                    { key: 'status', label: 'Status', sortable: true, render: (value) => `<span class='px-2 py-1 text-xs rounded-full ${value === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}'>${value}</span>` },
-                    { key: 'joinDate', label: 'Join Date', sortable: true, align: 'right' }
-                ]
-            }">
-                <DataTable 
-                    x-bind:data="users"
-                    x-bind:columns="columns"
+            <div class="max-w-6xl mx-auto">
+                <DataTable
+                    data={[
+                        {
+                            id: 1,
+                            name: 'John Doe',
+                            email: 'john@example.com',
+                            role: 'Admin',
+                            status: 'Active',
+                            joinDate: '2024-01-15',
+                        },
+                        {
+                            id: 2,
+                            name: 'Jane Smith',
+                            email: 'jane@example.com',
+                            role: 'User',
+                            status: 'Active',
+                            joinDate: '2024-02-20',
+                        },
+                        {
+                            id: 3,
+                            name: 'Bob Johnson',
+                            email: 'bob@example.com',
+                            role: 'Editor',
+                            status: 'Inactive',
+                            joinDate: '2024-01-10',
+                        },
+                        {
+                            id: 4,
+                            name: 'Alice Wilson',
+                            email: 'alice@example.com',
+                            role: 'User',
+                            status: 'Active',
+                            joinDate: '2024-03-05',
+                        },
+                        {
+                            id: 5,
+                            name: 'Charlie Brown',
+                            email: 'charlie@example.com',
+                            role: 'Admin',
+                            status: 'Active',
+                            joinDate: '2024-02-28',
+                        },
+                        {
+                            id: 6,
+                            name: 'Diana Prince',
+                            email: 'diana@example.com',
+                            role: 'Editor',
+                            status: 'Active',
+                            joinDate: '2024-01-22',
+                        },
+                    ]}
+                    columns={[
+                        { key: 'name', label: 'Name', sortable: true },
+                        { key: 'email', label: 'Email', sortable: true },
+                        {
+                            key: 'role',
+                            label: 'Role',
+                            sortable: true,
+                            render: value =>
+                                `<span class='px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800'>${value}</span>`,
+                        },
+                        {
+                            key: 'status',
+                            label: 'Status',
+                            sortable: true,
+                            render: value =>
+                                `<span class='px-2 py-1 text-xs rounded-full ${value === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}'>${value}</span>`,
+                        },
+                        {
+                            key: 'joinDate',
+                            label: 'Join Date',
+                            sortable: true,
+                            align: 'right',
+                        },
+                    ]}
                     searchable={true}
                     selectable={true}
                     paginated={true}
                     pageSize={4}
-                    variant="striped"
-                    density="comfortable"
                 />
-            </div>
-        </div>
-        
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Table Variants</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" x-data="{
-                sampleData: [
-                    { id: 1, product: 'Laptop', price: '$999', stock: '15' },
-                    { id: 2, product: 'Mouse', price: '$29', stock: '142' },
-                    { id: 3, product: 'Keyboard', price: '$79', stock: '67' }
-                ],
-                sampleColumns: [
-                    { key: 'product', label: 'Product', sortable: true },
-                    { key: 'price', label: 'Price', sortable: true, align: 'right' },
-                    { key: 'stock', label: 'Stock', sortable: true, align: 'center' }
-                ]
-            }">
-                <div>
-                    <h4 class="font-medium mb-2">Bordered</h4>
-                    <DataTable 
-                        x-bind:data="sampleData"
-                        x-bind:columns="sampleColumns"
-                        variant="bordered"
-                        density="compact"
-                    />
-                </div>
-                <div>
-                    <h4 class="font-medium mb-2">Hoverable</h4>
-                    <DataTable 
-                        x-bind:data="sampleData"
-                        x-bind:columns="sampleColumns"
-                        variant="hoverable"
-                        density="compact"
-                        interactive="hover"
-                    />
-                </div>
             </div>
         </div>
     </TabsContent>
     <TabsContent value="code">
-        <Code language="astro" code={`---
+        <Code
+            language="astro"
+            code={`---
 import DataTable from '@/components/ui/data/DataTable.astro';
-
-// Sample data
-const users = [
-  { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active' },
-  { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User', status: 'Active' },
-  { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Editor', status: 'Inactive' }
-];
-
-// Column definitions
-const columns = [
-  {
-    key: 'name',
-    label: 'Name',
-    sortable: true,
-    filterable: true
-  },
-  {
-    key: 'email',
-    label: 'Email',
-    sortable: true
-  },
-  {
-    key: 'role',
-    label: 'Role',
-    sortable: true,
-    render: (value) => \`<span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">\${value}</span>\`
-  },
-  {
-    key: 'status',
-    label: 'Status',
-    sortable: true,
-    render: (value) => {
-      const color = value === 'Active' ? 'green' : 'red';
-      return \`<span class="px-2 py-1 text-xs rounded-full bg-\${color}-100 text-\${color}-800">\${value}</span>\`;
-    }
-  }
-];
 ---
-
-{/* Basic Data Table */}
-<DataTable 
-  data={users}
-  columns={columns}
-  searchable={true}
-  variant="default"
-/>
-
-{/* Advanced Data Table with Selection and Pagination */}
-<DataTable 
-  data={users}
-  columns={columns}
-  searchable={true}
-  selectable={true}
-  paginated={true}
-  pageSize={10}
-  variant="striped"
-  density="comfortable"
-  emptyMessage="No users found"
-/>
-
-{/* With Custom Toolbar and Pagination */}
-<DataTable 
-  data={users}
-  columns={columns}
-  searchable={true}
-  selectable={true}
-  paginated={true}
->
-  <TableToolbar slot="toolbar" searchPlaceholder="Search users...">
-    <div slot="actions">
-      <button class="btn btn-primary">Add User</button>
-      <button class="btn btn-outline">Export</button>
-    </div>
-  </TableToolbar>
-
-  <TablePagination slot="pagination" showPageSize={true} />
-</DataTable>
-
-{/* Compact Variant */}
-<DataTable 
-  data={users}
-  columns={columns}
-  variant="bordered"
-  density="compact"
-  interactive="hover"
-/>`} />
+<DataTable
+    data={[
+        {
+            id: 1,
+            name: 'John Doe',
+            email: 'john@example.com',
+            role: 'Admin',
+            status: 'Active',
+            joinDate: '2024-01-15',
+        },
+        {
+            id: 2,
+            name: 'Jane Smith',
+            email: 'jane@example.com',
+            role: 'User',
+            status: 'Active',
+            joinDate: '2024-02-20',
+        },
+        {
+            id: 3,
+            name: 'Bob Johnson',
+            email: 'bob@example.com',
+            role: 'Editor',
+            status: 'Inactive',
+            joinDate: '2024-01-10',
+        },
+        {
+            id: 4,
+            name: 'Alice Wilson',
+            email: 'alice@example.com',
+            role: 'User',
+            status: 'Active',
+            joinDate: '2024-03-05',
+        },
+        {
+            id: 5,
+            name: 'Charlie Brown',
+            email: 'charlie@example.com',
+            role: 'Admin',
+            status: 'Active',
+            joinDate: '2024-02-28',
+        },
+        {
+            id: 6,
+            name: 'Diana Prince',
+            email: 'diana@example.com',
+            role: 'Editor',
+            status: 'Active',
+            joinDate: '2024-01-22',
+        },
+    ]}
+    columns={[
+        { key: 'name', label: 'Name', sortable: true },
+        { key: 'email', label: 'Email', sortable: true },
+        {
+            key: 'role',
+            label: 'Role',
+            sortable: true,
+            render: value =>
+                \`<span class='px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800'>\${value}</span>\`,
+        },
+        {
+            key: 'status',
+            label: 'Status',
+            sortable: true,
+            render: value =>
+                \`<span class='px-2 py-1 text-xs rounded-full \${value === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}'>\${value}</span>\`,
+        },
+        {
+            key: 'joinDate',
+            label: 'Join Date',
+            sortable: true,
+            align: 'right',
+        },
+    ]}
+    searchable={true}
+    selectable={true}
+    paginated={true}
+    pageSize={4}
+/>`}
+        />
     </TabsContent>
 </Tabs>
 
 ## API Reference
 
-### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `data` | `any[]` | `[]` | Array of data objects to display |
-| `columns` | `Column[]` | `[]` | Column definitions (see Column interface below) |
-| `variant` | `'default', 'bordered', 'striped', 'hoverable'` | `'default'` | Table visual variant |
-| `density` | `'compact', 'normal', 'comfortable'` | `'normal'` | Row padding density |
-| `size` | `'sm', 'md', 'lg'` | `'md'` | Table text size |
-| `interactive` | `'none', 'hover', 'click'` | `'none'` | Row interaction behavior |
-| `responsive` | `boolean` | `true` | Enable horizontal scrolling on small screens |
-| `searchable` | `boolean` | `false` | Enable global search functionality |
-| `selectable` | `boolean` | `false` | Enable row selection with checkboxes |
-| `paginated` | `boolean` | `false` | Enable pagination |
-| `pageSize` | `number` | `10` | Number of rows per page |
-| `loading` | `boolean` | `false` | Show loading state |
-| `emptyMessage` | `string` | `'No data available'` | Message shown when no data |
-| `class` | `string` | - | Additional CSS classes |
+| Prop           | Type                                            | Default               | Description                                     |
+| -------------- | ----------------------------------------------- | --------------------- | ----------------------------------------------- |
+| `data`         | `any[]`                                         | `[]`                  | Array of data objects to display                |
+| `columns`      | `Column[]`                                      | `[]`                  | Column definitions (see Column interface below) |
+| `variant`      | `'default', 'bordered', 'striped', 'hoverable'` | `'default'`           | Table visual variant                            |
+| `density`      | `'compact', 'normal', 'comfortable'`            | `'normal'`            | Row padding density                             |
+| `size`         | `'sm', 'md', 'lg'`                              | `'md'`                | Table text size                                 |
+| `interactive`  | `'none', 'hover', 'click'`                      | `'none'`              | Row interaction behavior                        |
+| `responsive`   | `boolean`                                       | `true`                | Enable horizontal scrolling on small screens    |
+| `searchable`   | `boolean`                                       | `false`               | Enable global search functionality              |
+| `selectable`   | `boolean`                                       | `false`               | Enable row selection with checkboxes            |
+| `paginated`    | `boolean`                                       | `false`               | Enable pagination                               |
+| `pageSize`     | `number`                                        | `10`                  | Number of rows per page                         |
+| `loading`      | `boolean`                                       | `false`               | Show loading state                              |
+| `emptyMessage` | `string`                                        | `'No data available'` | Message shown when no data                      |
+| `class`        | `string`                                        | -                     | Additional CSS classes                          |
 
 ### Column Interface
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `key` | `string` | - | Property key from data object |
-| `label` | `string` | - | Column header text |
-| `sortable` | `boolean` | `false` | Enable sorting for this column |
-| `filterable` | `boolean` | `false` | Include column in global search |
-| `align` | `'left', 'center', 'right'` | `'left'` | Text alignment |
-| `width` | `string` | - | Column width (CSS class) |
-| `hidden` | `boolean` | `false` | Initially hide column |
-| `render` | `(value: any, row: any) => string` | - | Custom cell renderer |
+| Property     | Type                               | Default  | Description                     |
+| ------------ | ---------------------------------- | -------- | ------------------------------- |
+| `key`        | `string`                           | -        | Property key from data object   |
+| `label`      | `string`                           | -        | Column header text              |
+| `sortable`   | `boolean`                          | `false`  | Enable sorting for this column  |
+| `filterable` | `boolean`                          | `false`  | Include column in global search |
+| `align`      | `'left', 'center', 'right'`        | `'left'` | Text alignment                  |
+| `width`      | `string`                           | -        | Column width (CSS class)        |
+| `hidden`     | `boolean`                          | `false`  | Initially hide column           |
+| `render`     | `(value: any, row: any) => string` | -        | Custom cell renderer            |
 
-### Slots
-
-| Slot | Description |
-|------|-------------|
-| `toolbar` | Custom toolbar content (typically TableToolbar component) |
+| Slot         | Description                                                     |
+| ------------ | --------------------------------------------------------------- |
+| `toolbar`    | Custom toolbar content (typically TableToolbar component)       |
 | `pagination` | Custom pagination content (typically TablePagination component) |
 
 ### Alpine.js Store Methods
 
 The DataTable creates an Alpine.js store with these methods:
 
-| Method | Parameters | Description |
-|--------|------------|-------------|
-| `sort(columnKey)` | `string` | Sort by column key |
-| `filter(query?)` | `string?` | Filter data by search query |
-| `goToPage(page)` | `number` | Navigate to specific page |
-| `nextPage()` | - | Go to next page |
-| `previousPage()` | - | Go to previous page |
-| `setPageSize(size)` | `number` | Change page size |
-| `toggleRowSelection(rowId)` | `any` | Toggle row selection |
-| `toggleSelectAll()` | - | Toggle all rows selection |
-| `clearSelection()` | - | Clear all selections |
-| `toggleColumn(columnKey)` | `string` | Toggle column visibility |
-| `updateData(newData)` | `any[]` | Update table data |
-| `refreshData()` | - | Emit refresh event |
+| Method                      | Parameters | Description                 |
+| --------------------------- | ---------- | --------------------------- |
+| `sort(columnKey)`           | `string`   | Sort by column key          |
+| `filter(query?)`            | `string?`  | Filter data by search query |
+| `goToPage(page)`            | `number`   | Navigate to specific page   |
+| `nextPage()`                | -          | Go to next page             |
+| `previousPage()`            | -          | Go to previous page         |
+| `setPageSize(size)`         | `number`   | Change page size            |
+| `toggleRowSelection(rowId)` | `any`      | Toggle row selection        |
+| `toggleSelectAll()`         | -          | Toggle all rows selection   |
+| `clearSelection()`          | -          | Clear all selections        |
+| `toggleColumn(columnKey)`   | `string`   | Toggle column visibility    |
+| `updateData(newData)`       | `any[]`    | Update table data           |
+| `refreshData()`             | -          | Emit refresh event          |
 
 ### Events
 
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `table-refresh` | - | Emitted when refreshData() is called |
-
-## Usage Examples
-
-### Dynamic Data Loading
-
-```astro
----
-// In your Astro component
-const initialData = await fetchUsers();
----
-
-<div x-data="{ tableData: [] }" x-init="tableData = await fetch('/api/users').then(r => r.json())">
-  <DataTable 
-    x-bind:data="tableData"
-    columns={columns}
-    searchable={true}
-    paginated={true}
-    x-on:table-refresh="tableData = await fetch('/api/users').then(r => r.json())"
-  />
-</div>
-```
-
-### Custom Cell Rendering
-
-```javascript
-const columns = [
-  {
-    key: 'avatar',
-    label: 'Avatar',
-    render: (value, row) => `
-      <div class="flex items-center gap-2">
-        <img src="${value}" alt="${row.name}" class="w-8 h-8 rounded-full" />
-        <span>${row.name}</span>
-      </div>
-    `
-  },
-  {
-    key: 'actions',
-    label: 'Actions',
-    align: 'center',
-    render: (value, row) => `
-      <div class="flex gap-1">
-        <button onclick="editItem(${row.id})" class="btn-sm btn-primary">Edit</button>
-        <button onclick="deleteItem(${row.id})" class="btn-sm btn-destructive">Delete</button>
-      </div>
-    `
-  }
-];
-```
-
-### Working with Selection
-
-```astro
-<div x-data="{ selectedItems: [] }">
-  <DataTable 
-    data={items}
-    columns={columns}
-    selectable={true}
-    x-on:selection-changed="selectedItems = $event.detail"
-  />
-  
-  <div x-show="selectedItems.length > 0">
-    <span x-text="selectedItems.length + ' items selected'"></span>
-    <button x-on:click="bulkDelete(selectedItems)">Delete Selected</button>
-  </div>
-</div>
-```
+| Event           | Payload | Description                          |
+| --------------- | ------- | ------------------------------------ |
+| `table-refresh` | -       | Emitted when refreshData() is called |

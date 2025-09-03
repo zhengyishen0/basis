@@ -14,7 +14,7 @@ import {
     NavigationMenuContent,
     NavigationMenuLink,
     NavigationMenuLinks,
-    NavigationMenuFeatured
+    NavigationMenuFeatured,
 } from '@/components/ui/overlay/navigationmenu';
 import { Column, Row } from '@/components/ui/layout';
 import Code from '@/components/ui/display/Code.astro';
@@ -34,86 +34,10 @@ The menu supports three content types: simple links, list layouts for basic navi
         <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-8">
-        {/* Basic Static Navigation */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-medium">Static Navigation Menu</h3>
-            <div class="bg-card p-6 rounded-lg border">
-                <NavigationMenu className="mx-auto">
-                    <NavigationMenuList>
-                        {/* Feature Layout Menu Item */}
-                        <NavigationMenuItem value="getting-started">
-                            <NavigationMenuTrigger>Getting Started</NavigationMenuTrigger>
-                            <NavigationMenuContent layout="feature">
-                                <NavigationMenuFeatured
-                                    href="/"
-                                    title="Basis Stack"
-                                    description="Modern fullstack development with Astro, Alpine.js, and Supabase"
-                                />
-                                <div class="flex flex-col space-y-2">
-                                    <NavigationMenuLink href="/docs/installation">
-                                        <div class="text-sm font-medium leading-none">Installation</div>
-                                        <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                            Get started with Basis Stack in minutes
-                                        </p>
-                                    </NavigationMenuLink>
-                                    <NavigationMenuLink href="/docs/components">
-                                        <div class="text-sm font-medium leading-none">Components</div>
-                                        <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                            Reusable UI components built with Alpine.js
-                                        </p>
-                                    </NavigationMenuLink>
-                                </div>
-                            </NavigationMenuContent>
-                        </NavigationMenuItem>
-
-                        {/* Grid Layout Menu Item */}
-                        <NavigationMenuItem value="components">
-                            <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-                            <NavigationMenuContent layout="grid" gridColumns={2}>
-                                <NavigationMenuLink href="/components/alert-dialog">
-                                    <div class="text-sm font-medium leading-none">Alert Dialog</div>
-                                    <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                        Modal dialog for important user confirmations
-                                    </p>
-                                </NavigationMenuLink>
-                                <NavigationMenuLink href="/components/hover-card">
-                                    <div class="text-sm font-medium leading-none">Hover Card</div>
-                                    <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                        Contextual information on hover
-                                    </p>
-                                </NavigationMenuLink>
-                                <NavigationMenuLink href="/components/progress">
-                                    <div class="text-sm font-medium leading-none">Progress</div>
-                                    <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                        Visual progress indicators
-                                    </p>
-                                </NavigationMenuLink>
-                                <NavigationMenuLink href="/components/scroll-area">
-                                    <div class="text-sm font-medium leading-none">Scroll Area</div>
-                                    <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                        Custom scrollbars for better UX
-                                    </p>
-                                </NavigationMenuLink>
-                            </NavigationMenuContent>
-                        </NavigationMenuItem>
-
-                        {/* Simple Link Menu Item */}
-                        <NavigationMenuItem value="documentation">
-                            <NavigationMenuLink
-                                href="/docs"
-                                className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                            >
-                                Documentation
-                            </NavigationMenuLink>
-                        </NavigationMenuItem>
-                    </NavigationMenuList>
-                </NavigationMenu>
-            </div>
-        </div>
-
-        {/* Dynamic Data-Driven Navigation */}
-        <div class="space-y-4" x-data={`{ 
+    <TabsContent value="preview" preview class="space-y-8 justify-center items-center">
+        <div 
+            class="bg-card p-2 rounded-lg border" 
+            x-data={`{ 
             navigationItems: [
                 {
                     id: 'products',
@@ -204,9 +128,7 @@ The menu supports three content types: simple links, list layouts for basic navi
                 }
             ]
         }`}>
-            <h3 class="text-lg font-medium">Dynamic Data-Driven Navigation</h3>
-            <div class="bg-card p-6 rounded-lg border">
-                <NavigationMenu className="mx-auto">
+            <NavigationMenu className="mx-auto">
                     <NavigationMenuList>
                         <NavigationMenuItems
                             x-for="item in navigationItems"
@@ -251,135 +173,25 @@ The menu supports three content types: simple links, list layouts for basic navi
                         </NavigationMenuItems>
                     </NavigationMenuList>
                 </NavigationMenu>
-            </div>
-        </div>
-
-        {/* List Layout Example */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-medium">List Layout</h3>
-            <div class="bg-card p-6 rounded-lg border">
-                <NavigationMenu>
-                    <NavigationMenuList>
-                        <NavigationMenuItem value="resources">
-                            <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
-                            <NavigationMenuContent layout="list">
-                                <NavigationMenuLink href="/blog">
-                                    <div class="text-sm font-medium leading-none">Blog</div>
-                                    <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                        Latest updates and tutorials
-                                    </p>
-                                </NavigationMenuLink>
-                                <NavigationMenuLink href="/community">
-                                    <div class="text-sm font-medium leading-none">Community</div>
-                                    <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                        Join our developer community
-                                    </p>
-                                </NavigationMenuLink>
-                                <NavigationMenuLink href="/changelog">
-                                    <div class="text-sm font-medium leading-none">Changelog</div>
-                                    <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                        Track feature updates and improvements
-                                    </p>
-                                </NavigationMenuLink>
-                            </NavigationMenuContent>
-                        </NavigationMenuItem>
-                    </NavigationMenuList>
-                </NavigationMenu>
-            </div>
-        </div>
-
-        {/* Featured Content Showcase */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-medium">Featured Content Variations</h3>
-            <div class="bg-card p-6 rounded-lg border">
-                <div class="grid gap-4 md:grid-cols-3">
-                    <NavigationMenuFeatured
-                        href="/featured/basic"
-                        title="Basic Featured"
-                        description="Simple featured card with gradient background"
-                        size="sm"
-                    />
-                    <NavigationMenuFeatured
-                        href="/featured/card"
-                        title="Card Style"
-                        description="Clean card-style featured content with border"
-                        variant="card"
-                        size="sm"
-                    />
-                    <NavigationMenuFeatured
-                        href="/featured/minimal"
-                        title="Minimal Style"
-                        description="Minimal featured content without background"
-                        variant="minimal"
-                        size="sm"
-                    />
-                </div>
-            </div>
         </div>
     </TabsContent>
     <TabsContent value="code">
         <Code language="astro" code={`---
-// Static navigation menu
+
 import {
-    NavigationMenu,
-    NavigationMenuList,
-    NavigationMenuItem,
-    NavigationMenuTrigger,
-    NavigationMenuContent,
-    NavigationMenuLink,
-    NavigationMenuFeatured
+NavigationMenu,
+NavigationMenuList,
+NavigationMenuItem,
+NavigationMenuTrigger,
+NavigationMenuContent,
+NavigationMenuLink,
+NavigationMenuFeatured
 } from '@/components/ui/overlay/navigationmenu';
 ---
 
-{/* Basic static navigation */}
-<NavigationMenu>
-    <NavigationMenuList>
-        {/* Feature layout with featured content */}
-        <NavigationMenuItem value="getting-started">
-            <NavigationMenuTrigger>Getting Started</NavigationMenuTrigger>
-            <NavigationMenuContent layout="feature">
-                <NavigationMenuFeatured
-                    href="/"
-                    title="Basis Stack"
-                    description="Modern fullstack development"
-                />
-                <div class="flex flex-col space-y-2">
-                    <NavigationMenuLink href="/docs/installation">
-                        <div class="text-sm font-medium">Installation</div>
-                        <p class="text-sm text-muted-foreground">
-                            Get started in minutes
-                        </p>
-                    </NavigationMenuLink>
-                </div>
-            </NavigationMenuContent>
-        </NavigationMenuItem>
-
-        {/* Grid layout */}
-        <NavigationMenuItem value="components">
-            <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-            <NavigationMenuContent layout="grid" gridColumns={2}>
-                <NavigationMenuLink href="/components/dialog">
-                    <div class="text-sm font-medium">Dialog</div>
-                    <p class="text-sm text-muted-foreground">Modal dialogs</p>
-                </NavigationMenuLink>
-                <NavigationMenuLink href="/components/tooltip">
-                    <div class="text-sm font-medium">Tooltip</div>
-                    <p class="text-sm text-muted-foreground">Hover information</p>
-                </NavigationMenuLink>
-            </NavigationMenuContent>
-        </NavigationMenuItem>
-
-        {/* Simple link */}
-        <NavigationMenuItem>
-            <NavigationMenuLink href="/docs">
-                Documentation
-            </NavigationMenuLink>
-        </NavigationMenuItem>
-    </NavigationMenuList>
-</NavigationMenu>
-
-{/* Dynamic data-driven navigation */}
-<div x-data="{ 
+<div 
+    class="bg-card p-2 rounded-lg border" 
+    x-data={"{ 
     navigationItems: [
         {
             id: 'products',
@@ -387,83 +199,141 @@ import {
             type: 'feature',
             featured: {
                 title: 'New Release',
-                description: 'Latest product updates',
+                description: 'Check out our latest product updates and features',
                 href: '/products/latest'
             },
             links: [
                 {
-                    id: 'web',
-                    title: 'Web App',
+                    id: 'web-app',
+                    title: 'Web Application',
                     url: '/products/web',
-                    description: 'Build modern web apps'
+                    description: 'Build modern web applications'
+                },
+                {
+                    id: 'mobile-app',
+                    title: 'Mobile App',
+                    url: '/products/mobile',
+                    description: 'Native mobile development tools'
                 }
             ]
+        },
+        {
+            id: 'services',
+            label: 'Services',
+            type: 'grid',
+            gridColumns: 2,
+            links: [
+                {
+                    id: 'consulting',
+                    title: 'Consulting',
+                    url: '/services/consulting',
+                    description: 'Expert technical guidance'
+                },
+                {
+                    id: 'support',
+                    title: 'Support',
+                    url: '/services/support',
+                    description: '24/7 technical support'
+                },
+                {
+                    id: 'training',
+                    title: 'Training',
+                    url: '/services/training',
+                    description: 'Developer education programs'
+                },
+                {
+                    id: 'migration',
+                    title: 'Migration',
+                    url: '/services/migration',
+                    description: 'Legacy system modernization'
+                }
+            ]
+        },
+        {
+            id: 'resources',
+            label: 'Resources',
+            type: 'list',
+            links: [
+                {
+                    id: 'blog',
+                    title: 'Blog',
+                    url: '/blog',
+                    description: 'Latest updates and tutorials'
+                },
+                {
+                    id: 'docs',
+                    title: 'Documentation',
+                    url: '/docs',
+                    description: 'Complete developer guides'
+                },
+                {
+                    id: 'community',
+                    title: 'Community',
+                    url: '/community',
+                    description: 'Join our developer community'
+                }
+            ]
+        },
+        {
+            id: 'about',
+            label: 'About',
+            type: 'link',
+            href: '/about'
         }
     ]
-}">
-    <NavigationMenu>
-        <NavigationMenuList>
-            <NavigationMenuItems
-                x-for="item in navigationItems"
-                x-key="item.id"
-            >
-                {/* Simple link for type='link' */}
-                <NavigationMenuLink
-                    slot="link"
-                    x-bind:href="item.href"
-                    x-text="item.label"
-                />
+}"}>
+    <NavigationMenu className="mx-auto">
+            <NavigationMenuList>
+                <NavigationMenuItems
+                    x-for="item in navigationItems"
+                    x-key="item.id"
+                >
+                    {/* Simple Link */}
+                    <NavigationMenuLink
+                        slot="link"
+                        x-bind:href="item.href"
+                        x-text="item.label"
+                        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
+                    />
 
-                {/* Trigger for dropdown menus */}
-                <NavigationMenuTrigger slot="trigger">
-                    <span x-text="item.label"></span>
-                </NavigationMenuTrigger>
+                    {/* Menu Trigger */}
+                    <NavigationMenuTrigger slot="trigger">
+                        <span x-text="item.label"></span>
+                    </NavigationMenuTrigger>
 
-                {/* Dynamic content based on item.type */}
-                <NavigationMenuContent slot="content">
-                    {/* Feature layout */}
-                    <template x-if="item.type === 'feature'">
-                        <div class="flex flex-row gap-4">
-                            <NavigationMenuFeatured />
-                            <div class="flex flex-col">
-                                <NavigationMenuLinks
-                                    x-for="link in item.links"
-                                    x-key="link.id"
-                                />
-                            </div>
-                        </div>
-                    </template>
+                    {/* Menu Content */}
+                    <NavigationMenuContent slot="content">
+                        {/* Feature Layout */}
+                        <template x-if="item.type === 'feature'">
+                            <Row>
+                                <NavigationMenuFeatured />
+                                <Column>
+                                    <NavigationMenuLinks
+                                        x-for="link in item.links"
+                                        x-key="link.id"
+                                    />
+                                </Column>
+                            </Row>
+                        </template>
 
-                    {/* List/Grid layouts */}
-                    <template x-if="item.type !== 'feature'">
-                        <NavigationMenuLinks
-                            x-for="link in item.links"
-                            x-key="link.id"
-                        />
-                    </template>
-                </NavigationMenuContent>
-            </NavigationMenuItems>
-        </NavigationMenuList>
-    </NavigationMenu>
+                        {/* Other Layouts */}
+                        <template x-if="item.type !== 'feature'">
+                            <NavigationMenuLinks
+                                x-for="link in item.links"
+                                x-key="link.id"
+                            />
+                        </template>
+                    </NavigationMenuContent>
+                </NavigationMenuItems>
+            </NavigationMenuList>
+        </NavigationMenu>
+
 </div>
 
-{/* Different featured content styles */}
-<NavigationMenuFeatured
-    href="/featured"
-    title="Card Style"
-    description="Clean card design"
-    variant="card"
-    size="md"
-/>
+`} />
 
-{/* Featured with custom image */}
-<NavigationMenuFeatured
-    href="/featured"
-    title="With Image"
-    description="Custom background image"
-    image="/path/to/image.jpg"
-/>`} />
-    </TabsContent>
+</TabsContent>
+
 </Tabs>
 
 ## API Reference
@@ -472,272 +342,121 @@ import {
 
 Main container for navigation menu with Alpine.js state management.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | - | Additional CSS classes |
-| `orientation` | `'horizontal', 'vertical'` | `'horizontal'` | Menu layout orientation |
-| `delayDuration` | `number` | `200` | Delay before closing menu on mouse leave (ms) |
-| `skipDelayDuration` | `number` | `300` | Skip delay when quickly switching menus (ms) |
+| Prop                | Type                       | Default        | Description                                   |
+| ------------------- | -------------------------- | -------------- | --------------------------------------------- |
+| `className`         | `string`                   | -              | Additional CSS classes                        |
+| `orientation`       | `'horizontal', 'vertical'` | `'horizontal'` | Menu layout orientation                       |
+| `delayDuration`     | `number`                   | `200`          | Delay before closing menu on mouse leave (ms) |
+| `skipDelayDuration` | `number`                   | `300`          | Skip delay when quickly switching menus (ms)  |
 
 #### Alpine.js State
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `activeMenu` | `string` | ID of currently active menu |
-| `openMenus` | `string[]` | Array of open menu IDs |
-| `keyboardActive` | `boolean` | Whether keyboard navigation is active |
+| Property         | Type       | Description                           |
+| ---------------- | ---------- | ------------------------------------- |
+| `activeMenu`     | `string`   | ID of currently active menu           |
+| `openMenus`      | `string[]` | Array of open menu IDs                |
+| `keyboardActive` | `boolean`  | Whether keyboard navigation is active |
 
 #### Alpine.js Methods
 
-| Method | Parameters | Description |
-|--------|------------|-------------|
-| `openMenu(menuId)` | `string` | Open specific menu |
-| `closeMenu(menuId)` | `string` | Close specific menu |
-| `closeAllMenus()` | - | Close all open menus |
-| `scheduleClose(menuId)` | `string` | Schedule menu close with delay |
-| `cancelClose()` | - | Cancel scheduled close |
+| Method                  | Parameters | Description                    |
+| ----------------------- | ---------- | ------------------------------ |
+| `openMenu(menuId)`      | `string`   | Open specific menu             |
+| `closeMenu(menuId)`     | `string`   | Close specific menu            |
+| `closeAllMenus()`       | -          | Close all open menus           |
+| `scheduleClose(menuId)` | `string`   | Schedule menu close with delay |
+| `cancelClose()`         | -          | Cancel scheduled close         |
 
 ### NavigationMenuList
 
 Container for navigation menu items.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | - | Additional CSS classes |
+| Prop        | Type     | Default | Description            |
+| ----------- | -------- | ------- | ---------------------- |
+| `className` | `string` | -       | Additional CSS classes |
 
 ### NavigationMenuItem
 
 Individual menu item container supporting both links and dropdown menus.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `string` | - | Unique identifier for the menu item |
-| `className` | `string` | - | Additional CSS classes |
-| `item` | `object` | - | Dynamic item data for Alpine.js rendering |
-
-#### Slots
-
-| Slot | Description |
-|------|-------------|
-| default | Static content when not using dynamic rendering |
+| Prop        | Type     | Default | Description                               |
+| ----------- | -------- | ------- | ----------------------------------------- |
+| `value`     | `string` | -       | Unique identifier for the menu item       |
+| `className` | `string` | -       | Additional CSS classes                    |
+| `item`      | `object` | -       | Dynamic item data for Alpine.js rendering |
 
 ### NavigationMenuItems
 
 Template component for rendering menu items dynamically with x-for.
 
-#### Props
+| Prop        | Type     | Default     | Description                |
+| ----------- | -------- | ----------- | -------------------------- |
+| `className` | `string` | -           | Additional CSS classes     |
+| `x-for`     | `string` | -           | Alpine.js x-for expression |
+| `x-key`     | `string` | `'item.id'` | Alpine.js x-key expression |
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | - | Additional CSS classes |
-| `x-for` | `string` | - | Alpine.js x-for expression |
-| `x-key` | `string` | `'item.id'` | Alpine.js x-key expression |
-
-#### Slots
-
-| Slot | Description |
-|------|-------------|
-| `link` | Content for simple link items |
+| Slot      | Description                        |
+| --------- | ---------------------------------- |
+| `link`    | Content for simple link items      |
 | `trigger` | Content for dropdown menu triggers |
-| `content` | Dropdown menu content |
+| `content` | Dropdown menu content              |
 
 ### NavigationMenuTrigger
 
 Button that triggers dropdown menu content.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `'default', 'ghost', 'link'` | `'default'` | Visual style variant |
-| `className` | `string` | - | Additional CSS classes |
-| `disabled` | `boolean` | `false` | Whether the trigger is disabled |
-
-#### Slots
-
-| Slot | Description |
-|------|-------------|
-| default | Trigger button content |
+| Prop        | Type                         | Default     | Description                     |
+| ----------- | ---------------------------- | ----------- | ------------------------------- |
+| `variant`   | `'default', 'ghost', 'link'` | `'default'` | Visual style variant            |
+| `className` | `string`                     | -           | Additional CSS classes          |
+| `disabled`  | `boolean`                    | `false`     | Whether the trigger is disabled |
 
 ### NavigationMenuContent
 
 Dropdown content container with layout support.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `layout` | `'list', 'grid', 'feature'` | `'grid'` | Content layout type |
-| `gridColumns` | `number` | `2` | Number of grid columns (grid layout) |
-| `minWidth` | `string` | `'400px'` | Minimum content width |
-| `className` | `string` | - | Additional CSS classes |
-
-#### Slots
-
-| Slot | Description |
-|------|-------------|
-| default | Menu content |
+| Prop          | Type                        | Default   | Description                          |
+| ------------- | --------------------------- | --------- | ------------------------------------ |
+| `layout`      | `'list', 'grid', 'feature'` | `'grid'`  | Content layout type                  |
+| `gridColumns` | `number`                    | `2`       | Number of grid columns (grid layout) |
+| `minWidth`    | `string`                    | `'400px'` | Minimum content width                |
+| `className`   | `string`                    | -         | Additional CSS classes               |
 
 ### NavigationMenuLink
 
 Individual navigation link with hover and focus states.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `href` | `string` | - | Link URL |
-| `variant` | `'default', 'active'` | `'default'` | Visual style variant |
-| `active` | `boolean` | `false` | Whether link is currently active |
-| `className` | `string` | - | Additional CSS classes |
-| `disabled` | `boolean` | `false` | Whether link is disabled |
-| `link` | `object` | - | Dynamic link data for Alpine.js rendering |
-
-#### Slots
-
-| Slot | Description |
-|------|-------------|
-| default | Link content |
+| Prop        | Type                  | Default     | Description                               |
+| ----------- | --------------------- | ----------- | ----------------------------------------- |
+| `href`      | `string`              | -           | Link URL                                  |
+| `variant`   | `'default', 'active'` | `'default'` | Visual style variant                      |
+| `active`    | `boolean`             | `false`     | Whether link is currently active          |
+| `className` | `string`              | -           | Additional CSS classes                    |
+| `disabled`  | `boolean`             | `false`     | Whether link is disabled                  |
+| `link`      | `object`              | -           | Dynamic link data for Alpine.js rendering |
 
 ### NavigationMenuLinks
 
 Template component for rendering navigation links dynamically.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | - | Additional CSS classes |
-| `variant` | `'default', 'active'` | `'default'` | Style variant for all links |
-| `disabled` | `boolean` | `false` | Whether all links are disabled |
-| `x-for` | `string` | - | Alpine.js x-for expression |
-| `x-key` | `string` | `'link.id'` | Alpine.js x-key expression |
-
-#### Slots
-
-| Slot | Description |
-|------|-------------|
-| default | Template content for each link |
+| Prop        | Type                  | Default     | Description                    |
+| ----------- | --------------------- | ----------- | ------------------------------ |
+| `className` | `string`              | -           | Additional CSS classes         |
+| `variant`   | `'default', 'active'` | `'default'` | Style variant for all links    |
+| `disabled`  | `boolean`             | `false`     | Whether all links are disabled |
+| `x-for`     | `string`              | -           | Alpine.js x-for expression     |
+| `x-key`     | `string`              | `'link.id'` | Alpine.js x-key expression     |
 
 ### NavigationMenuFeatured
 
 Special featured content component for prominent menu items.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `href` | `string` | - | Featured content URL |
-| `title` | `string` | - | Featured content title |
-| `description` | `string` | - | Featured content description |
-| `image` | `string` | - | Background image URL |
-| `className` | `string` | - | Additional CSS classes |
-| `size` | `'sm', 'md', 'lg'` | `'md'` | Size variant |
-| `variant` | `'default', 'card', 'minimal'` | `'default'` | Style variant |
-
-#### Slots
-
-| Slot | Description |
-|------|-------------|
-| default | Additional featured content |
-
-## Data Structure
-
-For dynamic navigation menus, use this data structure:
-
-```typescript
-interface NavigationMenuItemData {
-  id: string;                    // Unique identifier
-  label: string;                 // Display text
-  type: 'link' | 'list' | 'grid' | 'feature'; // Item type
-  href?: string;                 // URL for link type
-  disabled?: boolean;            // Whether item is disabled
-  links?: Array<{               // Sub-links for dropdown types
-    id: string;
-    title: string;
-    url: string;
-    description?: string;
-  }>;
-  gridColumns?: number;          // Columns for grid layout
-  featured?: {                   // Featured content for feature type
-    title: string;
-    description: string;
-    href: string;
-    image?: string;
-  };
-  layout?: {                     // Layout configuration
-    minWidth?: string;
-    gridColumns?: number;
-  };
-}
-```
-
-## Alpine.js Integration
-
-### Hover Behavior
-
-The menu system manages hover states automatically:
-
-- **Hover delay**: Configurable delay before opening/closing menus
-- **Quick switching**: Skip delays when rapidly switching between menus  
-- **Mouse leave**: Graceful closing with configurable delay
-
-### Keyboard Navigation
-
-Full keyboard support with proper focus management:
-
-- **Arrow keys**: Navigate between menu items
-- **Enter/Space**: Open/close dropdown menus
-- **Escape**: Close all menus and return focus
-- **Tab**: Standard tab order through interactive elements
-
-### State Management
-
-All menu state is managed through Alpine.js:
-
-```javascript
-// Access current state
-activeMenu        // Currently open menu ID
-openMenus        // Array of open menu IDs
-keyboardActive   // Whether using keyboard navigation
-
-// Control menus programmatically
-openMenu('menu-id')
-closeMenu('menu-id')
-closeAllMenus()
-```
-
-## Accessibility
-
-- **ARIA attributes**: Proper `aria-expanded`, `aria-current` states
-- **Keyboard navigation**: Full keyboard support with logical focus flow
-- **Screen reader support**: Semantic markup with navigation landmarks
-- **Focus management**: Proper focus trapping and restoration
-- **High contrast**: Supports high contrast mode and custom themes
-
-## Layout Types
-
-### List Layout
-Single column layout for simple navigation lists. Best for text-heavy menus with minimal visual complexity.
-
-### Grid Layout  
-Multi-column grid layout for organized content sections. Configurable column count with responsive behavior.
-
-### Feature Layout
-Combines a prominent featured section with supporting links. Ideal for highlighting key content or new features.
-
-## Best Practices
-
-1. **Consistent structure**: Maintain consistent menu depth and organization
-2. **Reasonable content**: Avoid overcrowding dropdown menus 
-3. **Clear labels**: Use descriptive, actionable menu labels
-4. **Logical grouping**: Group related items together
-5. **Mobile consideration**: Test navigation on touch devices
-6. **Performance**: Implement lazy loading for large menu datasets
-7. **Visual hierarchy**: Use proper typography and spacing scales
+| Prop          | Type                           | Default     | Description                  |
+| ------------- | ------------------------------ | ----------- | ---------------------------- |
+| `href`        | `string`                       | -           | Featured content URL         |
+| `title`       | `string`                       | -           | Featured content title       |
+| `description` | `string`                       | -           | Featured content description |
+| `image`       | `string`                       | -           | Background image URL         |
+| `className`   | `string`                       | -           | Additional CSS classes       |
+| `size`        | `'sm', 'md', 'lg'`             | `'md'`      | Size variant                 |
+| `variant`     | `'default', 'card', 'minimal'` | `'default'` | Style variant                |

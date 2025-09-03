@@ -1,5 +1,5 @@
 ---
-title: Dialog System
+title: Dialog
 description: Modal dialog components with Alpine.js state management, keyboard shortcuts, and flexible positioning
 category: overlay
 order: 1
@@ -12,19 +12,25 @@ import DialogFooter from '@/components/ui/overlay/dialog/DialogFooter.astro';
 import DialogTrigger from '@/components/ui/overlay/dialog/DialogTrigger.astro';
 import { Button } from '@/components/ui/forms';
 import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
 Modal dialog components with Alpine.js state management, keyboard shortcuts, auto-focus, and flexible positioning variants. Includes support for forms, confirmations, and side panels with proper accessibility features.
 
-<div class="preview border rounded-lg p-6">
-    <div class="space-y-6">
-        {/* Basic Modal Dialog */}
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
+        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-8">
         <div class="space-y-4">
-            <h4 class="font-medium">Basic Dialog</h4>
             <div class="flex gap-4">
                 <Dialog>
-                    <DialogTrigger variant="button">
+                    <DialogTrigger variant="outline">
                         Open Dialog
                     </DialogTrigger>
                     <DialogContent variant="center">
@@ -55,11 +61,11 @@ Modal dialog components with Alpine.js state management, keyboard shortcuts, aut
                         <DialogHeader>
                             <h4 class="font-medium">Left Sidebar</h4>
                         </DialogHeader>
-                        <div class="py-4">
+                        <div class="py-4  h-full">
                             <p class="text-sm">Content slides in from the left.</p>
                         </div>
                         <DialogFooter>
-                            <Button variant="outline" x-on:click="close()">Close</Button>
+                            <Button x-on:click="close()">Close</Button>
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
@@ -72,11 +78,11 @@ Modal dialog components with Alpine.js state management, keyboard shortcuts, aut
                         <DialogHeader>
                             <h4 class="font-medium">Right Sidebar</h4>
                         </DialogHeader>
-                        <div class="py-4">
+                        <div class="py-4 h-full">
                             <p class="text-sm">Content slides in from the right.</p>
                         </div>
                         <DialogFooter>
-                            <Button variant="outline" x-on:click="close()">Close</Button>
+                            <Button x-on:click="close()">Close</Button>
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
@@ -117,126 +123,8 @@ Modal dialog components with Alpine.js state management, keyboard shortcuts, aut
             </div>
         </div>
 
-        {/* Form Dialog with Auto-Focus */}
-        <div class="space-y-4">
-            <h4 class="font-medium">Form Dialog with Auto-Focus</h4>
-            <div class="flex gap-4">
-                <Dialog autoFocus={true}>
-                    <DialogTrigger variant="button">
-                        Create User
-                    </DialogTrigger>
-                    <DialogContent variant="center">
-                        <DialogHeader>
-                            <h3 class="text-lg font-semibold">Create New User</h3>
-                            <p class="text-sm text-muted-foreground">
-                                Fill in the details below to create a new user account.
-                            </p>
-                        </DialogHeader>
-                        <div class="py-4 space-y-4" x-data="{ name: '', email: '', role: 'user' }">
-                            <div class="space-y-2">
-                                <label class="text-sm font-medium">Name</label>
-                                <input 
-                                    type="text" 
-                                    x-model="name"
-                                    placeholder="Enter full name"
-                                    class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-                                />
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-medium">Email</label>
-                                <input 
-                                    type="email" 
-                                    x-model="email"
-                                    placeholder="Enter email address"
-                                    class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-                                />
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-medium">Role</label>
-                                <select 
-                                    x-model="role"
-                                    class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-                                >
-                                    <option value="user">User</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="editor">Editor</option>
-                                </select>
-                            </div>
-                        </div>
-                        <DialogFooter>
-                            <Button variant="outline" x-on:click="close()">Cancel</Button>
-                            <Button variant="default" x-on:click="close()">Create User</Button>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
-
-                {/* Confirmation Dialog */}
-                <Dialog>
-                    <DialogTrigger variant="destructive">
-                        Delete Item
-                    </DialogTrigger>
-                    <DialogContent variant="center">
-                        <DialogHeader closeable={false}>
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold">Delete Item</h3>
-                                    <p class="text-sm text-muted-foreground">
-                                        This action cannot be undone.
-                                    </p>
-                                </div>
-                            </div>
-                        </DialogHeader>
-                        <div class="py-4">
-                            <p class="text-sm">
-                                Are you sure you want to delete this item? This will permanently remove it from your account.
-                            </p>
-                        </div>
-                        <DialogFooter justify="end">
-                            <Button variant="outline" x-on:click="close()">Cancel</Button>
-                            <Button variant="destructive" x-on:click="close()">Delete</Button>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
-
-                {/* Keyboard Shortcut Dialog */}
-                <Dialog keyboardShortcut="cmd+k">
-                    <DialogTrigger variant="ghost">
-                        Quick Action (⌘K)
-                    </DialogTrigger>
-                    <DialogContent variant="center">
-                        <DialogHeader>
-                            <h3 class="text-lg font-semibold">Quick Actions</h3>
-                            <p class="text-sm text-muted-foreground">
-                                Press ⌘K to open this dialog anywhere
-                            </p>
-                        </DialogHeader>
-                        <div class="py-4">
-                            <div class="space-y-2">
-                                <button class="w-full text-left px-3 py-2 rounded-md hover:bg-accent text-sm">
-                                    🔍 Search
-                                </button>
-                                <button class="w-full text-left px-3 py-2 rounded-md hover:bg-accent text-sm">
-                                    ➕ Create New
-                                </button>
-                                <button class="w-full text-left px-3 py-2 rounded-md hover:bg-accent text-sm">
-                                    ⚙️ Settings
-                                </button>
-                            </div>
-                        </div>
-                        <DialogFooter>
-                            <Button variant="outline" x-on:click="close()">Close</Button>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
-            </div>
-        </div>
-    </div>
-</div>
+    </TabsContent>
+    <TabsContent value="code">
 
 <Code
     language="astro"
@@ -250,10 +138,9 @@ import { Button } from '@/components/ui/forms';
 ---
 
 {/* Basic Modal Dialog */}
+
 <Dialog>
-    <DialogTrigger variant="button">
-        Open Dialog
-    </DialogTrigger>
+    <DialogTrigger variant="button">Open Dialog</DialogTrigger>
     <DialogContent variant="center">
         <DialogHeader>
             <h3 class="text-lg font-semibold">Dialog Title</h3>
@@ -263,13 +150,16 @@ import { Button } from '@/components/ui/forms';
             <p>Your dialog content goes here.</p>
         </div>
         <DialogFooter>
-            <Button variant="outline" x-on:click="close()">Cancel</Button>
+            <Button variant="outline" x-on:click="close()">
+                Cancel
+            </Button>
             <Button variant="default">Confirm</Button>
         </DialogFooter>
     </DialogContent>
 </Dialog>
 
 {/* Side Panel Dialog */}
+
 <Dialog>
     <DialogTrigger variant="outline">Settings</DialogTrigger>
     <DialogContent variant="right">
@@ -287,12 +177,15 @@ import { Button } from '@/components/ui/forms';
             </div>
         </div>
         <DialogFooter>
-            <Button variant="default" x-on:click="close()">Save</Button>
+            <Button variant="default" x-on:click="close()">
+                Save
+            </Button>
         </DialogFooter>
     </DialogContent>
 </Dialog>
 
 {/* Form Dialog with Auto-Focus */}
+
 <Dialog autoFocus={true}>
     <DialogTrigger variant="button">Add User</DialogTrigger>
     <DialogContent variant="center">
@@ -302,8 +195,8 @@ import { Button } from '@/components/ui/forms';
         <div class="py-4 space-y-4" x-data="{ name: '', email: '' }">
             <div class="space-y-2">
                 <label class="text-sm font-medium">Name</label>
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     x-model="name"
                     placeholder="Enter name"
                     class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-ring"
@@ -311,8 +204,8 @@ import { Button } from '@/components/ui/forms';
             </div>
             <div class="space-y-2">
                 <label class="text-sm font-medium">Email</label>
-                <input 
-                    type="email" 
+                <input
+                    type="email"
                     x-model="email"
                     placeholder="Enter email"
                     class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-ring"
@@ -320,13 +213,18 @@ import { Button } from '@/components/ui/forms';
             </div>
         </div>
         <DialogFooter>
-            <Button variant="outline" x-on:click="close()">Cancel</Button>
-            <Button variant="default" x-on:click="close()">Add User</Button>
+            <Button variant="outline" x-on:click="close()">
+                Cancel
+            </Button>
+            <Button variant="default" x-on:click="close()">
+                Add User
+            </Button>
         </DialogFooter>
     </DialogContent>
 </Dialog>
 
 {/* Keyboard Shortcut Dialog */}
+
 <Dialog keyboardShortcut="cmd+k">
     <DialogTrigger variant="ghost">Command Palette (⌘K)</DialogTrigger>
     <DialogContent variant="center">
@@ -334,15 +232,17 @@ import { Button } from '@/components/ui/forms';
             <h3 class="text-lg font-semibold">Command Palette</h3>
         </DialogHeader>
         <div class="py-4">
-            <input 
-                type="text" 
+            <input
+                type="text"
                 placeholder="Type a command..."
                 class="w-full px-3 py-2 border rounded-md"
             />
         </div>
     </DialogContent>
-</Dialog>`}
-/>
+</Dialog>
+`} />
+    </TabsContent>
+</Tabs>
 
 ## API Reference
 
@@ -350,44 +250,44 @@ import { Button } from '@/components/ui/forms';
 
 Main container with state management and keyboard handling.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `closeable` | `boolean` | `true` | Whether dialog can be closed with Escape key |
-| `lockScroll` | `boolean` | `true` | Prevent body scrolling when dialog is open |
-| `keyboardShortcut` | `string` | - | Keyboard shortcut to open dialog (e.g., "cmd+k") |
-| `autoFocus` | `boolean` | `false` | Auto-focus first input/button when opened |
-| `focusSelector` | `string` | `'input, button, [tabindex]:not([tabindex="-1"])'` | CSS selector for auto-focus element |
+| Prop               | Type      | Default                                            | Description                                      |
+| ------------------ | --------- | -------------------------------------------------- | ------------------------------------------------ |
+| `closeable`        | `boolean` | `true`                                             | Whether dialog can be closed with Escape key     |
+| `lockScroll`       | `boolean` | `true`                                             | Prevent body scrolling when dialog is open       |
+| `keyboardShortcut` | `string`  | -                                                  | Keyboard shortcut to open dialog (e.g., "cmd+k") |
+| `autoFocus`        | `boolean` | `false`                                            | Auto-focus first input/button when opened        |
+| `focusSelector`    | `string`  | `'input, button, [tabindex]:not([tabindex="-1"])'` | CSS selector for auto-focus element              |
 
 ### DialogContent
 
 Content wrapper with backdrop, animations, and positioning variants.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `'center' \, 'left' \, 'right' \, 'top' \, 'bottom' \, 'fullscreen'` | `'center'` | Dialog positioning |
-| `backdrop` | `'dark' \, 'light' \, 'blur' \, 'none'` | `'dark'` | Backdrop style |
+| Prop       | Type                                                                 | Default    | Description        |
+| ---------- | -------------------------------------------------------------------- | ---------- | ------------------ |
+| `variant`  | `'center' \, 'left' \, 'right' \, 'top' \, 'bottom' \, 'fullscreen'` | `'center'` | Dialog positioning |
+| `backdrop` | `'dark' \, 'light' \, 'blur' \, 'none'`                              | `'dark'`   | Backdrop style     |
 
 ### DialogHeader
 
 Header section with optional close button and title content.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `closeable` | `boolean` | `true` | Show close button in top-right corner |
+| Prop        | Type      | Default | Description                           |
+| ----------- | --------- | ------- | ------------------------------------- |
+| `closeable` | `boolean` | `true`  | Show close button in top-right corner |
 
 ### DialogFooter
 
 Footer section with flexible button layouts.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `justify` | `'start' \, 'end' \, 'center' \, 'between'` | `'end'` | Button alignment |
-| `gap` | `'sm' \, 'md' \, 'lg'` | `'sm'` | Spacing between buttons |
+| Prop      | Type                                        | Default | Description             |
+| --------- | ------------------------------------------- | ------- | ----------------------- |
+| `justify` | `'start' \, 'end' \, 'center' \, 'between'` | `'end'` | Button alignment        |
+| `gap`     | `'sm' \, 'md' \, 'lg'`                      | `'sm'`  | Spacing between buttons |
 
 ### DialogTrigger
 
 Trigger element that opens the dialog when clicked.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
+| Prop      | Type                                            | Default     | Description  |
+| --------- | ----------------------------------------------- | ----------- | ------------ |
 | `variant` | `'default' \, 'button' \, 'outline' \, 'ghost'` | `'default'` | Visual style |

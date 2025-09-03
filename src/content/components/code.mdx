@@ -25,67 +25,20 @@ The Code component provides syntax highlighting for various programming language
             Code
         </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div class="space-y-4">
-            <Code
-                title="JavaScript Example"
-                language="javascript"
-                code={`function greet(name) {
+    <TabsContent
+        value="preview"
+        preview
+        class="space-y-4 justify-center items-center"
+    >
+        <Code
+            language="javascript"
+            code={`function greet(name) {
     console.log(\`Hello, \${name}!\`);
     return \`Welcome, \${name}\`;
 }
-
 const user = 'World';
 greet(user);`}
-            />
-            
-            <Code
-                language="python"
-                code={`def calculate_fibonacci(n):
-    if n <= 1:
-        return n
-    return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
-
-# Generate first 10 fibonacci numbers
-for i in range(10):
-    print(f"F({i}) = {calculate_fibonacci(i)}")`}
-            />
-            
-            <Code
-                title="TypeScript Interface"
-                language="typescript"
-                theme="vitesse-dark"
-                code={`interface User {
-    id: number;
-    name: string;
-    email: string;
-    preferences?: {
-        theme: 'light' | 'dark';
-        notifications: boolean;
-    };
-}
-
-const createUser = (userData: Omit<User, 'id'>): User => {
-    return {
-        id: Math.floor(Math.random() * 1000),
-        ...userData
-    };
-};`}
-            />
-            
-            <Code
-                language="bash"
-                showCopy={false}
-                code={`# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build`}
-            />
-        </div>
+        />
     </TabsContent>
     <TabsContent value="code">
         <Code
@@ -93,42 +46,16 @@ npm run build`}
             code={`---
 import Code from '@/components/ui/display/Code.astro';
 ---
-
-{/* Basic usage */}
-<Code
-    language="javascript"
-    code={\`console.log('Hello, World!');\`}
-/>
-
-{/* With title and copy functionality */}
-<Code
+ <Code
     title="JavaScript Example"
     language="javascript"
     code={\`function greet(name) {
-    console.log(\\\`Hello, \\\${name}!\\\`);
-    return \\\`Welcome, \\\${name}\\\`;
+    console.log(\`Hello, \${name}!\`);
+    return \`Welcome, \${name}\`;
 }
-
 const user = 'World';
-greet(user);\`}
-/>
-
-{/* Different themes */}
-<Code
-    language="typescript"
-    theme="vitesse-dark"
-    code={\`interface User {
-    id: number;
-    name: string;
-}\`}
-/>
-
-{/* Disable copy functionality */}
-<Code
-    language="bash"
-    showCopy={false}
-    code={\`npm install\`}
-/>`}
+greet(user);\`}/>
+`}
         />
     </TabsContent>
 </Tabs>
@@ -155,29 +82,12 @@ Available syntax highlighting themes:
 
 ## API Reference
 
-### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `code` | `string` | - | **Required.** The code content to highlight |
-| `language` | `string` | `'javascript'` | Programming language for syntax highlighting |
-| `title` | `string` | - | Optional title displayed above the code block |
-| `showCopy` | `boolean` | `true` | Show/hide copy-to-clipboard button |
-| `theme` | `'github-light' \, 'github-dark' \, 'vitesse-light' \, 'vitesse-dark'` | `'github-light'` | Syntax highlighting theme |
-| `class` | `string` | - | Additional CSS classes |
-
-### Features
-
-- **Syntax Highlighting**: Powered by Shiki for accurate, fast highlighting
-- **Copy to Clipboard**: Built-in copy functionality with visual feedback
-- **Theme Support**: Multiple color schemes for different environments
-- **Language Detection**: Supports 100+ programming languages
-- **Responsive Design**: Adapts to container width with horizontal scrolling
-- **Alpine.js Compatible**: Supports reactive props and event handling
-
-### Usage Tips
-
-- Use descriptive titles for complex code examples
-- Choose themes that match your site's design system
-- Disable copy functionality for short snippets or terminal outputs
-- Consider using `vitesse-dark` theme for dark mode interfaces
+| Prop       | Type                                                                   | Default          | Description                                   |
+| ---------- | ---------------------------------------------------------------------- | ---------------- | --------------------------------------------- |
+| `code`     | `string`                                                               | -                | **Required.** The code content to highlight   |
+| `language` | `string`                                                               | `'javascript'`   | Programming language for syntax highlighting  |
+| `title`    | `string`                                                               | -                | Optional title displayed above the code block |
+| `showCopy` | `boolean`                                                              | `true`           | Show/hide copy-to-clipboard button            |
+| `theme`    | `'github-light' \, 'github-dark' \, 'vitesse-light' \, 'vitesse-dark'` | `'github-light'` | Syntax highlighting theme                     |
+| `height`   | `string`                                                               | `'400px'`        | Height of the code container with scrolling   |
+| `class`    | `string`                                                               | -                | Additional CSS classes                        |

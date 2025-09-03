@@ -26,7 +26,7 @@ const headingsJson = JSON.stringify(headings);
 
 <div 
   x-data={`{
-    headings: ${headingsJson},
+    headings: ${headingsJson} || [],
     activeId: null,
     observer: null,
     autoCollapse: ${autoCollapse},
@@ -35,7 +35,7 @@ const headingsJson = JSON.stringify(headings);
     
     init() {
       // Extract headings from container if selector provided
-      if (this.containerSelector && this.headings.length === 0) {
+      if (this.containerSelector) {
         this.extractHeadings();
       }
       
@@ -51,7 +51,10 @@ const headingsJson = JSON.stringify(headings);
     
     extractHeadings() {
       const container = document.querySelector(this.containerSelector);
-      if (!container) return;
+      if (!container) {
+        console.warn('TableOfContents: Container not found:', this.containerSelector);
+        return;
+      }
       
       const headingElements = container.querySelectorAll('h2, h3, h4');
       const extractedHeadings = [];
@@ -76,6 +79,7 @@ const headingsJson = JSON.stringify(headings);
       });
       
       this.headings = extractedHeadings;
+      console.log('TableOfContents: Extracted headings:', extractedHeadings);
     },
     
     setupObserver() {
@@ -204,10 +208,10 @@ const headingsJson = JSON.stringify(headings);
     className
   )}
 >
-  <div class="space-y-2 pb-4">
+  <div class="space-y-2 pb-4" x-show="headings && headings.length > 0">
     <p class="font-medium text-sm">{title}</p>
     <ul class="m-0 list-none border-l border-border text-sm">
-      <template x-for="(heading, index) in headings" :key="heading.slug">
+      <template x-for="(heading, index) in headings" :key="(heading.slug || 'heading') + '-' + index">
         <li 
           class="mt-0 overflow-hidden transition-all duration-200"
           :class="{

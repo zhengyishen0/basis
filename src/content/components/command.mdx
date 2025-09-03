@@ -5,168 +5,203 @@ category: overlay
 order: 2
 ---
 
-import Command from '@/components/ui/overlay/command/Command.astro';
-import CommandInput from '@/components/ui/overlay/command/CommandInput.astro';
-import CommandItem from '@/components/ui/overlay/command/CommandItem.astro';
-import CommandItems from '@/components/ui/overlay/command/CommandItems.astro';
-import CommandFooter from '@/components/ui/overlay/command/CommandFooter.astro';
+import {
+    Command,
+    CommandInput,
+    CommandItem,
+    CommandItems,
+    CommandFooter,
+    CommandGroup,
+    CommandGroups,
+    CommandShortcut,
+    CommandTrigger,
+} from '@/components/ui/overlay';
 import { Button } from '@/components/ui/forms';
 import Code from '@/components/ui/display/Code.astro';
+import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
+import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
+import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
+import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 
 ## Overview
 
 The Command Palette provides a keyboard-driven interface similar to VS Code's Command Palette (Cmd+P) or Raycast. It combines search functionality with keyboard navigation for quick access to actions and commands.
 
-<div class="preview-container">
-    <div class="space-y-6">
-        <div class="flex flex-wrap gap-4 justify-center">
-            {/* Basic Command Palette */}
-            <Command 
+<Tabs defaultValue="preview" class="h-auto">
+    <TabsList variant="pills" slot="list">
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
+    </TabsList>
+    <TabsContent value="preview" preview class="space-y-4">
+        <div class="flex flex-col items-center space-y-4">
+            <Command
+                items={{
+                    suggestions: [
+                        {
+                            title: 'Calendar',
+                            value: 'calendar',
+                            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4m8-4v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>',
+                            show: true,
+                        },
+                        {
+                            title: 'Search Emoji',
+                            value: 'emoji',
+                            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg>',
+                            show: true,
+                        },
+                        {
+                            title: 'Calculator',
+                            value: 'calculator',
+                            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="m9 10-1 4h1.5l.5-2h1l.5 2H13l-1-4zm3 0h1v4h-1v-4z"/></svg>',
+                            show: true,
+                            disabled: true,
+                        },
+                    ],
+                    settings: [
+                        {
+                            title: 'Profile',
+                            value: 'profile',
+                            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+                            shortcut: '⌘P',
+                            show: true,
+                        },
+                        {
+                            title: 'Settings',
+                            value: 'settings',
+                            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>',
+                            shortcut: '⌘S',
+                            show: true,
+                        },
+                    ]
+                }}
+                onSelect="alert('Selected: ' + item.title)"
                 keyboardShortcut="cmd+k"
-                items={{
-                    "Actions": [
-                        { title: "New File", value: "new-file", icon: "file-plus", shortcut: "Cmd+N" },
-                        { title: "Open File", value: "open-file", icon: "folder-open", shortcut: "Cmd+O" },
-                        { title: "Save File", value: "save-file", icon: "save", shortcut: "Cmd+S" },
-                        { title: "Find in Files", value: "find", icon: "search", shortcut: "Cmd+Shift+F" }
-                    ],
-                    "Navigation": [
-                        { title: "Go to Line", value: "goto-line", icon: "hash", shortcut: "Ctrl+G" },
-                        { title: "Go to File", value: "goto-file", icon: "file", shortcut: "Cmd+P" },
-                        { title: "Go to Symbol", value: "goto-symbol", icon: "hash", shortcut: "Cmd+Shift+O" }
-                    ]
-                }}
-                onSelect="console.log('Selected:', item)"
             >
-                <Button variant="outline" slot="trigger">
-                    Basic Palette (⌘K)
-                </Button>
-            </Command>
+                <CommandTrigger slot="trigger" variant="button">
+                    Open Command Palette (⌘K)
+                </CommandTrigger>
 
-            {/* Categorized Commands */}
-            <Command 
-                keyboardShortcut="cmd+shift+p"
-                items={{
-                    "File Operations": [
-                        { title: "Create New Document", value: "new-doc", icon: "file-text" },
-                        { title: "Import Files", value: "import", icon: "upload" },
-                        { title: "Export Project", value: "export", icon: "download" }
-                    ],
-                    "Edit Operations": [
-                        { title: "Find and Replace", value: "find-replace", icon: "search" },
-                        { title: "Format Document", value: "format", icon: "align-left" },
-                        { title: "Toggle Comments", value: "comment", icon: "message-square" }
-                    ],
-                    "Settings": [
-                        { title: "Open Settings", value: "settings", icon: "settings" },
-                        { title: "Change Theme", value: "theme", icon: "palette" },
-                        { title: "Keyboard Shortcuts", value: "shortcuts", icon: "keyboard" }
-                    ]
-                }}
-                placeholder="Type a command..."
-                onSelect="alert(`Executing: ${item.title}`)"
-            >
-                <Button variant="default" slot="trigger">
-                    All Commands (⌘⇧P)
-                </Button>
-            </Command>
-
-            {/* Manual Assembly */}
-            <Command keyboardShortcut="cmd+j">
-                <Button variant="ghost" slot="trigger">
-                    Custom Commands (⌘J)
-                </Button>
-                
-                <CommandInput 
-                    placeholder="Type to search commands..."
+                <CommandInput
                     slot="input"
+                    placeholder="Type a command or search..."
                 />
-                
-                <div class="px-1 py-2" x-data="{
-                    commands: [
-                        { id: 1, title: 'Create Component', icon: '🧩', category: 'Development' },
-                        { id: 2, title: 'Run Tests', icon: '🧪', category: 'Development' },
-                        { id: 3, title: 'Deploy App', icon: '🚀', category: 'Operations' },
-                        { id: 4, title: 'View Logs', icon: '📄', category: 'Operations' }
-                    ]
-                }">
-                    <template x-for="category in ['Development', 'Operations']" x-key="category">
-                        <div x-show="commands.filter(cmd => cmd.category === category && (!commandSearch || cmd.title.toLowerCase().includes(commandSearch.toLowerCase()))).length > 0">
-                            <div class="px-2 py-1.5 text-xs font-medium text-muted-foreground" x-text="category"></div>
-                            <CommandItems x-for="command in commands.filter(cmd => cmd.category === category && (!commandSearch || cmd.title.toLowerCase().includes(commandSearch.toLowerCase())))" x-key="command.id">
-                                <CommandItem x-on:click="console.log('Selected:', command.title); close()">
-                                    <span class="mr-2" x-text="command.icon"></span>
-                                    <span x-text="command.title"></span>
-                                </CommandItem>
-                            </CommandItems>
+                <CommandGroups
+                    x-for="[categoryName, categoryItems] in Object.entries(filteredItems)"
+                    x-key="categoryName"
+                    showDivider={true}
+                >
+                    <CommandItems
+                        x-for="item in categoryItems"
+                        x-key="item.value"
+                    >
+                        <div
+                            slot="icon"
+                            class="mr-2 h-4 w-4 shrink-0"
+                            x-html="item.icon"
+                        >
                         </div>
-                    </template>
-                    
-                    <div x-show="commands.filter(cmd => !commandSearch || cmd.title.toLowerCase().includes(commandSearch.toLowerCase())).length === 0 && commandSearch" class="px-2 py-8 text-center text-sm text-muted-foreground">
-                        No commands found for "<span x-text="commandSearch"></span>"
-                    </div>
-                </div>
-                
+                        <span x-text="item.title"></span>
+                        <CommandShortcut
+                            slot="shortcut"
+                            x-text="item.shortcut"
+                        />
+                    </CommandItems>
+                </CommandGroups>
                 <CommandFooter slot="footer" />
             </Command>
         </div>
-        
-        <div class="text-center text-sm text-muted-foreground">
-            Try typing to search commands, use arrow keys to navigate, Enter to select
-        </div>
-    </div>
-</div>
 
-<Code
-    language="astro"
-    code={`---
-import Command from '@/components/ui/overlay/command/Command.astro';
-import CommandInput from '@/components/ui/overlay/command/CommandInput.astro';
-import CommandItem from '@/components/ui/overlay/command/CommandItem.astro';
-import CommandItems from '@/components/ui/overlay/command/CommandItems.astro';
-import CommandFooter from '@/components/ui/overlay/command/CommandFooter.astro';
-import { Button } from '@/components/ui/forms';
+        <div class="text-center text-sm text-muted-foreground">
+            Try typing "calendar", "profile", or "settings". Use arrow keys to navigate, Enter to select.
+        </div>
+    </TabsContent>
+    <TabsContent value="code">
+        <Code
+            language="astro"
+            code={`---
+
+import {
+    Command,
+    CommandInput,
+    CommandItem,
+    CommandItems,
+    CommandFooter,
+    CommandGroups,
+    CommandShortcut,
+    CommandTrigger,
+} from '@/components/ui/overlay';
 ---
 
-{/* Basic Usage */}
-<Command 
-    keyboardShortcut="cmd+k"
+<Command
     items={{
-        "Actions": [
-            { title: "New File", value: "new-file", icon: "file-plus", shortcut: "Cmd+N" },
-            { title: "Open File", value: "open-file", icon: "folder-open", shortcut: "Cmd+O" },
-            { title: "Save File", value: "save-file", icon: "save", shortcut: "Cmd+S" }
+        suggestions: [
+            {
+                title: 'Calendar',
+                value: 'calendar',
+                icon: '<svg>...</svg>',
+                show: true,
+            },
+            {
+                title: 'Search Emoji',
+                value: 'emoji',
+                icon: '<svg>...</svg>',
+                show: true,
+            }
         ],
-        "Navigation": [
-            { title: "Go to Line", value: "goto-line", icon: "hash", shortcut: "Ctrl+G" },
-            { title: "Go to File", value: "goto-file", icon: "file", shortcut: "Cmd+P" }
+        settings: [
+            {
+                title: 'Profile',
+                value: 'profile',
+                icon: '<svg>...</svg>',
+                shortcut: '⌘P',
+                show: true,
+            }
         ]
     }}
-    placeholder="Type a command..."
-    onSelect="console.log('Selected:', item)"
+    onSelect="alert('Selected: ' + item.title)"
+    keyboardShortcut="cmd+k"
 >
-    <Button variant="outline" slot="trigger">
-        Open Commands (⌘K)
-    </Button>
-</Command>
+    <CommandTrigger slot="trigger" variant="button">
+        Open Command Palette (⌘K)
+    </CommandTrigger>
 
-{/* Manual Assembly */}
-<Command keyboardShortcut="cmd+j">
-    <Button variant="ghost" slot="trigger">Custom Commands</Button>
-    
-    <CommandInput placeholder="Search..." slot="input" />
-    
-    <div x-data="{ commands: [...] }">
-        <CommandItems x-for="command in filteredCommands" x-key="command.id">
-            <CommandItem x-on:click="selectCommand(command)">
-                <span x-text="command.title"></span>
-            </CommandItem>
+    <CommandInput
+        slot="input"
+        placeholder="Type a command or search..."
+    />
+
+    <CommandGroups
+        x-for="[categoryName, categoryItems] in Object.entries(filteredItems)"
+        x-key="categoryName"
+        showDivider={true}
+    >
+        <CommandItems
+            x-for="item in categoryItems"
+            x-key="item.value"
+        >
+            <div
+                slot="icon"
+                class="mr-2 h-4 w-4 shrink-0"
+                x-html="item.icon"
+            >
+            </div>
+            <span x-text="item.title"></span>
+            <CommandShortcut
+                slot="shortcut"
+                x-text="item.shortcut"
+            />
         </CommandItems>
-    </div>
-    
+    </CommandGroups>
     <CommandFooter slot="footer" />
+
 </Command>`}
-/>
+        />
+    </TabsContent>
+</Tabs>
 
 ## API Reference
 
@@ -174,40 +209,31 @@ import { Button } from '@/components/ui/forms';
 
 Main container component with dialog behavior and keyboard shortcuts.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `items` | `Record<string, CommandItem[]>` | `{}` | Categorized command items |
-| `placeholder` | `string` | `'Type a command or search...'` | Input placeholder text |
-| `emptyText` | `string` | `'No results found.'` | Text when no results match |
-| `onSelect` | `string` | `'console.log(item)'` | Alpine.js expression for selection |
-| `keyboardShortcut` | `string` | `'cmd+k'` | Global keyboard shortcut |
-| `variant` | `'default' \, 'ghost' \, 'dialog'` | `'default'` | Visual variant |
-| `size` | `'sm' \, 'md' \, 'lg' \, 'full'` | `'md'` | Size variant |
-
-**Command Item Structure:**
-```typescript
-interface CommandItem {
-  title: string;        // Display name
-  value: string;        // Unique identifier
-  icon?: string;        // Icon name
-  shortcut?: string;    // Keyboard shortcut display
-  show?: boolean;       // Visibility flag
-  disabled?: boolean;   // Disabled state
-}
-```
+| Prop               | Type                               | Default                         | Description                                     |
+| ------------------ | ---------------------------------- | ------------------------------- | ----------------------------------------------- |
+| `items`            | `Record<string, CommandItem[]>`    | `{}`                            | Categorized command items (see structure below) |
+| `placeholder`      | `string`                           | `'Type a command or search...'` | Input placeholder text                          |
+| `emptyText`        | `string`                           | `'No results found.'`           | Text when no results match                      |
+| `onSelect`         | `string`                           | `'console.log(item)'`           | Alpine.js expression for selection              |
+| `keyboardShortcut` | `string`                           | `'cmd+k'`                       | Global keyboard shortcut                        |
+| `variant`          | `'default' \, 'ghost' \, 'dialog'` | `'default'`                     | Visual variant                                  |
+| `size`             | `'sm' \, 'md' \, 'lg' \, 'full'`   | `'md'`                          | Size variant                                    |
 
 ### CommandInput
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `placeholder` | `string` | `'Type a command or search...'` | Input placeholder |
-| `showIcon` | `boolean` | `true` | Show search icon |
+| Prop          | Type      | Default                         | Description       |
+| ------------- | --------- | ------------------------------- | ----------------- |
+| `placeholder` | `string`  | `'Type a command or search...'` | Input placeholder |
+| `showIcon`    | `boolean` | `true`                          | Show search icon  |
 
 ### CommandItem
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `shortcut` | `string` | - | Keyboard shortcut to display |
+Individual command item component.
+
+| Prop        | Type     | Default | Description                  |
+| ----------- | -------- | ------- | ---------------------------- |
+| `shortcut`  | `string` | -       | Keyboard shortcut to display |
+| `className` | `string` | -       | Additional CSS classes       |
 
 ### CommandItems
 
@@ -215,6 +241,41 @@ Container for dynamic command lists. Must include `x-for` and `x-key` directives
 
 ### CommandFooter
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `showHints` | `boolean` | `true` | Show keyboard navigation hints |
+| Prop        | Type      | Default | Description                    |
+| ----------- | --------- | ------- | ------------------------------ |
+| `showHints` | `boolean` | `true`  | Show keyboard navigation hints |
+| `class`     | `string`  | -       | Additional CSS classes         |
+
+### CommandTrigger
+
+Button or trigger element to open the command palette. Re-exported from DialogTrigger.
+
+| Prop        | Type                                            | Default     | Description            |
+| ----------- | ----------------------------------------------- | ----------- | ---------------------- |
+| `variant`   | `'default' \, 'button' \, 'outline' \, 'ghost'` | `'default'` | Visual variant         |
+| `className` | `string`                                        | -           | Additional CSS classes |
+
+### CommandGroup
+
+Container for grouping command items with an optional title. Re-exported from MenuGroup.
+
+| Prop        | Type     | Default | Description            |
+| ----------- | -------- | ------- | ---------------------- |
+| `className` | `string` | -       | Additional CSS classes |
+| `group`     | `any`    | -       | Dynamic group data     |
+
+### CommandGroups
+
+Dynamic container for multiple command groups. Must include `x-for` and `x-key` directives.
+
+| Prop          | Type      | Default | Description                 |
+| ------------- | --------- | ------- | --------------------------- |
+| `showDivider` | `boolean` | `false` | Show divider between groups |
+
+### CommandShortcut
+
+Component to display keyboard shortcuts. Re-exported from MenuShortcut.
+
+| Prop        | Type     | Default | Description            |
+| ----------- | -------- | ------- | ---------------------- |
+| `className` | `string` | -       | Additional CSS classes |

@@ -30,6 +30,7 @@ const { justify = 'end', gap = 'sm', className, ...alpineProps } = Astro.props;
 <footer
     class={cn(footerVariants({ justify, gap }), className)}
     {...alpineProps}
+    slot="footer"
 >
     <slot />
 </footer>

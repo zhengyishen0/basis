@@ -45,16 +45,8 @@ const {
     elevation = 'none',
     className,
     href,
-    imageSize = 'full',
     ...alpineProps
 } = Astro.props;
-
-const imageSizeClasses = {
-    'full': 'h-full w-full',
-    '3/4': 'h-3/4 w-3/4',
-    '2/3': 'h-2/3 w-2/3',
-    '1/2': 'h-1/2 w-1/2'
-};
 
 const Tag = href ? 'a' : 'div';
 ---
@@ -66,11 +58,7 @@ const Tag = href ? 'a' : 'div';
 >
     {
         src ? (
-            <img
-                src={src}
-                alt={alt || ''}
-                class={`aspect-square ${imageSizeClasses[imageSize]} object-cover rounded-full`}
-            />
+            <img src={src} alt={alt || ''} class={`object-cover`} />
         ) : (
             <div class="flex h-full w-full items-center justify-center bg-muted text-muted-foreground font-medium text-sm">
                 {fallback || <slot />}

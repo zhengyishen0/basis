@@ -68,16 +68,8 @@ const containerData = `{
   itemSelected: null,
   
   init() {
-    // Set initial activeModel to first selectable item
-    this.$nextTick(() => {
-      const selectableItems = this.selectableItems;
-      if (selectableItems.length > 0) {
-        const firstSelectableItem = selectableItems[0];
-        this.${activeModel} = this.flattenedItems.findIndex(item => item === firstSelectableItem);
-      } else {
-        this.${activeModel} = 0;
-      }
-    });
+    // Keep activeModel at -1 initially (no item selected)
+    // Items will only be highlighted when user navigates or hovers
     
     // Reset search when dialog opens/closes
     const dialog = this.$el.closest('[x-data]');
@@ -98,13 +90,13 @@ const containerData = `{
     
     // Reset active index when filtered items change
     this.$watch('filteredItems', () => {
+      // Only reset to -1 if currently selected item is no longer available
       this.$nextTick(() => {
+        const currentItem = this.flattenedItems[this.${activeModel}];
         const selectableItems = this.selectableItems;
-        if (selectableItems.length > 0) {
-          // Set activeModel to the DOM index of the first selectable item
-          const firstSelectableItem = selectableItems[0];
-          this.${activeModel} = this.flattenedItems.findIndex(item => item === firstSelectableItem);
-        } else {
+        
+        // If current item is no longer selectable, reset to -1
+        if (!currentItem || !selectableItems.includes(currentItem)) {
           this.${activeModel} = -1;
         }
       });
@@ -163,6 +155,13 @@ const containerData = `{
     const flattenedItems = this.flattenedItems;
     if (selectableItems.length === 0) return;
     
+    // If no item is currently selected (-1), select the first item
+    if (this.${activeModel} === -1) {
+      const firstItem = selectableItems[0];
+      this.${activeModel} = flattenedItems.findIndex(item => item === firstItem);
+      return;
+    }
+    
     // Find current selectable index
     const currentItem = flattenedItems[this.${activeModel}];
     let currentSelectableIndex = selectableItems.findIndex(item => item === currentItem);
@@ -184,6 +183,13 @@ const containerData = `{
     const selectableItems = this.selectableItems;
     const flattenedItems = this.flattenedItems;
     if (selectableItems.length === 0) return;
+    
+    // If no item is currently selected (-1), select the last item
+    if (this.${activeModel} === -1) {
+      const lastItem = selectableItems[selectableItems.length - 1];
+      this.${activeModel} = flattenedItems.findIndex(item => item === lastItem);
+      return;
+    }
     
     // Find current selectable index
     const currentItem = flattenedItems[this.${activeModel}];

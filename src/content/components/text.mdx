@@ -21,10 +21,9 @@ A comprehensive text component that automatically renders appropriate HTML eleme
         <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-8">
+    <TabsContent value="preview" preview class="space-y-8 justify-center">
         {/* Hero Variants */}
         <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Hero Variants</h3>
             <div class="space-y-4 text-center">
                 <Text variant="hero-title">
                     Transform Your Ideas Into Reality
@@ -38,454 +37,141 @@ A comprehensive text component that automatically renders appropriate HTML eleme
             </div>
         </div>
 
-        {/* Page Structure */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Page Structure</h3>
-            <div class="space-y-3">
-                <Text variant="page-title">
-                    Documentation Overview
-                </Text>
-                <Text variant="page-subtitle">
-                    Everything you need to get started with our component system
-                </Text>
-            </div>
-        </div>
-
-        {/* Section Structure */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Section Structure</h3>
-            <div class="space-y-3">
-                <Text variant="section-title">
-                    Getting Started
-                </Text>
-                <Text variant="section-subtitle">
-                    Quick setup and installation guide
-                </Text>
-            </div>
-        </div>
-
-        {/* Card Variants */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Card Content</h3>
-            <div class="bg-card border border-border rounded-lg p-6 space-y-3">
-                <Text variant="card-title">
-                    Card Title Example
-                </Text>
-                <Text variant="card-subtitle">
-                    Supporting subtitle information
-                </Text>
-                <Text variant="card-description">
-                    This is a longer description that provides more context about the card's content and purpose. It's designed to be easily readable and informative.
-                </Text>
-                <Text variant="card-content">
-                    Additional card content with smaller text for supplementary information.
-                </Text>
-            </div>
-        </div>
-
-        {/* Feature Variants */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Feature Descriptions</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-2">
-                    <Text variant="feature-title">
-                        🚀 Fast Performance
-                    </Text>
-                    <Text variant="feature-description">
-                        Optimized components that load quickly and provide smooth user experiences across all devices.
-                    </Text>
-                </div>
-                <div class="space-y-2">
-                    <Text variant="feature-title">
-                        🎨 Customizable Design
-                    </Text>
-                    <Text variant="feature-description">
-                        Flexible theming system with CSS variables and variant props for complete design control.
-                    </Text>
-                </div>
-            </div>
-        </div>
-
-        {/* Alert Variants */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Alert Content</h3>
-            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 space-y-2">
-                <Text variant="alert-title" class="text-blue-900">
-                    Important Information
-                </Text>
-                <Text variant="alert-description" class="text-blue-800">
-                    This is an example of how text variants can be used within alert components for consistent typography.
-                </Text>
-            </div>
-        </div>
-
-        {/* Testimonial Variants */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Testimonial Content</h3>
-            <div class="bg-muted rounded-lg p-6 text-center space-y-4">
-                <Text variant="testimonial-quote">
-                    "This component library has completely transformed how we build user interfaces. The consistency and quality are outstanding."
-                </Text>
-                <Text variant="testimonial-author">
-                    Sarah Johnson, Lead Developer
-                </Text>
-            </div>
-        </div>
-
-        {/* Stats Variants */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Statistics Display</h3>
-            <div class="grid grid-cols-3 gap-6 text-center">
-                <div class="space-y-1">
-                    <Text variant="stats-number">
-                        99.9%
-                    </Text>
-                    <Text variant="stats-label">
-                        Uptime
-                    </Text>
-                </div>
-                <div class="space-y-1">
-                    <Text variant="stats-number">
-                        10K+
-                    </Text>
-                    <Text variant="stats-label">
-                        Users
-                    </Text>
-                </div>
-                <div class="space-y-1">
-                    <Text variant="stats-number">
-                        50+
-                    </Text>
-                    <Text variant="stats-label">
-                        Components
-                    </Text>
-                </div>
-            </div>
-        </div>
-
-        {/* Body Text Variants */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Body Text Variants</h3>
-            <div class="space-y-3">
-                <Text variant="body-large">
-                    Large body text for emphasis and improved readability in important sections.
-                </Text>
-                <Text variant="body">
-                    Regular body text that forms the foundation of most content. This is the default variant that provides optimal readability for extended reading.
-                </Text>
-                <Text variant="body-small">
-                    Small body text used for supplementary information, captions, and less prominent content.
-                </Text>
-            </div>
-        </div>
-
-        {/* Utility Variants */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Utility Text</h3>
-            <div class="space-y-3">
-                <div class="space-y-1">
-                    <Text variant="label">Form Field Label</Text>
-                    <Text variant="caption">Field caption or helper text</Text>
-                </div>
-                <Text variant="overline">
-                    Section Overline
-                </Text>
-            </div>
-        </div>
-
-        {/* Interactive Variants */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Interactive Text</h3>
-            <div class="flex flex-wrap gap-4 items-center">
-                <Text variant="button" class="px-3 py-1 bg-primary text-primary-foreground rounded">
-                    Button Text
-                </Text>
-                <Text variant="link" class="cursor-pointer">
-                    Link Text Example
-                </Text>
-            </div>
-        </div>
-
-        {/* Status Variants */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Status Indicators</h3>
-            <div class="space-y-2">
-                <Text variant="muted">
-                    Muted text for less important information
-                </Text>
-                <Text variant="error">
-                    Error message text
-                </Text>
-                <Text variant="success">
-                    Success message text
-                </Text>
-                <Text variant="warning">
-                    Warning message text
-                </Text>
-                <Text variant="info">
-                    Info message text
-                </Text>
-            </div>
-        </div>
-
-        {/* State Management */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">State Management</h3>
-            <div x-data="{ 
-                currentState: 'active',
-                states: ['active', 'completed', 'pending', 'disabled']
-            }" class="space-y-4">
-                <div class="flex flex-wrap gap-2">
-                    <template x-for="state in states" x-bind:key="state">
-                        <button 
-                            x-on:click="currentState = state"
-                            class="px-3 py-1 text-sm bg-secondary text-secondary-foreground rounded hover:bg-secondary/80"
-                            x-bind:class="{ 'ring-2 ring-primary': currentState === state }"
-                            x-text="state"
-                        ></button>
-                    </template>
-                </div>
-                
-                <div class="space-y-2">
-                    <Text variant="body" x-bind:state="currentState">
-                        Dynamic state text example
-                    </Text>
-                    <p class="text-sm text-muted-foreground">
-                        Current state: <span x-text="currentState" class="font-mono"></span>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        {/* Accordion Integration */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Component Integration</h3>
-            <div class="bg-card border border-border rounded-lg overflow-hidden">
-                <div class="p-4 border-b border-border">
-                    <Text variant="accordion-trigger" class="font-semibold">
-                        Accordion Trigger Text
-                    </Text>
-                </div>
-                <div class="p-4">
-                    <Text variant="accordion-content">
-                        Accordion content text with appropriate styling for collapsible sections.
-                    </Text>
-                </div>
-            </div>
-        </div>
     </TabsContent>
     <TabsContent value="code">
         <Code language="astro" code={`---
+
 import Text from '@/components/ui/display/Text.astro';
+
 ---
 
-{/* Hero Section */}
-<Text variant="hero-title">
-    Transform Your Ideas Into Reality
-</Text>
-<Text variant="hero-subtitle">
-    Build modern web applications with confidence
-</Text>
-<Text variant="hero-description">
-    Comprehensive component library for modern web development.
-</Text>
-
-{/* Page Structure */}
-<Text variant="page-title">Documentation</Text>
-<Text variant="page-subtitle">Getting started guide</Text>
-
-{/* Section Structure */}
-<Text variant="section-title">Features</Text>
-<Text variant="section-subtitle">Core capabilities</Text>
-
-{/* Card Content */}
-<Text variant="card-title">Card Title</Text>
-<Text variant="card-subtitle">Card Subtitle</Text>
-<Text variant="card-description">Card description text</Text>
-<Text variant="card-content">Additional card content</Text>
-
-{/* Feature Content */}
-<Text variant="feature-title">🚀 Fast Performance</Text>
-<Text variant="feature-description">
-    Optimized for speed and efficiency
-</Text>
-
-{/* Alert Content */}
-<Text variant="alert-title">Important</Text>
-<Text variant="alert-description">Alert message content</Text>
-
-{/* Testimonials */}
-<Text variant="testimonial-quote">
-    "Amazing component library!"
-</Text>
-<Text variant="testimonial-author">Jane Doe</Text>
-
-{/* Statistics */}
-<Text variant="stats-number">99.9%</Text>
-<Text variant="stats-label">Uptime</Text>
-
-{/* Body Text */}
-<Text variant="body-large">Large body text</Text>
-<Text variant="body">Regular body text</Text>
-<Text variant="body-small">Small body text</Text>
-
-{/* Utility Text */}
-<Text variant="label">Field Label</Text>
-<Text variant="caption">Helper text</Text>
-<Text variant="overline">Section Header</Text>
-
-{/* Interactive Text */}
-<Text variant="button">Button Text</Text>
-<Text variant="link">Link Text</Text>
-
-{/* Status Text */}
-<Text variant="muted">Muted text</Text>
-<Text variant="error">Error message</Text>
-<Text variant="success">Success message</Text>
-<Text variant="warning">Warning message</Text>
-<Text variant="info">Info message</Text>
-
-{/* State Management */}
-<Text variant="body" state="active">Active text</Text>
-<Text variant="body" state="completed">Completed text</Text>
-<Text variant="body" state="pending">Pending text</Text>
-<Text variant="body" state="disabled">Disabled text</Text>
-
-{/* Alpine.js Integration */}
-<div x-data="{ currentState: 'active' }">
-    <Text variant="body" x-bind:state="currentState">
-        Dynamic state text
+<div class="space-y-4 text-center">
+    <Text variant="hero-title">
+        Transform Your Ideas Into Reality
     </Text>
-    <button x-on:click="currentState = 'completed'">
-        Mark Complete
-    </button>
+    <Text variant="hero-subtitle">
+        Build modern web applications with confidence
+    </Text>
+    <Text variant="hero-description">
+        Our comprehensive component library provides everything you need to create stunning, accessible, and performant user interfaces that scale with your business.
+    </Text>
 </div>
-
-{/* Accordion Integration */}
-<Text variant="accordion-trigger">Accordion Title</Text>
-<Text variant="accordion-content">Accordion content</Text>
-
-{/* Custom Classes */}
-<Text variant="hero-title" class="text-gradient bg-clip-text">
-    Gradient Hero Title
-</Text>`} />
+`} />
     </TabsContent>
 </Tabs>
 
 ## API Reference
 
-### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `TextVariant` | `'body'` | Typography variant (see variants table) |
-| `state` | `'active', 'completed', 'pending', 'disabled'` | - | Visual state modifier |
-| `class` | `string` | - | Additional CSS classes |
+| Prop      | Type                                           | Default  | Description                             |
+| --------- | ---------------------------------------------- | -------- | --------------------------------------- |
+| `variant` | `TextVariant`                                  | `'body'` | Typography variant (see variants table) |
+| `state`   | `'active', 'completed', 'pending', 'disabled'` | -        | Visual state modifier                   |
+| `class`   | `string`                                       | -        | Additional CSS classes                  |
 
 ### Text Variants
 
 #### Hero Variants
 
-| Variant | Element | Description | Font Size | Font Weight |
-|---------|---------|-------------|-----------|-------------|
-| `hero-title` | `h1` | Main hero headline | `4xl-6xl` responsive | `bold` |
-| `hero-subtitle` | `h3` | Hero subheading | `xl-2xl` responsive | `semibold` |
-| `hero-description` | `p` | Hero description | `lg-xl` responsive | `normal` |
+| Variant            | Element | Description        | Font Size            | Font Weight |
+| ------------------ | ------- | ------------------ | -------------------- | ----------- |
+| `hero-title`       | `h1`    | Main hero headline | `4xl-6xl` responsive | `bold`      |
+| `hero-subtitle`    | `h3`    | Hero subheading    | `xl-2xl` responsive  | `semibold`  |
+| `hero-description` | `p`     | Hero description   | `lg-xl` responsive   | `normal`    |
 
 #### Card Variants
 
-| Variant | Element | Description | Font Size | Font Weight |
-|---------|---------|-------------|-----------|-------------|
-| `card-title` | `h2` | Card headline | `xl` | `semibold` |
-| `card-subtitle` | `h3` | Card subheading | `lg` | `medium` |
-| `card-description` | `p` | Card description | `base` | `normal` |
-| `card-content` | `p` | Card body content | `sm` | `normal` |
+| Variant            | Element | Description       | Font Size | Font Weight |
+| ------------------ | ------- | ----------------- | --------- | ----------- |
+| `card-title`       | `h2`    | Card headline     | `xl`      | `semibold`  |
+| `card-subtitle`    | `h3`    | Card subheading   | `lg`      | `medium`    |
+| `card-description` | `p`     | Card description  | `base`    | `normal`    |
+| `card-content`     | `p`     | Card body content | `sm`      | `normal`    |
 
 #### Page Structure
 
-| Variant | Element | Description | Font Size | Font Weight |
-|---------|---------|-------------|-----------|-------------|
-| `page-title` | `h1` | Page main title | `3xl` | `bold` |
-| `page-subtitle` | `h3` | Page subtitle | `xl` | `medium` |
-| `section-title` | `h2` | Section heading | `2xl` | `semibold` |
-| `section-subtitle` | `h3` | Section subheading | `lg` | `medium` |
+| Variant            | Element | Description        | Font Size | Font Weight |
+| ------------------ | ------- | ------------------ | --------- | ----------- |
+| `page-title`       | `h1`    | Page main title    | `3xl`     | `bold`      |
+| `page-subtitle`    | `h3`    | Page subtitle      | `xl`      | `medium`    |
+| `section-title`    | `h2`    | Section heading    | `2xl`     | `semibold`  |
+| `section-subtitle` | `h3`    | Section subheading | `lg`      | `medium`    |
 
 #### Feature Content
 
-| Variant | Element | Description | Font Size | Font Weight |
-|---------|---------|-------------|-----------|-------------|
-| `feature-title` | `h2` | Feature headline | `xl` | `semibold` |
-| `feature-description` | `p` | Feature description | `base` | `normal` |
+| Variant               | Element | Description         | Font Size | Font Weight |
+| --------------------- | ------- | ------------------- | --------- | ----------- |
+| `feature-title`       | `h2`    | Feature headline    | `xl`      | `semibold`  |
+| `feature-description` | `p`     | Feature description | `base`    | `normal`    |
 
 #### Alert Content
 
-| Variant | Element | Description | Font Size | Font Weight |
-|---------|---------|-------------|-----------|-------------|
-| `alert-title` | `h5` | Alert heading | `base` | `medium` |
-| `alert-description` | `p` | Alert message | `sm` | `normal` |
+| Variant             | Element | Description   | Font Size | Font Weight |
+| ------------------- | ------- | ------------- | --------- | ----------- |
+| `alert-title`       | `h5`    | Alert heading | `base`    | `medium`    |
+| `alert-description` | `p`     | Alert message | `sm`      | `normal`    |
 
 #### Accordion Content
 
-| Variant | Element | Description | Font Size | Font Weight |
-|---------|---------|-------------|-----------|-------------|
-| `accordion-trigger` | `span` | Trigger button text | `base` | `semibold` |
-| `accordion-content` | `p` | Panel content | `sm` | `normal` |
+| Variant             | Element | Description         | Font Size | Font Weight |
+| ------------------- | ------- | ------------------- | --------- | ----------- |
+| `accordion-trigger` | `span`  | Trigger button text | `base`    | `semibold`  |
+| `accordion-content` | `p`     | Panel content       | `sm`      | `normal`    |
 
 #### Testimonial Content
 
-| Variant | Element | Description | Font Size | Font Weight |
-|---------|---------|-------------|-----------|-------------|
-| `testimonial-quote` | `blockquote` | Quote text | `lg` | `normal` (italic) |
-| `testimonial-author` | `cite` | Author attribution | `sm` | `medium` |
+| Variant              | Element      | Description        | Font Size | Font Weight       |
+| -------------------- | ------------ | ------------------ | --------- | ----------------- |
+| `testimonial-quote`  | `blockquote` | Quote text         | `lg`      | `normal` (italic) |
+| `testimonial-author` | `cite`       | Author attribution | `sm`      | `medium`          |
 
 #### Statistics
 
-| Variant | Element | Description | Font Size | Font Weight |
-|---------|---------|-------------|-----------|-------------|
-| `stats-number` | `strong` | Numeric value | `3xl-4xl` responsive | `bold` |
-| `stats-label` | `cite` | Stat description | `sm` | `medium` (uppercase) |
+| Variant        | Element  | Description      | Font Size            | Font Weight          |
+| -------------- | -------- | ---------------- | -------------------- | -------------------- |
+| `stats-number` | `strong` | Numeric value    | `3xl-4xl` responsive | `bold`               |
+| `stats-label`  | `cite`   | Stat description | `sm`                 | `medium` (uppercase) |
 
 #### Body Text
 
-| Variant | Element | Description | Font Size | Font Weight |
-|---------|---------|-------------|-----------|-------------|
-| `body-large` | `p` | Emphasized body | `lg` | `normal` |
-| `body` | `p` | Standard body | `base` | `normal` |
-| `body-small` | `small` | Supplementary text | `sm` | `normal` |
+| Variant      | Element | Description        | Font Size | Font Weight |
+| ------------ | ------- | ------------------ | --------- | ----------- |
+| `body-large` | `p`     | Emphasized body    | `lg`      | `normal`    |
+| `body`       | `p`     | Standard body      | `base`    | `normal`    |
+| `body-small` | `small` | Supplementary text | `sm`      | `normal`    |
 
 #### Utility Text
 
-| Variant | Element | Description | Font Size | Font Weight |
-|---------|---------|-------------|-----------|-------------|
-| `caption` | `small` | Image/table captions | `xs` | `normal` (uppercase) |
-| `label` | `span` | Form field labels | `sm` | `medium` |
-| `overline` | `span` | Section overlines | `xs` | `medium` (uppercase) |
+| Variant    | Element | Description          | Font Size | Font Weight          |
+| ---------- | ------- | -------------------- | --------- | -------------------- |
+| `caption`  | `small` | Image/table captions | `xs`      | `normal` (uppercase) |
+| `label`    | `span`  | Form field labels    | `sm`      | `medium`             |
+| `overline` | `span`  | Section overlines    | `xs`      | `medium` (uppercase) |
 
 #### Interactive Text
 
-| Variant | Element | Description | Font Size | Font Weight |
-|---------|---------|-------------|-----------|-------------|
-| `button` | `span` | Button text | `sm` | `medium` |
-| `link` | `span` | Link text | `sm` | `normal` (underlined) |
+| Variant  | Element | Description | Font Size | Font Weight           |
+| -------- | ------- | ----------- | --------- | --------------------- |
+| `button` | `span`  | Button text | `sm`      | `medium`              |
+| `link`   | `span`  | Link text   | `sm`      | `normal` (underlined) |
 
 #### Status Text
 
-| Variant | Element | Description | Font Size | Font Weight | Color |
-|---------|---------|-------------|-----------|-------------|-------|
-| `muted` | `small` | Subdued text | `sm` | `normal` | `muted-foreground` |
-| `error` | `small` | Error messages | `sm` | `medium` | `destructive` |
-| `success` | `small` | Success messages | `sm` | `medium` | `success` |
-| `warning` | `small` | Warning messages | `sm` | `medium` | `warning` |
-| `info` | `small` | Info messages | `sm` | `medium` | `info` |
+| Variant   | Element | Description      | Font Size | Font Weight | Color              |
+| --------- | ------- | ---------------- | --------- | ----------- | ------------------ |
+| `muted`   | `small` | Subdued text     | `sm`      | `normal`    | `muted-foreground` |
+| `error`   | `small` | Error messages   | `sm`      | `medium`    | `destructive`      |
+| `success` | `small` | Success messages | `sm`      | `medium`    | `success`          |
+| `warning` | `small` | Warning messages | `sm`      | `medium`    | `warning`          |
+| `info`    | `small` | Info messages    | `sm`      | `medium`    | `info`             |
 
 ### State Variants
 
-| State | Description | Visual Effect |
-|-------|-------------|---------------|
-| `active` | Currently active/selected | Enhanced contrast, medium weight |
-| `completed` | Task completed | Muted color, line-through |
-| `pending` | Task pending | Muted color, italic |
-| `disabled` | Disabled/unavailable | Muted color, reduced opacity |
+| State       | Description               | Visual Effect                    |
+| ----------- | ------------------------- | -------------------------------- |
+| `active`    | Currently active/selected | Enhanced contrast, medium weight |
+| `completed` | Task completed            | Muted color, line-through        |
+| `pending`   | Task pending              | Muted color, italic              |
+| `disabled`  | Disabled/unavailable      | Muted color, reduced opacity     |
 
 ### Semantic HTML Elements
 
@@ -504,6 +190,7 @@ The component automatically chooses appropriate HTML elements based on variants:
 ### Alpine.js Integration
 
 #### Dynamic States
+
 ```astro
 <div x-data="{ taskState: 'pending' }">
     <Text variant="body" x-bind:state="taskState">
@@ -516,9 +203,10 @@ The component automatically chooses appropriate HTML elements based on variants:
 ```
 
 #### Conditional Variants
+
 ```astro
 <div x-data="{ isImportant: false }">
-    <Text 
+    <Text
         :variant="isImportant ? 'hero-title' : 'section-title'"
         x-on:click="isImportant = !isImportant"
     >
@@ -528,8 +216,9 @@ The component automatically chooses appropriate HTML elements based on variants:
 ```
 
 #### State-Based Styling
+
 ```astro
-<Text 
+<Text
     variant="body"
     x-bind:class="{
         'text-foreground font-medium': $el.dataset.state === 'active',
@@ -542,38 +231,10 @@ The component automatically chooses appropriate HTML elements based on variants:
 </Text>
 ```
 
-### Accessibility Features
-
-#### Semantic HTML
-- Proper heading hierarchy
-- Semantic elements for content type
-- Screen reader friendly structure
-
-#### Color Contrast
-- WCAG AA compliant color ratios
-- High contrast mode support
-- Consistent color application
-
-#### Reading Experience
-- Optimal line heights for readability
-- Appropriate font sizes across devices
-- Consistent spacing and rhythm
-
-### Responsive Behavior
-
-#### Font Size Scaling
-- Mobile-first responsive typography
-- Fluid scaling between breakpoints
-- Optimal reading sizes per device
-
-#### Hierarchy Maintenance
-- Consistent visual hierarchy
-- Proper contrast ratios
-- Readable text at all sizes
-
 ### Customization
 
 #### CSS Variables
+
 ```css
 :root {
     --text-hero-title-size-mobile: theme('fontSize.4xl');
@@ -583,28 +244,12 @@ The component automatically chooses appropriate HTML elements based on variants:
 ```
 
 #### Theme Integration
+
 ```astro
-<Text 
+<Text
     variant="hero-title"
     class="text-primary dark:text-primary-dark"
 >
     Themed Text
 </Text>
 ```
-
-### Best Practices
-
-#### Semantic Usage
-- Use appropriate variants for content hierarchy
-- Maintain consistent heading levels
-- Choose elements that match content meaning
-
-#### Performance
-- Minimal CSS output through CVA
-- No JavaScript unless Alpine.js features used
-- Optimized for static generation
-
-#### Accessibility
-- Always maintain proper heading hierarchy
-- Provide sufficient color contrast
-- Use semantic elements appropriately

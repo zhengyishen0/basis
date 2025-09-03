@@ -18,413 +18,111 @@ A flexible avatar component that displays user profile images with automatic fal
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-8">
-        {/* Basic Usage */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Basic Usage</h3>
-            <div class="flex items-center gap-4">
+    <TabsContent
+        value="preview"
+        preview
+        class="space-y-8 items-center justify-center"
+    >
+        <div class="space-y-4 items-center">
+            <div class="flex items-center gap-6">
+                <Avatar
+                    shape="rounded"
+                    src="https://github.com/shadcn.png"
+                    alt="rounded"
+                    fallback="RD"
+                    size="lg"
+                />
+                <Avatar
+                    shape="rectangle"
+                    src="https://github.com/shadcn.png"
+                    alt="rectangle"
+                    fallback="RC"
+                    size="lg"
+                />
                 <Avatar
                     src="https://github.com/shadcn.png"
-                    alt="@shadcn"
-                    fallback="SH"
+                    alt="pill"
+                    fallback="PI"
+                    size="lg"
                 />
+                <Avatar fallback="B" />
                 <Avatar
-                    src="https://invalid-url.jpg"
-                    alt="Broken Image"
-                    fallback="BR"
-                />
-                <Avatar fallback="FB" />
-            </div>
-        </div>
-
-        {/* Size Variants */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Size Variants</h3>
-            <div class="flex items-center gap-4">
-                <div class="text-center">
-                    <Avatar
-                        size="xs"
-                        src="https://github.com/shadcn.png"
-                        alt="Extra Small"
-                        fallback="XS"
-                    />
-                    <p class="text-xs text-muted-foreground mt-1">xs</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        size="sm"
-                        src="https://github.com/shadcn.png"
-                        alt="Small"
-                        fallback="SM"
-                    />
-                    <p class="text-xs text-muted-foreground mt-1">sm</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        size="md"
-                        src="https://github.com/shadcn.png"
-                        alt="Medium"
-                        fallback="MD"
-                    />
-                    <p class="text-xs text-muted-foreground mt-1">md</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        size="lg"
-                        src="https://github.com/shadcn.png"
-                        alt="Large"
-                        fallback="LG"
-                    />
-                    <p class="text-xs text-muted-foreground mt-1">lg</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        size="xl"
-                        src="https://github.com/shadcn.png"
-                        alt="Extra Large"
-                        fallback="XL"
-                    />
-                    <p class="text-xs text-muted-foreground mt-1">xl</p>
-                </div>
-            </div>
-        </div>
-
-        {/* Shape Variants */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Shape Variants</h3>
-            <div class="flex items-center gap-6">
-                <div class="text-center">
-                    <Avatar
-                        shape="rounded"
-                        src="https://github.com/shadcn.png"
-                        alt="Rounded"
-                        fallback="RD"
-                        size="lg"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">rounded</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        shape="rectangle"
-                        src="https://github.com/shadcn.png"
-                        alt="Rectangle"
-                        fallback="RC"
-                        size="lg"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">rectangle</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        shape="pill"
-                        src="https://github.com/shadcn.png"
-                        alt="Circle"
-                        fallback="CI"
-                        size="lg"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">pill</p>
-                </div>
-            </div>
-        </div>
-
-        {/* Semantic Variants */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Semantic Variants</h3>
-            <div class="flex items-center gap-4">
-                <div class="text-center">
-                    <Avatar
-                        variant="default"
-                        fallback="DF"
-                        size="lg"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">default</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        variant="secondary"
-                        fallback="SC"
-                        size="lg"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">secondary</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        variant="destructive"
-                        fallback="DS"
-                        size="lg"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">destructive</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        variant="outline"
-                        fallback="OL"
-                        size="lg"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">outline</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        variant="ghost"
-                        fallback="GH"
-                        size="lg"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">ghost</p>
-                </div>
-            </div>
-        </div>
-
-        {/* Elevation Variants */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Elevation Variants</h3>
-            <div class="flex items-center gap-6">
-                <div class="text-center">
-                    <Avatar
-                        elevation="none"
-                        src="https://github.com/shadcn.png"
-                        alt="No elevation"
-                        fallback="NE"
-                        size="lg"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">none</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        elevation="flat"
-                        src="https://github.com/shadcn.png"
-                        alt="Flat elevation"
-                        fallback="FL"
-                        size="lg"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">flat</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        elevation="elevated"
-                        src="https://github.com/shadcn.png"
-                        alt="Elevated"
-                        fallback="EL"
-                        size="lg"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">elevated</p>
-                </div>
-            </div>
-        </div>
-
-        {/* Image Size Options */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Image Size Options</h3>
-            <div class="flex items-center gap-6">
-                <div class="text-center">
-                    <Avatar
-                        src="https://github.com/shadcn.png"
-                        alt="Full size"
-                        imageSize="full"
-                        size="xl"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">full</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        src="https://github.com/shadcn.png"
-                        alt="3/4 size"
-                        imageSize="3/4"
-                        size="xl"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">3/4</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        src="https://github.com/shadcn.png"
-                        alt="2/3 size"
-                        imageSize="2/3"
-                        size="xl"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">2/3</p>
-                </div>
-                <div class="text-center">
-                    <Avatar
-                        src="https://github.com/shadcn.png"
-                        alt="1/2 size"
-                        imageSize="1/2"
-                        size="xl"
-                    />
-                    <p class="text-xs text-muted-foreground mt-2">1/2</p>
-                </div>
-            </div>
-        </div>
-
-        {/* Clickable Avatars */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Clickable Avatars</h3>
-            <div class="flex items-center gap-4">
-                <Avatar
-                    href="#profile"
                     src="https://github.com/shadcn.png"
-                    alt="Profile Link"
-                    fallback="PL"
+                    alt="ring"
+                    fallback="RG"
                     size="lg"
-                    class="hover:opacity-80 transition-opacity"
+                    variant="ring"
                 />
-                <Avatar
-                    href="#settings"
-                    fallback="ST"
-                    size="lg"
-                    variant="outline"
-                    class="hover:opacity-80 transition-opacity"
-                />
-            </div>
-        </div>
-
-        {/* Custom Content */}
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Custom Content</h3>
-            <div class="flex items-center gap-4">
                 <Avatar size="lg">
                     <div class="flex items-center justify-center h-full w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold">
                         👨‍💻
-                    </div>
-                </Avatar>
-                <Avatar size="lg">
-                    <div class="flex items-center justify-center h-full w-full bg-gradient-to-r from-green-400 to-blue-500 text-white text-sm font-medium">
-                        +99
                     </div>
                 </Avatar>
             </div>
         </div>
     </TabsContent>
     <TabsContent value="code">
-        <Code language="astro" code={`---
+        <Code
+            language="astro"
+            code={`---
 import Avatar from '@/components/ui/display/Avatar.astro';
 ---
-
-{/* Basic Usage */}
+<Avatar
+    shape="rounded"
+    src="https://github.com/shadcn.png"
+    alt="rounded"
+    fallback="RD"
+    size="lg"
+/>
+<Avatar
+    shape="rectangle"
+    src="https://github.com/shadcn.png"
+    alt="rectangle"
+    fallback="RC"
+    size="lg"
+/>
 <Avatar
     src="https://github.com/shadcn.png"
-    alt="@shadcn"
-    fallback="SH"
+    alt="pill"
+    fallback="PI"
+    size="lg"
 />
-
-{/* Fallback Only */}
-<Avatar fallback="FB" />
-
-{/* Different Sizes */}
-<Avatar size="xs" src="/avatar.jpg" alt="Extra Small" />
-<Avatar size="sm" src="/avatar.jpg" alt="Small" />
-<Avatar size="md" src="/avatar.jpg" alt="Medium" />
-<Avatar size="lg" src="/avatar.jpg" alt="Large" />
-<Avatar size="xl" src="/avatar.jpg" alt="Extra Large" />
-
-{/* Shape Variants */}
-<Avatar shape="rounded" src="/avatar.jpg" alt="Rounded" />
-<Avatar shape="rectangle" src="/avatar.jpg" alt="Rectangle" />
-<Avatar shape="pill" src="/avatar.jpg" alt="Circle" />
-
-{/* Semantic Variants */}
-<Avatar variant="default" fallback="DF" />
-<Avatar variant="secondary" fallback="SC" />
-<Avatar variant="destructive" fallback="DS" />
-<Avatar variant="outline" fallback="OL" />
-<Avatar variant="ghost" fallback="GH" />
-
-{/* Elevation Options */}
-<Avatar elevation="none" src="/avatar.jpg" />
-<Avatar elevation="flat" src="/avatar.jpg" />
-<Avatar elevation="elevated" src="/avatar.jpg" />
-
-{/* Image Size Control */}
-<Avatar imageSize="full" src="/avatar.jpg" />
-<Avatar imageSize="3/4" src="/avatar.jpg" />
-<Avatar imageSize="2/3" src="/avatar.jpg" />
-<Avatar imageSize="1/2" src="/avatar.jpg" />
-
-{/* As Link */}
-<Avatar
-    href="/profile"
-    src="/avatar.jpg"
-    alt="Profile Link"
-    class="hover:opacity-80 transition-opacity"
+<Avatar fallback="B" />
+<Avatar  src="https://github.com/shadcn.png"
+    alt="ring" fallback="RG" size="lg" variant="ring"
 />
-
-{/* Custom Content */}
 <Avatar size="lg">
-    <div class="flex items-center justify-center h-full w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+    <div class="flex items-center justify-center h-full w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold">
         👨‍💻
     </div>
-</Avatar>`} />
+</Avatar>
+`}
+        />
     </TabsContent>
 </Tabs>
 
 ## API Reference
 
-### Props
+| Prop        | Type                                                        | Default   | Description                            |
+| ----------- | ----------------------------------------------------------- | --------- | -------------------------------------- |
+| `src`       | `string`                                                    | -         | Image source URL                       |
+| `alt`       | `string`                                                    | -         | Image alt text                         |
+| `fallback`  | `string`                                                    | -         | Fallback text when image fails to load |
+| `href`      | `string`                                                    | -         | URL to link to (renders as anchor)     |
+| `variant`   | `'default', 'secondary', 'destructive', 'outline', 'ghost'` | `'ghost'` | Semantic color variant                 |
+| `size`      | `'xs', 'sm', 'md', 'lg', 'xl'`                              | `'md'`    | Avatar size                            |
+| `shape`     | `'rectangle', 'rounded', 'pill'`                            | `'pill'`  | Border radius shape                    |
+| `elevation` | `'none', 'flat', 'elevated'`                                | `'none'`  | Shadow elevation level                 |
+| `imageSize` | `'full', '3/4', '2/3', '1/2'`                               | `'full'`  | Size of image within avatar            |
+| `className` | `string`                                                    | -         | Additional CSS classes                 |
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `src` | `string` | - | Image source URL |
-| `alt` | `string` | - | Image alt text |
-| `fallback` | `string` | - | Fallback text when image fails to load |
-| `href` | `string` | - | URL to link to (renders as anchor) |
-| `variant` | `'default', 'secondary', 'destructive', 'outline', 'ghost'` | `'ghost'` | Semantic color variant |
-| `size` | `'xs', 'sm', 'md', 'lg', 'xl'` | `'md'` | Avatar size |
-| `shape` | `'rectangle', 'rounded', 'pill'` | `'pill'` | Border radius shape |
-| `elevation` | `'none', 'flat', 'elevated'` | `'none'` | Shadow elevation level |
-| `imageSize` | `'full', '3/4', '2/3', '1/2'` | `'full'` | Size of image within avatar |
-| `className` | `string` | - | Additional CSS classes |
-
-### Slots
-
-| Slot | Description |
-|------|-------------|
+| Slot      | Description                                     |
+| --------- | ----------------------------------------------- |
 | `default` | Custom content when no src or fallback provided |
-
-### Behavior
-
-#### Image Loading
-- Displays image when `src` is provided and loads successfully
-- Falls back to `fallback` text when image fails to load
-- Shows slot content when neither `src` nor `fallback` is provided
-
-#### Link Behavior  
-- Renders as `<a>` tag when `href` is provided
-- Renders as `<div>` tag otherwise
-- Maintains all styling and functionality in both cases
-
-#### Fallback Display
-- Displays fallback text with muted background and foreground colors
-- Centers text both horizontally and vertically
-- Uses medium font weight and small text size
-
-### Alpine.js Integration
-
-Avatar supports all Alpine.js directives as pass-through props:
-
-```astro
-{/* Click handling */}
-<Avatar 
-    x-on:click="handleAvatarClick"
-    fallback="JS"
-/>
-
-{/* Dynamic properties */}
-<Avatar 
-    x-bind:src="userAvatar"
-    x-bind:alt="userName"
-    x-bind:fallback="userInitials"
-/>
-
-{/* Conditional styling */}
-<Avatar 
-    x-bind:class="{ 'ring-2 ring-primary': isSelected }"
-    src="/avatar.jpg"
-/>
-```
-
-### Accessibility
-
-- Proper `alt` attributes for screen readers
-- Semantic HTML structure (`<a>` vs `<div>`)
-- Focus states for clickable avatars
-- Color contrast meets accessibility standards

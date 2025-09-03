@@ -108,19 +108,26 @@ const commandItemsJson = JSON.stringify(commandItems);
 ---
 
 <SiteLayout>
-    <Page class="min-h-screen" x-data={pageData}>
+    <Page x-data={pageData}>
         <!-- Hero Section -->
         <Section
-            class="text-center py-4 px-4 bg-gradient-to-br from-muted/30 via-background to-muted/10 relative overflow-hidden min-h-[60vh] flex flex-col justify-center items-center gap-6"
+            class="text-center px-4 py-24 bg-gradient-to-br from-muted/30 via-background to-muted/10 relative overflow-hidden min-h-[40vh] flex flex-col justify-center items-center gap-8"
         >
             <Text
                 variant="hero-title"
                 class="relative z-10 drop-shadow-sm tracking-tight"
             >
-                <span class="relative group">
+                <span
+                    class="relative group"
+                    x-data="{ loaded: false }"
+                    x-init="setTimeout(() => loaded = true, 500)"
+                >
                     Basis UI
                     <span
-                        class="absolute bottom-[-8px] left-[-5%] w-[110%] h-[5px] bg-primary rounded-full origin-left scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100 transition-all duration-700 ease-out"
+                        class="absolute bottom-[-8px] left-[-5%] w-[110%] h-[5px] bg-primary rounded-full origin-left scale-x-0 opacity-0 transition-all duration-700 ease-out"
+                        :class="{ 'scale-x-100 opacity-100': loaded }"
+                        @mouseenter="$el.classList.add('scale-x-100', 'opacity-100')"
+                        @mouseleave="!loaded && $el.classList.remove('scale-x-100', 'opacity-100')"
                     ></span>
                 </span>
             </Text>
@@ -128,28 +135,24 @@ const commandItemsJson = JSON.stringify(commandItems);
                 variant="hero-description"
                 class="max-w-2xl mx-auto relative z-10"
             >
-                Build on Fundamentals - A methodology for modern web development
-                using basic tools and clear boundaries
+                A Shadcn-style component library purely designed for Astro.
             </Text>
             <Row class="flex justify-center gap-2 flex-wrap">
                 <Badge size="sm" variant="secondary">Astro</Badge>
                 <Badge size="sm" variant="secondary">Alpine</Badge>
-                <Badge size="sm" variant="secondary">Supabase</Badge>
+                <Badge size="sm" variant="secondary">Tailwind</Badge>
             </Row>
             <Row class="flex justify-center gap-4">
                 <Button href="/docs" size="lg"> Get Started </Button>
-                <Button href="/components" size="lg" variant="ghost"
+                <Button href="/docs/components" size="lg" variant="ghost"
                     >Components</Button
                 >
             </Row>
         </Section>
 
         <!-- Component Showcase Section -->
-        <Section class="mx-auto py-16 px-4 bg-muted/30">
-            <div class="text-center mb-12">
-                <Text variant="section-title" class="mb-4"
-                    >Component Showcase</Text
-                >
+        <Section class="mx-auto px-4 bg-muted/30">
+            <div class="text-center mb-4">
                 <Text
                     variant="body"
                     class="text-muted-foreground max-w-2xl mx-auto"
@@ -223,55 +226,64 @@ const commandItemsJson = JSON.stringify(commandItems);
                         </CardFooter>
                     </Card>
 
-                    <!-- FAQ Accordion -->
-                    <Card>
-                        <CardHeader class="pb-4">
-                            <Text
-                                variant="body"
-                                class="font-semibold text-lg text-foreground"
-                                >Frequently Asked Questions</Text
+                    <!-- Video Player -->
+                    <VideoPlayer youtubeId="dQw4w9WgXcQ" shape="rounded" />
+
+                    <!-- Calendar -->
+                    <div>
+                        <Calendar size="md" numberOfMonths={2} />
+                    </div>
+                </div>
+
+                <!-- Column 2: Command palette (no card), Calendar -->
+                <div class="space-y-4">
+                    <!-- Command Palette (without card container) -->
+                    <MenuContainer
+                        x-data={`{
+                                    commandSearch: '',
+                                    commandActiveIndex: 0,
+                                    commandItems: ${commandItemsJson}
+                                }`}
+                        items={commandItems}
+                        searchEnabled={true}
+                        keyboardNav={false}
+                        searchModel="commandSearch"
+                        activeModel="commandActiveIndex"
+                        itemsModel="commandItems"
+                        onSelect="alert('Selected: ' + item.title)"
+                        variant="default"
+                        size="md"
+                        class="w-full h-80"
+                    >
+                        <CommandInput
+                            slot="input"
+                            placeholder="Type a command or search..."
+                        />
+                        <CommandGroups
+                            x-for="[categoryName, categoryItems] in Object.entries(filteredItems)"
+                            x-key="categoryName"
+                            x-text="categoryName.charAt(0).toUpperCase() + categoryName.slice(1)"
+                            showDivider={true}
+                        >
+                            <CommandItems
+                                x-for="item in categoryItems"
+                                x-key="item.value"
                             >
-                            <Text
-                                variant="body"
-                                class="text-sm text-muted-foreground"
-                                >Find answers to common questions</Text
-                            >
-                        </CardHeader>
-                        <CardContent>
-                            <Accordion maxWidth="full" centered={false}>
-                                <AccordionItem>
-                                    <AccordionTrigger
-                                        >How do I reset my password?</AccordionTrigger
-                                    >
-                                    <AccordionContent>
-                                        Click "Forgot password?" on the login
-                                        page and follow the instructions sent to
-                                        your email.
-                                    </AccordionContent>
-                                </AccordionItem>
-                                <AccordionItem>
-                                    <AccordionTrigger
-                                        >What payment methods do you accept?</AccordionTrigger
-                                    >
-                                    <AccordionContent>
-                                        We accept all major credit cards,
-                                        PayPal, and bank transfers for
-                                        enterprise plans.
-                                    </AccordionContent>
-                                </AccordionItem>
-                                <AccordionItem>
-                                    <AccordionTrigger
-                                        >Can I cancel my subscription anytime?</AccordionTrigger
-                                    >
-                                    <AccordionContent>
-                                        Yes, you can cancel your subscription at
-                                        any time from your account settings. No
-                                        questions asked.
-                                    </AccordionContent>
-                                </AccordionItem>
-                            </Accordion>
-                        </CardContent>
-                    </Card>
+                                <div
+                                    slot="icon"
+                                    class="mr-2 h-4 w-4 shrink-0"
+                                    x-html="item.icon"
+                                >
+                                </div>
+                                <span x-text="item.title"></span>
+                                <CommandShortcut
+                                    slot="shortcut"
+                                    x-text="item.shortcut"
+                                />
+                            </CommandItems>
+                        </CommandGroups>
+                        <CommandFooter slot="footer" />
+                    </MenuContainer>
 
                     <!-- Dashboard Tabs -->
                     <Card>
@@ -307,7 +319,7 @@ const commandItemsJson = JSON.stringify(commandItems);
                                 <TabsContent
                                     value="overview"
                                     preview
-                                    class="h-32"
+                                    class="h-24"
                                 >
                                     <div
                                         class="flex items-center justify-between"
@@ -330,7 +342,7 @@ const commandItemsJson = JSON.stringify(commandItems);
                                 <TabsContent
                                     value="analytics"
                                     preview
-                                    class="h-32"
+                                    class="h-24"
                                 >
                                     <div class="space-y-2">
                                         <div class="flex justify-between">
@@ -354,7 +366,7 @@ const commandItemsJson = JSON.stringify(commandItems);
                                 <TabsContent
                                     value="settings"
                                     preview
-                                    class="h-32"
+                                    class="h-24"
                                 >
                                     <div class="space-y-2">
                                         <div
@@ -385,61 +397,6 @@ const commandItemsJson = JSON.stringify(commandItems);
                             </Tabs>
                         </CardContent>
                     </Card>
-                </div>
-
-                <!-- Column 2: Command palette (no card), Calendar -->
-                <div class="space-y-4">
-                    <!-- Command Palette (without card container) -->
-                    <MenuContainer
-                        x-data={`{
-                                    commandSearch: '',
-                                    commandActiveIndex: 0,
-                                    commandItems: ${commandItemsJson}
-                                }`}
-                        items={commandItems}
-                        searchEnabled={true}
-                        keyboardNav={false}
-                        searchModel="commandSearch"
-                        activeModel="commandActiveIndex"
-                        itemsModel="commandItems"
-                        onSelect="alert('Selected: ' + item.title)"
-                        variant="default"
-                        size="md"
-                        class="w-full"
-                    >
-                        <CommandInput
-                            slot="input"
-                            placeholder="Type a command or search..."
-                        />
-                        <CommandGroups
-                            x-for="[categoryName, categoryItems] in Object.entries(filteredItems)"
-                            x-key="categoryName"
-                            x-text="categoryName.charAt(0).toUpperCase() + categoryName.slice(1)"
-                            showDivider={true}
-                        >
-                            <CommandItems
-                                x-for="item in categoryItems"
-                                x-key="item.value"
-                            >
-                                <div
-                                    slot="icon"
-                                    class="mr-2 h-4 w-4 shrink-0"
-                                    x-html="item.icon"
-                                >
-                                </div>
-                                <span x-text="item.title"></span>
-                                <CommandShortcut
-                                    slot="shortcut"
-                                    x-text="item.shortcut"
-                                />
-                            </CommandItems>
-                        </CommandGroups>
-                        <CommandFooter slot="footer" />
-                    </MenuContainer>
-
-                    <!-- Calendar -->
-
-                    <Calendar size="lg" numberOfMonths={1} mode="range" />
                 </div>
 
                 <!-- Column 3: Table, Choose your plan, Video -->
@@ -483,7 +440,7 @@ const commandItemsJson = JSON.stringify(commandItems);
                                                 class="py-2 flex items-center space-x-2"
                                             >
                                                 <div
-                                                    class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs"
+                                                    class="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-background text-xs"
                                                 >
                                                     JS
                                                 </div>
@@ -493,9 +450,7 @@ const commandItemsJson = JSON.stringify(commandItems);
                                             </td>
                                             <td class="py-2 text-sm">Admin</td>
                                             <td class="py-2"
-                                                ><Badge
-                                                    variant="success"
-                                                    size="sm">Active</Badge
+                                                ><Badge size="sm">Active</Badge
                                                 ></td
                                             >
                                         </tr>
@@ -503,20 +458,18 @@ const commandItemsJson = JSON.stringify(commandItems);
                                             <td
                                                 class="py-2 flex items-center space-x-2"
                                             >
-                                                <div
-                                                    class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs"
+                                                <Badge
+                                                    class="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-background text-xs"
                                                 >
                                                     SM
-                                                </div>
+                                                </Badge>
                                                 <span class="text-sm"
                                                     >Sarah Miller</span
                                                 >
                                             </td>
                                             <td class="py-2 text-sm">Editor</td>
                                             <td class="py-2"
-                                                ><Badge
-                                                    variant="success"
-                                                    size="sm">Active</Badge
+                                                ><Badge size="sm">Active</Badge
                                                 ></td
                                             >
                                         </tr>
@@ -525,7 +478,7 @@ const commandItemsJson = JSON.stringify(commandItems);
                                                 class="py-2 flex items-center space-x-2"
                                             >
                                                 <div
-                                                    class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs"
+                                                    class="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-background text-xs"
                                                 >
                                                     MJ
                                                 </div>
@@ -538,6 +491,27 @@ const commandItemsJson = JSON.stringify(commandItems);
                                                 ><Badge
                                                     variant="secondary"
                                                     size="sm">Pending</Badge
+                                                ></td
+                                            >
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="py-2 flex items-center space-x-2"
+                                            >
+                                                <div
+                                                    class="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-background text-xs"
+                                                >
+                                                    EW
+                                                </div>
+                                                <span class="text-sm"
+                                                    >Emma Wilson</span
+                                                >
+                                            </td>
+                                            <td class="py-2 text-sm"
+                                                >Developer</td
+                                            >
+                                            <td class="py-2"
+                                                ><Badge size="sm">Active</Badge
                                                 ></td
                                             >
                                         </tr>
@@ -632,8 +606,49 @@ const commandItemsJson = JSON.stringify(commandItems);
                         </CardContent>
                     </Card>
 
-                    <!-- Video Player -->
-                    <VideoPlayer youtubeId="jfKfPfyJRdk" shape="rounded" />
+                    <!-- FAQ Accordion -->
+                    <Card>
+                        <CardHeader class="pb-4">
+                            <Text
+                                variant="body"
+                                class="font-semibold text-lg text-foreground"
+                                >Frequently Asked Questions</Text
+                            >
+                            <Text
+                                variant="body"
+                                class="text-sm text-muted-foreground"
+                                >Find answers to common questions</Text
+                            >
+                        </CardHeader>
+                        <CardContent>
+                            <Accordion
+                                maxWidth="full"
+                                centered={false}
+                                defaultOpen={true}
+                            >
+                                <AccordionItem x-data="{ id: 'faq-1' }">
+                                    <AccordionTrigger
+                                        >How do I reset my password?</AccordionTrigger
+                                    >
+                                    <AccordionContent>
+                                        Click "Forgot password?" on the login
+                                        page and follow the instructions sent to
+                                        your email.
+                                    </AccordionContent>
+                                </AccordionItem>
+                                <AccordionItem x-data="{ id: 'faq-2' }">
+                                    <AccordionTrigger
+                                        >How can I contact customer support?</AccordionTrigger
+                                    >
+                                    <AccordionContent>
+                                        We accept all major credit cards,
+                                        PayPal, and bank transfers for
+                                        enterprise plans.
+                                    </AccordionContent>
+                                </AccordionItem>
+                            </Accordion>
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
         </Section>

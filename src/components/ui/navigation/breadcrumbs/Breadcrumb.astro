@@ -10,8 +10,6 @@ const breadcrumbVariants = cva('w-full', {
             minimal: 'text-sm',
             compact: 'text-xs',
         },
-        size: sizes,
-        overflow: overflowVariants,
     },
 });
 
@@ -24,8 +22,6 @@ export interface Props extends VariantProps<typeof breadcrumbVariants> {
 
 const {
     variant = 'default',
-    size = 'md',
-    overflow = 'fixed',
     'aria-label': ariaLabel = 'breadcrumb',
     class: className,
     ...alpineProps
@@ -34,10 +30,10 @@ const {
 
 <nav
     aria-label={ariaLabel}
-    class={cn(breadcrumbVariants({ variant, size, overflow }), className)}
+    class={cn(breadcrumbVariants({ variant }), className)}
     {...alpineProps}
 >
-    <ol class="flex items-center text-sm text-muted-foreground">
+    <ol class="flex items-center justify-start text-sm text-muted-foreground">
         <slot />
     </ol>
 </nav>

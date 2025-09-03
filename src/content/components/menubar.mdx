@@ -5,17 +5,24 @@ category: navigation
 order: 3
 ---
 
-import MenuBar from '@/components/ui/overlay/menubar/MenuBar.astro';
+import {
+    MenuBar,
+    MenuBarTrigger,
+    MenuBarContent,
+    MenuBarItem,
+    MenuBarItems,
+    MenuBarGroup,
+    MenuBarGroups,
+    MenuBarSubMenu,
+    MenuBarSubTrigger,
+    MenuBarShortcut,
+    MenuBarConditional,
+} from '@/components/ui/overlay/menubar';
 import MenuContainer from '@/components/ui/overlay/menu/MenuContainer.astro';
 import MenuInput from '@/components/ui/overlay/menu/MenuInput.astro';
 import MenuItem from '@/components/ui/overlay/menu/MenuItem.astro';
-import MenuItems from '@/components/ui/overlay/menu/MenuItems.astro';
 import MenuGroup from '@/components/ui/overlay/menu/MenuGroup.astro';
-import MenuGroups from '@/components/ui/overlay/menu/MenuGroups.astro';
 import MenuShortcut from '@/components/ui/overlay/menu/MenuShortcut.astro';
-import MenuSubMenu from '@/components/ui/overlay/menu/MenuSubMenu.astro';
-import MenuSubTrigger from '@/components/ui/overlay/menu/MenuSubTrigger.astro';
-import MenuConditional from '@/components/ui/overlay/menu/MenuConditional.astro';
 import Button from '@/components/ui/forms/Button.astro';
 import { Icon } from 'astro-icon/components';
 import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
@@ -33,242 +40,327 @@ MenuBar provides application-style menu bars with File, Edit, View menus. Featur
         <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col justify-center space-y-8">
-        <div>
-            <h4 class="text-sm font-semibold mb-3">Application MenuBar</h4>
-            <MenuBar class="flex border rounded-md bg-background">
-                <MenuBar trigger="click">
-                    <Button variant="ghost" size="sm" slot="trigger" class="rounded-none">File</Button>
-                    <div slot="content" class="w-56">
-                        <div class="rounded-md border bg-popover text-popover-foreground shadow-md py-1">
-                            <MenuItem>
-                                <Icon name="lucide:file-plus" class="w-4 h-4 mr-2" />
-                                New File
-                                <MenuShortcut>⌘N</MenuShortcut>
-                            </MenuItem>
-                            <MenuItem>
-                                <Icon name="lucide:folder-open" class="w-4 h-4 mr-2" />
-                                Open
-                                <MenuShortcut>⌘O</MenuShortcut>
-                            </MenuItem>
-                            <div class="border-t my-1"></div>
-                            <MenuItem>
-                                <Icon name="lucide:save" class="w-4 h-4 mr-2" />
-                                Save
-                                <MenuShortcut>⌘S</MenuShortcut>
-                            </MenuItem>
-                        </div>
-                    </div>
+    <TabsContent value="preview" preview class="flex flex-col justify-center items-center space-y-8">
+        <div
+            x-data="{
+                menuBarData: [
+                    {
+                        name: 'File',
+                        groups: [
+                            {
+                                items: [
+                                    { text: 'New File', shortcut: 'Ctrl+N' },
+                                    { text: 'Open File', shortcut: 'Ctrl+O' },
+                                    { text: 'Save File', shortcut: 'Ctrl+S' }
+                                ]
+                            },
+                            {
+                                items: [
+                                    { 
+                                        text: 'Recent Files', 
+                                        submenu: [
+                                            { text: 'project.astro' },
+                                            { text: 'config.ts' },
+                                            { text: 'README.md' }
+                                        ]
+                                    },
+                                    { 
+                                        text: 'Export', 
+                                        submenu: [
+                                            { text: 'PDF' },
+                                            { text: 'HTML' },
+                                            { text: 'Markdown' }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                items: [
+                                    { text: 'Exit', shortcut: 'Alt+F4', variant: 'destructive' }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: 'Edit',
+                        groups: [
+                            {
+                                items: [
+                                    { text: 'Undo', shortcut: 'Ctrl+Z' },
+                                    { text: 'Redo', shortcut: 'Ctrl+Y' }
+                                ]
+                            },
+                            {
+                                items: [
+                                    { text: 'Cut', shortcut: 'Ctrl+X' },
+                                    { text: 'Copy', shortcut: 'Ctrl+C' },
+                                    { text: 'Paste', shortcut: 'Ctrl+V' }
+                                ]
+                            },
+                            {
+                                items: [
+                                    { text: 'Find', shortcut: 'Ctrl+F' },
+                                    { text: 'Replace', shortcut: 'Ctrl+H' }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: 'View',
+                        groups: [
+                            {
+                                items: [
+                                    { text: 'Zoom In', shortcut: 'Ctrl++' },
+                                    { text: 'Zoom Out', shortcut: 'Ctrl+-' },
+                                    { text: 'Reset Zoom', shortcut: 'Ctrl+0' }
+                                ]
+                            },
+                            {
+                                items: [
+                                    { text: 'Toggle Sidebar', shortcut: 'Ctrl+B' },
+                                    { text: 'Toggle Terminal', shortcut: 'Ctrl+`' }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: 'Help',
+                        groups: [
+                            {
+                                items: [
+                                    { text: 'Documentation', shortcut: 'F1' },
+                                    { text: 'Keyboard Shortcuts', shortcut: 'Ctrl+/' }
+                                ]
+                            },
+                            {
+                                items: [
+                                    { text: 'About' }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }"
+            class="flex justify-center items-center space-x-1 bg-background border-b pb-2 gap-2 w-60"
+        >
+            <template x-for="menu in menuBarData" x-key="menu.name">
+                <MenuBar>
+                    <MenuBarTrigger>
+                        <span x-text="menu.name"></span>
+                    </MenuBarTrigger>
+                    <MenuBarContent role="menu">
+                        <MenuBarGroups
+                            x-for="(group, groupIndex) in menu.groups"
+                            x-key="groupIndex"
+                            divider
+                        >
+                            <MenuBarConditional
+                                x-for="item in group.items"
+                                x-key="item.text"
+                                condition="!item.submenu"
+                            >
+                                <MenuBarItem
+                                    slot="true"
+                                    x-text="item.text"
+                                    x-bind:variant="item.variant || 'default'"
+                                >
+                                    <MenuBarShortcut x-text="item.shortcut" />
+                                </MenuBarItem>
+                                <MenuBarSubMenu slot="false">
+                                    <MenuBarSubTrigger x-text="item.text" />
+                                    <MenuBarItems
+                                        slot="submenu"
+                                        x-for="subitem in item.submenu"
+                                        x-key="subitem.text"
+                                        x-text="subitem.text"
+                                    />
+                                </MenuBarSubMenu>
+                            </MenuBarConditional>
+                        </MenuBarGroups>
+                    </MenuBarContent>
                 </MenuBar>
-                <MenuBar trigger="click">
-                    <Button variant="ghost" size="sm" slot="trigger" class="rounded-none">Edit</Button>
-                    <div slot="content" class="w-52">
-                        <div class="rounded-md border bg-popover text-popover-foreground shadow-md py-1">
-                            <MenuItem>
-                                <Icon name="lucide:undo" class="w-4 h-4 mr-2" />
-                                Undo
-                                <MenuShortcut>⌘Z</MenuShortcut>
-                            </MenuItem>
-                            <MenuItem>
-                                <Icon name="lucide:copy" class="w-4 h-4 mr-2" />
-                                Copy
-                                <MenuShortcut>⌘C</MenuShortcut>
-                            </MenuItem>
-                        </div>
-                    </div>
-                </MenuBar>
-                <MenuBar trigger="click">
-                    <Button variant="ghost" size="sm" slot="trigger" class="rounded-none">View</Button>
-                    <div slot="content" class="w-48">
-                        <div class="rounded-md border bg-popover text-popover-foreground shadow-md py-1">
-                            <MenuSubMenu>
-                                <MenuSubTrigger x-ref="submenuTrigger">
-                                    <Icon name="lucide:palette" class="w-4 h-4 mr-2" />
-                                    Theme
-                                    <Icon name="lucide:chevron-right" class="w-4 h-4 ml-auto" />
-                                </MenuSubTrigger>
-                                <div slot="submenu" class="w-40">
-                                    <MenuItem><Icon name="lucide:sun" class="w-4 h-4 mr-2" />Light</MenuItem>
-                                    <MenuItem><Icon name="lucide:moon" class="w-4 h-4 mr-2" />Dark</MenuItem>
-                                    <MenuItem><Icon name="lucide:monitor" class="w-4 h-4 mr-2" />System</MenuItem>
-                                </div>
-                            </MenuSubMenu>
-                            <div class="border-t my-1"></div>
-                            <MenuItem>
-                                <Icon name="lucide:zoom-in" class="w-4 h-4 mr-2" />
-                                Zoom In
-                                <MenuShortcut>⌘+</MenuShortcut>
-                            </MenuItem>
-                        </div>
-                    </div>
-                </MenuBar>
-            </MenuBar>
-        </div>
-        
-        <div>
-            <h4 class="text-sm font-semibold mb-3">Command Palette</h4>
-            <MenuBar trigger="click">
-                <Button variant="outline" slot="trigger">
-                    <Icon name="lucide:command" class="w-4 h-4 mr-2" />
-                    Command Palette
-                </Button>
-                <div slot="content">
-                    <MenuContainer size="md">
-                        <MenuInput slot="input" placeholder="Type a command..." />
-                        <MenuGroup>File</MenuGroup>
-                        <MenuItem>
-                            <Icon name="lucide:file-plus" class="w-4 h-4 mr-2" />
-                            New File
-                            <MenuShortcut>⌘N</MenuShortcut>
-                        </MenuItem>
-                        <MenuItem>
-                            <Icon name="lucide:folder-open" class="w-4 h-4 mr-2" />
-                            Open
-                            <MenuShortcut>⌘O</MenuShortcut>
-                        </MenuItem>
-                        <MenuGroup>Edit</MenuGroup>
-                        <MenuItem>
-                            <Icon name="lucide:copy" class="w-4 h-4 mr-2" />
-                            Copy
-                            <MenuShortcut>⌘C</MenuShortcut>
-                        </MenuItem>
-                    </MenuContainer>
-                </div>
-            </MenuBar>
+            </template>
         </div>
     </TabsContent>
     <TabsContent value="code">
         <Code
             language="astro"
             code={`---
-import MenuBar from '@/components/ui/overlay/menubar/MenuBar.astro';
-import MenuContainer from '@/components/ui/overlay/menu/MenuContainer.astro';
-import MenuInput from '@/components/ui/overlay/menu/MenuInput.astro';
-import MenuItem from '@/components/ui/overlay/menu/MenuItem.astro';
-import MenuItems from '@/components/ui/overlay/menu/MenuItems.astro';
-import MenuGroup from '@/components/ui/overlay/menu/MenuGroup.astro';
-import MenuShortcut from '@/components/ui/overlay/menu/MenuShortcut.astro';
-import MenuSubMenu from '@/components/ui/overlay/menu/MenuSubMenu.astro';
-import MenuSubTrigger from '@/components/ui/overlay/menu/MenuSubTrigger.astro';
-import Button from '@/components/ui/forms/Button.astro';
-import { Icon } from 'astro-icon/components';
+import {
+    MenuBar,
+    MenuBarTrigger,
+    MenuBarContent,
+    MenuBarItem,
+    MenuBarItems,
+    MenuBarGroup,
+    MenuBarGroups,
+    MenuBarSubMenu,
+    MenuBarSubTrigger,
+    MenuBarShortcut,
+    MenuBarConditional,
+} from '@/components/ui/overlay/menubar';
 ---
 
-{/* Application MenuBar */}
-<MenuBar class="flex border rounded-md bg-background">
-    <MenuBar trigger="click">
-        <Button variant="ghost" size="sm" slot="trigger" class="rounded-none">File</Button>
-        <div slot="content" class="w-56">
-            <div class="rounded-md border bg-popover shadow-md py-1">
-                <MenuItem>
-                    <Icon name="lucide:file-plus" class="w-4 h-4 mr-2" />
-                    New File
-                    <MenuShortcut>⌘N</MenuShortcut>
-                </MenuItem>
-                <MenuItem>
-                    <Icon name="lucide:folder-open" class="w-4 h-4 mr-2" />
-                    Open
-                    <MenuShortcut>⌘O</MenuShortcut>
-                </MenuItem>
-                <div class="border-t my-1"></div>
-                <MenuItem>
-                    <Icon name="lucide:save" class="w-4 h-4 mr-2" />
-                    Save
-                    <MenuShortcut>⌘S</MenuShortcut>
-                </MenuItem>
-            </div>
-        </div>
-    </MenuBar>
-    
-    <MenuBar trigger="click">
-        <Button variant="ghost" size="sm" slot="trigger" class="rounded-none">Edit</Button>
-        <div slot="content" class="w-52">
-            <div class="rounded-md border bg-popover shadow-md py-1">
-                <MenuItem>
-                    <Icon name="lucide:undo" class="w-4 h-4 mr-2" />
-                    Undo
-                    <MenuShortcut>⌘Z</MenuShortcut>
-                </MenuItem>
-                <MenuItem>
-                    <Icon name="lucide:copy" class="w-4 h-4 mr-2" />
-                    Copy
-                    <MenuShortcut>⌘C</MenuShortcut>
-                </MenuItem>
-            </div>
-        </div>
-    </MenuBar>
-    
-    <MenuBar trigger="click">
-        <Button variant="ghost" size="sm" slot="trigger" class="rounded-none">View</Button>
-        <div slot="content" class="w-48">
-            <div class="rounded-md border bg-popover shadow-md py-1">
-                <MenuSubMenu>
-                    <MenuSubTrigger x-ref="submenuTrigger">
-                        <Icon name="lucide:palette" class="w-4 h-4 mr-2" />
-                        Theme
-                        <Icon name="lucide:chevron-right" class="w-4 h-4 ml-auto" />
-                    </MenuSubTrigger>
-                    <div slot="submenu" class="w-40">
-                        <MenuItem><Icon name="lucide:sun" class="w-4 h-4 mr-2" />Light</MenuItem>
-                        <MenuItem><Icon name="lucide:moon" class="w-4 h-4 mr-2" />Dark</MenuItem>
-                    </div>
-                </MenuSubMenu>
-                <div class="border-t my-1"></div>
-                <MenuItem>
-                    <Icon name="lucide:zoom-in" class="w-4 h-4 mr-2" />
-                    Zoom In
-                    <MenuShortcut>⌘+</MenuShortcut>
-                </MenuItem>
-            </div>
-        </div>
-    </MenuBar>
-</MenuBar>
+<div
+    x-data="{
+                menuBarData: [
+                    {
+                        name: 'File',
+                        groups: [
+                            {
+                                items: [
+                                    { text: 'New File', shortcut: 'Ctrl+N' },
+                                    { text: 'Open File', shortcut: 'Ctrl+O' },
+                                    { text: 'Save File', shortcut: 'Ctrl+S' }
+                                ]
+                            },
+                            {
+                                items: [
+                                    { 
+                                        text: 'Recent Files', 
+                                        submenu: [
+                                            { text: 'project.astro' },
+                                            { text: 'config.ts' },
+                                            { text: 'README.md' }
+                                        ]
+                                    },
+                                    { 
+                                        text: 'Export', 
+                                        submenu: [
+                                            { text: 'PDF' },
+                                            { text: 'HTML' },
+                                            { text: 'Markdown' }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                items: [
+                                    { text: 'Exit', shortcut: 'Alt+F4', variant: 'destructive' }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: 'Edit',
+                        groups: [
+                            {
+                                items: [
+                                    { text: 'Undo', shortcut: 'Ctrl+Z' },
+                                    { text: 'Redo', shortcut: 'Ctrl+Y' }
+                                ]
+                            },
+                            {
+                                items: [
+                                    { text: 'Cut', shortcut: 'Ctrl+X' },
+                                    { text: 'Copy', shortcut: 'Ctrl+C' },
+                                    { text: 'Paste', shortcut: 'Ctrl+V' }
+                                ]
+                            },
+                            {
+                                items: [
+                                    { text: 'Find', shortcut: 'Ctrl+F' },
+                                    { text: 'Replace', shortcut: 'Ctrl+H' }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: 'View',
+                        groups: [
+                            {
+                                items: [
+                                    { text: 'Zoom In', shortcut: 'Ctrl++' },
+                                    { text: 'Zoom Out', shortcut: 'Ctrl+-' },
+                                    { text: 'Reset Zoom', shortcut: 'Ctrl+0' }
+                                ]
+                            },
+                            {
+                                items: [
+                                    { text: 'Toggle Sidebar', shortcut: 'Ctrl+B' },
+                                    { text: 'Toggle Terminal', shortcut: 'Ctrl+\`' }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: 'Help',
+                        groups: [
+                            {
+                                items: [
+                                    { text: 'Documentation', shortcut: 'F1' },
+                                    { text: 'Keyboard Shortcuts', shortcut: 'Ctrl+/' }
+                                ]
+                            },
+                            {
+                                items: [
+                                    { text: 'About' }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }"
+    class="flex justify-center items-center space-x-1 bg-background border-b pb-2 gap-2 w-60"
+>
+    <template x-for="menu in menuBarData" x-key="menu.name">
+        <MenuBar>
+            <MenuBarTrigger>
+                <span x-text="menu.name"></span>
+            </MenuBarTrigger>
+            <MenuBarContent role="menu">
+                <MenuBarGroups
+                    x-for="(group, groupIndex) in menu.groups"
+                    x-key="groupIndex"
+                    divider
+                >
+                    <MenuBarConditional
+                        x-for="item in group.items"
+                        x-key="item.text"
+                        condition="!item.submenu"
+                    >
+                        <MenuBarItem
+                            slot="true"
+                            x-text="item.text"
+                            x-bind:variant="item.variant || 'default'"
+                        >
+                            <MenuBarShortcut x-text="item.shortcut" />
+                        </MenuBarItem>
+                        <MenuBarSubMenu slot="false">
+                            <MenuBarSubTrigger x-text="item.text" />
+                            <MenuBarItems
+                                slot="submenu"
+                                x-for="subitem in item.submenu"
+                                x-key="subitem.text"
+                                x-text="subitem.text"
+                            />
+                        </MenuBarSubMenu>
+                    </MenuBarConditional>
+                </MenuBarGroups>
+            </MenuBarContent>
+        </MenuBar>
+    </template>
+</div>
 
-{/* Command Palette */}
-<MenuBar trigger="click">
-    <Button variant="outline" slot="trigger">
-        <Icon name="lucide:command" class="w-4 h-4 mr-2" />
-        Command Palette
-    </Button>
-    <div slot="content">
-        <MenuContainer size="md">
-            <MenuInput slot="input" placeholder="Type a command..." />
-            <MenuGroup>File</MenuGroup>
-            <MenuItem>
-                <Icon name="lucide:file-plus" class="w-4 h-4 mr-2" />
-                New File
-                <MenuShortcut>⌘N</MenuShortcut>
-            </MenuItem>
-            <MenuItem>
-                <Icon name="lucide:folder-open" class="w-4 h-4 mr-2" />
-                Open
-                <MenuShortcut>⌘O</MenuShortcut>
-            </MenuItem>
-            <MenuGroup>Edit</MenuGroup>
-            <MenuItem>
-                <Icon name="lucide:copy" class="w-4 h-4 mr-2" />
-                Copy
-                <MenuShortcut>⌘C</MenuShortcut>
-            </MenuItem>
-        </MenuContainer>
-    </div>
-</MenuBar>`}
-        />
-    </TabsContent>
+`}
+/>
+
+</TabsContent>
+
 </Tabs>
 
 ## API Reference
 
-| Component | Prop | Type | Default | Description |
-| --------- | ---- | ---- | ------- | ----------- |
-| **MenuBar** | `trigger` | `string` | `hover` | Trigger behavior |
-| | `className` | `string` | - | Additional CSS classes |
-| **MenuContainer** | `size` | `'sm' \, 'md' \, 'lg'` | `'md'` | Container size |
-| | `searchEnabled` | `boolean` | `true` | Enable search functionality |
-| | `variant` | `'default' \, 'ghost'` | `'default'` | Visual style variant |
-| **MenuItem** | `disabled` | `boolean` | `false` | Whether item is disabled |
-| | `shortcut` | `string` | - | Keyboard shortcut |
-| | `variant` | `'default' \, 'command'` | `'default'` | Visual style variant |
-| **MenuInput** | `placeholder` | `string` | `'Search...'` | Input placeholder |
-| | `showIcon` | `boolean` | `true` | Show search icon |
-| **MenuGroup** | `className` | `string` | - | Additional CSS classes |
+| Component         | Prop            | Type                     | Default       | Description                 |
+| ----------------- | --------------- | ------------------------ | ------------- | --------------------------- |
+| **MenuBar**       | `trigger`       | `string`                 | `hover`       | Trigger behavior            |
+|                   | `className`     | `string`                 | -             | Additional CSS classes      |
+| **MenuContainer** | `size`          | `'sm' \, 'md' \, 'lg'`   | `'md'`        | Container size              |
+|                   | `searchEnabled` | `boolean`                | `true`        | Enable search functionality |
+|                   | `variant`       | `'default' \, 'ghost'`   | `'default'`   | Visual style variant        |
+| **MenuItem**      | `disabled`      | `boolean`                | `false`       | Whether item is disabled    |
+|                   | `shortcut`      | `string`                 | -             | Keyboard shortcut           |
+|                   | `variant`       | `'default' \, 'command'` | `'default'`   | Visual style variant        |
+| **MenuInput**     | `placeholder`   | `string`                 | `'Search...'` | Input placeholder           |
+|                   | `showIcon`      | `boolean`                | `true`        | Show search icon            |
+| **MenuGroup**     | `className`     | `string`                 | -             | Additional CSS classes      |

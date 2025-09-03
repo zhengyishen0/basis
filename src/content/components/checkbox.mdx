@@ -18,148 +18,93 @@ The Checkbox component provides a styled checkbox input with support for checked
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
     </TabsList>
     <TabsContent value="preview" preview class="space-y-4">
-        <div class="space-y-4">
-            <div>
-                <h4 class="font-medium mb-3">Basic Usage</h4>
-                <div class="space-y-3">
-                    <Checkbox label="Accept terms and conditions" />
-                    <Checkbox label="Subscribe to newsletter" checked={true} />
-                    <Checkbox label="Remember my preferences" />
-                </div>
+        <div
+            x-data="{
+            notifications: false,
+            marketing: true,
+            analytics: false
+        }"
+        >
+            <div class="space-y-3 gap-2">
+                <Checkbox
+                    label="Enable notifications"
+                    x-model="notifications"
+                />
+                <Checkbox label="Marketing emails" x-model="marketing" />
+                <Checkbox label="Analytics tracking" x-model="analytics" />
             </div>
-            
-            <div>
-                <h4 class="font-medium mb-3">Disabled State</h4>
-                <div class="space-y-3">
-                    <Checkbox label="Disabled unchecked" disabled={true} />
-                    <Checkbox label="Disabled checked" disabled={true} checked={true} />
-                </div>
-            </div>
-            
-            <div x-data="{ 
-                notifications: false,
-                marketing: true,
-                analytics: false 
-            }">
-                <h4 class="font-medium mb-3">Interactive Demo (Alpine.js)</h4>
-                <div class="space-y-3">
-                    <Checkbox label="Enable notifications" x-model="notifications" />
-                    <Checkbox label="Marketing emails" x-model="marketing" />
-                    <Checkbox label="Analytics tracking" x-model="analytics" />
-                </div>
-                <div class="mt-4 p-3 bg-muted rounded-lg text-sm">
-                    <div class="space-y-1">
-                        <div>notifications: <span x-text="notifications" class="font-mono text-primary"></span></div>
-                        <div>marketing: <span x-text="marketing" class="font-mono text-primary"></span></div>
-                        <div>analytics: <span x-text="analytics" class="font-mono text-primary"></span></div>
+            <div class="mt-4 p-3 bg-muted rounded-lg text-sm">
+                <div class="space-y-1">
+                    <div>
+                        notifications:{' '}
+                        <span
+                            x-text="notifications"
+                            class="font-mono text-primary"
+                        ></span>
+                    </div>
+                    <div>
+                        marketing:{' '}
+                        <span
+                            x-text="marketing"
+                            class="font-mono text-primary"
+                        ></span>
+                    </div>
+                    <div>
+                        analytics:{' '}
+                        <span
+                            x-text="analytics"
+                            class="font-mono text-primary"
+                        ></span>
                     </div>
                 </div>
             </div>
         </div>
     </TabsContent>
     <TabsContent value="code">
-        <Code language="astro" code={`---
+        <Code
+            language="astro"
+            code={`---
 import Checkbox from '@/components/ui/forms/Checkbox.astro';
 ---
-{/* Basic Usage */}
-<Checkbox label="Accept terms and conditions" />
-<Checkbox label="Subscribe to newsletter" checked={true} />
-
-{/* Disabled State */}
-<Checkbox label="Disabled unchecked" disabled={true} />
-<Checkbox label="Disabled checked" disabled={true} checked={true} />
-
-{/* Without Label (just checkbox) */}
-<Checkbox id="checkbox-1" />
-<label for="checkbox-1">External label</label>
-
-{/* Alpine.js Integration */}
-<div x-data="{ agreed: false }">
-    <Checkbox label="I agree to the terms" x-model="agreed" />
-    <p x-show="agreed">Thank you for agreeing!</p>
-</div>
-
-{/* Form Integration */}
-<form>
-    <Checkbox name="newsletter" label="Subscribe to newsletter" />
-    <Checkbox name="terms" label="Accept terms" required />
-</form>`} />
+<div x-data="{
+            notifications: false,
+            marketing: true,
+            analytics: false
+        }">
+        <div class="space-y-3 gap-2">
+            <Checkbox label="Enable notifications" x-model="notifications" />
+            <Checkbox label="Marketing emails" x-model="marketing" />
+            <Checkbox label="Analytics tracking" x-model="analytics" />
+        </div>
+        <div class="mt-4 p-3 bg-muted rounded-lg text-sm">
+            <div class="space-y-1">
+                <div>notifications: <span x-text="notifications" class="font-mono text-primary"></span></div>
+                <div>marketing: <span x-text="marketing" class="font-mono text-primary"></span></div>
+                <div>analytics: <span x-text="analytics" class="font-mono text-primary"></span></div>
+            </div>
+        </div>
+    </div>
+`}
+        />
     </TabsContent>
 </Tabs>
 
 ## API Reference
 
-### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `id` | `string` | - | Unique identifier for the checkbox |
-| `name` | `string` | `id` | Name attribute for form submission |
-| `checked` | `boolean` | `false` | Whether the checkbox is checked |
+| Prop            | Type      | Default | Description                                    |
+| --------------- | --------- | ------- | ---------------------------------------------- |
+| `id`            | `string`  | -       | Unique identifier for the checkbox             |
+| `name`          | `string`  | `id`    | Name attribute for form submission             |
+| `checked`       | `boolean` | `false` | Whether the checkbox is checked                |
 | `indeterminate` | `boolean` | `false` | Whether the checkbox is in indeterminate state |
-| `disabled` | `boolean` | `false` | Whether the checkbox is disabled |
-| `label` | `string` | - | Label text displayed next to the checkbox |
-| `class` | `string` | - | Additional CSS classes |
-
-### Alpine.js Integration
-
-The component supports all Alpine.js directives and automatically integrates with Alpine's reactivity system:
-
-- Use `x-model` for two-way data binding
-- Access `isChecked`, `isIndeterminate`, and `isDisabled` reactive properties
-- Component automatically handles state management and updates
-
-### Accessibility Features
-
-- Proper ARIA attributes and roles
-- Keyboard navigation support
-- Screen reader compatible
-- Focus management with visible focus indicators
-- Semantic HTML with hidden native input for form compatibility
-
-### Usage Examples
-
-#### Basic Form Integration
-
-```astro
-<form method="POST">
-    <div class="space-y-3">
-        <Checkbox name="newsletter" label="Subscribe to newsletter" />
-        <Checkbox name="terms" label="I accept the terms of service" required />
-        <Checkbox name="privacy" label="I agree to the privacy policy" required />
-    </div>
-    <button type="submit">Submit</button>
-</form>
-```
-
-#### Advanced Alpine.js Usage
-
-```astro
-<div x-data="{
-    preferences: {
-        newsletter: false,
-        notifications: true,
-        analytics: false
-    },
-    toggleAll() {
-        const allChecked = Object.values(this.preferences).every(v => v);
-        Object.keys(this.preferences).forEach(key => {
-            this.preferences[key] = !allChecked;
-        });
-    }
-}">
-    <button x-on:click="toggleAll()" class="mb-4 px-3 py-1 bg-primary text-primary-foreground rounded">
-        Toggle All
-    </button>
-    
-    <div class="space-y-3">
-        <Checkbox label="Newsletter" x-model="preferences.newsletter" />
-        <Checkbox label="Push Notifications" x-model="preferences.notifications" />
-        <Checkbox label="Analytics" x-model="preferences.analytics" />
-    </div>
-</div>
-```
+| `disabled`      | `boolean` | `false` | Whether the checkbox is disabled               |
+| `label`         | `string`  | -       | Label text displayed next to the checkbox      |
+| `class`         | `string`  | -       | Additional CSS classes                         |

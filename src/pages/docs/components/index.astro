@@ -1,5 +1,25 @@
 ---
 import DocsLayout from '@/layouts/DocsLayout.astro';
+import { getCollection } from 'astro:content';
+import { Card, CardContent } from '@/components/ui/display/card';
+
+// Fetch all component docs from content collection
+const components = await getCollection('components');
+
+// Helper to format slug into Title Case if title is missing
+const toTitle = (str: string) => str
+  .split('-')
+  .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+  .join(' ');
+
+// Prepare items with href, title, and optional description
+const items = components
+  .map((entry) => ({
+    href: `/docs/components/${entry.slug}`,
+    title: entry.data.title ?? toTitle(entry.slug),
+    description: entry.data.description ?? '',
+  }))
+  .sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }));
 ---
 
 <DocsLayout
@@ -7,82 +27,25 @@ import DocsLayout from '@/layouts/DocsLayout.astro';
     description="Explore our comprehensive UI component library built with Astro and Alpine.js"
     slug="components"
 >
-    <div class="space-y-8">
-        <section>
-            <h2 id="overview">Component Library Overview</h2>
-            <p>
-                Our component library provides a complete set of UI components
-                built with Astro, Alpine.js, and Tailwind CSS. All components
-                follow a consistent design system and support theme variants.
-            </p>
-        </section>
-
-        <section>
-            <h2 id="categories">Component Categories</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 not-prose">
-                <div class="border rounded-lg p-4">
-                    <h3 class="font-semibold mb-2 text-foreground">
-                        Data Components
-                    </h3>
-                    <p class="text-sm text-muted-foreground">
-                        Tables, lists, and data display components
-                    </p>
-                </div>
-                <div class="border rounded-lg p-4 text-foreground">
-                    <h3 class="font-semibold mb-2">Display Components</h3>
-                    <p class="text-sm text-muted-foreground">
-                        Badges, cards, alerts, and visual elements
-                    </p>
-                </div>
-                <div class="border rounded-lg p-4 text-foreground">
-                    <h3 class="font-semibold mb-2">Feedback Components</h3>
-                    <p class="text-sm text-muted-foreground">
-                        Toasts, modals, progress indicators
-                    </p>
-                </div>
-                <div class="border rounded-lg p-4 text-foreground">
-                    <h3 class="font-semibold mb-2">Form Components</h3>
-                    <p class="text-sm text-muted-foreground">
-                        Inputs, buttons, selects, and form controls
-                    </p>
-                </div>
-                <div class="border rounded-lg p-4 text-foreground">
-                    <h3 class="font-semibold mb-2">Layout Components</h3>
-                    <p class="text-sm text-muted-foreground">
-                        Containers, grids, sections, and dividers
-                    </p>
-                </div>
-                <div class="border rounded-lg p-4 text-foreground">
-                    <h3 class="font-semibold mb-2">Navigation Components</h3>
-                    <p class="text-sm text-muted-foreground">
-                        Menus, breadcrumbs, tabs, and navigation bars
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2 id="usage">Using Components</h2>
-            <p>
-                All components are built as Astro components and can be imported
-                directly:
-            </p>
-            <pre><code>{`import { Button } from '@/components/ui/forms';
-import { Card } from '@/components/ui/display';`}</code></pre>
-        </section>
-
-        <section>
-            <h2 id="theming">Theming</h2>
-            <p>
-                Components use CVA (Class Variance Authority) for consistent
-                theming with variants:
-            </p>
-            <ul>
-                <li><strong>default</strong> - Primary brand color</li>
-                <li><strong>secondary</strong> - Secondary color scheme</li>
-                <li><strong>destructive</strong> - Error/danger states</li>
-                <li><strong>outline</strong> - Bordered variant</li>
-            </ul>
-        </section>
+    <div class="not-prose">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {items.map((item) => (
+                <a
+                    href={item.href}
+                    class="block group focus:outline-none focus:ring-2 focus:ring-primary rounded-lg"
+                >
+                    <Card class="h-full transition-colors group-hover:border-primary group-hover:shadow-sm">
+                        <CardContent class="p-4">
+                            <h3 class="font-semibold text-foreground mb-1">{item.title}</h3>
+                            {item.description && (
+                                <p class="text-sm text-muted-foreground line-clamp-2">
+                                    {item.description}
+                                </p>
+                            )}
+                        </CardContent>
+                    </Card>
+                </a>
+            ))}
+        </div>
     </div>
 </DocsLayout>

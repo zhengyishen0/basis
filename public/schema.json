@@ -114,6 +114,197 @@
       "type": "string",
       "description": "Custom registry URL",
       "format": "uri"
+    },
+    "components": {
+      "type": "object",
+      "description": "Available components registry",
+      "properties": {
+        "layout": {
+          "type": "object",
+          "description": "Layout and structure components",
+          "properties": {
+            "column": { "type": "boolean", "description": "Column layout component" },
+            "conditional": { "type": "boolean", "description": "Conditional rendering component" },
+            "divider": { "type": "boolean", "description": "Divider/separator component" },
+            "grid": { "type": "boolean", "description": "Grid layout component" },
+            "grid-items": { "type": "boolean", "description": "Grid items wrapper component" },
+            "inline": { "type": "boolean", "description": "Inline layout component" },
+            "list": { "type": "boolean", "description": "List layout component" },
+            "list-items": { "type": "boolean", "description": "List items wrapper component" },
+            "page": { "type": "boolean", "description": "Page layout component" },
+            "row": { "type": "boolean", "description": "Row layout component" },
+            "section": { "type": "boolean", "description": "Section layout component" },
+            "spacer": { "type": "boolean", "description": "Spacer component" }
+          },
+          "additionalProperties": false
+        },
+        "forms": {
+          "type": "object",
+          "description": "Input and form control components",
+          "properties": {
+            "button": { "type": "boolean", "description": "Button component" },
+            "checkbox": { "type": "boolean", "description": "Checkbox input component" },
+            "radio-group": { "type": "boolean", "description": "Radio group with items" },
+            "radio-group-description": { "type": "boolean", "description": "Radio group description component" },
+            "radio-group-item": { "type": "boolean", "description": "Individual radio group item" },
+            "radio-group-items": { "type": "boolean", "description": "Radio group items wrapper" },
+            "radio-group-label": { "type": "boolean", "description": "Radio group label component" },
+            "rating": { "type": "boolean", "description": "Star rating component" },
+            "select": { "type": "boolean", "description": "Select dropdown with items" },
+            "select-item": { "type": "boolean", "description": "Individual select option item" },
+            "select-items": { "type": "boolean", "description": "Select items wrapper component" },
+            "slider": { "type": "boolean", "description": "Range slider component" },
+            "text-input": { "type": "boolean", "description": "Text input component" },
+            "textarea": { "type": "boolean", "description": "Textarea component" }
+          },
+          "additionalProperties": false
+        },
+        "navigation": {
+          "type": "object",
+          "description": "Navigation and wayfinding components",
+          "properties": {
+            "breadcrumb": { "type": "boolean", "description": "Breadcrumb navigation with items" },
+            "breadcrumb-item": { "type": "boolean", "description": "Individual breadcrumb item" },
+            "breadcrumb-items": { "type": "boolean", "description": "Breadcrumb items wrapper" },
+            "smart-breadcrumb": { "type": "boolean", "description": "Smart breadcrumb with auto-truncation" },
+            "pagination": { "type": "boolean", "description": "Pagination component with links" },
+            "pagination-item": { "type": "boolean", "description": "Individual pagination item" },
+            "pagination-link": { "type": "boolean", "description": "Pagination link component" },
+            "pagination-next": { "type": "boolean", "description": "Pagination next button" },
+            "pagination-previous": { "type": "boolean", "description": "Pagination previous button" },
+            "tabs": { "type": "boolean", "description": "Tab navigation with content" },
+            "tabs-content": { "type": "boolean", "description": "Tab content panel" },
+            "tabs-list": { "type": "boolean", "description": "Tab list wrapper" },
+            "tabs-trigger": { "type": "boolean", "description": "Tab trigger button" }
+          },
+          "additionalProperties": false
+        },
+        "feedback": {
+          "type": "object",
+          "description": "User feedback and status components",
+          "properties": {
+            "alert": { "type": "boolean", "description": "Alert notification component" },
+            "badge": { "type": "boolean", "description": "Badge/label component" },
+            "banner": { "type": "boolean", "description": "Banner with actions and close" },
+            "banner-action": { "type": "boolean", "description": "Banner action button" },
+            "banner-close": { "type": "boolean", "description": "Banner close button" },
+            "banner-description": { "type": "boolean", "description": "Banner description text" },
+            "banner-title": { "type": "boolean", "description": "Banner title component" },
+            "empty": { "type": "boolean", "description": "Empty state component" },
+            "error": { "type": "boolean", "description": "Error state component" },
+            "loading": { "type": "boolean", "description": "Loading indicator component" },
+            "progress": { "type": "boolean", "description": "Progress bar component" },
+            "toast": { "type": "boolean", "description": "Toast notification component" }
+          },
+          "additionalProperties": false
+        },
+        "overlay": {
+          "type": "object",
+          "description": "Overlay and modal components",
+          "properties": {
+            "command": { "type": "boolean", "description": "Command palette with input and items" },
+            "command-footer": { "type": "boolean", "description": "Command palette footer" },
+            "command-input": { "type": "boolean", "description": "Command palette input field" },
+            "command-item": { "type": "boolean", "description": "Individual command item" },
+            "command-items": { "type": "boolean", "description": "Command items wrapper" },
+            "context-menu": { "type": "boolean", "description": "Context menu component" },
+            "dialog": { "type": "boolean", "description": "Dialog modal with header and footer" },
+            "dialog-content": { "type": "boolean", "description": "Dialog content area" },
+            "dialog-footer": { "type": "boolean", "description": "Dialog footer section" },
+            "dialog-header": { "type": "boolean", "description": "Dialog header section" },
+            "dialog-trigger": { "type": "boolean", "description": "Dialog trigger button" },
+            "dropdown-menu": { "type": "boolean", "description": "Dropdown menu component" },
+            "hover-card": { "type": "boolean", "description": "Hover card component" },
+            "menu": { "type": "boolean", "description": "Menu with groups, items and shortcuts" },
+            "menu-bar": { "type": "boolean", "description": "Menu bar component" },
+            "menu-conditional": { "type": "boolean", "description": "Conditional menu rendering" },
+            "menu-container": { "type": "boolean", "description": "Menu container wrapper" },
+            "menu-group": { "type": "boolean", "description": "Menu item group" },
+            "menu-groups": { "type": "boolean", "description": "Menu groups wrapper" },
+            "menu-input": { "type": "boolean", "description": "Menu input field" },
+            "menu-item": { "type": "boolean", "description": "Individual menu item" },
+            "menu-items": { "type": "boolean", "description": "Menu items wrapper" },
+            "menu-shortcut": { "type": "boolean", "description": "Menu keyboard shortcut display" },
+            "menu-sub-menu": { "type": "boolean", "description": "Sub-menu component" },
+            "menu-sub-trigger": { "type": "boolean", "description": "Sub-menu trigger" },
+            "navigation-menu": { "type": "boolean", "description": "Navigation menu with content and links" },
+            "navigation-menu-content": { "type": "boolean", "description": "Navigation menu content area" },
+            "navigation-menu-featured": { "type": "boolean", "description": "Navigation menu featured section" },
+            "navigation-menu-item": { "type": "boolean", "description": "Individual navigation menu item" },
+            "navigation-menu-items": { "type": "boolean", "description": "Navigation menu items wrapper" },
+            "navigation-menu-link": { "type": "boolean", "description": "Navigation menu link" },
+            "navigation-menu-links": { "type": "boolean", "description": "Navigation menu links wrapper" },
+            "navigation-menu-list": { "type": "boolean", "description": "Navigation menu list" },
+            "navigation-menu-trigger": { "type": "boolean", "description": "Navigation menu trigger" },
+            "popup": { "type": "boolean", "description": "Popup component with trigger" },
+            "popup-content": { "type": "boolean", "description": "Popup content area" },
+            "popup-trigger": { "type": "boolean", "description": "Popup trigger element" },
+            "tooltip": { "type": "boolean", "description": "Tooltip component" }
+          },
+          "additionalProperties": false
+        },
+        "display": {
+          "type": "object",
+          "description": "Content display components",
+          "properties": {
+            "accordion": { "type": "boolean", "description": "Accordion with collapsible items" },
+            "accordion-content": { "type": "boolean", "description": "Accordion content panel" },
+            "accordion-item": { "type": "boolean", "description": "Individual accordion item" },
+            "accordion-items": { "type": "boolean", "description": "Accordion items wrapper" },
+            "accordion-trigger": { "type": "boolean", "description": "Accordion trigger button" },
+            "avatar": { "type": "boolean", "description": "Avatar image component" },
+            "calendar": { "type": "boolean", "description": "Calendar date picker component" },
+            "card": { "type": "boolean", "description": "Card with header, content and footer" },
+            "card-content": { "type": "boolean", "description": "Card content area" },
+            "card-footer": { "type": "boolean", "description": "Card footer section" },
+            "card-header": { "type": "boolean", "description": "Card header section" },
+            "carousel": { "type": "boolean", "description": "Image/content carousel component" },
+            "code": { "type": "boolean", "description": "Code syntax highlighting component" },
+            "image": { "type": "boolean", "description": "Responsive image component" },
+            "navbar": { "type": "boolean", "description": "Navigation bar component" },
+            "table-of-contents": { "type": "boolean", "description": "Table of contents component" },
+            "text": { "type": "boolean", "description": "Text display component" },
+            "video-player": { "type": "boolean", "description": "Video player component" }
+          },
+          "additionalProperties": false
+        },
+        "data": {
+          "type": "object",
+          "description": "Data display and table components",
+          "properties": {
+            "data-table": { "type": "boolean", "description": "Complete data table with toolbar" },
+            "table": { "type": "boolean", "description": "Basic table with header, body, rows and cells" },
+            "table-body": { "type": "boolean", "description": "Table body section" },
+            "table-cell": { "type": "boolean", "description": "Individual table cell" },
+            "table-head": { "type": "boolean", "description": "Table header cell" },
+            "table-header": { "type": "boolean", "description": "Table header section" },
+            "table-pagination": { "type": "boolean", "description": "Table pagination component" },
+            "table-row": { "type": "boolean", "description": "Table row component" },
+            "table-toolbar": { "type": "boolean", "description": "Table toolbar component" }
+          },
+          "additionalProperties": false
+        },
+        "interactive": {
+          "type": "object",
+          "description": "Rich interactive components",
+          "properties": {
+            "copy-to-clipboard": { "type": "boolean", "description": "Copy to clipboard component" },
+            "monaco-editor": { "type": "boolean", "description": "Monaco code editor component" }
+          },
+          "additionalProperties": false
+        },
+        "indicators": {
+          "type": "object",
+          "description": "Visual indicator components",
+          "properties": {
+            "checkbox-indicator": { "type": "boolean", "description": "Checkbox visual indicator" },
+            "ellipsis": { "type": "boolean", "description": "Loading ellipsis indicator" },
+            "radio-indicator": { "type": "boolean", "description": "Radio button visual indicator" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
     }
   },
   "required": ["style", "tailwind", "aliases"],

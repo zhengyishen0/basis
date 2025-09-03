@@ -26,32 +26,32 @@ The TableOfContents component automatically generates a navigable table of conte
             Code
         </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-6">
+    <TabsContent value="preview" preview class="space-y-6 justify-start">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2 space-y-6">
-                <div class="prose max-w-none">
-                    <h2 id="getting-started">Getting Started</h2>
+                <div class="space-y-6 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-foreground [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-foreground [&_h3]:mb-3 [&_p]:text-foreground [&_p]:leading-relaxed [&_p]:mb-4">
+                    <h3 id="getting-started">Getting Started</h3>
                     <p>This section covers the basics of using the Table of Contents component. It automatically detects headings and creates navigation links.</p>
                     
-                    <h3 id="installation">Installation</h3>
+                    <h4 id="installation">Installation</h4>
                     <p>Install the component by importing it from the UI library. No additional setup required.</p>
                     
-                    <h3 id="basic-usage">Basic Usage</h3>
+                    <h4 id="basic-usage">Basic Usage</h4>
                     <p>Add the component to your page and it will automatically scan for headings.</p>
                     
-                    <h2 id="configuration">Configuration</h2>
+                    <h3 id="configuration">Configuration</h3>
                     <p>The component offers several configuration options for customization.</p>
                     
-                    <h3 id="auto-collapse">Auto Collapse</h3>
+                    <h4 id="auto-collapse">Auto Collapse</h4>
                     <p>Enable auto-collapse to show only the active section's subsections.</p>
                     
-                    <h3 id="custom-selectors">Custom Selectors</h3>
+                    <h4 id="custom-selectors">Custom Selectors</h4>
                     <p>Specify a container selector to scan for headings in specific areas.</p>
                     
-                    <h2 id="advanced-features">Advanced Features</h2>
+                    <h3 id="advanced-features">Advanced Features</h3>
                     <p>Explore advanced functionality for complex documentation.</p>
                     
-                    <h3 id="smooth-scrolling">Smooth Scrolling</h3>
+                    <h4 id="smooth-scrolling">Smooth Scrolling</h4>
                     <p>Built-in smooth scrolling with offset compensation for fixed headers.</p>
                 </div>
             </div>
@@ -83,26 +83,29 @@ import { TableOfContents } from '@/components/ui/display';
 ---
 
 {/* Auto-extract from page headings */}
-<TableOfContents 
+
+<TableOfContents
     containerSelector="main"
     autoCollapse={true}
     title="On This Page"
 />
 
 {/* Manual heading list */}
-<TableOfContents 
+
+<TableOfContents
     headings={[
         { depth: 2, slug: 'introduction', text: 'Introduction' },
         { depth: 3, slug: 'overview', text: 'Overview' },
         { depth: 3, slug: 'features', text: 'Features' },
         { depth: 2, slug: 'usage', text: 'Usage' },
         { depth: 3, slug: 'basic', text: 'Basic Example' },
-        { depth: 3, slug: 'advanced', text: 'Advanced Usage' }
+        { depth: 3, slug: 'advanced', text: 'Advanced Usage' },
     ]}
     autoCollapse={false}
 />
 
 {/* Custom styled TOC */}
+
 <TableOfContents 
     containerSelector=".content"
     title="Table of Contents"
@@ -112,35 +115,25 @@ import { TableOfContents } from '@/components/ui/display';
     </TabsContent>
 </Tabs>
 
-## Features
-
-- **Automatic Detection**: Scans page for H2, H3, and H4 headings
-- **Manual Configuration**: Accept pre-defined heading structures
-- **Active Section Tracking**: Highlights current section using Intersection Observer
-- **Smooth Scrolling**: Animated navigation with header offset compensation
-- **Auto-Collapse**: Optional collapsible subsections for better organization
-- **Responsive Design**: Hidden on mobile, visible on larger screens
-- **URL Hash Support**: Updates browser URL with current section
-- **Alpine.js Integration**: Reactive state management and smooth interactions
-- **Accessibility**: Full keyboard navigation and screen reader support
-
 ## Auto-Detection vs Manual
 
 ### Auto-Detection Mode
+
 When `containerSelector` is provided, the component automatically scans for headings:
 
 ```astro
-<TableOfContents 
+<TableOfContents
     containerSelector="main"
     autoCollapse={true}
 />
 ```
 
 ### Manual Mode
+
 Provide a pre-defined heading structure:
 
 ```astro
-<TableOfContents 
+<TableOfContents
     headings={[
         { depth: 2, slug: 'section-1', text: 'Section 1' },
         { depth: 3, slug: 'subsection-1-1', text: 'Subsection 1.1' }
@@ -150,287 +143,10 @@ Provide a pre-defined heading structure:
 
 ## API Reference
 
-### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `headings` | `Array<Heading>` | `[]` | Manual heading structure |
-| `class` | `string` | - | Additional CSS classes |
-| `autoCollapse` | `boolean` | `false` | Enable collapsible subsections |
-| `title` | `string` | `'On This Page'` | TOC title |
-| `containerSelector` | `string` | - | CSS selector for auto-detection |
-
-### Heading Object
-
-```typescript
-interface Heading {
-    depth: number;      // Heading level (2, 3, or 4)
-    slug: string;       // URL fragment identifier
-    text: string;       // Display text
-}
-```
-
-### Alpine.js State
-
-The component exposes these reactive properties:
-
-```javascript
-{
-    headings: [],              // Current heading list
-    activeId: null,            // Currently active heading ID
-    observer: null,            // Intersection Observer instance
-    autoCollapse: false,       // Collapse state
-    expandedSections: Set(),   // Set of expanded section IDs
-    containerSelector: null    // Container for auto-detection
-}
-```
-
-### Methods
-
-Access these methods through the component's Alpine.js scope:
-
-```javascript
-// Navigation
-this.scrollTo(slug)           // Smooth scroll to heading
-
-// Heading management
-this.extractHeadings()        // Extract headings from container
-this.setInitialActive()       // Set initial active heading
-this.updateExpanded(slug)     // Update expanded sections
-
-// Observer management
-this.setupObserver()          // Initialize intersection observer
-this.observeHeadings()        // Start observing headings
-this.destroy()               // Cleanup observers
-```
-
-## Usage Examples
-
-### Basic Auto-Generated TOC
-
-```astro
----
-import { TableOfContents } from '@/components/ui/display';
----
-
-<div class="flex">
-    <main class="flex-1">
-        <h2>Introduction</h2>
-        <p>Content here...</p>
-        
-        <h3>Getting Started</h3>
-        <p>More content...</p>
-        
-        <h2>Advanced Topics</h2>
-        <p>Advanced content...</p>
-    </main>
-    
-    <aside class="w-64">
-        <TableOfContents 
-            containerSelector="main"
-            autoCollapse={true}
-        />
-    </aside>
-</div>
-```
-
-### Documentation Layout
-
-```astro
-<div class="grid grid-cols-4 gap-8">
-    <article class="col-span-3 prose">
-        <h2 id="installation">Installation</h2>
-        <p>Install the package...</p>
-        
-        <h3 id="npm-install">NPM Install</h3>
-        <p>Use npm to install...</p>
-        
-        <h3 id="yarn-install">Yarn Install</h3>
-        <p>Use yarn to install...</p>
-        
-        <h2 id="configuration">Configuration</h2>
-        <p>Configure the package...</p>
-    </article>
-    
-    <aside class="col-span-1">
-        <TableOfContents 
-            containerSelector="article"
-            title="Guide Contents"
-            class="sticky top-8"
-        />
-    </aside>
-</div>
-```
-
-### Manual Heading Structure
-
-```astro
-<TableOfContents 
-    headings={[
-        { depth: 2, slug: 'overview', text: 'Overview' },
-        { depth: 3, slug: 'features', text: 'Key Features' },
-        { depth: 3, slug: 'benefits', text: 'Benefits' },
-        { depth: 2, slug: 'getting-started', text: 'Getting Started' },
-        { depth: 3, slug: 'quick-start', text: 'Quick Start' },
-        { depth: 3, slug: 'installation', text: 'Installation' },
-        { depth: 4, slug: 'npm', text: 'NPM' },
-        { depth: 4, slug: 'yarn', text: 'Yarn' }
-    ]}
-    autoCollapse={true}
-    title="Documentation"
-/>
-```
-
-### Blog Post TOC
-
-```astro
----
-const { headings } = await Astro.props.post.render();
----
-
-<article class="max-w-4xl mx-auto">
-    <div class="lg:flex lg:gap-8">
-        <div class="lg:flex-1">
-            <Content />
-        </div>
-        
-        <div class="lg:w-64">
-            <TableOfContents 
-                headings={headings}
-                title="Article Contents"
-                autoCollapse={false}
-                class="lg:sticky lg:top-8 bg-gray-50 rounded-lg p-4"
-            />
-        </div>
-    </div>
-</article>
-```
-
-### Custom Styled TOC
-
-```astro
-<TableOfContents 
-    containerSelector=".content"
-    autoCollapse={true}
-    title="Contents"
-    class="
-        bg-white border border-gray-200 rounded-xl p-6 shadow-sm
-        sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto
-    "
-/>
-
-<style>
-    .table-of-contents {
-        /* Custom scrollbar */
-        scrollbar-width: thin;
-        scrollbar-color: #cbd5e0 transparent;
-    }
-    
-    .table-of-contents::-webkit-scrollbar {
-        width: 4px;
-    }
-    
-    .table-of-contents::-webkit-scrollbar-thumb {
-        background: #cbd5e0;
-        border-radius: 2px;
-    }
-</style>
-```
-
-## Auto-Collapse Behavior
-
-When `autoCollapse` is enabled:
-
-1. **Initial State**: Only H2 headings are visible
-2. **Active Section**: H3/H4 under active H2 become visible
-3. **Navigation**: Clicking any heading expands its parent section
-4. **Smooth Transitions**: CSS transitions for expand/collapse animations
-
-```astro
-<TableOfContents 
-    autoCollapse={true}
-    /* Only active H2 section shows subsections */
-/>
-```
-
-## Styling and Customization
-
-### Default Classes
-
-The component uses these Tailwind classes:
-
-```css
-/* Wrapper */
-.sticky.top-4.hidden.lg:block
-
-/* Title */
-.font-medium.text-sm
-
-/* List */
-.list-none.border-l.text-sm
-
-/* Links */
-.inline-block.py-1.no-underline.transition-colors
-.pl-4    /* H2 headings */
-.pl-8    /* H3 headings */  
-.pl-12   /* H4 headings */
-
-/* Active state */
-.font-medium.text-foreground.border-l-2.border-foreground
-
-/* Inactive state */
-.text-muted-foreground.hover:text-foreground.border-transparent
-```
-
-### Custom Styling
-
-```astro
-<TableOfContents 
-    class="
-        bg-gradient-to-b from-blue-50 to-white
-        border-2 border-blue-200 
-        rounded-2xl p-6
-        shadow-lg
-    "
-/>
-```
-
-## Accessibility Features
-
-- **Semantic HTML**: Uses proper `nav`, `ul`, and `li` elements
-- **ARIA Labels**: Descriptive labels for screen readers
-- **Keyboard Navigation**: Full keyboard support for all links
-- **Focus Management**: Visible focus indicators
-- **Skip Links**: Allows skipping to main content
-- **High Contrast**: Works well with high contrast mode
-
-## Performance Considerations
-
-- **Intersection Observer**: Efficient scroll tracking with minimal performance impact
-- **Debounced Updates**: Prevents excessive state updates during fast scrolling
-- **Lazy Initialization**: Observer setup only after component mount
-- **Memory Management**: Proper cleanup on component destruction
-
-## Browser Support
-
-- **Modern Browsers**: Chrome 60+, Firefox 55+, Safari 12+, Edge 79+
-- **Intersection Observer**: Required for active section tracking
-- **Smooth Scroll**: Graceful fallback to instant scroll in older browsers
-- **CSS Grid**: Used for responsive layout
-
-## Troubleshooting
-
-### TOC Not Populating
-- Verify `containerSelector` targets the correct element
-- Ensure headings have proper HTML structure (H2, H3, H4)
-- Check that headings exist when component initializes
-
-### Active State Not Working
-- Confirm headings have unique `id` attributes
-- Check that Intersection Observer is supported
-- Verify no CSS is preventing scroll detection
-
-### Smooth Scrolling Issues
-- Adjust the `yOffset` value for fixed header compensation
-- Check for competing scroll behavior from other scripts
-- Ensure scroll container is properly identified
+| Prop                | Type             | Default          | Description                     |
+| ------------------- | ---------------- | ---------------- | ------------------------------- |
+| `headings`          | `Array<Heading>` | `[]`             | Manual heading structure        |
+| `class`             | `string`         | -                | Additional CSS classes          |
+| `autoCollapse`      | `boolean`        | `false`          | Enable collapsible subsections  |
+| `title`             | `string`         | `'On This Page'` | TOC title                       |
+| `containerSelector` | `string`         | -                | CSS selector for auto-detection |

@@ -45,9 +45,7 @@ The Button component is a versatile, accessible button element that supports mul
             <div class="flex flex-row gap-4 flex-wrap justify-center items-center">
                 <Button as="a" href="#" variant="outline">Link Button</Button>
                 <div x-data="{ count: 0 }">
-                    <Button x-on:click="count++">
-                        Clicked: <span x-text="count"></span> times
-                    </Button>
+                    <Button x-on:click="count++">Clicked: <span x-text="count"></span> times</Button>
                 </div>
             </div>
     </TabsContent>
@@ -64,18 +62,26 @@ import { Button } from '@/components/ui/forms';
 <Button variant="outline">Outline</Button>
 
 {/* Sizes */}
+
 <Button size="sm">Small</Button>
 <Button size="md">Medium</Button>
 <Button size="lg">Large</Button>
 
 {/* Disabled */}
+
 <Button disabled>Disabled</Button>
-<Button variant="secondary" disabled>Disabled Secondary</Button>
+<Button variant="secondary" disabled>
+    Disabled Secondary
+</Button>
 
 {/* As Link */}
-<Button as="a" href="#" variant="outline">Link Button</Button>
+
+<Button as="a" href="#" variant="outline">
+    Link Button
+</Button>
 
 {/* Alpine.js Integration */}
+
 <div x-data="{ count: 0 }">
     <Button x-on:click="count++">
         Clicked: <span x-text="count"></span> times
@@ -87,13 +93,11 @@ import { Button } from '@/components/ui/forms';
 
 ## API Reference
 
-### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `'default', 'secondary', 'destructive', 'outline'` | `'default'` | Button variant |
-| `size` | `'sm', 'md', 'lg'` | `'md'` | Button size |
-| `disabled` | `boolean` | `false` | Disabled state |
-| `as` | `'button', 'a'` | `'button'` | Render as button or anchor |
-| `href` | `string` | - | URL when rendered as anchor |
-| `class` | `string` | - | Additional CSS classes |
+| Prop       | Type                                               | Default     | Description                 |
+| ---------- | -------------------------------------------------- | ----------- | --------------------------- |
+| `variant`  | `'default', 'secondary', 'destructive', 'outline'` | `'default'` | Button variant              |
+| `size`     | `'sm', 'md', 'lg'`                                 | `'md'`      | Button size                 |
+| `disabled` | `boolean`                                          | `false`     | Disabled state              |
+| `as`       | `'button', 'a'`                                    | `'button'`  | Render as button or anchor  |
+| `href`     | `string`                                           | -           | URL when rendered as anchor |
+| `class`    | `string`                                           | -           | Additional CSS classes      |

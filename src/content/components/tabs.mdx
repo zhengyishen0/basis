@@ -25,63 +25,33 @@ Tabs organize content into multiple sections and allow users to navigate between
             Code
         </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col justify-center space-y-8">
-            <div>
-                <h4 class="text-sm font-semibold mb-3">Pills Variant</h4>
-                <Tabs defaultValue="account" class="w-full">
-                    <TabsList variant="pills" slot="list">
-                        <TabsTrigger value="account" variant="pills">Account</TabsTrigger>
-                        <TabsTrigger value="password" variant="pills">Password</TabsTrigger>
-                        <TabsTrigger value="settings" variant="pills">Settings</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="account">
-                        <div class="p-4 bg-muted/50 rounded-lg">
-                            <h3 class="font-semibold mb-2">Account Information</h3>
-                            <p class="text-sm">Manage your account details and preferences here.</p>
-                        </div>
-                    </TabsContent>
-                    <TabsContent value="password">
-                        <div class="p-4 bg-muted/50 rounded-lg">
-                            <h3 class="font-semibold mb-2">Password Settings</h3>
-                            <p class="text-sm">Update your password and security settings.</p>
-                        </div>
-                    </TabsContent>
-                    <TabsContent value="settings">
-                        <div class="p-4 bg-muted/50 rounded-lg">
-                            <h3 class="font-semibold mb-2">General Settings</h3>
-                            <p class="text-sm">Configure your application preferences.</p>
-                        </div>
-                    </TabsContent>
-                </Tabs>
-            </div>
-            <div>
-                <h4 class="text-sm font-semibold mb-3">Ghost Variant with Underline</h4>
-                <Tabs defaultValue="overview" underline class="w-full">
-                    <TabsList variant="ghost" slot="list">
-                        <TabsTrigger value="overview" variant="ghost">Overview</TabsTrigger>
-                        <TabsTrigger value="analytics" variant="ghost">Analytics</TabsTrigger>
-                        <TabsTrigger value="reports" variant="ghost">Reports</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="overview">
-                        <div class="p-4 bg-muted/50 rounded-lg">
-                            <h3 class="font-semibold mb-2">Overview</h3>
-                            <p class="text-sm">Get a high-level view of your metrics.</p>
-                        </div>
-                    </TabsContent>
-                    <TabsContent value="analytics">
-                        <div class="p-4 bg-muted/50 rounded-lg">
-                            <h3 class="font-semibold mb-2">Analytics</h3>
-                            <p class="text-sm">Deep dive into your data.</p>
-                        </div>
-                    </TabsContent>
-                    <TabsContent value="reports">
-                        <div class="p-4 bg-muted/50 rounded-lg">
-                            <h3 class="font-semibold mb-2">Reports</h3>
-                            <p class="text-sm">Generate and export reports.</p>
-                        </div>
-                    </TabsContent>
-                </Tabs>
-            </div>
+    <TabsContent value="preview" preview class="flex flex-col justify-center items-center space-y-8">
+        <Tabs defaultValue="account" class="w-72">
+            <TabsList variant="pills" slot="list">
+                <TabsTrigger value="account" variant="pills">Account</TabsTrigger>
+                <TabsTrigger value="password" variant="pills">Password</TabsTrigger>
+                <TabsTrigger value="settings" variant="pills">Settings</TabsTrigger>
+            </TabsList>
+            <TabsContent value="account">
+                <div class="border p-4 bg-muted/50 rounded-lg">
+                    <h3 class="font-semibold mb-2">Account Information</h3>
+                    <p class="text-sm">Manage your account details and preferences here.</p>
+                </div>
+            </TabsContent>
+            <TabsContent value="password">
+                <div class="border p-4 bg-muted/50 rounded-lg">
+                    <h3 class="font-semibold mb-2">Password Settings</h3>
+                    <p class="text-sm">Update your password and security settings.</p>
+                </div>
+            </TabsContent>
+            <TabsContent value="settings">
+                <div class="border p-4 bg-muted/50 rounded-lg">
+                    <h3 class="font-semibold mb-2">General Settings</h3>
+                    <p class="text-sm">Configure your application preferences.</p>
+                </div>
+            </TabsContent>
+        </Tabs>
+
     </TabsContent>
     <TabsContent value="code">
         <Code
@@ -93,58 +63,48 @@ import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
 import TabsTrigger from '@/components/ui/navigation/tabs/TabsTrigger.astro';
 import TabsContent from '@/components/ui/navigation/tabs/TabsContent.astro';
 ---
-{/* Pills Variant */}
-<Tabs defaultValue="account">
+
+<Tabs defaultValue="account" class="w-72">
     <TabsList variant="pills" slot="list">
-        <TabsTrigger value="account" variant="pills">Account</TabsTrigger>
-        <TabsTrigger value="password" variant="pills">Password</TabsTrigger>
-        <TabsTrigger value="settings" variant="pills">Settings</TabsTrigger>
+        <TabsTrigger value="account" variant="pills">
+            Account
+        </TabsTrigger>
+        <TabsTrigger value="password" variant="pills">
+            Password
+        </TabsTrigger>
+        <TabsTrigger value="settings" variant="pills">
+            Settings
+        </TabsTrigger>
     </TabsList>
     <TabsContent value="account">
-        <div class="p-4">
-            <h3>Account Information</h3>
-            <p>Manage your account details.</p>
+        <div class="border p-4 bg-muted/50 rounded-lg">
+            <h3 class="font-semibold mb-2">Account Information</h3>
+            <p class="text-sm">
+                Manage your account details and preferences here.
+            </p>
         </div>
     </TabsContent>
     <TabsContent value="password">
-        <div class="p-4">
-            <h3>Password Settings</h3>
-            <p>Update your password.</p>
+        <div class="border p-4 bg-muted/50 rounded-lg">
+            <h3 class="font-semibold mb-2">Password Settings</h3>
+            <p class="text-sm">Update your password and security settings.</p>
         </div>
     </TabsContent>
     <TabsContent value="settings">
-        <div class="p-4">
-            <h3>General Settings</h3>
-            <p>Configure preferences.</p>
+        <div class="border p-4 bg-muted/50 rounded-lg">
+            <h3 class="font-semibold mb-2">General Settings</h3>
+            <p class="text-sm">Configure your application preferences.</p>
         </div>
     </TabsContent>
 </Tabs>
 
-{/* Ghost Variant with Underline */}
+`}
+/>
+</TabsContent>
 
-<Tabs defaultValue="overview" underline>
-    <TabsList variant="ghost" slot="list">
-        <TabsTrigger value="overview" variant="ghost">Overview</TabsTrigger>
-        <TabsTrigger value="analytics" variant="ghost">Analytics</TabsTrigger>
-        <TabsTrigger value="reports" variant="ghost">Reports</TabsTrigger>
-    </TabsList>
-    <TabsContent value="overview">
-        <div class="p-4">Content for Overview</div>
-    </TabsContent>
-    <TabsContent value="analytics">
-        <div class="p-4">Content for Analytics</div>
-    </TabsContent>
-    <TabsContent value="reports">
-        <div class="p-4">Content for Reports</div>
-    </TabsContent>
-</Tabs>`}
-        />
-    </TabsContent>
 </Tabs>
 
 ## API Reference
-
-### Props
 
 | Component     | Props                                               | Description                       |
 | ------------- | --------------------------------------------------- | --------------------------------- |

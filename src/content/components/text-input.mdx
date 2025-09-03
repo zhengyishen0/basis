@@ -26,7 +26,7 @@ Text Input component provides a styled input field with support for different ty
             Code
         </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col justify-center items-center">
+    <TabsContent value="preview" preview class="flex flex-col justify-start items-center">
             <div class="w-full max-w-md space-y-4">
                 <div>
                     <label for="name" class="block text-sm font-medium mb-2">Name</label>
@@ -69,48 +69,73 @@ Text Input component provides a styled input field with support for different ty
             code={`---
 import TextInput from '@/components/ui/forms/TextInput.astro';
 ---
-{/* Basic Input */}
-<TextInput placeholder="Enter your name" />
 
-{/* Input Types */}
-<TextInput type="email" placeholder="Email address" />
-<TextInput type="password" placeholder="Password" />
-<TextInput type="tel" placeholder="Phone number" />
-
-{/* With Labels */}
 <div>
-    <label for="name" class="block text-sm font-medium mb-2">Name</label>
-    <TextInput id="name" placeholder="John Doe" />
+    <label for="name" class="block text-sm font-medium mb-2">
+        Name
+    </label>
+    <TextInput id="name" placeholder="Enter your name" />
+</div>
+<div>
+    <label for="email" class="block text-sm font-medium mb-2">
+        Email
+    </label>
+    <TextInput id="email" type="email" placeholder="john@example.com" />
+</div>
+<div>
+    <label for="password" class="block text-sm font-medium mb-2">
+        Password
+    </label>
+    <TextInput id="password" type="password" placeholder="Enter password" />
+</div>
+<div>
+    <label for="phone" class="block text-sm font-medium mb-2">
+        Phone Number
+    </label>
+    <TextInput id="phone" type="tel" placeholder="(555) 123-4567" />
+</div>
+<div>
+    <label for="disabled" class="block text-sm font-medium mb-2">
+        Disabled Input
+    </label>
+    <TextInput id="disabled" placeholder="Disabled input" disabled />
+</div>
+<div>
+    <label for="readonly" class="block text-sm font-medium mb-2">
+        Read-only Input
+    </label>
+    <TextInput
+        id="readonly"
+        placeholder="Read-only input"
+        readonly
+        value="This is read-only"
+    />
+</div>
+<div x-data="{ value: '' }">
+    <label for="reactive" class="block text-sm font-medium mb-2">
+        Reactive Input (Alpine.js)
+    </label>
+    <TextInput id="reactive" x-model="value" placeholder="Type something..." />
+    <p
+        class="text-sm text-muted-foreground mt-2"
+        x-text="value ? 'You typed: ' + value : 'Start typing above...'"
+    ></p>
 </div>
 
-{/* States */}
-<TextInput placeholder="Normal input" />
-<TextInput placeholder="Disabled input" disabled />
-<TextInput placeholder="Read-only input" readonly value="Read-only value" />
-<TextInput placeholder="Required input" required />
+`}
+/>
+</TabsContent>
 
-{/* Alpine.js Integration */}
-<div x-data="{ value: '' }">
-    <TextInput 
-        x-model="value" 
-        placeholder="Type something..."
-    />
-    <p x-text="'You typed: ' + value"></p>
-</div>`}
-        />
-    </TabsContent>
 </Tabs>
 
 ## API Reference
 
-### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `type` | `string` | `'text'` | Input type (text, email, password, etc.) |
-| `placeholder` | `string` | - | Placeholder text |
-| `value` | `string` | - | Input value |
-| `disabled` | `boolean` | `false` | Disabled state |
-| `readonly` | `boolean` | `false` | Read-only state |
-| `required` | `boolean` | `false` | Required field |
-| `class` | `string` | - | Additional CSS classes |
+| Prop          | Type      | Default  | Description                              |
+| ------------- | --------- | -------- | ---------------------------------------- |
+| `type`        | `string`  | `'text'` | Input type (text, email, password, etc.) |
+| `placeholder` | `string`  | -        | Placeholder text                         |
+| `value`       | `string`  | -        | Input value                              |
+| `disabled`    | `boolean` | `false`  | Disabled state                           |
+| `readonly`    | `boolean` | `false`  | Read-only state                          |
+| `required`    | `boolean` | `false`  | Required field                           |
+| `class`       | `string`  | -        | Additional CSS classes                   |

@@ -18,139 +18,91 @@ An interactive calendar component built with Alpine.js that supports single date
 
 <Tabs defaultValue="preview" class="h-auto">
     <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
+        <TabsTrigger value="preview" variant="pills">
+            Preview
+        </TabsTrigger>
+        <TabsTrigger value="code" variant="pills">
+            Code
+        </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-8">
-        {/* Selection Modes */}
+    <TabsContent value="preview" preview class="space-y-8 justify-start">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="space-y-4">
-                <h3 class="text-lg font-semibold">Single Date</h3>
+                <span class="text-lg font-semibold">Basic Calendar</span>
                 <Calendar mode="single" />
             </div>
             <div class="space-y-4">
-                <h3 class="text-lg font-semibold">Date Range</h3>
-                <Calendar mode="range" variant="outline" />
+                <span class="text-lg font-semibold">Dropdown Navigation</span>
+                <Calendar
+                    mode="single"
+                    captionLayout="dropdown"
+                    fromYear={2020}
+                    toYear={2030}
+                />
             </div>
         </div>
-
-        {/* Multiple Dates & Months */}
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="space-y-4">
-                <h3 class="text-lg font-semibold">Multiple Dates</h3>
-                <Calendar mode="multiple" variant="minimal" size="sm" />
-            </div>
-            <div class="space-y-4">
-                <h3 class="text-lg font-semibold">Multiple Months</h3>
+                <span class="text-lg font-semibold">Multiple Months</span>
                 <Calendar mode="range" numberOfMonths={2} density="compact" />
-            </div>
-        </div>
-
-        {/* Variants & Navigation */}
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="space-y-4">
-                <h3 class="text-lg font-semibold">Dropdown Navigation</h3>
-                <Calendar mode="single" captionLayout="dropdown" fromYear={2020} toYear={2030} />
-            </div>
-            <div class="space-y-4">
-                <h3 class="text-lg font-semibold">Variants</h3>
-                <div class="flex gap-4">
-                    <Calendar mode="single" variant="default" size="sm" density="compact" />
-                    <Calendar mode="single" variant="outline" size="sm" density="compact" />
-                </div>
             </div>
         </div>
     </TabsContent>
     <TabsContent value="code">
-        <Code language="astro" code={`---
+        <Code
+            language="astro"
+            code={`---
 import Calendar from '@/components/ui/display/Calendar.astro';
 ---
-
-{/* Single Date Selection */}
-<Calendar mode="single" />
-
-{/* Date Range Selection */}
-<Calendar 
-    mode="range" 
-    variant="outline"
-    size="lg"
-/>
-
-{/* Multiple Date Selection */}
-<Calendar 
-    mode="multiple"
-    variant="minimal"
-    size="sm"
-/>
-
-{/* Multiple Months */}
-<Calendar 
-    mode="range" 
-    numberOfMonths={2}
-    density="compact"
-/>
-
-{/* Dropdown Navigation */}
-<Calendar 
-    mode="single"
-    captionLayout="dropdown"
-    fromYear={2020}
-    toYear={2030}
-/>
-
-{/* With Date Constraints */}
-<Calendar 
-    mode="single"
-    minDate={new Date()}
-    maxDate={new Date(2024, 11, 31)}
-    disabled="(date) => date.getDay() === 0 || date.getDay() === 6"
-/>
-
-{/* Custom Event Handling */}
-<div x-data="{ selectedDate: null }">
-    <Calendar 
-        mode="single"
-        x-on:date-selected="selectedDate = $event.detail.date"
-    />
-    <p x-show="selectedDate" x-text="'Selected: ' + selectedDate"></p>
-</div>`} />
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div class="space-y-4">
+        <h3 class="text-lg font-semibold">Basic Calendar</h3>
+        <Calendar mode="single"  />
+    </div>
+    <div class="space-y-4">
+        <h3 class="text-lg font-semibold">Dropdown Navigation</h3>
+        <Calendar mode="single" captionLayout="dropdown" fromYear={2020} toYear={2030} />
+    </div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div class="space-y-4">
+        <h3 class="text-lg font-semibold">Multiple Months</h3>
+        <Calendar mode="range" numberOfMonths={2} density="compact" />
+    </div>
+</div>
+`}
+        />
     </TabsContent>
 </Tabs>
 
 ## API Reference
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `mode` | `'single' \, 'range' \, 'multiple'` | `'single'` | Date selection behavior |
-| `variant` | `'default' \, 'outline' \, 'minimal'` | `'default'` | Visual style variant |
-| `size` | `'sm' \, 'md' \, 'lg'` | `'md'` | Calendar size |
-| `density` | `'compact' \, 'normal' \, 'comfortable'` | `'normal'` | Spacing density |
-| `selected` | `Date \, Date[] \, DateRange` | - | Currently selected date(s) |
-| `onSelect` | `string` | `'handleDateSelect'` | Alpine.js function name for selection |
-| `disabled` | `string` | - | Alpine.js function for disabled dates |
-| `minDate` | `Date` | - | Minimum selectable date |
-| `maxDate` | `Date` | - | Maximum selectable date |
-| `numberOfMonths` | `number` | `1` | Number of months to display |
-| `captionLayout` | `'buttons' \, 'dropdown'` | `'buttons'` | Navigation type |
-| `fromYear` | `number` | `currentYear - 10` | Start year for dropdown |
-| `toYear` | `number` | `currentYear + 10` | End year for dropdown |
-| `weekStartsOn` | `0-6` | `0` | First day of week (0 = Sunday) |
-| `showOutsideDays` | `boolean` | `true` | Show days from other months |
-| `className` | `string` | - | Additional CSS classes |
+| Prop              | Type                                     | Default              | Description                           |
+| ----------------- | ---------------------------------------- | -------------------- | ------------------------------------- |
+| `mode`            | `'single' \, 'range' \, 'multiple'`      | `'single'`           | Date selection behavior               |
+| `variant`         | `'default' \, 'outline' \, 'minimal'`    | `'default'`          | Visual style variant                  |
+| `size`            | `'sm' \, 'md' \, 'lg'`                   | `'md'`               | Calendar size                         |
+| `density`         | `'compact' \, 'normal' \, 'comfortable'` | `'normal'`           | Spacing density                       |
+| `selected`        | `Date \, Date[] \, DateRange`            | -                    | Currently selected date(s)            |
+| `onSelect`        | `string`                                 | `'handleDateSelect'` | Alpine.js function name for selection |
+| `disabled`        | `string`                                 | -                    | Alpine.js function for disabled dates |
+| `minDate`         | `Date`                                   | -                    | Minimum selectable date               |
+| `maxDate`         | `Date`                                   | -                    | Maximum selectable date               |
+| `numberOfMonths`  | `number`                                 | `1`                  | Number of months to display           |
+| `captionLayout`   | `'buttons' \, 'dropdown'`                | `'buttons'`          | Navigation type                       |
+| `fromYear`        | `number`                                 | `currentYear - 10`   | Start year for dropdown               |
+| `toYear`          | `number`                                 | `currentYear + 10`   | End year for dropdown                 |
+| `weekStartsOn`    | `0-6`                                    | `0`                  | First day of week (0 = Sunday)        |
+| `showOutsideDays` | `boolean`                                | `true`               | Show days from other months           |
+| `className`       | `string`                                 | -                    | Additional CSS classes                |
 
 ### Events
 
 The calendar dispatches `date-selected` events that can be handled with Alpine.js:
 
 ```astro
-<Calendar 
+<Calendar
     x-on:date-selected="handleDateSelection($event)"
     mode="single"
 />
 ```
-
-### Selection Modes
-
-- **Single**: Select one date
-- **Range**: Select a date range with start and end dates  
-- **Multiple**: Select multiple individual dates

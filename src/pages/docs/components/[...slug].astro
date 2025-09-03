@@ -5,11 +5,11 @@ import DocsLayout from '@/layouts/DocsLayout.astro';
 export async function getStaticPaths() {
     const components = await getCollection('components');
     
-    // Sort components by order if specified
+    // Sort components alphabetically by title
     const sortedComponents = components.sort((a, b) => {
-        const orderA = a.data.order ?? 999;
-        const orderB = b.data.order ?? 999;
-        return orderA - orderB;
+        const titleA = (a.data.title || a.slug || '').toString();
+        const titleB = (b.data.title || b.slug || '').toString();
+        return titleA.localeCompare(titleB, undefined, { sensitivity: 'base' });
     });
 
     return sortedComponents.map((entry, index) => {

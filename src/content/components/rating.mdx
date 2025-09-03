@@ -25,44 +25,10 @@ The Rating component provides interactive star-based feedback with hover effects
             Code
         </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="flex flex-col gap-6 items-center">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
-            <div class="flex flex-col gap-4 items-center">
-                <h3 class="text-sm font-medium text-muted-foreground">Interactive Rating</h3>
-                <Rating initialValue={3} maxStars={5}>
-                    <span class="text-sm text-muted-foreground">Click to reset</span>
-                </Rating>
-            </div>
-            <div class="flex flex-col gap-4 items-center">
-                <h3 class="text-sm font-medium text-muted-foreground">Readonly Display</h3>
-                <Rating readonly initialValue={4.5} maxStars={5}>
-                    <span class="text-sm font-medium">4.5 out of 5 stars</span>
-                </Rating>
-            </div>
-            <div class="flex flex-col gap-4 items-center">
-                <h3 class="text-sm font-medium text-muted-foreground">Custom Star Count</h3>
-                <Rating maxStars={3} initialValue={2}>
-                    <span class="text-sm text-muted-foreground">3-star scale</span>
-                </Rating>
-            </div>
-            <div class="flex flex-col gap-4 items-center">
-                <h3 class="text-sm font-medium text-muted-foreground">Disabled State</h3>
-                <Rating disabled initialValue={3} maxStars={5}>
-                    <span class="text-sm text-muted-foreground">Rating disabled</span>
-                </Rating>
-            </div>
-            <div class="flex flex-col gap-4 items-center md:col-span-2">
-                <h3 class="text-sm font-medium text-muted-foreground">Form Integration</h3>
-                <form class="flex flex-col gap-4 p-4 border border-border rounded-lg w-full max-w-sm">
-                    <Rating name="experience_rating" initialValue={0}>
-                        <span class="text-sm text-muted-foreground">Rate your experience</span>
-                    </Rating>
-                    <button type="submit" class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
-                        Submit Rating
-                    </button>
-                </form>
-            </div>
-        </div>
+    <TabsContent value="preview" preview class="flex flex-col gap-6 items-center justify-center">
+        <Rating initialValue={3} maxStars={5} size="xl">
+            <span class="text-sm text-muted-foreground">Click to reset</span>
+        </Rating>
     </TabsContent>
     <TabsContent value="code">
         <Code
@@ -70,65 +36,27 @@ The Rating component provides interactive star-based feedback with hover effects
             code={`---
 import Rating from '@/components/ui/forms/Rating.astro';
 ---
-
-<!-- Interactive Rating -->
 <Rating initialValue={3} maxStars={5}>
     <span class="text-sm text-muted-foreground">Click to reset</span>
 </Rating>
+`}
+/>
 
-<!-- Readonly Display -->
-<Rating readonly initialValue={4.5} maxStars={5}>
-    <span class="text-sm font-medium">4.5 out of 5 stars</span>
-</Rating>
+</TabsContent>
 
-<!-- Custom Star Count -->
-<Rating maxStars={3} initialValue={2}>
-    <span class="text-sm text-muted-foreground">3-star scale</span>
-</Rating>
-
-<!-- Disabled State -->
-<Rating disabled initialValue={3} maxStars={5}>
-    <span class="text-sm text-muted-foreground">Rating disabled</span>
-</Rating>
-
-<!-- Form Integration -->
-<form>
-    <Rating name="experience_rating" initialValue={0}>
-        <span class="text-sm text-muted-foreground">Rate your experience</span>
-    </Rating>
-    <button type="submit">Submit Rating</button>
-</form>
-
-<!-- Alpine.js Integration -->
-<div x-data="{ rating: 0 }">
-    <Rating 
-        x-model="rating" 
-        @rating-changed="console.log('Rating changed to:', $event.detail)"
-        initialValue={0}
-    >
-        <span class="text-sm text-muted-foreground">Dynamic rating</span>
-    </Rating>
-    <p x-text="\`Current rating: \${rating}\`"></p>
-</div>`}
-        />
-    </TabsContent>
 </Tabs>
 
 ## API Reference
 
-### Props
+| Prop           | Type      | Default | Description                      |
+| -------------- | --------- | ------- | -------------------------------- |
+| `maxStars`     | `number`  | `5`     | Maximum number of stars          |
+| `initialValue` | `number`  | `0`     | Initial rating value             |
+| `disabled`     | `boolean` | `false` | Disable user interaction         |
+| `readonly`     | `boolean` | `false` | Make the rating read-only        |
+| `name`         | `string`  | -       | Form field name for hidden input |
+| `class`        | `string`  | -       | Additional CSS classes           |
 
-| Prop           | Type      | Default | Description                                      |
-| -------------- | --------- | ------- | ------------------------------------------------ |
-| `maxStars`     | `number`  | `5`     | Maximum number of stars                          |
-| `initialValue` | `number`  | `0`     | Initial rating value                             |
-| `disabled`     | `boolean` | `false` | Disable user interaction                         |
-| `readonly`     | `boolean` | `false` | Make the rating read-only                        |
-| `name`         | `string`  | -       | Form field name for hidden input                |
-| `class`        | `string`  | -       | Additional CSS classes                           |
-
-### Events
-
-| Event            | Detail   | Description                        |
-| ---------------- | -------- | ---------------------------------- |
-| `rating-changed` | `number` | Fired when the rating value changes|
+| Event            | Detail   | Description                         |
+| ---------------- | -------- | ----------------------------------- |
+| `rating-changed` | `number` | Fired when the rating value changes |

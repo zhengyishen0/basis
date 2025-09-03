@@ -5,7 +5,13 @@ category: feedback
 order: 6
 ---
 
-import { Banner, BannerTitle, BannerDescription, BannerAction, BannerClose } from '@/components/ui/feedback/banner';
+import {
+    Banner,
+    BannerTitle,
+    BannerDescription,
+    BannerAction,
+    BannerClose,
+} from '@/components/ui/feedback/banner';
 import Code from '@/components/ui/display/Code.astro';
 import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
 import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
@@ -22,61 +28,7 @@ Banner is a composable notification component system built with shadcn-style com
         <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        <div class="space-y-4">
-            <Banner variant="default" visible={true}>
-                <Icon name="lucide:info" class="w-5 h-5 flex-shrink-0 mt-[2px]" />
-                <div class="flex-1 min-w-0">
-                    <BannerTitle>Welcome to our platform</BannerTitle>
-                    <BannerDescription>
-                        Get started by exploring our new features and improved user experience.
-                    </BannerDescription>
-                </div>
-                <BannerAction>
-                    <button class="px-3 py-1 bg-primary-foreground/20 hover:bg-primary-foreground/30 text-primary-foreground rounded text-sm transition-colors">
-                        Get Started
-                    </button>
-                </BannerAction>
-                <BannerClose />
-            </Banner>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`---
-import { 
-  Banner, 
-  BannerTitle, 
-  BannerDescription, 
-  BannerAction, 
-  BannerClose 
-} from '@/components/ui/feedback/banner';
-import { Icon } from 'astro-icon/components';
----
-
-<Banner variant="default" visible={true}>
-  <Icon name="lucide:info" class="w-5 h-5 flex-shrink-0 mt-[2px]" />
-  <div class="flex-1 min-w-0">
-    <BannerTitle>Welcome to our platform</BannerTitle>
-    <BannerDescription>
-      Get started by exploring our new features.
-    </BannerDescription>
-  </div>
-  <BannerAction>
-    <button>Get Started</button>
-  </BannerAction>
-  <BannerClose />
-</Banner>`} />
-    </TabsContent>
-</Tabs>
-
-## Variants
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
+    <TabsContent value="preview" preview class="space-y-4 justify-start">
         <div class="space-y-4">
             <Banner variant="default" visible={true}>
                 <Icon name="lucide:info" class="w-5 h-5 flex-shrink-0 mt-[2px]" />
@@ -151,33 +103,33 @@ import { Icon } from 'astro-icon/components';
 </Banner>
 
 <Banner variant="secondary" visible={true}>
-  <Icon name="lucide:layers" />
-  <BannerTitle>Secondary Banner</BannerTitle>
-  <BannerClose />
+    <Icon name="lucide:layers" />
+    <BannerTitle>Secondary Banner</BannerTitle>
+    <BannerClose />
 </Banner>
 
 <Banner variant="success" visible={true}>
-  <Icon name="lucide:check-circle" />
-  <BannerTitle>Success Banner</BannerTitle>
-  <BannerClose />
+    <Icon name="lucide:check-circle" />
+    <BannerTitle>Success Banner</BannerTitle>
+    <BannerClose />
 </Banner>
 
 <Banner variant="warning" visible={true}>
-  <Icon name="lucide:alert-triangle" />
-  <BannerTitle>Warning Banner</BannerTitle>
-  <BannerClose />
+    <Icon name="lucide:alert-triangle" />
+    <BannerTitle>Warning Banner</BannerTitle>
+    <BannerClose />
 </Banner>
 
 <Banner variant="destructive" visible={true}>
-  <Icon name="lucide:alert-circle" />
-  <BannerTitle>Error Banner</BannerTitle>
-  <BannerClose />
+    <Icon name="lucide:alert-circle" />
+    <BannerTitle>Error Banner</BannerTitle>
+    <BannerClose />
 </Banner>
 
 <Banner variant="info" visible={true}>
-  <Icon name="lucide:info" />
-  <BannerTitle>Info Banner</BannerTitle>
-  <BannerClose />
+    <Icon name="lucide:info" />
+    <BannerTitle>Info Banner</BannerTitle>
+    <BannerClose />
 </Banner>
 
 <Banner variant="outline" visible={true}>
@@ -188,342 +140,57 @@ import { Icon } from 'astro-icon/components';
     </TabsContent>
 </Tabs>
 
-## Interactive Examples
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
-        {/* Demonstration banners with IDs for event dispatch */}
-        <Banner variant="info" position="static" visible={false} bannerId="demo-banner-1">
-            <Icon name="lucide:info" class="w-5 h-5 flex-shrink-0 mt-[2px]" />
-            <div class="flex-1 min-w-0">
-                <BannerTitle>Demo Banner 1</BannerTitle>
-                <BannerDescription>This banner can be shown/hidden with events.</BannerDescription>
-            </div>
-            <BannerClose />
-        </Banner>
-        
-        <Banner variant="success" position="static" visible={false} bannerId="demo-banner-2">
-            <Icon name="lucide:check-circle" class="w-5 h-5 flex-shrink-0 mt-[2px]" />
-            <div class="flex-1 min-w-0">
-                <BannerTitle>Demo Banner 2</BannerTitle>
-                <BannerDescription>Another banner with different styling.</BannerDescription>
-            </div>
-            <BannerClose />
-        </Banner>
-        
-        <Banner variant="warning" position="static" visible={false} visibleAfter={2000} bannerId="demo-banner-3">
-            <Icon name="lucide:alert-triangle" class="w-5 h-5 flex-shrink-0 mt-[2px]" />
-            <div class="flex-1 min-w-0">
-                <BannerTitle>Delayed Banner</BannerTitle>
-                <BannerDescription>This banner appears after 2 seconds automatically.</BannerDescription>
-            </div>
-            <BannerClose />
-        </Banner>
-        
-        <div class="flex gap-2 pt-4" x-data>
-            <button 
-                x-on:click="$dispatch('show-banner', { bannerId: 'demo-banner-1' })"
-                class="px-4 py-2 bg-info text-info-foreground rounded-md hover:bg-info/90 transition-colors text-sm"
-            >
-                Show Info Banner
-            </button>
-            
-            <button 
-                x-on:click="$dispatch('show-banner', { bannerId: 'demo-banner-2' })"
-                class="px-4 py-2 bg-success text-success-foreground rounded-md hover:bg-success/90 transition-colors text-sm"
-            >
-                Show Success Banner
-            </button>
-            
-            <button 
-                x-on:click="$dispatch('hide-banner', { bannerId: 'demo-banner-1' }); $dispatch('hide-banner', { bannerId: 'demo-banner-2' })"
-                class="px-4 py-2 bg-destructive text-destructive-foreground rounded-md hover:bg-destructive/90 transition-colors text-sm"
-            >
-                Hide All
-            </button>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`{/* Banner with event-based control */
-<Banner 
-  variant="info" 
-  visible={false} 
-  bannerId="demo-banner-1"
->
-  <Icon name="lucide:info" />
-  <div class="flex-1 min-w-0">
-    <BannerTitle>Demo Banner</BannerTitle>
-    <BannerDescription>Controlled with events.</BannerDescription>
-  </div>
-  <BannerClose />
-</Banner>
-
-{/* Delayed banner */}
-<Banner 
-  variant="warning" 
-  visible={false} 
-  visibleAfter={2000}
->
-  <BannerTitle>Delayed Banner</BannerTitle>
-  <BannerDescription>Appears after 2 seconds.</BannerDescription>
-</Banner>
-
-{/* Control buttons */}
-<div x-data>
-  <button x-on:click="$dispatch('show-banner', { bannerId: 'demo-banner-1' })">
-    Show Banner
-  </button>
-  
-  <button x-on:click="$dispatch('hide-banner', { bannerId: 'demo-banner-1' })">
-    Hide Banner
-  </button>
-</div>`} />
-    </TabsContent>
-</Tabs>
-
-## Sub-components
-
-<Tabs defaultValue="preview" class="h-auto">
-    <TabsList variant="pills" slot="list">
-        <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
-        <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
-    </TabsList>
-    <TabsContent value="preview" preview class="space-y-6">
-        <div class="space-y-6">
-            <div>
-                <h3 class="text-lg font-medium mb-2">Basic Structure</h3>
-                <Banner variant="outline" visible={true}>
-                    <div class="flex-1 min-w-0">
-                        <BannerTitle>Title Only</BannerTitle>
-                    </div>
-                </Banner>
-            </div>
-            
-            <div>
-                <h3 class="text-lg font-medium mb-2">With Description</h3>
-                <Banner variant="outline" visible={true}>
-                    <div class="flex-1 min-w-0">
-                        <BannerTitle>Title with Description</BannerTitle>
-                        <BannerDescription>
-                            Additional context and details about the message.
-                        </BannerDescription>
-                    </div>
-                </Banner>
-            </div>
-            
-            <div>
-                <h3 class="text-lg font-medium mb-2">With Action</h3>
-                <Banner variant="outline" visible={true}>
-                    <div class="flex-1 min-w-0">
-                        <BannerTitle>Action Banner</BannerTitle>
-                        <BannerDescription>
-                            This banner includes an action button.
-                        </BannerDescription>
-                    </div>
-                    <BannerAction>
-                        <button class="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90 transition-colors">
-                            Take Action
-                        </button>
-                    </BannerAction>
-                </Banner>
-            </div>
-            
-            <div>
-                <h3 class="text-lg font-medium mb-2">Full Structure</h3>
-                <Banner variant="outline" visible={true}>
-                    <Icon name="lucide:sparkles" class="w-5 h-5 flex-shrink-0 mt-[2px]" />
-                    <div class="flex-1 min-w-0">
-                        <BannerTitle>Complete Banner</BannerTitle>
-                        <BannerDescription>
-                            Icon, title, description, action, and close button.
-                        </BannerDescription>
-                    </div>
-                    <BannerAction>
-                        <button class="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90 transition-colors">
-                            Learn More
-                        </button>
-                    </BannerAction>
-                    <BannerClose />
-                </Banner>
-            </div>
-        </div>
-    </TabsContent>
-    <TabsContent value="code">
-        <Code language="astro" code={`{/* Title only */
-<Banner variant="outline" visible={true}>
-  <div class="flex-1 min-w-0">
-    <BannerTitle>Title Only</BannerTitle>
-  </div>
-</Banner>
-
-{/* With description */}
-<Banner variant="outline" visible={true}>
-  <div class="flex-1 min-w-0">
-    <BannerTitle>Title with Description</BannerTitle>
-    <BannerDescription>
-      Additional context and details.
-    </BannerDescription>
-  </div>
-</Banner>
-
-{/* With action */}
-<Banner variant="outline" visible={true}>
-  <div class="flex-1 min-w-0">
-    <BannerTitle>Action Banner</BannerTitle>
-  </div>
-  <BannerAction>
-    <button>Take Action</button>
-  </BannerAction>
-</Banner>
-
-{/* Complete structure */}
-<Banner variant="outline" visible={true}>
-  <Icon name="lucide:sparkles" />
-  <div class="flex-1 min-w-0">
-    <BannerTitle>Complete Banner</BannerTitle>
-    <BannerDescription>Full featured banner.</BannerDescription>
-  </div>
-  <BannerAction>
-    <button>Learn More</button>
-  </BannerAction>
-  <BannerClose />
-</Banner>`} />
-    </TabsContent>
-</Tabs>
-
 ## API Reference
 
-### Banner Props
+### Banner
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `'default', 'secondary', 'destructive', 'success', 'warning', 'info', 'outline'` | `'default'` | Visual variant of the banner |
-| `position` | `'static', 'top', 'bottom', 'sticky-top', 'sticky-bottom'` | `'static'` | Positioning behavior |
-| `visible` | `boolean` | `false` | Initial visibility state |
-| `visibleAfter` | `number` | `0` | Delay in milliseconds before showing |
-| `bannerId` | `string` | `undefined` | Unique ID for event-based control |
-| `class` | `string` | `undefined` | Additional CSS classes |
+| Prop           | Type                                                                             | Default     | Description                          |
+| -------------- | -------------------------------------------------------------------------------- | ----------- | ------------------------------------ |
+| `variant`      | `'default', 'secondary', 'destructive', 'success', 'warning', 'info', 'outline'` | `'default'` | Visual variant of the banner         |
+| `position`     | `'static', 'top', 'bottom', 'sticky-top', 'sticky-bottom'`                       | `'static'`  | Positioning behavior                 |
+| `visible`      | `boolean`                                                                        | `false`     | Initial visibility state             |
+| `visibleAfter` | `number`                                                                         | `0`         | Delay in milliseconds before showing |
+| `bannerId`     | `string`                                                                         | `undefined` | Unique ID for event-based control    |
+| `class`        | `string`                                                                         | `undefined` | Additional CSS classes               |
 
-### BannerTitle Props
+### BannerTitle
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
+| Prop        | Type     | Default     | Description            |
+| ----------- | -------- | ----------- | ---------------------- |
 | `className` | `string` | `undefined` | Additional CSS classes |
 
-### BannerDescription Props
+### BannerDescription
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
+| Prop        | Type     | Default     | Description            |
+| ----------- | -------- | ----------- | ---------------------- |
 | `className` | `string` | `undefined` | Additional CSS classes |
 
-### BannerAction Props
+### BannerAction
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `href` | `string` | `undefined` | Renders as link if provided |
-| `className` | `string` | `undefined` | Additional CSS classes |
+| Prop        | Type     | Default     | Description                 |
+| ----------- | -------- | ----------- | --------------------------- |
+| `href`      | `string` | `undefined` | Renders as link if provided |
+| `className` | `string` | `undefined` | Additional CSS classes      |
 
-### BannerClose Props
+### BannerClose
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
+| Prop        | Type     | Default     | Description            |
+| ----------- | -------- | ----------- | ---------------------- |
 | `className` | `string` | `undefined` | Additional CSS classes |
 
 ### Position Behaviors
 
-| Position | Description |
-|----------|-------------|
-| `static` | Normal document flow |
-| `top` | Fixed to top of viewport |
-| `bottom` | Fixed to bottom of viewport |
-| `sticky-top` | Sticks to top when scrolling |
+| Position        | Description                     |
+| --------------- | ------------------------------- |
+| `static`        | Normal document flow            |
+| `top`           | Fixed to top of viewport        |
+| `bottom`        | Fixed to bottom of viewport     |
+| `sticky-top`    | Sticks to top when scrolling    |
 | `sticky-bottom` | Sticks to bottom when scrolling |
 
 ### Alpine.js Events
 
-| Event | Description | Payload |
-|-------|-------------|---------|
+| Event         | Description    | Payload                |
+| ------------- | -------------- | ---------------------- |
 | `show-banner` | Shows a banner | `{ bannerId: string }` |
 | `hide-banner` | Hides a banner | `{ bannerId: string }` |
-
-### Usage Examples
-
-```astro
-{/* Basic banner */}
-<Banner variant="info" visible={true}>
-  <BannerTitle>Simple message</BannerTitle>
-</Banner>
-
-{/* Rich banner */}
-<Banner variant="warning" visible={true}>
-  <Icon name="lucide:alert-triangle" />
-  <div class="flex-1">
-    <BannerTitle>Important Update</BannerTitle>
-    <BannerDescription>
-      System maintenance scheduled for tonight.
-    </BannerDescription>
-  </div>
-  <BannerAction href="/maintenance">
-    Learn More
-  </BannerAction>
-  <BannerClose />
-</Banner>
-
-{/* Event-controlled banner */}
-<Banner 
-  variant="success" 
-  visible={false}
-  bannerId="success-banner"
->
-  <BannerTitle>Operation Complete</BannerTitle>
-</Banner>
-
-{/* Delayed banner */}
-<Banner 
-  variant="info"
-  visible={false}
-  visibleAfter={3000}
->
-  <BannerTitle>Welcome back!</BannerTitle>
-</Banner>
-
-{/* Fixed position */}
-<Banner 
-  variant="destructive" 
-  position="top"
-  visible={true}
->
-  <BannerTitle>Critical Alert</BannerTitle>
-  <BannerClose />
-</Banner>
-```
-
-### Features
-
-- **Composable Architecture**: Mix and match sub-components as needed
-- **Multiple Variants**: Full shadcn-style color system support
-- **Flexible Positioning**: Static, fixed, and sticky positioning options
-- **Alpine.js Integration**: Event-based show/hide with smooth transitions
-- **Delayed Visibility**: Built-in timer for delayed banner appearance
-- **Responsive Design**: Adapts to different screen sizes
-- **Accessible**: Proper ARIA attributes and keyboard support
-
-### Best Practices
-
-1. **Use appropriate variants**: Match the banner color to the message importance
-2. **Include clear actions**: Provide next steps when possible
-3. **Position strategically**: Use fixed/sticky positions for critical messages only
-4. **Provide dismissal**: Always include a close button for non-critical banners
-5. **Control timing**: Use delayed visibility for onboarding or progressive disclosure
-
-### Accessibility
-
-- Proper semantic HTML structure
-- ARIA labels for close buttons
-- Keyboard navigation support
-- Color contrast compliance
-- Screen reader friendly content structure

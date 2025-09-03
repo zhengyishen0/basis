@@ -5,7 +5,13 @@ category: forms
 order: 4
 ---
 
-import { RadioGroup, RadioGroupItem, RadioGroupItems, RadioGroupLabel, RadioGroupDescription } from '@/components/ui/forms/radiogroup';
+import {
+    RadioGroup,
+    RadioGroupItem,
+    RadioGroupItems,
+    RadioGroupLabel,
+    RadioGroupDescription,
+} from '@/components/ui/forms/radiogroup';
 import Code from '@/components/ui/display/Code.astro';
 import Tabs from '@/components/ui/navigation/tabs/Tabs.astro';
 import TabsList from '@/components/ui/navigation/tabs/TabsList.astro';
@@ -21,10 +27,10 @@ The RadioGroup component provides a composable radio button group with support f
         <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-6">
+    <TabsContent value="preview" preview class="space-y-6 justify-start">
         <div class="space-y-6">
             <div>
-                <h4 class="font-medium mb-3">Static Options</h4>
+                <span class="font-medium mb-6">Static Options</span>
                 <div x-data="{ plan: 'basic' }">
                     <RadioGroup name="plan" selectedOption="basic" x-model="plan">
                         <RadioGroupItem value="basic">
@@ -47,7 +53,7 @@ The RadioGroup component provides a composable radio button group with support f
             </div>
 
             <div>
-                <h4 class="font-medium mb-3">Horizontal Layout</h4>
+                <span class="font-medium mb-6">Horizontal Layout</span>
                 <div x-data="{ size: 'medium' }">
                     <RadioGroup name="size" orientation="horizontal" selectedOption="medium" x-model="size">
                         <RadioGroupItem value="small">
@@ -67,8 +73,8 @@ The RadioGroup component provides a composable radio button group with support f
             </div>
 
             <div>
-                <h4 class="font-medium mb-3">Dynamic Options</h4>
-                <div x-data="{ 
+                <span class="font-medium mb-6">Dynamic Options</span>
+                <div x-data="{
                     selectedLang: 'javascript',
                     languages: [
                         { value: 'javascript', label: 'JavaScript', description: 'Most popular web programming language' },
@@ -92,6 +98,7 @@ The RadioGroup component provides a composable radio button group with support f
     </TabsContent>
     <TabsContent value="code">
         <Code language="astro" code={`---
+
 import { 
     RadioGroup, 
     RadioGroupItem, 
@@ -100,51 +107,94 @@ import {
     RadioGroupDescription 
 } from '@/components/ui/forms/radiogroup';
 ---
-{/* Static Options */}
-<RadioGroup name="plan" selectedOption="basic">
-    <RadioGroupItem value="basic">
-        <RadioGroupLabel>Basic Plan</RadioGroupLabel>
-        <RadioGroupDescription>Perfect for small teams</RadioGroupDescription>
-    </RadioGroupItem>
-    <RadioGroupItem value="pro">
-        <RadioGroupLabel>Pro Plan</RadioGroupLabel>
-        <RadioGroupDescription>Best for growing businesses</RadioGroupDescription>
-    </RadioGroupItem>
-    <RadioGroupItem value="enterprise" disabled={true}>
-        <RadioGroupLabel>Enterprise Plan</RadioGroupLabel>
-        <RadioGroupDescription>For large organizations</RadioGroupDescription>
-    </RadioGroupItem>
-</RadioGroup>
 
-{/* Horizontal Layout */}
-<RadioGroup name="size" orientation="horizontal" selectedOption="medium">
-    <RadioGroupItem value="small">
-        <RadioGroupLabel>Small</RadioGroupLabel>
-    </RadioGroupItem>
-    <RadioGroupItem value="medium">
-        <RadioGroupLabel>Medium</RadioGroupLabel>
-    </RadioGroupItem>
-    <RadioGroupItem value="large">
-        <RadioGroupLabel>Large</RadioGroupLabel>
-    </RadioGroupItem>
-</RadioGroup>
+<div>
+    <span class="font-medium mb-6">Static Options</span>
+    <div x-data="{ plan: 'basic' }">
+        <RadioGroup name="plan" selectedOption="basic" x-model="plan">
+            <RadioGroupItem value="basic">
+                <RadioGroupLabel>Basic Plan</RadioGroupLabel>
+                <RadioGroupDescription>
+                    Perfect for small teams - $9/month
+                </RadioGroupDescription>
+            </RadioGroupItem>
+            <RadioGroupItem value="pro">
+                <RadioGroupLabel>Pro Plan</RadioGroupLabel>
+                <RadioGroupDescription>
+                    Best for growing businesses - $19/month
+                </RadioGroupDescription>
+            </RadioGroupItem>
+            <RadioGroupItem value="enterprise" disabled={true}>
+                <RadioGroupLabel>Enterprise Plan</RadioGroupLabel>
+                <RadioGroupDescription>
+                    For large organizations - Contact us
+                </RadioGroupDescription>
+            </RadioGroupItem>
+        </RadioGroup>
+        <div class="mt-4 p-3 bg-muted rounded-lg text-sm">
+            Selected: <span x-text="plan" class="font-mono text-primary"></span>
+        </div>
+    </div>
+</div>
 
-{/* Dynamic Options with Alpine.js */}
-<div x-data="{ 
-    selected: 'option1',
-    options: [
-        { value: 'option1', label: 'Option 1', description: 'First option' },
-        { value: 'option2', label: 'Option 2', description: 'Second option' }
-    ]
-}">
-    <RadioGroup name="dynamic" x-model="selected">
-        <RadioGroupItems x-for="option in options" x-key="option.value">
-            <RadioGroupLabel x-text="option.label" />
-            <RadioGroupDescription x-text="option.description" />
-        </RadioGroupItems>
-    </RadioGroup>
-</div>`} />
-    </TabsContent>
+<div>
+    <span class="font-medium mb-6">Horizontal Layout</span>
+    <div x-data="{ size: 'medium' }">
+        <RadioGroup
+            name="size"
+            orientation="horizontal"
+            selectedOption="medium"
+            x-model="size"
+        >
+            <RadioGroupItem value="small">
+                <RadioGroupLabel>Small</RadioGroupLabel>
+            </RadioGroupItem>
+            <RadioGroupItem value="medium">
+                <RadioGroupLabel>Medium</RadioGroupLabel>
+            </RadioGroupItem>
+            <RadioGroupItem value="large">
+                <RadioGroupLabel>Large</RadioGroupLabel>
+            </RadioGroupItem>
+        </RadioGroup>
+        <div class="mt-4 p-3 bg-muted rounded-lg text-sm">
+            Selected: <span x-text="size" class="font-mono text-primary"></span>
+        </div>
+    </div>
+</div>
+
+<div>
+    <span class="font-medium mb-6">Dynamic Options</span>
+    <div
+        x-data="{
+        selectedLang: 'javascript',
+        languages: [
+            { value: 'javascript', label: 'JavaScript', description: 'Most popular web programming language' },
+            { value: 'python', label: 'Python', description: 'Great for data science and web development' },
+            { value: 'rust', label: 'Rust', description: 'Systems programming language focused on safety' },
+            { value: 'go', label: 'Go', description: 'Simple, fast, and reliable language by Google' }
+        ]
+    }"
+    >
+        <RadioGroup
+            name="language"
+            selectedOption="javascript"
+            x-model="selectedLang"
+        >
+            <RadioGroupItems x-for="option in languages" x-key="option.value">
+                <RadioGroupLabel x-text="option.label" />
+                <RadioGroupDescription x-text="option.description" />
+            </RadioGroupItems>
+        </RadioGroup>
+        <div class="mt-4 p-3 bg-muted rounded-lg text-sm">
+            Selected:{' '}
+            <span x-text="selectedLang" class="font-mono text-primary"></span>
+        </div>
+    </div>
+</div>
+
+`} />
+</TabsContent>
+
 </Tabs>
 
 ## Components
@@ -153,90 +203,74 @@ import {
 
 The root component that manages state and provides context to child components.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `name` | `string` | - | **Required.** Name for the radio group |
-| `selectedOption` | `string` | `''` | Initially selected option value |
-| `disabled` | `boolean` | `false` | Disable the entire group |
-| `orientation` | `'vertical', 'horizontal'` | `'vertical'` | Layout direction |
-| `maxWidth` | `'sm', 'md', 'lg', 'xl', 'full'` | `'full'` | Maximum width constraint |
-| `centered` | `boolean` | `false` | Center the group horizontally |
-| `overflow` | `'fixed', 'scroll', 'hidden'` | `'fixed'` | Overflow behavior |
-| `class` | `string` | - | Additional CSS classes |
+| Prop             | Type                             | Default      | Description                            |
+| ---------------- | -------------------------------- | ------------ | -------------------------------------- |
+| `name`           | `string`                         | -            | **Required.** Name for the radio group |
+| `selectedOption` | `string`                         | `''`         | Initially selected option value        |
+| `disabled`       | `boolean`                        | `false`      | Disable the entire group               |
+| `orientation`    | `'vertical', 'horizontal'`       | `'vertical'` | Layout direction                       |
+| `maxWidth`       | `'sm', 'md', 'lg', 'xl', 'full'` | `'full'`     | Maximum width constraint               |
+| `centered`       | `boolean`                        | `false`      | Center the group horizontally          |
+| `overflow`       | `'fixed', 'scroll', 'hidden'`    | `'fixed'`    | Overflow behavior                      |
+| `class`          | `string`                         | -            | Additional CSS classes                 |
 
 ### RadioGroupItem
 
 Individual radio option container with visual styling and interaction handling.
 
-#### Props
+| Prop       | Type                       | Default      | Description                                     |
+| ---------- | -------------------------- | ------------ | ----------------------------------------------- |
+| `value`    | `string`                   | -            | **Required.** Value for this radio option       |
+| `disabled` | `boolean`                  | `false`      | Disable this specific option                    |
+| `layout`   | `'vertical', 'horizontal'` | `'vertical'` | Layout direction for content                    |
+| `size`     | `'sm', 'md', 'lg'`         | `'md'`       | Size of the option container                    |
+| `option`   | `any`                      | -            | Dynamic option data (used with RadioGroupItems) |
+| `class`    | `string`                   | -            | Additional CSS classes                          |
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `string` | - | **Required.** Value for this radio option |
-| `disabled` | `boolean` | `false` | Disable this specific option |
-| `layout` | `'vertical', 'horizontal'` | `'vertical'` | Layout direction for content |
-| `size` | `'sm', 'md', 'lg'` | `'md'` | Size of the option container |
-| `option` | `any` | - | Dynamic option data (used with RadioGroupItems) |
-| `class` | `string` | - | Additional CSS classes |
-
-#### Slots
-
-| Slot | Description |
-|------|-------------|
+| Slot    | Description                                                |
+| ------- | ---------------------------------------------------------- |
 | Default | Content area for RadioGroupLabel and RadioGroupDescription |
 
 ### RadioGroupItems
 
 Template component for rendering dynamic options using Alpine.js `x-for` directive.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `x-for` | `string` | - | **Required.** Alpine.js x-for expression |
-| `x-key` | `string` | `'option.value'` | Key for x-for iteration |
-| All RadioGroupItem props | - | - | Passed through to each rendered item |
+| Prop                     | Type     | Default          | Description                              |
+| ------------------------ | -------- | ---------------- | ---------------------------------------- |
+| `x-for`                  | `string` | -                | **Required.** Alpine.js x-for expression |
+| `x-key`                  | `string` | `'option.value'` | Key for x-for iteration                  |
+| All RadioGroupItem props | -        | -                | Passed through to each rendered item     |
 
 ### RadioGroupLabel
 
 Label component for radio options with multiple visual variants.
 
-#### Props
+| Prop       | Type                                | Default     | Description            |
+| ---------- | ----------------------------------- | ----------- | ---------------------- |
+| `text`     | `string`                            | -           | Static text content    |
+| `variant`  | `'default', 'emphasized', 'subtle'` | `'default'` | Visual style variant   |
+| `size`     | `'sm', 'md', 'lg'`                  | `'md'`      | Text size              |
+| `overflow` | `'fixed', 'scroll', 'hidden'`       | `'fixed'`   | Text overflow behavior |
+| `class`    | `string`                            | -           | Additional CSS classes |
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `text` | `string` | - | Static text content |
-| `variant` | `'default', 'emphasized', 'subtle'` | `'default'` | Visual style variant |
-| `size` | `'sm', 'md', 'lg'` | `'md'` | Text size |
-| `overflow` | `'fixed', 'scroll', 'hidden'` | `'fixed'` | Text overflow behavior |
-| `class` | `string` | - | Additional CSS classes |
-
-#### Slots
-
-| Slot | Description |
-|------|-------------|
+| Slot    | Description                                      |
+| ------- | ------------------------------------------------ |
 | Default | Label content (can be combined with `text` prop) |
 
 ### RadioGroupDescription
 
 Description component for providing additional context about radio options.
 
-#### Props
+| Prop       | Type                                | Default     | Description            |
+| ---------- | ----------------------------------- | ----------- | ---------------------- |
+| `text`     | `string`                            | -           | Static text content    |
+| `variant`  | `'default', 'emphasized', 'subtle'` | `'default'` | Visual style variant   |
+| `size`     | `'xs', 'sm', 'md'`                  | `'sm'`      | Text size              |
+| `overflow` | `'fixed', 'scroll', 'hidden'`       | `'fixed'`   | Text overflow behavior |
+| `class`    | `string`                            | -           | Additional CSS classes |
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `text` | `string` | - | Static text content |
-| `variant` | `'default', 'emphasized', 'subtle'` | `'default'` | Visual style variant |
-| `size` | `'xs', 'sm', 'md'` | `'sm'` | Text size |
-| `overflow` | `'fixed', 'scroll', 'hidden'` | `'fixed'` | Text overflow behavior |
-| `class` | `string` | - | Additional CSS classes |
-
-#### Slots
-
-| Slot | Description |
-|------|-------------|
+| Slot    | Description                                            |
+| ------- | ------------------------------------------------------ |
 | Default | Description content (can be combined with `text` prop) |
 
 ## Alpine.js Integration
@@ -247,106 +281,3 @@ The RadioGroup automatically integrates with Alpine.js and provides reactive sta
 - Access `selectedOption` reactive property
 - Use `setSelectedOption(value)` method to programmatically change selection
 - Component automatically handles disabled states and validation
-
-## Usage Examples
-
-### Form Integration
-
-```astro
-<form method="POST">
-    <div class="space-y-6">
-        <fieldset>
-            <legend class="text-lg font-medium mb-4">Choose your plan</legend>
-            <RadioGroup name="subscription_plan" selectedOption="basic">
-                <RadioGroupItem value="basic">
-                    <RadioGroupLabel>Basic - $9/month</RadioGroupLabel>
-                    <RadioGroupDescription>Perfect for individuals</RadioGroupDescription>
-                </RadioGroupItem>
-                <RadioGroupItem value="pro">
-                    <RadioGroupLabel>Pro - $19/month</RadioGroupLabel>
-                    <RadioGroupDescription>Great for small teams</RadioGroupDescription>
-                </RadioGroupItem>
-            </RadioGroup>
-        </fieldset>
-        
-        <button type="submit">Continue</button>
-    </div>
-</form>
-```
-
-### Advanced Alpine.js Usage
-
-```astro
-<div x-data="{
-    selectedPlan: 'basic',
-    plans: [
-        { 
-            value: 'basic', 
-            label: 'Basic', 
-            description: 'Essential features for individuals',
-            price: 9,
-            disabled: false 
-        },
-        { 
-            value: 'pro', 
-            label: 'Professional', 
-            description: 'Advanced features for teams',
-            price: 19,
-            disabled: false 
-        },
-        { 
-            value: 'enterprise', 
-            label: 'Enterprise', 
-            description: 'Full-featured solution',
-            price: null,
-            disabled: true 
-        }
-    ],
-    get selectedPlanData() {
-        return this.plans.find(p => p.value === this.selectedPlan);
-    }
-}">
-    <RadioGroup name="plan" x-model="selectedPlan">
-        <RadioGroupItems x-for="plan in plans" x-key="plan.value">
-            <div class="flex justify-between items-start">
-                <div>
-                    <RadioGroupLabel x-text="plan.label" variant="emphasized" />
-                    <RadioGroupDescription x-text="plan.description" />
-                </div>
-                <div class="text-right" x-show="plan.price">
-                    <span class="text-lg font-semibold" x-text="'$' + plan.price"></span>
-                    <div class="text-sm text-muted-foreground">/month</div>
-                </div>
-            </div>
-        </RadioGroupItems>
-    </RadioGroup>
-    
-    <div class="mt-6 p-4 bg-muted rounded-lg" x-show="selectedPlanData">
-        <h4 class="font-medium">Selected Plan:</h4>
-        <p x-text="selectedPlanData?.label"></p>
-        <p x-text="selectedPlanData?.description" class="text-sm text-muted-foreground"></p>
-    </div>
-</div>
-```
-
-### Horizontal Card Layout
-
-```astro
-<RadioGroup name="theme" orientation="horizontal" class="grid grid-cols-3 gap-4">
-    <RadioGroupItem value="light" class="text-center">
-        <div class="mb-2">🌞</div>
-        <RadioGroupLabel>Light</RadioGroupLabel>
-        <RadioGroupDescription size="xs">Clean and bright</RadioGroupDescription>
-    </RadioGroupItem>
-    <RadioGroupItem value="dark" class="text-center">
-        <div class="mb-2">🌙</div>
-        <RadioGroupLabel>Dark</RadioGroupLabel>
-        <RadioGroupDescription size="xs">Easy on the eyes</RadioGroupDescription>
-    </RadioGroupItem>
-    <RadioGroupItem value="auto" class="text-center">
-        <div class="mb-2">🔄</div>
-        <RadioGroupLabel>Auto</RadioGroupLabel>
-        <RadioGroupDescription size="xs">Follows system</RadioGroupDescription>
-    </RadioGroupItem>
-</RadioGroup>
-```
