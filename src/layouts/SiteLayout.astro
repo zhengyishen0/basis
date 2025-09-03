@@ -23,8 +23,8 @@ const { title, description } = Astro.props;
 
 // Navigation links
 const navLinks = [
-    { label: 'Docs', href: '/docs' },
-    { label: 'Components', href: '/docs/components/' },
+    { label: 'Docs', href: '/docs/get-started' },
+    { label: 'Components', href: '/docs/components' },
     { label: 'Todo', href: '/todo' },
 ];
 
@@ -270,7 +270,11 @@ const commandGroups = {
                     class="ml-1 font-medium transition-colors inline-flex items-center gap-1"
                     style="color: #da552f;"
                 >
-                    <img src="https://www.vectorlogo.zone/logos/producthunt/producthunt-icon.svg" alt="Product Hunt" class="w-4 h-4" />
+                    <img
+                        src="https://www.vectorlogo.zone/logos/producthunt/producthunt-icon.svg"
+                        alt="Product Hunt"
+                        class="w-4 h-4"
+                    />
                     Product Hunt
                 </a>
             </div>
