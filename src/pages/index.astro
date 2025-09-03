@@ -111,16 +111,23 @@ const commandItemsJson = JSON.stringify(commandItems);
     <Page x-data={pageData}>
         <!-- Hero Section -->
         <Section
-            class="text-center px-4 bg-gradient-to-br from-muted/30 via-background to-muted/10 relative overflow-hidden min-h-[40vh] flex flex-col justify-center items-center gap-6"
+            class="text-center px-4 py-24 bg-gradient-to-br from-muted/30 via-background to-muted/10 relative overflow-hidden min-h-[40vh] flex flex-col justify-center items-center gap-8"
         >
             <Text
                 variant="hero-title"
                 class="relative z-10 drop-shadow-sm tracking-tight"
             >
-                <span class="relative group">
+                <span
+                    class="relative group"
+                    x-data="{ loaded: false }"
+                    x-init="setTimeout(() => loaded = true, 500)"
+                >
                     Basis UI
                     <span
-                        class="absolute bottom-[-8px] left-[-5%] w-[110%] h-[5px] bg-primary rounded-full origin-left scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100 transition-all duration-700 ease-out"
+                        class="absolute bottom-[-8px] left-[-5%] w-[110%] h-[5px] bg-primary rounded-full origin-left scale-x-0 opacity-0 transition-all duration-700 ease-out"
+                        :class="{ 'scale-x-100 opacity-100': loaded }"
+                        @mouseenter="$el.classList.add('scale-x-100', 'opacity-100')"
+                        @mouseleave="!loaded && $el.classList.remove('scale-x-100', 'opacity-100')"
                     ></span>
                 </span>
             </Text>
@@ -128,17 +135,16 @@ const commandItemsJson = JSON.stringify(commandItems);
                 variant="hero-description"
                 class="max-w-2xl mx-auto relative z-10"
             >
-                Build on Fundamentals - A methodology for modern web development
-                using basic tools and clear boundaries
+                A Shadcn-style component library purely designed for Astro.
             </Text>
             <Row class="flex justify-center gap-2 flex-wrap">
                 <Badge size="sm" variant="secondary">Astro</Badge>
                 <Badge size="sm" variant="secondary">Alpine</Badge>
-                <Badge size="sm" variant="secondary">Supabase</Badge>
+                <Badge size="sm" variant="secondary">Tailwind</Badge>
             </Row>
             <Row class="flex justify-center gap-4">
                 <Button href="/docs" size="lg"> Get Started </Button>
-                <Button href="/components" size="lg" variant="ghost"
+                <Button href="/docs/components" size="lg" variant="ghost"
                     >Components</Button
                 >
             </Row>
@@ -146,10 +152,7 @@ const commandItemsJson = JSON.stringify(commandItems);
 
         <!-- Component Showcase Section -->
         <Section class="mx-auto px-4 bg-muted/30">
-            <div class="text-center mb-12">
-                <Text variant="section-title" class="mb-4"
-                    >Component Showcase</Text
-                >
+            <div class="text-center mb-4">
                 <Text
                     variant="body"
                     class="text-muted-foreground max-w-2xl mx-auto"
@@ -227,7 +230,9 @@ const commandItemsJson = JSON.stringify(commandItems);
                     <VideoPlayer youtubeId="dQw4w9WgXcQ" shape="rounded" />
 
                     <!-- Calendar -->
-                    <Calendar size="md" numberOfMonths={2} mode="range" />
+                    <div>
+                        <Calendar size="md" numberOfMonths={2} />
+                    </div>
                 </div>
 
                 <!-- Column 2: Command palette (no card), Calendar -->
@@ -337,7 +342,7 @@ const commandItemsJson = JSON.stringify(commandItems);
                                 <TabsContent
                                     value="analytics"
                                     preview
-                                    class="h-32"
+                                    class="h-24"
                                 >
                                     <div class="space-y-2">
                                         <div class="flex justify-between">
@@ -361,7 +366,7 @@ const commandItemsJson = JSON.stringify(commandItems);
                                 <TabsContent
                                     value="settings"
                                     preview
-                                    class="h-32"
+                                    class="h-24"
                                 >
                                     <div class="space-y-2">
                                         <div
@@ -633,7 +638,7 @@ const commandItemsJson = JSON.stringify(commandItems);
                                 </AccordionItem>
                                 <AccordionItem x-data="{ id: 'faq-2' }">
                                     <AccordionTrigger
-                                        >What payment methods do you accept?</AccordionTrigger
+                                        >How can I contact customer support?</AccordionTrigger
                                     >
                                     <AccordionContent>
                                         We accept all major credit cards,

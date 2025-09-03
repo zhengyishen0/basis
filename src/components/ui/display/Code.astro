@@ -9,6 +9,7 @@ export interface Props {
     title?: string;
     showCopy?: boolean;
     theme?: 'github-light' | 'github-dark' | 'vitesse-light' | 'vitesse-dark';
+    height?: string;
     class?: string;
     [key: string]: any;
 }
@@ -19,6 +20,7 @@ const {
     title,
     showCopy = true,
     theme = 'github-light',
+    height = '400px',
     class: className,
     ...alpineProps
 } = Astro.props;
@@ -48,7 +50,7 @@ const highlightedCode = await codeToHtml(code, {
         )
     }
 
-    <div class="relative group bg-secondary rounded-lg overflow-hidden">
+    <div class="relative group bg-secondary rounded-lg overflow-hidden" style={`height: ${height}; overflow-y: auto;`}>
         {
             showCopy && (
                 <div class="absolute top-2 right-2 z-20 opacity-70 group-hover:opacity-100 transition-opacity">

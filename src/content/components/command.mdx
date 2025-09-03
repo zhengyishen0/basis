@@ -114,7 +114,7 @@ The Command Palette provides a keyboard-driven interface similar to VS Code's Co
                 <CommandFooter slot="footer" />
             </Command>
         </div>
-        
+
         <div class="text-center text-sm text-muted-foreground">
             Try typing "calendar", "profile", or "settings". Use arrow keys to navigate, Enter to select.
         </div>
@@ -123,6 +123,7 @@ The Command Palette provides a keyboard-driven interface similar to VS Code's Co
         <Code
             language="astro"
             code={`---
+
 import {
     Command,
     CommandInput,
@@ -172,7 +173,7 @@ import {
         slot="input"
         placeholder="Type a command or search..."
     />
-    
+
     <CommandGroups
         x-for="[categoryName, categoryItems] in Object.entries(filteredItems)"
         x-key="categoryName"
@@ -196,6 +197,7 @@ import {
         </CommandItems>
     </CommandGroups>
     <CommandFooter slot="footer" />
+
 </Command>`}
         />
     </TabsContent>
@@ -207,45 +209,31 @@ import {
 
 Main container component with dialog behavior and keyboard shortcuts.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `items` | `Record<string, CommandItem[]>` | `{}` | Categorized command items (see structure below) |
-| `placeholder` | `string` | `'Type a command or search...'` | Input placeholder text |
-| `emptyText` | `string` | `'No results found.'` | Text when no results match |
-| `onSelect` | `string` | `'console.log(item)'` | Alpine.js expression for selection |
-| `keyboardShortcut` | `string` | `'cmd+k'` | Global keyboard shortcut |
-| `variant` | `'default' \, 'ghost' \, 'dialog'` | `'default'` | Visual variant |
-| `size` | `'sm' \, 'md' \, 'lg' \, 'full'` | `'md'` | Size variant |
-
-**Command Item Structure:**
-The `items` prop accepts an object where keys are category names and values are arrays of command items:
-
-```typescript
-interface CommandItem {
-  title: string;        // Display name
-  value: string;        // Unique identifier
-  icon?: string;        // Icon name or SVG string
-  shortcut?: string;    // Keyboard shortcut display (e.g., "⌘K")
-  show?: boolean;       // Visibility flag (default: true)
-  disabled?: boolean;   // Disabled state (default: false)
-}
-```
+| Prop               | Type                               | Default                         | Description                                     |
+| ------------------ | ---------------------------------- | ------------------------------- | ----------------------------------------------- |
+| `items`            | `Record<string, CommandItem[]>`    | `{}`                            | Categorized command items (see structure below) |
+| `placeholder`      | `string`                           | `'Type a command or search...'` | Input placeholder text                          |
+| `emptyText`        | `string`                           | `'No results found.'`           | Text when no results match                      |
+| `onSelect`         | `string`                           | `'console.log(item)'`           | Alpine.js expression for selection              |
+| `keyboardShortcut` | `string`                           | `'cmd+k'`                       | Global keyboard shortcut                        |
+| `variant`          | `'default' \, 'ghost' \, 'dialog'` | `'default'`                     | Visual variant                                  |
+| `size`             | `'sm' \, 'md' \, 'lg' \, 'full'`   | `'md'`                          | Size variant                                    |
 
 ### CommandInput
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `placeholder` | `string` | `'Type a command or search...'` | Input placeholder |
-| `showIcon` | `boolean` | `true` | Show search icon |
+| Prop          | Type      | Default                         | Description       |
+| ------------- | --------- | ------------------------------- | ----------------- |
+| `placeholder` | `string`  | `'Type a command or search...'` | Input placeholder |
+| `showIcon`    | `boolean` | `true`                          | Show search icon  |
 
 ### CommandItem
 
 Individual command item component.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `shortcut` | `string` | - | Keyboard shortcut to display |
-| `className` | `string` | - | Additional CSS classes |
+| Prop        | Type     | Default | Description                  |
+| ----------- | -------- | ------- | ---------------------------- |
+| `shortcut`  | `string` | -       | Keyboard shortcut to display |
+| `className` | `string` | -       | Additional CSS classes       |
 
 ### CommandItems
 
@@ -253,41 +241,41 @@ Container for dynamic command lists. Must include `x-for` and `x-key` directives
 
 ### CommandFooter
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `showHints` | `boolean` | `true` | Show keyboard navigation hints |
-| `class` | `string` | - | Additional CSS classes |
+| Prop        | Type      | Default | Description                    |
+| ----------- | --------- | ------- | ------------------------------ |
+| `showHints` | `boolean` | `true`  | Show keyboard navigation hints |
+| `class`     | `string`  | -       | Additional CSS classes         |
 
 ### CommandTrigger
 
 Button or trigger element to open the command palette. Re-exported from DialogTrigger.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `'default' \, 'button' \, 'outline' \, 'ghost'` | `'default'` | Visual variant |
-| `className` | `string` | - | Additional CSS classes |
+| Prop        | Type                                            | Default     | Description            |
+| ----------- | ----------------------------------------------- | ----------- | ---------------------- |
+| `variant`   | `'default' \, 'button' \, 'outline' \, 'ghost'` | `'default'` | Visual variant         |
+| `className` | `string`                                        | -           | Additional CSS classes |
 
 ### CommandGroup
 
 Container for grouping command items with an optional title. Re-exported from MenuGroup.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | - | Additional CSS classes |
-| `group` | `any` | - | Dynamic group data |
+| Prop        | Type     | Default | Description            |
+| ----------- | -------- | ------- | ---------------------- |
+| `className` | `string` | -       | Additional CSS classes |
+| `group`     | `any`    | -       | Dynamic group data     |
 
 ### CommandGroups
 
 Dynamic container for multiple command groups. Must include `x-for` and `x-key` directives.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
+| Prop          | Type      | Default | Description                 |
+| ------------- | --------- | ------- | --------------------------- |
 | `showDivider` | `boolean` | `false` | Show divider between groups |
 
 ### CommandShortcut
 
 Component to display keyboard shortcuts. Re-exported from MenuShortcut.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | - | Additional CSS classes |
+| Prop        | Type     | Default | Description            |
+| ----------- | -------- | ------- | ---------------------- |
+| `className` | `string` | -       | Additional CSS classes |

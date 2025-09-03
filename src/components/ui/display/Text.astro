@@ -16,7 +16,8 @@ const textVariants = cva('leading-none m-0', {
             // Card variants
             'card-title': 'text-xl font-semibold text-foreground',
             'card-subtitle': 'text-lg font-medium text-muted-foreground',
-            'card-description': 'text-base text-muted-foreground leading-relaxed',
+            'card-description':
+                'text-base text-muted-foreground leading-relaxed',
             'card-content': 'text-sm text-foreground leading-normal',
 
             // Alert variants
@@ -26,7 +27,8 @@ const textVariants = cva('leading-none m-0', {
             // Accordion variants
             'accordion-trigger':
                 'text-base font-semibold text-foreground select-none',
-            'accordion-content': 'text-sm text-muted-foreground leading-relaxed',
+            'accordion-content':
+                'text-sm text-muted-foreground leading-relaxed',
 
             // Page variants
             'page-title': 'text-3xl font-bold text-foreground',
@@ -38,10 +40,12 @@ const textVariants = cva('leading-none m-0', {
 
             // Feature variants
             'feature-title': 'text-xl font-semibold text-foreground',
-            'feature-description': 'text-base text-muted-foreground leading-relaxed',
+            'feature-description':
+                'text-base text-muted-foreground leading-relaxed',
 
             // Testimonial variants
-            'testimonial-quote': 'text-lg italic text-foreground leading-relaxed',
+            'testimonial-quote':
+                'text-lg italic text-foreground leading-relaxed',
             'testimonial-author': 'text-sm font-medium text-foreground',
 
             // Stats variants
@@ -100,7 +104,6 @@ const getElementFromVariant = (variant: string) => {
         case 'section-title':
         case 'feature-title':
             return 'h2';
-        case 'hero-subtitle':
         case 'card-subtitle':
         case 'page-subtitle':
         case 'section-subtitle':
@@ -144,14 +147,16 @@ const Element = getElementFromVariant(variant || 'body');
 const classes = cn(textVariants({ variant, state }), className);
 ---
 
-<Element 
-    class={classes} 
-    x-bind:class={rest[':state'] ? `{
+<Element
+    class={classes}
+    x-bind:class={rest[':state']
+        ? `{
         'text-foreground font-medium': ${rest[':state']} === 'active',
         'text-muted-foreground line-through': ${rest[':state']} === 'completed',
         'text-muted-foreground italic': ${rest[':state']} === 'pending',
         'text-muted-foreground opacity-60': ${rest[':state']} === 'disabled'
-    }` : undefined}
+    }`
+        : undefined}
     {...rest}
 >
     <slot />

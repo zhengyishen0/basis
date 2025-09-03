@@ -40,7 +40,7 @@ The HoverCard component displays rich content when hovering over elements. Perfe
                     <div class="flex items-start gap-3">
                         <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">JD</div>
                         <div class="flex-1">
-                            <h3 class="font-semibold">Jane Developer</h3>
+                            <span class="font-semibold">Jane Developer</span>
                             <p class="text-sm text-gray-600">@jane_dev</p>
                         </div>
                     </div>
@@ -70,7 +70,7 @@ The HoverCard component displays rich content when hovering over elements. Perfe
             <span class="font-medium">Jane Developer</span>
         </div>
     </HoverCardTrigger>
-    <HoverCardContent size="lg" placement="bottom">
+    <HoverCardContent placement="bottom" className="w-96 p-6">
         <div class="space-y-4">
             <div class="flex items-start gap-3">
                 <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">JD</div>
@@ -97,11 +97,13 @@ The HoverCard component displays rich content when hovering over elements. Perfe
 
 ## API Reference
 
-| Component            | Prop        | Type                                                       | Default    | Description                          |
-| -------------------- | ----------- | ---------------------------------------------------------- | ---------- | ------------------------------------ |
-| **HoverCard**        | `delay`     | `number`                                                   | `200`      | Delay before hover card appears (ms) |
-|                      | `className` | `string`                                                   | -          | Additional CSS classes               |
-| **HoverCardTrigger** | `className` | `string`                                                   | -          | Additional CSS classes               |
-| **HoverCardContent** | `placement` | `'top' \| 'bottom' \| 'left' \| 'right' \| 'bottom-start'` | `'bottom'` | Position relative to trigger         |
-|                      | `size`      | `'sm' \| 'md' \| 'lg'`                                     | `'md'`     | Size of the hover card               |
-|                      | `className` | `string`                                                   | -          | Additional CSS classes               |
+| Component            | Prop        | Type                                      | Default     | Description                          |
+| -------------------- | ----------- | ----------------------------------------- | ----------- | ------------------------------------ |
+| **HoverCard**        | `delay`     | `number`                                  | `200`       | Delay before hover card appears (ms) |
+|                      | `className` | `string`                                  | -           | Additional CSS classes               |
+| **HoverCardTrigger** | `variant`   | `'default' \| 'button' \| 'ghost' \| 'link'` | `'default'` | Visual style variant                 |
+|                      | `className` | `string`                                  | -           | Additional CSS classes               |
+| **HoverCardContent** | `theme`     | `'default' \| 'minimal'`                  | `'default'` | Theme style                          |
+|                      | `placement` | `'top' \| 'bottom' \| 'left' \| 'right'`  | `'bottom'`  | Position relative to trigger         |
+|                      | `className` | `string`                                  | -           | Additional CSS classes               |
+|                      | `role`      | `string`                                  | `'dialog'`  | ARIA role attribute                  |

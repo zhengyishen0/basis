@@ -25,14 +25,14 @@ An interactive calendar component built with Alpine.js that supports single date
             Code
         </TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-8">
+    <TabsContent value="preview" preview class="space-y-8 justify-start">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="space-y-4">
-                <h3 class="text-lg font-semibold">Basic Calendar</h3>
+                <span class="text-lg font-semibold">Basic Calendar</span>
                 <Calendar mode="single" />
             </div>
             <div class="space-y-4">
-                <h3 class="text-lg font-semibold">Dropdown Navigation</h3>
+                <span class="text-lg font-semibold">Dropdown Navigation</span>
                 <Calendar
                     mode="single"
                     captionLayout="dropdown"
@@ -43,7 +43,7 @@ An interactive calendar component built with Alpine.js that supports single date
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="space-y-4">
-                <h3 class="text-lg font-semibold">Multiple Months</h3>
+                <span class="text-lg font-semibold">Multiple Months</span>
                 <Calendar mode="range" numberOfMonths={2} density="compact" />
             </div>
         </div>
@@ -106,9 +106,3 @@ The calendar dispatches `date-selected` events that can be handled with Alpine.j
     mode="single"
 />
 ```
-
-### Selection Modes
-
-- **Single**: Select one date
-- **Range**: Select a date range with start and end dates
-- **Multiple**: Select multiple individual dates

@@ -28,7 +28,7 @@ Banner is a composable notification component system built with shadcn-style com
         <TabsTrigger value="preview" variant="pills">Preview</TabsTrigger>
         <TabsTrigger value="code" variant="pills">Code</TabsTrigger>
     </TabsList>
-    <TabsContent value="preview" preview class="space-y-4">
+    <TabsContent value="preview" preview class="space-y-4 justify-start">
         <div class="space-y-4">
             <Banner variant="default" visible={true}>
                 <Icon name="lucide:info" class="w-5 h-5 flex-shrink-0 mt-[2px]" />
@@ -142,7 +142,7 @@ Banner is a composable notification component system built with shadcn-style com
 
 ## API Reference
 
-### Banner Props
+### Banner
 
 | Prop           | Type                                                                             | Default     | Description                          |
 | -------------- | -------------------------------------------------------------------------------- | ----------- | ------------------------------------ |
@@ -153,26 +153,26 @@ Banner is a composable notification component system built with shadcn-style com
 | `bannerId`     | `string`                                                                         | `undefined` | Unique ID for event-based control    |
 | `class`        | `string`                                                                         | `undefined` | Additional CSS classes               |
 
-### BannerTitle Props
+### BannerTitle
 
 | Prop        | Type     | Default     | Description            |
 | ----------- | -------- | ----------- | ---------------------- |
 | `className` | `string` | `undefined` | Additional CSS classes |
 
-### BannerDescription Props
+### BannerDescription
 
 | Prop        | Type     | Default     | Description            |
 | ----------- | -------- | ----------- | ---------------------- |
 | `className` | `string` | `undefined` | Additional CSS classes |
 
-### BannerAction Props
+### BannerAction
 
 | Prop        | Type     | Default     | Description                 |
 | ----------- | -------- | ----------- | --------------------------- |
 | `href`      | `string` | `undefined` | Renders as link if provided |
 | `className` | `string` | `undefined` | Additional CSS classes      |
 
-### BannerClose Props
+### BannerClose
 
 | Prop        | Type     | Default     | Description            |
 | ----------- | -------- | ----------- | ---------------------- |
@@ -194,29 +194,3 @@ Banner is a composable notification component system built with shadcn-style com
 | ------------- | -------------- | ---------------------- |
 | `show-banner` | Shows a banner | `{ bannerId: string }` |
 | `hide-banner` | Hides a banner | `{ bannerId: string }` |
-
-### Features
-
-- **Composable Architecture**: Mix and match sub-components as needed
-- **Multiple Variants**: Full shadcn-style color system support
-- **Flexible Positioning**: Static, fixed, and sticky positioning options
-- **Alpine.js Integration**: Event-based show/hide with smooth transitions
-- **Delayed Visibility**: Built-in timer for delayed banner appearance
-- **Responsive Design**: Adapts to different screen sizes
-- **Accessible**: Proper ARIA attributes and keyboard support
-
-### Best Practices
-
-1. **Use appropriate variants**: Match the banner color to the message importance
-2. **Include clear actions**: Provide next steps when possible
-3. **Position strategically**: Use fixed/sticky positions for critical messages only
-4. **Provide dismissal**: Always include a close button for non-critical banners
-5. **Control timing**: Use delayed visibility for onboarding or progressive disclosure
-
-### Accessibility
-
-- Proper semantic HTML structure
-- ARIA labels for close buttons
-- Keyboard navigation support
-- Color contrast compliance
-- Screen reader friendly content structure

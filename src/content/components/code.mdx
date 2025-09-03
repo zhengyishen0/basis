@@ -31,7 +31,6 @@ The Code component provides syntax highlighting for various programming language
         class="space-y-4 justify-center items-center"
     >
         <Code
-            title="JavaScript Example"
             language="javascript"
             code={`function greet(name) {
     console.log(\`Hello, \${name}!\`);
@@ -90,20 +89,5 @@ Available syntax highlighting themes:
 | `title`    | `string`                                                               | -                | Optional title displayed above the code block |
 | `showCopy` | `boolean`                                                              | `true`           | Show/hide copy-to-clipboard button            |
 | `theme`    | `'github-light' \, 'github-dark' \, 'vitesse-light' \, 'vitesse-dark'` | `'github-light'` | Syntax highlighting theme                     |
+| `height`   | `string`                                                               | `'400px'`        | Height of the code container with scrolling   |
 | `class`    | `string`                                                               | -                | Additional CSS classes                        |
-
-### Features
-
-- **Syntax Highlighting**: Powered by Shiki for accurate, fast highlighting
-- **Copy to Clipboard**: Built-in copy functionality with visual feedback
-- **Theme Support**: Multiple color schemes for different environments
-- **Language Detection**: Supports 100+ programming languages
-- **Responsive Design**: Adapts to container width with horizontal scrolling
-- **Alpine.js Compatible**: Supports reactive props and event handling
-
-### Usage Tips
-
-- Use descriptive titles for complex code examples
-- Choose themes that match your site's design system
-- Disable copy functionality for short snippets or terminal outputs
-- Consider using `vitesse-dark` theme for dark mode interfaces
